@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Информация о браузере{% endblock %}
+
+{% block content %}
+<table data-role="table" class="ui-responsive table-stroke">
+    <thead>
+    <tr><th>Название</th><th>Значение</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Браузер:</td> <td>{{ userAgent }}</td></tr>
+        <tr><td>Дополнительная информация:</td> <td>{{ wapProfile }}</td></tr>
+        <tr><td>Номер телефона:</td> <td>{{ phoneNumber }}</td></tr>
+        <tr><td>IP-адрес:</td> <td>{{ ip }} ({{ ipHost }})</td></tr>
+        <tr><td>Локальный ip-адрес:</td> <td>{{ local }} ({{ localHost }})</td></tr>
+        <tr><td>Прокси:</td> <td>{{ proxy }}</td></tr>
+        <tr><td>Порт:</td> <td>{{ port }}</td></tr>
+        <tr><td>Реферер:</td> <td>{{ referer }}</td></tr>
+        <tr><td>Типы компрессии:</td> <td>{{ encoding }}</td></tr>
+        <tr><td>Кэш:</td> <td>{{ cache }}</td></tr>
+        <tr><td>Тип соединения:</td> <td>{{ connection }}</td></tr>
+        <tr><td>Тип канала:</td> <td>{{ bearerType }}</td></tr>
+        <tr><td>HTTP протокол:</td> <td>{{ httpProtocol }}</td></tr>
+        <tr><td>MIME типы:</td> <td>{{ accept }}</td></tr>
+        <tr><td>Языки:</td> <td>{{ lang }}</td></tr>
+        <tr><td>Кодировки:</td> <td>{{ charset }}</td></tr>
+        <tr><td>DNT</td><td>{{ dnt }}</td></tr>
+    </tbody>
+</table>
+{% endblock %}

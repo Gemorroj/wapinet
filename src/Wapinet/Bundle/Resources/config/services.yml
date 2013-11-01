@@ -1,0 +1,7 @@
+parameters:
+#    wapinet.example.class: Wapinet\Bundle\Example
+
+services:
+#    wapinet.example:
+#        class: %wapinet.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

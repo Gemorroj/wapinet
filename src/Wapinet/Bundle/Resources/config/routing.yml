@@ -1,0 +1,7 @@
+index:
+    pattern:  /
+    defaults: { _controller: WapinetBundle:Default:index }
+
+about:
+    pattern: /about
+    defaults: { _controller: WapinetBundle:About:index }

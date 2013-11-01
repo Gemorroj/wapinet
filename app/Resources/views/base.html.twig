@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wapinet.ru - {% block title %}{% endblock %}</title>
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+    {# jquery mobile #}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerjquerymobile/css/jquery.mobile.css') }}" />
+    <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/bmatznerjquerymobile/js/jquery.mobile.js') }}"></script>
+
+    {% block javascripts %}{% endblock %}
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+{% block body %}
+<div data-role="page">
+    {% block page %}
+        {% block panel %}
+            <div data-role="panel" id="menu">
+                <ul data-role="listview" data-icon="false" data-divider-theme="a" data-divider-theme="a" data-inset="false">
+                    <li data-role="list-divider">Mail</li>
+                    <li><a href="#">Inbox</a></li>
+                    <li><a href="#">Outbox</a></li>
+                    <li data-role="list-divider">Contacts</li>
+                    <li><a href="#">Friends</a></li>
+                    <li><a href="#">Work</a></li>
+                </ul>
+            </div>
+        {% endblock %}
+
+        <div data-role="header" data-position="fixed">
+            {% block header %}
+                <div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
+                    <a href="javascript:history.back();" data-role="button" data-icon="back" data-iconpos="notext">Назад</a>
+                    <a href="#menu" data-role="button" data-icon="bars">Меню</a>
+                    <!-- <a href="{{ path('index') }}" data-role="button" data-icon="home">wapinet.ru</a> -->
+                </div>
+                <h1><a href="{{ path('index') }}" data-role="button" data-inline="false">wapinet.ru</a></h1>
+                {% if app.user %}
+                    <a href="{{ path('fos_user_profile_show') }}" data-role="button" data-icon="gear" class="ui-btn-right"><img src="http://wapinet.ru/hammer_sickle.png" alt="" style="width: 13px; height: 13px;"/> {{ app.user.username }}</a>
+                {% else %}
+                    <a href="{{ path('fos_user_security_login') }}" data-role="button" data-icon="gear" class="ui-btn-right">Войти</a>
+                {% endif %}
+            {% endblock %}
+        </div>
+
+        <div data-role="content">
+            {% block content %}
+                <p></p>
+            {% endblock %}
+        </div>
+
+        <div data-role="footer">
+            {% block footer %}
+                <p>Online: 22</p>
+            {% endblock footer %}
+        </div>
+
+    {% endblock page %}
+</div>
+{% endblock body %}
+</body>
+</html>
