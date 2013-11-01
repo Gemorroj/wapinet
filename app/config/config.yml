@@ -95,6 +95,7 @@ fos_user:
 vich_uploader:
     db_driver: orm
     gaufrette: false
+    twig: true
     storage: vich_uploader.storage.file_system
     mappings:
         avatar:
