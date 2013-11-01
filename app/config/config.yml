@@ -27,6 +27,7 @@ twig:
     strict_variables: %kernel.debug%
     globals:
         wapinet_title: "%wapinet.title%"
+        wapinet_nophoto: "%wapinet.nophoto%"
 
 
 
