@@ -87,3 +87,16 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: Wapinet\Bundle\Entity\User
+    profile:
+        form:
+            type: wapinet_user_profile
+
+vich_uploader:
+    db_driver: orm
+    gaufrette: false
+    storage: vich_uploader.storage.file_system
+    mappings:
+        avatar:
+            uri_prefix: /avatar
+            upload_destination: %kernel.root_dir%/../web/avatar
+            namer: vich_uploader.namer_uniqid

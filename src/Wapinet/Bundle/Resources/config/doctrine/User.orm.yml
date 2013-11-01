@@ -7,7 +7,7 @@ Wapinet\Bundle\Entity\User:
             generator:
                 strategy: AUTO
     fields:
-        avatar:
+        avatarName:
             type: string
             length: 255
             nullable: true

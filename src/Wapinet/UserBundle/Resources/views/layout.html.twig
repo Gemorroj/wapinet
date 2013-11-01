@@ -1,0 +1,21 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+    <div>
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <a href="{{ path('fos_user_security_logout') }}">Выход</a> | <a href="{{ path('fos_user_profile_edit') }}">Редактировать профиль</a>
+        {% else %}
+            <a href="{{ path('fos_user_security_login') }}">Авторизация</a> | <a href="{{ path('fos_user_registration_register') }}">Регистрация</a>
+        {% endif %}
+    </div>
+
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="flash-{{ type }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    {% block fos_user_content %}{% endblock %}
+{% endblock %}
