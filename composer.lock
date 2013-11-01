@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "4396a8631839618b672d89647b8f20ba",
+    "hash": "431534b61c58de5b616509ddb19fc166",
     "packages": [
         {
             "name": "bmatzner/jquery-bundle",
@@ -2082,10 +2082,10 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
+        "friendsofsymfony/user-bundle": 20,
         "sonata-project/admin-bundle": 20,
         "sonata-project/doctrine-orm-admin-bundle": 20,
-        "bmatzner/jquery-mobile-bundle": 20,
-        "friendsofsymfony/user-bundle": 20
+        "bmatzner/jquery-mobile-bundle": 20
     },
     "platform": {
         "php": ">=5.3.3"

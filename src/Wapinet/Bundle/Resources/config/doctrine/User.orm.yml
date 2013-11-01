@@ -6,3 +6,8 @@ Wapinet\Bundle\Entity\User:
             type: integer
             generator:
                 strategy: AUTO
+    fields:
+        avatar:
+            type: string
+            length: 255
+            nullable: true

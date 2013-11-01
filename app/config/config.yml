@@ -25,6 +25,10 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    globals:
+        wapinet_title: "%wapinet.title%"
+
+
 
 # Assetic Configuration
 assetic:

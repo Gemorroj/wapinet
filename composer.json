@@ -19,10 +19,10 @@
         "sensio/framework-extra-bundle": "2.3.*",
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
+        "friendsofsymfony/user-bundle": "~2.0@dev",
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
-        "bmatzner/jquery-mobile-bundle": "dev-master",
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "bmatzner/jquery-mobile-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

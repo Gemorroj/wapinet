@@ -16,6 +16,9 @@ class AppKernel extends Kernel
             new Bmatzner\JQueryBundle\BmatznerJQueryBundle(),
             new Bmatzner\JQueryMobileBundle\BmatznerJQueryMobileBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            //TODO: "sonata-project/user-bundle": "dev-master",
+            // new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
+
 
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),

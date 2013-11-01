@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Wapinet.ru - {% block title %}{% endblock %}</title>
+    <title>{{ wapinet_title }} - {% block title %}{% endblock %}</title>
 
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -39,9 +39,9 @@
                 <div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
                     <a href="javascript:history.back();" data-role="button" data-icon="back" data-iconpos="notext">Назад</a>
                     <a href="#menu" data-role="button" data-icon="bars">Меню</a>
-                    <!-- <a href="{{ path('index') }}" data-role="button" data-icon="home">wapinet.ru</a> -->
+                    <!-- <a href="{{ path('index') }}" data-role="button" data-icon="home">{{ wapinet_title }}</a> -->
                 </div>
-                <h1><a href="{{ path('index') }}" data-role="button" data-inline="false">wapinet.ru</a></h1>
+                <h1><a href="{{ path('index') }}" data-role="button" data-inline="false">{{ wapinet_title }}</a></h1>
                 {% if app.user %}
                     <a href="{{ path('fos_user_profile_show') }}" data-role="button" data-icon="gear" class="ui-btn-right"><img src="http://wapinet.ru/hammer_sickle.png" alt="" style="width: 13px; height: 13px;"/> {{ app.user.username }}</a>
                 {% else %}
@@ -58,7 +58,7 @@
 
         <div data-role="footer">
             {% block footer %}
-                <p>Online: 22</p>
+                <p style="font-size: 12px;">Online: 22</p>
             {% endblock footer %}
         </div>
 
