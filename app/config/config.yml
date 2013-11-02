@@ -10,7 +10,7 @@ framework:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
     form:            ~
-    csrf_protection: ~
+    csrf_protection: true
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
@@ -74,6 +74,9 @@ swiftmailer:
 
 sonata_admin:
     title:      wapinet.ru
+    templates:
+        layout:  ::admin.html.twig
+
 
 sonata_block:
     default_contexts: [cms]

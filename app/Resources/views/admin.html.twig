@@ -1,0 +1,12 @@
+{% extends 'SonataAdminBundle::standard_layout.html.twig' %}
+{% block stylesheets %}
+    <style type="text/css">
+        #avatar {
+            display: none;
+        }
+        .avatar_preview {
+            max-height: 80px;
+        }
+    </style>
+    {{ parent() }}
+{% endblock %}
