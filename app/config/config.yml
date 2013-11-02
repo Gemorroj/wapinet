@@ -87,18 +87,17 @@ sonata_block:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: Wapinet\Bundle\Entity\User
+    user_class: Wapinet\UserBundle\Entity\User
     profile:
         form:
             type: wapinet_user_profile
 
-vich_uploader:
-    db_driver: orm
-    gaufrette: false
-    twig: true
-    storage: vich_uploader.storage.file_system
+iphp_file_store:
     mappings:
-        avatar:
-            uri_prefix: /avatar
-            upload_destination: %kernel.root_dir%/../web/avatar
-            namer: vich_uploader.namer_uniqid
+       avatar:
+           upload_dir:  %kernel.root_dir%/../web/avatar
+           upload_path: /avatar
+           directory_namer:
+               date:
+                  params: { field: createdAt, depth: month }
+           namer: ~

@@ -1,7 +1,0 @@
-Wapinet\UserBundle\Entity\User:
-    type:  Uploadable
-    fields:
-        avatar:
-            mapping: avatar
-            fileNameProperty: avatarName
-            nullable: true

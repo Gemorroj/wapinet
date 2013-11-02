@@ -2,22 +2,29 @@
 namespace Wapinet\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
-use Symfony\Component\HttpFoundation\File\File;
-
+use Iphp\FileStoreBundle\Mapping\Annotation as FileStore;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * User
+ * @FileStore\Uploadable
  */
 class User extends BaseUser
 {
     /**
-     * @var string|null
-     */
-    protected $avatarName;
-    /**
-     * @var File|null $avatar
+     * @var array|UploadedFile|null $avatar
+     * @FileStore\UploadableField(mapping="avatar")
      */
     protected $avatar;
+
+    /**
+     * @var \DateTime
+     */
+    protected $createdAt;
+    /**
+     * @var \DateTime|null
+     */
+    protected $updatedAt;
 
 
     public function __construct()
@@ -32,24 +39,34 @@ class User extends BaseUser
         return $this->avatar;
     }
 
-    public function getAvatarName()
-    {
-        return $this->avatarName;
-    }
-
-    public function setAvatar(File $avatar = null)
+    public function setAvatar($avatar = null)
     {
         $this->avatar = $avatar;
         return $this;
     }
 
-    public function setAvatarName($avatarName = null)
+
+    public function getCreatedAt()
     {
-        $this->avatarName = $avatarName;
+        return $this->createdAt;
+    }
+
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTime();
         return $this;
     }
 
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
 
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTime();
+        return $this;
+    }
 
     /**
      * return bool

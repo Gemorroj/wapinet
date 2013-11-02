@@ -1,0 +1,9 @@
+{% set path = avatar ? avatar.path : wapinet_nophoto %}
+
+<a href="#avatar" data-rel="popup" data-position-to="window" data-transition="fade">
+    <img src="{{ path }}" alt="{{ alt }}" class="avatar_preview" />
+</a>
+<div data-role="popup" id="avatar" data-overlay-theme="a" data-theme="d" data-corners="false">
+    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Закрыть</a>
+    <img src="{{ path }}" alt="{{ alt }}" />
+</div>

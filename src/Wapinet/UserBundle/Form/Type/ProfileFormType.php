@@ -7,12 +7,10 @@ use FOS\UserBundle\Form\Type\ProfileFormType as BaseType;
 
 class ProfileFormType extends BaseType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildUserForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
-
-        // add your custom field
-        $builder->add('avatar', 'file', array('label' => 'form.avatar', 'translation_domain' => 'FOSUserBundle'));
+        parent::buildUserForm($builder, $options);
+        $builder->add('avatar', 'iphp_file', array('label' => 'Аватар:', 'required' => false));
     }
 
     public function getName()

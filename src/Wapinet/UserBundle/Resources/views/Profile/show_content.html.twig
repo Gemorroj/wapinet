@@ -1,11 +1,5 @@
-{% trans_default_domain 'FOSUserBundle' %}
-
 <div class="fos_user_user_show">
-    <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
-    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
-    {% if user.hasAvatar %}
-        <p><img src="{{ vich_uploader_asset(user, 'avatar') }}" alt="{{ user.username }}" /></p>
-    {% else %}
-        <p><img src="{{ wapinet_nophoto }}" alt="{{ user.username }}" /></p>
-    {% endif %}
+    <p>Логин: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>{% include 'WapinetBundle::avatar.html.twig' with {'avatar': user.avatar, 'alt': user.username} %}</p>
 </div>

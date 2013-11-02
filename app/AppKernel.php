@@ -8,7 +8,7 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         $bundles = array(
-            new Vich\UploaderBundle\VichUploaderBundle(),
+            new Iphp\FileStoreBundle\IphpFileStoreBundle(),
             new Sonata\AdminBundle\SonataAdminBundle(),
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
@@ -31,6 +31,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Wapinet\UserBundle\WapinetUserBundle(),
             new Wapinet\Bundle\WapinetBundle(),
+            new Wapinet\FileStoreBundle\WapinetFileStoreBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
