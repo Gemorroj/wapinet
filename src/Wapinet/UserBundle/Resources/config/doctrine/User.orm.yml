@@ -13,11 +13,11 @@ Wapinet\UserBundle\Entity\User:
         createdAt:
             type: datetime
             nullable: false
-            name: created_at
+            column: created_at
         updatedAt:
             type: datetime
             nullable: true
-            name: updated_at
+            column: updated_at
 
     lifecycleCallbacks:
         prePersist: [ setCreatedAtValue ]

@@ -27,13 +27,6 @@ class User extends BaseUser
     protected $updatedAt;
 
 
-    public function __construct()
-    {
-        parent::__construct();
-        // your own logic
-    }
-
-
     public function getAvatar()
     {
         return $this->avatar;
