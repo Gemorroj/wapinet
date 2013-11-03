@@ -29,6 +29,7 @@ twig:
         wapinet_title: "%wapinet_title%"
         wapinet_nophoto: "%wapinet_nophoto%"
         wapinet_dateformat: "%wapinet_dateformat%"
+        wapinet_datetimeformat: "%wapinet_datetimeformat%"
 
 
 # Assetic Configuration
@@ -107,6 +108,10 @@ fos_message:
     db_driver: orm
     thread_class: Wapinet\MessageBundle\Entity\Thread
     message_class: Wapinet\MessageBundle\Entity\Message
+    new_thread_form:
+        type: wapinet_message.new_thread.form.type
+    reply_form:
+        type: wapinet_message.reply.form.type
 
 iphp_file_store:
     mappings:

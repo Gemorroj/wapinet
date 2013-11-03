@@ -1,0 +1,36 @@
+<ul data-role="listview" data-inset="true">
+    {% if threads %}
+        {% for thread in threads %}
+            <li data-role="list-divider">{{ thread.lastMessage.createdAt|date(wapinet_datetimeformat) }} <span class="ui-li-count">{{ thread.messages|length }}</span></li>
+            <li>
+                <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}">
+                    <h2>
+                        {{ thread.subject }}
+                    </h2>
+                    {% if not fos_message_is_read(thread) %}
+                        <p><strong>Новое!</strong></p>
+                    {% endif %}
+                    <p>{% trans with {'%sender%': thread.lastMessage.sender|e } from 'FOSMessageBundle' %}by{% endtrans %}</p>
+                    <p>
+                        {% if fos_message_can_delete_thread(thread) %}
+                            {% if fos_message_deleted_by_participant(thread) %}
+                                <form action="{{ url('fos_message_thread_undelete', {'threadId': thread.id}) }}" method="post">
+                                    <input data-icon="refresh" data-mini="true" data-inline="true" type="submit" value="Восстановить" />
+                                </form>
+                            {% else %}
+                                <form action="{{ url('fos_message_thread_delete', {'threadId': thread.id}) }}" method="post">
+                                    <input data-icon="delete" data-mini="true" data-inline="true" type="submit" value="Удалить" />
+                                </form>
+                            {% endif %}
+                        {% endif %}
+                    </p>
+                </a>
+            </li>
+        {% endfor %}
+    {% else %}
+        <li>
+            Нет сообщений для отображения.
+        </li>
+    {% endif %}
+
+    </ul>

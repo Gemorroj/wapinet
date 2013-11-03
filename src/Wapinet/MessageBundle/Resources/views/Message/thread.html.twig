@@ -1,0 +1,33 @@
+{% extends 'FOSMessageBundle::layout.html.twig' %}
+
+{% block fos_message_content %}
+
+<h2>{{ thread.subject }}</h2>
+
+<ul data-role="listview">
+{% for message in thread.messages %}
+    <li>
+        <div class="messenger_thread_message">
+            <div class="messenger_thread_message_info">
+                {% trans with {'%sender%': message.sender|e, '%date%': message.createdAt|date(wapinet_datetimeformat)} from 'FOSMessageBundle' %}message_info{% endtrans %}
+                <br />
+                {% include 'WapinetBundle::avatar.html.twig' with {'avatar': message.sender.avatar, 'alt': message.sender.username} %}
+            </div>
+
+            <div class="messenger_thread_message_body" id="message_{{ message.id }}">
+                {{ message.body }}
+            </div>
+        </div>
+    </li>
+{% endfor %}
+</ul>
+
+<h3>Ответить</h3>
+
+<form action="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}" method="post">
+    {{ form_widget(form) }}
+
+    <input type="submit" value="Отправить" />
+</form>
+
+{% endblock %}
