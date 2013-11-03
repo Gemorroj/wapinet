@@ -104,7 +104,7 @@ fos_comment:
 
 fos_message:
     db_driver: orm
-    thread_class: Wapinet\MesssageBundle\Entity\Thread
+    thread_class: Wapinet\MessageBundle\Entity\Thread
     message_class: Wapinet\MessageBundle\Entity\Message
 
 iphp_file_store:
