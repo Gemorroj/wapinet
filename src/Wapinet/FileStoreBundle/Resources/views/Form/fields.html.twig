@@ -1,15 +1,14 @@
 {% block iphp_file_widget %}
 
-{% set fileData = value %}
 <div {{ block('widget_container_attributes') }}>
 
     <div>{{ form_widget(form.file) }}</div>
 
     {# if was upload error value is uploadedFile and originalName no exists#}
-    {% if fileData and fileData.originalName is defined %}
+    {% if value and value.originalName is defined %}
         <fieldset>
-            {% include 'WapinetBundle::avatar.html.twig' with {'avatar': fileData, 'alt': fileData.originalName} %}
-            {# {{ fileData.originalName }} #} ({{ fileData.size / 1000}} Kb{{ fileData.width is defined ? ', ' ~ fileData.width ~ 'x' ~ fileData.height : ""}})<br/>
+            {% include 'WapinetBundle::avatar.html.twig' with {'user': app.user} %}
+            {# {{ value.originalName }} #} ({{ value.size / 1000}} Kb{{ value.width is defined ? ', ' ~ value.width ~ 'x' ~ value.height : ""}})<br/>
 
             <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
                 <label>{{ form_row (form.delete)}}</label>

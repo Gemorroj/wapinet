@@ -11,7 +11,7 @@
             <div class="messenger_thread_message_info">
                 {% trans with {'%sender%': message.sender|e, '%date%': message.createdAt|date(wapinet_datetimeformat)} from 'FOSMessageBundle' %}message_info{% endtrans %}
                 <br />
-                {% include 'WapinetBundle::avatar.html.twig' with {'avatar': message.sender.avatar, 'alt': message.sender.username} %}
+                {% include 'WapinetBundle::avatar.html.twig' with {'user': message.sender} %}
             </div>
 
             <div class="messenger_thread_message_body" id="message_{{ message.id }}">

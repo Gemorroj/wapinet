@@ -21,7 +21,7 @@
         </tr>
         <tr>
             <td>Аватар</td>
-            <td>{% include 'WapinetBundle::avatar.html.twig' with {'avatar': user.avatar, 'alt': user.username} %}</td>
+            <td>{% include 'WapinetBundle::avatar.html.twig' with {'user': user} %}</td>
         </tr>
         </tbody>
     </table>
