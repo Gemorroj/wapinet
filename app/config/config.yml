@@ -35,7 +35,7 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        [ ]
+    bundles:        [ "FOSCommentBundle" ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -94,6 +94,18 @@ fos_user:
     profile:
         form:
             type: wapinet_user_profile
+
+fos_comment:
+    db_driver: orm
+    class:
+        model:
+            comment: Wapinet\CommentBundle\Entity\Comment
+            thread: Wapinet\CommentBundle\Entity\Thread
+
+fos_message:
+    db_driver: orm
+    thread_class: Wapinet\MesssageBundle\Entity\Thread
+    message_class: Wapinet\MessageBundle\Entity\Message
 
 iphp_file_store:
     mappings:

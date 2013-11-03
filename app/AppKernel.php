@@ -17,6 +17,10 @@ class AppKernel extends Kernel
             new Bmatzner\JQueryBundle\BmatznerJQueryBundle(),
             new Bmatzner\JQueryMobileBundle\BmatznerJQueryMobileBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            new FOS\CommentBundle\FOSCommentBundle(), //TODO: https://github.com/FriendsOfSymfony/FOSCommentBundle
+            new JMS\SerializerBundle\JMSSerializerBundle($this),
+            new FOS\MessageBundle\FOSMessageBundle(), //TODO: https://github.com/FriendsOfSymfony/FOSMessageBundle
 
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
@@ -29,6 +33,8 @@ class AppKernel extends Kernel
             new Wapinet\UserBundle\WapinetUserBundle(),
             new Wapinet\Bundle\WapinetBundle(),
             new Wapinet\FileStoreBundle\WapinetFileStoreBundle(),
+            new Wapinet\MessageBundle\WapinetMessageBundle(),
+            new Wapinet\CommentBundle\WapinetCommentBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -4,12 +4,13 @@ namespace Wapinet\UserBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Iphp\FileStoreBundle\Mapping\Annotation as FileStore;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
  * User
  * @FileStore\Uploadable
  */
-class User extends BaseUser
+class User extends BaseUser implements ParticipantInterface
 {
     /**
      * @var array|UploadedFile|null $avatar
