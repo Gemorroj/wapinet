@@ -55,7 +55,7 @@ class UserAdmin extends Admin
             ->add('email', null, array('label' => 'Email'))
             ->add('avatar', 'iphp_file', array('label' => 'Аватар', 'required' => false))
             ->add('roles', 'choice', array('choices' => $roles, 'multiple' => true))
-            ->add('sex', 'choice', array('label' => 'Пол', 'choices' => array(User::SEX_M => 'Мужской', User::SEX_F => 'Женский')))
+            ->add('sex', 'choice', array('label' => 'Пол', 'choices' => User::getSexChoices()))
             ->add('birthday', 'date', array('widget' => 'single_text', 'label' => 'День рождения', 'required' => false))
         ;
     }

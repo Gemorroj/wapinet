@@ -1,5 +1,32 @@
 <div class="fos_user_user_show">
-    <p>Логин: {{ user.username }}</p>
-    <p>Email: {{ user.email }}</p>
-    <p>{% include 'WapinetBundle::avatar.html.twig' with {'avatar': user.avatar, 'alt': user.username} %}</p>
+    <table data-role="table" id="profile-table" class="ui-responsive table-stroke">
+        <thead>
+        <tr>
+            <th data-priority="1"></th>
+            <th data-priority="2"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Логин</td>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <td>Пол</td>
+            <td>{{ ((user.sex == constant('Wapinet\\UserBundle\\Entity\\User::SEX_M')) ? 'Мужской' : 'Женксий')|raw }}</td>
+        </tr>
+        <tr>
+            <td>День рождения</td>
+            <td>{{ user.birthday is null ? '' : user.birthday.format(wapinet_dateformat) }}</td>
+        </tr>
+        <tr>
+            <td>Аватар</td>
+            <td>{% include 'WapinetBundle::avatar.html.twig' with {'avatar': user.avatar, 'alt': user.username} %}</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+
+{% if app.user.id == user.id %}
+    <a data-role="button" data-inline="true" href="{{ path('fos_user_profile_edit') }}">Редактировать профиль</a>
+{% endif %}

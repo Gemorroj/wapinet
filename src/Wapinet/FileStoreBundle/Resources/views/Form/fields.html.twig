@@ -11,7 +11,10 @@
             {% include 'WapinetBundle::avatar.html.twig' with {'avatar': fileData, 'alt': fileData.originalName} %}
             {# {{ fileData.originalName }} #} ({{ fileData.size / 1000}} Kb{{ fileData.width is defined ? ', ' ~ fileData.width ~ 'x' ~ fileData.height : ""}})<br/>
 
-            {{ form_row (form.delete)}}
+            <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                <label>{{ form_row (form.delete)}}</label>
+            </fieldset>
+
         </fieldset>
     {% endif %}
 </div>

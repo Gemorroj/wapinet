@@ -124,4 +124,12 @@ class User extends BaseUser implements ParticipantInterface
     {
         return (null !== $this->avatar);
     }
+
+    /**
+     * @return array
+     */
+    public static function getSexChoices()
+    {
+        return array(User::SEX_M => 'Мужской', User::SEX_F => 'Женский');
+    }
 }

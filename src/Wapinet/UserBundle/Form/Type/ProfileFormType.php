@@ -4,12 +4,15 @@ namespace Wapinet\UserBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use FOS\UserBundle\Form\Type\ProfileFormType as BaseType;
+use Wapinet\UserBundle\Entity\User;
 
 class ProfileFormType extends BaseType
 {
     public function buildUserForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildUserForm($builder, $options);
+        $builder->add('sex', 'choice', array('label' => 'Пол:', 'choices' => User::getSexChoices()));
+        $builder->add('birthday', 'date', array('widget' => 'single_text', 'label' => 'Дата рождения:', 'required' => false));
         $builder->add('avatar', 'iphp_file', array('label' => 'Аватар:', 'required' => false));
     }
 

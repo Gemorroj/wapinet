@@ -2,9 +2,7 @@
 
 {% block content %}
     <div>
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <a href="{{ path('fos_user_security_logout') }}">Выход</a> | <a href="{{ path('fos_user_profile_edit') }}">Редактировать профиль</a>
-        {% else %}
+        {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <a href="{{ path('fos_user_security_login') }}">Авторизация</a> | <a href="{{ path('fos_user_registration_register') }}">Регистрация</a>
         {% endif %}
     </div>
