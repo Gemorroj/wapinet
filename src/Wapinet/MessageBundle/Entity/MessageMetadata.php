@@ -9,6 +9,7 @@ use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
  * @ORM\Entity
+ * @ORM\Table("message_metadata")
  */
 class MessageMetadata extends BaseMessageMetadata
 {

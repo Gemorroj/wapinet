@@ -8,6 +8,7 @@ use FOS\CommentBundle\Entity\Thread as BaseThread;
 /**
  * @ORM\Entity
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ * @ORM\Table("comment_thread")
  */
 class Thread extends BaseThread
 {

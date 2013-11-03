@@ -8,6 +8,7 @@ use FOS\MessageBundle\Entity\Thread as BaseThread;
 
 /**
  * @ORM\Entity
+ * @ORM\Table("message_thread")
  */
 class Thread extends BaseThread
 {
