@@ -18,6 +18,13 @@ Wapinet\UserBundle\Entity\User:
             type: datetime
             nullable: true
             column: updated_at
+        sex:
+            type: string
+            columnDefinition: ENUM('m', 'f') NOT NULL DEFAULT 'm'
+            nullable: false
+        birthday:
+            type: date
+            nullable: true
 
     lifecycleCallbacks:
         prePersist: [ setCreatedAtValue ]

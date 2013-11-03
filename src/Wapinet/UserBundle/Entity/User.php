@@ -12,6 +12,9 @@ use FOS\MessageBundle\Model\ParticipantInterface;
  */
 class User extends BaseUser implements ParticipantInterface
 {
+    const SEX_M = 'm';
+    const SEX_F = 'f';
+
     /**
      * @var array|UploadedFile|null $avatar
      * @FileStore\UploadableField(mapping="avatar")
@@ -26,6 +29,58 @@ class User extends BaseUser implements ParticipantInterface
      * @var \DateTime|null
      */
     protected $updatedAt;
+
+    /**
+     * @var string
+     */
+    protected $sex;
+
+    /**
+     * @var \DateTime|null
+     */
+    protected $birthday;
+
+
+
+    /**
+     * @param \DateTime $birthday
+     * @return User
+     */
+    public function setBirthday(\DateTime $birthday = null)
+    {
+        $this->birthday = $birthday;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getBirthday()
+    {
+        return $this->birthday;
+    }
+
+    /**
+     * @param string $sex
+     * @return User
+     */
+    public function setSex($sex)
+    {
+        if ($sex !== self::SEX_M && $sex !== self::SEX_F) {
+            throw new \InvalidArgumentException('Invalid sex');
+        }
+
+        $this->sex = $sex;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSex()
+    {
+        return $this->sex;
+    }
 
 
     public function getAvatar()
