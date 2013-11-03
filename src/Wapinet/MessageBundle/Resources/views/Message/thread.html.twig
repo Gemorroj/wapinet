@@ -10,8 +10,10 @@
         <div class="messenger_thread_message">
             <div class="messenger_thread_message_info">
                 {% trans with {'%sender%': message.sender|e, '%date%': message.createdAt|date(wapinet_datetimeformat)} from 'FOSMessageBundle' %}message_info{% endtrans %}
-                <br />
-                {% include 'WapinetBundle::avatar.html.twig' with {'user': message.sender} %}
+                {% if message.sender.avatar %}
+                    <br />
+                    {% include 'WapinetBundle::avatar.html.twig' with {'user': message.sender} %}
+                {% endif %}
             </div>
 
             <div class="messenger_thread_message_body" id="message_{{ message.id }}">
