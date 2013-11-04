@@ -13,15 +13,29 @@
         </tr>
         <tr>
             <td>Пол</td>
-            <td>{{ ((user.sex == constant('Wapinet\\UserBundle\\Entity\\User::SEX_M')) ? 'Мужской' : 'Женксий')|raw }}</td>
+            <td>
+                {% if user.sex == constant('Wapinet\\UserBundle\\Entity\\User::SEX_M') %}
+                    Мужской
+                {% elseif user.sex == constant('Wapinet\\UserBundle\\Entity\\User::SEX_F') %}
+                    Женский
+                {% else %}
+                    Не указан
+                {% endif %}
+            </td>
         </tr>
         <tr>
             <td>День рождения</td>
-            <td>{{ user.birthday is null ? '' : user.birthday.format(wapinet_dateformat) }}</td>
+            <td>{{ user.birthday is null ? 'Не указано' : user.birthday.format(wapinet_dateformat) }}</td>
         </tr>
         <tr>
             <td>Аватар</td>
-            <td>{% include 'WapinetBundle::avatar.html.twig' with {'user': user} %}</td>
+            <td>
+                {% if user.avatar %}
+                    {% include 'WapinetBundle::avatar.html.twig' with {'user': user} %}
+                {% else %}
+                    Не указан
+                {% endif %}
+            </td>
         </tr>
         </tbody>
     </table>

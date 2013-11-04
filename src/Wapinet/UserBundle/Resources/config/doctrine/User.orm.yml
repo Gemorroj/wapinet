@@ -20,8 +20,8 @@ Wapinet\UserBundle\Entity\User:
             column: updated_at
         sex:
             type: string
-            columnDefinition: ENUM('m', 'f') NOT NULL DEFAULT 'm'
-            nullable: false
+            columnDefinition: ENUM('m', 'f') DEFAULT NULL
+            nullable: true
         birthday:
             type: date
             nullable: true

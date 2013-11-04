@@ -31,9 +31,9 @@ class User extends BaseUser implements ParticipantInterface
     protected $updatedAt;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $sex = self::SEX_M;
+    protected $sex;
 
     /**
      * @var \DateTime|null
@@ -76,7 +76,7 @@ class User extends BaseUser implements ParticipantInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getSex()
     {
