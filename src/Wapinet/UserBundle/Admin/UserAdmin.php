@@ -53,7 +53,7 @@ class UserAdmin extends Admin
             ->add('plainPassword', 'text', array('label' => 'Пароль', 'required' => false))
             ->add('username', null, array('label' => 'Логин'))
             ->add('email', null, array('label' => 'Email'))
-            ->add('avatar', null, array('label' => 'Аватар', 'required' => false)) //TODO: доделать
+            ->add('avatar', 'iphp_file_admin', array('label' => 'Аватар', 'required' => false)) //TODO: доделать
             ->add('roles', 'choice', array('choices' => $roles, 'multiple' => true))
             ->add('sex', 'choice', array('label' => 'Пол', 'choices' => User::getSexChoices()))
             ->add('birthday', 'date', array('widget' => 'single_text', 'label' => 'День рождения', 'required' => false))

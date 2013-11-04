@@ -1,0 +1,6 @@
+services:
+    wapinet_filestore.type.iphp_file_admin:
+        class: Wapinet\FileStoreBundle\Form\Type\FileTypeAdmin
+        arguments: [@iphp.filestore.mapping.factory, @iphp.filestore.datastorage, @iphp.filestore.filestorage.file_system]
+        tags:
+            - { name: form.type, alias: iphp_file_admin }
