@@ -33,7 +33,7 @@ class User extends BaseUser implements ParticipantInterface
     /**
      * @var string
      */
-    protected $sex;
+    protected $sex = self::SEX_M;
 
     /**
      * @var \DateTime|null
@@ -63,6 +63,7 @@ class User extends BaseUser implements ParticipantInterface
     /**
      * @param string $sex
      * @return User
+     * @throws \InvalidArgumentException
      */
     public function setSex($sex)
     {

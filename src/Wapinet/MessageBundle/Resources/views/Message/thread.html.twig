@@ -9,7 +9,7 @@
     <li>
         <div class="messenger_thread_message">
             <div class="messenger_thread_message_info">
-                От <a href="{{ path('fos_user_profile_show', {'id': message.sender.id}) }}">{{ message.sender}}</a>, {{ message.createdAt|date(wapinet_datetimeformat) }}
+                От <a href="{{ path('fos_user_profile_show', {'username': message.sender.username}) }}">{{ message.sender}}</a>, {{ message.createdAt|date(wapinet_datetimeformat) }}
                 {% if message.sender.avatar %}
                     <br />
                     {% include 'WapinetBundle::avatar.html.twig' with {'user': message.sender} %}
