@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new FOS\CommentBundle\FOSCommentBundle(), //TODO: https://github.com/FriendsOfSymfony/FOSCommentBundle
             new JMS\SerializerBundle\JMSSerializerBundle($this),
             new FOS\MessageBundle\FOSMessageBundle(),
+            new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
 
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
@@ -35,6 +36,7 @@ class AppKernel extends Kernel
             new Wapinet\FileStoreBundle\WapinetFileStoreBundle(),
             new Wapinet\MessageBundle\WapinetMessageBundle(),
             new Wapinet\CommentBundle\WapinetCommentBundle(),
+            new Wapinet\NewsBundle\WapinetNewsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

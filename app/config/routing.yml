@@ -1,3 +1,7 @@
+wapinet_news:
+    resource: "@WapinetNewsBundle/Resources/config/routing.yml"
+    prefix:   /news
+
 wapinet_user:
     resource: "@WapinetUserBundle/Resources/config/routing.yml"
     prefix:   /profile

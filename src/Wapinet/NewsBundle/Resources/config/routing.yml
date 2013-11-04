@@ -1,0 +1,3 @@
+wapinet_news:
+    pattern:  /
+    defaults: { _controller: WapinetNewsBundle:News:index }
