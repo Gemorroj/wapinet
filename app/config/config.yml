@@ -103,6 +103,7 @@ fos_comment:
         model:
             comment: Wapinet\CommentBundle\Entity\Comment
             thread: Wapinet\CommentBundle\Entity\Thread
+            vote: Wapinet\CommentBundle\Entity\Vote
 
 fos_message:
     db_driver: orm

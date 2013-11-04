@@ -1,3 +1,7 @@
+wapinet_user:
+    resource: "@WapinetUserBundle/Resources/config/routing.yml"
+    prefix:   /profile
+
 wapinet:
     resource: "@WapinetBundle/Resources/config/routing.yml"
     prefix:   /
@@ -39,7 +43,3 @@ fos_comment_api:
 fos_message:
     resource: "@FOSMessageBundle/Resources/config/routing.xml"
     prefix: /message
-
-wapinet_user:
-    resource: "@WapinetUserBundle/Resources/config/routing.yml"
-    prefix:   /profile

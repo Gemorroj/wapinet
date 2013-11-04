@@ -20,7 +20,7 @@ class AppKernel extends Kernel
             new FOS\RestBundle\FOSRestBundle(),
             new FOS\CommentBundle\FOSCommentBundle(), //TODO: https://github.com/FriendsOfSymfony/FOSCommentBundle
             new JMS\SerializerBundle\JMSSerializerBundle($this),
-            new FOS\MessageBundle\FOSMessageBundle(), //TODO: https://github.com/FriendsOfSymfony/FOSMessageBundle
+            new FOS\MessageBundle\FOSMessageBundle(),
 
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
