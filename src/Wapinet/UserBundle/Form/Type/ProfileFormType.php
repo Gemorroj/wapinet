@@ -12,7 +12,7 @@ class ProfileFormType extends BaseType
     {
         parent::buildUserForm($builder, $options);
         $builder
-            ->add('sex', 'choice', array('label' => 'Пол:', 'choices' => User::getSexChoices()))
+            ->add('sex', 'choice', array('label' => 'Пол:', 'required' => false, 'choices' => User::getSexChoices()))
             ->add('birthday', 'date', array('widget' => 'single_text', 'label' => 'Дата рождения:', 'required' => false))
             ->add('avatar', 'iphp_file', array('label' => 'Аватар:', 'required' => false))
         ;

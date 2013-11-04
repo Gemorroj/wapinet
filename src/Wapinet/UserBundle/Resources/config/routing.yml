@@ -1,9 +1,5 @@
-fos_user_profile_show:
-    pattern:  /{username}
-    defaults: { _controller: WapinetUserBundle:Profile:show, username: null }
+wapinet_user_profile:
+    pattern:  /user/{username}
+    defaults: { _controller: WapinetUserBundle:Profile:showUser, username: null }
     requirements:
         _method: GET
-
-fos_user_profile_edit:
-    pattern: /edit
-    defaults: { _controller: WapinetUserBundle:Profile:edit }
