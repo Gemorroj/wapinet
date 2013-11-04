@@ -26,10 +26,11 @@
 
 <h3>Ответить</h3>
 
-<form action="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}" method="post">
+{{ form_start(form, {'action': path('fos_message_thread_view', {'threadId': thread.id}), 'method': 'POST'}) }}
     {{ form_widget(form) }}
-
-    <input type="submit" value="Отправить" />
-</form>
+    <div>
+        <input type="submit" value="Отправить" />
+    </div>
+{{ form_end(form) }}
 
 {% endblock %}

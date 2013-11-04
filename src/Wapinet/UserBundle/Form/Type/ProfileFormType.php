@@ -11,9 +11,11 @@ class ProfileFormType extends BaseType
     public function buildUserForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildUserForm($builder, $options);
-        $builder->add('sex', 'choice', array('label' => 'Пол:', 'choices' => User::getSexChoices()));
-        $builder->add('birthday', 'date', array('widget' => 'single_text', 'label' => 'Дата рождения:', 'required' => false));
-        $builder->add('avatar', 'iphp_file', array('label' => 'Аватар:', 'required' => false));
+        $builder
+            ->add('sex', 'choice', array('label' => 'Пол:', 'choices' => User::getSexChoices()))
+            ->add('birthday', 'date', array('widget' => 'single_text', 'label' => 'Дата рождения:', 'required' => false))
+            ->add('avatar', 'iphp_file', array('label' => 'Аватар:', 'required' => false))
+        ;
     }
 
     public function getName()

@@ -17,7 +17,8 @@ class ReplyMessageFormType extends BaseType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('body', 'textarea', array('label' => 'Сообщение'));
+            ->add('body', 'textarea', array('label' => 'Сообщение'))
+        ;
     }
 
     public function getName()

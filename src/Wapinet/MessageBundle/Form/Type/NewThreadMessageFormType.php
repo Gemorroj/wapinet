@@ -20,7 +20,8 @@ class NewThreadMessageFormType extends BaseType
         $builder
             ->add('recipient', 'fos_user_username', array('label' => 'Получатель'))
             ->add('subject', 'text', array('label' => 'Тема'))
-            ->add('body', 'textarea', array('label' => 'Сообщение'));
+            ->add('body', 'textarea', array('label' => 'Сообщение'))
+        ;
     }
 
     public function getName()
