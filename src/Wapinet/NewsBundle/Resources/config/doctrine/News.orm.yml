@@ -1,0 +1,31 @@
+Wapinet\NewsBundle\Entity\News:
+    type:  entity
+    table: news
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        subject:
+            type: string
+            nullable: false
+        body:
+            type: text
+            nullable: false
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+        updatedAt:
+            type: datetime
+            nullable: true
+            column: updated_at
+
+    manyToOne:
+        createdBy:
+            targetEntity: Wapinet\UserBundle\Entity\User
+
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

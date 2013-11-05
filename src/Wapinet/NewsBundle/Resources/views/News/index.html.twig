@@ -1,9 +1,41 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Новости{% endblock %}
+{% block content -%}
+    <h1>News list</h1>
 
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Subject</th>
+                <th>Body</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in pager %}
+            <tr>
+                <td><a href="{{ path('wapinet_news_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.subject }}</td>
+                <td>{{ entity.body }}</td>
+                <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('wapinet_news_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-{% block content %}
-    <div>In progress</div>
-{% endblock %}
+    <div class="pagerfanta">
+        {{ pagerfanta(pager) }}
+    </div>
 
+    {% endblock %}
