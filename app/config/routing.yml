@@ -1,14 +1,18 @@
-wapinet_news:
-    resource: "@WapinetNewsBundle/Resources/config/routing.yml"
-    prefix:   /news
+wapinet:
+    resource: "@WapinetBundle/Resources/config/routing.yml"
+    prefix:   /
 
 wapinet_user:
     resource: "@WapinetUserBundle/Resources/config/routing.yml"
     prefix:   /profile
 
-wapinet:
-    resource: "@WapinetBundle/Resources/config/routing.yml"
-    prefix:   /
+wapinet_news:
+    resource: "@WapinetNewsBundle/Resources/config/routing.yml"
+    prefix:   /news
+
+wapinet_message:
+    resource: "@WapinetMessageBundle/Resources/config/routing.yml"
+    prefix:   /message
 
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'

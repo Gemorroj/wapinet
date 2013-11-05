@@ -109,6 +109,7 @@ fos_message:
     db_driver: orm
     thread_class: Wapinet\MessageBundle\Entity\Thread
     message_class: Wapinet\MessageBundle\Entity\Message
+    provider: wapinet_message.provider
     new_thread_form:
         type: wapinet_message.new_thread.form.type
     reply_form:

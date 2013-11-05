@@ -1,0 +1,17 @@
+wapinet_message_inbox:
+    pattern:  /inbox/{page}
+    defaults: { _controller: WapinetMessageBundle:Message:inbox, page: 1 }
+    requirements:
+        page: \d+
+
+wapinet_message_sent:
+    pattern:  /sent/{page}
+    defaults: { _controller: WapinetMessageBundle:Message:sent, page: 1 }
+    requirements:
+        page: \d+
+
+wapinet_message_deleted:
+    pattern:  /deleted/{page}
+    defaults: { _controller: WapinetMessageBundle:Message:deleted, page: 1 }
+    requirements:
+        page: \d+

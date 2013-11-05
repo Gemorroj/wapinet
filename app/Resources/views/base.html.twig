@@ -32,9 +32,9 @@
                     {% if is_granted('ROLE_USER') %}
                         <li data-role="list-divider">Сообщения</li>
                         <li><a href="{{ url('fos_message_thread_new') }}">Написать</a></li>
-                        <li><a href="{{ url('fos_message_inbox') }}">Входящие</a> <span class="ui-li-count">{{ fos_message_nb_unread() }}</span></li>
-                        <li><a href="{{ url('fos_message_sent') }}">Исходящие</a></li>
-                        <li><a href="{{ url('fos_message_deleted') }}">Корзина</a></li>
+                        <li><a href="{{ url('wapinet_message_inbox') }}">Входящие</a> <span class="ui-li-count">{{ fos_message_nb_unread() }}</span></li>
+                        <li><a href="{{ url('wapinet_message_sent') }}">Исходящие</a></li>
+                        <li><a href="{{ url('wapinet_message_deleted') }}">Корзина</a></li>
                     {% endif %}
                     <li data-role="list-divider">Закладки</li>
                     <li><a href="#">Форум</a></li>

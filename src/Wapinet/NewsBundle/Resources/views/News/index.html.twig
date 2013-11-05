@@ -1,41 +1,31 @@
 {% extends '::base.html.twig' %}
 
 {% block content -%}
-    <h1>News list</h1>
+    <h2>Новости</h2>
 
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Subject</th>
-                <th>Body</th>
-                <th>Createdat</th>
-                <th>Updatedat</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in news %}
-            <tr>
-                <td><a href="{{ path('wapinet_news_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.subject }}</td>
-                <td>{{ entity.body }}</td>
-                <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('wapinet_news_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <ul data-role="listview" data-inset="true">
+        {% if news %}
+            {% for entity in news %}
+                <li data-role="list-divider">{{ entity.createdAt|date(wapinet_datetimeformat) }} <span class="ui-li-count">123</span></li>
+                <li>
+                    <a href="{{ url('wapinet_news_show', {'id': entity.id}) }}">
+                        <h2>
+                            {{ entity.subject }}
+                        </h2>
+                        {% if entity.updatedAt is not null %}
+                            <p><strong>Обновлено {{ entity.updatedAt|date(wapinet_datetimeformat) }}</strong></p>
+                        {% endif %}
+                    </a>
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>
+                Нет новостей для отображения.
+            </li>
+        {% endif %}
+    </ul>
 
     <div class="pagerfanta">
         {{ pagerfanta(news) }}
     </div>
-
-    {% endblock %}
+{% endblock %}
