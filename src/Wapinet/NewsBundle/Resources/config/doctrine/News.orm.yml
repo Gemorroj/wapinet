@@ -1,4 +1,5 @@
 Wapinet\NewsBundle\Entity\News:
+    repositoryClass: Wapinet\NewsBundle\Entity\NewsRepository
     type:  entity
     table: news
     id:
