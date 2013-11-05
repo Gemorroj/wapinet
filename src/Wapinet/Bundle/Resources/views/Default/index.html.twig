@@ -13,7 +13,7 @@
         <li><a href="#">Архиватор</a></li>
         <li><a href="#">Форум</a> <span class="ui-li-count">234</span></li>
         <li><a href="#">Гостевая</a> <span class="ui-li-count">265</span></li>
-        <li><a href="{{ path('wapinet_news') }}">Новости</a> <span class="ui-li-count">22.12.2013</span></li>
+        <li><a href="{{ path('wapinet_news') }}">Новости</a> <span class="ui-li-count">{{ wapinet_news_last_date() }}</span></li>
         <li><a href="http://govnowap.ru" rel="external">Говновап</a></li>
     </ul>
 {% endblock %}

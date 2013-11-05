@@ -10,6 +10,17 @@ class NewsRepository extends EntityRepository
         return $this->getEntityManager()->createQueryBuilder()
             ->select('news')
             ->from('WapinetNewsBundle:News', 'news')
-            ->orderBy('news.id', 'DESC');
+            ->orderBy('news.id', 'DESC')
+            ->getQuery();
+    }
+
+    public function getLastDate()
+    {
+        return $this->getEntityManager()->createQueryBuilder()
+            ->select('news.createdAt')
+            ->from('WapinetNewsBundle:News', 'news')
+            ->orderBy('news.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery();
     }
 }

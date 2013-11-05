@@ -4,3 +4,9 @@ services:
         arguments: [~, Wapinet\NewsBundle\Entity\News, SonataAdminBundle:CRUD]
         tags:
             - {name: sonata.admin, manager_type: orm, group: Новости, label: Новости}
+
+    wapinet_news.twig_extension:
+        class: Wapinet\NewsBundle\Twig\Extension\NewsExtension
+        arguments: [@service_container, @doctrine.orm.entity_manager]
+        tags:
+            - {name: twig.extension, alias: wapinet_news}
