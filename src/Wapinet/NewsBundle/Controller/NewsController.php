@@ -3,7 +3,7 @@
 namespace Wapinet\NewsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * News controller.
@@ -11,26 +11,30 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class NewsController extends Controller
 {
-
     /**
      * Lists all News entities.
      *
+     * @param int $page
+     * @return Response
      */
     public function indexAction($page = 1)
     {
         $result = $this->getDoctrine()
             ->getRepository('WapinetNewsBundle:News')
-            ->getPages($page);
+            ->getAllBuilder();
 
+        $result = $this->get('wapinet.paginate.controller')->paginate($result, $page);
 
         return $this->render('WapinetNewsBundle:News:index.html.twig', array(
-                'pager' => $result,
-            ));
+            'news' => $result,
+        ));
     }
 
     /**
      * Finds and displays a News entity.
      *
+     * @param int $id
+     * @return Response
      */
     public function showAction($id)
     {
@@ -43,7 +47,7 @@ class NewsController extends Controller
         }
 
         return $this->render('WapinetNewsBundle:News:show.html.twig', array(
-                'entity'      => $entity,
-            ));
+            'entity'  => $entity,
+        ));
     }
 }

@@ -15,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for entity in pager %}
+        {% for entity in news %}
             <tr>
                 <td><a href="{{ path('wapinet_news_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.subject }}</td>
@@ -35,7 +35,7 @@
     </table>
 
     <div class="pagerfanta">
-        {{ pagerfanta(pager) }}
+        {{ pagerfanta(news) }}
     </div>
 
     {% endblock %}

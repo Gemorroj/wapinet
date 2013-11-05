@@ -25,6 +25,10 @@
                 <th>Updatedat</th>
                 <td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
             </tr>
+            <tr>
+                <th>Createdby</th>
+                <td><a href="{{ path('wapinet_user_profile', {'username': entity.createdBy.username}) }}">{{ entity.createdBy.username }}</a></td>
+            </tr>
         </tbody>
     </table>
 

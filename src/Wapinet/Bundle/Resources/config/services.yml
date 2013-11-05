@@ -1,8 +1,8 @@
 parameters:
-#    wapinet.example.class: Wapinet\Bundle\Example
+    wapinet.controller.paginate.class: Wapinet\Bundle\Controller\PaginateController
 
 services:
-    #pagerfanta.view.default:
-    #    class: Pagerfanta\View\DefaultView
-    #    public: false
-    #    tags: [{ name: pagerfanta.view, alias: default }]
+    wapinet.paginate.controller:
+        class:     "%wapinet.controller.paginate.class%"
+        calls:
+            - [setContainer, ["@service_container"]]
