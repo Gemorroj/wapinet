@@ -1,42 +1,18 @@
 {% extends '::base.html.twig' %}
 
+{% block title %}Новсти - {{ entity.subject }}{% endblock %}
+
 {% block content -%}
-    <h1>News</h1>
+    <h2>{{ entity.subject }}</h2>
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Subject</th>
-                <td>{{ entity.subject }}</td>
-            </tr>
-            <tr>
-                <th>Body</th>
-                <td>{{ entity.body }}</td>
-            </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Updatedat</th>
-                <td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Createdby</th>
-                <td><a href="{{ path('wapinet_user_profile', {'username': entity.createdBy.username}) }}">{{ entity.createdBy.username }}</a></td>
-            </tr>
-        </tbody>
-    </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('wapinet_news') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    <ul data-role="listview" data-inset="true">
+        <li data-role="list-divider">{{ entity.createdAt|date(wapinet_datetimeformat) }}</li>
+        <li>
+            <h2>{{ entity.subject }}</h2>
+            {% if entity.updatedAt is not null %}
+                <p><strong>Обновлено {{ entity.updatedAt|date(wapinet_datetimeformat) }}</strong></p>
+            {% endif %}
+            <p>{{ entity.body }}</p>
+        </li>
+    </ul>
 {% endblock %}
