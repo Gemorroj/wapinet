@@ -16,11 +16,7 @@ class NewsAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('id')
-            ->add('subject')
-            ->add('body')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('subject', null, array('label' => 'Заголовок'))
         ;
     }
 
@@ -30,12 +26,12 @@ class NewsAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
-            ->add('subject')
-            ->add('body')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('id', null, array('label' => 'Идентификатор'))
+            ->addIdentifier('subject', null, array('label' => 'Заголовок'))
+            ->add('createdAt', null, array('label' => 'Создано'))
+            ->add('updatedAt', null, array('label' => 'Обновлено'))
             ->add('_action', 'actions', array(
+                'label' => 'Операции',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
@@ -51,11 +47,8 @@ class NewsAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('id')
-            ->add('subject')
-            ->add('body')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('subject', null, array('label' => 'Заголовок'))
+            ->add('body', null, array('label' => 'Новость'))
         ;
     }
 
@@ -65,11 +58,11 @@ class NewsAdmin extends Admin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('id')
-            ->add('subject')
-            ->add('body')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('id', null, array('label' => 'Идентификатор'))
+            ->add('subject', null, array('label' => 'Заголовок'))
+            ->add('body', null, array('label' => 'Новость'))
+            ->add('createdAt', null, array('label' => 'Создано'))
+            ->add('updatedAt', null, array('label' => 'Обновлено'))
         ;
     }
 }

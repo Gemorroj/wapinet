@@ -114,6 +114,14 @@ class UserAdmin extends Admin
             ->add('roles', null, array('label' => 'Роли'))
             ->add('created_at', 'datetime', array('label' => 'Зарегистрирован'))
             ->add('last_login', 'datetime', array('label' => 'Последняя авторизация'))
+            ->add('_action', 'actions', array(
+                    'label' => 'Операции',
+                    'actions' => array(
+                        'show' => array(),
+                        'edit' => array(),
+                        'delete' => array(),
+                    )
+                ))
         ;
     }
 }
