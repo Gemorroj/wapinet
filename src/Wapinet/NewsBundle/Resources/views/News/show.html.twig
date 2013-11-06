@@ -6,11 +6,11 @@
     <h2>{{ entity.subject }}</h2>
 
     <ul data-role="listview" data-inset="true">
-        <li data-role="list-divider">{{ entity.createdAt|date(wapinet_datetimeformat) }}</li>
+        <li data-role="list-divider">{{ entity.createdAt|wapinet_datetime }}</li>
         <li>
             <h2>{{ entity.subject }}</h2>
             {% if entity.updatedAt is not null %}
-                <p><strong>Обновлено {{ entity.updatedAt|date(wapinet_datetimeformat) }}</strong></p>
+                <p><strong>Обновлено {{ entity.updatedAt|wapinet_datetime }}</strong></p>
             {% endif %}
             <p>{{ entity.body }}</p>
         </li>

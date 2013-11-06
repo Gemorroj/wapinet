@@ -6,3 +6,8 @@ services:
         class:     "%wapinet.controller.paginate.class%"
         calls:
             - [setContainer, ["@service_container"]]
+
+    wapinet.date.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\Date
+        tags:
+            - {name: twig.extension, alias: wapinet_date}

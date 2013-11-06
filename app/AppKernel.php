@@ -31,6 +31,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+
             new Wapinet\UserBundle\WapinetUserBundle(),
             new Wapinet\Bundle\WapinetBundle(),
             new Wapinet\FileStoreBundle\WapinetFileStoreBundle(),

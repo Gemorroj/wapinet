@@ -25,7 +25,7 @@
         </tr>
         <tr>
             <td>День рождения</td>
-            <td>{{ user.birthday is null ? 'Не указано' : user.birthday.format(wapinet_dateformat) }}</td>
+            <td>{{ user.birthday is null ? 'Не указано' : user.birthday|wapinet_date }}</td>
         </tr>
         <tr>
             <td>Аватар</td>

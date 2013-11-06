@@ -1,7 +1,7 @@
 <ul data-role="listview" data-inset="true">
     {% if threads %}
         {% for thread in threads %}
-            <li data-role="list-divider">{{ thread.lastMessage.createdAt|date(wapinet_datetimeformat) }} <span class="ui-li-count">{{ thread.messages|length }}</span></li>
+            <li data-role="list-divider">{{ thread.lastMessage.createdAt|wapinet_datetime }} <span class="ui-li-count">{{ thread.messages|length }}</span></li>
             <li>
                 <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}">
                     <h2>
