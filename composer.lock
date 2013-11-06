@@ -1194,16 +1194,16 @@
         },
         {
             "name": "jms/metadata",
-            "version": "1.4.2",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/metadata.git",
-                "reference": "246d7096801ce29b5aea30a1abf0277ccfb9f055"
+                "reference": "88ffa28bc987e4c26229fc84a2e541b6ed4e1459"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/metadata/zipball/246d7096801ce29b5aea30a1abf0277ccfb9f055",
-                "reference": "246d7096801ce29b5aea30a1abf0277ccfb9f055",
+                "url": "https://api.github.com/repos/schmittjoh/metadata/zipball/88ffa28bc987e4c26229fc84a2e541b6ed4e1459",
+                "reference": "88ffa28bc987e4c26229fc84a2e541b6ed4e1459",
                 "shasum": ""
             },
             "require": {
@@ -1215,7 +1215,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.4.x-dev"
+                    "dev-master": "1.5.x-dev"
                 }
             },
             "autoload": {
@@ -1242,7 +1242,7 @@
                 "xml",
                 "yaml"
             ],
-            "time": "2013-09-13 09:05:44"
+            "time": "2013-11-05 23:02:36"
         },
         {
             "name": "jms/parser-lib",
@@ -2009,12 +2009,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "b794b728ae7ac50ec7b923e2ff273b2597affa2e"
+                "reference": "db176158c91197ab4de04ca79a3570d86fa84697"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/b794b728ae7ac50ec7b923e2ff273b2597affa2e",
-                "reference": "b794b728ae7ac50ec7b923e2ff273b2597affa2e",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/db176158c91197ab4de04ca79a3570d86fa84697",
+                "reference": "db176158c91197ab4de04ca79a3570d86fa84697",
                 "shasum": ""
             },
             "require": {
@@ -2079,7 +2079,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2013-11-01 17:10:12"
+            "time": "2013-11-05 15:15:26"
         },
         {
             "name": "sonata-project/block-bundle",
