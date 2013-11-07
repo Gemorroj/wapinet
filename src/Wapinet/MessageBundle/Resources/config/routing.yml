@@ -20,4 +20,5 @@ wapinet_message_thread_view:
     pattern: /{threadId}/{page}
     defaults: {_controller: WapinetMessageBundle:Message:thread, page: 1 }
     requirements:
+        threadId: \d+
         page: \d+
