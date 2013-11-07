@@ -5,3 +5,9 @@ $(document).bind("mobileinit", function () {
     $.mobile.ajaxEnabled = false;
     $.mobile.ajaxFormsEnabled = false;
 });
+
+$.ajaxSetup({
+    "complete": function () {
+        $("#page").trigger("pagecreate");
+    }
+});

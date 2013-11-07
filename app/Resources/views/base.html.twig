@@ -30,8 +30,20 @@
 
                 // api base url to use for initial requests
                 var fos_comment_thread_api_base_url = '{{ path('fos_comment_get_threads') }}';
+
+                // Snippet for asynchronously loading the comments
+                var comments = function () {
+                    var fos_comment_script = document.createElement('script');
+                    {# fos_comment_script.async = true; #}
+                    fos_comment_script.src = '{{ asset_url }}';
+                    fos_comment_script.type = 'text/javascript';
+
+                    (document.getElementsByTagName('head')[0]).appendChild(fos_comment_script);
+                };
+
+                $(document).bind("mobileinit", comments).ready(comments);
             </script>
-            <script type="text/javascript" src="{{ asset_url }}" async="async"></script>
+            {# <script type="text/javascript" src="{{ asset_url }}" async="async"></script> #}
         {% endjavascripts %}
     {% endif %}
 
@@ -43,7 +55,7 @@
 </head>
 <body>
 {% block body %}
-<div data-role="page">
+<div data-role="page" id="page">
     {% block page %}
         {% block panel %}
             <div data-role="panel" id="menu">
