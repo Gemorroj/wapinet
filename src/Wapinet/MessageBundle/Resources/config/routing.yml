@@ -15,3 +15,9 @@ wapinet_message_deleted:
     defaults: { _controller: WapinetMessageBundle:Message:deleted, page: 1 }
     requirements:
         page: \d+
+
+wapinet_message_thread_view:
+    pattern: /{threadId}/{page}
+    defaults: {_controller: WapinetMessageBundle:Message:thread, page: 1 }
+    requirements:
+        page: \d+

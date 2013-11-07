@@ -1,9 +1,9 @@
-{% extends 'FOSMessageBundle::layout.html.twig' %}
+{% extends 'WapinetMessageBundle::layout.html.twig' %}
 
 {% block fos_message_content %}
 
 <h2>Исходящие</h2>
 
-{% include 'FOSMessageBundle:Message:threads_list.html.twig' with {'threads': threads} %}
+{% include 'WapinetMessageBundle:Message:threads_list.html.twig' with {'threads': threads} %}
 
 {% endblock %}
