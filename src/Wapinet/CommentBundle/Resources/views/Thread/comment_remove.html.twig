@@ -10,7 +10,7 @@
 #}
 
 <div class="fos_comment_delete_form_holder">
-    <form class="fos_comment_delete_form" action="{{ url('fos_comment_patch_thread_comment_state', {'id': id, 'commentId': commentId}) }}" data-fos-comment-thread-id="{{ id }}" method="POST">
+    {{ form_start(form, {'action': path('fos_comment_patch_thread_comment_state', {'id': id, 'commentId': commentId}), 'method': 'POST', attr: {'data-fos-comment-thread-id': id, 'class': 'fos_comment_delete_form'}}) }}
 
         {% block fos_comment_form_fields %}
             {{ form_errors(form) }}
@@ -22,9 +22,9 @@
 
         <div class="fos_comment_submit">
             {% block fos_comment_form_submit %}
-                <input type="submit" value="{{ 'fos_comment_comment_delete' | trans({}, 'FOSCommentBundle') }}" />
+                <input data-inline="true" type="submit" value="{{ 'fos_comment_comment_delete' | trans({}, 'FOSCommentBundle') }}" />
             {% endblock %}
         </div>
 
-    </form>
+    {{ form_end(form) }}
 </div>

@@ -9,7 +9,7 @@
 
 #}
 
-{{ form_start(form, {'action': path('fos_comment_post_threads'), 'method': 'POST', 'class': 'fos_comment_comment_form'}) }}
+{{ form_start(form, {'action': path('fos_comment_post_threads'), 'method': 'POST', attr: {'class': 'fos_comment_comment_form'}}) }}
 
     {% block fos_comment_form_fields %}
         {{ form_errors(form) }}

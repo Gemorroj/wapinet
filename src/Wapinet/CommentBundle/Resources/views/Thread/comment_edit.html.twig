@@ -10,8 +10,7 @@
 #}
 
 <div class="fos_comment_comment_form_holder">
-    <form class="fos_comment_comment_edit_form" action="{{ url('fos_comment_put_thread_comments', {'id': comment.thread.id, 'commentId': comment.id}) }}" method="POST">
-
+    {{ form_start(form, {'action': path('fos_comment_put_thread_comments', {'id': comment.thread.id, 'commentId': comment.id}), 'method': 'POST', 'attr': {'class': 'fos_comment_comment_edit_form'}}) }}
         {% block fos_comment_form_fields %}
             {{ form_errors(form) }}
             {{ form_errors(form.body) }}
@@ -20,13 +19,13 @@
         {% endblock %}
 
         <div class="fos_comment_submit">
-            <button type="button" class="fos_comment_comment_edit_cancel">{% trans from 'FOSCommentBundle' %}fos_comment_comment_edit_cancel{% endtrans %}</button>
+            <button data-inline="true" type="button" class="fos_comment_comment_edit_cancel">{% trans from 'FOSCommentBundle' %}fos_comment_comment_edit_cancel{% endtrans %}</button>
             {% block fos_comment_form_submit %}
-                <input type="submit" value="{% trans from 'FOSCommentBundle' %}fos_comment_comment_edit_submit{% endtrans %}" />
+                <input data-inline="true" type="submit" value="{% trans from 'FOSCommentBundle' %}fos_comment_comment_edit_submit{% endtrans %}" />
             {% endblock %}
         </div>
 
-        <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="_method" value="PUT" />
 
-    </form>
+    {{ form_end(form) }}
 </div>

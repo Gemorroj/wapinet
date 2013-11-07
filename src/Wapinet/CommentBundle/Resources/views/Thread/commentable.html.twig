@@ -10,7 +10,7 @@
 #}
 
 <div class="fos_comment_commentable_form_holder">
-    <form class="fos_comment_commentable_form" action="{{ url('fos_comment_patch_thread_commentable', {'id': id}) }}" data-fos-comment-thread-id="{{ id }}" method="POST">
+    {{ form_start(form, {'action': path('fos_comment_patch_thread_commentable', {'id': id}), 'method': 'POST', attr: {'data-fos-comment-thread-id': id, 'class': 'fos_comment_commentable_form'}}) }}
 
         {% block fos_comment_form_fields %}
             {{ form_errors(form) }}
@@ -25,9 +25,9 @@
 
         <div class="fos_comment_submit">
             {% block fos_comment_form_submit %}
-                <input type="submit" value="{{ (isCommentable ? 'fos_comment_thread_open' : 'fos_comment_thread_close') | trans({}, 'FOSCommentBundle') }}" />
+                <input type="submit" data-inline="true" value="{{ (isCommentable ? 'fos_comment_thread_open' : 'fos_comment_thread_close') | trans({}, 'FOSCommentBundle') }}" />
             {% endblock %}
         </div>
 
-    </form>
+    {{ form_end(form) }}
 </div>
