@@ -2010,12 +2010,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "afb14fad049c6e68d84ddc1cc4234f4772f0daf9"
+                "reference": "1d31e97c8b3e011f2ef173130190fb4f43cee413"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/afb14fad049c6e68d84ddc1cc4234f4772f0daf9",
-                "reference": "afb14fad049c6e68d84ddc1cc4234f4772f0daf9",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/1d31e97c8b3e011f2ef173130190fb4f43cee413",
+                "reference": "1d31e97c8b3e011f2ef173130190fb4f43cee413",
                 "shasum": ""
             },
             "require": {
@@ -2080,7 +2080,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2013-11-06 09:53:39"
+            "time": "2013-11-07 17:35:18"
         },
         {
             "name": "sonata-project/block-bundle",
@@ -2151,12 +2151,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataDoctrineORMAdminBundle.git",
-                "reference": "84aa85cdb53dbab7204ece9510541f713102d297"
+                "reference": "a50225ee07a9864c7664af2fe0b8f818b6f600b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineORMAdminBundle/zipball/84aa85cdb53dbab7204ece9510541f713102d297",
-                "reference": "84aa85cdb53dbab7204ece9510541f713102d297",
+                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineORMAdminBundle/zipball/a50225ee07a9864c7664af2fe0b8f818b6f600b0",
+                "reference": "a50225ee07a9864c7664af2fe0b8f818b6f600b0",
                 "shasum": ""
             },
             "require": {
@@ -2199,20 +2199,20 @@
                 "generator",
                 "sonata"
             ],
-            "time": "2013-10-26 14:59:53"
+            "time": "2013-11-07 09:51:41"
         },
         {
             "name": "sonata-project/exporter",
-            "version": "1.3.2",
+            "version": "1.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/exporter.git",
-                "reference": "32be2960ad553b27cc9a828f91d7d501e16ba8ae"
+                "reference": "dad681274e09854a972a0c882ebddd095b7837be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/exporter/zipball/32be2960ad553b27cc9a828f91d7d501e16ba8ae",
-                "reference": "32be2960ad553b27cc9a828f91d7d501e16ba8ae",
+                "url": "https://api.github.com/repos/sonata-project/exporter/zipball/dad681274e09854a972a0c882ebddd095b7837be",
+                "reference": "dad681274e09854a972a0c882ebddd095b7837be",
                 "shasum": ""
             },
             "require": {
@@ -2255,7 +2255,7 @@
                 "export",
                 "xls"
             ],
-            "time": "2013-10-11 10:14:05"
+            "time": "2013-10-24 13:43:33"
         },
         {
             "name": "sonata-project/jquery-bundle",
