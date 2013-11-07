@@ -64,25 +64,22 @@ class MessageController extends BaseController
      */
     public function threadAction($threadId, $page = 1)
     {
-        /** @var \Wapinet\MessageBundle\Entity\Thread $thread */
-        $thread = $this->getProvider()->getThread($threadId);
+        /** @var array('thread'=>\Wapinet\MessageBundle\Entity\Thread, 'messages'=>Pagerfanta) $threadMessages */
+        $threadMessages = $this->getProvider()->getThreadMesages($threadId, $page);
 
-        $messages = $this->container->get('wapinet.paginate.controller')->paginate($thread->getMessages(), $page);
-
-
-        $form = $this->container->get('fos_message.reply_form.factory')->create($thread);
+        $form = $this->container->get('fos_message.reply_form.factory')->create($threadMessages['thread']);
         $formHandler = $this->container->get('fos_message.reply_form.handler');
 
         if ($message = $formHandler->process($form)) {
             return new RedirectResponse($this->container->get('router')->generate('fos_message_thread_view', array(
-                'threadId' => $message->getThread()->getId()
+                'threadId' => $threadMessages['thread']->getId()
             )));
         }
 
         return $this->container->get('templating')->renderResponse('WapinetMessageBundle:Message:thread.html.twig', array(
-            'messages' => $messages,
+            'messages' => $threadMessages['messages'],
             'form' => $form->createView(),
-            'thread' => $thread
+            'thread' => $threadMessages['thread']
         ));
     }
 }

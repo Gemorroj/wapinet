@@ -27,7 +27,7 @@ class Thread extends BaseThread
     /**
      * @ORM\OneToMany(
      *   targetEntity="Wapinet\MessageBundle\Entity\Message",
-     *   mappedBy="thread"
+     *   mappedBy="thread", fetch="EXTRA_LAZY", orphanRemoval=true
      * )
      * @ORM\OrderBy({"id" = "DESC"})
      * @var Message[]|\Doctrine\Common\Collections\Collection

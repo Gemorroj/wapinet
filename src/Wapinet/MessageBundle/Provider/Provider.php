@@ -4,6 +4,8 @@ namespace Wapinet\MessageBundle\Provider;
 
 use FOS\MessageBundle\Provider\Provider as BaseProvider;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Pagerfanta\Pagerfanta;
 
 /**
@@ -64,6 +66,40 @@ class Provider extends BaseProvider
         return $this->container->get('wapinet.paginate.controller')->paginate($builder, $page);
 
         //return $this->threadManager->findParticipantDeletedThreads($participant);
+    }
+
+
+    /**
+     * Gets a thread by its ID
+     * Performs authorization checks
+     * Marks the thread as read
+     *
+     * @param int $threadId
+     * @param int $page
+     *
+     * @throws NotFoundHttpException|AccessDeniedException
+     * @return array('thread'=>\Wapinet\MessageBundle\Entity\Thread, 'messages'=>Pagerfanta)
+     */
+    public function getThreadMesages($threadId, $page = 1)
+    {
+        $thread = $this->threadManager->findThreadById($threadId);
+        if (!$thread) {
+            throw new NotFoundHttpException('There is no such thread');
+        }
+        if (!$this->authorizer->canSeeThread($thread)) {
+            throw new AccessDeniedException('You are not allowed to see this thread');
+        }
+
+        $parerfanta = $this->container->get('wapinet.paginate.controller')->paginate($thread->getMessages(), $page);
+
+        foreach ($parerfanta->getCurrentPageResults() as $message) {
+            $this->threadReader->markAsRead($message);
+        }
+
+        return array(
+            'thread' => $thread,
+            'messages' => $parerfanta,
+        );
     }
 
 
