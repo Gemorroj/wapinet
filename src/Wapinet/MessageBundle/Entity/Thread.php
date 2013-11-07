@@ -29,6 +29,7 @@ class Thread extends BaseThread
      *   targetEntity="Wapinet\MessageBundle\Entity\Message",
      *   mappedBy="thread"
      * )
+     * @ORM\OrderBy({"id" = "DESC"})
      * @var Message[]|\Doctrine\Common\Collections\Collection
      */
     protected $messages;

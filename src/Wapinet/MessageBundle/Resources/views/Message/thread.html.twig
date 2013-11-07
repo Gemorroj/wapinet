@@ -6,20 +6,11 @@
 
 <ul data-role="listview" data-inset="true">
 {% for message in messages %}
-    <li>
-        <div class="messenger_thread_message">
-            <div class="messenger_thread_message_info">
-                От <a href="{{ path('wapinet_user_profile', {'username': message.sender.username}) }}">{{ message.sender}}</a>, {{ message.createdAt|wapinet_datetime }}
-                {% if message.sender.avatar %}
-                    <br />
-                    {% include 'WapinetBundle::avatar.html.twig' with {'user': message.sender} %}
-                {% endif %}
-            </div>
-
-            <div class="messenger_thread_message_body" id="message_{{ message.id }}">
-                {{ message.body }}
-            </div>
-        </div>
+    <li data-role="list-divider"><a href="{{ path('wapinet_user_profile', {'username': message.sender.username}) }}">{{ message.sender.username }}</a> <span class="ui-li-count">{{ message.createdAt|wapinet_datetime  }}</span></li>
+    <li data-icon="false">
+        {% if message.sender.avatar %}
+            {% include 'WapinetBundle::avatar.html.twig' with {'user': message.sender, 'text_after_avatar': message.body } %}
+        {% endif %}
     </li>
 {% endfor %}
 </ul>
