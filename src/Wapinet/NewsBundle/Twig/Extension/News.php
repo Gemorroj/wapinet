@@ -33,11 +33,9 @@ class News extends \Twig_Extension
      */
     public function getLastDate()
     {
-        $result = $this->em->getRepository('WapinetNewsBundle:News')->getLastDate()->getSingleResult();
-        if ($result) {
-            return $result['createdAt'];
-        }
-        return null;
+        $result = $this->em->getRepository('WapinetNewsBundle:News')->getLastDate()->getOneOrNullResult();
+
+        return (null === $result ? null : $result['createdAt']);
     }
 
     /**
