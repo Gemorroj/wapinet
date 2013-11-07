@@ -1,4 +1,5 @@
 {% extends '::base.html.twig' %}
+{% set comments_id = 'news-' ~ entity.id %}
 
 {% block title %}Новсти - {{ entity.subject }}{% endblock %}
 
@@ -16,5 +17,7 @@
         </li>
     </ul>
 
-{# {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'news-1'} %} #}
+    {% include 'WapinetCommentBundle::comments.html.twig' %}
+
 {% endblock %}
+
