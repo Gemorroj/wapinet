@@ -11,9 +11,9 @@ class DefaultController extends Controller
         return $this->render('WapinetBundle:Default:index.html.twig');
     }
 
-    public function funAction()
+    public function utilitiesAction()
     {
-        return $this->render('WapinetBundle:Default:fun.html.twig');
+        return $this->render('WapinetBundle:Default:utilities.html.twig');
     }
 
     public function programmingAction()

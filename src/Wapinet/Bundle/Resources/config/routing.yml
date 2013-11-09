@@ -2,9 +2,9 @@ index:
     pattern:  /
     defaults: { _controller: WapinetBundle:Default:index }
 
-fun:
-    pattern:  /fun
-    defaults: { _controller: WapinetBundle:Default:fun }
+utilities:
+    pattern:  /utilities
+    defaults: { _controller: WapinetBundle:Default:utilities }
 
 downloads:
     pattern:  /downloads
