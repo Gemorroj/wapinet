@@ -9,6 +9,7 @@
 
 #}
 
+{% if comment is not fos_comment_in_state(constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_DELETED')) or fos_comment_can_delete_comment(comment) %}
 <ul data-role="listview" data-inset="true">
 {% block fos_comment_comment %}
 
@@ -33,8 +34,8 @@
             {% block fos_comment_comment_metas_voting %}
                 {% if fos_comment_can_vote(comment) %}
                     <span class="fos_comment_comment_voting">
-                        <a data-role="button" data-inline="true" href="#" data-url="{{ url("fos_comment_new_thread_comment_votes", {"id": comment.thread.id, "commentId": comment.id, "value": 1}) }}" class="fos_comment_comment_vote" data-iconpos="notext" data-icon="plus" data-mini="true">Голосовать за</a>
-                        <a data-role="button" data-inline="true" href="#" data-url="{{ url("fos_comment_new_thread_comment_votes", {"id": comment.thread.id, "commentId": comment.id, "value": -1}) }}" class="fos_comment_comment_vote" data-iconpos="notext" data-icon="minus" data-mini="true">Голосовать против</a>
+                        <a data-role="button" data-inline="true" href="#" data-url="{{ url("fos_comment_new_thread_comment_votes", {"id": comment.thread.id, "commentId": comment.id, "value": 1}) }}" class="fos_comment_comment_vote" data-iconpos="notext" data-theme="b" data-icon="plus">Голосовать за</a>
+                        <a data-role="button" data-inline="true" href="#" data-url="{{ url("fos_comment_new_thread_comment_votes", {"id": comment.thread.id, "commentId": comment.id, "value": -1}) }}" class="fos_comment_comment_vote" data-iconpos="notext" data-theme="b" data-icon="minus">Голосовать против</a>
                         <span class="fos_comment_comment_score" id="fos_comment_score_{{ comment.id }}">Голоса: {{ comment.score }}</span>
                     </span>
                 {% endif %}
@@ -106,3 +107,4 @@
     </li>
 {% endblock fos_comment_comment %}
 </ul>
+{% endif %}
