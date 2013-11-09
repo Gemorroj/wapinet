@@ -2,6 +2,18 @@ index:
     pattern:  /
     defaults: { _controller: WapinetBundle:Default:index }
 
+fun:
+    pattern:  /fun
+    defaults: { _controller: WapinetBundle:Default:fun }
+
+downloads:
+    pattern:  /downloads
+    defaults: { _controller: WapinetBundle:Default:downloads }
+
+programming:
+    pattern:  /programming
+    defaults: { _controller: WapinetBundle:Default:programming }
+
 about:
     pattern: /about
     defaults: { _controller: WapinetBundle:About:index }

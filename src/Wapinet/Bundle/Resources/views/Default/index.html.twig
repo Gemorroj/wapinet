@@ -1,14 +1,14 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Wap мастерская{% endblock %}
+{% block title %}Главная{% endblock %}
 
 
 {% block content %}
     <ul data-role="listview" data-inset="true">
-        <!-- <li><a href="{{ path('about') }}">Информация о браузере</a></li> -->
         <li><a href="#">Файлообменник <span class="ui-li-count">123</span></a></li>
-        <li><a href="#">Развлечения</a></li>
-        <li><a href="#">WAP мастеру</a></li>
+        <li><a href="{{ path('downloads') }}">Загрузки</a></li>
+        <li><a href="{{ path('fun') }}">Развлечения</a></li>
+        <li><a href="{{ path('programming') }}">WAP мастеру</a></li>
         <li><a href="#">Анонимайзер</a></li>
         <li><a href="#">Архиватор</a></li>
         <li><a href="#">Форум</a> <span class="ui-li-count">234</span></li>
