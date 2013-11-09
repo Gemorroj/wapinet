@@ -18,6 +18,10 @@ programming:
     pattern:  /programming
     defaults: { _controller: WapinetBundle:Default:programming }
 
+buy_php_scripts:
+    pattern:  /buy_php_scripts
+    defaults: { _controller: WapinetBundle:Default:buyPhpScripts }
+
 browser_info:
     pattern: /browser_info
     defaults: { _controller: WapinetBundle:BrowserInfo:index }

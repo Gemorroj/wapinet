@@ -30,4 +30,9 @@ class DefaultController extends Controller
     {
         return $this->render('WapinetBundle:Default:downloads.html.twig');
     }
+
+    public function buyPhpScriptsAction()
+    {
+        return $this->render('WapinetBundle:Default:buy_php_scripts.html.twig');
+    }
 }
