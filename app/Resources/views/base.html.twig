@@ -19,32 +19,27 @@
 
     {# comments #}
     {% if comments_id is defined %}
-        {% stylesheets '@FOSCommentBundle/Resources/assets/css/comments.css' %}
-            <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-        {% endstylesheets %}
+        <script type="text/javascript">
+            // thread id
+            var fos_comment_thread_id = '{{ comments_id }}';
 
-        {% javascripts '@FOSCommentBundle/Resources/assets/js/comments.js' %}
-            <script type="text/javascript">
-                // thread id
-                var fos_comment_thread_id = '{{ comments_id }}';
+            // api base url to use for initial requests
+            var fos_comment_thread_api_base_url = '{{ path('fos_comment_get_threads') }}';
 
-                // api base url to use for initial requests
-                var fos_comment_thread_api_base_url = '{{ path('fos_comment_get_threads') }}';
+            // Snippet for asynchronously loading the comments
+            var comments = function () {
+                var fos_comment_script = document.createElement('script');
+                {# fos_comment_script.async = 'async'; #}
+                fos_comment_script.src = '{{ asset('bundles/wapinetcomment/js/comments.js') }}';
+                fos_comment_script.type = 'text/javascript';
 
-                // Snippet for asynchronously loading the comments
-                var comments = function () {
-                    var fos_comment_script = document.createElement('script');
-                    {# fos_comment_script.async = true; #}
-                    fos_comment_script.src = '{{ asset_url }}';
-                    fos_comment_script.type = 'text/javascript';
+                (document.getElementsByTagName('head')[0]).appendChild(fos_comment_script);
+            };
 
-                    (document.getElementsByTagName('head')[0]).appendChild(fos_comment_script);
-                };
-
-                $(document).bind("mobileinit", comments).ready(comments);
-            </script>
-            {# <script type="text/javascript" src="{{ asset_url }}" async="async"></script> #}
-        {% endjavascripts %}
+            $(document).bind("mobileinit", comments).ready(comments);
+        </script>
+        <link rel="stylesheet" href="{{ asset('bundles/wapinetcomment/css/comments.css') }}" type="text/css" />
+        {# <script async="async" type="text/javascript" src="{{ asset('bundles/wapinetcomment/js/comments.js') }}"></script> #}
     {% endif %}
 
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/wapinet/css/style.css') }}" />
