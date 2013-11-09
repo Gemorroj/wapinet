@@ -32,6 +32,7 @@ class CommentManager extends BaseCommentManager
      */
     public function findCommentsByThread(ThreadInterface $thread, $depth = null, $sorterAlias = null, $page = 1)
     {
+        //TODO: Добавить Pagerfanta
         $qb = $this->repository
             ->createQueryBuilder()
             ->field('thread.$id')->equals($thread->getId())
@@ -67,7 +68,7 @@ class CommentManager extends BaseCommentManager
      */
     public function findCommentTreeByThread(ThreadInterface $thread, $sorter = null, $depth = null, $page = 1)
     {
-        $comments = $this->findCommentsByThread($thread, $depth);
+        $comments = $this->findCommentsByThread($thread, $depth, null, $page);
         $sorter = $this->sortingFactory->getSorter($sorter);
 
         return $this->organiseComments($comments, $sorter);
