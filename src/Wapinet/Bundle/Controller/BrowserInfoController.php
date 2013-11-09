@@ -5,7 +5,7 @@ namespace Wapinet\Bundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class AboutController extends Controller
+class BrowserInfoController extends Controller
 {
     /**
      * @param Request $request

@@ -2,6 +2,10 @@ index:
     pattern:  /
     defaults: { _controller: WapinetBundle:Default:index }
 
+about:
+    pattern:  /about
+    defaults: { _controller: WapinetBundle:Default:about }
+
 utilities:
     pattern:  /utilities
     defaults: { _controller: WapinetBundle:Default:utilities }
@@ -14,6 +18,6 @@ programming:
     pattern:  /programming
     defaults: { _controller: WapinetBundle:Default:programming }
 
-about:
-    pattern: /about
-    defaults: { _controller: WapinetBundle:About:index }
+browser_info:
+    pattern: /browser_info
+    defaults: { _controller: WapinetBundle:BrowserInfo:index }

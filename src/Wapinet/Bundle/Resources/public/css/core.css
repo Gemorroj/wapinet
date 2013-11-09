@@ -1,0 +1,17 @@
+img.avatar_preview {
+    width: 80px;
+    height: auto;
+}
+img.avatar_login {
+    width: auto;
+    height: 45px;
+}
+p.footer {
+    font-size: 0.8em;
+    margin-left: 10px;
+}
+p.footer-right {
+    font-size: 0.8em;
+    float: right;
+    margin-right: 10px;
+}

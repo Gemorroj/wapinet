@@ -11,6 +11,11 @@ class DefaultController extends Controller
         return $this->render('WapinetBundle:Default:index.html.twig');
     }
 
+    public function aboutAction()
+    {
+        return $this->render('WapinetBundle:Default:about.html.twig');
+    }
+
     public function utilitiesAction()
     {
         return $this->render('WapinetBundle:Default:utilities.html.twig');
