@@ -1,0 +1,4 @@
+services:
+    wapinet_comment.manager.comment:
+        class: Wapinet\CommentBundle\Document\CommentManager
+        arguments: [@event_dispatcher, @fos_comment.sorting_factory, @fos_comment.entity_manager, %fos_comment.model.comment.class%]

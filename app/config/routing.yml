@@ -14,6 +14,12 @@ wapinet_message:
     resource: "@WapinetMessageBundle/Resources/config/routing.yml"
     prefix:   /message
 
+wapinet_comment_api:
+    type: rest
+    resource: "@WapinetCommentBundle/Resources/config/routing.yml"
+    prefix: /comment/api
+    defaults: { _format: html }
+
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
     prefix: /admin
@@ -45,7 +51,7 @@ fos_user_change_password:
 fos_comment_api:
     type: rest
     resource: "@FOSCommentBundle/Resources/config/routing.yml"
-    prefix: /api
+    prefix: /comment/api
     defaults: { _format: html }
 
 fos_message:

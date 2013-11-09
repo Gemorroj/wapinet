@@ -1,0 +1,4 @@
+wapinet_comment_thread_api:
+    type: rest
+    resource: Wapinet\CommentBundle\Controller\ThreadController
+    name_prefix: fos_comment_
