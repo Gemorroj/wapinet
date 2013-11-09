@@ -19,10 +19,10 @@
         {% endblock %}
 
         <div class="fos_comment_submit">
-            <button data-inline="true" type="button" class="fos_comment_comment_edit_cancel">{% trans from 'FOSCommentBundle' %}fos_comment_comment_edit_cancel{% endtrans %}</button>
             {% block fos_comment_form_submit %}
-                <input data-inline="true" type="submit" value="{% trans from 'FOSCommentBundle' %}fos_comment_comment_edit_submit{% endtrans %}" />
+                <input data-inline="true" type="submit" value="Изменить" />
             {% endblock %}
+            <a href="#" data-role="button" data-inline="true" class="fos_comment_comment_edit_cancel">Отмена</a>
         </div>
 
         <input type="hidden" name="_method" value="PUT" />

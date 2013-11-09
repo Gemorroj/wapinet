@@ -43,9 +43,11 @@
                 <div class="fos_comment_submit">
                     {% block fos_comment_form_submit %}
                         {% if parent is not null %}
-                            <input type="button" data-inline="true" value="{% trans from 'FOSCommentBundle' %}fos_comment_comment_reply_cancel{% endtrans %}" class="fos_comment_comment_reply_cancel" />
+                            <input type="submit" data-inline="true" value="Ответить" />
+                            <input type="button" data-inline="true" value="Отмена" class="fos_comment_comment_reply_cancel" />
+                        {% else %}
+                            <input type="submit" value="Ответить" />
                         {% endif %}
-                        <input type="submit" value="{% trans from 'FOSCommentBundle' %}fos_comment_comment_new_submit{% endtrans %}" />
                     {% endblock %}
                 </div>
 

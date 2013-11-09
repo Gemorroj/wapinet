@@ -6,7 +6,7 @@
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
-
+/*
 .fos_comment_thread_show {
     margin-top: 2em;
     padding: 1em 20px;
@@ -28,8 +28,9 @@
 }
 .fos_comment_comment_show {
     color: #555;
-}
+}*/
 .fos_comment_comment_metas {
+    /*
     margin: 1.5em 0 0.5em 0;
     padding: 1em 20px;
     background: #e6e6e6;
@@ -37,7 +38,8 @@
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
-}
+    */
+}/*
 .fos_comment_comment_body {
     line-height: 1.5em;
 }
@@ -106,10 +108,49 @@ a.fos_comment_thread_feed {
     height: 16px;
     display: block;
     float: right;
+}*/
+.fos_comment_form_errors {
+    color: #ff0000;
 }
-.fos_comment_comment_voting {
-    float: right;
+.fos_comment_reply_prototype {
+    display: none;
+}
+.fos_comment_comment_show {
+    color: #555;
 }
 .fos_comment_comment_score {
     display: inline-block;
+    vertical-align: middle;
+}
+.fos_comment_comment_reply.fos_comment_replying a.fos_comment_comment_reply_show_form {
+    display: none;
+}
+
+.fos_comment_comment_reply {
+    text-align: right;
+}
+.fos_comment_comment_reply {
+    text-align: left;
+    margin-top: 1em;
+    padding: 1em 20px;
+    background: #d6d6d6;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+.fos_comment_comment_reply_show_form {
+    padding: 2px 5px;
+    font-size: 0.8em;
+}
+.fos_comment_comment_body {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.fos_comment_comment_avatar {
+    margin-right: 10px;
+    float: left;
+}
+.fos_comment_comment_text {
+    float: left;
 }
