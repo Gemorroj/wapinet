@@ -11,3 +11,9 @@ services:
         class: Wapinet\Bundle\Twig\Extension\Date
         tags:
             - {name: twig.extension, alias: wapinet_date}
+
+    wapinet.online.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\Online
+        arguments: [@doctrine.orm.entity_manager, @service_container]
+        tags:
+            - {name: twig.extension, alias: wapinet_online}

@@ -1,0 +1,152 @@
+<?php
+
+namespace Wapinet\Bundle\Entity;
+
+use Wapinet\UserBundle\Entity\User;
+
+/**
+ * Online
+ */
+class Online
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var User|null
+     */
+    private $user;
+
+    /**
+     * @var \DateTime
+     */
+    private $datetime;
+
+    /**
+     * @var string
+     */
+    private $ip;
+
+    /**
+     * @var string
+     */
+    private $browser;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set id
+     *
+     * @param int $id
+     * @return Online
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Set user
+     *
+     * @param User|null $user
+     * @return Online
+     */
+    public function setUser(User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return User|null
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set datetime
+     *
+     * @param \DateTime $datetime
+     * @return Online
+     */
+    public function setDatetime(\DateTime $datetime)
+    {
+        $this->datetime = $datetime;
+    
+        return $this;
+    }
+
+    /**
+     * Get datetime
+     *
+     * @return \DateTime 
+     */
+    public function getDatetime()
+    {
+        return $this->datetime;
+    }
+
+    /**
+     * Set ip
+     *
+     * @param string $ip
+     * @return Online
+     */
+    public function setIp($ip)
+    {
+        $this->ip = $ip;
+    
+        return $this;
+    }
+
+    /**
+     * Get ip
+     *
+     * @return string 
+     */
+    public function getIp()
+    {
+        return $this->ip;
+    }
+
+    /**
+     * Set browser
+     *
+     * @param string $browser
+     * @return Online
+     */
+    public function setBrowser($browser)
+    {
+        $this->browser = $browser;
+    
+        return $this;
+    }
+
+    /**
+     * Get browser
+     *
+     * @return string 
+     */
+    public function getBrowser()
+    {
+        return $this->browser;
+    }
+}
