@@ -14,6 +14,7 @@ namespace Wapinet\CommentBundle\Entity;
 use FOS\CommentBundle\Entity\CommentManager as BaseCommentManager;
 use FOS\CommentBundle\Model\ThreadInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * Default ORM CommentManager.
@@ -34,16 +35,16 @@ class CommentManager extends BaseCommentManager
      * @param  integer         $depth
      * @param  string          $sorterAlias
      * @param  int             $page
-     * @return array           of ThreadInterface
+     * @return array('pagerfanta' => \Pagerfanta\Pagerfanta, 'comments' => array)
      */
     public function findCommentsByThread(ThreadInterface $thread, $depth = null, $sorterAlias = null, $page = 1)
     {
-        $qb = $this->repository
-                ->createQueryBuilder('c')
-                ->join('c.thread', 't')
-                ->where('t.id = :thread')
-                ->orderBy('c.ancestors', 'ASC')
-                ->setParameter('thread', $thread->getId());
+        $qb = $this->repository->createQueryBuilder('c');
+
+        $qb->join('c.thread', 't')
+            ->where('t.id = :thread')
+            ->orderBy('c.ancestors', 'ASC')
+            ->setParameter('thread', $thread->getId());
 
         if (null !== $depth && $depth >= 0) {
             // Queries for an additional level so templates can determine
@@ -53,17 +54,34 @@ class CommentManager extends BaseCommentManager
                ->setParameter('depth', $depth + 1);
         }
 
-        $comments = $this->container->get('wapinet.paginate.controller')->paginate($qb, $page);
-        //$comments = $qb
-        //    ->getQuery()
-        //    ->execute();
+        // TODO: https://github.com/FriendsOfSymfony/FOSCommentBundle/issues/113
+        //$expr = $qb->expr();
+
+        //$concatLeft = $expr->concat($expr->literal('%/'), $expr->concat('c.id', $expr->literal('%')));
+        //$concatRight = $expr->concat($expr->literal('%'), $expr->concat('c.id', $expr->literal('/%')));
+
+        //$qb->addSelect('ca')
+        //    ->leftJoin('Wapinet\CommentBundle\Entity\Comment', 'ca')
+        //    ->where('ca.ancestors = c.id')
+        //    ->orWhere($expr->like('ca.ancestors', $concatLeft))
+        //    ->orWhere($expr->like('ca.ancestors', $concatRight));
+
+        //$pagerfanta = $this->container->get('wapinet.paginate.controller')->paginate($qb, $page);
+        //$comments = $pagerfanta->CurrentPageResults();
+        $comments = $qb
+            ->getQuery()
+            ->execute();
+
 
         if (null !== $sorterAlias) {
             $sorter = $this->sortingFactory->getSorter($sorterAlias);
             $comments = $sorter->sortFlat($comments);
         }
 
-        return $comments;
+        //$pagerfanta = $this->container->get('wapinet.paginate.controller')->paginate($comments, $page);
+        //$comments = $pagerfanta->getCurrentPageResults();
+
+        return array('pagerfanta' => /*$pagerfanta*/null, 'comments' => $comments);
     }
 
 
@@ -73,14 +91,15 @@ class CommentManager extends BaseCommentManager
      * @param null            $depth
      * @param int             $page
      *
-     * @return array
+     * @return array('pagerfanta' => \Pagerfanta\Pagerfanta, 'comments' => array)
      */
     public function findCommentTreeByThread(ThreadInterface $thread, $sorter = null, $depth = null, $page = 1)
     {
-        $comments = $this->findCommentsByThread($thread, $depth, null, $page);
+        $commentsByThread = $this->findCommentsByThread($thread, $depth, null, $page);
         $sorter = $this->sortingFactory->getSorter($sorter);
 
-        return $this->organiseComments($comments, $sorter);
+        $commentsByThread['comments'] = $this->organiseComments($commentsByThread['comments'], $sorter);
+        return $commentsByThread;
     }
 
 

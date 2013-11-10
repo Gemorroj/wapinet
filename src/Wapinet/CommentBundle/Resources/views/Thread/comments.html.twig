@@ -32,3 +32,11 @@
 {% for commentinfo in comments %}
     {% include "FOSCommentBundle:Thread:comment.html.twig" with { "children": commentinfo.children, "comment": commentinfo.comment, "depth": depth, "view": view } %}
 {% endfor %}
+
+{#
+{% if depth == 0 %}
+    <div class="pagerfanta">
+        {{ pagerfanta(pagerfanta) }}
+    </div>
+{% endif %}
+#}

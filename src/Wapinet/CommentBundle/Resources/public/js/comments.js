@@ -1,47 +1,4 @@
-/**
- * This file is part of the FOSCommentBundle package.
- *
- * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
- *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
- */
-
-/**
- * To use this reference javascript, you must also have jQuery installed. If
- * you want to embed comments cross-domain, then easyXDM CORS is also required.
- *
- * @todo: expand this explanation (also in the docs)
- *
- * Then a comment thread can be embedded on any page:
- *
- * <div id="fos_comment_thread">#comments</div>
- * <script type="text/javascript">
- *     // Set the thread_id if you want comments to be loaded via ajax (url to thread comments api)
- *     var fos_comment_thread_id = 'a_unique_identifier_for_the_thread';
- *     var fos_comment_thread_api_base_url = 'http://example.org/api/threads';
- *
- *     // Optionally set the cors url if you want cross-domain AJAX (also needs easyXDM)
- *     var fos_comment_remote_cors_url = 'http://example.org/cors/index.html';
- *
- *     // Optionally set a custom callback function to update the comment count elements
- *     var fos_comment_thread_comment_count_callback = function(elem, threadObject){}
- *
- *     // Optionally set a different element than div#fos_comment_thread as container
- *     var fos_comment_thread_container = $('#other_element');
- *
- * (function() {
- *     var fos_comment_script = document.createElement('script');
- *     fos_comment_script.async = true;
- *     fos_comment_script.src = 'http://example.org/path/to/this/file.js';
- *     fos_comment_script.type = 'text/javascript';
- *
- *     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(fos_comment_script);
- * })();
- * </script>
- */
-
-(function(window, $, easyXDM){
+(function (window, $) {
     "use strict";
     var FOS_COMMENT = {
         /**
@@ -53,7 +10,7 @@
          * @param function error Optional callback function to use in case of error.
          */
         post: function(url, data, success, error, complete) {
-            // Wrap the error callback to match return data between jQuery and easyXDM
+            // Wrap the error callback to match return data between jQuery
             var wrappedErrorCallback = function(response){
                 if('undefined' !== typeof error) {
                     error(response.responseText, response.status);
@@ -76,7 +33,7 @@
          * @param function error Optional callback function to use in case of error.
          */
         get: function(url, data, success, error) {
-            // Wrap the error callback to match return data between jQuery and easyXDM
+            // Wrap the error callback to match return data between jQuery
             var wrappedErrorCallback = function(response){
                 if('undefined' !== typeof error) {
                     error(response.responseText, response.status);
@@ -90,13 +47,15 @@
          *
          * @param string identifier Unique identifier url for the thread comments.
          * @param string url Optional url for the thread. Defaults to current location.
+         * @param integer page
          */
-        getThreadComments: function(identifier, permalink) {
+        getThreadComments: function(identifier, permalink, page) {
             var event = jQuery.Event('fos_comment_before_load_thread');
 
             event.identifier = identifier;
             event.params = {
-                permalink: encodeURIComponent(permalink || window.location.href)
+                permalink: encodeURIComponent(permalink || window.location.href),
+                page: encodeURIComponent(page || 1)
             };
 
             FOS_COMMENT.thread_container.trigger(event);
@@ -341,6 +300,18 @@
                     );
                 }
             );
+
+            // Pagerfanta listener
+            FOS_COMMENT.thread_container.on('click',
+                '.pagerfanta a',
+                function(e) {
+                    //e.stopPropagation();
+                    e.preventDefault();
+                    var page = this.href.split('page=')[1].split('&')[0];
+
+                    FOS_COMMENT.getThreadComments(window.fos_comment_thread_id, undefined, page);
+                }
+            );
         },
 
         appendComment: function(commentHtml, form) {
@@ -459,65 +430,6 @@
     // Check if a thread container was configured. If not, use default.
     FOS_COMMENT.thread_container = window.fos_comment_thread_container || $('#fos_comment_thread');
 
-    // AJAX via easyXDM if this is configured
-    if(typeof window.fos_comment_remote_cors_url != "undefined") {
-        /**
-         * easyXDM instance to use
-         */
-        FOS_COMMENT.easyXDM = easyXDM.noConflict('FOS_COMMENT');
-
-        /**
-         * Shorcut request method.
-         *
-         * @param string method The request method to use.
-         * @param string url The url of the page to request.
-         * @param object data The data parameters.
-         * @param function success Optional callback function to use in case of succes.
-         * @param function error Optional callback function to use in case of error.
-         */
-        FOS_COMMENT.request = function(method, url, data, success, error) {
-            // wrap the callbacks to match the callback parameters of jQuery
-            var wrappedSuccessCallback = function(response){
-                if('undefined' !== typeof success) {
-                    success(response.data, response.status);
-                }
-            };
-            var wrappedErrorCallback = function(response){
-                if('undefined' !== typeof error) {
-                    error(response.data.data, response.data.status);
-                }
-            };
-
-            // todo: is there a better way to do this?
-            FOS_COMMENT.xhr.request({
-                url: url,
-                method: method,
-                data: data
-            }, wrappedSuccessCallback, wrappedErrorCallback);
-        };
-
-        FOS_COMMENT.post = function(url, data, success, error) {
-            this.request('POST', url, data, success, error);
-        };
-
-        FOS_COMMENT.get= function(url, data, success, error) {
-            // make data serialization equals to that of jquery
-            var params = jQuery.param(data);
-            url += '' != params ? '?' + params : '';
-
-            this.request('GET', url, undefined, success, error);
-        };
-
-        /* Initialize xhr object to do cross-domain requests. */
-        FOS_COMMENT.xhr = new FOS_COMMENT.easyXDM.Rpc({
-            remote: window.fos_comment_remote_cors_url
-        }, {
-            remote: {
-                request: {} // request is exposed by /cors/
-            }
-        });
-    }
-
     // set the appropriate base url
     FOS_COMMENT.base_url = window.fos_comment_thread_api_base_url;
 
@@ -539,4 +451,4 @@
 
     window.fos = window.fos || {};
     window.fos.Comment = FOS_COMMENT;
-})(window, window.jQuery, window.easyXDM);
+})(window, window.jQuery);

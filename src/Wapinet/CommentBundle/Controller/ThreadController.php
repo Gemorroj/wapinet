@@ -70,7 +70,10 @@ class ThreadController extends BaseThreadController
         $viewMode = $request->query->get('view', 'tree');
         switch ($viewMode) {
             case self::VIEW_FLAT:
-                $comments = $this->container->get('wapinet_comment.manager.comment')->findCommentsByThread($thread, $displayDepth, $sorter, $page);
+                /** @var $commentsByThread array('pagerfanta' => \Pagerfanta\Pagerfanta, 'comments' => array) */
+                $commentsByThread = $this->container->get('wapinet_comment.manager.comment')->findCommentsByThread($thread, $displayDepth, $sorter, $page);
+                $comments = $commentsByThread['comments'];
+                $pagerfanta = $commentsByThread['pagerfanta'];
 
                 // We need nodes for the api to return a consistent response, not an array of comments
                 $comments = array_map(function($comment) {
@@ -81,12 +84,16 @@ class ThreadController extends BaseThreadController
                 break;
             case self::VIEW_TREE:
             default:
-                $comments = $this->container->get('wapinet_comment.manager.comment')->findCommentTreeByThread($thread, $sorter, $displayDepth, $page);
+                /** @var $commentTreeByThread array('pagerfanta' => \Pagerfanta\Pagerfanta, 'comments' => array) */
+                $commentTreeByThread = $this->container->get('wapinet_comment.manager.comment')->findCommentTreeByThread($thread, $sorter, $displayDepth, $page);
+                $comments = $commentTreeByThread['comments'];
+                $pagerfanta = $commentTreeByThread['pagerfanta'];
                 break;
         }
 
         $view = View::create()
             ->setData(array(
+                'pagerfanta' => $pagerfanta,
                 'comments' => $comments,
                 'displayDepth' => $displayDepth,
                 'sorter' => 'date',

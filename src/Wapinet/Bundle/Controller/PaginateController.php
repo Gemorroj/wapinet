@@ -8,6 +8,7 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
+use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 
 
@@ -26,6 +27,8 @@ class PaginateController extends Controller
             $adapter = new DoctrineCollectionAdapter($data);
         } elseif ($data instanceof Query || $data instanceof QueryBuilder) {
             $adapter = new DoctrineORMAdapter($data);
+        } elseif (is_array($data)) {
+            $adapter = new ArrayAdapter($data);
         } else {
             throw new \RuntimeException('Неизвестный тип данных для постраничной навигации');
         }
