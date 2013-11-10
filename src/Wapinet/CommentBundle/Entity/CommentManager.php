@@ -9,18 +9,25 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Wapinet\CommentBundle\Document;
+namespace Wapinet\CommentBundle\Entity;
 
-use FOS\CommentBundle\Document\CommentManager as BaseCommentManager;
+use FOS\CommentBundle\Entity\CommentManager as BaseCommentManager;
 use FOS\CommentBundle\Model\ThreadInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Pagerfanta\Pagerfanta;
 
 /**
- * Default ODM CommentManager.
+ * Default ORM CommentManager.
  *
- * @author Thibault Duplessis <thibault.duplessis@gmail.com>
+ * @author Tim Nagel <tim@nagel.com.au>
  */
 class CommentManager extends BaseCommentManager
 {
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
     /**
      * Returns a flat array of comments of a specific thread.
      *
@@ -32,22 +39,25 @@ class CommentManager extends BaseCommentManager
      */
     public function findCommentsByThread(ThreadInterface $thread, $depth = null, $sorterAlias = null, $page = 1)
     {
-        //TODO: Добавить Pagerfanta
         $qb = $this->repository
-            ->createQueryBuilder()
-            ->field('thread.$id')->equals($thread->getId())
-            ->sort('ancestors', 'ASC');
+                ->createQueryBuilder('c')
+                ->join('c.thread', 't')
+                ->where('t.id = :thread')
+                ->orderBy('c.ancestors', 'ASC')
+                ->setParameter('thread', $thread->getId());
 
-        if ($depth > 0) {
+        if (null !== $depth && $depth >= 0) {
             // Queries for an additional level so templates can determine
             // if the final 'depth' layer has children.
 
-            $qb->field('depth')->lte($depth + 1);
+            $qb->andWhere('c.depth < :depth')
+               ->setParameter('depth', $depth + 1);
         }
 
-        $comments = $qb
-            ->getQuery()
-            ->execute();
+        $comments = $this->container->get('wapinet.paginate.controller')->paginate($qb, $page);
+        //$comments = $qb
+        //    ->getQuery()
+        //    ->execute();
 
         if (null !== $sorterAlias) {
             $sorter = $this->sortingFactory->getSorter($sorterAlias);
@@ -72,5 +82,14 @@ class CommentManager extends BaseCommentManager
         $sorter = $this->sortingFactory->getSorter($sorter);
 
         return $this->organiseComments($comments, $sorter);
+    }
+
+
+    /**
+     * @param ContainerInterface $container
+     */
+    public function setContainer(ContainerInterface $container)
+    {
+        $this->container = $container;
     }
 }

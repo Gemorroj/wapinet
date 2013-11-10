@@ -31,13 +31,12 @@ class ThreadController extends BaseThreadController
      *
      * @param Request $request Current request
      * @param string  $id      Id of the thread
-     * @param int     $page
      *
      * @return View
      */
-    /*
-    public function getThreadCommentsAction(Request $request, $id, $page = 1)
+    public function getThreadCommentsAction(Request $request, $id)
     {
+        $page = $request->query->get('page');
         $displayDepth = $request->query->get('displayDepth');
         $sorter = $request->query->get('sorter');
         $thread = $this->container->get('fos_comment.manager.thread')->findThreadById($id);
@@ -109,7 +108,7 @@ class ThreadController extends BaseThreadController
 
         return $this->getViewHandler()->handle($view);
     }
-    */
+
 
     /**
      * @return \FOS\RestBundle\View\ViewHandler

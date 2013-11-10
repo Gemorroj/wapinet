@@ -103,6 +103,9 @@ class Provider extends BaseProvider
     }
 
 
+    /**
+     * @param ContainerInterface $container
+     */
     public function setContainer(ContainerInterface $container)
     {
         $this->container = $container;
