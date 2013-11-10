@@ -18,6 +18,14 @@ programming:
     pattern:  /programming
     defaults: { _controller: WapinetBundle:Default:programming }
 
+source_code:
+    pattern:  /source_code
+    defaults: { _controller: WapinetBundle:Default:sourceCode }
+
+gmanager:
+    pattern:  /gmanager
+    defaults: { _controller: WapinetBundle:Default:gmanager }
+
 buy_php_scripts:
     pattern:  /buy_php_scripts
     defaults: { _controller: WapinetBundle:Default:buyPhpScripts }

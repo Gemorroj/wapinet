@@ -26,6 +26,16 @@ class DefaultController extends Controller
         return $this->render('WapinetBundle:Default:programming.html.twig');
     }
 
+    public function sourceCodeAction()
+    {
+        return $this->render('WapinetBundle:Default:source_code.html.twig');
+    }
+
+    public function gmanagerAction()
+    {
+        return $this->redirect('https://github.com/Gemorroj/gmanager', 301);
+    }
+
     public function downloadsAction()
     {
         return $this->render('WapinetBundle:Default:downloads.html.twig');
