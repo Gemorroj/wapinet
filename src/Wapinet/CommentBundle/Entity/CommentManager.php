@@ -14,7 +14,6 @@ namespace Wapinet\CommentBundle\Entity;
 use FOS\CommentBundle\Entity\CommentManager as BaseCommentManager;
 use FOS\CommentBundle\Model\ThreadInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Pagerfanta\Pagerfanta;
 
 /**
  * Default ORM CommentManager.

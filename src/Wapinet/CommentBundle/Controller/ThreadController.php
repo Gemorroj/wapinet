@@ -36,7 +36,7 @@ class ThreadController extends BaseThreadController
      */
     public function getThreadCommentsAction(Request $request, $id)
     {
-        $page = $request->query->get('page');
+        $page = $request->query->get('page', 1);
         $displayDepth = $request->query->get('displayDepth');
         $sorter = $request->query->get('sorter');
         $thread = $this->container->get('fos_comment.manager.thread')->findThreadById($id);
