@@ -1,7 +1,37 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}WapinetBundle:MobileCode:android{% endblock %}
+{% block title %}Mitsubishi Trium{% endblock %}
 
-{% block body %}
-<h1>Welcome to the MobileCode:android page</h1>
+{% block content %}
+    <div>
+        Все "секретные" коды вводятся в телефон путем набора специального цифрового кода при одновременном удержании клавиши <strong>*</strong><br/>
+        5806 - узнать версию прошивки.<br/>
+        5807 - a littel bit diffrent.<br/>
+        5472 - Test Mode для дата-кабеля.<br/>
+        4329 - Activate and deactivate NETMONITOR.<br/>
+        621342 - Activate and deactivate another NETMONITOR.<br/>
+        3926 - shutdown<br/>
+        #06# - show IMEI code<br/>
+        850696 - Enable/disable warm start. Если выкл, то при возникновении фатальной ошибки телефон выключится, а если вкл, то выдаст диагностическую информацию и зависнет<br/>
+        3926 - Вызов функции Fatal error<br/>
+        936505 - Display firmware version and MSID<br/>
+        5807 - Версия прошивки и версия епрома<br/>
+        3857 - ???<br/>
+        781625 - Enable/disable SUP traces - ??? (SUP is one of the firmware tasks)<br/>
+        574243 - Lock NS level<br/>
+        360608 - Lock IMSI level<br/>
+        362628 - Lock IMSI level<br/>
+        480896 - sp,corp lock??<br/>
+        482896 - sp,corp lock??<br/>
+        967678 - sp,corp lock??<br/>
+        476989 - Ext lock<br/>
+        787090 - Lock net level<br/>
+        787292 - Lock net level<br/>
+        <br/>
+        Форматирование:<br/>
+        1)Если возникают проблемы с приемом, с софтом или еще чем-то, трубу можно форматнуть (сбросить все настройки и очистить память).<br/>
+        Вынимается аккумулятор, sim&#x27;ka, подключаем зарядку, давим * и одновременно вводим 65512890 и все телефон как новенький.<br/>
+        2)В то время, когда телефон ещё работает вытащить батарейку.
+        Затем вставить её обратно, включить его, и в момент прохождения ScanDisk&#x27;a вытащить повторно, и снова запустить ( появится картинка - на манер тетриса ) и вуаля телефон абсолютно чистый, прямо как с завода. ;)<br/>
+    </div>
 {% endblock %}

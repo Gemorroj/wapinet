@@ -1,7 +1,83 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}WapinetBundle:MobileCode:android{% endblock %}
+{% block title %}Nokia{% endblock %}
 
-{% block body %}
-<h1>Welcome to the MobileCode:android page</h1>
+{% block content %}
+    <div>
+        xx# - xx позиция в телефонной книге<br/>
+        *#0000# - Номер серии и дата выпуска<br/>
+        *#7780# - Вернуть заводские установки<br/>
+        *3370# - Активирует Enhanced Full Rate (улучшает качество передачи, что сопровождается увеличением расхода аккумулятора), режим активируется после выключения и включения аппарата<br/>
+        #3370# - Режим Enhanced Full Rate выключается при следующем включении<br/>
+        *4370# - Half Rate Codec activation<br/>
+        #4370# - Half Rate Codec deactivation<br/>
+        *4720# - Активируется режим Half Rate (уменьшается расход аккумулятора), активируется при следующем включении<br/>
+        #4720# - Режим Half Rate выключается<br/>
+        *#7220# - Увеличение скорости (проверено на Nokia 3510)<br/>
+        *#7230# - Выключение режима "увеличение скорости передачи GPRS".<br/>
+        *#92702689# - Вход в специальное меню, в котором можно использовать представленные ниже команды:<br/>
+        6232 ОК - Показывает месяц и год выпуска<br/>
+        7332 ОК - Показывает дату последнего изменения в программе<br/>
+        7832 ОК - Показывает дату продажи (если введен)<br/>
+        9268 ОК - Показывает серийный номер (IMEI)<br/>
+        37832 ОК - Можно ввести дату продажи MMYY (осторожно! потом нельзя изменить)<br/>
+        <br/>
+        Вход в специальное меню *#92702689#<br/>
+        Команды в специальном меню:<br/>
+        6232 OK показывает дату выпуска<br/>
+        7332 OK показывает дату последнего изменения в программе<br/>
+        7832 OK показывает дату продажи (если введено!)<br/>
+        37832 OK можно ввести дату продажи MMYY (потом нельзя изменить!)<br/>
+        9268 OK показывает IMEI<br/>
+        <br/>
+        Nokia 2110<br/>
+        *#9999# , *#170602112302# , *#682371158412125# - Показать версию программного обеспечения<br/>
+        *#3283# - Показать дату производства аппарата<br/>
+        *#746025625# - [*#sim0clock#]<br/>
+        *#92702689# - [*#war0anty#]<br/>
+        секретное меню:<br/>
+        1. Displays Serial Number<br/>
+        2. Displays the Month and Year of Manufacture (0997)<br/>
+        3. Displays (if there) the date where the phone was purchased<br/>
+        4. Displays the date of last repairment - if found (0000)<br/>
+        5. Makes you capebel of transferring user data<br/>
+        6. Shows how many hours the phone has been on<br/>
+        <br/>
+        Nokia 3110<br/>
+        *#3110# - Показывает версию программного обеспечения<br/>
+        *#7780# - Восстанавливает заводские установки<br/>
+        <br/>
+        Nokia 3650<br/>
+        *#7370# - Сброс данных (RESET)<br/>
+        <br/>
+        Nokia 5110<br/>
+        Для отключения SP-кодировок (при условии, что включен Pin-код аппарата): При запросе Pin-кода нажмите С , затем - стрелка вверх или стрелка вниз. Нажмите С до тех пор, пока дисплей не очистится, после чего введите команду изменения Pin-кода, но не изменяйте его на самом деле **04*PIN*PIN*PIN# , единственная проблема в том, что придется повторять данную процедуру при каждом включении аппарата<br/>
+        <br/>
+        Nokia 7110<br/>
+        *#746025625# - Проверка поддержки SIM-картой режима SIM clock<br/>
+        <br/>
+        Nokia 7650 (смартфоны Symbian)<br/>
+        *#7979# - phone reset<br/>
+        *#7470# - hard reset<br/>
+        *#7370# - master reset (like new phone)<br/>
+        *#2254*# - Status register: C,BS,RR,MMI,CREAT<br/>
+        *#2255*# - activate and deactivate the "DEBUG CALL" -Mode; when activated,make a call to busy line an the phone will display some hex codes on the display<br/>
+        *#2558*# - the time in days, hours and minutes you are connected to the net<br/>
+        *#2562*# - not clear; the phone reconnect to the net<br/>
+        *#2565*# - not clear; warmstart ?<br/>
+        *#3333*# - (NO) blocking -list (15 items)<br/>
+        *#2377*# - "BEER" : not cler the phone waits a random time and reconnect to net, sometimes make reset<br/>
+        *#3377*# - Init , Flags , SIM LOCK<br/>
+        *#3353*# - reset the (NO) BLOCKING list<br/>
+        *#7378*# - Name, Lenght,SIM phase<br/>
+        *#7489*# - Security Code<br/>
+        *#7693*# - you can activate and deactivate the Sleep Menu (when deactivated the battery will go down!)<br/>
+        *#7787*# - not clear: Spurious Interrupt<br/>
+        *#7948*# - Switch Off: not clear: it is a timer or something<br/>
+        *#8463*# - Some information about the SLEEP MODE: Wake, Sleep Req., Sleep<br/>
+        <br/>
+        Nokia 9000<br/>
+        *#682371158412125# - soft version<br/>
+        *#3283# - prod. date<br/>
+    </div>
 {% endblock %}

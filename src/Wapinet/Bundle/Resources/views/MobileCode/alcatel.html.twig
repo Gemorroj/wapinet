@@ -1,7 +1,16 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}WapinetBundle:MobileCode:alcatel{% endblock %}
+{% block title %}Alcatel{% endblock %}
 
-{% block body %}
-<h1>Welcome to the MobileCode:alcatel page</h1>
+{% block content %}
+    <div>
+        000000* - Инженерное меню (индикатор заряда батарей в процентах)<br/>
+        ###765*02# - Добавить<br/>
+        ###765*05# - Заблокировать<br/>
+        ###765*07# - Разблокировать<br/>
+        ###765*08# - Сбросить<br/>
+        ###765*78# - Деактивация<br/>
+        ###847# - Заводские установки<br/>
+        ###337*02# - Перезагрузка<br/>
+    </div>
 {% endblock %}

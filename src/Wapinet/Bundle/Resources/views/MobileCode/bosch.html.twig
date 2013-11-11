@@ -1,7 +1,21 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}WapinetBundle:MobileCode:bosh{% endblock %}
+{% block title %}Bosh{% endblock %}
 
-{% block body %}
-<h1>Welcome to the MobileCode:bosh page</h1>
+{% block content %}
+    <div>
+        *#0000# - Сбрасывает язык меню на английский<br/>
+        *#3370# - Включает/выключает Enhaced Full Rate (улучшенное качество звука, но увеличивается расход аккумулятора)<br/>
+        *#9000# - Установка SIM lock кода<br/>
+        *#9001# - Ввод Corporate lock кода (Bosh 908)<br/>
+        *#9002# - Ввод Provider lock кода (Bosh 908)<br/>
+        *#9003# - Ввод Network lock кода<br/>
+        *#9004# - Ввод Subset lock кода<br/>
+        *#9100# - Снятие SIM lock кода<br/>
+        *#9101# - Снятие Corporate lock кода (Bosh 908)<br/>
+        *#9102# - Снятие Provider lock кода (Bosh 908)<br/>
+        *#9103# - Снятие Network lock кода<br/>
+        *#9104# - Снятие Subset lock кода<br/>
+        *#3262255*8378# - Открытие инженерного меню (*#DANCALL*TEST#)<br/>
+    </div>
 {% endblock %}

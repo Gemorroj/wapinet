@@ -1,7 +1,314 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}WapinetBundle:MobileCode:android{% endblock %}
+{% block title %}Samsung{% endblock %}
 
-{% block body %}
-<h1>Welcome to the MobileCode:android page</h1>
+{% block content %}
+    <div>
+    Менеджер файлов<br/>
+    Свободное место в телефоне..<br/>
+    Вызываем менеджера файлов набрав *#9998*627837793# будет сообщение об ошибке, после этого заходим в меню-&gt;настройки телефона-&gt;мои настройки-&gt;Меню файлов.<br/>
+    <br/>
+    Данные коды предназначены для телефона Samsung SGH-C100, но часть из них работает и на других моделях Samsung&#x27;a.<br/>
+    *#9999# - Версия софта<br/>
+    *#0001# - Серийный номер<br/>
+    *#9998*5282# - Настройки GPRS<br/>
+    *#9998*246# - Battery status<br/>
+    *#9998*324# - Debug screen<br/>
+    *#9998*523# - LCD contrast<br/>
+    *#9998*842# - Vibration<br/>
+    *#9998*289# - Alarm beeper<br/>
+    *#9125# - Smiley<br/>
+    *#0837# - Soft version<br/>
+    *#0523# - Display contrast<br/>
+    *#0228# - Battery info<br/>
+    *#0000# - RESET<br/>
+    *#0523# - ???
+    <br/>
+    Следующие коды для моделей Samsung SGH Rxxx, Nxxx<br/>
+    *#0837# - Вывод версии п.о.<br/>
+    *#9998*746*0# - Размер сим файла<br/>
+    *#9998*778*0# - Сервисная таблица сим карты<br/>
+    *0001*s*f*t#  - Изменение серийных параметров (с этим осторожно)<br/>
+    *#9998*324*0# - Экран отладчика<br/>
+    *2767*2878# - Пользовательский сброс (остаются только заводские настройки)<br/>
+    *2767*3855# - Полный сброс EEPROM (SP-разблокировка) также сбрасывается IMEI и устанавливается автоматически новый (НЕ ЗНАЕТЕ ЧТО ЭТО, ТОГДА НЕ ДЕЛАЙТЕ!)<br/>
+    <br/>
+    X120, T86<br/>
+    *#9998*4357# - Перечень всех сервисных кодов. <br/>
+    *#9998*1111# - Sw version. <br/>
+    *#9998*2222# - Hw version. <br/>
+    *#9998*842# - Настройки вибро. <br/>
+    *#9998*289# - Настройки звонка. <br/>
+    *#9998*228# - Battery Status. <br/>
+    *#9998*782# - RTC Display. <br/>
+    *#9998*523# - Контрастность экрана. <br/>
+    *#9998*778# - Сервисная таблица SIM - меню. <br/>
+    *#9998*638# - SIM network ID. <br/>
+    *#9998*746# - SIM Information. <br/>
+    *#9998*76# - Production N... .<br/>
+    <br/>
+    С110<br/>
+    *#1111#<br/>
+    *#2222#<br/>
+    *#1234#<br/>
+    <br/>
+    X100/X600/C200N/E720<br/>
+    *#8999*8376263# - Версия прошивки <br/>
+    *#8999*523# - Яркость дисплея <br/>
+    *#8999*377# - Некоторое подобие журнала ошибок <br/>
+    *#7465625# - Блокировки <br/>
+    *#2255# - Журнал звонков <br/>
+    *#4777*8665# - Настройка GPRS <br/>
+    *2767*2878# - Сброс всех пользовательских настроек EEPROM, включая удаление всех записей из телефонной книги <br/>
+    #*0000# <br/>
+    #*0400# <br/>
+    #*1200# - AFC DAC Val <br/>
+    #*1300# - IMEI <br/>
+    #*1400# - IMSI <br/>
+    #*1700# - (?) Command #*1700 Executed <br/>
+    #*1800# - (?) Command #*1800 Executed <br/>
+    #*1900# - (?) Command #*1900 Executed <br/>
+    #*2000# - (?) Command #*2000 Executed <br/>
+    #*2100# - (?) Command #*2100 Executed <br/>
+    #*2200# - (?) Command #*2200 Executed <br/>
+    #*2252# - Current CAL <br/>
+    #*2255# - журнал звонков <br/>
+    #*2256# - Calibr.-Info <br/>
+    #*2282# <br/>
+    #*2285# <br/>
+    #*2286# - Databattery <br/>
+    #*2337# - (?) Permanent Registration - Not Yet Implemented <br/>
+    #*2355# <br/>
+    #*2400# - (?) Command #*2400 Executed <br/>
+    #*2474# - For CMD Set - DEBUGBATTERY in cihard.opt <br/>
+    #*2527# - GPRS Switching Set to class (4/8/9/10) <br/>
+    #*2558# - Time ON <br/>
+    #*2562# <br/>
+    #*2565# <br/>
+    #*2677# - AMR State: (None / Full Rate) <br/>
+    #*2679# - Copycat Feature: (ACTIVATED/DEACTIVATED) <br/>
+    #*2787# - CRTP (ON/OFF) <br/>
+    #*2834# - Audio path Mobile Normal <br/>
+    #*2836# - AVDDSS Management: (DEACTIVATED/ACTIVATED) <br/>
+    #*3230# - Trace Enable DCD disable <br/>
+    #*3231# - Trace disable DCD Enable <br/>
+    #*3232# - Current Mode (Trace enabled/DCD enabled) <br/>
+    #*3270# - DCS Support: (DEACTIVATED/ACTIVATED) <br/>
+    #*3282# - Data: (DEACTIVATED/ACTIVATED) <br/>
+    #*3333# <br/>
+    #*3353# - General Defence Code Erased <br/>
+    #*3370# <br/>
+    #*3377# <br/>
+    #*3476# - EGSM: (DEACTIVATED/ACTIVATED) <br/>
+    #*3676# - Flash Volume Formated <br/>
+    #*3683# <br/>
+    #*3737# - Some Codes <br/>
+    #*3777# <br/>
+    #*3779# <br/>
+    #*3825# - (?) Command #*3825 Executed <br/>
+    #*3837# <br/>
+    #*3849# <br/>
+    #*3851# <br/>
+    #*3876# <br/>
+    #*3877# - Dump of SPY Trace <br/>
+    #*3900# <br/>
+    #*3940# - External looptest 9600 bps not available in SYSOL2 <br/>
+    #*3940# - External looptest 115200 bps not available in SYSOL2 <br/>
+    #*3941# <br/>
+    #*4200# <br/>
+    #*4263# - Handsfree Mode: ACTIVATED <br/>
+    #*4300# <br/>
+    #*4500# <br/>
+    #*4674# - IMSI| MCC:2 5 0 | MNC 9 2 | 10 11 91 83 50 <br/>
+    #*4700# - Half Rate: (ACTIVATED/DEACTIVATED) <br/>
+    #*4760# - GSM: (ACTIVATED/DEACTIVATED) <br/>
+    #*4864# <br/>
+    #*5100# <br/>
+    #*5111# - (?) Some Codes <br/>
+    #*5132# <br/>
+    #*5133# - (?) Some Codes <br/>
+    #*5143# <br/>
+    #*5156# <br/>
+    #*5165# <br/>
+    #*5171# - (?) Some Codes <br/>
+    #*5172# - (?) Some Codes <br/>
+    #*5173# - (?) Some Codes <br/>
+    #*5174# <br/>
+    #*5175# <br/>
+    #*5176# - (?) Some Codes <br/>
+    #*5177# <br/>
+    #*5187# - L1C2G trace: (ACTIVATED/DEACTIVATED) <br/>
+    #*53696# - [Java dnload] WAPSAR mode <br/>
+    #*536961# - WAPSAR enable HTTP disable <br/>
+    #*536962# - HTTP enable WAPSAR disable <br/>
+    #*536963# - SERIAL enable Others disable <br/>
+    #*5376# <br/>
+    #*5400# - (?) Command #*5400 Executed <br/>
+    #*5500# <br/>
+    #*5600# <br/>
+    #*566335# - [WAP model ID] <br/>
+    #*5663351# - [Phone Model] SAMSUNG SGH-X100 <br/>
+    #*5663352# - [Java Model] SEC-SGHS300/1.0 <br/>
+    #*5737425# - Java Serial <br/>
+    #*577699# - APN <br/>
+    #*5800# - (?) Command #*5800 Executed <br/>
+    #*6100# - (?) Command #*6100 Executed <br/>
+    #*6200# <br/>
+    #*6420# - Mic off <br/>
+    #*6421# - Mic on <br/>
+    #*6422# - Mic dep RXdata <br/>
+    #*6428# - Mic measurement <br/>
+    #*6700# <br/>
+    #*6837# - Official Software Version <br/>
+    #*6900# <br/>
+    #*7200# <br/>
+    #*7222# - Operation Typ: Class C GSM <br/>
+    #*7224# - ERROR <br/>
+    #*7247# <br/>
+    #*7252# - Operation Typ: Class B GPRS <br/>
+    #*7271# - Multi slot: Class 1 GPRS <br/>
+    #*7274# - Multi slot: Class 4 GPRS <br/>
+    #*7276# <br/>
+    #*7284# - Class B <br/>
+    #*7287# - GPRS Attached <br/>
+    #*7288# - GPRS Detached <br/>
+    #*7326# - Accessory: Vibrator <br/>
+    #*7337# - Some kind of Reset Settings <br/>
+    #*7352# - Some Kind of Debug Info <br/>
+    #*7462# - SIM phase <br/>
+    #*7524# - KCGPRS <br/>
+    #*7562# - LOCI GPRS <br/>
+    #*7626# <br/>
+    #*7629# <br/>
+    #*7632# - Sleep mode <br/>
+    #*7633# <br/>
+    #*7638# - RLC always open ended TBF: (ACTIVATED/DEACTIVATED) <br/>
+    #*7646# <br/>
+    #*7665# <br/>
+    #*7666# - SrCell Data <br/>
+    #*7673# - Sleep mode <br/>
+    #*7676# - Command #*7676 Executed <br/>
+    #*7683# - Sleep variable <br/>
+    #*7693# - Sleep deact <br/>
+    #*7728# - RSAV done->reset <br/>
+    #*7762# - SMS bearer CS (ACTIVATED/DEACTIVATED) <br/>
+    #*7825# <br/>
+    #*7828# - С Midl Rl51 <br/>
+    #*7957# - Command #*7957 Executed <br/>
+    #*7983# - Voltage/Freq (DEACTIVATED/ACTIVATED) <br/>
+    #*7986# - Voltage (DEACTIVATED/ACTIVATED) <br/>
+    #*8462# - Sleep time since SwitchOff <br/>
+    #*8465# - Time in L1 <br/>
+    #*8466# - Old Time <br/>
+    #*8645# <br/>
+    #*9278# - Command #*9278 Executed <br/>
+    #*9795# - wtls key: reset <br/>
+    #7263867# - RAM Dump (On/Off) <br/>
+    #7465625*228# - Activa lock deactivated <br/>
+    #7465625*27* <br/>
+    #7465625*2827# - Auto CP lock deactivated <br/>
+    #7465625*28638# - Auto Network lock deactivated <br/>
+    #7465625*28746# - Auto SIM lock deactivated <br/>
+    #7465625*2877# - Auto SP lock deactivated <br/>
+    #7465625*28782# - Auto subset lock deactivated <br/>
+    #7465625*638* <br/>
+    #7465625*746* <br/>
+    #7465625*77* <br/>
+    #7465625*782* <br/>
+    #8999*324# <br/>
+    *#0* <br/>
+    *#0020# – установка языка меню по умолчанию <br/>
+    *#2255# - Call List <br/>
+    *#4777*8665# – Настройки GPRS <br/>
+    *#7465625# – Interrogate (?) <br/>
+    *#8377466# – Software &amp; Hardware Versions <br/>
+    *#8888# – показывает Hardware Version <br/>
+    *#8999*324# - (?) Some Strange Numbers <br/>
+    *#8999*377# - Журнал ошибок <br/>
+    *#8999*3825523# - (?) Внешний дисплей <br/>
+    *#8999*523# - Main LCD Brightness <br/>
+    *#8999*636# - (?) Another Strange Numbers <br/>
+    *#8999*8376263# - Информация о телефоне. Версия HW, SW, + Some Code And Data <br/>
+    *#8999*8378# - Тестовый режим. Настройка звуков, эквалайзер, усиление, версии HW и SW <br/>
+    *#9999# – показывает Software Version <br/>
+    сброс настроек <br/>
+    *2767*xx927 - Сброс настроек WAP на предустановленные значения. xx - номер страны. Например, для Великобритании xx=44: *2767*44WAP# для Голландии xx=31: *2767*31WAP# <br/>
+    *2767*xx667 - То же самое для MMS. Список стран зависит от прошивки. <br/>
+    *2767*2877368# <br/>
+    *2767*2878# – сброс пользовательских настроек EEPROM (будьте осторожны, данная процедура также очищает и телефонную книгу)<br/>
+    *2767*31667# <br/>
+    *2767*31927# <br/>
+    *2767*33667# <br/>
+    *2767*33927# <br/>
+    *2767*34667# <br/>
+    *2767*34927# <br/>
+    *2767*351667# <br/>
+    *2767*351927# <br/>
+    *2767*3700# <br/>
+    *2767*380667# <br/>
+    *2767*380927# <br/>
+    *2767*3855# - Полный сброс l EEPROM ( Этот код удаляет SP-блокиравку!! ) Но также изменяет IMEI на 447967-89-400044-0, Для восстановления своего старого IMEI используйте соответствующее ПО (на свой страх и риск)<br/>
+    *2767*39667# <br/>
+    *2767*39927# <br/>
+    *2767*420667# <br/>
+    *2767*420927# <br/>
+    *2767*43667# <br/>
+    *2767*43927# <br/>
+    *2767*44667# <br/>
+    *2767*44927# <br/>
+    *2767*46667# <br/>
+    *2767*46927# <br/>
+    *2767*49667# <br/>
+    *2767*49927# <br/>
+    *2767*66335# <br/>
+    *2767*688# (неподтвержденная информация) [Unlocking Code] <br/>
+    *2767*7100# <br/>
+    *2767*7300# <br/>
+    *2767*73738927# = *2767*RESETWAP# <br/>
+    *2767*7650# <br/>
+    *2767*7667# <br/>
+    *2767*7927# <br/>
+    *2767*8200# <br/>
+    *2767*927# <br/>
+    сброс настроек <br/>
+    *335# <br/>
+    *663867# - mm file dumped <br/>
+    *7465625# - Блокировки <br/>
+    *7465625*228# - Activa lock personalized <br/>
+    *7465625*27* <br/>
+    *7465625*2827# - Auto CP lock activated <br/>
+    *7465625*28638# - Auto Network lock activated <br/>
+    *7465625*28746# - Auto SIM lock activated <br/>
+    *7465625*2877# - Auto SP lock activated <br/>
+    *7465625*28782# - Auto subset lock activated <br/>
+    *7465625*638* <br/>
+    *7465625*746 <br/>
+    *7465625*746* <br/>
+    *7465625*77* <br/>
+    *7465625*782*<br/>
+    <br/>
+    SGH-E700<br/>
+    UNLOCK разблокировка клавиатуры<br/>
+    1) Вводим *#9998*3323#<br/>
+    2) Жмём правую кнопку<br/>
+    3) Появляется меню, жмём на 7ой пункт<br/>
+    4) Вводим *0141#<br/>
+    5) Нажимаем поднять трубку<br/>
+    6) Выключаем телефон<br/>
+    После поведённой процедуры телефон попросит код, нужно ввести 8 нулей: 00000000<br/>
+    <br/>
+    SGH-A800<br/>
+    *2767*637# - разблокировка<br/>
+    <br/>
+    SGH V200<br/>
+    Разблокировка:<br/>
+    Включить без SIM карты и ввести следующие коды:<br/>
+    *2767*63342# - нажать зеленую клавишу<br/>
+    *2767*3855# - нажать зеленую клавишу<br/>
+    *2767*2878# - нажать зеленую клавишу<br/>
+    *2767*927# - нажать зеленую клавишу<br/>
+    *2767*7822573738# - нажать зеленую клавишу<br/>
+    Телефон будет разблокирован, но все данные телефона утеряны!<br/>
+    АКБ телефона должен быть полностью заряжен<br/>
+    </div>
 {% endblock %}

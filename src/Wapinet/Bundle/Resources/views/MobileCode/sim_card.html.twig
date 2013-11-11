@@ -1,7 +1,16 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}WapinetBundle:MobileCode:android{% endblock %}
+{% block title %}Сим карты{% endblock %}
 
-{% block body %}
-<h1>Welcome to the MobileCode:android page</h1>
+{% block content %}
+    <div>
+        Изменить PIN:
+        **04*oldPIN*newPIN*newPIN# кнопка посыла вызова<br/>
+        Изменить PIN2:
+        **042*oldPIN2*newPIN2*newPIN2# кнопка посыла вызова<br/>
+        Разблокировка PIN:
+        **05*PUK*newPIN*newPIN# кнопка посыла вызова<br/>
+        Разблокировка PIN2:
+        **052*PUK2*newPIN2*newPIN2# кнопка посыла вызова<br/>
+    </div>
 {% endblock %}

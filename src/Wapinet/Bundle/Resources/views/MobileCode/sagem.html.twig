@@ -1,7 +1,12 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}WapinetBundle:MobileCode:android{% endblock %}
+{% block title %}Sagem{% endblock %}
 
-{% block body %}
-<h1>Welcome to the MobileCode:android page</h1>
+{% block content %}
+    <div>
+        1. Записываем IMEI телефона. Чтобы узнать его набираем *#06#<br/>
+        2. IMEI имеет вид ABCDEFXXXXXXXX-Y<br/>
+        3. Записываем себе 8 последних цифр IMEI то есть ХХХХХХХХ<br/>
+        4. В обычном режиме набираете * и эти восемь цифр и ОК. Инженерное меню активировано. Входим в меню нажимаем * и в сервисном меню появляются дополнительные пункты и активизируется нетмонитор. При каждом выключении/включении телефона необходимо повторять процедуру активации<br/>
+    </div>
 {% endblock %}
