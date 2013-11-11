@@ -62,14 +62,14 @@ mobile_code_siemens:
     pattern: /siemens
     defaults: { _controller: WapinetBundle:MobileCode:siemens }
 
-mobile_code_sim_cart:
-    pattern: /sim_cart
-    defaults: { _controller: WapinetBundle:MobileCode:simCart }
+mobile_code_sim_card:
+    pattern: /sim_card
+    defaults: { _controller: WapinetBundle:MobileCode:simCard }
 
 mobile_code_sony_ericsson:
     pattern: /sony_ericsson
     defaults: { _controller: WapinetBundle:MobileCode:sonyEricsson }
 
-mobile_code_trium:
-    pattern: /trium
-    defaults: { _controller: WapinetBundle:MobileCode:trium }
+mobile_code_mitsubishi_trium:
+    pattern: /mitsubishi_trium
+    defaults: { _controller: WapinetBundle:MobileCode:mitsubishiTrium }

@@ -86,9 +86,9 @@ class MobileCodeController extends Controller
         return $this->render('WapinetBundle:MobileCode:siemens.html.twig');
     }
 
-    public function simCartAction()
+    public function simCardAction()
     {
-        return $this->render('WapinetBundle:MobileCode:sim_cart.html.twig');
+        return $this->render('WapinetBundle:MobileCode:sim_card.html.twig');
     }
 
     public function sonyEricssonAction()
@@ -96,8 +96,8 @@ class MobileCodeController extends Controller
         return $this->render('WapinetBundle:MobileCode:sony_ericsson.html.twig');
     }
 
-    public function triumAction()
+    public function mitsubishiTriumAction()
     {
-        return $this->render('WapinetBundle:MobileCode:trium.html.twig');
+        return $this->render('WapinetBundle:MobileCode:mitsubishi_trium.html.twig');
     }
 }
