@@ -3,6 +3,7 @@
 namespace Wapinet\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class IcqController extends Controller
 {
@@ -61,8 +62,51 @@ class IcqController extends Controller
         return $this->render('WapinetBundle:Icq:search.html.twig');
     }
 
-    public function userInfoAction()
+    public function userInfoAction(Request $request)
     {
-        return $this->render('WapinetBundle:Icq:user_info.html.twig');
+        $result = null;
+
+        if ('POST' === $this->getRequest()->getMethod()) {
+            $content = $this->cleanUserInfo($request->get('uin'));
+            $result = array(
+                'uin' => $request->get('uin'),
+                'found' => (bool)$content,
+                'content' => $content, //raw
+            );
+        }
+
+        return $this->render('WapinetBundle:Icq:user_info.html.twig', array('result' => $result));
+    }
+
+    /**
+     * @param string $uin
+     *
+     * @return string
+     */
+    protected function cleanUserInfo($uin)
+    {
+        $curl = $this->get('curl_helper');
+        $curl->setOpt(CURLOPT_URL, 'http://www.icq.com/people/' . $uin . '/view/ru');
+        $curl->addBrowserHeaders();
+        $curl->addCompression();
+        $curl->setOpt(CURLOPT_RETURNTRANSFER, true);
+        $curl->setOpt(CURLOPT_AUTOREFERER, false);
+        $curl->setOpt(CURLOPT_HEADER, false);
+        $out = $curl->exec();
+
+        $out = explode('<div class="form-col l">', $out);
+        if (!isset($out[1])) {
+            return '';
+        }
+        $out = '<div><div><div class="form-col l">' . $out[1];
+        $out = explode('</div></div>', $out);
+        $out = $out[0];
+
+        $out = str_replace('<label for="" class="l">', '<label>', $out);
+        $out = str_replace('</label>', ':</label>', $out);
+        $out = str_replace('<div class="clearBoth"></div>', '', $out);
+        $out = str_replace('<hr />', '', $out);
+
+        return $out;
     }
 }

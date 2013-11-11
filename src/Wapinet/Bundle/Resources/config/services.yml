@@ -1,9 +1,6 @@
-parameters:
-    wapinet.controller.paginate.class: Wapinet\Bundle\Controller\PaginateController
-
 services:
     wapinet.paginate.controller:
-        class:     "%wapinet.controller.paginate.class%"
+        class: Wapinet\Bundle\Controller\PaginateController
         calls:
             - [setContainer, ["@service_container"]]
 
@@ -17,3 +14,6 @@ services:
         arguments: [@doctrine.orm.entity_manager, @service_container]
         tags:
             - {name: twig.extension, alias: wapinet_online}
+
+    curl_helper:
+        class: Wapinet\Bundle\Helper\Curl
