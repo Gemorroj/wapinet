@@ -21,6 +21,11 @@ class MobileCodeController extends Controller
         return $this->render('WapinetBundle:MobileCode:android.html.twig');
     }
 
+    public function iphoneAction()
+    {
+        return $this->render('WapinetBundle:MobileCode:iphone.html.twig');
+    }
+
     public function alcatelAction()
     {
         return $this->render('WapinetBundle:MobileCode:alcatel.html.twig');

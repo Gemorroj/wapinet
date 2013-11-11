@@ -10,6 +10,10 @@ mobile_code_android:
     pattern: /android
     defaults: { _controller: WapinetBundle:MobileCode:android }
 
+mobile_code_iphone:
+    pattern: /iphone
+    defaults: { _controller: WapinetBundle:MobileCode:iphone }
+
 mobile_code_alcatel:
     pattern: /alcatel
     defaults: { _controller: WapinetBundle:MobileCode:alcatel }
