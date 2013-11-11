@@ -1,0 +1,27 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Телефонные коды{% endblock %}
+
+{% block content %}
+    <ul data-role="listview" data-inset="true">
+        {# TODO: доделать картинки, макс размер 80 на 80 #}
+        <li><a href="{{ path('mobile_code_all_phones') }}"><img src="{{ asset('bundles/wapinet/images/mobile_code/android.png') }}" alt="Все телефоны" class="ui-li-icon" />Все телефоны</a></li>
+        <li><a href="{{ path('mobile_code_sim_cart') }}"><img src="{{ asset('bundles/wapinet/images/mobile_code/android.png') }}" alt="Сим карта" class="ui-li-icon" />Сим карта</a></li>
+        <li><a href="{{ path('mobile_code_android') }}"><img src="{{ asset('bundles/wapinet/images/mobile_code/android.png') }}" alt="Android" class="ui-li-icon" />Android</a></li>
+        <li><a href="{{ path('mobile_code_alcatel') }}"><img src="{{ asset('bundles/wapinet/images/mobile_code/android.png') }}" alt="Alcatel" class="ui-li-icon" />Alcatel</a></li>
+        <li><a href="{{ path('mobile_code_bosch') }}"><img src="{{ asset('bundles/wapinet/images/mobile_code/android.png') }}" alt="Bosch" class="ui-li-icon" />Bosch</a></li>
+        <li><a href="{{ path('mobile_code_ericsson') }}"><img src="{{ asset('bundles/wapinet/images/mobile_code/android.png') }}" alt="Ericsson" class="ui-li-icon" />Ericsson</a></li>
+        <li><a href="{{ path('mobile_code_lg') }}"><img src="{{ asset('bundles/wapinet/images/mobile_code/android.png') }}" alt="LG" class="ui-li-icon" />LG</a></li>
+        <li><a href="{{ path('mobile_code_maxon') }}"><img src="{{ asset('bundles/wapinet/images/mobile_code/android.png') }}" alt="Maxon" class="ui-li-icon" />Maxon</a></li>
+        <li><a href="{{ path('mobile_code_motorola') }}"><img src="{{ asset('bundles/wapinet/images/mobile_code/android.png') }}" alt="Motorola" class="ui-li-icon" />Motorola</a></li>
+        <li><a href="{{ path('mobile_code_nokia') }}"><img src="{{ asset('bundles/wapinet/images/mobile_code/android.png') }}" alt="Nokia" class="ui-li-icon" />Nokia</a></li>
+        <li><a href="{{ path('mobile_code_panasonic') }}"><img src="{{ asset('bundles/wapinet/images/mobile_code/android.png') }}" alt="Panasonic" class="ui-li-icon" />Panasonic</a></li>
+        <li><a href="{{ path('mobile_code_pantech') }}"><img src="{{ asset('bundles/wapinet/images/mobile_code/android.png') }}" alt="Pantech" class="ui-li-icon" />Pantech</a></li>
+        <li><a href="{{ path('mobile_code_philips') }}"><img src="{{ asset('bundles/wapinet/images/mobile_code/android.png') }}" alt="Philips" class="ui-li-icon" />Philips</a></li>
+        <li><a href="{{ path('mobile_code_sagem') }}"><img src="{{ asset('bundles/wapinet/images/mobile_code/android.png') }}" alt="Sagem" class="ui-li-icon" />Sagem</a></li>
+        <li><a href="{{ path('mobile_code_samsung') }}"><img src="{{ asset('bundles/wapinet/images/mobile_code/android.png') }}" alt="Samsung" class="ui-li-icon" />Samsung</a></li>
+        <li><a href="{{ path('mobile_code_siemens') }}"><img src="{{ asset('bundles/wapinet/images/mobile_code/android.png') }}" alt="Siemens" class="ui-li-icon" />Siemens</a></li>
+        <li><a href="{{ path('mobile_code_sony_ericsson') }}"><img src="{{ asset('bundles/wapinet/images/mobile_code/android.png') }}" alt="Sony Ericsson" class="ui-li-icon" />Sony Ericsson</a></li>
+        <li><a href="{{ path('mobile_code_trium') }}"><img src="{{ asset('bundles/wapinet/images/mobile_code/android.png') }}" alt="Trium" class="ui-li-icon" />Trium</a></li>
+    </ul>
+{% endblock %}

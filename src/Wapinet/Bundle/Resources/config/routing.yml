@@ -33,3 +33,7 @@ buy_php_scripts:
 browser_info:
     pattern: /browser_info
     defaults: { _controller: WapinetBundle:BrowserInfo:index }
+
+mobile_code:
+    resource: "@WapinetBundle/Resources/config/routing/mobile_code.yml"
+    prefix:   /mobile_code
