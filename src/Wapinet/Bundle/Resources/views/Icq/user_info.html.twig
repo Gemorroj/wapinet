@@ -4,12 +4,12 @@
 
 {% block content %}
     <div>Смотреть данные пользователя ICQ<br/>
-        <form action="{{ path('icq_user_info') }}" method="post" id="form">
+        {{ form_start(form, {'action': path('icq_user_info'), 'method': 'POST'}) }}
             <div>
-                UIN: <input name="uin" type="text" value="{{ app.request.get('uin') }}" /><br/>
-                <input type="submit" value="Смотреть"/>
+                {{ form_widget(form) }}
+                <input type="submit" value="Смотреть" />
             </div>
-        </form>
+        {{ form_end(form) }}
         {% if result is not null %}
             {% if result.found %}
                 <div>

@@ -4,6 +4,8 @@ namespace Wapinet\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Wapinet\Bundle\Form\Type\Icq\UserInfoType;
+
 
 class IcqController extends Controller
 {
@@ -66,17 +68,30 @@ class IcqController extends Controller
     {
         $result = null;
 
-        if ('POST' === $this->getRequest()->getMethod()) {
-            $content = $this->cleanUserInfo($request->get('uin'));
-            $result = array(
-                'uin' => $request->get('uin'),
-                'found' => (bool)$content,
-                'content' => $content, //raw
-            );
+        $form = $this->createForm(new UserInfoType());
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $data = $form->getData();
+
+                $content = $this->cleanUserInfo($data['uin']);
+
+                // TODO: написать общий класс для работы с результатами
+                $result = array(
+                    'uin' => $data['uin'],
+                    'found' => (bool)$content,
+                    'content' => $content, //raw
+                );
+            }
         }
 
-        return $this->render('WapinetBundle:Icq:user_info.html.twig', array('result' => $result));
+        return $this->render('WapinetBundle:Icq:user_info.html.twig', array(
+            'form' => $form->createView(),
+            'result' => $result
+        ));
     }
+
 
     /**
      * @param string $uin

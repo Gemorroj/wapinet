@@ -55,7 +55,7 @@
     {% block page %}
         {% block panel %}
             <div data-role="panel" id="menu">
-                <ul data-role="listview" data-icon="false" data-divider-theme="a" data-divider-theme="a" data-inset="false">
+                <ul data-role="listview" data-icon="false" data-divider-theme="a" data-inset="false">
                     {% if is_granted('ROLE_USER') %}
                         <li data-role="list-divider">Сообщения</li>
                         <li><a href="{{ url('fos_message_thread_new') }}">Написать</a></li>
