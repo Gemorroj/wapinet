@@ -37,3 +37,7 @@ browser_info:
 mobile_code:
     resource: "@WapinetBundle/Resources/config/routing/mobile_code.yml"
     prefix:   /mobile_code
+
+icq:
+    resource: "@WapinetBundle/Resources/config/routing/icq.yml"
+    prefix:   /icq

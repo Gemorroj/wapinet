@@ -1,0 +1,47 @@
+icq_index:
+    pattern: /
+    defaults: { _controller: WapinetBundle:Icq:index }
+
+icq_registration:
+    pattern: /registration
+    defaults: { _controller: WapinetBundle:Icq:registration }
+
+icq_about:
+    pattern: /about
+    defaults: { _controller: WapinetBundle:Icq:about }
+
+icq_invise:
+    pattern: /invise
+    defaults: { _controller: WapinetBundle:Icq:invise }
+
+icq_secure:
+    pattern: /secure
+    defaults: { _controller: WapinetBundle:Icq:secure }
+
+icq_servers:
+    pattern: /servers
+    defaults: { _controller: WapinetBundle:Icq:servers }
+
+icq_clients:
+    pattern: /clients
+    defaults: { _controller: WapinetBundle:Icq:clients }
+
+icq_services:
+    pattern: /services
+    defaults: { _controller: WapinetBundle:Icq:services }
+
+icq_disconnect:
+    pattern: /disconnect
+    defaults: { _controller: WapinetBundle:Icq:disconnect }
+
+icq_errors:
+    pattern: /errors
+    defaults: { _controller: WapinetBundle:Icq:errors }
+
+icq_search:
+    pattern: /search
+    defaults: { _controller: WapinetBundle:Icq:search }
+
+icq_user_info:
+    pattern: /user_info
+    defaults: { _controller: WapinetBundle:Icq:userInfo }
