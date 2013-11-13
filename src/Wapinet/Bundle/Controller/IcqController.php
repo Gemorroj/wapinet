@@ -5,6 +5,7 @@ namespace Wapinet\Bundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Wapinet\Bundle\Form\Type\Icq\UserInfoType;
+use Wapinet\Bundle\Form\Type\Icq\RegistrationType;
 use Symfony\Component\Form\FormError;
 
 
@@ -15,9 +16,39 @@ class IcqController extends Controller
         return $this->render('WapinetBundle:Icq:index.html.twig');
     }
 
-    public function registrationAction()
+    public function registrationAction(Request $request)
     {
-        return $this->render('WapinetBundle:Icq:registration.html.twig');
+        $result = null;
+
+        $form = $this->createForm(new RegistrationType());
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $data = $form->getData();
+/*
+                $content = $this->cleanUserInfo($data['uin']);
+                if (!$content) {
+                    $form->addError(new FormError('Пользователь не найден'));
+                } else {
+                    $result = array(
+                        'uin' => $data['uin'],
+                        'content' => $content, //raw
+                    );
+                }
+*/
+            }
+        }
+
+        return $this->render('WapinetBundle:Icq:registration.html.twig', array(
+            'form' => $form->createView(),
+            'result' => $result
+        ));
+    }
+
+    public function registrationPicAction(Request $request)
+    {
+
     }
 
     public function aboutAction()

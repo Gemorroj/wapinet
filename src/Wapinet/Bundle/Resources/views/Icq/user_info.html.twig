@@ -3,11 +3,8 @@
 {% block title %}Данные о владельце UIN{% endblock %}
 
 {% block content %}
-    <div>Смотреть данные пользователя ICQ<br/>
         {{ form_start(form, {'action': path('icq_user_info'), 'method': 'POST'}) }}
-            <div>
                 {{ form_widget(form) }}
-            </div>
         {{ form_end(form) }}
         {% if result is not null %}
             <div>
@@ -16,5 +13,4 @@
                 {{ result.content|raw }}
             </div>
         {% endif %}
-    </div>
 {% endblock %}

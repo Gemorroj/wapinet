@@ -6,6 +6,10 @@ icq_registration:
     pattern: /registration
     defaults: { _controller: WapinetBundle:Icq:registration }
 
+icq_registration_pic:
+    pattern: /registration_pic
+    defaults: { _controller: WapinetBundle:Icq:registrationPic }
+
 icq_about:
     pattern: /about
     defaults: { _controller: WapinetBundle:Icq:about }

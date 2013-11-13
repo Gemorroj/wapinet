@@ -3,7 +3,6 @@
 {% block title %}Siemens{% endblock %}
 
 {% block content %}
-    <div>
         Выбор языка:<br/>
         *#0000# + "зеленая трубка" - Автоматический<br/>
         *#0001# + "зеленая трубка" - English<br/>
@@ -61,9 +60,9 @@
         DISABLE incoming number being shown on your phone *77#<br/>
         ENABLE incoming number being shown on your phone #77#@<br/>
         STATUS of whether calling parties number is shown on your phone *#77#@<br/>
-    </div>
 
-    <div>
+    <br/>
+
         <div>
             Во всех телефонах Siemens(начиная с 35-ой серии) есть вшитые картинки для отправления в SMS.
             Вернее не сами картинки, а ключевые слова, заменяемые телефоном(Siemens&#x27;ом) на картинки.
@@ -94,8 +93,9 @@
         "%Trip" <img src="{{ asset('bundles/wapinet/images/mobile_code/siemens/trip.wbmp') }}" alt="Trip"/><br/>
         "%Turtle" <img src="{{ asset('bundles/wapinet/images/mobile_code/siemens/turtle.wbmp') }}" alt="Turtle"/><br/>
         "%Yes" <img src="{{ asset('bundles/wapinet/images/mobile_code/siemens/yes.wbmp') }}" alt="Yes"/><br/>
-    </div>
-    <div>
+
+    <br/>
+
         <div>
             Локальные ссылки браузера Openwave
             Вызываются вводом в графу "URL:" (без "http://") ,которая находится в пункте меню браузера "Перейти к URL".
@@ -155,5 +155,4 @@
         <a href="internal:primprov">internal:primprov</a> - Страница: "Для настройки услуг интернет введите ваш PIN-код."<br/>
         <a href="internal:main-menu">internal:main-menu</a> - Подменю<br/>
         <a href="internal:main-menu_s">internal:main-menu_s</a> - Подменю на чистом окне<br/>
-    </div>
 {% endblock %}
