@@ -26,8 +26,7 @@
         "bmatzner/jquery-mobile-bundle": "dev-master",
         "friendsofsymfony/comment-bundle": "dev-master",
         "friendsofsymfony/message-bundle": "dev-master",
-        "white-october/pagerfanta-bundle": "dev-master",
-        "gregwar/captcha-bundle": "dev-master"
+        "white-october/pagerfanta-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

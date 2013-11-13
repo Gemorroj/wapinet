@@ -24,6 +24,7 @@ class EmailType extends AbstractType
         $builder->add('attach', 'file', array('label' => 'Файл', 'required' => false));
         $builder->add('url', 'url', array('label' => 'Файл', 'required' => false));
         $builder->add('compress', 'checkbox', array('label' => 'Архивировать  файл в ZIP', 'required' => false));
+        //$builder->add('captcha', 'captcha');
 
         $builder->add('submit', 'submit', array('label' => 'Отправить'));
     }
