@@ -1,0 +1,13 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Отправка Email{% endblock %}
+
+{% block content %}
+    {% if result is not null %}
+        ...
+    {% else %}
+        {{ form_start(form, {'action': path('email_index'), 'method': 'POST'}) }}
+            {{ form_widget(form) }}
+        {{ form_end(form) }}
+    {% endif %}
+{% endblock %}

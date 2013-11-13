@@ -41,3 +41,7 @@ mobile_code:
 icq:
     resource: "@WapinetBundle/Resources/config/routing/icq.yml"
     prefix:   /icq
+
+email:
+    resource: "@WapinetBundle/Resources/config/routing/email.yml"
+    prefix:   /email

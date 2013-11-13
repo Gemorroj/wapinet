@@ -18,10 +18,11 @@ class AppKernel extends Kernel
             new Bmatzner\JQueryMobileBundle\BmatznerJQueryMobileBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
-            new FOS\CommentBundle\FOSCommentBundle(), //TODO: https://github.com/FriendsOfSymfony/FOSCommentBundle
+            new FOS\CommentBundle\FOSCommentBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle($this),
             new FOS\MessageBundle\FOSMessageBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
+            new Gregwar\CaptchaBundle\GregwarCaptchaBundle(),
 
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
