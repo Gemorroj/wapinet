@@ -26,13 +26,11 @@ class IcqController extends Controller
         $curl->setOpt(CURLOPT_URL, 'http://www.icq.com/join/ru');
         $curl->addBrowserHeaders();
         $curl->addCompression();
-        $curl->setOpt(CURLOPT_RETURNTRANSFER, true);
-        $curl->setOpt(CURLOPT_HEADER, false);
-        $out = $curl->exec();
+        $response = $curl->exec();
 
-        preg_match('/name="csrf"[\s+]value="(.+)"/U', $out, $csrf);
-        preg_match('/name="gnm"[\s+]value="(.+)"/U', $out, $gnm);
-        preg_match('/src="https:\/\/www\.icq\.com\/utils\/recaptcha\/gnm\/(.+)"/U', $out, $img_gnm);
+        preg_match('/name="csrf"[\s+]value="(.+)"/U', $response->getContent(), $csrf);
+        preg_match('/name="gnm"[\s+]value="(.+)"/U', $response->getContent(), $gnm);
+        preg_match('/src="https:\/\/www\.icq\.com\/utils\/recaptcha\/gnm\/(.+)"/U', $response->getContent(), $img_gnm);
 
         return array(
             'csrf' => $csrf[1],
@@ -54,8 +52,6 @@ class IcqController extends Controller
         $curl->addBrowserHeaders();
         $curl->addCompression();
         $curl->setOpt(CURLOPT_REFERER, 'http://www.icq.com/join/ru');
-        $curl->setOpt(CURLOPT_RETURNTRANSFER, true);
-        $curl->setOpt(CURLOPT_HEADER, false);
         $curl->addHeader('X-Requested-With', 'XMLHttpRequest');
         $curl->addHeader('Cookie', 'is_ab_mim=0; rfd=; icq_tracking=' . mt_rand(99999, PHP_INT_MAX) . '; icq_lang=ru; csrf=' . $data['csrf']);
 
@@ -68,9 +64,9 @@ class IcqController extends Controller
         $curl->addPostData('gnm', $data['gnm']);
         $curl->addPostData('captcha', $data['captcha']);
 
-        $out = $curl->exec();
+        $response = $curl->exec();
 
-        $json = json_decode($out);
+        $json = json_decode($response->getContent());
 
         return (200 === $json->status);
     }
@@ -111,11 +107,9 @@ class IcqController extends Controller
         $curl->setOpt(CURLOPT_URL, 'https://www.icq.com/utils/recaptcha/gnm/' . $gnm_img);
         $curl->addBrowserHeaders();
         $curl->setOpt(CURLOPT_REFERER, 'http://www.icq.com/join/ru');
-        $curl->setOpt(CURLOPT_RETURNTRANSFER, true);
-        $curl->setOpt(CURLOPT_HEADER, false);
-        $out = $curl->exec();
+        $response = $curl->exec();
 
-        $im = @imagecreatefromstring($out);
+        $im = @imagecreatefromstring($response->getContent());
         if ($im === false) {
             return new Response('Error');
         }
@@ -226,12 +220,9 @@ class IcqController extends Controller
         $curl->setOpt(CURLOPT_URL, 'http://www.icq.com/people/' . $uin . '/view/ru');
         $curl->addBrowserHeaders();
         $curl->addCompression();
-        $curl->setOpt(CURLOPT_RETURNTRANSFER, true);
-        $curl->setOpt(CURLOPT_AUTOREFERER, false);
-        $curl->setOpt(CURLOPT_HEADER, false);
-        $out = $curl->exec();
+        $response = $curl->exec();
 
-        $out = explode('<div class="form-col l">', $out);
+        $out = explode('<div class="form-col l">', $response->getContent());
         if (!isset($out[1])) {
             return '';
         }

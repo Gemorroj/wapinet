@@ -1,6 +1,8 @@
 <?php
 namespace Wapinet\Bundle\Helper;
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * CURL хэлпер
  */
@@ -21,14 +23,17 @@ class Curl
     protected $postData = array();
 
 
+
     /**
      * Конструктор
      */
     public function __construct()
     {
         $this->curl = curl_init();
-        curl_setopt($this->curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($this->curl, CURLOPT_SSL_VERIFYHOST, false);
+        $this->setOpt(CURLOPT_SSL_VERIFYPEER, false);
+        $this->setOpt(CURLOPT_SSL_VERIFYHOST, false);
+        $this->setOpt(CURLOPT_RETURNTRANSFER, true);
+        $this->setOpt(CURLOPT_HEADER, true);
     }
 
     /**
@@ -44,10 +49,52 @@ class Curl
         return $this;
     }
 
+
+    /**
+     * @param string $rawHeaders
+     *
+     * @see http://php.net/manual/ru/function.http-parse-headers.php#112986
+     * @return array
+     */
+    protected function parseHeaders($rawHeaders)
+    {
+        if (!function_exists('http_parse_headers')) {
+            $headers = array();
+            $key = '';
+
+            foreach (explode("\n", $rawHeaders) as $h) {
+                $h = explode(':', $h, 2);
+
+                if (isset($h[1])) {
+                    if (!isset($headers[$h[0]])) {
+                        $headers[$h[0]] = trim($h[1]);
+                    } elseif (is_array($headers[$h[0]])) {
+                        $headers[$h[0]] = array_merge($headers[$h[0]], array(trim($h[1])));
+                    } else {
+                        $headers[$h[0]] = array_merge(array($headers[$h[0]]), array(trim($h[1])));
+                    }
+
+                    $key = $h[0];
+                } else {
+                    if (substr($h[0], 0, 1) == "\t") {
+                        $headers[$key] .= "\r\n\t".trim($h[0]);
+                    } elseif (!$key) {
+                        $headers[0] = trim($h[0]);
+                    }
+                }
+            }
+
+            return $headers;
+        }
+
+        return http_parse_headers($rawHeaders);
+    }
+
+
     /**
      * Получаем результат
      *
-     * @return mixed
+     * @return Response
      */
     public function exec()
     {
@@ -58,7 +105,16 @@ class Curl
             $this->sendPostData();
         }
 
-        return curl_exec($this->curl);
+        $out = curl_exec($this->curl);
+        $size = curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
+        $status = curl_getinfo($this->curl, CURLINFO_HTTP_CODE);
+
+        // заголовки
+        $headers = $this->parseHeaders(substr($out, 0, $size - 4));
+        // тело
+        $content = substr($out, $size);
+
+        return new Response($content, $status, $headers);
     }
 
     /**
