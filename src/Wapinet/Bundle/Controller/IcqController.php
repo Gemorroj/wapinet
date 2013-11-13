@@ -17,9 +17,68 @@ class IcqController extends Controller
         return $this->render('WapinetBundle:Icq:index.html.twig');
     }
 
+    /**
+     * @return array
+     */
+    protected function getIcqVariables ()
+    {
+        $curl = $this->get('curl_helper');
+        $curl->setOpt(CURLOPT_URL, 'http://www.icq.com/join/ru');
+        $curl->addBrowserHeaders();
+        $curl->addCompression();
+        $curl->setOpt(CURLOPT_RETURNTRANSFER, true);
+        $curl->setOpt(CURLOPT_HEADER, false);
+        $out = $curl->exec();
+
+        preg_match('/name="csrf"[\s+]value="(.+)"/U', $out, $csrf);
+        preg_match('/name="gnm"[\s+]value="(.+)"/U', $out, $gnm);
+        preg_match('/src="https:\/\/www\.icq\.com\/utils\/recaptcha\/gnm\/(.+)"/U', $out, $img_gnm);
+
+        return array(
+            'csrf' => $csrf[1],
+            'gnm' => $gnm[1],
+            'gnm_img' => $img_gnm[1],
+            'reg_type' => '2',
+        );
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return bool
+     */
+    protected function icqRegistration (array $data)
+    {
+        $curl = $this->get('curl_helper');
+        $curl->setOpt(CURLOPT_URL, 'http://www.icq.com/join/commit/ru');
+        $curl->addBrowserHeaders();
+        $curl->addCompression();
+        $curl->setOpt(CURLOPT_REFERER, 'http://www.icq.com/join/ru');
+        $curl->setOpt(CURLOPT_RETURNTRANSFER, true);
+        $curl->setOpt(CURLOPT_HEADER, false);
+        $curl->addHeader('X-Requested-With', 'XMLHttpRequest');
+        $curl->addHeader('Cookie', 'is_ab_mim=0; rfd=; icq_tracking=' . mt_rand(99999, PHP_INT_MAX) . '; icq_lang=ru; csrf=' . $data['csrf']);
+
+        $curl->addPostData('reg_type', $data['reg_type']);
+        $curl->addPostData('csrf', $data['csrf']);
+        $curl->addPostData('first_name', $data['first_name']);
+        $curl->addPostData('last_name', $data['last_name']);
+        $curl->addPostData('email', $data['email']);
+        $curl->addPostData('password', $data['password']);
+        $curl->addPostData('gnm', $data['gnm']);
+        $curl->addPostData('captcha', $data['captcha']);
+
+        $out = $curl->exec();
+
+        $json = json_decode($out);
+
+        return (200 === $json->status);
+    }
+
     public function registrationAction(Request $request)
     {
         $result = null;
+        $variables = null;
 
         $form = $this->createForm(new RegistrationType());
         $form->handleRequest($request);
@@ -27,31 +86,26 @@ class IcqController extends Controller
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $data = $form->getData();
-/*
-                $content = $this->cleanUserInfo($data['uin']);
-                if (!$content) {
-                    $form->addError(new FormError('Пользователь не найден'));
+                if (!$this->icqRegistration($data)) {
+                    $form->addError(new FormError('Проверьте правильность данных и попробуйте еще раз. Возможно, указанный E-mail уже был зарегистрирован.'));
                 } else {
-                    $result = array(
-                        'uin' => $data['uin'],
-                        'content' => $content, //raw
-                    );
+                    $result = true;
                 }
-*/
             }
+        }
+
+        if (true !== $result) {
+            $variables = $this->getIcqVariables();
         }
 
         return $this->render('WapinetBundle:Icq:registration.html.twig', array(
             'form' => $form->createView(),
-            'gnm' => 'sdf',
-            'gnm_img' => '3453',
-            'csrf' => '111',
-            'reg_type' => '2',
+            'variables' => $variables,
             'result' => $result
         ));
     }
 
-    public function registrationPicAction(Request $request, $gnm_img)
+    public function registrationPicAction($gnm_img)
     {
         $curl = $this->get('curl_helper');
         $curl->setOpt(CURLOPT_URL, 'https://www.icq.com/utils/recaptcha/gnm/' . $gnm_img);

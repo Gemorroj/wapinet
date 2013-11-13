@@ -4,7 +4,9 @@
 
 {% block content %}
     {% if result is not null %}
-        ...
+        Вы Успешно Зарегистрировались!<br/>
+        На Ваш Email отправлено письмо со ссылкой для подтверждения регистрации.<br/>
+        Для активации аккаунта, Вы должны перейти по указанной в Email ссылке.
     {% else %}
         <p>
             Используйте данный сервис регистрации в ICQ только если у Вас нет возможности зарегистрироваться на <a href="http://www.icq.com/join/">официальном сайте</a>.<br/>
@@ -13,15 +15,18 @@
         </p>
 
         {{ form_start(form, {'action': path('icq_registration'), 'method': 'POST'}) }}
-            {{ form_row(form.reg_type, {'value': reg_type}) }}
-            {{ form_row(form.csrf, {'value': csrf}) }}
-            {{ form_row(form.gnm, {'value': gnm}) }}
+            {{ form_errors(form) }}
+
+            {{ form_row(form.reg_type, {'value': variables.reg_type}) }}
+            {{ form_row(form.csrf, {'value': variables.csrf}) }}
+            {{ form_row(form.gnm, {'value': variables.gnm}) }}
             {{ form_row(form.first_name) }}
             {{ form_row(form.last_name) }}
             {{ form_row(form.email) }}
             {{ form_row(form.password) }}
-            <img src="{{ path('icq_registration_pic', {'gnm_img': gnm_img}) }}" alt="код"/><br/>
+            <img src="{{ path('icq_registration_pic', {'gnm_img': variables.gnm_img}) }}" alt="код"/><br/>
             {{ form_row(form.captcha) }}
+            {{ form_rest(form) }}
             {{ form_row(form.submit) }}
         {{ form_end(form) }}
     {% endif %}
