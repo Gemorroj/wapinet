@@ -2,6 +2,7 @@
 namespace Wapinet\Bundle\Helper;
 
 use Symfony\Component\HttpFoundation\Response;
+use Wapinet\Bundle\Exception\RequestException;
 
 /**
  * CURL хэлпер
@@ -91,9 +92,56 @@ class Curl
     }
 
 
+    // загрузка файлов
+    // @see https://github.com/kriswallsmith/Buzz/blob/master/lib/Buzz/Client/AbstractCurl.php#L101
+    /**
+     * Returns a value for the CURLOPT_POSTFIELDS option.
+     *
+     * @return string|array A post fields value
+     */
+    /*
+    private static function getPostFields(RequestInterface $request)
+    {
+        if (!$request instanceof FormRequestInterface) {
+            return $request->getContent();
+        }
+
+        $fields = $request->getFields();
+        $multipart = false;
+
+        foreach ($fields as $name => $value) {
+            if ($value instanceof FormUploadInterface) {
+                $multipart = true;
+
+                if ($file = $value->getFile()) {
+                    // replace value with upload string
+                    $fields[$name] = '@'.$file;
+
+                    if ($contentType = $value->getContentType()) {
+                        $fields[$name] .= ';type='.$contentType;
+                    }
+                    if (basename($file) != $value->getFilename()) {
+                        $fields[$name] .= ';filename='.$value->getFilename();
+                    }
+                } else {
+                    return $request->getContent();
+                }
+            }
+        }
+
+        return $multipart ? $fields : http_build_query($fields, '', '&');
+    }
+    */
+
+
+
+
+
+
     /**
      * Получаем результат
      *
+     * @throws RequestException
      * @return Response
      */
     public function exec()
@@ -106,11 +154,14 @@ class Curl
         }
 
         $out = curl_exec($this->curl);
+        if (false === $out) {
+            throw new RequestException(curl_error($this->curl), curl_errno($this->curl));
+        }
         $size = curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
         $status = curl_getinfo($this->curl, CURLINFO_HTTP_CODE);
 
         // заголовки
-        $headers = $this->parseHeaders(substr($out, 0, $size - 4));
+        $headers = $this->parseHeaders(rtrim(substr($out, 0, $size)));
         // тело
         $content = substr($out, $size);
 
