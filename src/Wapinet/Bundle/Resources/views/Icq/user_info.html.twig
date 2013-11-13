@@ -7,19 +7,14 @@
         {{ form_start(form, {'action': path('icq_user_info'), 'method': 'POST'}) }}
             <div>
                 {{ form_widget(form) }}
-                <input type="submit" value="Смотреть" />
             </div>
         {{ form_end(form) }}
         {% if result is not null %}
-            {% if result.found %}
-                <div>
-                    <img src="https://api.icq.net/expressions/get?t={{ result.uin }}&amp;f=native&amp;type=buddyIcon" alt="avatar" />
-                    <img src="http://status.icq.com/online.gif?img=5&amp;icq={{ result.uin }}" alt="status" />
-                    {{ result.content|raw }}
-                </div>
-            {% else %}
-                <div>Пользователь не найден<br/></div>
-            {% endif %}
+            <div>
+                <img src="https://api.icq.net/expressions/get?t={{ result.uin }}&amp;f=native&amp;type=buddyIcon" alt="avatar" />
+                <img src="http://status.icq.com/online.gif?img=5&amp;icq={{ result.uin }}" alt="status" />
+                {{ result.content|raw }}
+            </div>
         {% endif %}
     </div>
 {% endblock %}

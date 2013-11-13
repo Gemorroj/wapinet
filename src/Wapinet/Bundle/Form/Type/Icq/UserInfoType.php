@@ -18,6 +18,7 @@ class UserInfoType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder->add('uin', 'number', array('label' => 'UIN', 'required' => true));
+        $builder->add('submit', 'submit', array('label' => 'Смотреть'));
     }
 
     /**

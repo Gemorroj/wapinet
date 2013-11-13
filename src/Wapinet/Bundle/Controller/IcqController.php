@@ -5,6 +5,7 @@ namespace Wapinet\Bundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Wapinet\Bundle\Form\Type\Icq\UserInfoType;
+use Symfony\Component\Form\FormError;
 
 
 class IcqController extends Controller
@@ -76,13 +77,14 @@ class IcqController extends Controller
                 $data = $form->getData();
 
                 $content = $this->cleanUserInfo($data['uin']);
-
-                // TODO: написать общий класс для работы с результатами
-                $result = array(
-                    'uin' => $data['uin'],
-                    'found' => (bool)$content,
-                    'content' => $content, //raw
-                );
+                if (!$content) {
+                    $form->addError(new FormError('Пользователь не найден'));
+                } else {
+                    $result = array(
+                        'uin' => $data['uin'],
+                        'content' => $content, //raw
+                    );
+                }
             }
         }
 
