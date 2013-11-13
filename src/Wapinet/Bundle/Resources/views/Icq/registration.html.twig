@@ -13,7 +13,16 @@
         </p>
 
         {{ form_start(form, {'action': path('icq_registration'), 'method': 'POST'}) }}
-            {{ form_widget(form) }}
+            {{ form_row(form.reg_type, {'value': reg_type}) }}
+            {{ form_row(form.csrf, {'value': csrf}) }}
+            {{ form_row(form.gnm, {'value': gnm}) }}
+            {{ form_row(form.first_name) }}
+            {{ form_row(form.last_name) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.password) }}
+            <img src="{{ path('icq_registration_pic', {'gnm_img': gnm_img}) }}" alt="код"/><br/>
+            {{ form_row(form.captcha) }}
+            {{ form_row(form.submit) }}
         {{ form_end(form) }}
     {% endif %}
 {% endblock %}

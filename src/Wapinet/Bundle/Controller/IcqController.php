@@ -4,6 +4,7 @@ namespace Wapinet\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Wapinet\Bundle\Form\Type\Icq\UserInfoType;
 use Wapinet\Bundle\Form\Type\Icq\RegistrationType;
 use Symfony\Component\Form\FormError;
@@ -42,13 +43,47 @@ class IcqController extends Controller
 
         return $this->render('WapinetBundle:Icq:registration.html.twig', array(
             'form' => $form->createView(),
+            'gnm' => 'sdf',
+            'gnm_img' => '3453',
+            'csrf' => '111',
+            'reg_type' => '2',
             'result' => $result
         ));
     }
 
-    public function registrationPicAction(Request $request)
+    public function registrationPicAction(Request $request, $gnm_img)
     {
+        $curl = $this->get('curl_helper');
+        $curl->setOpt(CURLOPT_URL, 'https://www.icq.com/utils/recaptcha/gnm/' . $gnm_img);
+        $curl->addBrowserHeaders();
+        $curl->setOpt(CURLOPT_REFERER, 'http://www.icq.com/join/ru');
+        $curl->setOpt(CURLOPT_RETURNTRANSFER, true);
+        $curl->setOpt(CURLOPT_HEADER, false);
+        $out = $curl->exec();
 
+        $im = @imagecreatefromstring($out);
+        if ($im === false) {
+            return new Response('Error');
+        }
+
+        $i = imagecreatetruecolor(120, 50);
+        imagecopyresampled($i, $im, 0, 0, 0, 0, 120, 50, 240, 100);
+
+        //imageinterlace($im, 1); // Примочка
+
+        ob_start();
+        imagepng($i, null, 9);
+        $image = ob_get_contents();
+        ob_end_clean();
+        imagedestroy($i);
+        imagedestroy($im);
+
+
+        $response = new Response($image);
+        $response->headers->set('Content-Type', 'image/png');
+        $response->headers->set('Cache-Control', 'no-cache, no-store, max-age=0');
+
+        return $response;
     }
 
     public function aboutAction()

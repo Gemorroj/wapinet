@@ -18,7 +18,7 @@ class RegistrationType extends AbstractType
         parent::buildForm($builder, $options);
 
 
-        $builder->add('reg_type', 'hidden', array('data' => '2'));
+        $builder->add('reg_type', 'hidden');
         $builder->add('csrf', 'hidden');
         $builder->add('gnm', 'hidden');
         $builder->add('first_name', 'text', array('label' => 'Имя'));
