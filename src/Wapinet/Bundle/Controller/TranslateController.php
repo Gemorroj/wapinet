@@ -21,24 +21,7 @@ class TranslateController extends Controller
                 $data = $form->getData();
 
                 try {
-                    $curl = $this->get('curl_helper');
-                    $curl->setOpt(CURLOPT_URL,
-                        'https://translate.yandex.net/api/v1.5/tr.json/translate?key=' .
-                        $this->container->getParameter('wapinet_translate_key') .
-                        '&lang=' . $data['lang'] .
-                        '&text=' . urlencode($data['text'])
-                    );
-
-                    $response = $curl->exec();
-
-                    if (200 !== $response->getStatusCode()) {
-                        throw new HttpException($response->getStatusCode());
-                    }
-
-                    $json = json_decode($response->getContent());
-
-                    $result = implode('', $json->text);
-
+                    $result = $this->getTranslate($data);
                 } catch (\Exception $e) {
                     $form->addError(new FormError($e->getMessage()));
                 }
@@ -50,5 +33,33 @@ class TranslateController extends Controller
             'form' => $form->createView(),
             'result' => $result,
         ));
+    }
+
+
+    /**
+     * @param array $data
+     *
+     * @return string
+     * @throws HttpException
+     */
+    protected function getTranslate(array $data)
+    {
+        $curl = $this->get('curl_helper');
+        $curl->setOpt(CURLOPT_URL,
+            'https://translate.yandex.net/api/v1.5/tr.json/translate?key=' .
+            $this->container->getParameter('wapinet_translate_key') .
+            '&lang=' . $data['lang'] .
+            '&text=' . urlencode($data['text'])
+        );
+
+        $response = $curl->exec();
+
+        if (200 !== $response->getStatusCode()) {
+            throw new HttpException($response->getStatusCode());
+        }
+
+        $json = json_decode($response->getContent());
+
+        return implode('', $json->text);
     }
 }

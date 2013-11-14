@@ -1,0 +1,3 @@
+pagerank_index:
+    pattern: /
+    defaults: { _controller: WapinetBundle:Pagerank:index }

@@ -49,3 +49,7 @@ email:
 translate:
     resource: "@WapinetBundle/Resources/config/routing/translate.yml"
     prefix:   /translate
+
+pagerank:
+    resource: "@WapinetBundle/Resources/config/routing/pagerank.yml"
+    prefix:   /pagerank
