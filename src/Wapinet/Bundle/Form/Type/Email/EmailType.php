@@ -36,6 +36,6 @@ class EmailType extends AbstractType
      */
     public function getName()
     {
-        return 'icq_user_info';
+        return 'email_form';
     }
 }

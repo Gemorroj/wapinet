@@ -3,12 +3,19 @@ namespace Wapinet\Bundle\Helper;
 
 use Symfony\Component\HttpFoundation\Response;
 use Wapinet\Bundle\Exception\RequestException;
+use Symfony\Component\HttpKernel\Exception\LengthRequiredHttpException;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * CURL хэлпер
  */
 class Curl
 {
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
     /**
      * @var resource
      */
@@ -28,8 +35,10 @@ class Curl
     /**
      * Конструктор
      */
-    public function __construct()
+    public function __construct(ContainerInterface $container)
     {
+        $this->container = $container;
+
         $this->curl = curl_init();
         $this->setOpt(CURLOPT_SSL_VERIFYPEER, false);
         $this->setOpt(CURLOPT_SSL_VERIFYHOST, false);
@@ -48,6 +57,28 @@ class Curl
     {
         curl_setopt($this->curl, $key, $value);
         return $this;
+    }
+
+
+    /**
+     * @throws LengthRequiredHttpException|\LengthException
+     */
+    protected function checkFileSize()
+    {
+        $this->setOpt(CURLOPT_NOBODY, true);
+        $response = $this->exec();
+
+        $length = $response->headers->get('Content-Length');
+        if (null === $length) {
+            throw new LengthRequiredHttpException('Не удалось определить размер файла');
+        }
+
+        $maxLength = $this->container->getParameter('wapinet_max_download_filesize');
+        if ($length > $maxLength) {
+            throw new \LengthException('Размер файла превышает максимально допустимый');
+        }
+
+        $this->setOpt(CURLOPT_NOBODY, false);
     }
 
 

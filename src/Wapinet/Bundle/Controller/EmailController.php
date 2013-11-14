@@ -5,6 +5,7 @@ namespace Wapinet\Bundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Wapinet\Bundle\Form\Type\Email\EmailType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class EmailController extends Controller
 {
@@ -22,7 +23,15 @@ class EmailController extends Controller
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $data = $form->getData();
-                //
+                file_put_contents('/log.log', print_r($data, true));
+
+                $message = \Swift_Message::newInstance($data['subject'], $data['message'], 'text/plain', 'UTF-8');
+
+                if ($data['attach'] instanceof UploadedFile) {
+
+                } elseif ('' !== $data['url']) {
+
+                }
             }
         }
 
