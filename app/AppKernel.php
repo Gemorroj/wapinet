@@ -5,6 +5,51 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
 {
+    /**
+     * {@inheritdoc}
+     */
+    protected function buildContainer()
+    {
+        $container = parent::buildContainer();
+
+        $this->createDir(self::getTmpDir());
+
+        return $container;
+    }
+
+    /**
+     * @param string $dir
+     *
+     * @throws RuntimeException
+     * @return bool
+     */
+    protected function createDir($dir)
+    {
+        if (!is_dir($dir)) {
+            if (false === @mkdir($dir, 0777, true)) {
+                throw new \RuntimeException(sprintf("Unable to create the tmp directory (%s)\n", $dir));
+            }
+        } elseif (!is_writable($dir)) {
+            throw new \RuntimeException(sprintf("Unable to write in the tmp directory (%s)\n", $dir));
+        }
+
+        return true;
+    }
+
+
+    /**
+     * Tmp directory
+     *
+     * @return string
+     */
+    public static function getTmpDir()
+    {
+        return __DIR__.'/tmp';
+    }
+
+    /**
+     * @return \Symfony\Component\HttpKernel\Bundle\BundleInterface[]
+     */
     public function registerBundles()
     {
         $bundles = array(
@@ -48,6 +93,7 @@ class AppKernel extends Kernel
 
         return $bundles;
     }
+
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
