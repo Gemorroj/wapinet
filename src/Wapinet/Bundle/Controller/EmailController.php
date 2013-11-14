@@ -18,39 +18,52 @@ class EmailController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                //TODO: компрессия в zip
                 $data = $form->getData();
 
-                $message = \Swift_Message::newInstance($data['subject'], $data['message'], 'text/plain', 'UTF-8');
-                $message->setFrom($data['from']);
-                $message->setTo($data['to']);
-
-                if ($data['attach'] instanceof UploadedFile) {
-                    $attach = \Swift_Attachment::fromPath($data['attach']->getPathname(), $data['attach']->getClientMimeType());
-                    $attach->setFilename($data['attach']->getClientOriginalName());
-                    $message->attach($attach);
-                } elseif (null !== $data['url']) {
-                    $curl = $this->get('curl_helper');
-                    $curl->setOpt(CURLOPT_URL, $data['url']);
-                    $curl->addBrowserHeaders();
-                    try {
-                        $curl->checkFileSize();
-                    } catch (\Exception $e) {
-                        $form->addError(new FormError($e->getMessage()));
-                    }
-                    $response = $curl->exec();
-                    $attach = \Swift_Attachment::newInstance($response->getContent(), basename($data['url']), $response->headers->get('Content-Type'));
-                    $message->attach($attach);
+                try {
+                    $message = $this->getMessage($data);
+                    $result = (bool)$this->get('mailer')->send($message);
+                } catch (\Exception $e) {
+                    $form->addError(new FormError($e->getMessage()));
                 }
 
-                $result = (bool)$this->get('mailer')->send($message);
             }
         }
 
         return $this->render('WapinetBundle:Email:index.html.twig', array(
             'form' => $form->createView(),
-             'result' => $result
+            'result' => $result
         ));
     }
 
+
+    /**
+     * @param array $data
+     *
+     * @return \Swift_Message
+     */
+    protected function getMessage(array $data)
+    {
+        $message = \Swift_Message::newInstance($data['subject'], $data['message'], 'text/plain', 'UTF-8');
+        $message->setFrom($data['from']);
+        $message->setTo($data['to']);
+
+        if ($data['attach'] instanceof UploadedFile) {
+            $attach = \Swift_Attachment::fromPath($data['attach']->getPathname(), $data['attach']->getClientMimeType());
+            $attach->setFilename($data['attach']->getClientOriginalName());
+            $message->attach($attach);
+        } elseif (null !== $data['url']) {
+            $curl = $this->get('curl_helper');
+            $curl->setOpt(CURLOPT_URL, $data['url']);
+            $curl->addBrowserHeaders();
+
+            $curl->checkFileSize();
+
+            $response = $curl->exec();
+            $attach = \Swift_Attachment::newInstance($response->getContent(), basename($data['url']), $response->headers->get('Content-Type'));
+            $message->attach($attach);
+        }
+
+        return $message;
+    }
 }
