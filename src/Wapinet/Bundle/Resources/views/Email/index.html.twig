@@ -4,7 +4,11 @@
 
 {% block content %}
     {% if result is not null %}
-        ...
+        {% if result %}
+            E-mail успешно отправлен
+        {% else %}
+            Произошла ошибка при отправке E-mail
+        {% endif %}
     {% else %}
         {{ form_start(form, {'action': path('email_index'), 'method': 'POST'}) }}
             {{ form_widget(form) }}

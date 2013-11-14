@@ -63,7 +63,7 @@ class Curl
     /**
      * @throws LengthRequiredHttpException|\LengthException
      */
-    protected function checkFileSize()
+    public function checkFileSize()
     {
         $this->setOpt(CURLOPT_NOBODY, true);
         $response = $this->exec();
