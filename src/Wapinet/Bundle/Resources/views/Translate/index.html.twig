@@ -1,0 +1,17 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Переводчик{% endblock %}
+
+{% block content %}
+    {{ form_start(form, {'action': path('translate_index'), 'method': 'POST'}) }}
+        {% if result is not null %}
+            {% if result %}
+                <label>Перевод <textarea>{{ result }}</textarea></label>
+            {% else %}
+                Произошла ошибка
+            {% endif %}
+        {% endif %}
+
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

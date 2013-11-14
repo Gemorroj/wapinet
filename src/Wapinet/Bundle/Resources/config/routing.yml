@@ -45,3 +45,7 @@ icq:
 email:
     resource: "@WapinetBundle/Resources/config/routing/email.yml"
     prefix:   /email
+
+translate:
+    resource: "@WapinetBundle/Resources/config/routing/translate.yml"
+    prefix:   /translate
