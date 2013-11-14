@@ -18,6 +18,7 @@ class EmailController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
+                //TODO: компрессия в zip
                 $data = $form->getData();
 
                 $message = \Swift_Message::newInstance($data['subject'], $data['message'], 'text/plain', 'UTF-8');
