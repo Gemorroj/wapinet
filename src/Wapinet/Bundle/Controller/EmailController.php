@@ -22,9 +22,12 @@ class EmailController extends Controller
                 $data = $form->getData();
 
                 $message = \Swift_Message::newInstance($data['subject'], $data['message'], 'text/plain', 'UTF-8');
+                $message->setFrom($data['from']);
+                $message->setTo($data['to']);
 
                 if ($data['attach'] instanceof UploadedFile) {
-                    $attach = \Swift_Attachment::fromPath($data['attach']->getPathname(), $data['attach']->getMimeType());
+                    $attach = \Swift_Attachment::fromPath($data['attach']->getPathname(), $data['attach']->getClientMimeType());
+                    $attach->setFilename($data['attach']->getClientOriginalName());
                     $message->attach($attach);
                 } elseif (null !== $data['url']) {
                     $curl = $this->get('curl_helper');
