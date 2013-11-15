@@ -94,7 +94,7 @@ class BrowserInfoController extends Controller
 
     public function indexAction(Request $request)
     {
-        return $this->render('WapinetBundle:About:index.html.twig', array(
+        return $this->render('WapinetBundle:BrowserInfo:index.html.twig', array(
                 'userAgent' => $request->server->get('HTTP_USER_AGENT'),
                 'wapProfile' => $request->server->get('HTTP_X_WAP_PROFILE'),
                 'phoneNumber' => $this->getPhoneNumber($request),
