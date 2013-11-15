@@ -3,14 +3,15 @@
 {% block title %}WEB мастерская{% endblock %}
 {% block menu %}
     {{wapinet_menu({
-    1: {'uri': path('programming'), 'title': 'WEB мастерская'}
+    1: {'uri': path('index'), 'title': 'Главная'},
+    2: {'uri': path('programming'), 'title': 'WEB мастерская'}
     })}}
 {% endblock %}
 
 
 {% block content %}
     <ul data-role="listview" data-inset="true">
-        <li><a href="{{ path('source_code') }}">Мои разработки</a></li>
+        <li><a href="{{ path('open_source') }}">Open source разработки</a></li>
         <li><a href="{{ path('buy_php_scripts') }}">Платные PHP скрипты</a></li>
         <li><a href="#">Бесплатные PHP скрипты</a></li>
         <li><a href="#">FTP менеджер (Punk 77)</a></li>

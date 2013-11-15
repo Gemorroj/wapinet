@@ -23,8 +23,9 @@ class Menu extends \Twig_Extension
     public function getMenu(array $options = array(array('uri' => '/', 'title' => 'wapinet.ru')))
     {
         $out = '<div data-role="controlgroup" data-type="horizontal" data-mini="true" class="ui-btn-left">';
-        $out .= '<a href="javascript:history.back();" data-role="button" data-icon="back" data-iconpos="notext">Назад</a>';
-        $out .= '<a href="#menu" data-role="button" data-icon="bars">Меню</a>';
+        //$out .= '<a href="javascript:history.back();" data-role="button" data-icon="back" data-iconpos="notext">Назад</a>';
+        //$out .= '<a href="#menu" data-role="button" data-icon="bars">Меню</a>';
+        $out .= '<a href="#menu" data-role="button" data-icon="bars" data-iconpos="notext">Меню</a>';
 
         ksort($options, SORT_NUMERIC);
         $last = array_pop($options);

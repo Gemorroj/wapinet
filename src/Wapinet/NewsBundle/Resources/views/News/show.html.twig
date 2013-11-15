@@ -1,6 +1,12 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Новсти - {{ entity.subject }}{% endblock %}
+{% block title %}{{ entity.subject }}{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('wapinet_news'), 'title': 'Новости'},
+    2: {'uri': path('wapinet_news_show', {'id': entity.id}), 'title': entity.subject},
+    })}}
+{% endblock %}
 
 {% block content -%}
     <h2>{{ entity.subject }}</h2>

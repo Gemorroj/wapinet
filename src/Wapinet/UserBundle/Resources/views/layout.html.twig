@@ -1,4 +1,10 @@
 {% extends '::base.html.twig' %}
+{% block title %}wapinet.ru{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('index'), 'title': wapinet_title}
+    })}}
+{% endblock %}
 
 {% block content %}
     <div>

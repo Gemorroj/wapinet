@@ -3,7 +3,9 @@
 {% block title %}Pantech{% endblock %}
 {% block menu %}
     {{wapinet_menu({
-    1: {'uri': path('mobile_code_pantech'), 'title': 'Pantech'}
+    1: {'uri': path('utilities'), 'title': 'Полезные WEB приложения'},
+    2: {'uri': path('mobile_code_index'), 'title': 'Телефонные коды'},
+    3: {'uri': path('mobile_code_pantech'), 'title': 'Pantech'}
     })}}
 {% endblock %}
 

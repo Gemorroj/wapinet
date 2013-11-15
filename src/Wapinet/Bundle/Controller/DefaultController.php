@@ -26,9 +26,9 @@ class DefaultController extends Controller
         return $this->render('WapinetBundle:Default:programming.html.twig');
     }
 
-    public function sourceCodeAction()
+    public function openSourceAction()
     {
-        return $this->render('WapinetBundle:Default:source_code.html.twig');
+        return $this->render('WapinetBundle:Default:open_source.html.twig');
     }
 
     public function gmanagerAction()

@@ -3,7 +3,9 @@
 {% block title %}Данные о владельце UIN{% endblock %}
 {% block menu %}
     {{wapinet_menu({
-    1: {'uri': path('icq_user_info'), 'title': 'Данные о владельце UIN'}
+    1: {'uri': path('utilities'), 'title': 'Полезные WEB приложения'},
+    2: {'uri': path('icq_index'), 'title': 'Все об ICQ'},
+    3: {'uri': path('icq_user_info'), 'title': 'Данные о владельце UIN'}
     })}}
 {% endblock %}
 

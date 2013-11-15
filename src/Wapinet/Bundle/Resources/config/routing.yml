@@ -18,9 +18,9 @@ programming:
     pattern:  /programming
     defaults: { _controller: WapinetBundle:Default:programming }
 
-source_code:
-    pattern:  /source_code
-    defaults: { _controller: WapinetBundle:Default:sourceCode }
+open_source:
+    pattern:  /open_source
+    defaults: { _controller: WapinetBundle:Default:openSource }
 
 gmanager:
     pattern:  /gmanager

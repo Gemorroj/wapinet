@@ -27,6 +27,7 @@ twig:
     strict_variables: %kernel.debug%
     globals:
         wapinet_nophoto: "%wapinet_nophoto%"
+        wapinet_title: "%wapinet_title%"
 
 # Assetic Configuration
 assetic:
