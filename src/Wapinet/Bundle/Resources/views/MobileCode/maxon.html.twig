@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Maxon{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('mobile_code_maxon'), 'title': 'Maxon'}
+    })}}
+{% endblock %}
 
 {% block content %}
         *#9900# - Версия прошивки<br/>

@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Все об ICQ{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('icq_index'), 'title': 'Все об ICQ'}
+    })}}
+{% endblock %}
 
 {% block content %}
     <ul data-role="listview" data-inset="true">

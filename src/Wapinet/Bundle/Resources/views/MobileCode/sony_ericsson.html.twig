@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Sony Ericsson{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('mobile_code_sony_ericsson'), 'title': 'Sony Ericsson'}
+    })}}
+{% endblock %}
 
 {% block content %}
         *585*0000# - нетмонитор в новых моделях<br/>

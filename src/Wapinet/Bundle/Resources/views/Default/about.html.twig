@@ -1,7 +1,11 @@
 {% extends '::base.html.twig' %}
 
 {% block title %}О сайте{% endblock %}
-
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('about'), 'title': 'О сайте'}
+    })}}
+{% endblock %}
 
 {% block content %}
     Сайт появился в 2006 году.<br />

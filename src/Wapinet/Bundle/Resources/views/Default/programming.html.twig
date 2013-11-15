@@ -1,6 +1,11 @@
 {% extends '::base.html.twig' %}
 
 {% block title %}WEB мастерская{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('programming'), 'title': 'WEB мастерская'}
+    })}}
+{% endblock %}
 
 
 {% block content %}

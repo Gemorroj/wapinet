@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Регистрация ICQ номера (UIN){% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('icq_registration'), 'title': 'Регистрация ICQ номера (UIN)'}
+    })}}
+{% endblock %}
 
 {% block content %}
     {% if result is not null %}

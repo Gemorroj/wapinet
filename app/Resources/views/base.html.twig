@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ wapinet_title }} - {{ title }}</title>
+    <title>wapinet.ru - {{ title }}</title>
 
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -73,12 +73,7 @@
 
         <div data-role="header" data-position="fixed">
             {% block header %}
-                <div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
-                    <a href="javascript:history.back();" data-role="button" data-icon="back" data-iconpos="notext">Назад</a>
-                    <a href="#menu" data-role="button" data-icon="bars">Меню</a>
-                    <!-- <a href="{{ path('index') }}" data-role="button" data-icon="home">{{ wapinet_title }}</a> -->
-                </div>
-                <h2><a href="{{ path('index') }}" data-role="button" data-inline="false">{{ wapinet_title }}</a></h2>
+                {% block menu %}{% endblock %}
                 {% if app.user %}
                     <a href="{{ path('fos_user_profile_show') }}" data-role="button" data-icon="gear" class="ui-btn-right">
                         {% if app.user.hasAvatar %}
@@ -93,10 +88,7 @@
         </div>
 
         <div data-role="content">
-            {% block content %}
-                <p></p>
-            {% endblock %}
-            {% block menu %}{% endblock %}
+            {% block content %}{% endblock %}
         </div>
 
         <div data-role="footer">

@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Анализ индексирования сайта{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('pagerank_index'), 'title': 'Анализ индексирования сайта'}
+    })}}
+{% endblock %}
 
 {% block content %}
     {{ form_start(form, {'action': path('pagerank_index'), 'method': 'POST'}) }}

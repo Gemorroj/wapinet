@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Ericsson{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('mobile_code_ericsson'), 'title': 'Ericsson'}
+    })}}
+{% endblock %}
 
 {% block content %}
         *#0000# - Сбрасывает язык в меню на английский<br/>

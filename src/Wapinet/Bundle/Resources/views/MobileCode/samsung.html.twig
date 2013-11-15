@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Samsung{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('mobile_code_samsung'), 'title': 'Samsung'}
+    })}}
+{% endblock %}
 
 {% block content %}
     Менеджер файлов<br/>

@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Сим карты{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('mobile_code_sim_card'), 'title': 'Сим карты'}
+    })}}
+{% endblock %}
 
 {% block content %}
         Изменить PIN:

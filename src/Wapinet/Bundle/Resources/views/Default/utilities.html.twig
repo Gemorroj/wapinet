@@ -1,6 +1,11 @@
 {% extends '::base.html.twig' %}
 
 {% block title %}Полезные WEB приложения{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('utilities'), 'title': 'Полезные WEB приложения'}
+    })}}
+{% endblock %}
 
 
 {% block content %}

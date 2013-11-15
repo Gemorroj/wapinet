@@ -1,7 +1,11 @@
 {% extends '::base.html.twig' %}
 
 {% block title %}Разработки с открытым кодом{% endblock %}
-
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('source_code'), 'title': 'Разработки с открытым кодом'}
+    })}}
+{% endblock %}
 
 {% block content %}
     <ul data-role="listview" data-inset="true">

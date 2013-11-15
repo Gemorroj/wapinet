@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Pantech{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('mobile_code_pantech'), 'title': 'Pantech'}
+    })}}
+{% endblock %}
 
 {% block content %}
         G500, G600, G700, G800, G900<br/>

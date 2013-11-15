@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Телефонные коды{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('mobile_code_index'), 'title': 'Телефонные коды'}
+    })}}
+{% endblock %}
 
 {% block content %}
     <ul data-role="listview" data-inset="true">

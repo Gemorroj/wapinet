@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Motorola{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('mobile_code_motorola'), 'title': 'Motorola'}
+    })}}
+{% endblock %}
 
 {% block content %}
         ppp087p1p OK - Активация 100 ячеек памяти в телефоне<br/>

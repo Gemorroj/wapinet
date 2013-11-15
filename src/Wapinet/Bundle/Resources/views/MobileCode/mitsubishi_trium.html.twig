@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Mitsubishi Trium{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('mobile_code_mitsubishi_trium'), 'title': 'Mitsubishi Trium'}
+    })}}
+{% endblock %}
 
 {% block content %}
         Все "секретные" коды вводятся в телефон путем набора специального цифрового кода при одновременном удержании клавиши <strong>*</strong><br/>

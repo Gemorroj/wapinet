@@ -1,7 +1,11 @@
 {% extends '::base.html.twig' %}
 
 {% block title %}Загрузки, развлечения{% endblock %}
-
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'}
+    })}}
+{% endblock %}
 
 {% block content %}
     <ul data-role="listview" data-inset="true">

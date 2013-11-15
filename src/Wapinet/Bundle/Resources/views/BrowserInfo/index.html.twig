@@ -2,12 +2,10 @@
 
 {% block title %}Информация о браузере{% endblock %}
 {% block menu %}
-    {{
-        wapinet_menu({
-            1: {'uri': path('utilities'), 'title': 'Полезные WEB приложения'},
-            2: {'uri': path('browser_info'), 'title': 'Информация о браузере'}
-        })
-    }}
+    {{wapinet_menu({
+        1: {'uri': path('utilities'), 'title': 'Полезные WEB приложения'},
+        2: {'uri': path('browser_info'), 'title': 'Информация о браузере'}
+    })}}
 {% endblock %}
 
 {% block content %}

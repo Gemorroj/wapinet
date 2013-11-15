@@ -2,20 +2,8 @@
 
 namespace Wapinet\Bundle\Twig\Extension;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 class Menu extends \Twig_Extension
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
-
     /**
      * Returns a list of global functions to add to the existing list.
      *
@@ -32,17 +20,21 @@ class Menu extends \Twig_Extension
      * @param array $options
      * @return string
      */
-    public function getMenu(array $options = array())
+    public function getMenu(array $options = array(array('uri' => '/', 'title' => 'wapinet.ru')))
     {
-        $router = $this->container->get('router');
+        $out = '<div data-role="controlgroup" data-type="horizontal" data-mini="true" class="ui-btn-left">';
+        $out .= '<a href="javascript:history.back();" data-role="button" data-icon="back" data-iconpos="notext">Назад</a>';
+        $out .= '<a href="#menu" data-role="button" data-icon="bars">Меню</a>';
 
-        $out = '<ul>';
-        $out .= '<li><a href="' . $router->generate('index') . '">Главная</a></li>';
         ksort($options, SORT_NUMERIC);
+        $last = array_pop($options);
+
         foreach ($options as $value) {
-            $out .= '<li><a href="' . htmlspecialchars($value['uri']) . '">' . htmlspecialchars($value['title'], ENT_NOQUOTES) . '</a></li>';
+            $out .= '<a data-role="button" data-icon="arrow-l" href="' . htmlspecialchars($value['uri']) . '">' . htmlspecialchars($value['title'], ENT_NOQUOTES) . '</a>';
         }
-        $out .= '</ul>';
+
+        $out .= '</div>';
+        $out .= '<h2>' . htmlspecialchars($last['title'], ENT_NOQUOTES) . '</h2>';
 
         return $out;
     }

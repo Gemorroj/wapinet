@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Philips{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('mobile_code_philips'), 'title': 'Philips'}
+    })}}
+{% endblock %}
 
 {% block content %}
         *#7489*# - Показывает секретный код аппарата<br/>

@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Alcatel{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('mobile_code_alcatel'), 'title': 'Alcatel'}
+    })}}
+{% endblock %}
 
 {% block content %}
         000000* - Инженерное меню (индикатор заряда батарей в процентах)<br/>

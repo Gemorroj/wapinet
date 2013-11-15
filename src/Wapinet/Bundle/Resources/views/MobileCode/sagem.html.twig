@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Sagem{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('mobile_code_sagem'), 'title': 'Sagem'}
+    })}}
+{% endblock %}
 
 {% block content %}
         1. Записываем IMEI телефона. Чтобы узнать его набираем *#06#<br/>

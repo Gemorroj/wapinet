@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Nokia{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('mobile_code_nokia'), 'title': 'Nokia'}
+    })}}
+{% endblock %}
 
 {% block content %}
         xx# - xx позиция в телефонной книге<br/>

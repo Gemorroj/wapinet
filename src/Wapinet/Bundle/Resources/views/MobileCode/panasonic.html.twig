@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Panasonic{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('mobile_code_panasonic'), 'title': 'Panasonic'}
+    })}}
+{% endblock %}
 
 {% block content %}
         *01763*3641# - Вход в нетмонитор<br/>

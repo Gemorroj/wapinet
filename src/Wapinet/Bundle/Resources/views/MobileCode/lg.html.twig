@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}LG{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('mobile_code_lg'), 'title': 'LG'}
+    })}}
+{% endblock %}
 
 {% block content %}
         *#07# - IMEI SV<br/>

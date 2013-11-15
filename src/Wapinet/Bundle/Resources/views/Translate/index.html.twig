@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Переводчик{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('translate_index'), 'title': 'Переводчик'}
+    })}}
+{% endblock %}
 
 {% block content %}
     {{ form_start(form, {'action': path('translate_index'), 'method': 'POST'}) }}

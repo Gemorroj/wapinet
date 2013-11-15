@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Данные о владельце UIN{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('icq_user_info'), 'title': 'Данные о владельце UIN'}
+    })}}
+{% endblock %}
 
 {% block content %}
         {{ form_start(form, {'action': path('icq_user_info'), 'method': 'POST'}) }}

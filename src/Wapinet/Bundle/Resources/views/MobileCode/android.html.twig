@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Android{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('mobile_code_android'), 'title': 'Android'}
+    })}}
+{% endblock %}
 
 {% block content %}
         *#*#4636#*#* - Сведения и настройки<br/>

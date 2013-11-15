@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}Bosh{% endblock %}
+{% block title %}Bosch{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('mobile_code_bosch'), 'title': 'Bosch'}
+    })}}
+{% endblock %}
 
 {% block content %}
         *#0000# - Сбрасывает язык меню на английский<br/>

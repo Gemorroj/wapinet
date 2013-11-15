@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Все телефоны{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('mobile_code_all_phones'), 'title': 'Все телефоны'}
+    })}}
+{% endblock %}
 
 {% block content %}
         *#06# - IMEI (серийный номер)<br/>

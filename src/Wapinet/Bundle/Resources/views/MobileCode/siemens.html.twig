@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Siemens{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('mobile_code_siemens'), 'title': 'Siemens'}
+    })}}
+{% endblock %}
 
 {% block content %}
         Выбор языка:<br/>

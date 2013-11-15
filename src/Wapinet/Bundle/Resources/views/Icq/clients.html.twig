@@ -1,6 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}Клиенты ICQ{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('icq_clients'), 'title': 'Клиенты ICQ'}
+    })}}
+{% endblock %}
 
 {% block content %}
         <strong>IM+</strong><br/><a href="http://www.shape.ag/en/products/details.php?product=im&amp;platform=none">Официальный сайт</a><br/>Отличный мультипротокольный (Beep, Skype, ICQ, ВКонтакте, Mail.Ru Агент, Одноклассники) клиент дла множества платформ. Всем рекомендую.<br/><br/>
