@@ -96,6 +96,9 @@
             {% block content %}
                 <p></p>
             {% endblock %}
+            {% block menu %}
+                <p>{{ knp_menu_render('main') }}</p>
+            {% endblock %}
         </div>
 
         <div data-role="footer">
