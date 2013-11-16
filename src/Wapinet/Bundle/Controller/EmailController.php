@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Wapinet\Bundle\Form\Type\Email\EmailType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Wapinet\Bundle\Entity\FileUrl;
 use Symfony\Component\Form\FormError;
 
 class EmailController extends Controller
@@ -48,19 +49,9 @@ class EmailController extends Controller
         $message->setFrom($data['from']);
         $message->setTo($data['to']);
 
-        if ($data['attach'] instanceof UploadedFile) {
-            $attach = \Swift_Attachment::fromPath($data['attach']->getPathname(), $data['attach']->getClientMimeType());
-            $attach->setFilename($data['attach']->getClientOriginalName());
-            $message->attach($attach);
-        } elseif (null !== $data['url']) {
-            $curl = $this->get('curl_helper');
-            $curl->setOpt(CURLOPT_URL, $data['url']);
-            $curl->addBrowserHeaders();
-
-            $curl->checkFileSize();
-
-            $response = $curl->exec();
-            $attach = \Swift_Attachment::newInstance($response->getContent(), basename($data['url']), $response->headers->get('Content-Type'));
+        if ($data['file'] instanceof UploadedFile || $data['file'] instanceof FileUrl) {
+            $attach = \Swift_Attachment::fromPath($data['file']->getPathname(), $data['file']->getClientMimeType());
+            $attach->setFilename($data['file']->getClientOriginalName());
             $message->attach($attach);
         }
 

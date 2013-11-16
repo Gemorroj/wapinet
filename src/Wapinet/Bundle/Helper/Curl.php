@@ -47,6 +47,22 @@ class Curl
     }
 
     /**
+     * Деструктор
+     */
+    public function __destruct()
+    {
+        $this->close();
+    }
+
+    /**
+     * Закрываем соединение
+     */
+    public function close()
+    {
+        curl_close($this->curl);
+    }
+
+    /**
      * Задаем опцию
      *
      * @param int $key
@@ -195,6 +211,7 @@ class Curl
         $headers = $this->parseHeaders(rtrim(substr($out, 0, $size)));
         // тело
         $content = substr($out, $size);
+        $content = (false === $content ? null : $content);
 
         return new Response($content, $status, $headers);
     }
@@ -214,14 +231,6 @@ class Curl
         $this->setOpt(CURLOPT_POSTFIELDS, $post);
 
         return $this;
-    }
-
-    /**
-     * Деструктор
-     */
-    public function __destruct()
-    {
-        curl_close($this->curl);
     }
 
 

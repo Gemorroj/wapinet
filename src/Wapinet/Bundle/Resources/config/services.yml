@@ -23,3 +23,9 @@ services:
     paginate_helper:
         class: Wapinet\Bundle\Helper\Paginate
         arguments: [@service_container]
+
+    wapinet.type.file_url:
+        class: Wapinet\Bundle\Form\Type\FileUrlType
+        arguments: [@service_container]
+        tags:
+            - { name: form.type, alias: file_url }
