@@ -35,6 +35,12 @@ class UnicodeController extends Controller
         ));
     }
 
+    public function iconsAction()
+    {
+        return $this->render('WapinetBundle:Unicode:icons.html.twig');
+    }
+
+
     /**
      * @param array $data
      *

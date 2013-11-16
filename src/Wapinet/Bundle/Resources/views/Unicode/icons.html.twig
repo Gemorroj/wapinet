@@ -1,0 +1,1674 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Пиктограммы в Unicode{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('utilities'), 'title': 'Полезные WEB приложения'}
+    })}}
+{% endblock %}
+
+
+{% block content %}
+<table data-role="table" class="ui-responsive table-stroke">
+    <thead>
+    <tr>
+        <th data-priority="1">Символ</th>
+        <th data-priority="2">Наименование</th>
+        <th data-priority="3">Мнемоника</th>
+        <th data-priority="4">Код</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr>
+        <th colspan="4">Символы управления в HTML (XHTML)</th>
+    </tr>
+    <tr>
+        <td>'</td>
+        <td>одинарная кавычка</td>
+        <td>&amp;apos;</td>
+        <td>&amp;#39;</td>
+    </tr>
+    <tr>
+        <td>"</td>
+        <td>двойная кавычка</td>
+        <td>&amp;quot;</td>
+        <td>&amp;#34;</td>
+    </tr>
+    <tr>
+        <td>&amp;</td>
+        <td>амперсанд</td>
+        <td>&amp;amp;</td>
+        <td>&amp;#38;</td>
+    </tr>
+    <tr>
+        <td>&lt;</td>
+        <td>меньше</td>
+        <td>&amp;lt;</td>
+        <td>&amp;#60;</td>
+    </tr>
+    <tr>
+        <td>&gt;</td>
+        <td>больше</td>
+        <td>&amp;gt;</td>
+        <td>&amp;#62;</td>
+    </tr>
+
+    <tr>
+        <th colspan="4">Синтаксис и пунктуация</th>
+    </tr>
+    <tr>
+        <td>&#160;</td>
+        <td>неразрывный пробел</td>
+        <td>&amp;nbsp;</td>
+        <td>&amp;#160;</td>
+    </tr>
+    <tr>
+        <td>&#8194;</td>
+        <td>пробел длины N (обычный пробел)</td>
+        <td>&amp;ensp;</td>
+        <td>&amp;#8194;</td>
+    </tr>
+    <tr>
+        <td>&#8195;</td>
+        <td>пробел длины M (длинный пробел)</td>
+        <td>&amp;emsp;</td>
+        <td>&amp;#8195;</td>
+    </tr>
+    <tr>
+        <td>&#8201;</td>
+        <td>узкий пробел</td>
+        <td>&amp;thinsp;</td>
+        <td>&amp;#8201;</td>
+    </tr>
+    <tr>
+        <td>&shy;</td>
+        <td>мягкий перенос/место возможного переноса<br />непечатный знак</td>
+        <td>&amp;shy;</td>
+        <td>&amp;#173;</td>
+    </tr>
+    <tr>
+        <td>&#8209;</td>
+        <td>дефис</td>
+        <td>&nbsp;</td>
+        <td>&amp;#150;<br />&amp;#8209;</td>
+    </tr>
+    <tr>
+        <td>&ndash;</td>
+        <td>тире длины N (обычное тире)</td>
+        <td>&amp;ndash;</td>
+        <td>&amp;#8211;</td>
+    </tr>
+    <tr>
+        <td>&mdash;</td>
+        <td>тире длины M (длинное тире)</td>
+        <td>&amp;mdash;</td>
+        <td>&amp;#8212;</td>
+    </tr>
+    <tr>
+        <td>.</td>
+        <td>точка</td>
+        <td>&nbsp;</td>
+        <td>&amp;#46;</td>
+    </tr>
+    <tr>
+        <td>,</td>
+        <td>запятая</td>
+        <td>&nbsp;</td>
+        <td>&amp;#44;</td>
+    </tr>
+    <tr>
+        <td>&hellip;</td>
+        <td>многоточие</td>
+        <td>&amp;hellip;</td>
+        <td>&amp;#133;<br />&amp;#8230;</td>
+    </tr>
+    <tr>
+        <td>:</td>
+        <td>двоеточие</td>
+        <td>&nbsp;</td>
+        <td>&amp;#58;</td>
+    </tr>
+    <tr>
+        <td>;</td>
+        <td>точка с запятой</td>
+        <td>&nbsp;</td>
+        <td>&amp;#59;</td>
+    </tr>
+    <tr>
+        <td>!</td>
+        <td>знак восклицания</td>
+        <td>&nbsp;</td>
+        <td>&amp;#33;<br />&amp;#451;</td>
+    </tr>
+    <tr>
+        <td>?</td>
+        <td>вопросительный знак</td>
+        <td>&nbsp;</td>
+        <td>&amp;#63;</td>
+    </tr>
+    <tr>
+        <td>@</td>
+        <td>&laquo;собачка&raquo;</td>
+        <td>&nbsp;</td>
+        <td>&amp;#64;</td>
+    </tr>
+    <tr>
+        <td>*</td>
+        <td>&laquo;звездочка&raquo;</td>
+        <td>&nbsp;</td>
+        <td>&amp;#42;</td>
+    </tr>
+    <tr>
+        <td>#</td>
+        <td>&laquo;решетка&raquo;</td>
+        <td>&nbsp;</td>
+        <td>&amp;#35;</td>
+    </tr>
+    <tr>
+        <td>&lsquo;</td>
+        <td>одиночная верхняя левая кавычка</td>
+        <td>&amp;lsquo;</td>
+        <td>&amp;#145;<br />&amp;#8216;</td>
+    </tr>
+    <tr>
+        <td>&rsquo;</td>
+        <td>одиночная верхняя правая кавычка</td>
+        <td>&amp;rsquo;</td>
+        <td>&amp;#146;<br />&amp;#8217;</td>
+    </tr>
+    <tr>
+        <td>&sbquo;</td>
+        <td>одиночная нижняя правая кавычка</td>
+        <td>&amp;sbquo;</td>
+        <td>&amp;#130;<br />&amp;#8218;</td>
+    </tr>
+    <tr>
+        <td>&ldquo;</td>
+        <td>двойная верхняя левая кавычка</td>
+        <td>&amp;ldquo;</td>
+        <td>&amp;#147;<br />&amp;#8220;</td>
+    </tr>
+    <tr>
+        <td>&rdquo;</td>
+        <td>двойная верхняя правая кавычка</td>
+        <td>&amp;rdquo;</td>
+        <td>&amp;#148;<br />&amp;#8221;</td>
+    </tr>
+    <tr>
+        <td>&bdquo;</td>
+        <td>двойная нижняя правая кавычка</td>
+        <td>&amp;bdquo</td>
+        <td>&amp;#132;<br />&amp;#8222;</td>
+    </tr>
+    <tr>
+        <td>&laquo;</td>
+        <td>двойная левая угловая кавычка (рус)</td>
+        <td>&amp;laquo;</td>
+        <td>&amp;#171;</td>
+    </tr>
+    <tr>
+        <td>&raquo;</td>
+        <td>двойная правая угловая кавычка (рус)</td>
+        <td>&amp;raquo;</td>
+        <td>&amp;#187;</td>
+    </tr>
+    <tr>
+        <td>&#769;</td>
+        <td>знак ударения<br />Пример: Вася&#769;</td>
+        <td>&nbsp;</td>
+        <td>&amp;#769;</td>
+    </tr>
+    <tr>
+        <td>'</td>
+        <td>апостроф<br />Пример: Вас'я</td>
+        <td>&nbsp;</td>
+        <td>&amp;#39;</td>
+    </tr>
+    <tr>
+        <td>&acute;</td>
+        <td>акут<br />Пример: Вас&acute;я</td>
+        <td>&amp;acute;</td>
+        <td>&amp;#180;</td>
+    </tr>
+    <tr>
+        <td>&para;</td>
+        <td>абзац (непечатный знак)</td>
+        <td>&amp;para;</td>
+        <td>&amp;#182;</td>
+    </tr>
+    <tr>
+        <td>&sect;</td>
+        <td>параграф</td>
+        <td>&amp;sect;</td>
+        <td>&amp;#167;</td>
+    </tr>
+    <tr>
+        <td>&circ;</td>
+        <td>акцент (перевёрнутая птичка)</td>
+        <td>&amp;circ;</td>
+        <td>&amp;#136;<br />&amp;#710;</td>
+    </tr>
+    <tr>
+        <td>&tilde;</td>
+        <td>малая тильда</td>
+        <td>&amp;tilde;</td>
+        <td>&amp;#152;<br />&amp;#732;</td>
+    </tr>
+    <tr>
+        <td>&brvbar;</td>
+        <td>вертикальный пунктир</td>
+        <td>amp;brvbar;</td>
+        <td>&amp;#166;</td>
+    </tr>
+    <tr>
+        <td>(</td>
+        <td>круглая скобка влево</td>
+        <td>&nbsp;</td>
+        <td>&amp;#40;</td>
+    </tr>
+    <tr>
+        <td>)</td>
+        <td>круглая скобка вправо</td>
+        <td>&nbsp;</td>
+        <td>&amp;#41;</td>
+    </tr>
+    <tr>
+        <td>&lang;</td>
+        <td>угловая скобка влево</td>
+        <td>&amp;lang;</td>
+        <td>&amp;#9001;</td>
+    </tr>
+    <tr>
+        <td>&rang;</td>
+        <td>угловая скобка вправо</td>
+        <td>&amp;rang;</td>
+        <td>&amp;#9002;</td>
+    </tr>
+    <tr>
+        <td>/</td>
+        <td>слеш</td>
+        <td>&nbsp;</td>
+        <td>&amp;#47;</td>
+    </tr>
+    <tr>
+        <td>&frasl;</td>
+        <td>косая дробная черта</td>
+        <td>&amp;frasl;</td>
+        <td>&amp;#8260;</td>
+    </tr>
+    <tr>
+        <td>&#448;</td>
+        <td>вертикальная черта</td>
+        <td>&nbsp;</td>
+        <td>&amp;#448;</td>
+    </tr>
+    <tr>
+        <td>&#449;</td>
+        <td>двойная вертикальная черта</td>
+        <td>&nbsp;</td>
+        <td>&amp;#449;</td>
+    </tr>
+    <tr>
+        <td>&oline;</td>
+        <td>надчеркиваниеПример: Вася&oline;вася</td>
+        <td>&amp;oline;</td>
+        <td>&amp;#8254;</td>
+    </tr>
+
+    <tr>
+        <th colspan="4">Товарные знаки и валюта</th>
+    </tr>
+    <tr>
+        <td>&copy;</td>
+        <td>знак защиты авторского права (copyright)</td>
+        <td>&amp;copy;</td>
+        <td>&amp;#169;</td>
+    </tr>
+    <tr>
+        <td>&reg;</td>
+        <td>знак регистрации товарного знака</td>
+        <td>&amp;reg;</td>
+        <td>&amp;#174;</td>
+    </tr>
+    <tr>
+        <td>&trade;</td>
+        <td>товарный знак (TradeMark)</td>
+        <td>&amp;trade;</td>
+        <td>&amp;#153;</td>
+    </tr>
+    <tr>
+        <td>&curren;</td>
+        <td>валюта</td>
+        <td>&amp;curren;</td>
+        <td>&amp;#164;</td>
+    </tr>
+    <tr>
+        <td>&euro;</td>
+        <td>евро</td>
+        <td>&amp;euro;</td>
+        <td>&amp;#128;</td>
+    </tr>
+    <tr>
+        <td>$</td>
+        <td>доллар</td>
+        <td>&nbsp;</td>
+        <td>&amp;#36;</td>
+    </tr>
+    <tr>
+        <td>&cent;</td>
+        <td>цент</td>
+        <td>&amp;cent;</td>
+        <td>&amp;#162;</td>
+    </tr>
+    <tr>
+        <td>&yen;</td>
+        <td>иена</td>
+        <td>&amp;yen;</td>
+        <td>&amp;#165;</td>
+    </tr>
+    <tr>
+        <td>&pound;</td>
+        <td>фунт</td>
+        <td>&amp;pound</td>
+        <td>&amp;#163;</td>
+    </tr>
+
+    <tr>
+        <th colspan="4">Математика и физика</th>
+    </tr>
+    <tr>
+        <td>+</td>
+        <td>плюс</td>
+        <td>&amp;plus;</td>
+        <td>&amp;#43;</td>
+    </tr>
+    <tr>
+        <td>&minus;</td>
+        <td>минус</td>
+        <td>&amp;minus;</td>
+        <td>&amp;#45;<br />&amp;#8722;</td>
+    </tr>
+    <tr>
+        <td>=</td>
+        <td>равно</td>
+        <td>&nbsp;</td>
+        <td>&amp;#61;</td>
+    </tr>
+    <tr>
+        <td>&plusmn;</td>
+        <td>плюс-минус</td>
+        <td>&amp;plusmn;</td>
+        <td>&amp;#177;</td>
+    </tr>
+    <tr>
+        <td>&times;</td>
+        <td>знак умножения</td>
+        <td>&amp;times;</td>
+        <td>&amp;#215;</td>
+    </tr>
+    <tr>
+        <td>&divide;</td>
+        <td>знак деления</td>
+        <td>&amp;divide;</td>
+        <td>&amp;#247;</td>
+    </tr>
+    <tr>
+        <td>&sdot;</td>
+        <td>оператор &laquo;точка&raquo; (середина строки)</td>
+        <td>&amp;sdot;</td>
+        <td>&amp;#183;<br />&amp;#8901;</td>
+    </tr>
+    <tr>
+        <td>&lowast;</td>
+        <td>оператор &laquo;звёздочка&raquo; (середина строки)</td>
+        <td>&amp;lowast;</td>
+        <td>&amp;#8727;</td>
+    </tr>
+    <tr>
+        <td>&sim;</td>
+        <td>оператор &laquo;тильда&raquo;</td>
+        <td>&amp;sim;</td>
+        <td>&amp;#8764;</td>
+    </tr>
+    <tr>
+        <td>&bull;</td>
+        <td>маркер списка (середина строки)</td>
+        <td>&amp;bull;</td>
+        <td>&amp;#149;<br />&amp;#8226;</td>
+    </tr>
+    <tr>
+        <td>&sup1;</td>
+        <td>верхний индекс &laquo;1&raquo;</td>
+        <td>&amp;sup1;</td>
+        <td>&amp;#185;</td>
+    </tr>
+    <tr>
+        <td>&sup2;</td>
+        <td>верхний индекс &laquo;2&raquo;</td>
+        <td>&amp;sup2;</td>
+        <td>&amp;#178;</td>
+    </tr>
+    <tr>
+        <td>&sup3;</td>
+        <td>верхний индекс &laquo;3&raquo;</td>
+        <td>&amp;sup3;</td>
+        <td>>&amp;#179;</td>
+    </tr>
+    <tr>
+        <td>&frac14;</td>
+        <td>дробь &laquo;одна четвёртая&raquo;</td>
+        <td>&amp;frac14;</td>
+        <td>&amp;#188;</td>
+    </tr>
+    <tr>
+        <td>&frac12;</td>
+        <td>дробь &laquo;одна вторая&raquo;</td>
+        <td>&amp;frac12;</td>
+        <td>&amp;#189;</td>
+    </tr>
+    <tr>
+        <td>&frac34;</td>
+        <td>дробь &laquo;три четверти&raquo;</td>
+        <td>&amp;frac34;</td>
+        <td>&amp;#190;</td>
+    </tr>
+    <tr>
+        <td>№</td>
+        <td>знак номера</td>
+        <td>&nbsp;</td>
+        <td>&amp;#8470;</td>
+    </tr>
+    <tr>
+        <td>%</td>
+        <td>процент</td>
+        <td>&nbsp;</td>
+        <td>&amp;#37;</td>
+    </tr>
+    <tr>
+        <td>&permil;</td>
+        <td>промилле</td>
+        <td>&amp;permil;</td>
+        <td>&amp;#137;<br />&amp;#8240;</td>
+    </tr>
+    <tr>
+        <td>&deg;</td>
+        <td>градусы</td>
+        <td>&amp;deg;</td>
+        <td>&amp;#176;</td>
+    </tr>
+    <tr>
+        <td>&prime;</td>
+        <td>минуты, футы</td>
+        <td>&amp;prime;</td>
+        <td>&amp;#8242;</td>
+    </tr>
+    <tr>
+        <td>&Prime;</td>
+        <td>секунды, дюймы<br />Пример: 30&deg;25&prime;12Prime;</td>
+        <td>&amp;Prime;</td>
+        <td>&amp;#8243;</td>
+    </tr>
+    <tr>
+        <td>&micro;</td>
+        <td>микро</td>
+        <td>&amp;micro;</td>
+        <td>&amp;#181;</td>
+    </tr>
+    <tr>
+        <td>&pi;</td>
+        <td>Пи</td>
+        <td>&amp;pi;</td>
+        <td>&amp;#960;</td>
+    </tr>
+    <tr>
+        <td>&fnof;</td>
+        <td>знак функции<br />(не путать с &laquo;интеграл&raquo;)</td>
+        <td>&amp;fnof;</td>
+        <td>&amp;#131;<br />&amp;#402;</td>
+    </tr>
+    <tr>
+        <td>&int;</td>
+        <td>интеграл</td>
+        <td>&amp;int;</td>
+        <td>&amp;#8747;</td>
+    </tr>
+    <tr>
+        <td>&empty;</td>
+        <td>перечеркнутый ноль<br />пустое множество (не путать с &laquo;диаметр&raquo;)</td>
+        <td>&amp;empty;</td>
+        <td>&amp;#8709;</td>
+    </tr>
+    <tr>
+        <td>&#8960;</td>
+        <td>диаметр</td>
+        <td>&nbsp;</td>
+        <td>&amp;#8960</td>
+    </tr>
+    <tr>
+        <td>&prod;</td>
+        <td>знак произведения</td>
+        <td>&amp;prod;</td>
+        <td>&amp;#8719;</td>
+    </tr>
+    <tr>
+        <td>&sum;</td>
+        <td>знак суммирования</td>
+        <td>&amp;sum;</td>
+        <td>&amp;#8721;</td>
+    </tr>
+    <tr>
+        <td>&radic;</td>
+        <td>радикал<br />(квадратный корень или корень степени x)</td>
+        <td>&amp;radic;</td>
+        <td>&amp;#8730;</td>
+    </tr>
+    <tr>
+        <td>&prop;</td>
+        <td>пропорционально</td>
+        <td>&amp;prop;</td>
+        <td>&amp;#8733;</td>
+    </tr>
+    <tr>
+        <td>&infin;</td>
+        <td>бесконечность</td>
+        <td>&amp;infin;</td>
+        <td>&amp;#8734;</td>
+    </tr>
+    <tr>
+        <td>&ang;</td>
+        <td>угол</td>
+        <td>&amp;ang;</td>
+        <td>&amp;#8736;</td>
+    </tr>
+    <tr>
+        <td>&perp;</td>
+        <td>ортогонально (перпендикулярно)</td>
+        <td>&amp;perp;</td>
+        <td>&amp;#8869;</td>
+    </tr>
+    <tr>
+        <td>&there4;</td>
+        <td>знак &laquo;cледовательно&raquo;</td>
+        <td>&amp;there4;</td>
+        <td>&amp;#8756;</td>
+    </tr>
+    <tr>
+        <td>&cong;</td>
+        <td>приблизительно равно</td>
+        <td>&amp;cong;</td>
+        <td>&amp;#8773;</td>
+    </tr>
+    <tr>
+        <td>&asymp;</td>
+        <td>почти равно</td>
+        <td>&amp;asymp;</td>
+        <td>&amp;#8776;</td>
+    </tr>
+    <tr>
+        <td>&ne;</td>
+        <td>не равно</td>
+        <td>&amp;ne;</td>
+        <td>&amp;#8800;</td>
+    </tr>
+    <tr>
+        <td>&equiv;</td>
+        <td>идентично</td>
+        <td>&amp;equiv;</td>
+        <td>&amp;#8801;</td>
+    </tr>
+    <tr>
+        <td>&le;</td>
+        <td>меньше или равно</td>
+        <td>&amp;le;</td>
+        <td>&amp;#8804;</td>
+    </tr>
+    <tr>
+        <td>&ge;</td>
+        <td>больше или равно</td>
+        <td>&amp;ge;</td>
+        <td>&amp;#8805;</td>
+    </tr>
+    <tr>
+        <td>&and;</td>
+        <td>логическое И</td>
+        <td>&amp;and;</td>
+        <td>&amp;#8743;</td>
+    </tr>
+    <tr>
+        <td>&or;</td>
+        <td>логическое ИЛИ</td>
+        <td>&amp;or;</td>
+        <td>&amp;#8744;</td>
+    </tr>
+    <tr>
+        <td>&oplus;</td>
+        <td>знак &laquo;плюс в круге&raquo; (прямая сумма)</td>
+        <td>&amp;oplus;</td>
+        <td>&amp;#8853;</td>
+    </tr>
+    <tr>
+        <td>&otimes;</td>
+        <td>знак &laquo;умножение в круге&raquo; (векторное произведение)</td>
+        <td>&amp;otimes;</td>
+        <td>&amp;#8855;</td>
+    </tr>
+    <tr>
+        <td>&#664;</td>
+        <td>точка в круге (стрела на наблюдателя)</td>
+        <td>&nbsp;</td>
+        <td>&amp;#664;</td>
+    </tr>
+
+    </tbody>
+</table>
+
+<table data-role="table" class="ui-responsive table-stroke">
+    <thead>
+    <tr>
+        <th data-priority="1"></th>
+        <th data-priority="2"></th>
+        <th data-priority="3"></th>
+        <th data-priority="4"></th>
+        <th data-priority="5"></th>
+        <th data-priority="6"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th colspan="6">Стрелки и указатели</th>
+    </tr>
+    <tr>
+        <td>
+            &larr;<br />
+            &amp;larr;<br />
+            &amp;#8592;<br />
+        </td>
+        <td>
+            &uarr;<br />
+            &amp;uarr;<br />
+            &amp;#8593;<br />
+        </td>
+        <td>
+            &rarr;<br />
+            &amp;rarr;<br />
+            &amp;#8594;<br />
+        </td>
+        <td>
+            &darr;<br />
+            &amp;darr;<br />
+            &amp;#8595;<br />
+        </td>
+        <td>
+            &harr;<br />
+            &amp;harr;<br />
+            &amp;#8596;<br />
+        </td>
+        <td>
+            &#8646;<br />
+            &nbsp;<br />
+            &amp;#8646;<br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &lArr;<br />
+            &amp;lArr;<br />
+            &amp;#8656;<br />
+        </td>
+        <td>
+            &uArr;<br />
+            &amp;uArr;<br />
+            &amp;#8657;<br />
+        </td>
+        <td>
+            &rArr;<br />
+            &amp;rArr;<br />
+            &amp;#8658;<br />
+        </td>
+        <td>
+            &dArr;<br />
+            &amp;dArr;<br />
+            &amp;#8659;<br />
+        </td>
+        <td>
+            &hArr;<br />
+            &amp;hArr;<br />
+            &amp;#8660;<br />
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &crarr;<br />
+            &amp;crarr;<br />
+            &amp;#8629;<br />
+        </td>
+        <td>
+            &#8623;<br />
+            &nbsp;<br />
+            &amp;#8623;<br />
+        </td>
+        <td>
+            &#9735;<br />
+            &nbsp;<br />
+            &amp;#9735;<br />
+        </td>
+        <td>
+            &#9998;<br />
+            &nbsp;<br />
+            &amp;#9998;<br />
+        </td>
+        <td>
+            &#9999;<br />
+            &nbsp;<br />
+            &amp;#9999;<br />
+        </td>
+        <td>
+            &#10000;<br />
+            &nbsp;<br />
+            &amp;#10000;<br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &#9650;<br />
+            &amp;#9650;<br />
+        </td>
+        <td>
+            &#9658;<br />
+            &amp;#9658;<br />
+        </td>
+        <td>
+            &#9660;<br />
+            &amp;#9660;<br />
+        </td>
+        <td>
+            &#9668;<br />
+            &amp;#9668;<br />
+        </td>
+        <td>
+            &#10001;<br />
+            &amp;#10001;<br />
+        </td>
+        <td>
+            &#10002;<br />
+            &amp;#10002;<br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &#9754;<br />
+            &amp;#9754;<br />
+        </td>
+        <td>
+            &#9755;<br />
+            &amp;#9755;<br />
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#9756;<br />
+            &amp;#9756;<br />
+        </td>
+        <td>
+            &#9757;<br />
+            &amp;#9757;<br />
+        </td>
+        <td>
+            &#9758;<br />
+            &amp;#9758;<br />
+        </td>
+        <td>
+            &#9759;<br />
+            &amp;#9759;<br />
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#706;<br />
+            &amp;#706;<br />
+        </td>
+        <td>
+            &#707;<br />
+            &amp;#707;<br />
+        </td>
+        <td>
+            &#708;<br />
+            &amp;#708;<br />
+        </td>
+        <td>
+            &#709;<br />
+            &amp;#709;p>
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+
+    <tr>
+        <th colspan="6">Пиктограммы в HTML (XHTML)</th>
+    </tr>
+
+    <tr>
+        <td>
+            &dagger;<br />
+            &amp;dagger;<br />
+            &amp;#134;<br />
+            &amp;#8224;<br />
+        </td>
+        <td>
+            &Dagger;<br />
+            &amp;Dagger;<br />
+            &amp;#135;<br />
+            &amp;#450;<br />
+            &amp;#8225;<br />
+        </td>
+        <td>
+            &#9766;<br />
+            &nbsp;<br />
+            &amp;#9766;<br />
+        </td>
+        <td>
+            &#9768;<br />
+            &nbsp;<br />
+            &amp;#9768;<br />
+        </td>
+        <td>
+            &#9840;<br />
+            &nbsp;<br />
+            &amp;#9840;<br />
+        </td>
+        <td>
+            &#9841;<br />
+            &nbsp;<br />
+            &amp;#9841;<br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &#10009;<br />
+            &amp;#10009;<br />
+        </td>
+        <td>
+            &#10010;<br />
+            &amp;#10010;<br />
+        </td>
+        <td>
+            &#10011;<br />
+            &amp;#10011;<br />
+        </td>
+        <td>
+            &#10012;<br />
+            &amp;#10012;<br />
+        </td>
+        <td>
+            &#10013;<br />
+            &amp;#10013;<br />
+        </td>
+        <td>
+            &#10014;<br />
+            &amp;#10014;<br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &#10015;<br />
+            &amp;#10015;<br />
+        </td>
+        <td>
+            &#10016;<br />
+            &amp;#10016;<br />
+        </td>
+        <td>
+            &#10018;<br />
+            &amp;#10018;<br />
+        </td>
+        <td>
+            &#10019;<br />
+            &amp;#10019;<br />
+        </td>
+        <td>
+            &#10020;<br />
+            &amp;#10020;<br />
+        </td>
+        <td>
+            &#10021;<br />
+            &amp;#10021;<br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &#10022;<br />
+            &amp;#10022;<br />
+        </td>
+        <td>
+            &#10023;<br />
+            &amp;#10023;<br />
+        </td>
+        <td>
+            &#10070;<br />
+            &amp;#10070;<br />
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#10017;<br />
+            &amp;#10017;<br />
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#9728;<br />
+            &amp;#9728;<br />
+        </td>
+        <td>
+            &#9788;<br />
+            &amp;#9788;<br />
+        </td>
+        <td>
+            &#9789;<br />
+            &amp;#9789;<br />
+        </td>
+        <td>
+            &#9790;<br />
+            &amp;#9790;<br />
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#9832;<br />
+            &amp;#9832;<br />
+        </td>
+        <td>
+            &#9729;<br />
+            &amp;#9729;<br />
+        </td>
+        <td>
+            &#9730;<br />
+            &amp;#9730;<br />
+        </td>
+        <td>
+            &#9731;<br />
+            &amp;#9731;<br />
+        </td>
+        <td>
+            &#9732;<br />
+            &amp;#9732;<br />
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#9742;<br />
+            &amp;#9742;<br />
+        </td>
+        <td>
+            &#9743;<br />
+            &amp;#9743;<br />
+        </td>
+        <td>
+            &#9990;<br />
+            &amp;#9990;<br />
+        </td>
+        <td>
+            &#9988;<br />
+            &amp;#9988;<br />
+        </td>
+        <td>
+            &#9987;<br />
+            &amp;#9987;<br />
+        </td>
+        <td>
+            &#9993;<br />
+            &amp;#9993;<br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &#9992;<br />
+            &amp;#9992;<br />
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#9996;<br />
+            &amp;#9996;<br />
+        </td>
+        <td>
+            &#9997;<br />
+            &amp;#9997;<br />
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#9733;<br />
+            &amp;#9733;<br />
+        </td>
+        <td>
+            &#9734;<br />
+            &amp;#9734;<br />
+        </td>
+        <td>
+            &#10025;<br />
+            &amp;#10025;<br />
+        </td>
+        <td>
+            &#10026;<br />
+            &amp;#10026;<br />
+        </td>
+        <td>
+            &#10027;<br />
+            &amp;#10027;<br />
+        </td>
+        <td>
+            &#10028;<br />
+            &amp;#10028;<br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &#10029;<br />
+            &amp;#10029;<br />
+        </td>
+        <td>
+            &#10030;<br />
+            &amp;#10030;<br />
+        </td>
+        <td>
+            &#10031;<br />
+            &amp;#10031;<br />
+        </td>
+        <td>
+            &#10032;<br />
+            &amp;#10032;<br />
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#10033;<br />
+            &amp;#10033;<br />
+        </td>
+        <td>
+            &#10034;<br />
+            &amp;#10034;<br />
+        </td>
+        <td>
+            &#10035;<br />
+            &amp;#10035;<br />
+        </td>
+        <td>
+            &#10036;<br />
+            &amp;#10036;<br />
+        </td>
+        <td>
+            &#10037;&amp;#10037;<br />
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#10039;<br />
+            &amp;#10039;<br />
+        </td>
+        <td>
+            &#10040;<br />
+            &amp;#10040<br />
+        </td>
+        <td>
+            &#10041;<br />
+            &amp;#10041;<br />
+        </td>
+        <td>
+            &#10042;<br />
+            &amp;#10042;<br />
+        </td>
+        <td>
+            &#10043;<br />
+            &amp;#10043;<br />
+        </td>
+        <td>
+            &#10044;<br />
+            &amp;#10044;<br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &#10045;<br />
+            &amp;#10045;<br />
+        </td>
+        <td>
+            &#10046;<br />
+            &amp;#10046;<br />
+        </td>
+        <td>
+            &#10047;<br />
+            &amp;#10047;<br />
+        </td>
+        <td>
+            &#10048;<br />
+            &amp;#10048;<br />
+        </td>
+        <td>
+            &#10049;<br />
+            &amp;#10049;<br />
+        </td>
+        <td>
+            &#10050;<br />
+            &amp;#10050;<br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &#10051;<br />
+            &amp;#10051;<br />
+        </td>
+        <td>
+            &#10052;<br />
+            &amp;#10052;<br />
+        </td>
+        <td>
+            &#10053;<br />
+            &amp;#10053;<br />
+        </td>
+        <td>
+            &#10054;<br />
+            &amp;#10054;<br />
+        </td>
+        <td>
+            &#10055;<br />
+            &amp;#10055;<br />
+        </td>
+        <td>
+            &#10056;<br />
+            &amp;#10056;<br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &#10057;<br />
+            &amp;#10057;<br />
+        </td>
+        <td>
+            &#10058;<br />
+            &amp;#10058;<br />
+        </td>
+        <td>
+            &#10059;<br />
+            &amp;#10059;<br />
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#10061;<br />
+            &amp;#10061;<br />
+        </td>
+        <td>
+            &#10063;<br />
+            &amp;#10063;<br />
+        </td>
+        <td>
+            &#10064;<br />
+            &amp;#10064;<br />
+        </td>
+        <td>
+            &#10065;<br />
+            &amp;#10065;<br />
+        </td>
+        <td>
+            &#10066;<br />
+            &amp;#10066;<br />
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#9760;<br />
+            &amp;#9760;<br />
+        </td>
+        <td>
+            &#9762;<br />
+            &amp;#9762;<br />
+        </td>
+        <td>
+            &#9763;<br />
+            &amp;#9763;<br />
+        </td>
+        <td>
+            &#9991;<br />
+            &amp;#9991;<br />
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#10003;<br />
+            &amp;#10003;<br />
+        </td>
+        <td>
+            &#10004;<br />
+            &amp;#10004;<br />
+        </td>
+        <td>
+            &#10005;<br />
+            &amp;#10005;<br />
+        </td>
+        <td>
+            &#10006;<br />
+            &amp;#10006;<br />
+        </td>
+        <td>
+            &#10007;<br />
+            &amp;#10007;<br />
+        </td>
+        <td>
+            &#10008;<br />
+            &amp;#10008;<br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &#9745;<br />
+            &amp;#9745;<br />
+        </td>
+        <td>
+            &#9746;<br />
+            &amp;#9746;<br />
+        </td>
+        <td>
+            &#9747;<br />
+            &amp;#9747;<br />
+        </td>
+        <td>
+            &#9761;<br />
+            &amp;#9761;<br />
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+
+    <tr>
+        <th colspan="6">Карты, шахматы, музыка</th>
+    </tr>
+    <tr>
+        <td>
+            &spades;<br />
+            &amp;spades;<br />
+            &amp;#9824;<br />
+        </td>
+        <td>
+            &clubs;<br />
+            &amp;clubs;<br />
+            &amp;#9827;<br />
+        </td>
+        <td>
+            &hearts;<br />
+            &amp;hearts;<br />
+            &amp;#9829;<br />
+        </td>
+        <td>
+            &diams;<br />
+            &amp;diams;<br />
+            &amp;#9830;<br />
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#9828;<br />
+            &amp;#9828;<br />
+        </td>
+        <td>
+            &#9831;<br />
+            &amp;#9831;<br />
+        </td>
+        <td>
+            &#9825;<br />
+            &amp;#9825;<br />
+        </td>
+        <td>
+            &#9826;<br />
+            &amp;#9826;<br />
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#9812;<br />
+            &amp;#9812;<br />
+        </td>
+        <td>
+            &#9813;<br />
+            &amp;#9813;<br />
+        </td>
+        <td>
+            &#9814;<br />
+            &amp;#9814;<br />
+        </td>
+        <td>
+            &#9815;<br />
+            &amp;#9815;<br />
+        </td>
+        <td>
+            &#9816;<br />
+            &amp;#9816;<br />
+        </td>
+        <td>
+            &#9817;<br />
+            &amp;#9817;<br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &#9818;<br />
+            &amp;#9818;<br />
+        </td>
+        <td>
+            &#9819;<br />
+            &amp;#9819;<br />
+        </td>
+        <td>
+            &#9820;<br />
+            &amp;#9820;<br />
+        </td>
+        <td>
+            &#9821;<br />
+            &amp;#9821;<br />
+        </td>
+        <td>
+            &#9822;<br />
+            &amp;#9822;<br />
+        </td>
+        <td>
+            &#9823;<br />
+            &amp;#9823;<br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &#9839;<br />
+            &amp;#9839;</td>
+        <td>
+            &#9837;<br />
+            &amp;#9837;<br />
+        </td>
+        <td>
+            &#9838;<br />
+            &amp;#9838;<br />
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#9833;<br />
+            &amp;#9833;<br />
+        </td>
+        <td>
+            &#9834;<br />
+            &amp;#9834;<br />
+        </td>
+        <td>
+            &#9835;<br />
+            &amp;#9835;<br />
+        </td>
+        <td>
+            &#9836;<br />
+            &amp;#9836;<br />
+        </td>
+        <td>&amp;n</td>
+    </tr>
+
+    <tr>
+        <th colspan="6">Разное</th>
+    </tr>
+    <tr>
+        <td>
+            &#9764;<br />
+            &amp;#9764;<br />
+        </td>
+        <td>
+            &#9765;<br />
+            &amp;#9765;<br />
+        </td>
+        <td>
+            &#9767;<br />
+            &amp;#9767;<br />
+        </td>
+        <td>
+            &#9769;<br />
+            &amp;#9769;<br />
+        </td>
+        <td>
+            &#9770;<br />
+            &amp;#9770;<br />
+        </td>
+        <td>
+            &#9771;<br />
+            &amp;#9771;<br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &#9772;<br />
+            &amp;#9772;<br />
+        </td>
+        <td>
+            &#9773;<br />
+            &amp;#9773;<br />
+        </td>
+        <td>
+            &#9774;<br />
+            &amp;#9774;<br />
+        </td>
+        <td>
+            &#9775;<br />
+            &amp;#9775;<br />
+        </td>
+        <td>
+            &#9784;<br />
+            &amp;#9784;<br />
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#9786;<br />
+            &amp;#9786;<br />
+        </td>
+        <td>
+            &#9785;<br />
+            &amp;#9785;<br />
+        </td>
+        <td>
+            &#9787;<br />
+            &amp;#9787;<br />
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#9791;<br />
+            &amp;#9791;<br />
+        </td>
+        <td>
+            &#9792;<br />
+            &amp;#9792;<br />
+        </td>
+        <td>
+            &#9793;<br />
+            &amp;#9793;<br />
+        </td>
+        <td>
+            &#9794;<br />
+            &amp;#9794;<br />
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#9795;<br />
+            &amp;#9795;<br />
+        </td>
+        <td>
+            &#9796;<br />
+            &amp;#9796;<br />
+        </td>
+        <td>
+            &#9797;<br />
+            &amp;#9797;<br />
+        </td>
+        <td>
+            &#9798;<br />
+            &amp;#9798;<br />
+        </td>
+        <td>
+            &#9799;<br />
+            &amp;#9799;<br />
+        </td>
+        <td>
+            &#9800;<br />
+            &amp;#9800;<br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &#9801;<br />
+            &amp;#9801;<br />
+        </td>
+        <td>
+            &#9802;<br />
+            &amp;#9802;<br />
+        </td>
+        <td>
+            &#9803;<br />
+            &amp;#9803;<br />
+        </td>
+        <td>
+            &#9804;<br />
+            &amp;#9804;<br />
+        </td>
+        <td>
+            &#9805;<br />
+            &amp;#9805;<br />
+        </td>
+        <td>
+            &#9806;<br />
+            &amp;#9806;<br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &#9807;<br />
+            &amp;#9807;<br />
+        </td>
+        <td>
+            &#9808;<br />
+            &amp;#9808;<br />
+        </td>
+        <td>
+            &#9809;<br />
+            &amp;#9809;<br />
+        </td>
+        <td>
+            &#9810;<br />
+            &amp;#9810;<br />
+        </td>
+        <td>
+            &#9811;<br />
+            &amp;#9811;<br />
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            &#9842;<br />
+            &amp;#9842;<br />
+        </td>
+        <td>
+            &#9843;<br />
+            &amp;#9843;<br />
+        </td>
+        <td>
+            &#9844;<br />
+            &amp;#9844;<br />
+        </td>
+        <td>
+            &#9845;<br />
+            &amp;#9845;<br />
+        </td>
+        <td>
+            &#9846;<br />
+            &amp;#9846;<br />
+        </td>
+        <td>
+            &#9847;<br />
+            &amp;#9847;<br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &#9848;<br />
+            &amp;#9848;<br />
+        </td>
+        <td>
+            &#9849;<br />
+            &amp;#9849;<br />
+        </td>
+        <td>
+            &#9850;<br />
+            &amp;#9850;<br />
+        </td>
+        <td>
+            &#9851;<br />
+            &amp;#9851;<br />
+        </td>
+        <td>
+            &#9852;<br />
+            &amp;#9852;<br />
+        </td>
+        <td>
+            &#9853;<br />
+            &amp;#9853;<br />
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+{% endblock %}

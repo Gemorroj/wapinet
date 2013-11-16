@@ -1,3 +1,7 @@
 unicode_index:
     pattern: /
     defaults: { _controller: WapinetBundle:Unicode:index }
+
+unicode_icons:
+    pattern: /icons
+    defaults: { _controller: WapinetBundle:Unicode:icons }
