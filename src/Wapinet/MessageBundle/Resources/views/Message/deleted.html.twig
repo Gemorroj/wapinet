@@ -2,15 +2,12 @@
 
 {% block title %}Корзина{% endblock %}
 {% block menu %}
-    {{wapinet_menu({
-    1: {'uri': path('index'), 'title': 'Главная'},
-    2: {'uri': path('wapinet_message_deleted'), 'title': 'Корзина'}
-    })}}
+    {{ wapinet_menu({
+        1: {'uri': path('wapinet_message_inbox'), 'title': 'Входящие'}
+    }) }}
 {% endblock %}
 
 {% block fos_message_content %}
-
-<h2>Корзина</h2>
 
 {% include 'WapinetMessageBundle:Message:threads_list.html.twig' with {'threads': threads} %}
 

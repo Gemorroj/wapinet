@@ -73,7 +73,11 @@
 
         <div data-role="header" data-position="fixed">
             {% block header %}
-                {% block menu %}{% endblock %}
+                <div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
+                    <a href="javascript:history.back();" data-role="button" data-icon="back">Назад</a>
+                    <a href="#menu" data-role="button" data-icon="bars">Меню</a>
+                </div>
+                <h2>{{ title }}</h2>
                 {% if app.user %}
                     <a href="{{ path('fos_user_profile_show') }}" data-role="button" data-icon="gear" class="ui-btn-right">
                         {% if app.user.hasAvatar %}
@@ -87,8 +91,10 @@
             {% endblock %}
         </div>
 
+
         <div data-role="content">
-            {% block content %}{% endblock %}
+            {% block menu %}{% endblock %}
+            <p>{% block content %}{% endblock %}</p>
         </div>
 
         <div data-role="footer">

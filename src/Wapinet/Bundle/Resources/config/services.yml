@@ -17,6 +17,7 @@ services:
 
     wapinet.menu.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Menu
+        arguments: [@service_container]
         tags:
             - {name: twig.extension, alias: wapinet_menu}
 

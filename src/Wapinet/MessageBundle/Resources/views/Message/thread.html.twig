@@ -2,15 +2,12 @@
 
 {% block title %}{{ thread.subject }}{% endblock %}
 {% block menu %}
-    {{wapinet_menu({
-    1: {'uri': path('index'), 'title': 'Главная'},
-    2: {'uri': path('wapinet_message_thread_view'), 'title': thread.subject}
-    })}}
+    {{ wapinet_menu({
+        1: {'uri': path('wapinet_message_inbox'), 'title': 'Входящие'}
+    }) }}
 {% endblock %}
 
 {% block fos_message_content %}
-
-<h2>{{ thread.subject }}</h2>
 
 <ul data-role="listview" data-inset="true">
 {% for message in messages %}

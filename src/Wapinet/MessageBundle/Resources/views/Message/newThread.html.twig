@@ -2,15 +2,12 @@
 
 {% block title %}Новое сообщение{% endblock %}
 {% block menu %}
-    {{wapinet_menu({
-    1: {'uri': path('index'), 'title': 'Главная'},
-    2: {'uri': path('fos_message_thread_new'), 'title': 'Новое сообщение'}
-    })}}
+    {{ wapinet_menu({
+        1: {'uri': path('wapinet_message_inbox'), 'title': 'Входящие'}
+    }) }}
 {% endblock %}
 
 {% block fos_message_content %}
-
-<h2>Новое сообщение</h2>
 
 {{ form_start(form, {'action': path('fos_message_thread_new'), 'method': 'POST'}) }}
     {{ form_widget(form) }}

@@ -2,15 +2,12 @@
 
 {% block title %}Исходящие{% endblock %}
 {% block menu %}
-    {{wapinet_menu({
-    1: {'uri': path('index'), 'title': 'Главная'},
-    2: {'uri': path('wapinet_message_sent'), 'title': 'Исходящие'}
-    })}}
+    {{ wapinet_menu({
+        1: {'uri': path('wapinet_message_inbox'), 'title': 'Входящие'}
+    }) }}
 {% endblock %}
 
 {% block fos_message_content %}
-
-<h2>Исходящие</h2>
 
 {% include 'WapinetMessageBundle:Message:threads_list.html.twig' with {'threads': threads} %}
 

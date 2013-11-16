@@ -2,10 +2,9 @@
 
 {% block title %}Все об ICQ{% endblock %}
 {% block menu %}
-    {{wapinet_menu({
-    1: {'uri': path('utilities'), 'title': 'Полезные WEB приложения'},
-    2: {'uri': path('icq_index'), 'title': 'Все об ICQ'}
-    })}}
+    {{ wapinet_menu({
+        1: {'uri': path('utilities'), 'title': 'Полезные WEB приложения'}
+    }) }}
 {% endblock %}
 
 {% block content %}

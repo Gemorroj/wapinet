@@ -2,10 +2,7 @@
 
 {% block title %}WEB мастерская{% endblock %}
 {% block menu %}
-    {{wapinet_menu({
-    1: {'uri': path('index'), 'title': 'Главная'},
-    2: {'uri': path('programming'), 'title': 'WEB мастерская'}
-    })}}
+    {{ wapinet_menu() }}
 {% endblock %}
 
 
