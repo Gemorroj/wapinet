@@ -53,3 +53,7 @@ translate:
 pagerank:
     resource: "@WapinetBundle/Resources/config/routing/pagerank.yml"
     prefix:   /pagerank
+
+unicode:
+    resource: "@WapinetBundle/Resources/config/routing/unicode.yml"
+    prefix:   /unicode
