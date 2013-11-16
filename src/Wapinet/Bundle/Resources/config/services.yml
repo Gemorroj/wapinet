@@ -1,9 +1,4 @@
 services:
-    wapinet.paginate.controller:
-        class: Wapinet\Bundle\Controller\PaginateController
-        calls:
-            - [setContainer, ["@service_container"]]
-
     wapinet.date.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Date
         tags:
@@ -23,4 +18,8 @@ services:
 
     curl_helper:
         class: Wapinet\Bundle\Helper\Curl
+        arguments: [@service_container]
+
+    paginate_helper:
+        class: Wapinet\Bundle\Helper\Paginate
         arguments: [@service_container]

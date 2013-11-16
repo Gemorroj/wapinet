@@ -1,8 +1,7 @@
 <?php
 
-namespace Wapinet\Bundle\Controller;
+namespace Wapinet\Bundle\Helper;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
@@ -10,10 +9,24 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
-class PaginateController extends Controller
+class Paginate
 {
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
+     * Конструктор
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * @param Query|QueryBuilder|Collection $data
      * @param int $page

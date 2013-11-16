@@ -57,3 +57,7 @@ pagerank:
 unicode:
     resource: "@WapinetBundle/Resources/config/routing/unicode.yml"
     prefix:   /unicode
+
+rename:
+    resource: "@WapinetBundle/Resources/config/routing/rename.yml"
+    prefix:   /rename

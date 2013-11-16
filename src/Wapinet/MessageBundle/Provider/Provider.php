@@ -31,7 +31,7 @@ class Provider extends BaseProvider
         $participant = $this->getAuthenticatedParticipant();
 
         $builder = $this->threadManager->getParticipantInboxThreadsQueryBuilder($participant);
-        return $this->container->get('wapinet.paginate.controller')->paginate($builder, $page);
+        return $this->container->get('paginate_helper')->paginate($builder, $page);
 
         //return $this->threadManager->findParticipantInboxThreads($participant);
     }
@@ -47,7 +47,7 @@ class Provider extends BaseProvider
         $participant = $this->getAuthenticatedParticipant();
 
         $builder = $this->threadManager->getParticipantSentThreadsQueryBuilder($participant);
-        return $this->container->get('wapinet.paginate.controller')->paginate($builder, $page);
+        return $this->container->get('paginate_helper')->paginate($builder, $page);
 
         //return $this->threadManager->findParticipantSentThreads($participant);
     }
@@ -63,7 +63,7 @@ class Provider extends BaseProvider
         $participant = $this->getAuthenticatedParticipant();
 
         $builder = $this->threadManager->getParticipantDeletedThreadsQueryBuilder($participant);
-        return $this->container->get('wapinet.paginate.controller')->paginate($builder, $page);
+        return $this->container->get('paginate_helper')->paginate($builder, $page);
 
         //return $this->threadManager->findParticipantDeletedThreads($participant);
     }
@@ -90,7 +90,7 @@ class Provider extends BaseProvider
             throw new AccessDeniedException('You are not allowed to see this thread');
         }
 
-        $parerfanta = $this->container->get('wapinet.paginate.controller')->paginate($thread->getMessages(), $page);
+        $parerfanta = $this->container->get('paginate_helper')->paginate($thread->getMessages(), $page);
 
         foreach ($parerfanta->getCurrentPageResults() as $message) {
             $this->threadReader->markAsRead($message);

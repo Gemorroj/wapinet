@@ -1,0 +1,22 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Переименование файлов{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('utilities'), 'title': 'Полезные WEB приложения'}
+    })}}
+{% endblock %}
+
+{% block content %}
+    {% if result is not null %}
+        {% if result %}
+            ...
+        {% else %}
+            Произошла ошибка при переименовании
+        {% endif %}
+    {% else %}
+        {{ form_start(form, {'action': path('rename_index'), 'method': 'POST'}) }}
+            {{ form_widget(form) }}
+        {{ form_end(form) }}
+    {% endif %}
+{% endblock %}
