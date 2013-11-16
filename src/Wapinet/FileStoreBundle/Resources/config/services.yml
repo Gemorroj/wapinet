@@ -4,3 +4,10 @@ services:
         arguments: [@iphp.filestore.mapping.factory, @iphp.filestore.datastorage, @iphp.filestore.filestorage.file_system]
         tags:
             - { name: form.type, alias: iphp_file_admin }
+
+
+    wapinet_filestore.type.iphp_file:
+        class: Wapinet\FileStoreBundle\Form\Type\FileType
+        arguments: [@iphp.filestore.mapping.factory, @iphp.filestore.datastorage, @iphp.filestore.filestorage.file_system]
+        tags:
+            - { name: form.type, alias: iphp_file }

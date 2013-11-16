@@ -18,7 +18,7 @@ Wapinet\Bundle\Entity\Online:
             type: string
             length: 255
 
-    oneToOne:
+    manyToOne:
         user:
             fetch: LAZY
             type: integer
