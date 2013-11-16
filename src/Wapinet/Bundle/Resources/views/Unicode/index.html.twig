@@ -1,0 +1,26 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Конвертер в Unicode{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('utilities'), 'title': 'Полезные WEB приложения'}
+    })}}
+{% endblock %}
+
+
+{% block content %}
+    Данный сервис позволяет перекодировать текст в кодировку <abbr title="Юникод (англ. Unicode) — стандарт кодирования символов, позволяющий представить знаки практически всех письменных языков">Unicode</abbr>.
+    <br/>
+
+    {{ form_start(form, {'action': path('unicode_index'), 'method': 'POST'}) }}
+    {% if result is not null %}
+        {% if result %}
+            <label>Результат <textarea>{{ result }}</textarea></label>
+        {% else %}
+            Произошла ошибка
+        {% endif %}
+    {% endif %}
+
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}
