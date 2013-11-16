@@ -1,6 +1,6 @@
 var FileLoader = {
     readFile: function (file, callback) {
-        if (window.FileReader && file.type.match('^image/.+')) {
+        if (window.FileReader) {
             var fileReader = new window.FileReader();
             fileReader.onload = callback;
             fileReader.readAsDataURL(file);
@@ -8,14 +8,15 @@ var FileLoader = {
         }
         return false;
     },
-    preview: function (e, previewElement) {
+    imagePreview: function (e, previewElement) {
         var img = new Image();
         img.src = e.target.result;
         img.className = 'image_preview';
 
-        var $prevParent = $(previewElement).parent();
-        $prevParent.find('img.image_preview').remove();
-        $prevParent.prepend(img);
+        $(previewElement).parent().prepend(img);
+    },
+    imagePreviewCleaner: function (previewElement) {
+        $(previewElement).parent().find('img.image_preview').remove();
     }
 };
 
@@ -28,9 +29,13 @@ $(document)/*.bind("mobileinit", function () {
         $('input[type="file"]').change(function (e) {
             var fileElement = e.target;
             $.each(fileElement.files, function (i, file) {
-                FileLoader.readFile(file, function (e) {
-                    FileLoader.preview(e, fileElement);
-                });
+                FileLoader.imagePreviewCleaner(fileElement);
+                // обрабатываем только картинки
+                if (file.type.match('^image/.+')) {
+                    FileLoader.readFile(file, function (e) {
+                        FileLoader.imagePreview(e, fileElement);
+                    });
+                }
             });
         });
 });
