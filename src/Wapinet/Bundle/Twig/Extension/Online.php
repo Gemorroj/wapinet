@@ -52,6 +52,7 @@ class Online extends \Twig_Extension
      */
     protected function updateOnline()
     {
+        $result = null;
         $token = $this->container->get('security.context')->getToken();
         if (null !== $token) {
             // getUser возвращает string
@@ -66,17 +67,29 @@ class Online extends \Twig_Extension
         $online->setDatetime(new \DateTime());
         $online->setUser($user);
 
-        $result = $this->em->createQuery('SELECT o.id FROM Wapinet\Bundle\Entity\Online o WHERE o.ip = :ip AND o.browser = :browser')
-            ->setParameter('ip', $online->getIp())
-            ->setParameter('browser', $online->getBrowser())
-            ->getOneOrNullResult();
+        if (null !== $online->getUser()) {
+            $result = $this->em->createQuery('SELECT o.id FROM Wapinet\Bundle\Entity\Online o WHERE o.user = :user')
+                ->setParameter('user', $online->getUser())
+                ->getOneOrNullResult();
+        }
 
         if (null !== $result) {
             $online->setId($result['id']);
             $this->em->merge($online);
         } else {
-            $this->em->persist($online);
+            $result = $this->em->createQuery('SELECT o.id FROM Wapinet\Bundle\Entity\Online o WHERE o.ip = :ip AND o.browser = :browser')
+                ->setParameter('ip', $online->getIp())
+                ->setParameter('browser', $online->getBrowser())
+                ->getOneOrNullResult();
+
+            if (null !== $result) {
+                $online->setId($result['id']);
+                $this->em->merge($online);
+            } else {
+                $this->em->persist($online);
+            }
         }
+
         $this->em->flush();
     }
 
