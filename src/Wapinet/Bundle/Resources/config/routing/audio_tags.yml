@@ -3,9 +3,9 @@ audio_tags_index:
     defaults: { _controller: WapinetBundle:AudioTags:index }
 
 audio_tags_edit:
-    pattern: /edit/{fileName}
+    pattern: /edit/{fileName}/{originalFileName}
     defaults: { _controller: WapinetBundle:AudioTags:edit }
 
 audio_tags_download:
-    pattern: /download/{fileName}
+    pattern: /download/{fileName}/{originalFileName}
     defaults: { _controller: WapinetBundle:AudioTags:download }
