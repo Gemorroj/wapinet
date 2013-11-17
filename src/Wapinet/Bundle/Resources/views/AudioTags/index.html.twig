@@ -1,0 +1,16 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Редактор аудио тегов{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('utilities'), 'title': 'Полезные WEB приложения'}
+    })}}
+{% endblock %}
+
+{% block content %}
+    Поддерживаются форматы: APE (v1, v2), ID3v1 (v1.0, v1.1), ID3v2 (v2.4, v2.3, v2.2), Lyrics3 (v1, v2)
+
+    {{ form_start(form, {'action': path('audio_tags_index'), 'method': 'POST'}) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

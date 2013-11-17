@@ -26,7 +26,8 @@
         "bmatzner/jquery-mobile-bundle": "dev-master",
         "friendsofsymfony/comment-bundle": "dev-master",
         "friendsofsymfony/message-bundle": "dev-master",
-        "white-october/pagerfanta-bundle": "dev-master"
+        "white-october/pagerfanta-bundle": "dev-master",
+        "james-heinrich/getid3": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

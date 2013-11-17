@@ -1,0 +1,11 @@
+audio_tags_index:
+    pattern: /
+    defaults: { _controller: WapinetBundle:AudioTags:index }
+
+audio_tags_edit:
+    pattern: /edit/{fileName}
+    defaults: { _controller: WapinetBundle:AudioTags:edit }
+
+audio_tags_download:
+    pattern: /download/{fileName}
+    defaults: { _controller: WapinetBundle:AudioTags:download }

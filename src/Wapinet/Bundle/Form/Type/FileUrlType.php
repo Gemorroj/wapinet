@@ -33,7 +33,10 @@ class FileUrlType extends AbstractType
         $required = (isset($options['required']) && true === $options['required']);
         $transformer = new FileUrlDataTransformer($this->container, $required);
 
-        $builder->add('file', 'file', array('label' => 'Файл', 'required' => false))
+        $attrFile = array();
+        $attrFile = (isset($options['attr']['accept']) ? array_merge($attrFile, array('accept' => $options['attr']['accept'])) : $attrFile);
+
+        $builder->add('file', 'file', array('attr' => $attrFile, 'label' => 'Файл', 'required' => false))
             ->add('url', 'url', array('label' => 'Ссылка', 'required' => false))
             ->addViewTransformer($transformer);
     }
