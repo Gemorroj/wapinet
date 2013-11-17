@@ -26,18 +26,33 @@ $(document)/*.bind("mobileinit", function () {
 })*/.ready(function () {
     $.mobile.ajaxEnabled = false;
     $.mobile.ajaxFormsEnabled = false;
-        $('input[type="file"]').change(function (e) {
-            var fileElement = e.target;
-            $.each(fileElement.files, function (i, file) {
-                FileLoader.imagePreviewCleaner(fileElement);
-                // обрабатываем только картинки
-                if (file.type.match('^image/.+')) {
-                    FileLoader.readFile(file, function (e) {
-                        FileLoader.imagePreview(e, fileElement);
-                    });
-                }
-            });
+
+    // предпросмотр картинок в загружаемых файлах
+    $('input[type="file"]').change(function (e) {
+        var fileElement = e.target;
+        $.each(fileElement.files, function (i, file) {
+            FileLoader.imagePreviewCleaner(fileElement);
+            // обрабатываем только картинки
+            if (file.type.match('^image/.+')) {
+                FileLoader.readFile(file, function (e) {
+                    FileLoader.imagePreview(e, fileElement);
+                });
+            }
         });
+    });
+
+    // выключение взаимозаменяющих полей в url_file
+    var fileUrl = $('fieldset.file_url');
+    fileUrl.find('input[type="file"]').change(function (e) {
+        if (e.target.files[0]) {
+            fileUrl.find('input[type="url"]').textinput("disable");
+        }
+    });
+    fileUrl.find('input[type="url"]').change(function (e) {
+        if (e.target.value) {
+            fileUrl.find('input[type="file"]').textinput("disable");
+        }
+    });
 });
 
 $.ajaxSetup({
