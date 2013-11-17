@@ -1,0 +1,3 @@
+sms_index:
+    pattern: /
+    defaults: { _controller: WapinetBundle:Sms:index }

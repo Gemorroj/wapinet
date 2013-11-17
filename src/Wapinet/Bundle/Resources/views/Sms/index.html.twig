@@ -1,0 +1,140 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Отправка СМС{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('utilities'), 'title': 'Полезные WEB приложения'}
+    })}}
+{% endblock %}
+
+{% block content %}
+    {% if result is not null %}
+        <strong>
+            {% if result %}
+                СМС сообщение отправлено
+            {% else %}
+                Произошла ошибка при отправке СМС
+            {% endif %}
+        </strong>
+    {% endif %}
+
+    {{ form_start(form, {'action': path('sms_index'), 'method': 'POST'}) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    <br />
+    <div data-role="collapsible" data-theme="b" data-content-theme="c">
+        <h2>Номер следует набирать в международном формате, например, 79061234567 или +380501234567</h2>
+
+        <ul data-role="listview">
+            <li data-role="list-divider">КиевСтар</li>
+            <li>
+                <p>Необходимо отправить пустое СМС на бесплатный номер:<br/>
+                    - <strong>7021</strong> - для разрешения приема SMS-сообщений<br/>
+                    - <strong>7020</strong> - для блокировки приема SMS-сообщений<br/>
+                    Для проверки статуса - отправьте пустое СМС на номер <strong>7022</strong><br/>
+                    SMS отправленные на КиевСтар доходят с задержкой 5 - 15 минут</p>
+            </li>
+            <li data-role="list-divider">Beeline, Россия</li>
+            <li>
+                <p>Необходимо позвонить по телефону:<br/>
+                    - <strong>0684002</strong> для разрешения приема SMS-сообщений<br/>
+                    - <strong>0684003</strong> для блокировки приема SMS-сообщений</p>
+            </li>
+            <li data-role="list-divider">СМАРТС</li>
+            <li>
+                <p>Необходимо отправить команду <strong>am ВАШ НОМЕР</strong> на номер <strong>+79023708073</strong></p>
+            </li>
+            <li data-role="list-divider">МТС Поволжье</li>
+            <li>
+                <p>Необходимо отправить СМС с текстом <strong>1</strong> на бесплатный номер: <strong>29471</strong></p>
+            </li>
+            <li data-role="list-divider">Элайн Марий Эл</li>
+            <li>
+                <p>Необходимо отправить СМС с текстом <strong>+email</strong> на бесплатный номер: <strong>0</strong></p>
+            </li>
+            <li data-role="list-divider">Мегафон Дальний Восток</li>
+            <li>
+                <p>Необходимо отправить СМС с текстом <strong>С</strong> на бесплатный номер: <strong>508</strong></p>
+            </li>
+            <li data-role="list-divider">Мегафон Северо-Запад</li>
+            <li>
+                <p>Необходимо отправить СМС с текстом <strong>С</strong> на бесплатный номер: <strong>000990</strong></p>
+            </li>
+            <li data-role="list-divider">Мегафон Центр</li>
+            <li>
+                <p>Получатель должен отправить СМС с текстом <strong>on</strong> на бесплатный номер: <strong>000133</strong> или набрать номер <strong>*1#</strong></p>
+            </li>
+            <li data-role="list-divider">Мегафон Центр-Юг</li>
+            <li>
+                <p>Необходимо отправить СМС с текстом <strong>create ВАШ НОМЕР</strong> на бесплатный номер: <strong>000800</strong></p>
+            </li>
+            <li data-role="list-divider">Мегафон Кавказ</li>
+            <li>
+                <p>Необходимо отправить СМС с текстом <strong>create ВАШ НОМЕР</strong> на бесплатный номер: <strong>000800</strong></p>
+            </li>
+            <li data-role="list-divider">Мегафон Сибирь</li>
+            <li>
+                <p>Необходимо отправить СМС с текстом <strong>С</strong> на бесплатный номер: <strong>508</strong></p>
+            </li>
+            <li data-role="list-divider">Мегафон</li>
+            <li>
+                <p>Необходимо отправить СМС с текстом <strong>С</strong> на бесплатный номер: <strong>000908</strong></p>
+            </li>
+            <li data-role="list-divider">Билайн, Казахстан</li>
+            <li>
+                <p>Необходимо отправить SMS с текстом <strong>09051</strong> на бесплатный номер: <strong>0674</strong></p>
+            </li>
+            <li data-role="list-divider">K-Mobile, Казахстан</li>
+            <li>
+                <p>Через АССА (Автоматическая Служба Сервиса Абонента), позвонив по телефону <strong>90502441</strong>.<br />
+                    По окончании месяца вам не нужно снова подключать эту услугу при условии, что у вас достаточно денег на счете.<br />
+                    Отключить услугу можно также через справочную службу 9050</p>
+            </li>
+            <li data-role="list-divider">Связьинформ</li>
+            <li>
+                <p>Необходимо набрать следующую комбинацию <strong>614#08#</strong> и нажать кнопку посыла вызова</p>
+            </li>
+            <li data-role="list-divider">Стек GSM</li>
+            <li>
+                <p>Необходимо отправить SMS с текстом <strong>A</strong> на бесплатный номер: <strong>99051</strong></p>
+            </li>
+            <li data-role="list-divider">Bashcell</li>
+            <li>
+                <p>Необходимо отправить SMS с текстом <strong>r1</strong> на бесплатный номер: <strong>886</strong></p>
+            </li>
+            <li data-role="list-divider">Santel</li>
+            <li>
+                <p>Необходимо отправить SMS с текстом <strong>/ON</strong> на бесплатный номер: <strong>16131</strong></p>
+            </li>
+            <li data-role="list-divider">CITY, Н. Новгород</li>
+            <li>
+                <p>Необходимо позвонить на бесплатный номер: <strong>10022</strong></p>
+            </li>
+            <li data-role="list-divider">Оренбург gsm</li>
+            <li>
+                <p>Необходимо отправить SMS на бесплатный номер: <strong>186</strong></p>
+            </li>
+            <li data-role="list-divider">Оренбург gsm</li>
+            <li>
+                <p>Необходимо отправить SMS на бесплатный номер: <strong>186</strong></p>
+            </li>
+            <li data-role="list-divider">Velcom, Беларусь</li>
+            <li>
+                <p>Необходимо отправить SMS с текстом <strong>websms start</strong> на номер: <strong>511</strong></p>
+            </li>
+            <li data-role="list-divider">Djuice</li>
+            <li>
+                <p>Необходимо отправить SMS с любым текстом на номер: <strong>7021</strong></p>
+            </li>
+            <li data-role="list-divider">Tele2, Эстония</li>
+            <li>
+                <p>Услугу необходимо заказать в службе поддержки клиентов</p>
+            </li>
+            <li data-role="list-divider">Elisa, Эстония</li>
+            <li>
+                <p>Услугу необходимо активировать через служебный номер <strong>15300</strong></p>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

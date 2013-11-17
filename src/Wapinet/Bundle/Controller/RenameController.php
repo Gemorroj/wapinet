@@ -20,7 +20,6 @@ class RenameController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $result = null;
         $form = $this->createForm(new RenameType());
         $form->handleRequest($request);
 
@@ -38,8 +37,7 @@ class RenameController extends Controller
         }
 
         return $this->render('WapinetBundle:Rename:index.html.twig', array(
-            'form' => $form->createView(),
-            'result' => $result
+            'form' => $form->createView()
         ));
     }
 

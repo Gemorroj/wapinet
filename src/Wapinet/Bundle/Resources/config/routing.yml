@@ -61,3 +61,7 @@ unicode:
 rename:
     resource: "@WapinetBundle/Resources/config/routing/rename.yml"
     prefix:   /rename
+
+sms:
+    resource: "@WapinetBundle/Resources/config/routing/sms.yml"
+    prefix:   /sms

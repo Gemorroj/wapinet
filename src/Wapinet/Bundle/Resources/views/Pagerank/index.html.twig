@@ -8,7 +8,6 @@
 {% endblock %}
 
 {% block content %}
-    {{ form_start(form, {'action': path('pagerank_index'), 'method': 'POST'}) }}
     {% if result is not null %}
         <p>
             Google PR: {{ result.google_pr }}<br/>
@@ -21,7 +20,8 @@
         </p>
     {% endif %}
 
-    {{ form_widget(form) }}
+    {{ form_start(form, {'action': path('pagerank_index'), 'method': 'POST'}) }}
+        {{ form_widget(form) }}
     {{ form_end(form) }}
 
     <p>
