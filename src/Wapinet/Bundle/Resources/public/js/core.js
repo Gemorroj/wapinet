@@ -8,17 +8,39 @@ var FileLoader = {
         }
         return false;
     },
-    imagePreview: function (e, previewElement) {
-        var img = new Image();
-        img.src = e.target.result;
-        img.className = 'image_preview';
+    preview: function (e, file, previewElement) {
+        var container = document.createElement('p');
+        container.className = 'container_preview';
 
-        $(previewElement).parent().prepend(img);
+        if (file.type.match('^image/.+')) {
+            var img = new Image();
+            img.src = e.target.result;
+            img.className = 'image_preview';
+            container.appendChild(img);
+        }
+
+        var size = document.createTextNode(' ' + Helper.sizeFormat(e.total));
+        container.appendChild(size);
+
+        $(previewElement).parent().prepend(container);
     },
-    imagePreviewCleaner: function (previewElement) {
-        $(previewElement).parent().find('img.image_preview').remove();
+    previewCleaner: function (previewElement) {
+        $(previewElement).parent().find('p.container_preview').remove();
     }
 };
+var Helper = {
+    sizeFormat: function (fileSizeInBytes) {
+        var i = -1;
+        var byteUnits = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
+        do {
+            fileSizeInBytes = fileSizeInBytes / 1024;
+            i++;
+        } while (fileSizeInBytes > 1024);
+
+        return Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
+    }
+};
+
 
 $(document)/*.bind("mobileinit", function () {
     $.mobile.ajaxEnabled = false;
@@ -31,13 +53,10 @@ $(document)/*.bind("mobileinit", function () {
     $('input[type="file"]').change(function (e) {
         var fileElement = e.target;
         $.each(fileElement.files, function (i, file) {
-            FileLoader.imagePreviewCleaner(fileElement);
-            // обрабатываем только картинки
-            if (file.type.match('^image/.+')) {
-                FileLoader.readFile(file, function (e) {
-                    FileLoader.imagePreview(e, fileElement);
-                });
-            }
+            FileLoader.previewCleaner(fileElement);
+            FileLoader.readFile(file, function (e) {
+                FileLoader.preview(e, file, fileElement);
+            });
         });
     });
 
