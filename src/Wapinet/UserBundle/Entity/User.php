@@ -40,6 +40,39 @@ class User extends BaseUser implements ParticipantInterface
      */
     protected $birthday;
 
+    /**
+     * @var bool
+     */
+    protected $subscribeComments = false;
+
+    /**
+     * @var bool
+     */
+    protected $subscribeMessages = true;
+
+
+
+    public function getSubscribeComments()
+    {
+        return $this->subscribeComments;
+    }
+
+    public function setSubscribeComments($subscribeComments)
+    {
+        $this->subscribeComments = $subscribeComments;
+        return $this;
+    }
+
+    public function getSubscribeMessages()
+    {
+        return $this->subscribeMessages;
+    }
+
+    public function setSubscribeMessages($subscribeMessages)
+    {
+        $this->subscribeMessages = $subscribeMessages;
+        return $this;
+    }
 
 
     /**

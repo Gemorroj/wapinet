@@ -7,6 +7,14 @@ Wapinet\UserBundle\Entity\User:
             generator:
                 strategy: AUTO
     fields:
+        subscribeComments:
+            type: boolean
+            nullable: false
+            column: subscribe_comments
+        subscribeMessages:
+            type: boolean
+            nullable: false
+            column: subscribe_messages
         avatar:
             type: array
             nullable: true

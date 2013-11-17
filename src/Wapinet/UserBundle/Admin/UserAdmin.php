@@ -33,6 +33,8 @@ class UserAdmin extends Admin
             ->add('avatar', null, array('label' => 'Аватар'))
             ->add('sex', null, array('label' => 'Пол'))
             ->add('birthday', null, array('label' => 'День рождения'))
+            ->add('subscribeComments', null, array('label' => 'Рассылка комментариев'))
+            ->add('subscribeMessages', null, array('label' => 'Рассылка сообщений'))
         ;
     }
 
@@ -53,10 +55,12 @@ class UserAdmin extends Admin
             ->add('plainPassword', 'text', array('label' => 'Пароль', 'required' => false))
             ->add('username', null, array('label' => 'Логин'))
             ->add('email', null, array('label' => 'Email'))
-            ->add('avatar', 'iphp_file_admin', array('label' => 'Аватар', 'required' => false)) //TODO: доделать
+            ->add('avatar', 'iphp_file_admin', array('label' => 'Аватар', 'required' => false))
             ->add('roles', 'choice', array('choices' => $roles, 'multiple' => true))
             ->add('sex', 'choice', array('label' => 'Пол', 'required' => false, 'choices' => User::getSexChoices()))
             ->add('birthday', 'date', array('widget' => 'single_text', 'label' => 'День рождения', 'required' => false))
+            ->add('subscribeComments', null, array('label' => 'Рассылка комментариев'))
+            ->add('subscribeMessages', null, array('label' => 'Рассылка сообщений'))
         ;
     }
 
@@ -115,13 +119,13 @@ class UserAdmin extends Admin
             ->add('created_at', 'datetime', array('label' => 'Зарегистрирован'))
             ->add('last_login', 'datetime', array('label' => 'Последняя авторизация'))
             ->add('_action', 'actions', array(
-                    'label' => 'Операции',
-                    'actions' => array(
-                        'show' => array(),
-                        'edit' => array(),
-                        'delete' => array(),
-                    )
-                ))
+                'label' => 'Операции',
+                'actions' => array(
+                    'show' => array(),
+                    'edit' => array(),
+                    'delete' => array(),
+                )
+            ))
         ;
     }
 }
