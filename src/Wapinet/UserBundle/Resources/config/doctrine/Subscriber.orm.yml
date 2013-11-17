@@ -1,0 +1,25 @@
+Wapinet\UserBundle\Entity\Subscriber:
+    type:  entity
+    table: subscriber
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        subject:
+            type: string
+        message:
+            type: text
+        url:
+            type: string
+
+    manyToOne:
+        user:
+            type: integer
+            targetEntity: Wapinet\UserBundle\Entity\User
+            joinColumns:
+                user_id:
+                    onDelete: CASCADE
+                    onUpdate: CASCADE # не ставится автоматически. проставить вручную.
+                    nullable: false

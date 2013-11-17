@@ -12,3 +12,15 @@ services:
             - [setUserManager, ["@fos_user.user_manager"]]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Пользователи, label: Пользователи }
+
+    wapinet_user.subscriber.message:
+        class: Wapinet\UserBundle\EventListener\SubscriberMessage
+        arguments: [@fos_message.message_manager, @doctrine.orm.entity_manager, @router]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    wapinet_user.subscriber.comment:
+        class: Wapinet\UserBundle\EventListener\SubscriberComment
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: kernel.event_subscriber }

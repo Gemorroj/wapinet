@@ -23,7 +23,7 @@ Wapinet\Bundle\Entity\Online:
             fetch: LAZY
             type: integer
             targetEntity: Wapinet\UserBundle\Entity\User
-            joinColumn:
+            joinColumns:
                 user_id:
                     onDelete: CASCADE
                     onUpdate: CASCADE # не ставится автоматически. проставить вручную.

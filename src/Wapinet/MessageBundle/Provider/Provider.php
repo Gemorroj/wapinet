@@ -2,6 +2,7 @@
 
 namespace Wapinet\MessageBundle\Provider;
 
+use FOS\MessageBundle\Model\MessageInterface;
 use FOS\MessageBundle\Provider\Provider as BaseProvider;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -92,8 +93,22 @@ class Provider extends BaseProvider
 
         $parerfanta = $this->container->get('paginate_helper')->paginate($thread->getMessages(), $page);
 
+
+        $currentUser = $this->container->get('security.context')->getToken()->getUser();
+
+        /*
+        $currentParticipant = null;
+        foreach ($thread->getParticipants() as $participant) {
+            if ($currentUser->getId() === $participant->getId()) {
+                $currentParticipant = $participant;
+                break;
+            }
+        }
+        */
+
+        /** @var MessageInterface $message */
         foreach ($parerfanta->getCurrentPageResults() as $message) {
-            $this->threadReader->markAsRead($message);
+            $this->messageManager->markAsReadByParticipant($message, $currentUser);
         }
 
         return array(
