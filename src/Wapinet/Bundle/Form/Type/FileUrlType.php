@@ -30,7 +30,8 @@ class FileUrlType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $transformer = new FileUrlDataTransformer($this->container);
+        $required = (isset($options['required']) && true === $options['required']);
+        $transformer = new FileUrlDataTransformer($this->container, $required);
 
         $builder->add('file', 'file', array('label' => 'Файл', 'required' => false))
             ->add('url', 'url', array('label' => 'Ссылка', 'required' => false))

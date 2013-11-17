@@ -5,6 +5,7 @@ namespace Wapinet\Bundle\Form\DataTransformer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 use Wapinet\Bundle\Entity\FileUrl;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -14,11 +15,17 @@ class FileUrlDataTransformer implements DataTransformerInterface
      * @var ContainerInterface
      */
     protected $container;
+    /**
+     * @var bool
+     */
+    protected $required;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, $required = true)
     {
         $this->container = $container;
+        $this->required = $required;
     }
+
 
     public function transform($fileDataFromDb)
     {
@@ -31,6 +38,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
      *
      * @param array $fileDataFromForm
      * @return FileUrl|UploadedFile|null
+     * @throws TransformationFailedException
      */
     public function reverseTransform($fileDataFromForm)
     {
@@ -55,9 +63,17 @@ class FileUrlDataTransformer implements DataTransformerInterface
             $curl->close();
             fclose($f);
 
-            return new FileUrl($temp, $fileDataFromForm['url'], $responseHeaders->headers->get('Content-Type'), $responseHeaders->headers->get('Content-Length'));
+            return new FileUrl(
+                $temp,
+                $fileDataFromForm['url'],
+                $responseHeaders->headers->get('Content-Type'),
+                $responseHeaders->headers->get('Content-Length')
+            );
         }
 
+        if (true === $this->required) {
+            throw new TransformationFailedException('Не заполнено обязательное поле');
+        }
         return null;
     }
 }

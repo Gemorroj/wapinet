@@ -21,7 +21,7 @@ class EmailType extends AbstractType
         $builder->add('from', 'email', array('label' => 'От кого', 'data' => '@'));
         $builder->add('subject', 'text', array('label' => 'Тема'));
         $builder->add('message', 'textarea', array('label' => 'Сообщение'));
-        $builder->add('file', 'file_url', array('label' => false));
+        $builder->add('file', 'file_url', array('required' => false, 'label' => false));
         //$builder->add('captcha', 'captcha');
 
         $builder->add('submit', 'submit', array('label' => 'Отправить'));

@@ -18,7 +18,7 @@ class RenameType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder->add('name', 'text', array('label' => 'Новое имя файла'));
-        $builder->add('file', 'file_url', array('label' => false));
+        $builder->add('file', 'file_url', array('required' => true, 'label' => false));
 
         $builder->add('submit', 'submit', array('label' => 'Переименовать'));
     }
