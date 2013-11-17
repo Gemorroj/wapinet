@@ -43,7 +43,7 @@ class User extends BaseUser implements ParticipantInterface
     /**
      * @var bool
      */
-    protected $subscribeComments = false;
+    protected $subscribeComments = true;
 
     /**
      * @var bool
