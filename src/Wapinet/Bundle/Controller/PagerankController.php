@@ -59,7 +59,7 @@ class PagerankController extends Controller
 
     protected function getYandexPages($url)
     {
-        $curl = $this->get('curl_helper');
+        $curl = $this->get('curl');
         $curl->setOpt(CURLOPT_URL, 'http://xmlsearch.yandex.ru/xmlsearch?user=gemorwapinet&key=' . $this->container->getParameter('wapinet_search_key'));
         $curl->setOpt(CURLOPT_POST, true);
         $curl->setOpt(CURLOPT_POSTFIELDS, '<?xml version="1.0" encoding="UTF-8"?><request><query>' . $url . '</query><groupings><groupby groups-on-page="1"/></groupings></request>');
@@ -79,7 +79,7 @@ class PagerankController extends Controller
 
     protected function getYandexTcy($url)
     {
-        $curl = $this->get('curl_helper');
+        $curl = $this->get('curl');
         $curl->setOpt(CURLOPT_URL, 'http://bar-navig.yandex.ru/u?ver=2&show=32&url=http://' . $url);
         $curl->addCompression();
 
@@ -98,7 +98,7 @@ class PagerankController extends Controller
 
     protected function getGooglePages($url)
     {
-        $curl = $this->get('curl_helper');
+        $curl = $this->get('curl');
         $curl->setOpt(CURLOPT_URL, 'http://www.google.com/search?q=' . rawurlencode('site:' . $url));
         $curl->addCompression();
         $curl->addHeader('Accept-Language', 'en-US,en');
@@ -132,7 +132,7 @@ class PagerankController extends Controller
 
     protected function getGoogleInurl($url)
     {
-        $curl = $this->get('curl_helper');
+        $curl = $this->get('curl');
         $curl->setOpt(CURLOPT_URL, 'http://www.google.com/search?q=' . rawurlencode('"' . $url . '" -inurl:"' . $url . '"'));
         $curl->setOpt(CURLOPT_FOLLOWLOCATION, true); // fix ipv4
         $curl->addCompression();

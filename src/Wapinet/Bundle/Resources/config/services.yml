@@ -16,13 +16,16 @@ services:
         tags:
             - {name: twig.extension, alias: wapinet_menu}
 
-    curl_helper:
+    curl:
         class: Wapinet\Bundle\Helper\Curl
         arguments: [@service_container]
 
-    paginate_helper:
+    paginate:
         class: Wapinet\Bundle\Helper\Paginate
         arguments: [@service_container]
+
+    getid3:
+        class: Wapinet\Bundle\Helper\Getid3
 
     wapinet.type.file_url:
         class: Wapinet\Bundle\Form\Type\FileUrlType

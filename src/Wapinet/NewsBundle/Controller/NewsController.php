@@ -23,7 +23,7 @@ class NewsController extends Controller
             ->getRepository('WapinetNewsBundle:News')
             ->getAllBuilder();
 
-        $result = $this->get('paginate_helper')->paginate($result, $page);
+        $result = $this->get('paginate')->paginate($result, $page);
 
         return $this->render('WapinetNewsBundle:News:index.html.twig', array(
             'news' => $result,

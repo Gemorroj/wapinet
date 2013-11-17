@@ -48,7 +48,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
         }
 
         if ($fileDataFromForm['url']) {
-            $curl = $this->container->get('curl_helper');
+            $curl = $this->container->get('curl');
             $curl->setOpt(CURLOPT_URL, $fileDataFromForm['url']);
             $curl->addBrowserHeaders();
             $responseHeaders = $curl->checkFileSize();

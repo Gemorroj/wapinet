@@ -22,7 +22,7 @@ class IcqController extends Controller
      */
     protected function getIcqVariables ()
     {
-        $curl = $this->get('curl_helper');
+        $curl = $this->get('curl');
         $curl->setOpt(CURLOPT_URL, 'http://www.icq.com/join/ru');
         $curl->addBrowserHeaders();
         $curl->addCompression();
@@ -47,7 +47,7 @@ class IcqController extends Controller
      */
     protected function icqRegistration (array $data)
     {
-        $curl = $this->get('curl_helper');
+        $curl = $this->get('curl');
         $curl->setOpt(CURLOPT_URL, 'http://www.icq.com/join/commit/ru');
         $curl->addBrowserHeaders();
         $curl->addCompression();
@@ -103,7 +103,7 @@ class IcqController extends Controller
 
     public function registrationPicAction($gnm_img)
     {
-        $curl = $this->get('curl_helper');
+        $curl = $this->get('curl');
         $curl->setOpt(CURLOPT_URL, 'https://www.icq.com/utils/recaptcha/gnm/' . $gnm_img);
         $curl->addBrowserHeaders();
         $curl->setOpt(CURLOPT_REFERER, 'http://www.icq.com/join/ru');
@@ -216,7 +216,7 @@ class IcqController extends Controller
      */
     protected function cleanUserInfo($uin)
     {
-        $curl = $this->get('curl_helper');
+        $curl = $this->get('curl');
         $curl->setOpt(CURLOPT_URL, 'http://www.icq.com/people/' . $uin . '/view/ru');
         $curl->addBrowserHeaders();
         $curl->addCompression();

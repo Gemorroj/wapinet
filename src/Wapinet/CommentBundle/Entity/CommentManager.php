@@ -66,7 +66,7 @@ class CommentManager extends BaseCommentManager
         //    ->orWhere($expr->like('ca.ancestors', $concatLeft))
         //    ->orWhere($expr->like('ca.ancestors', $concatRight));
 
-        //$pagerfanta = $this->container->get('paginate_helper')->paginate($qb, $page);
+        //$pagerfanta = $this->container->get('paginate')->paginate($qb, $page);
         //$comments = $pagerfanta->CurrentPageResults();
         $comments = $qb
             ->getQuery()
@@ -78,7 +78,7 @@ class CommentManager extends BaseCommentManager
             $comments = $sorter->sortFlat($comments);
         }
 
-        //$pagerfanta = $this->container->get('paginate_helper')->paginate($comments, $page);
+        //$pagerfanta = $this->container->get('paginate')->paginate($comments, $page);
         //$comments = $pagerfanta->getCurrentPageResults();
 
         return array('pagerfanta' => /*$pagerfanta*/null, 'comments' => $comments);
