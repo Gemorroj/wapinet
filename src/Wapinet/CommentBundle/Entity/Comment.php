@@ -33,6 +33,7 @@ class Comment extends BaseComment implements SignedCommentInterface, VotableComm
      * Author of the comment
      *
      * @ORM\ManyToOne(targetEntity="Wapinet\UserBundle\Entity\User")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @var UserInterface
      */
     protected $author;

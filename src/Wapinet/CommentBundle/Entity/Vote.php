@@ -33,6 +33,7 @@ class Vote extends BaseVote implements SignedVoteInterface
      * Author of the vote
      *
      * @ORM\ManyToOne(targetEntity="Wapinet\UserBundle\Entity\User")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @var UserInterface
      */
     protected $voter;

@@ -21,6 +21,7 @@ class Thread extends BaseThread
 
     /**
      * @ORM\ManyToOne(targetEntity="Wapinet\UserBundle\Entity\User")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $createdBy;
 

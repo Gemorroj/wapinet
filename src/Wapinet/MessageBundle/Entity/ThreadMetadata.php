@@ -29,6 +29,7 @@ class ThreadMetadata extends BaseThreadMetadata
 
     /**
      * @ORM\ManyToOne(targetEntity="Wapinet\UserBundle\Entity\User")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @var ParticipantInterface
      */
     protected $participant;

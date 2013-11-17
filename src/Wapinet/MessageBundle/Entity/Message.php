@@ -29,6 +29,7 @@ class Message extends BaseMessage
 
     /**
      * @ORM\ManyToOne(targetEntity="Wapinet\UserBundle\Entity\User")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @var ParticipantInterface
      */
     protected $sender;
