@@ -335,7 +335,7 @@
                 form_parent.remove();
             } else {
                 // Insert the comment
-                form.after(commentHtml);
+                form.parent().after(commentHtml);
                 form.trigger('fos_comment_add_comment', commentHtml);
 
                 // "reset" the form

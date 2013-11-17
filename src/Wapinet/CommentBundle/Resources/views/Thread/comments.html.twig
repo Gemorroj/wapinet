@@ -13,20 +13,20 @@
 {% set view = view|default('tree') %}
 
 {% if depth == 0 %}
-    {% if fos_comment_can_comment_thread(thread) %}
-        {{ render(url("fos_comment_new_thread_comments", {"id": thread.id})) }}
-    {% endif %}
-
     {% if fos_comment_can_edit_thread(thread) %}
-    <div class="fos_comment_thread_commentable">
-        <a href="" data-role="button" data-inline="true" data-url="{{ url('fos_comment_edit_thread_commentable', {'id': thread.id, 'value': not thread.commentable}) }}" class="fos_comment_thread_commentable_action">
-            {{ (thread.commentable ? 'fos_comment_thread_close' : 'fos_comment_thread_open') | trans({}, 'FOSCommentBundle') }}
-        </a>
-    </div>
+        <div class="fos_comment_thread_commentable">
+            <a href="#" data-role="button" data-inline="true" data-url="{{ url('fos_comment_edit_thread_commentable', {'id': thread.id, 'value': not thread.commentable}) }}" class="fos_comment_thread_commentable_action">
+                {{ (thread.commentable ? 'fos_comment_thread_close' : 'fos_comment_thread_open') | trans({}, 'FOSCommentBundle') }}
+            </a>
+        </div>
     {% endif %}
 
     {% set count = thread.numComments %}
-    <h3>{% transchoice count with {'%count%': count} from "FOSCommentBundle" %}fos_comment_thread_comment_count{% endtranschoice %}</h3>
+    <p>{% transchoice count with {'%count%': count} from "FOSCommentBundle" %}fos_comment_thread_comment_count{% endtranschoice %}</p>
+
+    {% if fos_comment_can_comment_thread(thread) %}
+        {{ render(url("fos_comment_new_thread_comments", {"id": thread.id})) }}
+    {% endif %}
 {% endif %}
 
 {% for commentinfo in comments %}
