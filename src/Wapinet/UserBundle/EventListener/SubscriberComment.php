@@ -6,6 +6,7 @@ use FOS\CommentBundle\Events as Event;
 use FOS\CommentBundle\Event\CommentEvent;
 use Wapinet\UserBundle\Entity\Subscriber as EntitySubscriber;
 use Doctrine\Orm\EntityManager;
+use Wapinet\UserBundle\Entity\User;
 
 class SubscriberComment implements EventSubscriberInterface
 {
@@ -31,6 +32,7 @@ class SubscriberComment implements EventSubscriberInterface
             return;
         }
 
+        /** @var User $user */
         $user = $parentComment->getAuthor();
         if (null === $user) {
             return;
@@ -39,7 +41,7 @@ class SubscriberComment implements EventSubscriberInterface
         $thread = $comment->getThread();
         $path = $thread->getPermalink();
 
-        if (null !== $user) {
+        if (null !== $user && $user->getSubscribeComments()) {
             $subscriber = new EntitySubscriber();
             $subscriber->setSubject('Новый комментарий');
             $subscriber->setUrl($path);

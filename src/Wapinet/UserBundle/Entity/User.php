@@ -59,7 +59,7 @@ class User extends BaseUser implements ParticipantInterface
 
     public function setSubscribeComments($subscribeComments)
     {
-        $this->subscribeComments = $subscribeComments;
+        $this->subscribeComments = (bool)$subscribeComments;
         return $this;
     }
 
@@ -70,7 +70,7 @@ class User extends BaseUser implements ParticipantInterface
 
     public function setSubscribeMessages($subscribeMessages)
     {
-        $this->subscribeMessages = $subscribeMessages;
+        $this->subscribeMessages = (bool)$subscribeMessages;
         return $this;
     }
 
