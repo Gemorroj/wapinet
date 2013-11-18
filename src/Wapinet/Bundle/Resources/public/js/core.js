@@ -52,19 +52,22 @@ $(document)/*.bind("mobileinit", function () {
     // предпросмотр картинок в загружаемых файлах
     $('input[type="file"]').change(function (e) {
         var fileElement = e.target;
-        FileLoader.previewCleaner(fileElement);
-        $.each(fileElement.files, function (i, file) {
-            FileLoader.readFile(file, function (e) {
-                FileLoader.preview(e, file, fileElement);
+        // только если поддерживается
+        if (fileElement.files) {
+            FileLoader.previewCleaner(fileElement);
+            $.each(fileElement.files, function (i, file) {
+                FileLoader.readFile(file, function (e) {
+                    FileLoader.preview(e, file, fileElement);
+                });
             });
-        });
+        }
     });
 
     // выключение взаимозаменяющих полей в url_file
     var fileUrl = $('fieldset.file_url');
     fileUrl.find('input[type="file"]').change(function (e) {
         var state = 'enable';
-        if (e.target.files[0]) {
+        if (e.target.value) {
             state = 'disable';
         }
         fileUrl.find('input[type="url"]').textinput(state);
