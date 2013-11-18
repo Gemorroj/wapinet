@@ -86,7 +86,7 @@ class AudioTagsController extends Controller
                 $data = $form->getData();
 
                 try {
-                    $tags = $this->setTags($fileName, $data);
+                    $this->setTags($fileName, $data);
                 } catch (\Exception $e) {
                     $form->addError(new FormError($e->getMessage()));
                 }
@@ -111,18 +111,20 @@ class AudioTagsController extends Controller
     protected function getTags($fileName)
     {
         $getid3 = $this->get('getid3')->getId3();
-        return $getid3->analyze(\AppKernel::getTmpDir() . DIRECTORY_SEPARATOR . $fileName);
+        $tags = $getid3->analyze(\AppKernel::getTmpDir() . DIRECTORY_SEPARATOR . $fileName);
+        \getid3_lib::CopyTagsToComments($tags);
+
+        return $tags;
     }
 
     /**
      * @param string $fileName
      * @param array $data
-     *
-     * @return array
+     * @throws \RuntimeException
      */
     protected function setTags($fileName, array $data)
     {
-        return array();
+
     }
 
 
