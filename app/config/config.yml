@@ -138,16 +138,6 @@ fos_message:
     reply_form:
         type: wapinet_message.reply.form.type
 
-iphp_file_store:
-    mappings:
-       avatar:
-           upload_dir:  %kernel.root_dir%/../web/avatar
-           upload_path: /avatar
-           directory_namer:
-               date:
-                  params: { field: createdAt, depth: month }
-           namer: ~
-
 knp_menu:
     twig:  # use "twig: false" to disable the Twig extension and the TwigRenderer
         template: knp_menu.html.twig

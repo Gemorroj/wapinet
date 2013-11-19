@@ -56,22 +56,6 @@ class FileUrl extends File
         return $this->size;
     }
 
-    /**
-     * Returns locale independent base name of the given path.
-     *
-     * @param string $name The new file name
-     *
-     * @return string containing
-     */
-    protected function getName($name)
-    {
-        $originalName = str_replace('\\', '/', $name);
-        $pos = strrpos($originalName, '/');
-        $originalName = false === $pos ? $originalName : substr($originalName, $pos + 1);
-
-        return $originalName;
-    }
-
 
     /**
      * Returns the file mime type.

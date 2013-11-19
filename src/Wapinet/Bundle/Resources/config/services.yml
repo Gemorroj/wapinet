@@ -25,6 +25,9 @@ services:
         class: Wapinet\Bundle\Helper\Curl
         arguments: [@service_container]
 
+    file_namer:
+        class: Wapinet\Bundle\Helper\FileNamer
+
     paginate:
         class: Wapinet\Bundle\Helper\Paginate
         arguments: [@service_container]

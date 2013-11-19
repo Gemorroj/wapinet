@@ -22,7 +22,6 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
-        "iphp/filestore-bundle":"dev-master",
         "bmatzner/jquery-mobile-bundle": "dev-master",
         "friendsofsymfony/comment-bundle": "dev-master",
         "friendsofsymfony/message-bundle": "dev-master",

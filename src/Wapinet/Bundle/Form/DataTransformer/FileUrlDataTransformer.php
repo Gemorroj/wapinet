@@ -63,12 +63,15 @@ class FileUrlDataTransformer implements DataTransformerInterface
             $curl->close();
             fclose($f);
 
-            return new FileUrl(
+            $ret =  new FileUrl(
                 $temp,
                 $fileDataFromForm['url'],
                 $responseHeaders->headers->get('Content-Type'),
                 $responseHeaders->headers->get('Content-Length')
             );
+
+            file_put_contents('/log.log', print_r($ret, true));
+            return $ret;
         }
 
         if (true === $this->required) {

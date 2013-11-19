@@ -16,7 +16,7 @@ class ProfileFormType extends BaseType
             ->add('birthday', 'date', array('widget' => 'single_text', 'label' => 'Дата рождения:', 'required' => false))
             ->add('subscribeComments', 'checkbox', array('label' => 'Присылать E-mail о новых комментариях', 'required' => false))
             ->add('subscribeMessages', 'checkbox', array('label' => 'Присылать E-mail о новых сообщениях', 'required' => false))
-            ->add('avatar', 'iphp_file', array('label' => 'Аватар:', 'required' => false))
+            ->add('avatar', 'file_url', array('label' => 'Аватар:', 'required' => false))
         ;
     }
 

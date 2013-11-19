@@ -53,7 +53,6 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         $bundles = array(
-            new Iphp\FileStoreBundle\IphpFileStoreBundle(),
             new Sonata\AdminBundle\SonataAdminBundle(),
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
@@ -79,7 +78,6 @@ class AppKernel extends Kernel
 
             new Wapinet\UserBundle\WapinetUserBundle(),
             new Wapinet\Bundle\WapinetBundle(),
-            new Wapinet\FileStoreBundle\WapinetFileStoreBundle(),
             new Wapinet\MessageBundle\WapinetMessageBundle(),
             new Wapinet\CommentBundle\WapinetCommentBundle(),
             new Wapinet\NewsBundle\WapinetNewsBundle(),
