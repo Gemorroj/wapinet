@@ -14,6 +14,26 @@
         <pre>{{ dump(tags) }}</pre>
     </p>
     {{ form_start(form, {'action': path('audio_tags_edit', {'fileName': fileName, 'originalFileName': originalFileName}), 'method': 'POST'}) }}
-        {{ form_widget(form) }}
+
+        {{ form_row(form.title) }}
+        {{ form_row(form.album_artist) }}
+        {{ form_row(form.artist) }}
+        {{ form_row(form.album) }}
+        {{ form_row(form.year) }}
+        {{ form_row(form.track_number) }}
+        {{ form_row(form.url_user) }}
+        {{ form_row(form.genre) }}
+        {{ form_row(form.comment) }}
+        {% if tags.picture is defined %}
+            {% include 'WapinetBundle::image.html.twig' with {'image': {'id': 'image', 'alt': '', 'src': 'data:' ~ tags.picture[0].image_mime ~ ';base64,' ~ tags.picture[0].data|base64_encode } } %}
+            {{ form_row(form.picture_delete) }}
+        {% else %}
+            {{ form_row(form.picture_delete, {'disabled': 'disabled'}) }}
+        {% endif %}
+
+        {{ form_row(form.picture) }}
+
+        {{ form_row(form._token) }}
+        {{ form_row(form.submit) }}
     {{ form_end(form) }}
 {% endblock %}

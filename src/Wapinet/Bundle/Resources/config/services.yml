@@ -16,6 +16,11 @@ services:
         tags:
             - {name: twig.extension, alias: wapinet_menu}
 
+    base64.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\Base64
+        tags:
+            - {name: twig.extension, alias: base64}
+
     curl:
         class: Wapinet\Bundle\Helper\Curl
         arguments: [@service_container]

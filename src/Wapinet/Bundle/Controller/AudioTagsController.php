@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Wapinet\Bundle\Entity\AudioTags;
 use Wapinet\Bundle\Form\Type\AudioTags\AudioTagsType;
 use Wapinet\Bundle\Form\Type\AudioTags\AudioTagsEditType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -125,7 +126,7 @@ class AudioTagsController extends Controller
      */
     protected function setTags($fileName, array $data)
     {
-
+        file_put_contents('/log.log', print_r($data, true), FILE_APPEND);
     }
 
 
