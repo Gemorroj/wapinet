@@ -22,7 +22,7 @@ class FileType extends BaseType
         $builder->addEventSubscriber($subscriber);
 
 
-        $builder->add('file', 'file', array('attr' => array('accept' => 'image/*'), 'required' => false))
+        $builder->add('file', 'file_url', array('attr' => array('accept' => 'image/*'), 'required' => false))
             ->add('delete', 'checkbox', array('required' => false))
             ->addViewTransformer($transformer);
 

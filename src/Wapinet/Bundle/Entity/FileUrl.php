@@ -3,6 +3,7 @@
 namespace Wapinet\Bundle\Entity;
 
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 
 /**
  * File or url
@@ -93,6 +94,31 @@ class FileUrl extends File
     }
 
     /**
+     * Returns the extension based on the client mime type.
+     *
+     * If the mime type is unknown, returns null.
+     *
+     * This method uses the mime type as guessed by getClientMimeType()
+     * to guess the file extension. As such, the extension returned
+     * by this method cannot be trusted.
+     *
+     * For a trusted extension, use guessExtension() instead (which guesses
+     * the extension based on the guessed mime type for the file).
+     *
+     * @return string|null The guessed extension or null if it cannot be guessed
+     *
+     * @see guessExtension()
+     * @see getClientMimeType()
+     */
+    public function guessClientExtension()
+    {
+        $type = $this->getClientMimeType();
+        $guesser = ExtensionGuesser::getInstance();
+
+        return $guesser->guess($type);
+    }
+
+    /**
      * Returns the original file name.
      *
      * It is extracted from the request from which the file has been uploaded.
@@ -105,5 +131,18 @@ class FileUrl extends File
     public function getClientOriginalName()
     {
         return $this->originalName;
+    }
+
+    /**
+     * Returns the original file extension
+     *
+     * It is extracted from the original file name that was uploaded.
+     * Then is should not be considered as a safe value.
+     *
+     * @return string The extension
+     */
+    public function getClientOriginalExtension()
+    {
+        return pathinfo($this->originalName, PATHINFO_EXTENSION);
     }
 }
