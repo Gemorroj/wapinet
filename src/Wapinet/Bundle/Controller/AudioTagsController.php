@@ -77,7 +77,6 @@ class AudioTagsController extends Controller
      */
     public function editAction(Request $request, $fileName, $originalFileName)
     {
-        $tags = $this->getTags($fileName);
         $form = $this->createForm(new AudioTagsEditType());
         $form->handleRequest($request);
 
@@ -93,10 +92,12 @@ class AudioTagsController extends Controller
 
             }
         }
+        $info = $this->getInfo($fileName);
 
         return $this->render('WapinetBundle:AudioTags:edit.html.twig', array(
             'form' => $form->createView(),
-            'tags' => $tags,
+            'tags' => $info['comments'],
+            'info' => $info['audio'],
             'originalFileName' => $originalFileName,
             'fileName' => $fileName,
         ));
@@ -108,13 +109,13 @@ class AudioTagsController extends Controller
      *
      * @return array
      */
-    protected function getTags($fileName)
+    protected function getInfo($fileName)
     {
         $getid3 = $this->get('getid3')->getId3();
-        $tags = $getid3->analyze(\AppKernel::getTmpDir() . DIRECTORY_SEPARATOR . $fileName);
-        \getid3_lib::CopyTagsToComments($tags);
+        $info = $getid3->analyze(\AppKernel::getTmpDir() . DIRECTORY_SEPARATOR . $fileName);
+        \getid3_lib::CopyTagsToComments($info);
 
-        return $tags;
+        return $info;
     }
 
     /**

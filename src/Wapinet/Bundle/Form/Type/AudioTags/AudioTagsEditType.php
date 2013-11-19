@@ -17,7 +17,16 @@ class AudioTagsEditType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('composer', 'text', array('required' => false, 'label' => 'Автор'));
+        $builder->add('title', 'text', array('required' => false, 'label' => 'Название'));
+        $builder->add('album_artist', 'text', array('required' => false, 'label' => 'Исполнитель альбома'));
+        $builder->add('artist', 'text', array('required' => false, 'label' => 'Исполнитель'));
+        $builder->add('album', 'text', array('required' => false, 'label' => 'Альбом'));
+        $builder->add('year', 'text', array('required' => false, 'label' => 'Год'));
+        $builder->add('track_number', 'text', array('required' => false, 'label' => 'Номер трека'));
+        $builder->add('url_user', 'text', array('required' => false, 'label' => 'Ссылка'));
+        $builder->add('genre', 'text', array('required' => false, 'label' => 'Стиль'));
+        $builder->add('comment', 'textarea', array('required' => false, 'label' => 'Комментарий'));
+
 
         $builder->add('submit', 'submit', array('label' => 'Отправить'));
     }
