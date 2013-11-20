@@ -33,17 +33,16 @@ class ProfileFormType extends BaseType
             ->add('subscribeComments', 'checkbox', array('label' => 'Присылать E-mail о новых комментариях', 'required' => false))
             ->add('subscribeMessages', 'checkbox', array('label' => 'Присылать E-mail о новых сообщениях', 'required' => false))
             ->add('avatar', 'file_url', array(
-                // TODO: полностью переделать.
+                'delete_button' => true,
+                'save' => true,
+                'save_directory' => $this->container->getParameter('wapinet_avatar_dir_filesystem'),
+                'save_public_directory' => $this->container->getParameter('wapinet_avatar_dir_public'),
                 'attr' => array(
-                    'accept' => 'image/*',
-                    'save' => true,
-                    'save_directory' => $this->container->getParameter('wapinet_avatar_dir_filesystem'),
-                    'save_public_directory' => $this->container->getParameter('wapinet_avatar_dir_public')
+                    'accept' => 'image/*'
                 ),
                 'label' => 'Аватар',
                 'required' => false,
-            ))
-            ->add('avatar_delete', 'checkbox', array('mapped' => false, 'attr' => array('data-mini' => 'true'), 'required' => false, 'label' => 'Удалить аватар'));
+            ));
         ;
     }
 

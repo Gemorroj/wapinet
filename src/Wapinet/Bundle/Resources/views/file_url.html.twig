@@ -1,9 +1,18 @@
 {% block file_url_widget %}
     {% spaceless %}
         <fieldset class="file_url" data-role="fieldcontain" {{ block('widget_container_attributes') }}>
-            {% for child in form %}
-                {{ form_row(child) }}
-            {% endfor %}
+            {{ form_row(form.file) }}
+            {{ form_row(form.url) }}
+            {% if value.hasFile %}
+                {% if value.getFile.mimeType|slice(0, 6) == 'image/' %}
+                    {% include 'WapinetBundle::image.html.twig' with {'image': {'id': 'image', 'alt': '', 'src': value.publicPath } } %}
+                {% else %}
+                    <p>{{ value.getFile.basename }} ({{ value.getFile.size }} b)</p>
+                {% endif %}
+                {% if form.file_url_delete is defined %}
+                    {{ form_row(form.file_url_delete) }}
+                {% endif %}
+            {% endif %}
         </fieldset>
     {% endspaceless %}
 {% endblock %}

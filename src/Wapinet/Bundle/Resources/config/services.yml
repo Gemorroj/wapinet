@@ -40,3 +40,10 @@ services:
         arguments: [@service_container]
         tags:
             - { name: form.type, alias: file_url }
+
+    wapinet.listener.file_url:
+        class: Wapinet\Bundle\Listener\FileUrl
+        public: false
+        #<argument type="service" id="iphp.filestore.datastorage"/>
+        #<argument type="service" id="iphp.filestore.filestorage.file_system"/>
+        #<argument type="service" id="iphp.filestore.mapping.factory"/>

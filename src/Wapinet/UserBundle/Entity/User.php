@@ -153,7 +153,7 @@ class User extends BaseUser implements ParticipantInterface
      */
     public function hasAvatar()
     {
-        return (null !== $this->avatar);
+        return (null !== $this->avatar && true === $this->avatar->hasFile());
     }
 
     /**

@@ -32,6 +32,14 @@ class FileUrlDataTransformer implements DataTransformerInterface
      */
     protected $savePublicDirectory;
 
+
+    /**
+     * @param ContainerInterface $container
+     * @param bool               $required
+     * @param bool               $save
+     * @param null               $saveDirectory
+     * @param null               $savePublicDirectory
+     */
     public function __construct(ContainerInterface $container, $required = true, $save = false, $saveDirectory = null, $savePublicDirectory = null)
     {
         $this->container = $container;
@@ -55,6 +63,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
      */
     public function reverseTransform($fileDataFromForm)
     {
+        file_put_contents('/log.log', var_export($fileDataFromForm, true), FILE_APPEND);
         $uploadedFile = null;
 
         if ($fileDataFromForm['file']) {

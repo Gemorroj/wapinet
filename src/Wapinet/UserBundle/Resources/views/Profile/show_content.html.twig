@@ -30,7 +30,7 @@
         <tr>
             <td>Аватар</td>
             <td>
-                {% if user.avatar %}
+                {% if user.hasAvatar %}
                     {% include 'WapinetBundle::avatar.html.twig' with {'user': user} %}
                 {% else %}
                     Не указан

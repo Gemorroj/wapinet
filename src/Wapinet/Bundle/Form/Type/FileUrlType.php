@@ -4,6 +4,7 @@ namespace Wapinet\Bundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Wapinet\Bundle\Form\DataTransformer\FileUrlDataTransformer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -27,18 +28,40 @@ class FileUrlType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $required = (isset($options['required']) && true === $options['required']);
-        $save = (isset($options['attr']['save']) && true === $options['attr']['save']);
-        $saveDirectory = (isset($options['attr']['save_directory']) ? $options['attr']['save_directory'] : null);
-        $savePublicDirectory = (isset($options['attr']['save_public_directory']) ? $options['attr']['save_public_directory'] : null);
-        $transformer = new FileUrlDataTransformer($this->container, $required, $save, $saveDirectory, $savePublicDirectory);
+        $transformer = new FileUrlDataTransformer(
+            $this->container,
+            $options['required'],
+            $options['save'],
+            $options['save_directory'],
+            $options['save_public_directory']
+        );
 
         $attrFile = array();
         $attrFile = (isset($options['attr']['accept']) ? array_merge($attrFile, array('accept' => $options['attr']['accept'])) : $attrFile);
 
-        $builder->add('file', 'file', array('attr' => $attrFile, 'label' => 'Файл', 'required' => false))
-            ->add('url', 'url', array('label' => 'Ссылка', 'required' => false))
-            ->addViewTransformer($transformer);
+        $builder->add('file', 'file', array('attr' => $attrFile, 'label' => 'Файл', 'required' => false));
+        $builder->add('url', 'url', array('label' => 'Ссылка', 'required' => false));
+
+        if ($options['delete_button']) {
+            $builder->add('file_url_delete', 'checkbox', array(
+                'attr' => array('data-mini' => 'true'),
+                'required' => false,
+                'label' => 'Удалить'
+            ));
+        }
+
+        $builder->addViewTransformer($transformer);
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'required' => false,
+            'save' => false,
+            'save_directory' => null,
+            'save_public_directory' => null,
+            'delete_button' => false,
+        ));
     }
 
     /**
