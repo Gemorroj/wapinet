@@ -2,6 +2,13 @@
 
 {{ form_start(form, {'action': path('fos_user_profile_edit'), 'method': 'POST', attr: {'class': 'fos_user_profile_edit'}}) }}
     {{ form_widget(form) }}
+
+        {% if form.avatar is not null %}
+            {% include 'WapinetBundle::avatar.html.twig' with {'user': app.user } %}
+            {{ form_row(form.avatar_delete) }}
+        {% else %}
+            {{ form_row(form.avatar_delete, {'disabled': 'disabled'}) }}
+        {% endif %}
     <div>
         <input type="submit" value="Изменить" />
     </div>

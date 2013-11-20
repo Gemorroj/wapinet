@@ -26,14 +26,19 @@ class FileUrlDataTransformer implements DataTransformerInterface
     /**
      * @var string|null
      */
-    protected $savePath;
+    protected $saveDirectory;
+    /**
+     * @var string|null
+     */
+    protected $savePublicDirectory;
 
-    public function __construct(ContainerInterface $container, $required = true, $save = false, $savePath = null)
+    public function __construct(ContainerInterface $container, $required = true, $save = false, $saveDirectory = null, $savePublicDirectory = null)
     {
         $this->container = $container;
         $this->required = $required;
         $this->save = $save;
-        $this->savePah = $savePath;
+        $this->saveDirectory = $saveDirectory;
+        $this->savePublicDirectory = $savePublicDirectory;
     }
 
 
@@ -88,15 +93,17 @@ class FileUrlDataTransformer implements DataTransformerInterface
         $file = new File($uploadedFile);
 
         if (true === $this->save) {
-            if (null === $this->savePah) {
+            if (null === $this->saveDirectory || null === $this->savePublicDirectory) {
                 throw new InvalidArgumentException('Не указана директория для сохранения файла');
             }
             $fileNamer = $this->container->get('file_namer');
             $fileNamer->setFile($uploadedFile);
 
+            $file->setBaseDirectory($this->saveDirectory);
+            $file->setBasePublicDirectory($this->savePublicDirectory);
             $file->setDirectory($fileNamer->getDirectory());
             $file->setFilename($fileNamer->getFilename());
-            $file->move($this->savePah . '/' . $file->getDirectory(), $file->getFilename());
+            $file->getFile()->move($this->saveDirectory . '/' . $file->getDirectory(), $file->getFilename());
         }
 
         return $file;

@@ -7,8 +7,16 @@ use Symfony\Component\HttpFoundation\File\File as BaseFile;
 /**
  * File
  */
-class File extends BaseFile implements \Serializable
+class File extends \ArrayIterator implements \Serializable
 {
+    /**
+     * @var string|null
+     */
+    protected $baseDirectory;
+    /**
+     * @var string|null
+     */
+    protected $basePublicDirectory;
     /**
      * @var string|null
      */
@@ -20,51 +28,71 @@ class File extends BaseFile implements \Serializable
     protected $filename;
 
     /**
-     * @var string|null
+     * @var BaseFile
      */
-    protected $mimeType;
+    protected $file;
 
     /**
-     * @var int|null
+     * @param UploadedFile $file
      */
-    protected $size;
-
-    /**
-     * @var null|UploadedFile
-     */
-    private $uploadedFile;
-
-
-    /**
-     * @param UploadedFile|string $file
-     */
-    public function __construct($file)
+    public function __construct(UploadedFile $file)
     {
-        if ($file instanceof UploadedFile) {
-            $this->uploadedFile = $file;
-            parent::__construct($file->getPathname());
-        } else {
-            parent::__construct($file);
-        }
-        $this->size = $this->getSize();
-        $this->mimeType = $this->getMimeType();
+        $this->file = $file;
     }
 
-
     /**
-     * @param string $directory
-     * @param null|string $name
      * @return BaseFile
      */
-    public function move($directory, $name = null)
+    public function getFile()
     {
-        if (null !== $this->uploadedFile) {
-            return $this->uploadedFile->move($directory, $name);
-        } else {
-            return parent::move($directory, $name);
-        }
+        return $this->file;
     }
 
+    /**
+     * Get base directory
+     *
+     * @return string|null
+     */
+    public function getBaseDirectory()
+    {
+        return $this->baseDirectory;
+    }
+
+    /**
+     * Set base directory
+     *
+     * @param string $baseDirectory
+     * @return File
+     */
+    public function setBaseDirectory($baseDirectory)
+    {
+        $this->baseDirectory = $baseDirectory;
+
+        return $this;
+    }
+
+    /**
+     * Get base public directory
+     *
+     * @return string|null
+     */
+    public function getBasePublicDirectory()
+    {
+        return $this->basePublicDirectory;
+    }
+
+    /**
+     * Set base public directory
+     *
+     * @param string $basePublicDirectory
+     * @return File
+     */
+    public function setBasePublicDirectory($basePublicDirectory)
+    {
+        $this->basePublicDirectory = $basePublicDirectory;
+
+        return $this;
+    }
 
     /**
      * Get directory
@@ -113,23 +141,19 @@ class File extends BaseFile implements \Serializable
     }
 
     /**
-     * Get mime type
-     *
-     * @return string|null
+     * @return string
      */
-    public function getMimeType()
+    public function getPublicPath()
     {
-        return $this->mimeType;
+        return $this->getBasePublicDirectory() .'/' . $this->getPath();
     }
 
     /**
-     * Get size
-     *
-     * @return int|null
+     * @return string
      */
-    public function getSize()
+    public function getLocalPath()
     {
-        return $this->size;
+        return $this->getBaseDirectory() .'/' . $this->getPath();
     }
 
     /**
@@ -146,10 +170,10 @@ class File extends BaseFile implements \Serializable
     public function serialize()
     {
         return serialize(array(
+            'base_directory' => $this->getBaseDirectory(),
+            'base_public_directory' => $this->getBasePublicDirectory(),
             'directory' => $this->getDirectory(),
             'filename' => $this->getFilename(),
-            'mimeType' => $this->getMimeType(),
-            'size' => $this->getSize(),
         ));
     }
 
@@ -159,9 +183,18 @@ class File extends BaseFile implements \Serializable
     public function unserialize($serialized)
     {
         $data = unserialize($serialized);
+        $this->setBaseDirectory($data['base_directory']);
+        $this->setBasePublicDirectory($data['base_public_directory']);
         $this->setDirectory($data['directory']);
         $this->setFilename($data['filename']);
-        $this->size = $data['size'];
-        $this->mimeType = $data['mimeType'];
+        $this->file = new BaseFile($data['base_directory'] . '/' . $data['directory'] . '/' . $data['filename']);
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getLocalPath();
     }
 }

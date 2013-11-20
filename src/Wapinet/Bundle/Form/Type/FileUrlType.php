@@ -29,8 +29,9 @@ class FileUrlType extends AbstractType
 
         $required = (isset($options['required']) && true === $options['required']);
         $save = (isset($options['attr']['save']) && true === $options['attr']['save']);
-        $savePath = (isset($options['attr']['save_path']) ? $options['attr']['save_path'] : null);
-        $transformer = new FileUrlDataTransformer($this->container, $required, $save, $savePath);
+        $saveDirectory = (isset($options['attr']['save_directory']) ? $options['attr']['save_directory'] : null);
+        $savePublicDirectory = (isset($options['attr']['save_public_directory']) ? $options['attr']['save_public_directory'] : null);
+        $transformer = new FileUrlDataTransformer($this->container, $required, $save, $saveDirectory, $savePublicDirectory);
 
         $attrFile = array();
         $attrFile = (isset($options['attr']['accept']) ? array_merge($attrFile, array('accept' => $options['attr']['accept'])) : $attrFile);

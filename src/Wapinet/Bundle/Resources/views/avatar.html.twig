@@ -1,4 +1,4 @@
-{% set path = user.avatar ? user.avatar.path : wapinet_nophoto %}
+{% set path = user.avatar ? user.avatar.publicPath : wapinet_nophoto %}
 
 <a href="#avatar{{ user.id }}" data-rel="popup" data-position-to="window" data-transition="fade">
     <img src="{{ path }}" alt="{{ user.username }}" class="image_preview" />
