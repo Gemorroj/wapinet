@@ -2,21 +2,29 @@
 
 namespace Wapinet\Bundle\Helper;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 class FileNamer
 {
     /**
-     * @param string $fileName
-     * @return string
+     * @var UploadedFile
      */
-    public function getPath($fileName)
+    protected $file;
+    /**
+     * @param UploadedFile $file
+     * @return FileNamer
+     */
+    public function setFile(UploadedFile $file)
     {
-        return $this->getDirectory() . '/' . $this->getFile($fileName);
+        $this->file = $file;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    protected function getDirectory()
+    public function getDirectory()
     {
         $date = new \DateTime();
 
@@ -25,13 +33,11 @@ class FileNamer
 
 
     /**
-     * @param string $fileName
      * @return string
      */
-    protected function getFile($fileName)
+    public function getFilename()
     {
-        $name = preg_replace('/[^\\pL\d.]+/u', '-', $fileName);
-
+        $name = preg_replace('/[^\\pL\d.]+/u', '-', $this->file->getClientOriginalName());
 
         $iso = array(
             "Є" => "YE", "І" => "I", "Ѓ" => "G", "і" => "i", "№" => "N", "є" => "ye", "ѓ" => "g",

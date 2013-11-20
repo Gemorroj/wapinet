@@ -4,10 +4,10 @@ namespace Wapinet\Bundle\Form\DataTransformer;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
+use Wapinet\Bundle\Entity\File;
 use Wapinet\Bundle\Entity\FileUrl;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUrlDataTransformer implements DataTransformerInterface
 {
@@ -19,11 +19,21 @@ class FileUrlDataTransformer implements DataTransformerInterface
      * @var bool
      */
     protected $required;
+    /**
+     * @var bool
+     */
+    protected $save;
+    /**
+     * @var string|null
+     */
+    protected $savePath;
 
-    public function __construct(ContainerInterface $container, $required = true)
+    public function __construct(ContainerInterface $container, $required = true, $save = false, $savePath = null)
     {
         $this->container = $container;
         $this->required = $required;
+        $this->save = $save;
+        $this->savePah = $savePath;
     }
 
 
@@ -34,17 +44,17 @@ class FileUrlDataTransformer implements DataTransformerInterface
 
 
     /**
-     * array with 2 items - file (UploadedFile) and url (text)
-     *
      * @param array $fileDataFromForm
-     * @return FileUrl|UploadedFile|null
-     * @throws TransformationFailedException
+     * @return File|null
+     * @throws TransformationFailedException|InvalidArgumentException
      */
     public function reverseTransform($fileDataFromForm)
     {
+        $uploadedFile = null;
+
         if ($fileDataFromForm['file']) {
             // UploadedFile
-            return $fileDataFromForm['file'];
+            $uploadedFile = $fileDataFromForm['file'];
         }
 
         if ($fileDataFromForm['url']) {
@@ -63,20 +73,32 @@ class FileUrlDataTransformer implements DataTransformerInterface
             $curl->close();
             fclose($f);
 
-            $ret =  new FileUrl(
+            $uploadedFile =  new FileUrl(
                 $temp,
                 $fileDataFromForm['url'],
                 $responseHeaders->headers->get('Content-Type'),
                 $responseHeaders->headers->get('Content-Length')
             );
-
-            file_put_contents('/log.log', print_r($ret, true));
-            return $ret;
         }
 
-        if (true === $this->required) {
+        if (null === $uploadedFile && true === $this->required) {
             throw new TransformationFailedException('Не заполнено обязательное поле');
         }
-        return null;
+
+        $file = new File($uploadedFile);
+
+        if (true === $this->save) {
+            if (null === $this->savePah) {
+                throw new InvalidArgumentException('Не указана директория для сохранения файла');
+            }
+            $fileNamer = $this->container->get('file_namer');
+            $fileNamer->setFile($uploadedFile);
+
+            $file->setDirectory($fileNamer->getDirectory());
+            $file->setFilename($fileNamer->getFilename());
+            $file->move($this->savePah . '/' . $file->getDirectory(), $file->getFilename());
+        }
+
+        return $file;
     }
 }

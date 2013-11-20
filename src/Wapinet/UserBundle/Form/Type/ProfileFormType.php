@@ -2,12 +2,28 @@
 
 namespace Wapinet\UserBundle\Form\Type;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use FOS\UserBundle\Form\Type\ProfileFormType as BaseType;
 use Wapinet\UserBundle\Entity\User;
 
 class ProfileFormType extends BaseType
 {
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
+     * @param string $user
+     * @param ContainerInterface $container
+     */
+    public function __construct($user, ContainerInterface $container)
+    {
+        parent::__construct($user);
+        $this->container = $container;
+    }
+
     public function buildUserForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildUserForm($builder, $options);
@@ -16,7 +32,7 @@ class ProfileFormType extends BaseType
             ->add('birthday', 'date', array('widget' => 'single_text', 'label' => 'Дата рождения:', 'required' => false))
             ->add('subscribeComments', 'checkbox', array('label' => 'Присылать E-mail о новых комментариях', 'required' => false))
             ->add('subscribeMessages', 'checkbox', array('label' => 'Присылать E-mail о новых сообщениях', 'required' => false))
-            ->add('avatar', 'file_url', array('label' => 'Аватар:', 'required' => false))
+            ->add('avatar', 'file_url', array('attr' => array('accept' => 'image/*', 'save' => true, 'save_path' => $this->container->getParameter('wapinet_avatar_dir_filesystem')), 'label' => 'Аватар:', 'required' => false))
         ;
     }
 

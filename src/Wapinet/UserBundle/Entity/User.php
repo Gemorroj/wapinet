@@ -2,9 +2,8 @@
 namespace Wapinet\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use FOS\MessageBundle\Model\ParticipantInterface;
-use Wapinet\Bundle\Entity\FileUrl;
+use Wapinet\Bundle\Entity\File;
 
 /**
  * User
@@ -15,7 +14,7 @@ class User extends BaseUser implements ParticipantInterface
     const SEX_F = 'f';
 
     /**
-     * @var array|UploadedFile|FileUrl|null $avatar
+     * @var File|null $avatar
      */
     protected $avatar;
 

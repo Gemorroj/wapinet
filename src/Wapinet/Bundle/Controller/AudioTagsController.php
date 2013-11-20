@@ -7,11 +7,9 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Wapinet\Bundle\Entity\AudioTags;
 use Wapinet\Bundle\Form\Type\AudioTags\AudioTagsType;
 use Wapinet\Bundle\Form\Type\AudioTags\AudioTagsEditType;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Wapinet\Bundle\Entity\FileUrl;
+use Wapinet\Bundle\Entity\File as WapinetFile;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Form\FormError;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
@@ -39,7 +37,7 @@ class AudioTagsController extends Controller
                     return new RedirectResponse(
                         $router->generate('audio_tags_edit', array(
                                 'fileName' => $file->getBasename(),
-                                'originalFileName' => $data['file']->getClientOriginalName()
+                                'originalFileName' => $data['file']->getUploadedFile()->getClientOriginalName()
                             ), Router::ABSOLUTE_URL
                         )
                     );
@@ -61,12 +59,12 @@ class AudioTagsController extends Controller
      */
     protected function saveFile(array $data)
     {
-        /** @var $file UploadedFile|FileUrl */
+        /** @var $file WapinetFile */
         $file = $data['file'];
         $tempDirectory = \AppKernel::getTmpDir();
         $tempName = tempnam($tempDirectory, 'audio_file');
 
-        return $file->move($tempDirectory, $tempName);
+        return $file->getUploadedFile()->move($tempDirectory, $tempName);
     }
 
 

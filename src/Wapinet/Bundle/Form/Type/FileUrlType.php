@@ -7,9 +7,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Wapinet\Bundle\Form\DataTransformer\FileUrlDataTransformer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-/**
- * @author Vitiko <vitiko@mail.ru>
- */
 class FileUrlType extends AbstractType
 {
 
@@ -31,7 +28,9 @@ class FileUrlType extends AbstractType
         parent::buildForm($builder, $options);
 
         $required = (isset($options['required']) && true === $options['required']);
-        $transformer = new FileUrlDataTransformer($this->container, $required);
+        $save = (isset($options['attr']['save']) && true === $options['attr']['save']);
+        $savePath = (isset($options['attr']['save_path']) ? $options['attr']['save_path'] : null);
+        $transformer = new FileUrlDataTransformer($this->container, $required, $save, $savePath);
 
         $attrFile = array();
         $attrFile = (isset($options['attr']['accept']) ? array_merge($attrFile, array('accept' => $options['attr']['accept'])) : $attrFile);
