@@ -1,14 +1,19 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {{ form_start(form, {'action': path('fos_user_profile_edit'), 'method': 'POST', attr: {'class': 'fos_user_profile_edit'}}) }}
-    {{ form_widget(form) }}
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.sex) }}
+    {{ form_row(form.birthday) }}
 
-        {% if form.avatar is not null %}
-            {% include 'WapinetBundle::avatar.html.twig' with {'user': app.user } %}
-            {{ form_row(form.avatar_delete) }}
-        {% else %}
-            {{ form_row(form.avatar_delete, {'disabled': 'disabled'}) }}
-        {% endif %}
+    {% if app.user.avatar is not null and app.user.avatar.hasFile %}
+        {% include 'WapinetBundle::avatar.html.twig' with {'user': app.user } %}
+        {{ form_row(form.avatar_delete) }}
+    {% else %}
+        {{ form_row(form.avatar_delete, {'disabled': 'disabled'}) }}
+    {% endif %}
+
+    {{ form_rest(form) }}
     <div>
         <input type="submit" value="Изменить" />
     </div>

@@ -28,24 +28,32 @@ class File extends \ArrayIterator implements \Serializable
     protected $filename;
 
     /**
-     * @var BaseFile
+     * @var BaseFile|null
      */
     protected $file;
 
     /**
-     * @param UploadedFile $file
+     * @param UploadedFile|null $file
      */
-    public function __construct(UploadedFile $file)
+    public function __construct(UploadedFile $file = null)
     {
         $this->file = $file;
     }
 
     /**
-     * @return BaseFile
+     * @return BaseFile|null
      */
     public function getFile()
     {
         return $this->file;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasFile()
+    {
+        return (null !== $this->file);
     }
 
     /**
@@ -169,6 +177,10 @@ class File extends \ArrayIterator implements \Serializable
      */
     public function serialize()
     {
+        if (null == $this->getFile()) {
+            return serialize(null);
+        }
+
         return serialize(array(
             'base_directory' => $this->getBaseDirectory(),
             'base_public_directory' => $this->getBasePublicDirectory(),
@@ -183,11 +195,13 @@ class File extends \ArrayIterator implements \Serializable
     public function unserialize($serialized)
     {
         $data = unserialize($serialized);
-        $this->setBaseDirectory($data['base_directory']);
-        $this->setBasePublicDirectory($data['base_public_directory']);
-        $this->setDirectory($data['directory']);
-        $this->setFilename($data['filename']);
-        $this->file = new BaseFile($data['base_directory'] . '/' . $data['directory'] . '/' . $data['filename']);
+        if ($data) {
+            $this->setBaseDirectory($data['base_directory']);
+            $this->setBasePublicDirectory($data['base_public_directory']);
+            $this->setDirectory($data['directory']);
+            $this->setFilename($data['filename']);
+            $this->file = new BaseFile($data['base_directory'] . '/' . $data['directory'] . '/' . $data['filename']);
+        }
     }
 
     /**

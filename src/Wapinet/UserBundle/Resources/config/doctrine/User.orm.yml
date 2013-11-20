@@ -16,7 +16,7 @@ Wapinet\UserBundle\Entity\User:
             nullable: false
             column: subscribe_messages
         avatar:
-            type: array
+            type: object
             nullable: true
         createdAt:
             type: datetime

@@ -92,7 +92,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
 
         $file = new File($uploadedFile);
 
-        if (true === $this->save) {
+        if (true === $this->save && null !== $uploadedFile) {
             if (null === $this->saveDirectory || null === $this->savePublicDirectory) {
                 throw new InvalidArgumentException('Не указана директория для сохранения файла');
             }

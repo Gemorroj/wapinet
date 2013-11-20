@@ -33,6 +33,7 @@ class ProfileFormType extends BaseType
             ->add('subscribeComments', 'checkbox', array('label' => 'Присылать E-mail о новых комментариях', 'required' => false))
             ->add('subscribeMessages', 'checkbox', array('label' => 'Присылать E-mail о новых сообщениях', 'required' => false))
             ->add('avatar', 'file_url', array(
+                // TODO: полностью переделать.
                 'attr' => array(
                     'accept' => 'image/*',
                     'save' => true,
