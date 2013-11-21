@@ -1,0 +1,11 @@
+services:
+    wapinet_uploader.type.file_url:
+        class: Wapinet\UploaderBundle\Form\Type\FileUrlType
+        arguments: [@service_container]
+        tags:
+            - { name: form.type, alias: file_url }
+
+    wapinet_uploader.directory_namer:
+        class: Wapinet\UploaderBundle\Naming\DirectoryNamer
+        tags:
+            - { name: directory_namer }

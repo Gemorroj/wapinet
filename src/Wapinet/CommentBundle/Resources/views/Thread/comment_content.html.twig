@@ -68,7 +68,7 @@
             {% if comment is fos_comment_in_state(constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_DELETED')) %}
                 {% trans from 'FOSCommentBundle' %}fos_comment_comment_deleted{% endtrans %}
             {% else %}
-                {% if comment.author and comment.author.avatar and comment.author.avatar.publicPath %}
+                {% if comment.author and comment.author.avatar %}
                     <span class="fos_comment_comment_avatar">{% include 'WapinetBundle::avatar.html.twig' with {'user': comment.author} %}</span>
                 {% endif %}
                 <h2 class="fos_comment_comment_text">

@@ -1,13 +1,13 @@
 <?php
 
-namespace Wapinet\Bundle\Form\DataTransformer;
+namespace Wapinet\UploaderBundle\Form\DataTransformer;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
-use Wapinet\Bundle\Entity\File;
-use Wapinet\Bundle\Entity\FileUrl;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Wapinet\UploaderBundle\Entity\FileUrl;
 
 class FileUrlDataTransformer implements DataTransformerInterface
 {
@@ -19,34 +19,16 @@ class FileUrlDataTransformer implements DataTransformerInterface
      * @var bool
      */
     protected $required;
-    /**
-     * @var bool
-     */
-    protected $save;
-    /**
-     * @var string|null
-     */
-    protected $saveDirectory;
-    /**
-     * @var string|null
-     */
-    protected $savePublicDirectory;
 
 
     /**
      * @param ContainerInterface $container
      * @param bool               $required
-     * @param bool               $save
-     * @param null               $saveDirectory
-     * @param null               $savePublicDirectory
      */
-    public function __construct(ContainerInterface $container, $required = true, $save = false, $saveDirectory = null, $savePublicDirectory = null)
+    public function __construct(ContainerInterface $container, $required = true)
     {
         $this->container = $container;
         $this->required = $required;
-        $this->save = $save;
-        $this->saveDirectory = $saveDirectory;
-        $this->savePublicDirectory = $savePublicDirectory;
     }
 
 
@@ -58,7 +40,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
 
     /**
      * @param array $fileDataFromForm
-     * @return File|null
+     * @return UploadedFile|FileUrl|null
      * @throws TransformationFailedException|InvalidArgumentException
      */
     public function reverseTransform($fileDataFromForm)
@@ -102,26 +84,6 @@ class FileUrlDataTransformer implements DataTransformerInterface
             throw new TransformationFailedException('Ошибка при загрузке файла');
         }
 
-        if (null === $uploadedFile) {
-            return null;
-        }
-
-        $file = new File($uploadedFile);
-
-        if (true === $this->save && null !== $uploadedFile) {
-            if (null === $this->saveDirectory || null === $this->savePublicDirectory) {
-                throw new InvalidArgumentException('Не указана директория для сохранения файла');
-            }
-            $fileNamer = $this->container->get('file_namer');
-            $fileNamer->init($this->saveDirectory, $uploadedFile);
-
-            $file->setBaseDirectory($this->saveDirectory);
-            $file->setBasePublicDirectory($this->savePublicDirectory);
-            $file->setDirectory($fileNamer->getDirectory());
-            $file->setFilename($fileNamer->getFilename());
-            $file->getFile()->move($this->saveDirectory . '/' . $file->getDirectory(), $file->getFilename());
-        }
-
-        return $file;
+        return $uploadedFile;
     }
 }

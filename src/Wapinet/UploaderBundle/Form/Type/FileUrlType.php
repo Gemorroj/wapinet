@@ -1,16 +1,15 @@
 <?php
 
-namespace Wapinet\Bundle\Form\Type;
+namespace Wapinet\UploaderBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Wapinet\Bundle\Form\DataTransformer\FileUrlDataTransformer;
+use Wapinet\UploaderBundle\Form\DataTransformer\FileUrlDataTransformer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class FileUrlType extends AbstractType
 {
-
     /**
      * @var ContainerInterface
      */
@@ -30,10 +29,7 @@ class FileUrlType extends AbstractType
 
         $transformer = new FileUrlDataTransformer(
             $this->container,
-            $options['required'],
-            $options['save'],
-            $options['save_directory'],
-            $options['save_public_directory']
+            $options['required']
         );
 
         $attrFile = array();
@@ -57,9 +53,6 @@ class FileUrlType extends AbstractType
     {
         $resolver->setDefaults(array(
             'required' => false,
-            'save' => false,
-            'save_directory' => null,
-            'save_public_directory' => null,
             'delete_button' => false,
         ));
     }

@@ -3,10 +3,13 @@ namespace Wapinet\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use FOS\MessageBundle\Model\ParticipantInterface;
-use Wapinet\Bundle\Entity\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
+ * @Vich\Uploadable
  */
 class User extends BaseUser implements ParticipantInterface
 {
@@ -14,9 +17,20 @@ class User extends BaseUser implements ParticipantInterface
     const SEX_F = 'f';
 
     /**
+     * @Assert\File(
+     *     maxSize="1M",
+     *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg", "image/gif"}
+     * )
+     * @Vich\UploadableField(mapping="user_avatar", fileNameProperty="avatarName")
+     *
      * @var File|null $avatar
      */
     protected $avatar;
+
+    /**
+     * @var string|null
+     */
+    protected $avatarName;
 
     /**
      * @var \DateTime
@@ -125,11 +139,31 @@ class User extends BaseUser implements ParticipantInterface
     /**
      * @param File|null $avatar
      *
-     * @return $this
+     * @return User
      */
     public function setAvatar($avatar = null)
     {
         $this->avatar = $avatar;
+        return $this;
+    }
+
+
+    /**
+     * @return null|string
+     */
+    public function getAvatarName()
+    {
+        return $this->avatarName;
+    }
+
+    /**
+     * @param string|null $avatarName
+     *
+     * @return User
+     */
+    public function setAvatarName($avatarName)
+    {
+        $this->avatarName = $avatarName;
         return $this;
     }
 
@@ -161,7 +195,7 @@ class User extends BaseUser implements ParticipantInterface
      */
     public function hasAvatar()
     {
-        return (null !== $this->avatar && true === $this->avatar->hasFile());
+        return (null !== $this->avatar);
     }
 
     /**

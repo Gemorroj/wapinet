@@ -84,7 +84,7 @@
                 {% if app.user %}
                     <a href="{{ path('fos_user_profile_show') }}" data-role="button" data-icon="gear" class="ui-btn-right">
                         {% if app.user.hasAvatar %}
-                            <img src="{{ app.user.avatar.publicPath }}" alt="" class="avatar_login" />
+                            <img src="{{ vich_uploader_asset(user, 'avatar') }}" alt="" class="avatar_login" />
                         {% endif %}
                         {{ app.user.username }}
                     </a>

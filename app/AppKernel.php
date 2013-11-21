@@ -66,6 +66,7 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle($this),
             new FOS\MessageBundle\FOSMessageBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
+            new Vich\UploaderBundle\VichUploaderBundle(),
 
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
@@ -81,6 +82,7 @@ class AppKernel extends Kernel
             new Wapinet\MessageBundle\WapinetMessageBundle(),
             new Wapinet\CommentBundle\WapinetCommentBundle(),
             new Wapinet\NewsBundle\WapinetNewsBundle(),
+            new Wapinet\UploaderBundle\WapinetUploaderBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

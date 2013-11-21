@@ -143,3 +143,14 @@ knp_menu:
         template: knp_menu.html.twig
     templating: false # if true, enables the helper for PHP templates
     default_renderer: twig # The renderer to use, list is also available by default
+
+vich_uploader:
+    db_driver: orm
+    mappings:
+        user_avatar:
+            namer: vich_uploader.namer_origname
+            directory_namer: wapinet_uploader.directory_namer
+            delete_on_remove: true # determines whether to delete file upon removal of entity
+            inject_on_load: true # determines whether to inject a File instance upon load
+            uri_prefix: /avatar
+            upload_destination: %kernel.root_dir%/../web/avatar

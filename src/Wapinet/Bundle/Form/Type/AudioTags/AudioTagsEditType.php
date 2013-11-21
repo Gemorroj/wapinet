@@ -32,7 +32,7 @@ class AudioTagsEditType extends AbstractType
                 'accept' => 'image/*'
             ),
             'required' => false,
-            'label' => 'Изображение'
+            'label' => 'Изображение',
         ));
 
         $builder->add('submit', 'submit', array('label' => 'Отправить'));

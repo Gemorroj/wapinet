@@ -25,19 +25,9 @@ services:
         class: Wapinet\Bundle\Helper\Curl
         arguments: [@service_container]
 
-    file_namer:
-        class: Wapinet\Bundle\Helper\FileNamer
-
     paginate:
         class: Wapinet\Bundle\Helper\Paginate
         arguments: [@service_container]
 
     getid3:
         class: Wapinet\Bundle\Helper\Getid3
-
-    wapinet.type.file_url:
-        class: Wapinet\Bundle\Form\Type\FileUrlType
-        arguments: [@service_container]
-        tags:
-            - { name: form.type, alias: file_url }
-
