@@ -11,11 +11,18 @@ class FileNamer
      */
     protected $file;
     /**
+     * @var string
+     */
+    protected $baseDirectory;
+
+    /**
+     * @param string $baseDirectory
      * @param UploadedFile $file
      * @return FileNamer
      */
-    public function setFile(UploadedFile $file)
+    public function init($baseDirectory, UploadedFile $file)
     {
+        $this->baseDirectory = $baseDirectory;
         $this->file = $file;
 
         return $this;
@@ -65,6 +72,12 @@ class FileNamer
             $name = iconv('utf-8', 'us-ascii//TRANSLIT', $name);
         }
 
-        return strtolower($name);
+        $name = strtolower($name);
+
+
+        //TODO: если файл с таким именем уже существует, добавлять префикс
+
+
+        return $name;
     }
 }

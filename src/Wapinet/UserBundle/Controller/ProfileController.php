@@ -2,6 +2,7 @@
 namespace Wapinet\UserBundle\Controller;
 
 use FOS\UserBundle\Model\UserInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Controller\ProfileController as BaseController;
 use Symfony\Component\HttpFoundation\Response;
@@ -82,6 +83,11 @@ class ProfileController extends BaseController
             $avatar = $avatarForm->getData();
             $fileUrlDelete = $avatarForm->get('file_url_delete')->getData();
             $isSubmitAvatar = $avatar && $avatar->hasFile();
+            if ($fileUrlDelete && $originalAvatar) {
+                if (!@unlink($originalAvatar->getLocalPath())) {
+                    throw new FileException('Не удалось удалить файл');
+                }
+            }
             if (!$fileUrlDelete && !$isSubmitAvatar) {
                 $user->setAvatar($originalAvatar);
                 //$avatarForm->setData($originalAvatar);

@@ -113,7 +113,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
                 throw new InvalidArgumentException('Не указана директория для сохранения файла');
             }
             $fileNamer = $this->container->get('file_namer');
-            $fileNamer->setFile($uploadedFile);
+            $fileNamer->init($this->saveDirectory, $uploadedFile);
 
             $file->setBaseDirectory($this->saveDirectory);
             $file->setBasePublicDirectory($this->savePublicDirectory);

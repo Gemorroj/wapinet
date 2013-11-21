@@ -3,7 +3,7 @@
         <fieldset class="file_url" data-role="fieldcontain" {{ block('widget_container_attributes') }}>
             {{ form_row(form.file) }}
             {{ form_row(form.url) }}
-            {% if value and value.hasFile %}
+            {% if value and value.hasFile and (value.getFile.isValid is not defined or value.getFile.isValid) %}
                 {% if value.getFile.mimeType|slice(0, 6) == 'image/' %}
                     {% include 'WapinetBundle::image.html.twig' with {'image': {'id': 'image', 'alt': '', 'src': value.publicPath } } %}
                 {% else %}
