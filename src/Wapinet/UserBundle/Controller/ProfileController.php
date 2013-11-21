@@ -12,6 +12,8 @@ use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Wapinet\Bundle\Entity\File;
+use Wapinet\UserBundle\Entity\User;
 
 
 class ProfileController extends BaseController
@@ -47,6 +49,7 @@ class ProfileController extends BaseController
      */
     public function editAction(Request $request)
     {
+        /** @var User $user */
         $user = $this->container->get('security.context')->getToken()->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
@@ -65,13 +68,25 @@ class ProfileController extends BaseController
         /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
         $formFactory = $this->container->get('fos_user.profile.form.factory');
 
+        //
+        $originalAvatar = $user->hasAvatar() ? clone $user->getAvatar() : null;
+        //
+
         $form = $formFactory->createForm();
         $form->setData($user);
+        $form->handleRequest($request);
 
-        if ('POST' === $request->getMethod()) {
-            $form->submit($request);
+        if ($form->isSubmitted()) {
+            $avatarForm = $form->get('avatar');
+            /** @var File|null $avatar */
+            $avatar = $avatarForm->getData();
+            $fileUrlDelete = $avatarForm->get('file_url_delete')->getData();
+            $isSubmitAvatar = $avatar && $avatar->hasFile();
+            if (!$fileUrlDelete && !$isSubmitAvatar) {
+                $user->setAvatar($originalAvatar);
+                //$avatarForm->setData($originalAvatar);
+            }
 
-            //TODO: рукам доделать обработку загрузки файлов.
 
             if ($form->isValid()) {
                 /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */

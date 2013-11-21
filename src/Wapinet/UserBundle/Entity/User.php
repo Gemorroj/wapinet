@@ -114,11 +114,19 @@ class User extends BaseUser implements ParticipantInterface
     }
 
 
+    /**
+     * @return null|File
+     */
     public function getAvatar()
     {
         return $this->avatar;
     }
 
+    /**
+     * @param File|null $avatar
+     *
+     * @return $this
+     */
     public function setAvatar($avatar = null)
     {
         $this->avatar = $avatar;

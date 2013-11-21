@@ -63,7 +63,6 @@ class FileUrlDataTransformer implements DataTransformerInterface
      */
     public function reverseTransform($fileDataFromForm)
     {
-        file_put_contents('/log.log', var_export($fileDataFromForm, true), FILE_APPEND);
         $uploadedFile = null;
 
         if ($fileDataFromForm['file']) {
@@ -97,6 +96,14 @@ class FileUrlDataTransformer implements DataTransformerInterface
 
         if (null === $uploadedFile && true === $this->required) {
             throw new TransformationFailedException('Не заполнено обязательное поле');
+        }
+        // TODO: вероятно эта проверка не нужна
+        if (null !== $uploadedFile && true !== $uploadedFile->isValid()) {
+            throw new TransformationFailedException('Ошибка при загрузке файла');
+        }
+
+        if (null === $uploadedFile) {
+            return null;
         }
 
         $file = new File($uploadedFile);

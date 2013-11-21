@@ -41,4 +41,12 @@ class FileUrl extends UploadedFile
 
         return $target;
     }
+
+    /**
+     * @return bool
+     */
+    public function isValid()
+    {
+        return file_exists($this->getPathname());
+    }
 }
