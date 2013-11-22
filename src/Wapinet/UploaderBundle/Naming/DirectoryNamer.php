@@ -19,6 +19,6 @@ class DirectoryNamer implements DirectoryNamerInterface
      */
     public function directoryName($obj, $field, $uploadDir)
     {
-        return $uploadDir . '/' . get_class($obj) . '/' . $obj->getId();
+        return $uploadDir . '/' . str_replace('\\', '/', get_class($obj)) . '/' . $obj->getId();
     }
 }

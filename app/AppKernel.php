@@ -48,6 +48,32 @@ class AppKernel extends Kernel
     }
 
     /**
+     * Web directory
+     *
+     * @return string
+     */
+    public static function getWebDir()
+    {
+        return __DIR__.'/../web';
+    }
+
+
+    /**
+     * Returns the kernel parameters.
+     *
+     * @return array An array of kernel parameters
+     */
+    protected function getKernelParameters()
+    {
+        $parameters = parent::getKernelParameters();
+        $parameters['kernel.web_dir'] = $this->getWebDir();
+        $parameters['kernel.tmp_dir'] = $this->getTmpDir();
+
+        return $parameters;
+    }
+
+
+    /**
      * @return \Symfony\Component\HttpKernel\Bundle\BundleInterface[]
      */
     public function registerBundles()

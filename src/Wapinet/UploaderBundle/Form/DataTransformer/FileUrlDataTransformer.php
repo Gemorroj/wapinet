@@ -6,6 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Wapinet\UploaderBundle\Entity\FileUrl;
 
@@ -31,14 +32,23 @@ class FileUrlDataTransformer implements DataTransformerInterface
         $this->required = $required;
     }
 
-
     /**
+     * @param File|null $fileDataFromDb
+     *
+     * @return array|null
+     *
      * @see https://github.com/dustin10/VichUploaderBundle/issues/27
      */
     public function transform($fileDataFromDb)
     {
-        //TODO: доделать
-        return null;//$fileDataFromDb;
+        if (null !== $fileDataFromDb) {
+            return array(
+                'web_path' => str_replace('\\', '//', mb_substr($fileDataFromDb->getPathName(), mb_strlen($this->container->get('kernel')->getWebDir()))),
+                'file_url' => $fileDataFromDb
+            );
+        }
+
+        return null;
     }
 
 

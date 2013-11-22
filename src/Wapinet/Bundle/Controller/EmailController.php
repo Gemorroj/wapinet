@@ -3,9 +3,9 @@
 namespace Wapinet\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Wapinet\Bundle\Form\Type\Email\EmailType;
-use Wapinet\Bundle\Entity\File;
 use Symfony\Component\Form\FormError;
 
 class EmailController extends Controller
@@ -48,9 +48,9 @@ class EmailController extends Controller
         $message->setFrom($data['from']);
         $message->setTo($data['to']);
 
-        if ($data['file'] instanceof File) {
-            $attach = \Swift_Attachment::fromPath($data['file']->getUploadedFile()->getPathname(), $data['file']->getUploadedFile()->getClientMimeType());
-            $attach->setFilename($data['file']->getUploadedFile()->getClientOriginalName());
+        if ($data['file'] instanceof UploadedFile) {
+            $attach = \Swift_Attachment::fromPath($data['file']->getPathname(), $data['file']->getClientMimeType());
+            $attach->setFilename($data['file']->getClientOriginalName());
             $message->attach($attach);
         }
 

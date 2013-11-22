@@ -4,13 +4,11 @@
             {{ form_row(form.file) }}
             {{ form_row(form.url) }}
 
-            {{ dump(value) }}
-
-            {% if value and value.hasFile and (value.getFile.isValid is not defined or value.getFile.isValid) %}
-                {% if value.getFile.mimeType|slice(0, 6) == 'image/' %}
-                    {% include 'WapinetBundle::image.html.twig' with {'image': {'id': 'image', 'alt': '', 'src': value.publicPath } } %}
+            {% if value %}
+                {% if value.file_url.mimeType|slice(0, 6) == 'image/' %}
+                    {% include 'WapinetBundle::image.html.twig' with {'image': {'id': 'image', 'alt': '', 'src': value.web_path } } %}
                 {% else %}
-                    <p>{{ value.getFile.basename }} ({{ value.getFile.size }} b)</p>
+                    <p>{{ value.value.file_url.basename }} ({{ value.value.file_url.size }} b)</p>
                 {% endif %}
                 {% if form.file_url_delete is defined %}
                     {{ form_row(form.file_url_delete) }}

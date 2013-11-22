@@ -3,9 +3,9 @@
 namespace Wapinet\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Wapinet\Bundle\Form\Type\Rename\RenameType;
-use Wapinet\Bundle\Entity\File;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,8 +47,8 @@ class RenameController extends Controller
      */
     protected function getRename(array $data)
     {
-        if ($data['file'] instanceof File) {
-            $file = new BinaryFileResponse($data['file']->getUploadedFile());
+        if ($data['file'] instanceof UploadedFile) {
+            $file = new BinaryFileResponse($data['file']);
             $file->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $data['name']);
             return $file;
         }
