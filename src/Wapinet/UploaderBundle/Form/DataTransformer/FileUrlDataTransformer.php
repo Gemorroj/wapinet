@@ -32,9 +32,13 @@ class FileUrlDataTransformer implements DataTransformerInterface
     }
 
 
+    /**
+     * @see https://github.com/dustin10/VichUploaderBundle/issues/27
+     */
     public function transform($fileDataFromDb)
     {
-        return $fileDataFromDb;
+        //TODO: доделать
+        return null;//$fileDataFromDb;
     }
 
 
