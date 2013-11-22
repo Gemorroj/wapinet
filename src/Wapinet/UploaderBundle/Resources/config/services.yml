@@ -9,3 +9,12 @@ services:
         class: Wapinet\UploaderBundle\Naming\DirectoryNamer
         tags:
             - { name: directory_namer }
+
+    wapinet_uploader.listener.uploader:
+        class: Wapinet\UploaderBundle\EventListener\UploaderListener
+        public: false
+        arguments: [@vich_uploader.adapter, @vich_uploader.annotation_driver, @vich_uploader.storage, @vich_uploader.file_injector]
+        calls:
+            - [setContainer, ["@service_container"]]
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

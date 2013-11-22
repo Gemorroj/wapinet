@@ -10,6 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class FileUrlType extends AbstractType
 {
+    public $builder;
     /**
      * @var ContainerInterface
      */
@@ -47,6 +48,7 @@ class FileUrlType extends AbstractType
         }
 
         $builder->addViewTransformer($transformer);
+        $this->builder = $builder->getData();
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

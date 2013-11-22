@@ -17,9 +17,9 @@ class User extends BaseUser implements ParticipantInterface
     const SEX_F = 'f';
 
     /**
-     * @Assert\File(
-     *     maxSize="1M",
-     *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg", "image/gif"}
+     * @Assert\Image(
+     *     maxSize="200k",
+     *     mimeTypes={"image/png", "image/jpeg", "image/gif"}
      * )
      * @Vich\UploadableField(mapping="user_avatar", fileNameProperty="avatarName")
      *
@@ -143,7 +143,14 @@ class User extends BaseUser implements ParticipantInterface
      */
     public function setAvatar($avatar = null)
     {
+        $tmp = $this->avatar;
+
         $this->avatar = $avatar;
+
+        if ($this->avatar !== $tmp) {
+            $this->setUpdatedAtValue();
+        }
+
         return $this;
     }
 
