@@ -10,11 +10,7 @@ services:
         tags:
             - { name: directory_namer }
 
-    wapinet_uploader.listener.uploader:
-        class: Wapinet\UploaderBundle\EventListener\UploaderListener
-        public: false
-        arguments: [@vich_uploader.adapter, @vich_uploader.annotation_driver, @vich_uploader.storage, @vich_uploader.file_injector]
-        calls:
-            - [setContainer, ["@service_container"]]
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
+    wapinet_uploader.delete_file:
+        class: Wapinet\UploaderBundle\Helper\DeleteFile
+        scope: request
+        arguments: [@request, @vich_uploader.property_mapping_factory]
