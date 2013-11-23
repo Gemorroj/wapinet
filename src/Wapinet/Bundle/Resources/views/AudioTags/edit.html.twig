@@ -9,9 +9,12 @@
 
 {% block content %}
     <p>
-        <a title="{{ originalFileName }}" href="{{ path('audio_tags_download', {'fileName': fileName, 'originalFileName': originalFileName}) }}">Скачать файл</a>
-        <pre>{{ dump(info) }}</pre>
-        <pre>{{ dump(tags) }}</pre>
+        <a title="{{ originalFileName }}" href="{{ path('audio_tags_download', {'fileName': fileName, 'originalFileName': originalFileName}) }}">Скачать файл</a><br />
+        Формат: {{ info.dataformat }}<br />
+        Битрейт: {{ info.bitrate }} ({{ info.bitrate_mode }})<br />
+        Частота дискретизации: {{ info.sample_rate }}<br />
+        Размер: {{ info.size|wapinet_size }}<br />
+        Каналы: {{ info.channelmode }}<br />
     </p>
     {{ form_start(form, {'action': path('audio_tags_edit', {'fileName': fileName, 'originalFileName': originalFileName}), 'method': 'POST'}) }}
         {{ form_widget(form) }}

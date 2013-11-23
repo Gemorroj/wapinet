@@ -4,6 +4,11 @@ services:
         tags:
             - {name: twig.extension, alias: wapinet_date}
 
+    wapinet.size.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\Size
+        tags:
+            - {name: twig.extension, alias: wapinet_size}
+
     wapinet.online.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Online
         arguments: [@doctrine.orm.entity_manager, @service_container]

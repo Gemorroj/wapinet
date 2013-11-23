@@ -3,6 +3,7 @@
 namespace Wapinet\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -94,24 +95,46 @@ class AudioTagsController extends Controller
         }
 
         $info = $this->getInfo($fileName);
-
-        if (isset($info['comments']['picture'][0])) {
-            $form->setData(array(
-                'picture' => new FileContent(
-                    $info['comments']['picture'][0]['data'],
-                    $info['comments']['picture'][0]['image_mime'],
-                    'Картинка'
-                )
-            ));
-        }
+        $info['audio']['size'] = filesize(\AppKernel::getTmpDir() . DIRECTORY_SEPARATOR . $fileName);
+        $this->setFormData($form, $info['comments']);
 
         return $this->render('WapinetBundle:AudioTags:edit.html.twig', array(
             'form' => $form->createView(),
-            'tags' => $info['comments'],
             'info' => $info['audio'],
             'originalFileName' => $originalFileName,
             'fileName' => $fileName,
         ));
+    }
+
+
+    /**
+     * @param Form $form
+     * @param array $tags
+     */
+    protected function setFormData(Form $form, array $tags)
+    {
+        $data = array(
+            'picture' => null,
+            'title' => isset($tags['title'][0]) ? $tags['title'][0] : '',
+            'album_artist' => isset($tags['album_artist'][0]) ? $tags['album_artist'][0] : (isset($tags['albumartist'][0]) ? $tags['albumartist'][0] : ''),
+            'artist' => isset($tags['artist'][0]) ? $tags['artist'][0] : '',
+            'album' => isset($tags['album'][0]) ? $tags['album'][0] : '',
+            'year' => isset($tags['year'][0]) ? $tags['year'][0] : (isset($tags['date'][0]) ? $tags['date'][0] : ''),
+            'track_number' => isset($tags['track_number'][0]) ? $tags['track_number'][0] : (isset($tags['track'][0]) ? $tags['track'][0] : ''),
+            'url_user' => isset($tags['url_user'][0]) ? $tags['url_user'][0] : '',
+            'genre' => isset($tags['genre'][0]) ? $tags['genre'][0] : '',
+            'comment' => isset($tags['comment'][0]) ? $tags['comment'][0] : '',
+        );
+
+        if (isset($tags['picture'][0])) {
+            $data['picture'] = new FileContent(
+                $tags['picture'][0]['data'],
+                $tags['picture'][0]['image_mime'],
+                'Картинка'
+            );
+        }
+
+        $form->setData($data);
     }
 
 
