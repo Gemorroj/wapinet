@@ -8,7 +8,9 @@
 {% endblock %}
 
 {% block content %}
-    Поддерживаются форматы: APE (v1, v2), ID3v1 (v1.0, v1.1), ID3v2 (v2.4, v2.3, v2.2), Lyrics3 (v1, v2)
+    Поддерживаются форматы:<br />
+    - чтение: APE (v1, v2), ID3v1 (v1.0, v1.1), ID3v2 (v2.4, v2.3, v2.2), Lyrics3 (v1, v2)<br />
+    - запись: ID3v2 (v2.4, v2.3)<br />
 
     {{ form_start(form, {'action': path('audio_tags_index'), 'method': 'POST'}) }}
         {{ form_widget(form) }}
