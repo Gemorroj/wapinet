@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Form\FormError;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Wapinet\UploaderBundle\Entity\FileContent;
 
 /**
  * @see https://github.com/JamesHeinrich/getID3/blob/master/demos/demo.audioinfo.class.php
@@ -91,7 +92,18 @@ class AudioTagsController extends Controller
 
             }
         }
+
         $info = $this->getInfo($fileName);
+
+        if (isset($info['comments']['picture'][0])) {
+            $form->setData(array(
+                'picture' => new FileContent(
+                    $info['comments']['picture'][0]['data'],
+                    $info['comments']['picture'][0]['image_mime'],
+                    'Картинка'
+                )
+            ));
+        }
 
         return $this->render('WapinetBundle:AudioTags:edit.html.twig', array(
             'form' => $form->createView(),

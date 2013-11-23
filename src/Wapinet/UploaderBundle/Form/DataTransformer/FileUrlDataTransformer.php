@@ -8,6 +8,7 @@ use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Wapinet\UploaderBundle\Entity\FileContent;
 use Wapinet\UploaderBundle\Entity\FileUrl;
 
 class FileUrlDataTransformer implements DataTransformerInterface
@@ -44,6 +45,11 @@ class FileUrlDataTransformer implements DataTransformerInterface
         if ($fileDataFromDb instanceof File) {
             return array(
                 'web_path' => str_replace('\\', '//', mb_substr($fileDataFromDb->getPathName(), mb_strlen($this->container->get('kernel')->getWebDir()))),
+                'file_url' => $fileDataFromDb
+            );
+        } elseif ($fileDataFromDb instanceof FileContent) {
+            return array(
+                'web_path' => 'data:' . $fileDataFromDb->getMimeType() . ';base64,' . base64_encode($fileDataFromDb->getContent()),
                 'file_url' => $fileDataFromDb
             );
         }
