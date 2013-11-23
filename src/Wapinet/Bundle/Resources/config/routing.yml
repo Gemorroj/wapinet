@@ -30,6 +30,10 @@ buy_php_scripts:
     pattern:  /buy_php_scripts
     defaults: { _controller: WapinetBundle:Default:buyPhpScripts }
 
+textbook:
+    pattern:  /textbook
+    defaults: { _controller: WapinetBundle:Default:textbook }
+
 browser_info:
     pattern: /browser_info
     defaults: { _controller: WapinetBundle:BrowserInfo:index }
