@@ -10,6 +10,7 @@
 
 {% block content %}
     {{ form_start(form, {'action': path('rest_index'), 'method': 'POST'}) }}
+    {{ form_errors(form) }}
     {% if result is not null %}
         <fieldset>
             <label for="rest-result">Результат</label>

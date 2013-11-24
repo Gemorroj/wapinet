@@ -1,0 +1,18 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}HTML валидатор{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('programming'), 'title': 'WEB мастерская'}
+    })}}
+{% endblock %}
+
+
+{% block content %}
+    {{ form_start(form, {'action': path('html_validator_index'), 'method': 'POST'}) }}
+    {% if result is not null %}
+        {{ dump(result) }}
+    {% endif %}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

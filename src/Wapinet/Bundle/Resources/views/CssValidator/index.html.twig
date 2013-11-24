@@ -1,0 +1,29 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}CSS валидатор{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('programming'), 'title': 'WEB мастерская'}
+    })}}
+{% endblock %}
+
+
+{% block content %}
+    {{ form_start(form, {'action': path('css_validator_index'), 'method': 'POST'}) }}
+    {{ form_errors(form) }}
+    {% if result is not null %}
+        {{ dump(result) }}
+    {% endif %}
+
+    <div class="ui-grid-solo">
+        <div class="ui-block-a">{{ form_row(form.css) }}</div>
+    </div>
+    <div class="ui-grid-b">
+        <div class="ui-block-a">{{ form_row(form.profile) }}</div>
+        <div class="ui-block-b">{{ form_row(form.usermedium) }}</div>
+        <div class="ui-block-c">{{ form_row(form.warning) }}</div>
+    </div>
+
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}

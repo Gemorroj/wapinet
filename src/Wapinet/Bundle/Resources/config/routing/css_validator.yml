@@ -1,0 +1,3 @@
+css_validator_index:
+    pattern: /
+    defaults: { _controller: WapinetBundle:CssValidator:index }

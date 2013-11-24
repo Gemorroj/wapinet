@@ -85,3 +85,11 @@ obfuscator:
 rest:
     resource: "@WapinetBundle/Resources/config/routing/rest.yml"
     prefix:   /rest
+
+css_validator:
+    resource: "@WapinetBundle/Resources/config/routing/css_validator.yml"
+    prefix:   /css_validator
+
+html_validator:
+    resource: "@WapinetBundle/Resources/config/routing/html_validator.yml"
+    prefix:   /html_validator

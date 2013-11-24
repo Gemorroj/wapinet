@@ -39,3 +39,9 @@ services:
 
     phpwhois:
         class: Wapinet\Bundle\Helper\Phpwhois
+
+    css_validator:
+        class: Wapinet\Bundle\Helper\CssValidator
+
+    html_validator:
+        class: Wapinet\Bundle\Helper\HtmlValidator
