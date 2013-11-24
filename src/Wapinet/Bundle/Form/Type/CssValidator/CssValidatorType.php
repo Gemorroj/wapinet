@@ -19,6 +19,11 @@ class CssValidatorType extends AbstractType
 
         $builder->add('css', 'textarea', array(
             'label' => 'CSS код',
+            'required' => false,
+        ));
+        $builder->add('file', 'file_url', array(
+            'label' => false,
+            'required' => false,
         ));
         $builder->add('profile', 'choice', array(
             'label' => 'Профиль',

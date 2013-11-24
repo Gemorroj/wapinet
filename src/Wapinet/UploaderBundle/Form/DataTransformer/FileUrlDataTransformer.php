@@ -76,7 +76,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
             $curl = $this->container->get('curl');
             $curl->setOpt(CURLOPT_URL, $fileDataFromForm['url']);
             $curl->addBrowserHeaders();
-            $responseHeaders = $curl->checkFileSize();
+            $responseHeaders = $curl->checkFileSize(false);
 
             $temp = tempnam(\AppKernel::getTmpDir(), 'file_url');
             $f = fopen($temp, 'w');

@@ -27,3 +27,6 @@ div.rest_type {
 div.rest_url {
     width: 75% !important;
 }
+code.html_validator strong {
+    color: red;
+}

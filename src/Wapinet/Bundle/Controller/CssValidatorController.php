@@ -5,6 +5,7 @@ namespace Wapinet\Bundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Exception\ValidatorException;
 use Wapinet\Bundle\Form\Type\CssValidator\CssValidatorType;
 
 class CssValidatorController extends Controller
@@ -37,6 +38,7 @@ class CssValidatorController extends Controller
 
     /**
      * @param array $data
+     * @throws ValidatorException
      * @return \Services_W3C_CSSValidator_Response
      */
     protected function getCssValidator(array $data)
@@ -46,6 +48,12 @@ class CssValidatorController extends Controller
         $cssValidator->setWarning($data['warning']);
         $cssValidator->setUsermedium($data['usermedium']);
 
-        return $cssValidator->validateFragment($data['css']);
+        if (null !== $data['css']) {
+            return $cssValidator->validateFragment($data['css']);
+        }
+        if (null !== $data['file']) {
+            return $cssValidator->validateFile($data['file']);
+        }
+        throw new ValidatorException('Не заполнено ни одного поля с CSS кодом ');
     }
 }

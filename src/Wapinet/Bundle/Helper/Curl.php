@@ -79,15 +79,16 @@ class Curl
     /**
      * @throws LengthRequiredHttpException|\LengthException
      *
+     * @param bool $strict Исключение если не удалось определить размер файла (не найден Content-Length)
      * @return Response
      */
-    public function checkFileSize()
+    public function checkFileSize($strict = true)
     {
         $this->setOpt(CURLOPT_NOBODY, true);
         $response = $this->exec();
 
         $length = $response->headers->get('Content-Length');
-        if (null === $length) {
+        if (null === $length && true === $strict) {
             throw new LengthRequiredHttpException('Не удалось определить размер файла');
         }
 

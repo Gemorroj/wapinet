@@ -19,6 +19,11 @@ class HtmlValidatorType extends AbstractType
 
         $builder->add('html', 'textarea', array(
             'label' => 'HTML код',
+            'required' => false,
+        ));
+        $builder->add('file', 'file_url', array(
+            'label' => false,
+            'required' => false,
         ));
 
         $builder->add('submit', 'submit', array('label' => 'Проверить'));

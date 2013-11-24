@@ -12,14 +12,32 @@
     {{ form_start(form, {'action': path('css_validator_index'), 'method': 'POST'}) }}
 
     {% if result is not null %}
-        {{ dump(result) }}
+        {% if result.validity %}
+            <strong>Документ прошел валидацию</strong><br />
+        {% endif %}
+
+        {% if result.errors %}
+            <strong>Ошибки</strong>
+            <ul>
+            {% for error in result.errors %}
+                <li>Строка {{ error.line }}: [{{ error.errortype }}] - {{ error.message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% if result.warnings %}
+            <strong>Предупреждения</strong>
+            <ul>
+            {% for warning in result.warnings %}
+                <li>Строка {{ warning.line }}: {{ warning.message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
     {% endif %}
 
     {{ form_errors(form) }}
 
-    <div class="ui-grid-solo">
-        <div class="ui-block-a">{{ form_row(form.css) }}</div>
-    </div>
+    {{ form_row(form.css) }}
+    {{ form_row(form.file) }}
     <div class="ui-grid-b">
         <div class="ui-block-a">{{ form_row(form.profile) }}</div>
         <div class="ui-block-b">{{ form_row(form.usermedium) }}</div>

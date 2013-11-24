@@ -8,7 +8,7 @@
                 {% if value.file_url.mimeType|slice(0, 6) == 'image/' %}
                     {% include 'WapinetBundle::image.html.twig' with {'image': {'id': 'image', 'alt': '', 'src': value.web_path } } %}
                 {% else %}
-                    <p>{{ value.file_url.basename }} ({{ value.file_url.size|wapinet_size }})</p>
+                    <p>{{ value.file_url.clientOriginalName }} ({{ value.file_url.size|wapinet_size }})</p>
                 {% endif %}
                 {% if form.file_url_delete is defined %}
                     {{ form_row(form.file_url_delete) }}

@@ -5,6 +5,7 @@ namespace Wapinet\Bundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Exception\ValidatorException;
 use Wapinet\Bundle\Form\Type\HtmlValidator\HtmlValidatorType;
 
 class HtmlValidatorController extends Controller
@@ -37,11 +38,18 @@ class HtmlValidatorController extends Controller
 
     /**
      * @param array $data
-     * @return \Services_W3C_HTMLValidator
+     * @throws ValidatorException
+     * @return \Services_W3C_HTMLValidator_Response
      */
     protected function getHtmlValidator(array $data)
     {
         $htmlValidator = $this->get('html_validator');
-        return $htmlValidator->validateFragment($data['html']);
+        if (null !== $data['html']) {
+            return $htmlValidator->validateFragment($data['html']);
+        }
+        if (null !== $data['file']) {
+            return $htmlValidator->validateFile($data['file']);
+        }
+        throw new ValidatorException('Не заполнено ни одного поля с HTML кодом ');
     }
 }
