@@ -14,19 +14,19 @@ class CssValidatorController extends Controller
     {
         $result = null;
         $form = $this->createForm(new CssValidatorType());
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $data = $form->getData();
+        try {
+            $form->handleRequest($request);
 
-                try {
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $data = $form->getData();
+
                     $result = $this->getCssValidator($data);
-                } catch (\Exception $e) {
-                    $form->addError(new FormError($e->getMessage()));
                 }
-
             }
+        } catch (\Exception $e) {
+            $form->addError(new FormError($e->getMessage()));
         }
 
         return $this->render('WapinetBundle:CssValidator:index.html.twig', array(

@@ -14,19 +14,18 @@ class UnicodeController extends Controller
     {
         $result = null;
         $form = $this->createForm(new UnicodeType());
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $data = $form->getData();
+        try {
+            $form->handleRequest($request);
 
-                try {
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $data = $form->getData();
                     $result = $this->getUnicode($data);
-                } catch (\Exception $e) {
-                    $form->addError(new FormError($e->getMessage()));
                 }
-
             }
+        } catch (\Exception $e) {
+            $form->addError(new FormError($e->getMessage()));
         }
 
         return $this->render('WapinetBundle:Unicode:index.html.twig', array(
@@ -77,6 +76,10 @@ class UnicodeController extends Controller
     }
 
 
+    /**
+     * @param string $str
+     * @return string
+     */
     protected function getLatin($str)
     {
         return strtr($str, array(
@@ -87,11 +90,19 @@ class UnicodeController extends Controller
         ));
     }
 
+    /**
+     * @param string $str
+     * @return string
+     */
     protected function getHtmlSpecialChars($str)
     {
         return htmlspecialchars($str, ENT_QUOTES);
     }
 
+    /**
+     * @param string $str
+     * @return string
+     */
     protected function getZeroFill($str)
     {
         return ltrim($str, 0);

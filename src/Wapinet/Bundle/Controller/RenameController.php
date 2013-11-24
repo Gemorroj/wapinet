@@ -20,19 +20,18 @@ class RenameController extends Controller
     public function indexAction(Request $request)
     {
         $form = $this->createForm(new RenameType());
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $data = $form->getData();
+        try {
+            $form->handleRequest($request);
 
-                try {
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $data = $form->getData();
                     return $this->getRename($data);
-                } catch (\Exception $e) {
-                    $form->addError(new FormError($e->getMessage()));
                 }
-
             }
+        } catch (\Exception $e) {
+            $form->addError(new FormError($e->getMessage()));
         }
 
         return $this->render('WapinetBundle:Rename:index.html.twig', array(

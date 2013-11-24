@@ -14,19 +14,18 @@ class TranslateController extends Controller
     {
         $result = null;
         $form = $this->createForm(new TranslateType());
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $data = $form->getData();
+        try {
+            $form->handleRequest($request);
 
-                try {
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $data = $form->getData();
                     $result = $this->getTranslate($data);
-                } catch (\Exception $e) {
-                    $form->addError(new FormError($e->getMessage()));
                 }
-
             }
+        } catch (\Exception $e) {
+            $form->addError(new FormError($e->getMessage()));
         }
 
         return $this->render('WapinetBundle:Translate:index.html.twig', array(

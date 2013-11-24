@@ -27,13 +27,14 @@ class AudioTagsController extends Controller
     public function indexAction(Request $request)
     {
         $form = $this->createForm(new AudioTagsType());
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $data = $form->getData();
+        try {
+            $form->handleRequest($request);
 
-                try {
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $data = $form->getData();
+
                     $file = $this->saveFile($data);
                     $router = $this->container->get('router');
 
@@ -44,10 +45,10 @@ class AudioTagsController extends Controller
                             ), Router::ABSOLUTE_URL
                         )
                     );
-                } catch (\Exception $e) {
-                    $form->addError(new FormError($e->getMessage()));
                 }
             }
+        } catch (\Exception $e) {
+            $form->addError(new FormError($e->getMessage()));
         }
 
         return $this->render('WapinetBundle:AudioTags:index.html.twig', array(
@@ -85,21 +86,21 @@ class AudioTagsController extends Controller
         $this->setFormData($form, $info['comments']);
         $originalForm = clone $form; //hack stupid symfony
 
-        $form->handleRequest($request);
+        try {
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
 
-                try {
                     $this->setTags($fileName, $form, $info);
-                } catch (\Exception $e) {
-                    $form->addError(new FormError($e->getMessage()));
-                }
 
-                $form = $originalForm;
-                $info = $this->getInfo($fileName);
-                $this->setFormData($form, $info['comments']);
+                    $form = $originalForm;
+                    $info = $this->getInfo($fileName);
+                    $this->setFormData($form, $info['comments']);
+                }
             }
+        } catch (\Exception $e) {
+            $form->addError(new FormError($e->getMessage()));
         }
 
         return $this->render('WapinetBundle:AudioTags:edit.html.twig', array(

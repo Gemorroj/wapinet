@@ -14,19 +14,17 @@ class RestController extends Controller
     {
         $result = null;
         $form = $this->createForm(new RestType());
-        $form->handleRequest($request);
+        try {
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $data = $form->getData();
-
-                try {
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $data = $form->getData();
                     $result = $this->getRest($data);
-                } catch (\Exception $e) {
-                    $form->addError(new FormError($e->getMessage()));
                 }
-
             }
+        } catch (\Exception $e) {
+            $form->addError(new FormError($e->getMessage()));
         }
 
         return $this->render('WapinetBundle:Rest:index.html.twig', array(

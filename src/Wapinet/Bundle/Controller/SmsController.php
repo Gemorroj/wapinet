@@ -13,20 +13,19 @@ class SmsController extends Controller
     {
         $result = null;
         $form = $this->createForm(new SmsType());
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $data = $form->getData();
+        try {
+            $form->handleRequest($request);
 
-                try {
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $data = $form->getData();
                     $message = $this->send($data);
                     $result = (bool)$this->get('mailer')->send($message);
-                } catch (\Exception $e) {
-                    $form->addError(new FormError($e->getMessage()));
                 }
-
             }
+        } catch (\Exception $e) {
+            $form->addError(new FormError($e->getMessage()));
         }
 
         return $this->render('WapinetBundle:Sms:index.html.twig', array(

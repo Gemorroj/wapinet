@@ -15,19 +15,23 @@ class WhoisController extends Controller
     {
         $resultHtml = null;
         $form = $this->createForm(new WhoisType());
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $data = $form->getData();
+        try {
+            $form->handleRequest($request);
 
-                $resultHtml = $this->lookup($form, $data);
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $data = $form->getData();
+                    $resultHtml = $this->getWhois($data);
+                }
+            } elseif (null !== $request->get('query')) {
+                $data = array('query' => $request->get('query'));
+                $form->setData($data);
+
+                $resultHtml = $this->getWhois($data);
             }
-        } elseif (null !== $request->get('query')) {
-            $data = array('query' => $request->get('query'));
-            $form->setData($data);
-
-            $resultHtml = $this->lookup($form, $data);
+        } catch (\Exception $e) {
+            $form->addError(new FormError($e->getMessage()));
         }
 
         return $this->render('WapinetBundle:Whois:index.html.twig', array(
@@ -37,23 +41,8 @@ class WhoisController extends Controller
     }
 
     /**
-     * @param Form $form
      * @param array $data
-     * @return string|null
-     */
-    protected function lookup(Form $form, array $data)
-    {
-        try {
-            return $this->getWhois($data);
-        } catch (\Exception $e) {
-            $form->addError(new FormError($e->getMessage()));
-        }
-        return null;
-    }
-
-    /**
-     * @param array $data
-     * @return string
+     * @return string HTML текст
      * @throws WhoisException
      */
     protected function getWhois(array $data)

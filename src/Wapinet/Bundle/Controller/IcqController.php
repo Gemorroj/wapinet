@@ -43,7 +43,7 @@ class IcqController extends Controller
     /**
      * @param array $data
      *
-     * @return bool
+     * @throws \RuntimeException
      */
     protected function icqRegistration (array $data)
     {
@@ -68,7 +68,9 @@ class IcqController extends Controller
 
         $json = json_decode($response->getContent());
 
-        return (200 === $json->status);
+        if (200 !== $json->status) {
+            throw new \RuntimeException('Проверьте правильность данных и попробуйте еще раз. Возможно, указанный E-mail уже был зарегистрирован.');
+        }
     }
 
     public function registrationAction(Request $request)
@@ -77,17 +79,18 @@ class IcqController extends Controller
         $variables = null;
 
         $form = $this->createForm(new RegistrationType());
-        $form->handleRequest($request);
+        try {
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $data = $form->getData();
-                if (!$this->icqRegistration($data)) {
-                    $form->addError(new FormError('Проверьте правильность данных и попробуйте еще раз. Возможно, указанный E-mail уже был зарегистрирован.'));
-                } else {
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $data = $form->getData();
+                    $this->icqRegistration($data);
                     $result = true;
                 }
             }
+        } catch (\Exception $e) {
+            $form->addError(new FormError($e->getMessage()));
         }
 
         if (true !== $result) {
@@ -184,22 +187,23 @@ class IcqController extends Controller
         $result = null;
 
         $form = $this->createForm(new UserInfoType());
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $data = $form->getData();
+        try {
+            $form->handleRequest($request);
 
-                $content = $this->cleanUserInfo($data['uin']);
-                if (!$content) {
-                    $form->addError(new FormError('Пользователь не найден'));
-                } else {
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $data = $form->getData();
+
+                    $content = $this->cleanUserInfo($data['uin']);
                     $result = array(
                         'uin' => $data['uin'],
                         'content' => $content, //raw
                     );
                 }
             }
+        } catch (\Exception $e) {
+            $form->addError(new FormError($e->getMessage()));
         }
 
         return $this->render('WapinetBundle:Icq:user_info.html.twig', array(
@@ -212,6 +216,7 @@ class IcqController extends Controller
     /**
      * @param string $uin
      *
+     * @throws \RuntimeException
      * @return string
      */
     protected function cleanUserInfo($uin)
@@ -234,6 +239,10 @@ class IcqController extends Controller
         $out = str_replace('</label>', ':</label>', $out);
         $out = str_replace('<div class="clearBoth"></div>', '', $out);
         $out = str_replace('<hr />', '', $out);
+
+        if (!$out) {
+            throw new \RuntimeException('Пользователь не найден');
+        }
 
         return $out;
     }
