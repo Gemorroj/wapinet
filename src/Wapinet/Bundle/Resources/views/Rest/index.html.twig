@@ -1,0 +1,34 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}REST клиент{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('programming'), 'title': 'WEB мастерская'}
+    })}}
+{% endblock %}
+
+
+{% block content %}
+    {{ form_start(form, {'action': path('rest_index'), 'method': 'POST'}) }}
+    {% if result is not null %}
+        <fieldset>
+            <label for="rest-result">Результат</label>
+            <div class="ui-grid-solo" id="rest-result">
+                <div class="ui-block-a"><label>Заголовки <textarea>{{ result.headers }}</textarea></label></div>
+                <div class="ui-block-a"><label>Тело <textarea>{{ result.content }}</textarea></label></div>
+            </div>
+        </fieldset>
+    {% endif %}
+
+    <div class="ui-grid-a">
+        <div class="ui-block-a rest_type">{{ form_row(form.type) }}</div>
+        <div class="ui-block-b rest_url">{{ form_row(form.url) }}</div>
+    </div>
+    <div class="ui-grid-solo">
+        <div class="ui-block-a">{{ form_row(form.header) }}</div>
+        <div class="ui-block-a">{{ form_row(form.body) }}</div>
+    </div>
+
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}

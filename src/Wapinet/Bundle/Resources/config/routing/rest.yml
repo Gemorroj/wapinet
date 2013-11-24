@@ -1,0 +1,3 @@
+rest_index:
+    pattern: /
+    defaults: { _controller: WapinetBundle:Rest:index }

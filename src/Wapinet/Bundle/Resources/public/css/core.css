@@ -21,3 +21,9 @@ fieldset.file_url {
 p.container_preview {
 
 }
+div.rest_type {
+    width: 25% !important;
+}
+div.rest_url {
+    width: 75% !important;
+}
