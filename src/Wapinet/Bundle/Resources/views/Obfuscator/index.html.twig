@@ -1,0 +1,26 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}PHP обфускатор{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('utilities'), 'title': 'Полезные WEB приложения'}
+    })}}
+{% endblock %}
+
+
+{% block content %}
+    Данный сервис позволяет <abbr title="Обфускация или запутывание кода — приведение исходного текста или исполняемого кода программы к виду, сохраняющему ее функциональность, но затрудняющему анализ, понимание алгоритмов работы и модификацию при декомпиляции">обфусцировать</abbr> PHP код.
+    <br/>
+
+    {{ form_start(form, {'action': path('obfuscator_index'), 'method': 'POST'}) }}
+    {% if result is not null %}
+        {% if result %}
+            <label>Результат <textarea>{{ result }}</textarea></label>
+        {% else %}
+            Произошла ошибка
+        {% endif %}
+    {% endif %}
+
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

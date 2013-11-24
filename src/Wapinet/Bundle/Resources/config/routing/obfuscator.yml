@@ -1,0 +1,3 @@
+obfuscator_index:
+    pattern: /
+    defaults: { _controller: WapinetBundle:Obfuscator:index }

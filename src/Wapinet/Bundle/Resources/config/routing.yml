@@ -77,3 +77,7 @@ audio_tags:
 whois:
     resource: "@WapinetBundle/Resources/config/routing/whois.yml"
     prefix:   /whois
+
+obfuscator:
+    resource: "@WapinetBundle/Resources/config/routing/obfuscator.yml"
+    prefix:   /obfuscator
