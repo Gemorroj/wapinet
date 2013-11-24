@@ -93,3 +93,7 @@ css_validator:
 html_validator:
     resource: "@WapinetBundle/Resources/config/routing/html_validator.yml"
     prefix:   /html_validator
+
+php_validator:
+    resource: "@WapinetBundle/Resources/config/routing/php_validator.yml"
+    prefix:   /php_validator

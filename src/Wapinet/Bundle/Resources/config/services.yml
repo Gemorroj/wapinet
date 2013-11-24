@@ -45,3 +45,7 @@ services:
 
     html_validator:
         class: Wapinet\Bundle\Helper\HtmlValidator
+
+    php_validator:
+        class: Wapinet\Bundle\Helper\PhpValidator
+        arguments: [@service_container]

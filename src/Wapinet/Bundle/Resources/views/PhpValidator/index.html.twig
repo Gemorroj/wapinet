@@ -1,0 +1,30 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}PHP валидатор{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('programming'), 'title': 'WEB мастерская'}
+    })}}
+{% endblock %}
+
+
+{% block content %}
+    {{ form_start(form, {'action': path('php_validator_index'), 'method': 'POST'}) }}
+    {% if result is not null %}
+        {% if result.validity %}
+            <strong>Документ прошел валидацию</strong><br />
+        {% endif %}
+
+        {% if result.errors %}
+            <strong>Ошибки</strong>
+            <ul>
+                {% for error in result.errors %}
+                    <li>Строка {{ error.line }}: [{{ error.type }}] - {{ error.message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+    {% endif %}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}
