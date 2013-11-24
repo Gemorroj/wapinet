@@ -10,11 +10,7 @@
 {% block content %}
     {{ form_start(form, {'action': path('whois_index'), 'method': 'POST'}) }}
     {% if resultHtml is not null %}
-        {% if resultHtml %}
-            <fieldset>{{ resultHtml|raw }}</fieldset>
-        {% else %}
-            Произошла ошибка
-        {% endif %}
+        <fieldset>{{ resultHtml|raw }}</fieldset>
     {% endif %}
 
     {{ form_widget(form) }}

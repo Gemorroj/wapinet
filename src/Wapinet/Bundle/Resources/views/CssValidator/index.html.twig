@@ -10,10 +10,12 @@
 
 {% block content %}
     {{ form_start(form, {'action': path('css_validator_index'), 'method': 'POST'}) }}
-    {{ form_errors(form) }}
+
     {% if result is not null %}
         {{ dump(result) }}
     {% endif %}
+
+    {{ form_errors(form) }}
 
     <div class="ui-grid-solo">
         <div class="ui-block-a">{{ form_row(form.css) }}</div>

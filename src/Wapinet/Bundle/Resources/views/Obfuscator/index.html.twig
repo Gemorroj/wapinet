@@ -14,11 +14,7 @@
 
     {{ form_start(form, {'action': path('obfuscator_index'), 'method': 'POST'}) }}
     {% if result is not null %}
-        {% if result %}
-            <label>Результат <textarea>{{ result }}</textarea></label>
-        {% else %}
-            Произошла ошибка
-        {% endif %}
+        <label>Результат <textarea>{{ result }}</textarea></label>
     {% endif %}
 
     {{ form_widget(form) }}

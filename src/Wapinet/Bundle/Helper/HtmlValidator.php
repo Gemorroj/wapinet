@@ -18,7 +18,7 @@ class HtmlValidator
 
     /**
      * @param string $html
-     * @return \Services_W3C_HTMLValidator
+     * @return \Services_W3C_HTMLValidator_Response
      * @throws \RuntimeException
      */
     public function validateFragment($html)

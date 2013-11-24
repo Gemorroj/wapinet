@@ -10,13 +10,14 @@
 
 {% block content %}
     {{ form_start(form, {'action': path('icq_user_info'), 'method': 'POST'}) }}
-            {{ form_widget(form) }}
+        {% if result is not null %}
+            <div>
+                <img src="https://api.icq.net/expressions/get?t={{ result.uin }}&amp;f=native&amp;type=buddyIcon" alt="avatar" />
+                <img src="http://status.icq.com/online.gif?img=5&amp;icq={{ result.uin }}" alt="status" />
+                {{ result.content|raw }}
+            </div>
+        {% endif %}
+
+        {{ form_widget(form) }}
     {{ form_end(form) }}
-    {% if result is not null %}
-        <div>
-            <img src="https://api.icq.net/expressions/get?t={{ result.uin }}&amp;f=native&amp;type=buddyIcon" alt="avatar" />
-            <img src="http://status.icq.com/online.gif?img=5&amp;icq={{ result.uin }}" alt="status" />
-            {{ result.content|raw }}
-        </div>
-    {% endif %}
 {% endblock %}
