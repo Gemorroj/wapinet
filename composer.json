@@ -6,6 +6,12 @@
     "autoload": {
         "psr-0": { "": "src/" }
     },
+    "repositories": [
+        {
+            "type": "pear",
+            "url": "http://pear.php.net"
+        }
+    ],
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.3.*",
@@ -28,7 +34,9 @@
         "white-october/pagerfanta-bundle": "dev-master",
         "james-heinrich/getid3": "dev-master",
         "vich/uploader-bundle": "dev-master",
-        "gemorroj/phpwhois": "dev-master"
+        "gemorroj/phpwhois": "dev-master",
+        "pear-pear/Services_W3C_CSSValidator": "*",
+        "pear-pear/Services_W3C_HTMLValidator": "*"
     },
     "scripts": {
         "post-install-cmd": [
