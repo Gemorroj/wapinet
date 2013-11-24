@@ -36,3 +36,6 @@ services:
 
     getid3:
         class: Wapinet\Bundle\Helper\Getid3
+
+    phpwhois:
+        class: Wapinet\Bundle\Helper\Phpwhois

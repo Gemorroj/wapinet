@@ -27,7 +27,8 @@
         "friendsofsymfony/message-bundle": "dev-master",
         "white-october/pagerfanta-bundle": "dev-master",
         "james-heinrich/getid3": "dev-master",
-        "vich/uploader-bundle": "dev-master"
+        "vich/uploader-bundle": "dev-master",
+        "gemorroj/phpwhois": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

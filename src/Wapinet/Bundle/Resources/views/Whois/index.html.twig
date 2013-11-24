@@ -1,0 +1,22 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}WHOIS (информация о домене или IP){% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('programming'), 'title': 'WEB мастерская'}
+    })}}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form, {'action': path('whois_index'), 'method': 'POST'}) }}
+    {% if resultHtml is not null %}
+        {% if resultHtml %}
+            <fieldset>{{ resultHtml|raw }}</fieldset>
+        {% else %}
+            Произошла ошибка
+        {% endif %}
+    {% endif %}
+
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

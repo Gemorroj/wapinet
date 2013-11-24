@@ -73,3 +73,7 @@ sms:
 audio_tags:
     resource: "@WapinetBundle/Resources/config/routing/audio_tags.yml"
     prefix:   /audio_tags
+
+whois:
+    resource: "@WapinetBundle/Resources/config/routing/whois.yml"
+    prefix:   /whois
