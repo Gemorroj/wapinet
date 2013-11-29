@@ -13,6 +13,7 @@ class AppKernel extends Kernel
         $container = parent::buildContainer();
 
         $this->createDir(self::getTmpDir());
+        $this->createDir($this->getCacheWeatherDir());
 
         return $container;
     }
@@ -34,6 +35,15 @@ class AppKernel extends Kernel
         }
 
         return true;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getCacheWeatherDir()
+    {
+        return $this->getCacheDir() . '/weather';
     }
 
 

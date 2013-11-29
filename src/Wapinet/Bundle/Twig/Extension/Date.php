@@ -26,11 +26,14 @@ class Date extends \Twig_Extension
         if ($date instanceof \DateTime) {
             $today = new \DateTime('today');
             $yesterday = new \DateTime('yesterday');
+            $tomorrow = new \DateTime('tomorrow');
 
             if ($date->format('Ymd') === $today->format('Ymd')) {
                 return 'Сегодня';
             } elseif ($date->format('Ymd') == $yesterday->format('Ymd')) {
                 return 'Вчера';
+            } elseif ($date->format('Ymd') == $tomorrow->format('Ymd')) {
+                return 'Завтра';
             } else {
                 return $date->format('d.m.Y');
             }
@@ -48,11 +51,14 @@ class Date extends \Twig_Extension
         if ($datetime instanceof \DateTime) {
             $today = new \DateTime('today');
             $yesterday = new \DateTime('yesterday');
+            $tomorrow = new \DateTime('tomorrow');
 
             if ($datetime->format('Ymd') === $today->format('Ymd')) {
                 return 'Сегодня в ' . $datetime->format('H:i');
             } elseif ($datetime->format('Ymd') == $yesterday->format('Ymd')) {
                 return 'Вчера в ' . $datetime->format('H:i');
+            } elseif ($datetime->format('Ymd') == $tomorrow->format('Ymd')) {
+                return 'Завтра в ' . $datetime->format('H:i');
             } else {
                 return $datetime->format('d.m.Y H:i:s');
             }

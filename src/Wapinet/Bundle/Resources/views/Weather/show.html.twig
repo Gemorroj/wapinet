@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Погода{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'}
+    })}}
+{% endblock %}
+
+
+{% block content %}
+    <ul data-role="listview" data-inset="true">
+        <li data-role="list-divider">Текущая погода</li>
+        <li>
+            <h2>{{ weather.now.temperature }} {{ weather.now.description }}</h2>
+            <p>Давление: {{ weather.now.pressure }} мм рт. ст.</p>
+            <p>Влажность: {{ weather.now.humidity }} %</p>
+            <p>Ветер: {{ weather.now.wind }} м/с</p>
+        </li>
+        {% for forecast in weather.forecast %}
+            <li data-role="list-divider">{{ forecast.datetime|wapinet_datetime }}</li>
+            <li>
+                <h2>{{ forecast.temperature }} {{ forecast.description }}</h2>
+                <p>Давление: {{ forecast.pressure }} мм рт. ст.</p>
+                <p>Влажность: {{ forecast.humidity }} %</p>
+                <p>Ветер: {{ forecast.wind }} м/с</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

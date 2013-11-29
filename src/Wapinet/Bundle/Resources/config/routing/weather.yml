@@ -1,0 +1,17 @@
+weather_country:
+    pattern: /
+    defaults: { _controller: WapinetBundle:Weather:country }
+
+weather_city:
+    pattern: /{country}
+    defaults: { _controller: WapinetBundle:Weather:city }
+    requirements:
+        country: \d+
+
+weather_show:
+    pattern: /{country}/{city}
+    defaults: { _controller: WapinetBundle:Weather:show }
+    requirements:
+        country: \d+
+        city: \d+
+
