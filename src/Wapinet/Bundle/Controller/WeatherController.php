@@ -10,8 +10,6 @@ use Wapinet\Bundle\Form\Type\Weather\CityType;
 use Wapinet\Bundle\Form\Type\Weather\CountryType;
 
 
-
-// TODO: доделать заголовки стран и городов
 class WeatherController extends Controller
 {
     public function countryAction(Request $request)
@@ -40,7 +38,8 @@ class WeatherController extends Controller
 
     public function cityAction(Request $request, $country)
     {
-        $form = $this->createForm(new CityType($this->get('weather')->getCities($country)));
+        $weather = $this->get('weather');
+        $form = $this->createForm(new CityType($weather->getCities($country)));
 
         try {
             $form->handleRequest($request);
@@ -57,6 +56,7 @@ class WeatherController extends Controller
         }
 
         return $this->render('WapinetBundle:Weather:city.html.twig', array(
+            'countryName' => $weather->getCountries()[$country],
             'country' => $country,
             'form' => $form->createView(),
         ));
@@ -65,8 +65,11 @@ class WeatherController extends Controller
 
     public function showAction(Request $request, $country, $city)
     {
+        $weather = $this->get('weather');
         return $this->render('WapinetBundle:Weather:show.html.twig', array(
+            'countryName' => $weather->getCountries()[$country],
             'country' => $country,
+            'cityName' => $weather->getCities($country)[$city],
             'city' => $city,
             'weather' => $this->get('weather')->getWeather($city),
         ));

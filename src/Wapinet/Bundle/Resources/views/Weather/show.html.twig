@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Погода{% endblock %}
+{% block title %}Погода - {{ countryName }} - {{ cityName }}{% endblock %}
 {% block menu %}
     {{wapinet_menu({
     1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'}
