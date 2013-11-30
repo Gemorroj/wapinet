@@ -28,13 +28,14 @@ class Paginate
     }
 
     /**
-     * @param Query|QueryBuilder|Collection $data
+     * @param Query|QueryBuilder|Collection|array $data
      * @param int $page
+     * @param int|null $maxPerPage
      *
      * @throws \RuntimeException
      * @return Pagerfanta
      */
-    public function paginate($data, $page = 1)
+    public function paginate($data, $page = 1, $maxPerPage = null)
     {
         if ($data instanceof Collection) {
             $adapter = new DoctrineCollectionAdapter($data);
@@ -47,7 +48,7 @@ class Paginate
         }
 
         $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage($this->container->getParameter('wapinet_paginate_maxperpage'));
+        $pagerfanta->setMaxPerPage(null === $maxPerPage ? $this->container->getParameter('wapinet_paginate_maxperpage') : $maxPerPage);
         $pagerfanta->setCurrentPage($page);
 
         return $pagerfanta;

@@ -65,3 +65,7 @@ services:
     news:
         class: Wapinet\Bundle\Helper\News
         arguments: [@service_container]
+
+    bash:
+        class: Wapinet\Bundle\Helper\Bash
+        arguments: [@service_container]

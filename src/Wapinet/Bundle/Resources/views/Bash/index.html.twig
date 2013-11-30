@@ -1,0 +1,24 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}БезБАШенные приколы{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'}
+    })}}
+{% endblock %}
+
+{% block content %}
+    <ul data-role="listview" data-inset="true">
+        {% for item in items %}
+            {% if item %}
+                <li>
+                    <p class="long-description">{{ item|raw }}</p>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+    <div class="pagerfanta">
+        {{ pagerfanta(items) }}
+    </div>
+{% endblock %}

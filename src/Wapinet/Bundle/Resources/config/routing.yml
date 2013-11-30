@@ -114,3 +114,7 @@ news:
     resource: "@WapinetBundle/Resources/config/routing/news.yml"
     prefix:   /news
 
+bash:
+    resource: "@WapinetBundle/Resources/config/routing/bash.yml"
+    prefix:   /bash
+

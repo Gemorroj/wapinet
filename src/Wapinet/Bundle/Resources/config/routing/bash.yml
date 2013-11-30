@@ -1,0 +1,5 @@
+bash_index:
+    pattern: /{page}
+    defaults: { _controller: WapinetBundle:Bash:index, page: null }
+    requirements:
+        page: \d+
