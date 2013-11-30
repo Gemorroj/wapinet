@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Гороскоп на день - Общая характеристика дня{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'},
+    2: {'uri': path('horoscope_index'), 'title': 'Гороскоп на день'}
+    })}}
+{% endblock %}
+
+{% block content %}
+    <p>{{ date|wapinet_date }}</p>
+    <p>{{ horoscope }}</p>
+{% endblock %}

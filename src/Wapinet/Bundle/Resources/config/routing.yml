@@ -106,4 +106,8 @@ rates:
     resource: "@WapinetBundle/Resources/config/routing/rates.yml"
     prefix:   /rates
 
+horoscope:
+    resource: "@WapinetBundle/Resources/config/routing/horoscope.yml"
+    prefix:   /horoscope
+
 

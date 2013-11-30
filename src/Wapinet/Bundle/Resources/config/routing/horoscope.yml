@@ -1,0 +1,14 @@
+horoscope_index:
+    pattern: /
+    defaults: { _controller: WapinetBundle:Horoscope:index }
+
+horoscope_show:
+    pattern: /{zodiac}
+    defaults: { _controller: WapinetBundle:Horoscope:show }
+    requirements:
+        zodiac: (aquarius|aries|cancer|capricorn|gemini|leo|libra|pisces|sagittarius|scorpio|taurus|virgo)
+
+horoscope_day:
+    pattern: /day
+    defaults: { _controller: WapinetBundle:Horoscope:day }
+

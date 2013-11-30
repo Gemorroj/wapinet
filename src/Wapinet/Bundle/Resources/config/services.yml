@@ -58,3 +58,7 @@ services:
         class: Wapinet\Bundle\Helper\Rates
         arguments: [@service_container]
 
+    horoscope:
+        class: Wapinet\Bundle\Helper\Horoscope
+        arguments: [@service_container]
+
