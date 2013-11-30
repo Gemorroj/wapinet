@@ -54,3 +54,7 @@ services:
         class: Wapinet\Bundle\Helper\Weather
         arguments: [@service_container]
 
+    rates:
+        class: Wapinet\Bundle\Helper\Rates
+        arguments: [@service_container]
+

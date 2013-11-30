@@ -94,7 +94,6 @@ class Weather
 
         $obj = simplexml_load_string($result->getContent());
 
-        var_dump($obj->location->fact->values->attributes());
         $weather =  array(
             'now' => array(
                 'temperature' => $this->addPlusMinus((string)$obj->location->fact->values->attributes()->t),

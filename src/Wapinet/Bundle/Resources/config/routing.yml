@@ -102,3 +102,8 @@ weather:
     resource: "@WapinetBundle/Resources/config/routing/weather.yml"
     prefix:   /weather
 
+rates:
+    resource: "@WapinetBundle/Resources/config/routing/rates.yml"
+    prefix:   /rates
+
+

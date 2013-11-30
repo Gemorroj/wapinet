@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Курсы валют - {{ name }}{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'}
+    })}}
+{% endblock %}
+
+{% block content %}
+    <p>{{ date|wapinet_date }}</p>
+<table data-role="table" id="table-column-toggle" data-mode="reflow" class="ui-responsive table-stroke">
+    <thead>
+    <tr>
+        <th>Название</th>
+        <th>Код</th>
+        <th>Курс</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for rate in rates %}
+        <tr>
+            <td>{{ rate.name }}</td>
+            <td>{{ rate.code }}</td>
+            <td>{{ rate.rate }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,10 @@
+rates_index:
+    pattern: /
+    defaults: { _controller: WapinetBundle:Rates:index }
+
+rates_show:
+    pattern: /{country}
+    defaults: { _controller: WapinetBundle:Rates:show }
+    requirements:
+        country: (ru|by|ua|kz)
+

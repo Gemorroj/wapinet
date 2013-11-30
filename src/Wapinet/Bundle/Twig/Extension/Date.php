@@ -26,14 +26,20 @@ class Date extends \Twig_Extension
         if ($date instanceof \DateTime) {
             $today = new \DateTime('today');
             $yesterday = new \DateTime('yesterday');
+            $dayBeforeYesterday = new \DateTime('yesterday - 1 day');
             $tomorrow = new \DateTime('tomorrow');
+            $dayAfterTomorrow = new \DateTime('tomorrow + 1 day');
 
             if ($date->format('Ymd') === $today->format('Ymd')) {
                 return 'Сегодня';
             } elseif ($date->format('Ymd') == $yesterday->format('Ymd')) {
                 return 'Вчера';
+            } elseif ($date->format('Ymd') == $dayBeforeYesterday->format('Ymd')) {
+                return 'Позавчера';
             } elseif ($date->format('Ymd') == $tomorrow->format('Ymd')) {
                 return 'Завтра';
+            } elseif ($date->format('Ymd') == $dayAfterTomorrow->format('Ymd')) {
+                return 'Послезавтра';
             } else {
                 return $date->format('d.m.Y');
             }
@@ -51,14 +57,20 @@ class Date extends \Twig_Extension
         if ($datetime instanceof \DateTime) {
             $today = new \DateTime('today');
             $yesterday = new \DateTime('yesterday');
+            $dayBeforeYesterday = new \DateTime('yesterday - 1 day');
             $tomorrow = new \DateTime('tomorrow');
+            $dayAfterTomorrow = new \DateTime('tomorrow + 1 day');
 
             if ($datetime->format('Ymd') === $today->format('Ymd')) {
                 return 'Сегодня в ' . $datetime->format('H:i');
             } elseif ($datetime->format('Ymd') == $yesterday->format('Ymd')) {
                 return 'Вчера в ' . $datetime->format('H:i');
+            } elseif ($datetime->format('Ymd') == $dayBeforeYesterday->format('Ymd')) {
+                return 'Позавчера в ' . $datetime->format('H:i');
             } elseif ($datetime->format('Ymd') == $tomorrow->format('Ymd')) {
                 return 'Завтра в ' . $datetime->format('H:i');
+            } elseif ($datetime->format('Ymd') == $dayAfterTomorrow->format('Ymd')) {
+                return 'Послезавтра в ' . $datetime->format('H:i');
             } else {
                 return $datetime->format('d.m.Y H:i:s');
             }
