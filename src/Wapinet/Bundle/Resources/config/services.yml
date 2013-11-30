@@ -62,3 +62,6 @@ services:
         class: Wapinet\Bundle\Helper\Horoscope
         arguments: [@service_container]
 
+    news:
+        class: Wapinet\Bundle\Helper\News
+        arguments: [@service_container]

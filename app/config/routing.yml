@@ -8,7 +8,7 @@ wapinet_user:
 
 wapinet_news:
     resource: "@WapinetNewsBundle/Resources/config/routing.yml"
-    prefix:   /news
+    prefix:   /wapinet_news
 
 wapinet_message:
     resource: "@WapinetMessageBundle/Resources/config/routing.yml"

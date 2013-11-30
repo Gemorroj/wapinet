@@ -1,0 +1,28 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Новости{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'}
+    })}}
+{% endblock %}
+
+
+{% block content %}
+<ul data-role="listview" data-inset="true">
+    <li>
+        <a href="{{ path('news_rt') }}">
+            <img src="{{ asset('bundles/wapinet/images/news/rt.jpg') }}" alt="RT" />
+            <h2>RT на русском</h2>
+            <p>Российская международная многоязычная информационная телевизионная компания</p>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('news_inotv') }}">
+            <img src="{{ asset('bundles/wapinet/images/news/inotv.jpg') }}" alt="Ино ТВ">
+            <h2>Ино ТВ</h2>
+            <p>Репортажи зарубежных телеканалов о России с переводом на русский язык</p>
+        </a>
+    </li>
+</ul>
+{% endblock %}

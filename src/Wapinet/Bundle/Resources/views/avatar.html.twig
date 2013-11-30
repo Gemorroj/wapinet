@@ -1,7 +1,7 @@
 {% set path = user.avatar ? vich_uploader_asset(user, 'avatar') : wapinet_nophoto %}
 
 <a href="#avatar{{ user.id }}" data-rel="popup" data-position-to="window" data-transition="fade">
-    <img src="{{ path }}" alt="{{ user.username }}" class="image_preview" />
+    <img src="{{ path }}" alt="{{ user.username }}" class="image-preview" />
     {% if text_after_avatar is defined %}
         <h2>{{ text_after_avatar }}</h2>
     {% endif %}

@@ -19,7 +19,7 @@
             <strong>Ошибки</strong>
             <ul>
                 {% for error in result.errors %}
-                    <li>Строка {{ error.line }}, колонка {{ error.col }}: {{ error.message }}<br /><code class="html_validator">{{ error.source|raw }}</code></li>
+                    <li>Строка {{ error.line }}, колонка {{ error.col }}: {{ error.message }}<br /><code class="html-validator">{{ error.source|raw }}</code></li>
                 {% endfor %}
             </ul>
         {% endif %}
@@ -27,7 +27,7 @@
             <strong>Предупреждения</strong>
             <ul>
                 {% for warning in result.warnings %}
-                    <li>Строка {{ warning.line }}, колонка {{ warning.col }}: {{ warning.message }}<br /><code class="html_validator">{{ warning.source|raw }}</code></li>
+                    <li>Строка {{ warning.line }}, колонка {{ warning.col }}: {{ warning.message }}<br /><code class="html-validator">{{ warning.source|raw }}</code></li>
                 {% endfor %}
             </ul>
         {% endif %}

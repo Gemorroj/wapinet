@@ -1,0 +1,35 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Новости - {{ name }}{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'},
+    2: {'uri': path('news_index'), 'title': 'Новости'},
+    })}}
+{% endblock %}
+
+
+{% block content %}
+    {% set iCounter = 0 %}
+    <ul data-role="listview" data-inset="true">
+        {% for value in news %}
+            {% set iCounter = iCounter + 1 %}
+            <li data-role="list-divider">{{ value.datetime|wapinet_datetime }}</li>
+            <li data-icon="false">
+                <h2>{{ value.title }}</h2>
+                <p class="long-description">{{ value.description }}</p>
+                {% if value.photo is not null %}
+                    <div>{% include 'WapinetBundle::image.html.twig' with {'image': {'id': iCounter, 'alt': '', 'src': value.photo } } %}</div>
+                    <p></p>
+                {% endif %}
+                {% if value.video is not null %}
+                    <p>Видео: <a href="{{ value.video }}">смотреть</a></p>
+                {% endif %}
+                {% if value.author is not null %}
+                    <p>Источник: {{ value.author }}</p>
+                {% endif %}
+                <p>Оригинал: <a target="_blank" href="{{ value.link }}">перейти</a></p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

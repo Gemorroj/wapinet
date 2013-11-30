@@ -1,8 +1,8 @@
-img.image_preview {
+img.image-preview {
     width: 80px;
     height: auto;
 }
-img.avatar_login {
+img.avatar-login {
     width: auto;
     height: 15px;
 }
@@ -15,18 +15,21 @@ p.footer-right {
     float: right;
     margin-right: 10px;
 }
-fieldset.file_url {
+fieldset.file-url {
 
 }
-p.container_preview {
+p.container-preview {
 
 }
-div.rest_type {
+div.rest-type {
     width: 25% !important;
 }
-div.rest_url {
+div.rest-url {
     width: 75% !important;
 }
-code.html_validator strong {
+code.html-validator strong {
     color: red;
+}
+p.long-description {
+    white-space: pre-wrap;
 }

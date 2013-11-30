@@ -10,12 +10,12 @@ var FileLoader = {
     },
     preview: function (e, file, previewElement) {
         var container = document.createElement('p');
-        container.className = 'container_preview';
+        container.className = 'container-preview';
 
         if (file.type.match('^image/.+')) {
             var img = new Image();
             img.src = e.target.result;
-            img.className = 'image_preview';
+            img.className = 'image-preview';
             container.appendChild(img);
         }
 
@@ -25,7 +25,7 @@ var FileLoader = {
         $(previewElement).parent().prepend(container);
     },
     previewCleaner: function (previewElement) {
-        $(previewElement).parent().find('p.container_preview').remove();
+        $(previewElement).parent().find('p.container-preview').remove();
     }
 };
 var Helper = {
