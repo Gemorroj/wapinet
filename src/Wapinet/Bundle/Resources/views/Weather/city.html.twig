@@ -3,7 +3,8 @@
 {% block title %}Погода - {{ countryName }}{% endblock %}
 {% block menu %}
     {{wapinet_menu({
-    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'}
+    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'},
+    2: {'uri': path('weather_country'), 'title': 'Погода'}
     })}}
 {% endblock %}
 

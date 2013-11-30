@@ -3,7 +3,8 @@
 {% block title %}Курсы валют - {{ name }}{% endblock %}
 {% block menu %}
     {{wapinet_menu({
-    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'}
+    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'},
+    2: {'uri': path('rates_index'), 'title': 'Курсы валют'}
     })}}
 {% endblock %}
 
