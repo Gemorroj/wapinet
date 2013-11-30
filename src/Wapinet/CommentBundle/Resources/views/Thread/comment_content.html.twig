@@ -61,7 +61,7 @@
         </li>
     {% endblock fos_comment_comment_metas %}
 
-    <li data-icon="false" id="fos_comment_{{ comment.id }}" class="fos_comment_comment_show fos_comment_comment_depth_{{ depth }}" {% if parent is defined %}data-parent="{{ parent.id }}"{% endif %}>
+    <li data-icon="false" id="fos_comment_{{ comment.id }}" class="fos_comment_comment_show fos_comment_comment_depth_{{ depth }}" {% if parent is defined and parent is not null %}data-parent="{{ parent.id }}"{% endif %}>
 
         <div id="fos_comment_comment_body_{{ comment.id }}" class="fos_comment_comment_body">
         {% block fos_comment_comment_body %}
