@@ -36,6 +36,7 @@ class SizaController extends Controller
         $siza->init('/bundles/wapinet/siza', $query, $page, $scr);
 
         $content = '';
+        $pages = '';
 
         if (strpos($query, '/artists/') === 0) {
             $content .= $siza->getContent();
@@ -43,7 +44,7 @@ class SizaController extends Controller
             $content .= $siza->getContentList();
             $content .= $siza->getFoldersListDl();
             $content .= $siza->getFoldersList();
-            $content .= $siza->getListingNagivation();
+            $pages = $siza->getListingNagivation();
             if ($content === '') {
                 $content .= $siza->getContent();
             }
@@ -55,6 +56,7 @@ class SizaController extends Controller
             'content' => $content,
             'breadcrumbs' => $breadcrumbs,
             'name' => $name['name'],
+            'pages' => $pages,
         ));
     }
 

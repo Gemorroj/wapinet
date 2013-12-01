@@ -73,7 +73,6 @@ class Siza
     public function init($contentDirectory, $query, $page = null, $scr = null)
     {
         $this->link = 'http://load.siza.ru/' . ltrim($query, '/') . '?page=' . $page . '&scr=' . $scr;
-        error_log($this->link);
         $this->contentDirectory = $contentDirectory;
         $this->dom = new \DOMDocument('1.0', 'UTF-8');
         @$this->dom->loadHTML($this->getLink()->getContent());
@@ -287,6 +286,7 @@ class Siza
             $out .= $v->ownerDocument->saveXML($v);
         }
 
+        $out = str_replace(array('<span>|</span>', '<div id="listingNagivation">', '</div>'), array('', '', ''), $out);
         return $out;
     }
 
