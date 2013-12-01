@@ -48,10 +48,13 @@ class SizaController extends Controller
                 $content .= $siza->getContent();
             }
         }
-        $content .= $siza->getContentNavigator();
+        $breadcrumbs = $siza->getContentNavigator();
+        $name = array_pop($breadcrumbs);
 
         return $this->render('WapinetBundle:Siza:show.html.twig', array(
-            'content' => $content
+            'content' => $content,
+            'breadcrumbs' => $breadcrumbs,
+            'name' => $name['name'],
         ));
     }
 

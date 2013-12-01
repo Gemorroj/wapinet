@@ -369,11 +369,11 @@ class Siza
     /**
      * Получаем страницу с бредкрамбсами
      *
-     * @return string
+     * @return array
      */
     public function getContentNavigator()
     {
-        $out = '';
+        $out = array(array('query' => '', 'name' => 'Загрузки'));
 
         /** @var \DOMElement $v */
         foreach ($this->contentNodes as $v) {
@@ -384,17 +384,15 @@ class Siza
                 /** @var \DOMElement $a */
                 foreach ($aArr as $a) {
                     $i++;
-                    if ($i === 1) {
-                        $a->setAttribute('href', '/');
-                    } else if ($i === 2) {
-                        $a->setAttribute('href', './');
-                    } else {
+                    if ($i < 3) {
+                        continue;
+                    }  else {
                         $href = (string)$a->getAttribute('href');
-                        $a->setAttribute('href', '?q=' . $href);
+                        $out[] = array('query' => $href, 'name' => $a->nodeValue);
                     }
                 }
 
-                $out .= $v->ownerDocument->saveXML($v);
+                $out[] = array('query' => null, 'name' => ltrim(trim($v->lastChild->nodeValue), '» '));
                 break;
             }
         }

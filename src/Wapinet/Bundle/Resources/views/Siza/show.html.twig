@@ -1,12 +1,16 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Бесплатные загрузки{% endblock %}
+{% block title %}Бесплатные загрузки - {{ name }}{% endblock %}
 {% block menu %}
-    {{wapinet_menu({
-    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'}
-    })}}
-{% endblock %}
+    {% set menu = {1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'}} %}
 
+    {% for item in breadcrumbs %}
+        {% set key = loop.index + 1 %}
+        {% set menu = menu|merge({ (key): {'uri': path('siza_index', {'q': item.query}), 'title': item.name }}) %}
+    {% endfor %}
+
+    {{ wapinet_menu(menu) }}
+{% endblock %}
 
 {% block content %}
     {{ content|raw }}
