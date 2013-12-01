@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Бесплатные загрузки{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'}
+    })}}
+{% endblock %}
+
+
+{% block content %}
+    {{ content|raw }}
+{% endblock %}

@@ -1,0 +1,5 @@
+siza_index:
+    pattern: /
+    defaults: { _controller: WapinetBundle:Siza:index }
+
+

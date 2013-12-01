@@ -69,3 +69,9 @@ services:
     bash:
         class: Wapinet\Bundle\Helper\Bash
         arguments: [@service_container]
+
+    siza:
+        class: Wapinet\Bundle\Helper\Siza
+        arguments: [@service_container]
+
+

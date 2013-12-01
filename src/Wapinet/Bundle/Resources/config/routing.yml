@@ -118,3 +118,7 @@ bash:
     resource: "@WapinetBundle/Resources/config/routing/bash.yml"
     prefix:   /bash
 
+siza:
+    resource: "@WapinetBundle/Resources/config/routing/siza.yml"
+    prefix:   /siza
+

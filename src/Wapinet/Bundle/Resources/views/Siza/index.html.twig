@@ -1,0 +1,29 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Бесплатные загрузки{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'}
+    })}}
+{% endblock %}
+
+
+{% block content %}
+    <ul data-role="listview" data-inset="true">
+        <li><a href="{{ path('siza_index', {'q': 'music'}) }}">Музыка (MP3|AMR|MMF)</a></li>
+        <li><a href="{{ path('siza_index', {'q': 'poly'}) }}">Музыка (MMF с голосом|MIDI)</a></li>
+        <li><a href="{{ path('siza_index', {'q': 'igry'}) }}">Игры</a></li>
+        <li><a href="{{ path('siza_index', {'q': 'android'}) }}">Android Игры|Проги</a></li>
+        <li><a href="{{ path('siza_index', {'q': 'kartinki'}) }}">Картинки</a></li>
+        <li><a href="{{ path('siza_index', {'q': 'flash_zastavki'}) }}">Flash заставки</a></li>
+        <li><a href="{{ path('siza_index', {'q': 'erotik'}) }}">Эротика</a></li>
+        <li><a href="{{ path('siza_index', {'q': 'video'}) }}">Видео</a></li>
+        <li><a href="{{ path('siza_index', {'q': 'mobilnye_filmy'}) }}">Мобильные фильмы</a></li>
+        <li><a href="{{ path('siza_index', {'q': 'programmy'}) }}">Программы</a></li>
+        <li><a href="{{ path('siza_index', {'q': 'symbian'}) }}">Symbian Игры|Проги</a></li>
+        <li><a href="{{ path('siza_index', {'q': 'temy'}) }}">Темы</a></li>
+        <li><a href="{{ path('siza_index', {'q': 'animacii'}) }}">Анимации</a></li>
+        <li><a href="{{ path('siza_index', {'q': 'znamenitosti'}) }}">Знаменитости</a></li>
+        <li><a href="{{ path('siza_index', {'q': 'windows_mobile'}) }}">Windows mobile</a></li>
+    </ul>
+{% endblock %}
