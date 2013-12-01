@@ -122,3 +122,4 @@ siza:
     resource: "@WapinetBundle/Resources/config/routing/siza.yml"
     prefix:   /siza
 
+
