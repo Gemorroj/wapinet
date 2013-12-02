@@ -30,6 +30,7 @@ twig:
         wapinet_title: "%wapinet_title%"
         wapinet_proxy_url: "%wapinet_proxy_url%"
         wapinet_ftp_url: "%wapinet_ftp_url%"
+        wapinet_forum_url: "%wapinet_forum_url%"
 
 # Assetic Configuration
 assetic:
