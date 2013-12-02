@@ -1,0 +1,8 @@
+archiver_index:
+    pattern: /
+    defaults: { _controller: WapinetBundle:Archiver:index }
+
+archiver_create:
+    pattern: /create
+    defaults: { _controller: WapinetBundle:Archiver:create }
+

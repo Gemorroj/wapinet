@@ -9,7 +9,7 @@
         <li><a href="{{ path('utilities') }}">Полезные WEB приложения</a></li>
         <li><a href="{{ path('programming') }}">WEB мастерская</a></li>
         <li><a href="{{ wapinet_proxy_url }}" rel="external">Анонимайзер</a></li>
-        <li><a href="#">Архиватор</a></li>
+        <li><a href="{{ path('archiver_index') }}">Архиватор</a></li>
         <li><a href="{{ wapinet_forum_url }}">Форум</a> <span class="ui-li-count">234</span></li>
         <li><a href="#">Гостевая</a> <span class="ui-li-count">265</span></li>
         <li><a href="{{ path('wapinet_news') }}">Новости</a> <span class="ui-li-count">{{ wapinet_news_last_date()|wapinet_datetime|default('Новостей нет') }}</span></li>

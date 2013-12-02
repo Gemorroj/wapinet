@@ -64,7 +64,7 @@ $(document)/*.bind("mobileinit", function () {
     });
 
     // выключение взаимозаменяющих полей в url_file
-    var fileUrl = $('fieldset.file_url');
+    var fileUrl = $('fieldset.file-url');
     fileUrl.find('input[type="file"]').change(function (e) {
         var state = 'enable';
         if (e.target.value) {

@@ -122,4 +122,8 @@ siza:
     resource: "@WapinetBundle/Resources/config/routing/siza.yml"
     prefix:   /siza
 
+archiver:
+    resource: "@WapinetBundle/Resources/config/routing/archiver.yml"
+    prefix:   /archiver
+
 

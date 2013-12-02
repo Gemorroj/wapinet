@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Архиватор{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('utilities'), 'title': 'Полезные WEB приложения'}
+    })}}
+{% endblock %}
+
+{% block content %}
+    <ul data-role="listview" data-inset="true">
+        <li><a href="{{ path('archiver_create') }}">Создать архив</a></li>
+        <li><a href="#">Распаковать архив</a></li>
+        <li><a href="#">Переархивировать в ZIP</a></li>
+    </ul>
+{% endblock %}
