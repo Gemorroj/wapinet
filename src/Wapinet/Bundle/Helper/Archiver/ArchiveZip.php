@@ -65,7 +65,7 @@ class ArchiveZip extends Archive
         }
 
         if (false === $zip->close()) {
-            throw new ArchiverException('Не удалось создать ZIP архив');
+            throw new ArchiverException('Не удалось проверить ZIP архив');
         }
 
         return true;

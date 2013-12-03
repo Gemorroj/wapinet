@@ -43,10 +43,10 @@ abstract class Archive
         /** @var \SplFileInfo $object */
         foreach ($objects as $object) {
             // пропускаем ссылки
-            if ($object->isFile() === true || $object->isDir() === true) {
+            //if ($object->isFile() === true || $object->isDir() === true) {
                 $object->setInfoClass('\Wapinet\Bundle\Entity\ArchiveFileInfo');
                 $result[] = $object;
-            }
+            //}
         }
 
         return $result;

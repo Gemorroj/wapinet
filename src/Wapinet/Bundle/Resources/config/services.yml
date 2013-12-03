@@ -78,3 +78,6 @@ services:
         class: Wapinet\Bundle\Helper\Archiver\ArchiveZip
         arguments: [@service_container]
 
+    archive_rar:
+        class: Wapinet\Bundle\Helper\Archiver\ArchiveRar
+        arguments: [@service_container]
