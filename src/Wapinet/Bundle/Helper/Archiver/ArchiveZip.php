@@ -28,8 +28,18 @@ class ArchiveZip extends Archive
             throw new ArchiverException('Не удалось добавить комментарий к ZIP архиву');
         }
 
-        if (false === $zip->addGlob($directory . '/*', GLOB_NOSORT, array('add_path' => '/', 'remove_all_path' => true))) {
+        $cd = getcwd();
+        if (false === $cd) {
+            throw new ArchiverException('Не удалось получить рабочий каталог');
+        }
+        if (false === chdir($directory)) {
+            throw new ArchiverException('Не удалось изменить рабочий каталог');
+        }
+        if (false === $zip->addGlob('*', GLOB_NOSORT, array('remove_all_path' => true))) {
             throw new ArchiverException('Не удалось добавить файлы в ZIP архив');
+        }
+        if (false === chdir($cd)) {
+            throw new ArchiverException('Не удалось вернуть рабочий каталог');
         }
 
         if (false === $zip->close()) {
