@@ -32,6 +32,10 @@ class ArchiveRar extends Archive
             return false;
         }
 
+        if (false === @$rar->getEntries()) {
+            return false;
+        }
+
         if (false === $rar->close()) {
             throw new ArchiverException('Не удалось проверить RAR архив');
         }
