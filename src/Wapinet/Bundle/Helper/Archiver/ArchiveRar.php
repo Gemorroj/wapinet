@@ -27,7 +27,7 @@ class ArchiveRar extends Archive
      */
     public function isValid (File $file)
     {
-        $rar = \RarArchive::open($file->getPathname());
+        $rar = @\RarArchive::open($file->getPathname());
         if (false === $rar) {
             return false;
         }

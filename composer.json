@@ -35,6 +35,7 @@
         "james-heinrich/getid3": "dev-master",
         "vich/uploader-bundle": "dev-master",
         "gemorroj/phpwhois": "dev-master",
+        "gemorroj/archive7z": "dev-master",
         "pear-pear/Services_W3C_CSSValidator": "*",
         "pear-pear/Services_W3C_HTMLValidator": "*"
     },

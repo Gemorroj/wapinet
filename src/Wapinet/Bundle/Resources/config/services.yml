@@ -81,3 +81,7 @@ services:
     archive_rar:
         class: Wapinet\Bundle\Helper\Archiver\ArchiveRar
         arguments: [@service_container]
+
+    archive_7z:
+        class: Wapinet\Bundle\Helper\Archiver\Archive7z
+        arguments: [@service_container]

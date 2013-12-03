@@ -151,6 +151,12 @@ class ArchiverController extends Controller
             $archiveRar->extract($archiveDirectory, $file);
             return $archiveDirectory;
         }
+        $archive7z = $this->get('archive_7z');
+        if (true === $archive7z->isValid($file)) {
+            $archiveDirectory = $this->createArchiveDirectory();
+            $archive7z->extract($archiveDirectory, $file);
+            return $archiveDirectory;
+        }
 
         throw new ArchiverException('Неподдерживаемый тип архива');
     }
