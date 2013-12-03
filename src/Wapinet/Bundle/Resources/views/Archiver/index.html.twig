@@ -10,7 +10,6 @@
 {% block content %}
     <ul data-role="listview" data-inset="true">
         <li><a href="{{ path('archiver_create') }}">Создать архив</a></li>
-        <li><a href="#">Распаковать архив</a></li>
-        <li><a href="#">Переархивировать в ZIP</a></li>
+        <li><a href="{{ path('archiver_extract') }}">Распаковать архив</a></li>
     </ul>
 {% endblock %}

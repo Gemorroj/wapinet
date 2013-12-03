@@ -6,6 +6,10 @@ archiver_create:
     pattern: /create
     defaults: { _controller: WapinetBundle:Archiver:create }
 
+archiver_extract:
+    pattern: /extract
+    defaults: { _controller: WapinetBundle:Archiver:extract }
+
 archiver_edit:
     pattern: /edit/{archive}
     defaults: { _controller: WapinetBundle:Archiver:edit }

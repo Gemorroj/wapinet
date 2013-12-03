@@ -28,18 +28,19 @@ class ArchiveZip extends Archive
             throw new ArchiverException('Не удалось добавить комментарий к ZIP архиву');
         }
 
-        $cd = getcwd();
-        if (false === $cd) {
-            throw new ArchiverException('Не удалось получить рабочий каталог');
-        }
-        if (false === chdir($directory)) {
-            throw new ArchiverException('Не удалось изменить рабочий каталог');
-        }
-        if (false === $zip->addGlob('*', GLOB_NOSORT, array('remove_all_path' => true))) {
-            throw new ArchiverException('Не удалось добавить файлы в ZIP архив');
-        }
-        if (false === chdir($cd)) {
-            throw new ArchiverException('Не удалось вернуть рабочий каталог');
+        foreach ($this->getFiles($directory) as $entry) {
+            $dir = $entry->getPathInfo()->getArchiveName();
+            $dir = ('' != $dir ? $dir . '/' : '');
+
+            if ($entry->isDir() === true) {
+                if (false === $zip->addEmptyDir($dir . $entry->getBasename())) {
+                    throw new ArchiverException('Не удалось добавить директорию в ZIP архив');
+                }
+            } else {
+                if (false === $zip->addFile($entry->getPathname(), $dir . $entry->getBasename())) {
+                    throw new ArchiverException('Не удалось добавить файл в ZIP архив');
+                }
+            }
         }
 
         if (false === $zip->close()) {
@@ -47,5 +48,48 @@ class ArchiveZip extends Archive
         }
 
         return new File($tmpArchive);
+    }
+
+
+    /**
+     * @param File $file
+     * @return bool
+     * @throws ArchiverException
+     */
+    public function isValid (File $file)
+    {
+        $zip = new \ZipArchive;
+        $result = $zip->open($file->getPathname(), \ZIPARCHIVE::CHECKCONS);
+        if (true !== $result) {
+            return false;
+        }
+
+        if (false === $zip->close()) {
+            throw new ArchiverException('Не удалось создать ZIP архив');
+        }
+
+        return true;
+    }
+
+
+    /**
+     * @param string $directory
+     * @param File $file
+     * @throws ArchiverException
+     */
+    public function extract($directory, File $file)
+    {
+        $zip = new \ZipArchive;
+        $result = $zip->open($file->getPathname());
+        if (true !== $result) {
+            throw new ArchiverException('Не удалось открыть ZIP архив', $result);
+        }
+
+        if (true !== $zip->extractTo($directory)) {
+            throw new ArchiverException('Не удалось распаковать ZIP архив');
+        }
+        if (false === $zip->close()) {
+            throw new ArchiverException('Не удалось распаковать ZIP архив');
+        }
     }
 }

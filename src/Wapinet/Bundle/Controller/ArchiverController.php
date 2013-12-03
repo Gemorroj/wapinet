@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Router;
+use Wapinet\Bundle\Exception\ArchiverException;
 use Wapinet\Bundle\Form\Type\Archiver\AddType;
 
 class ArchiverController extends Controller
@@ -75,7 +76,7 @@ class ArchiverController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        $files = $this->getFiles($archiveDirectory);
+        $files = $this->get('archive_zip')->getFiles($archiveDirectory);
 
         return $this->render('WapinetBundle:Archiver:edit.html.twig', array(
             'archive' => $archive,
@@ -97,6 +98,55 @@ class ArchiverController extends Controller
         $file = $archiveZip->create($archiveDirectory);
 
         return new BinaryFileResponse($file);
+    }
+
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
+    public function extractAction(Request $request)
+    {
+        $form = $this->createForm(new AddType());
+
+        try {
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $data = $form->getData();
+
+                    $archiveDirectory = $this->extractArchive($data['file']);
+
+                    $archive = basename($archiveDirectory);
+                    return new RedirectResponse($this->get('router')->generate('archiver_edit', array('archive' => $archive), Router::ABSOLUTE_URL));
+                }
+            }
+        } catch (\Exception $e) {
+            $form->addError(new FormError($e->getMessage()));
+        }
+
+        return $this->render('WapinetBundle:Archiver:exctract.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+
+    /**
+     * @param File $file
+     * @throws ArchiverException
+     * @return string
+     */
+    protected function extractArchive(File $file)
+    {
+        $archiveZip = $this->get('archive_zip');
+        if (true === $archiveZip->isValid($file)) {
+            $archiveDirectory = $this->createArchiveDirectory();
+            $archiveZip->extract($archiveDirectory, $file);
+            return $archiveDirectory;
+        }
+
+        throw new ArchiverException('Неподдерживаемый тип архива');
     }
 
 
@@ -164,22 +214,4 @@ class ArchiverController extends Controller
     {
         return $file->move($directory, $file->getClientOriginalName());
     }
-
-    /**
-     * @param string $directory
-     * @return \SplFileInfo[]
-     */
-    protected function getFiles($directory)
-    {
-        $result = array();
-        /** @var \DirectoryIterator $file */
-        foreach (new \DirectoryIterator($directory) as $file) {
-            if ($file->isFile() === true) {
-                $result[] = $file->getFileInfo();
-            }
-        }
-
-        return $result;
-    }
-
 }

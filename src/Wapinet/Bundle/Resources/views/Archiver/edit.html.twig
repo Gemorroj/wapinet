@@ -19,7 +19,12 @@
 
     <ul data-role="listview" data-inset="true">
     {% for file in files %}
-        <li><a href="#">{{ file.basename }}</a>  <span class="ui-li-count">{{ file.size|wapinet_size }}</span></li>
+        <li>
+            <a href="#">{{ file.pathInfo.archiveName ? file.pathInfo.archiveName ~ ' / ' : '' }}{{ file.basename }} {# {{ file.dir ? '/' : '' }} #}</a>
+            {% if not file.dir %}
+                <span class="ui-li-count">{{ file.size|wapinet_size }}</span>
+            {% endif %}
+        </li>
     {% endfor %}
     </ul>
 {% endblock %}

@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Распаковать архив{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('utilities'), 'title': 'Полезные WEB приложения'},
+    2: {'uri': path('archiver_index'), 'title': 'Архиватор'}
+    })}}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form, {'action': path('archiver_extract'), 'method': 'POST'}) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}
