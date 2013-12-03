@@ -4,7 +4,14 @@ namespace Wapinet\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Router;
 use Wapinet\Bundle\Form\Type\Archiver\AddType;
 
 class ArchiverController extends Controller
@@ -15,6 +22,10 @@ class ArchiverController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
     public function createAction(Request $request)
     {
         $form = $this->createForm(new AddType());
@@ -25,8 +36,11 @@ class ArchiverController extends Controller
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
+                    $archiveDirectory = $this->createArchiveDirectory();
+                    $this->addFile($archiveDirectory, $data['file']);
 
-
+                    $archive = basename($archiveDirectory);
+                    return new RedirectResponse($this->get('router')->generate('archiver_edit', array('archive' => $archive), Router::ABSOLUTE_URL));
                 }
             }
         } catch (\Exception $e) {
@@ -34,8 +48,134 @@ class ArchiverController extends Controller
         }
 
         return $this->render('WapinetBundle:Archiver:create.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ));
+    }
+
+
+    /**
+     * @param Request $request
+     * @param string $archive
+     * @return Response
+     */
+    public function editAction(Request $request, $archive)
+    {
+        $form = $this->createForm(new AddType());
+        $archiveDirectory = $this->checkArchiveDirectory($archive);
+
+        try {
+            $form->handleRequest($request);
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $data = $form->getData();
+                    $this->addFile($archiveDirectory, $data['file']);
+                }
+            }
+        } catch (\Exception $e) {
+            $form->addError(new FormError($e->getMessage()));
+        }
+
+        $files = $this->getFiles($archiveDirectory);
+
+        return $this->render('WapinetBundle:Archiver:edit.html.twig', array(
+            'archive' => $archive,
+            'form' => $form->createView(),
+            'files' => $files,
+        ));
+    }
+
+
+    /**
+     * @param Request $request
+     * @param string $archive
+     * @return BinaryFileResponse
+     */
+    public function downloadAction(Request $request, $archive)
+    {
+        return new BinaryFileResponse('');
+    }
+
+
+    /**
+     * @return string
+     */
+    protected function generateArchiveName()
+    {
+        return uniqid('archive');
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTmpDir()
+    {
+        return $this->get('kernel')->getTmpArchiverDir();
+    }
+
+    /**
+     * @param string $archive
+     * @return string
+     * @throws FileException
+     */
+    protected function checkArchiveDirectory($archive)
+    {
+        $directory = $this->getTmpDir() . '/' . $archive;
+
+        if (false === is_dir($directory)) {
+            throw new FileException('Не удалось найти временную директорию');
+        }
+        if (false === is_readable($directory)) {
+            throw new FileException('Нет доступа на чтение временной директории');
+        }
+        if (false === is_writable($directory)) {
+            throw new FileException('Нет доступа на запись во временную директорию');
+        }
+
+        return $directory;
+    }
+
+
+    /**
+     * @return string
+     * @throws \RuntimeException
+     */
+    protected function createArchiveDirectory()
+    {
+        $archive = $this->generateArchiveName();
+        $directory = $this->getTmpDir() . '/' . $archive;
+        if (false === mkdir($directory, 0755)) {
+            throw new \RuntimeException('Не удалось создать временную директорию');
+        }
+
+        return $directory;
+    }
+
+    /**
+     * @param string $directory
+     * @param UploadedFile $file
+     * @throws FileException
+     * @return File
+     */
+    protected function addFile($directory, UploadedFile $file)
+    {
+        return $file->move($directory, $file->getClientOriginalName());
+    }
+
+    /**
+     * @param string $directory
+     * @return \SplFileInfo[]
+     */
+    protected function getFiles($directory)
+    {
+        $result = array();
+        /** @var \DirectoryIterator $file */
+        foreach (new \DirectoryIterator($directory) as $file) {
+            if ($file->isFile() === true) {
+                $result[] = $file->getFileInfo();
+            }
+        }
+
+        return $result;
     }
 
 }

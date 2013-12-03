@@ -17,7 +17,7 @@ class AddType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('file', 'file_url', array('required' => true, 'label' => false));
+        $builder->add('file', 'file_url', array('required' => true, 'label' => 'Файл добавляемый в архив'));
 
         $builder->add('submit', 'submit', array('label' => 'Добавить'));
     }

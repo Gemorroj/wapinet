@@ -1,0 +1,25 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Cоздать архив - {{ archive }}{% endblock %}
+{% block menu %}
+    {{wapinet_menu({
+    1: {'uri': path('utilities'), 'title': 'Полезные WEB приложения'},
+    2: {'uri': path('archiver_index'), 'title': 'Архиватор'}
+    })}}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form, {'action': path('archiver_edit', {'archive': archive}), 'method': 'POST'}) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    <p>
+        <a data-inline="true" data-role="button" data-icon="check" href="{{ path('archiver_download', {'archive': archive}) }}">Скачать ZIP архив</a>
+    </p>
+
+    <ul data-role="listview" data-inset="true">
+    {% for file in files %}
+        <li><a href="#">{{ file.basename }}</a>  <span class="ui-li-count">{{ file.size|wapinet_size }}</span></li>
+    {% endfor %}
+    </ul>
+{% endblock %}
