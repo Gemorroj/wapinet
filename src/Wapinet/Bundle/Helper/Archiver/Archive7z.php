@@ -28,7 +28,7 @@ class Archive7z extends Archive
      */
     public function isValid (File $file)
     {
-        $archive7z = new Base7zArchive($file->getPathname());
+        $archive7z = new Base7zArchive($file->getPathname(), $this->container->getParameter('wapinet_7z_path'));
 
         return $archive7z->isValid();
     }
