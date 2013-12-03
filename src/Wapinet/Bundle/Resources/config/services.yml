@@ -74,4 +74,7 @@ services:
         class: Wapinet\Bundle\Helper\Siza
         arguments: [@service_container]
 
+    archive_zip:
+        class: Wapinet\Bundle\Helper\Archiver\ArchiveZip
+        arguments: [@service_container]
 

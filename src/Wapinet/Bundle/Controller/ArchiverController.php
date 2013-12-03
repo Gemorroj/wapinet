@@ -86,13 +86,17 @@ class ArchiverController extends Controller
 
 
     /**
-     * @param Request $request
      * @param string $archive
      * @return BinaryFileResponse
      */
-    public function downloadAction(Request $request, $archive)
+    public function downloadAction($archive)
     {
-        return new BinaryFileResponse('');
+        $archiveDirectory = $this->checkArchiveDirectory($archive);
+
+        $archiveZip = $this->get('archive_zip');
+        $file = $archiveZip->create($archiveDirectory);
+
+        return new BinaryFileResponse($file);
     }
 
 
