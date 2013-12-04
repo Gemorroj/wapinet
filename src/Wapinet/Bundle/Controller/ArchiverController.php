@@ -5,6 +5,7 @@ namespace Wapinet\Bundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -103,6 +104,31 @@ class ArchiverController extends Controller
 
     /**
      * @param Request $request
+     * @param string $archive
+     * @param string $name
+     * @return BinaryFileResponse
+     * @throws AccessDeniedException
+     */
+    public function downloadFileAction(Request $request, $archive, $name)
+    {
+        $path = $request->get('path');
+        if (strpos($path, '../') !== false || strpos($path, '..\\')) {
+            throw new AccessDeniedException($path);
+        }
+
+        $archiveDirectory = $this->checkArchiveDirectory($archive);
+        $file = realpath($archiveDirectory . DIRECTORY_SEPARATOR . $path);
+
+        if (strpos($file, $archiveDirectory) !== 0 || is_file($file) !== true) {
+            throw new AccessDeniedException($path);
+        }
+
+        return new BinaryFileResponse($file);
+    }
+
+
+    /**
+     * @param Request $request
      * @return RedirectResponse|Response
      */
     public function extractAction(Request $request)
@@ -185,7 +211,7 @@ class ArchiverController extends Controller
      */
     protected function checkArchiveDirectory($archive)
     {
-        $directory = $this->getTmpDir() . '/' . $archive;
+        $directory = $this->getTmpDir() . DIRECTORY_SEPARATOR . $archive;
 
         if (false === is_dir($directory)) {
             throw new FileException('Не удалось найти временную директорию');
@@ -208,7 +234,7 @@ class ArchiverController extends Controller
     protected function createArchiveDirectory()
     {
         $archive = $this->generateArchiveName();
-        $directory = $this->getTmpDir() . '/' . $archive;
+        $directory = $this->getTmpDir() . DIRECTORY_SEPARATOR . $archive;
         if (false === mkdir($directory, 0755)) {
             throw new \RuntimeException('Не удалось создать временную директорию');
         }

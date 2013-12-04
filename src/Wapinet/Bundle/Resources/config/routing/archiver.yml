@@ -16,6 +16,12 @@ archiver_edit:
     requirements:
         archive: "archive[a-z0-9]+"
 
+archiver_download_file:
+    pattern: /download/{archive}/{name}
+    defaults: { _controller: WapinetBundle:Archiver:downloadFile }
+    requirements:
+        archive: "archive[a-z0-9]+"
+
 archiver_download:
     pattern: /download/{archive}.zip
     defaults: { _controller: WapinetBundle:Archiver:download }

@@ -44,7 +44,7 @@ class AppKernel extends Kernel
      */
     public function getTmpArchiverDir()
     {
-        return self::getTmpDir() . '/archiver';
+        return self::getTmpDir() . DIRECTORY_SEPARATOR . 'archiver';
     }
 
 
@@ -53,7 +53,7 @@ class AppKernel extends Kernel
      */
     public function getCacheWeatherDir()
     {
-        return $this->getCacheDir() . '/weather';
+        return $this->getCacheDir() . DIRECTORY_SEPARATOR . 'weather';
     }
 
 
@@ -64,7 +64,7 @@ class AppKernel extends Kernel
      */
     public static function getTmpDir()
     {
-        return __DIR__.'/tmp';
+        return __DIR__ . DIRECTORY_SEPARATOR . 'tmp';
     }
 
     /**
@@ -74,7 +74,7 @@ class AppKernel extends Kernel
      */
     public static function getWebDir()
     {
-        return __DIR__.'/../web';
+        return realpath(__DIR__.'/../web');
     }
 
 

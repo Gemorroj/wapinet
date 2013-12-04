@@ -17,14 +17,16 @@
         <a data-inline="true" data-role="button" data-icon="check" href="{{ path('archiver_download', {'archive': archive}) }}">Скачать ZIP архив</a>
     </p>
 
-    <ul data-role="listview" data-inset="true">
+    <ul data-role="listview" data-inset="true" data-divider-theme="d">
     {% for file in files %}
-        <li>
-            <a href="#">{{ file.pathInfo.archiveName ? file.pathInfo.archiveName ~ ' / ' : '' }}{{ file.basename }} {# {{ file.dir ? '/' : '' }} #}</a>
-            {% if not file.dir %}
-                <span class="ui-li-count">{{ file.size|wapinet_size }}</span>
+            {% if file.dir %}
+                <li data-role="list-divider">{{ file.pathInfo.archiveName ? file.pathInfo.archiveName ~ ' / ' : '' }}{{ file.basename }}</li>
+            {% else %}
+                <li>
+                    <a href="{{ path('archiver_download_file', {'archive': archive, 'name': file.basename, 'path': (file.pathInfo.archiveName ? file.pathInfo.archiveName ~ '/' : '') ~ file.basename }) }}">{{ file.pathInfo.archiveName ? file.pathInfo.archiveName ~ ' / ' : '' }}{{ file.basename }}</a>
+                    <span class="ui-li-count">{{ file.size|wapinet_size }}</span>
+                </li>
             {% endif %}
-        </li>
     {% endfor %}
     </ul>
 {% endblock %}
