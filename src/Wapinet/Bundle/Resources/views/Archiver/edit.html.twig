@@ -18,20 +18,10 @@
             });
 
             $("#delete-popup-do").on("click", function () {
-                $(this).attr('href', '{{ path('archiver_delete_file', {'archive': archive, 'name': 'file'}) }}?path=' + window.encodeURIComponent(deletePath));
-                $.ajax({
-                    url: '{{ path('archiver_delete_file', {'archive': archive, 'name': 'file'}) }}',
-                    data: {'path': deletePath},
-                    success: function () {
-                        window.location.assign(window.location.href);
-                    },
-                    error: function () {
-                        var messagePopup = $("#message-popup");
-                        messagePopup.find('p').text('Ошибка');
-                        messagePopup.popup("open");
-
-                    }
-                });
+                $.get('{{ path('archiver_delete_file', {'archive': archive, 'name': 'file'}) }}?path=' + deletePath, function () {
+                    window.location.assign(window.location.href);
+                }
+                );
             });
         });
     </script>
@@ -54,14 +44,14 @@
         {% if file.dir %}
             <li class="ui-bar-d">
                 <a href="#">{{ pathView }}</a>
-                <a data-path="{{ path }}" href="#delete-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
+                <a data-path="{{ path|url_encode }}" href="#delete-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
             </li>
         {% else %}
 
             <li>
                 <a href="{{ path('archiver_download_file', {'archive': archive, 'name': file.basename, 'path': path }) }}">{{ pathView }}</a>
                 <span class="ui-li-count">{{ file.size|wapinet_size }}</span>
-                <a data-path="{{ path }}" href="#delete-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
+                <a data-path="{{ path|url_encode }}" href="#delete-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
             </li>
         {% endif %}
     {% endfor %}

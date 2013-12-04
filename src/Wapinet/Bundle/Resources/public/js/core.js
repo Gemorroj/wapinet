@@ -84,5 +84,14 @@ $(document)/*.bind("mobileinit", function () {
 $.ajaxSetup({
     "complete": function () {
         $("#page").trigger("pagecreate");
+    },
+    "error": function () {
+        $.mobile.loading("show", {
+            text: "Ошибка",
+            textVisible: true
+        });
+        setTimeout(function () {
+            $.mobile.loading("hide");
+        }, 3000);
     }
 });

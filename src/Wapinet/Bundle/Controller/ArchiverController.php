@@ -3,7 +3,6 @@
 namespace Wapinet\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
@@ -132,8 +131,7 @@ class ArchiverController extends Controller
 
         $file = $this->checkFile($archiveDirectory, $path, true);
 
-        $fs = new Filesystem();
-        $fs->remove($file);
+        $this->get('filesystem')->remove($file);
 
         return new RedirectResponse($this->get('router')->generate('archiver_edit', array('archive' => $archive), Router::ABSOLUTE_URL));
     }
@@ -144,7 +142,7 @@ class ArchiverController extends Controller
      * @param string $path
      * @param bool $allowDirectory
      * @throws AccessDeniedException
-     * @return File
+     * @return string
      */
     protected function checkFile($archiveDirectory, $path, $allowDirectory = false)
     {
@@ -162,7 +160,7 @@ class ArchiverController extends Controller
             throw new AccessDeniedException($path);
         }
 
-        return new File($file);
+        return $file;
     }
 
     /**
@@ -209,12 +207,12 @@ class ArchiverController extends Controller
             $archiveZip->extract($archiveDirectory, $file);
             return $archiveDirectory;
         }
-        $archiveRar = $this->get('archive_rar');
-        if (true === $archiveRar->isValid($file)) {
-            $archiveDirectory = $this->createArchiveDirectory();
-            $archiveRar->extract($archiveDirectory, $file);
-            return $archiveDirectory;
-        }
+        //$archiveRar = $this->get('archive_rar');
+        //if (true === $archiveRar->isValid($file)) {
+        //    $archiveDirectory = $this->createArchiveDirectory();
+        //    $archiveRar->extract($archiveDirectory, $file);
+        //    return $archiveDirectory;
+        //}
         $archive7z = $this->get('archive_7z');
         if (true === $archive7z->isValid($file)) {
             $archiveDirectory = $this->createArchiveDirectory();
