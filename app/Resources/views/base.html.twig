@@ -60,13 +60,13 @@
             <div data-role="panel" id="menu">
                 <ul data-role="listview" data-icon="false" data-divider-theme="a" data-inset="false">
                     {% if is_granted('ROLE_USER') %}
-                        <li data-role="list-divider">Сообщения</li>
+                        <li data-role="list-divider" class="menu-head">Сообщения</li>
                         <li><a href="{{ url('fos_message_thread_new') }}">Написать</a></li>
                         <li><a href="{{ url('wapinet_message_inbox') }}">Входящие</a> <span class="ui-li-count">{{ fos_message_nb_unread() }}</span></li>
                         <li><a href="{{ url('wapinet_message_sent') }}">Исходящие</a></li>
                         <li><a href="{{ url('wapinet_message_deleted') }}">Корзина</a></li>
                     {% endif %}
-                    <li data-role="list-divider">Закладки</li>
+                    <li data-role="list-divider" class="menu-head">Закладки</li>
                     <li><a href="#">Форум</a></li>
                     <li><a href="#">Тест (добавить в профиле управление)</a></li>
                     <li><a href="#">Тест2 (по умолчанию подабавлять кое-каких закладок)</a></li>

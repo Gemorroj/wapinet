@@ -33,3 +33,7 @@ code.html-validator strong {
 p.long-description {
     white-space: pre-wrap;
 }
+li.menu-head {
+    /* 40 - 7 - 7 + 1*/
+    height: 27px;
+}

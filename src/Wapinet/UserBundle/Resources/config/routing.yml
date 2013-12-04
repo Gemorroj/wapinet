@@ -1,5 +1,10 @@
 wapinet_user_profile:
-    pattern:  /user/{username}
+    pattern:  /profile/user/{username}
     defaults: { _controller: WapinetUserBundle:Profile:showUser, username: null }
     requirements:
         _method: GET
+
+wapinet_user_menu_edit:
+    pattern:  /menu/edit
+    defaults: { _controller: WapinetUserBundle:Menu:edit }
+

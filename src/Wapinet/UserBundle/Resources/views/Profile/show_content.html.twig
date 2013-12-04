@@ -42,5 +42,6 @@
 </div>
 
 {% if app.user.id == user.id %}
-    <a data-role="button" data-inline="true" href="{{ path('fos_user_profile_edit') }}">Редактировать профиль</a>
+    <a data-role="button" data-inline="true" href="{{ path('fos_user_profile_edit') }}">Редактировать профиль</a><br />
+    <a data-role="button" data-inline="true" href="{{ path('wapinet_user_menu_edit') }}">Редактировать меню</a>
 {% endif %}

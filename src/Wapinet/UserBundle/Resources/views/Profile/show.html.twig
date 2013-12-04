@@ -1,6 +1,6 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
-{% block title %}Просмотр профиля{% endblock %}
+{% block title %}Просмотр профиля - {{ user.username }}{% endblock %}
 {% block menu %}
     {{ wapinet_menu() }}
 {% endblock %}
