@@ -17,7 +17,7 @@ class Online extends \Twig_Extension
      */
     protected $container;
 
-    public function __construct(EntityManager $em, ContainerInterface $container)
+    public function __construct(ContainerInterface $container, EntityManager $em)
     {
         $this->em = $em;
         $this->container = $container;

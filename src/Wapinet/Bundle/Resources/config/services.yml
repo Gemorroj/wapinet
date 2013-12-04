@@ -11,7 +11,7 @@ services:
 
     wapinet.online.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Online
-        arguments: [@doctrine.orm.entity_manager, @service_container]
+        arguments: [ @service_container, @doctrine.orm.entity_manager]
         tags:
             - {name: twig.extension, alias: wapinet_online}
 
@@ -25,6 +25,12 @@ services:
         class: Wapinet\Bundle\Twig\Extension\Base64
         tags:
             - {name: twig.extension, alias: base64}
+
+    wapinet.forum.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\Forum
+        arguments: [@service_container, @doctrine.orm.entity_manager]
+        tags:
+            - {name: twig.extension, alias: wapinet_forum}
 
     curl:
         class: Wapinet\Bundle\Helper\Curl
