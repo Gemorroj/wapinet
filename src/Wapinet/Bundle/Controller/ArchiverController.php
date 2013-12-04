@@ -3,6 +3,7 @@
 namespace Wapinet\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
@@ -101,7 +102,6 @@ class ArchiverController extends Controller
         return new BinaryFileResponse($file);
     }
 
-
     /**
      * @param Request $request
      * @param string $archive
@@ -112,20 +112,58 @@ class ArchiverController extends Controller
     public function downloadFileAction(Request $request, $archive, $name)
     {
         $path = $request->get('path');
-        if (strpos($path, '../') !== false || strpos($path, '..\\')) {
-            throw new AccessDeniedException($path);
-        }
-
         $archiveDirectory = $this->checkArchiveDirectory($archive);
-        $file = realpath($archiveDirectory . DIRECTORY_SEPARATOR . $path);
 
-        if (strpos($file, $archiveDirectory) !== 0 || is_file($file) !== true) {
-            throw new AccessDeniedException($path);
-        }
+        $file = $this->checkFile($archiveDirectory, $path, false);
 
         return new BinaryFileResponse($file);
     }
 
+    /**
+     * @param Request $request
+     * @param string $archive
+     * @param string $name
+     * @return RedirectResponse
+     */
+    public function deleteFileAction(Request $request, $archive, $name)
+    {
+        $path = $request->get('path');
+        $archiveDirectory = $this->checkArchiveDirectory($archive);
+
+        $file = $this->checkFile($archiveDirectory, $path, true);
+
+        $fs = new Filesystem();
+        $fs->remove($file);
+
+        return new RedirectResponse($this->get('router')->generate('archiver_edit', array('archive' => $archive), Router::ABSOLUTE_URL));
+    }
+
+
+    /**
+     * @param string $archiveDirectory
+     * @param string $path
+     * @param bool $allowDirectory
+     * @throws AccessDeniedException
+     * @return File
+     */
+    protected function checkFile($archiveDirectory, $path, $allowDirectory = false)
+    {
+        if (strpos($path, '../') !== false || strpos($path, '..\\')) {
+            throw new AccessDeniedException($path);
+        }
+
+        $file = realpath($archiveDirectory . DIRECTORY_SEPARATOR . $path);
+
+        if (strpos($file, $archiveDirectory) !== 0) {
+            throw new AccessDeniedException($path);
+        }
+
+        if (true !== $allowDirectory && true === is_dir($allowDirectory)) {
+            throw new AccessDeniedException($path);
+        }
+
+        return new File($file);
+    }
 
     /**
      * @param Request $request
