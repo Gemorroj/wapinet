@@ -36,7 +36,7 @@ abstract class Archive
     public function getFiles($directory)
     {
         $archiveDirectory = basename($directory);
-        \Wapinet\Bundle\Entity\ArchiveFileInfo::setArchiveDirectory($archiveDirectory);
+        ArchiveFileInfo::setArchiveDirectory($archiveDirectory);
 
         /** @var \SplFileInfo[] $objects */
         $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory, \RecursiveDirectoryIterator::SKIP_DOTS), \RecursiveIteratorIterator::SELF_FIRST);
@@ -56,7 +56,7 @@ abstract class Archive
         $result = array();
         $tmp = array();
         foreach ($objects as $name => $object) {
-            $object->setInfoClass('\Wapinet\Bundle\Entity\ArchiveFileInfo');
+            $object->setInfoClass('Wapinet\Bundle\Helper\Archiver\ArchiveFileInfo');
 
             if ('' === $object->getPathInfo()->getArchiveName() && false === $object->isDir()) {
                 $result[] = $object;

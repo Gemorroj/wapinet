@@ -1,6 +1,6 @@
 <?php
 
-namespace Wapinet\Bundle\Entity;
+namespace Wapinet\Bundle\Helper\Archiver;
 
 /**
  * ArchiveFileInfo

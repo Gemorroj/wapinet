@@ -31,6 +31,7 @@ twig:
         wapinet_proxy_url: "%wapinet_proxy_url%"
         wapinet_ftp_url: "%wapinet_ftp_url%"
         wapinet_forum_url: "%wapinet_forum_url%"
+        wapinet_sea_url: "%wapinet_sea_url%"
         wapinet_govnowap_url: "%wapinet_govnowap_url%"
 
 # Assetic Configuration
