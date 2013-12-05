@@ -15,11 +15,11 @@ services:
         tags:
             - {name: twig.extension, alias: wapinet_online}
 
-    wapinet.menu.twig_extension:
-        class: Wapinet\Bundle\Twig\Extension\Menu
+    wapinet.breadcrumbs.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\Breadcrumbs
         arguments: [@service_container]
         tags:
-            - {name: twig.extension, alias: wapinet_menu}
+            - {name: twig.extension, alias: wapinet_breadcrumbs}
 
     base64.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Base64

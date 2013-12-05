@@ -4,7 +4,7 @@ namespace Wapinet\Bundle\Twig\Extension;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class Menu extends \Twig_Extension
+class Breadcrumbs extends \Twig_Extension
 {
     /**
      * @var ContainerInterface
@@ -24,7 +24,7 @@ class Menu extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('wapinet_menu', array($this, 'getMenu'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('wapinet_breadcrumbs', array($this, 'getBreadcrumbs'), array('is_safe' => array('html'))),
         );
     }
 
@@ -32,7 +32,7 @@ class Menu extends \Twig_Extension
      * @param array $options
      * @return string
      */
-    public function getMenu(array $options = array())
+    public function getBreadcrumbs(array $options = array())
     {
         $out = '';
 
@@ -60,6 +60,6 @@ class Menu extends \Twig_Extension
      */
     public function getName()
     {
-        return 'wapinet_menu';
+        return 'wapinet_breadcrumbs';
     }
 }

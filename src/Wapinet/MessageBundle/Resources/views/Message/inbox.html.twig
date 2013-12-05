@@ -1,8 +1,8 @@
 {% extends 'WapinetMessageBundle::layout.html.twig' %}
 
 {% block title %}Входящие{% endblock %}
-{% block menu %}
-    {{ wapinet_menu({
+{% block breadcrumbs %}
+    {{ wapinet_breadcrumbs({
         1: {'uri': path('fos_message_thread_new'), 'title': 'Новое сообщение'}
     }) }}
 {% endblock %}

@@ -1,8 +1,8 @@
 {% extends 'WapinetMessageBundle::layout.html.twig' %}
 
 {% block title %}{{ thread.subject }}{% endblock %}
-{% block menu %}
-    {{ wapinet_menu({
+{% block breadcrumbs %}
+    {{ wapinet_breadcrumbs({
         1: {'uri': path('wapinet_message_inbox'), 'title': 'Входящие'}
     }) }}
 {% endblock %}
