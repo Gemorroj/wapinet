@@ -43,7 +43,7 @@ class Panel extends \Twig_Extension
             $panel = new UserPanel();
         }
 
-        return $panel->getPanel();
+        return $panel->getIterator();
     }
 
 

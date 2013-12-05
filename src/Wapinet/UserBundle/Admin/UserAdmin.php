@@ -35,7 +35,7 @@ class UserAdmin extends Admin
             ->add('birthday', null, array('label' => 'День рождения'))
             ->add('subscribeComments', null, array('label' => 'Рассылка комментариев'))
             ->add('subscribeMessages', null, array('label' => 'Рассылка сообщений'))
-            //->add('panel', null, array('label' => 'Меню'))
+            ->add('panel', null, array('label' => 'Меню'))
         ;
     }
 
@@ -56,13 +56,22 @@ class UserAdmin extends Admin
             ->add('plainPassword', 'text', array('label' => 'Пароль', 'required' => false))
             ->add('username', null, array('label' => 'Логин'))
             ->add('email', null, array('label' => 'Email'))
-            ->add('avatar', 'file_url', array('label' => 'Аватар', 'required' => false))
             ->add('roles', 'choice', array('choices' => $roles, 'multiple' => true))
             ->add('sex', 'choice', array('label' => 'Пол', 'required' => false, 'choices' => User::getSexChoices()))
             ->add('birthday', 'date', array('widget' => 'single_text', 'label' => 'День рождения', 'required' => false))
             ->add('subscribeComments', null, array('label' => 'Рассылка комментариев'))
             ->add('subscribeMessages', null, array('label' => 'Рассылка сообщений'))
-            //->add('panel', null, array('label' => 'Меню'))
+            ->with('Аватар')
+            ->add('avatar', 'file_url', array('label' => false, 'required' => false))
+            ->end()
+            ->with('Меню')
+            ->add('panel', 'sonata_type_admin', array(
+                'label' => false,
+                'required' => true,
+                'delete' => false,
+                'btn_add' => false,
+            ))
+            ->end()
         ;
     }
 

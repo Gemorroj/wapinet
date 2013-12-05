@@ -4,7 +4,7 @@ namespace Wapinet\UserBundle\Entity;
 /**
  * Panel
  */
-class Panel
+class Panel extends \ArrayObject
 {
     const ROUTE_FORUM = 'forum_index';
     const ROUTE_FILES = 'files_index';
@@ -34,9 +34,9 @@ class Panel
     /**
      * @return array
      */
-    public function getPanel()
+    public function getIterator()
     {
-        return array(
+        return new \ArrayIterator(array(
             self::ROUTE_FORUM => array(
                 'route' => self::ROUTE_FORUM,
                 'name' => 'Форум',
@@ -72,7 +72,7 @@ class Panel
                 'name' => 'WEB мастерская',
                 'enabled' => $this->getProgramming(),
             ),
-        );
+        ));
     }
 
     /**
@@ -206,5 +206,20 @@ class Panel
     public function getFiles()
     {
         return $this->files;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        $result = '';
+        foreach ($this->getIterator() as $item) {
+            if ($item['enabled']) {
+                $result .= $item['name'] . ', ';
+            }
+        }
+
+        return rtrim($result, ', ');
     }
 }
