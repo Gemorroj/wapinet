@@ -4,7 +4,7 @@ wapinet_user_profile:
     requirements:
         _method: GET
 
-wapinet_user_menu_edit:
-    pattern:  /menu/edit
-    defaults: { _controller: WapinetUserBundle:Menu:edit }
+wapinet_user_panel_edit:
+    pattern:  /panel/edit
+    defaults: { _controller: WapinetUserBundle:Panel:edit }
 

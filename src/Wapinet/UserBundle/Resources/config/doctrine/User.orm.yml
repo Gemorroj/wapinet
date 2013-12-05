@@ -40,10 +40,10 @@ Wapinet\UserBundle\Entity\User:
         preUpdate: [ setUpdatedAtValue ]
 
     oneToOne:
-        menu:
-            targetEntity: Wapinet\UserBundle\Entity\Menu
+        panel:
+            targetEntity: Wapinet\UserBundle\Entity\Panel
             joinColumn:
-                name: menu_id
+                name: panel_id
                 referencedColumnName: id
                 onDelete: CASCADE
                 nullable: false

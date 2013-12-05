@@ -2,9 +2,9 @@
 namespace Wapinet\UserBundle\Entity;
 
 /**
- * Menu
+ * Panel
  */
-class Menu
+class Panel
 {
     const ROUTE_FORUM = 'forum_index';
     const ROUTE_FILES = 'files_index';
@@ -33,7 +33,7 @@ class Menu
 
     /**
      * @param boolean $forum
-     * @return Menu
+     * @return Panel
      */
     public function setForum($forum)
     {
@@ -52,7 +52,7 @@ class Menu
 
     /**
      * @param boolean $downloads
-     * @return Menu
+     * @return Panel
      */
     public function setDownloads($downloads)
     {
@@ -71,7 +71,7 @@ class Menu
 
     /**
      * @param boolean $programming
-     * @return Menu
+     * @return Panel
      */
     public function setProgramming($programming)
     {
@@ -90,7 +90,7 @@ class Menu
 
     /**
      * @param boolean $proxy
-     * @return Menu
+     * @return Panel
      */
     public function setProxy($proxy)
     {
@@ -109,7 +109,7 @@ class Menu
 
     /**
      * @param boolean $utilities
-     * @return Menu
+     * @return Panel
      */
     public function setUtilities($utilities)
     {
@@ -128,7 +128,7 @@ class Menu
 
     /**
      * @param boolean $archiver
-     * @return Menu
+     * @return Panel
      */
     public function setArchiver($archiver)
     {
@@ -147,7 +147,7 @@ class Menu
 
     /**
      * @param boolean $files
-     * @return Menu
+     * @return Panel
      */
     public function setFiles($files)
     {

@@ -62,34 +62,34 @@ class User extends BaseUser implements ParticipantInterface
     protected $subscribeMessages = true;
 
     /**
-     * @var Menu
+     * @var Panel
      */
-    protected $menu;
+    protected $panel;
 
 
     public function __construct()
     {
         parent::__construct();
-        $this->menu = new Menu();
+        $this->menu = new Panel();
     }
 
     /**
-     * @param Menu $menu
+     * @param Panel $panel
      * @return User
      */
-    public function setMenu(Menu $menu)
+    public function setPanel(Panel $panel)
     {
-        $this->menu = $menu;
+        $this->panel = $panel;
 
         return $this;
     }
 
     /**
-     * @return Menu
+     * @return Panel
      */
-    public function getMenu()
+    public function getPanel()
     {
-        return $this->menu;
+        return $this->panel;
     }
 
 

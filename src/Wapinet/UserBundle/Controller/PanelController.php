@@ -5,11 +5,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Wapinet\UserBundle\Entity\Menu;
+use Wapinet\UserBundle\Entity\Panel;
 use Wapinet\UserBundle\Entity\User;
-use Wapinet\UserBundle\Form\Type\MenuType;
+use Wapinet\UserBundle\Form\Type\PanelType;
 
-class MenuController extends Controller
+class PanelController extends Controller
 {
     public function editAction(Request $request)
     {
@@ -24,15 +24,15 @@ class MenuController extends Controller
             throw new AccessDeniedException('Вы должны быть авторизованы.');
         }
 
-        $form = $this->createForm(new MenuType());
-        $form->setData($user->getMenu());
+        $form = $this->createForm(new PanelType());
+        $form->setData($user->getPanel());
 
         try {
             $form->handleRequest($request);
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
-                    /** @var Menu $data */
+                    /** @var Panel $data */
                     $data = $form->getData();
 
                     $em = $this->getDoctrine()->getManager();
@@ -44,7 +44,7 @@ class MenuController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetUserBundle:Menu:edit.html.twig', array(
+        return $this->render('WapinetUserBundle:Panel:edit.html.twig', array(
             'form' => $form->createView(),
         ));
     }

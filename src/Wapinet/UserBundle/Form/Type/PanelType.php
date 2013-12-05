@@ -6,9 +6,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Menu
+ * Panel
  */
-class MenuType extends AbstractType
+class PanelType extends AbstractType
 {
     /**
      * @var FormBuilderInterface $builder
@@ -32,7 +32,7 @@ class MenuType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Wapinet\UserBundle\Entity\Menu',
+            'data_class' => 'Wapinet\UserBundle\Entity\Panel',
         ));
     }
 
@@ -43,6 +43,6 @@ class MenuType extends AbstractType
      */
     public function getName()
     {
-        return 'menu';
+        return 'panel';
     }
 }

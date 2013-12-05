@@ -57,7 +57,7 @@
 <div data-role="page" id="page" data-title="{{ title }}">
     {% block page %}
         {% block panel %}
-            <div data-role="panel" id="menu">
+            <div data-role="panel" id="panel">
                 <ul data-role="listview" data-icon="false" data-divider-theme="a" data-inset="false">
                     {% if is_granted('ROLE_USER') %}
                         <li data-role="list-divider" class="menu-head">Сообщения</li>
@@ -78,7 +78,7 @@
             {% block header %}
                 <div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
                     <a href="javascript:history.back();" data-role="button" data-icon="back">Назад</a>
-                    <a href="#menu" data-role="button" data-icon="bars">Меню</a>
+                    <a href="#panel" data-role="button" data-icon="bars">Меню</a>
                 </div>
                 <h2>{{ title }}</h2>
                 {% if app.user %}
