@@ -4,14 +4,14 @@
 
 {% block content %}
     <ul data-role="listview" data-inset="true">
-        <li><a href="#">Файлообменник (библиотека, скрипты, софт) <span class="ui-li-count">???</span></a></li>
+        <li><a href="{{ path('files_index') }}">Файлообменник (библиотека, скрипты, софт) <span class="ui-li-count">???</span></a></li>
         <li><a href="{{ path('downloads') }}">Загрузки, развлечения</a></li>
         <li><a href="{{ path('utilities') }}">Полезные WEB приложения</a></li>
         <li><a href="{{ path('programming') }}">WEB мастерская</a></li>
-        <li><a href="{{ wapinet_proxy_url }}" rel="external">Анонимайзер</a></li>
+        <li><a href="{{ path('proxy_index') }}">Анонимайзер</a></li>
         <li><a href="{{ path('archiver_index') }}">Архиватор</a></li>
-        <li><a href="{{ wapinet_forum_url }}" rel="external">Форум</a> <span class="ui-li-count">{{ wapinet_forum_topics_count() }} | {{ wapinet_forum_posts_count() }}</span></li>
+        <li><a href="{{ path('forum_index') }}">Форум</a> <span class="ui-li-count">{{ wapinet_forum_topics_count() }} | {{ wapinet_forum_posts_count() }}</span></li>
         <li><a href="{{ path('wapinet_news') }}">Новости</a> <span class="ui-li-count">{{ wapinet_news_last_date()|wapinet_datetime|default('Новостей нет') }}</span></li>
-        <li><a href="{{ wapinet_govnowap_url }}" rel="external">Говновап</a></li>
+        <li><a href="{{ path('govnowap_index') }}">Говновап</a></li>
     </ul>
 {% endblock %}

@@ -126,4 +126,56 @@ archiver:
     resource: "@WapinetBundle/Resources/config/routing/archiver.yml"
     prefix:   /archiver
 
+files:
+    resource: "@WapinetBundle/Resources/config/routing/files.yml"
+    prefix:   /files
 
+
+proxy_index:
+    pattern: /proxy
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: %wapinet_proxy_url%
+        permanent: true
+
+ftp_index:
+    pattern: /ftp
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: %wapinet_ftp_url%
+        permanent: true
+
+forum_index:
+    pattern: /forum
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: %wapinet_forum_url%
+        permanent: true
+
+govnowap_index:
+    pattern: /govnowap
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: %wapinet_govnowap_url%
+        permanent: true
+
+sea_index:
+    pattern: /sea
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: %wapinet_sea_url%
+        permanent: true
+
+sea_readme:
+    pattern: /sea/readme
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: %wapinet_sea_url%/readme.txt
+        permanent: true
+
+sea_changelog:
+    pattern: /sea/changelog
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: %wapinet_sea_url%/changelog.txt
+        permanent: true

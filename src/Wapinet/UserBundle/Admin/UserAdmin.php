@@ -35,6 +35,7 @@ class UserAdmin extends Admin
             ->add('birthday', null, array('label' => 'День рождения'))
             ->add('subscribeComments', null, array('label' => 'Рассылка комментариев'))
             ->add('subscribeMessages', null, array('label' => 'Рассылка сообщений'))
+            //->add('menu', null, array('label' => 'Меню'))
         ;
     }
 
@@ -61,6 +62,7 @@ class UserAdmin extends Admin
             ->add('birthday', 'date', array('widget' => 'single_text', 'label' => 'День рождения', 'required' => false))
             ->add('subscribeComments', null, array('label' => 'Рассылка комментариев'))
             ->add('subscribeMessages', null, array('label' => 'Рассылка сообщений'))
+            //->add('menu', null, array('label' => 'Меню'))
         ;
     }
 

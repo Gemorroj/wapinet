@@ -61,27 +61,73 @@ class User extends BaseUser implements ParticipantInterface
      */
     protected $subscribeMessages = true;
 
+    /**
+     * @var Menu
+     */
+    protected $menu;
 
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->menu = new Menu();
+    }
+
+    /**
+     * @param Menu $menu
+     * @return User
+     */
+    public function setMenu(Menu $menu)
+    {
+        $this->menu = $menu;
+
+        return $this;
+    }
+
+    /**
+     * @return Menu
+     */
+    public function getMenu()
+    {
+        return $this->menu;
+    }
+
+
+    /**
+     * @return bool
+     */
     public function getSubscribeComments()
     {
         return $this->subscribeComments;
     }
 
+    /**
+     * @param bool $subscribeComments
+     * @return User
+     */
     public function setSubscribeComments($subscribeComments)
     {
         $this->subscribeComments = (bool)$subscribeComments;
+
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function getSubscribeMessages()
     {
         return $this->subscribeMessages;
     }
 
+    /**
+     * @param bool $subscribeMessages
+     * @return User
+     */
     public function setSubscribeMessages($subscribeMessages)
     {
         $this->subscribeMessages = (bool)$subscribeMessages;
+
         return $this;
     }
 

@@ -38,3 +38,12 @@ Wapinet\UserBundle\Entity\User:
     lifecycleCallbacks:
         prePersist: [ setCreatedAtValue ]
         preUpdate: [ setUpdatedAtValue ]
+
+    oneToOne:
+        menu:
+            targetEntity: Wapinet\UserBundle\Entity\Menu
+            joinColumn:
+                name: menu_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false

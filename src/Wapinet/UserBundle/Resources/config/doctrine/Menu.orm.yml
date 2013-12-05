@@ -1,0 +1,30 @@
+Wapinet\UserBundle\Entity\Menu:
+    type:  entity
+    table: fos_user_menu
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        forum:
+            type: boolean
+            nullable: false
+        files:
+            type: boolean
+            nullable: false
+        archiver:
+            type: boolean
+            nullable: false
+        proxy:
+            type: boolean
+            nullable: false
+        downloads:
+            type: boolean
+            nullable: false
+        utilities:
+            type: boolean
+            nullable: false
+        programming:
+            type: boolean
+            nullable: false
