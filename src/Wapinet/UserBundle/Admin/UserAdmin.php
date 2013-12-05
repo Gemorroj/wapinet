@@ -62,7 +62,7 @@ class UserAdmin extends Admin
             ->add('subscribeComments', null, array('label' => 'Рассылка комментариев'))
             ->add('subscribeMessages', null, array('label' => 'Рассылка сообщений'))
             ->with('Аватар')
-            ->add('avatar', 'file_url', array('label' => false, 'required' => false))
+            ->add('avatar', 'file_url', array('delete_button' => true, 'label' => false, 'required' => false, 'attr' => array('accept' => 'image/*')))
             ->end()
             ->with('Меню')
             ->add('panel', 'sonata_type_admin', array(
