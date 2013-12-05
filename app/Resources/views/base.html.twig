@@ -67,9 +67,11 @@
                         <li><a href="{{ url('wapinet_message_deleted') }}">Корзина</a></li>
                     {% endif %}
                     <li data-role="list-divider" class="menu-head">Закладки</li>
-                    <li><a href="#">Форум</a></li>
-                    <li><a href="#">Тест (добавить в профиле управление)</a></li>
-                    <li><a href="#">Тест2 (по умолчанию подабавлять кое-каких закладок)</a></li>
+                    {% for item in wapinet_panel() %}
+                        {% if item.enabled %}
+                            <li><a href="{{ path(item.route) }}">{{ item.name }}</a></li>
+                        {% endif %}
+                    {% endfor %}
                 </ul>
             </div>
         {% endblock %}

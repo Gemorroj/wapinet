@@ -13,13 +13,8 @@ class PanelController extends Controller
 {
     public function editAction(Request $request)
     {
-        $token = $this->container->get('security.context')->getToken();
-        if (null === $token) {
-            throw new AccessDeniedException('Вы должны быть авторизованы.');
-        }
         /** @var User $user */
-        $user = $token->getUser();
-
+        $user = $this->container->get('security.context')->getToken()->getUser();
         if (!is_object($user) || !$user instanceof User) {
             throw new AccessDeniedException('Вы должны быть авторизованы.');
         }

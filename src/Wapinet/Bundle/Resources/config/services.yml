@@ -21,6 +21,12 @@ services:
         tags:
             - {name: twig.extension, alias: wapinet_breadcrumbs}
 
+    wapinet.panel.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\Panel
+        arguments: [@service_container]
+        tags:
+            - {name: twig.extension, alias: wapinet_panel}
+
     base64.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Base64
         tags:

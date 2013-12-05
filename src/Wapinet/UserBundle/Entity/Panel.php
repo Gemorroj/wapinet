@@ -10,9 +10,9 @@ class Panel
     const ROUTE_FILES = 'files_index';
     const ROUTE_ARCHIVER = 'archiver_index';
     const ROUTE_PROXY = 'proxy_index';
-    const ROUTE_DOWNLOADS = 'downloads_index';
-    const ROUTE_UTILITIES = 'utilities_index';
-    const ROUTE_PROGRAMMING = 'programming_index';
+    const ROUTE_DOWNLOADS = 'downloads';
+    const ROUTE_UTILITIES = 'utilities';
+    const ROUTE_PROGRAMMING = 'programming';
 
     protected $id;
     protected $forum = true;
@@ -29,6 +29,50 @@ class Panel
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPanel()
+    {
+        return array(
+            self::ROUTE_FORUM => array(
+                'route' => self::ROUTE_FORUM,
+                'name' => 'Форум',
+                'enabled' => $this->getForum(),
+            ),
+            self::ROUTE_FILES => array(
+                'route' => self::ROUTE_FILES,
+                'name' => 'Файлообменник',
+                'enabled' => $this->getFiles(),
+            ),
+            self::ROUTE_ARCHIVER => array(
+                'route' => self::ROUTE_ARCHIVER,
+                'name' => 'Архиватор',
+                'enabled' => $this->getArchiver(),
+            ),
+            self::ROUTE_PROXY => array(
+                'route' => self::ROUTE_PROXY,
+                'name' => 'Анонимайзер',
+                'enabled' => $this->getProxy(),
+            ),
+            self::ROUTE_DOWNLOADS => array(
+                'route' => self::ROUTE_DOWNLOADS,
+                'name' => 'Загрузки, развлечения',
+                'enabled' => $this->getDownloads(),
+            ),
+            self::ROUTE_UTILITIES => array(
+                'route' => self::ROUTE_UTILITIES,
+                'name' => 'Полезные WEB приложения',
+                'enabled' => $this->getUtilities(),
+            ),
+            self::ROUTE_PROGRAMMING => array(
+                'route' => self::ROUTE_PROGRAMMING,
+                'name' => 'WEB мастерская',
+                'enabled' => $this->getProgramming(),
+            ),
+        );
     }
 
     /**
