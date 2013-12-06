@@ -4,3 +4,9 @@ services:
         arguments: [@event_dispatcher, @fos_comment.sorting_factory, @fos_comment.entity_manager, %fos_comment.model.comment.class%]
         calls:
             - [setContainer, ["@service_container"]]
+
+    wapinet_comment.admin.comment:
+        class: Wapinet\CommentBundle\Admin\CommentAdmin
+        arguments: [null, Wapinet\CommentBundle\Entity\Comment, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Пользователи, label: Комментарии }

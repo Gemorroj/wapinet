@@ -16,3 +16,9 @@ services:
         calls:
             - [setContainer, ["@service_container"]]
         arguments: [@fos_message.thread_manager, @fos_message.message_manager, @fos_message.thread_reader, @fos_message.authorizer, @fos_message.participant_provider]
+
+    wapinet_message.admin.message:
+        class: Wapinet\MessageBundle\Admin\MessageAdmin
+        arguments: [null, Wapinet\MessageBundle\Entity\Message, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Пользователи, label: Сообщения }

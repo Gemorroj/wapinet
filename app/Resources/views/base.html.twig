@@ -80,7 +80,7 @@
             {% block header %}
                 <div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
                     <a href="javascript:history.back();" data-role="button" data-icon="back">Назад</a>
-                    <a href="#panel" data-role="button" data-icon="bars">Меню{% if fos_message_nb_unread() > 0 %} +{{ fos_message_nb_unread() }}{% endif %}</a>
+                    <a href="#panel" data-role="button" data-icon="bars">Меню{% if (is_granted('ROLE_USER') and fos_message_nb_unread() > 0) %} +{{ fos_message_nb_unread() }}{% endif %}</a>
                 </div>
                 <h2>{{ title }}</h2>
                 {% if app.user %}
