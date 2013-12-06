@@ -11,8 +11,6 @@ use Sonata\AdminBundle\Show\ShowMapper;
 
 class PanelAdmin extends Admin
 {
-    protected $userManager;
-
     /**
      * {@inheritdoc}
      */
