@@ -1,5 +1,12 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Title{% endblock %}
+{% block title %}Файлообменник{% endblock %}
+{% block breadcrumbs %}
+    {{wapinet_breadcrumbs({
+    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'}
+    })}}
+{% endblock %}
 
-{% block content %}{% endblock %}
+{% block content %}
+    тест
+{% endblock %}
