@@ -42,6 +42,7 @@ Wapinet\UserBundle\Entity\User:
     oneToOne:
         panel:
             targetEntity: Wapinet\UserBundle\Entity\Panel
+            cascade: ["persist", "remove"]
             joinColumn:
                 name: panel_id
                 referencedColumnName: id

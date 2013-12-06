@@ -70,7 +70,7 @@ class User extends BaseUser implements ParticipantInterface
     public function __construct()
     {
         parent::__construct();
-        $this->menu = new Panel();
+        $this->panel = new Panel();
     }
 
     /**
