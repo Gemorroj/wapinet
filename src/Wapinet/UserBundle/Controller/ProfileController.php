@@ -68,12 +68,10 @@ class ProfileController extends BaseController
 
         $form = $formFactory->createForm();
         $form->setData($user);
-        //@fixme: revert user
-        $originalUser = clone $user;
-        $originalForm = clone $form;
 
-        if ('POST' === $request->getMethod()) {
-            $form->submit($request);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
 
             if ($form->isValid()) {
                 $this->container->get('wapinet_uploader.delete_file')->delete($form, $user);
@@ -94,21 +92,8 @@ class ProfileController extends BaseController
                 $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
 
                 return $response;
-            } else {
-                //@fixme: revert user
-                foreach ($form->getErrors() as $error) {
-                    $originalForm->addError($error);
-                }
-                $form = $originalForm;
-                $user = $originalUser;
-                $this->container->get('security.context')->getToken()->setUser($user);
             }
         }
-
-        $form = $originalForm;
-        $user = $originalUser;
-        $this->container->get('security.context')->getToken()->setUser($user);
-        $request = null;
 
         return $this->container->get('templating')->renderResponse(
             'FOSUserBundle:Profile:edit.html.'.$this->container->getParameter('fos_user.template.engine'),
