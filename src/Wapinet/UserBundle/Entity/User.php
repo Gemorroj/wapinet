@@ -18,8 +18,13 @@ class User extends BaseUser implements ParticipantInterface
 
     /**
      * @Assert\Image(
-     *     maxSize="200k",
-     *     mimeTypes={"image/png", "image/jpeg", "image/gif"}
+     *     maxSize="100k",
+     *     minWidth=13,
+     *     maxWidth=500,
+     *     minHeight=13,
+     *     maxHeight=500,
+     *     mimeTypes={"image/png", "image/jpeg", "image/gif"},
+     *     groups={"Profile"}
      * )
      * @Vich\UploadableField(mapping="user_avatar", fileNameProperty="avatarName")
      *

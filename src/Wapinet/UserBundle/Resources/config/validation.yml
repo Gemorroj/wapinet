@@ -1,9 +1,0 @@
-Wapinet\UserBundle\Entity\User:
-    properties:
-        avatar:
-            - Image:
-                maxSize: 100k
-                minWidth: 13
-                maxWidth: 500
-                minHeight: 13
-                maxHeight: 500
