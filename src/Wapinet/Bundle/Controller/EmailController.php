@@ -13,7 +13,7 @@ class EmailController extends Controller
     public function indexAction(Request $request)
     {
         $result = null;
-        $form = $this->createForm(new EmailType());
+        $form = $this->createForm(new EmailType($this->container));
 
         try {
             $form->handleRequest($request);

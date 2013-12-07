@@ -1,6 +1,7 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\Email;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
@@ -9,6 +10,18 @@ use Symfony\Component\Form\AbstractType;
  */
 class EmailType extends AbstractType
 {
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+    /**
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * @var FormBuilderInterface $builder
      * @var array                $options
@@ -22,7 +35,10 @@ class EmailType extends AbstractType
         $builder->add('subject', 'text', array('label' => 'Тема'));
         $builder->add('message', 'textarea', array('label' => 'Сообщение'));
         $builder->add('file', 'file_url', array('required' => false, 'label' => false));
-        //$builder->add('captcha', 'captcha');
+
+        if (false === $this->container->get('security.context')->isGranted($this->container->getParameter('wapinet_role_nocaptcha'))) {
+            $builder->add('captcha', 'captcha', array('required' => true, 'label' => 'Код'));
+        }
 
         $builder->add('submit', 'submit', array('label' => 'Отправить'));
     }

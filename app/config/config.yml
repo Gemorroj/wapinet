@@ -160,6 +160,9 @@ vich_uploader:
             uri_prefix: /avatar
             upload_destination: %kernel.web_dir%/avatar
 
+gregwar_captcha:
+    as_url: true
+
 #liip_imagine:
 #    filter_sets:
 #        avatar_login_thumb:
