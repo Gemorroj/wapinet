@@ -8,5 +8,23 @@
 {% endblock %}
 
 {% block content %}
-    тест
+    <div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="c">
+        <h2>Новые файлы</h2>
+        <ul data-role="listview">
+            <li><a href="#">За вчера</a> <span class="ui-li-count">???</span></li>
+            <li><a href="#">За сегодня</a> <span class="ui-li-count">???</span></li>
+        </ul>
+    </div>
+
+    <ul data-role="listview" data-inset="true">
+        <li><a href="#">Все файлы</a> <span class="ui-li-count">???</span></li>
+        <li><a href="#">Категории</a></li>
+        <li data-icon="search"><a href="#">Поиск</a></li>
+    </ul>
+
+    <ul data-role="listview" data-inset="true">
+        <li data-icon="forward"><a href="#">Загрузить файл</a></li>
+        <li data-icon="info"><a href="#">Статистика</a></li>
+        <li data-icon="alert"><a href="#">Информация (правила, ответственность и т.п.)</a></li>
+    </ul>
 {% endblock %}
