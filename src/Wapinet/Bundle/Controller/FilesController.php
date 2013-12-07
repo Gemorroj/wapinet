@@ -13,4 +13,14 @@ class FilesController extends Controller
     {
         return $this->render('WapinetBundle:Files:index.html.twig');
     }
+
+    public function informationAction()
+    {
+        return $this->render('WapinetBundle:Files:information.html.twig');
+    }
+
+    public function statisticsAction()
+    {
+        return $this->render('WapinetBundle:Files:statistics.html.twig');
+    }
 }

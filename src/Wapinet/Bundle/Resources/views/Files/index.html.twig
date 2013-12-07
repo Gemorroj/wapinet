@@ -24,7 +24,7 @@
 
     <ul data-role="listview" data-inset="true">
         <li data-icon="forward"><a href="#">Загрузить файл</a></li>
-        <li data-icon="info"><a href="#">Статистика</a></li>
-        <li data-icon="alert"><a href="#">Информация (правила, ответственность и т.п.)</a></li>
+        <li data-icon="info"><a href="{{ path('files_statistics') }}">Статистика</a></li>
+        <li data-icon="alert"><a href="{{ path('files_information') }}">Информация</a></li>
     </ul>
 {% endblock %}

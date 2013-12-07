@@ -2,3 +2,11 @@ files_index:
     pattern: /
     defaults: { _controller: WapinetBundle:Files:index }
 
+files_information:
+    pattern: /information
+    defaults: { _controller: WapinetBundle:Files:information }
+
+files_statistics:
+    pattern: /statistics
+    defaults: { _controller: WapinetBundle:Files:statistics }
+
