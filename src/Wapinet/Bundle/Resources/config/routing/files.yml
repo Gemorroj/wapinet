@@ -10,3 +10,7 @@ files_statistics:
     pattern: /statistics
     defaults: { _controller: WapinetBundle:Files:statistics }
 
+files_upload:
+    pattern: /upload
+    defaults: { _controller: WapinetBundle:Files:upload }
+

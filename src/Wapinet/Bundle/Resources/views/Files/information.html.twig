@@ -1,10 +1,10 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Файлообменник - информация{% endblock %}
+{% block title %}Информация{% endblock %}
 {% block breadcrumbs %}
     {{wapinet_breadcrumbs({
     1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'},
-    1: {'uri': path('files_index'), 'title': 'Файлообменник'}
+    2: {'uri': path('files_index'), 'title': 'Файлообменник'}
     })}}
 {% endblock %}
 

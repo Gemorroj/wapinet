@@ -23,4 +23,9 @@ class FilesController extends Controller
     {
         return $this->render('WapinetBundle:Files:statistics.html.twig');
     }
+
+    public function uploadAction()
+    {
+        return $this->render('WapinetBundle:Files:upload.html.twig');
+    }
 }
