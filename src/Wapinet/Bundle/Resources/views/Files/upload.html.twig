@@ -9,5 +9,7 @@
 {% endblock %}
 
 {% block content %}
-    Загрузить файл
+    {{ form_start(form, {'action': path('files_upload'), 'method': 'POST'}) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
 {% endblock %}
