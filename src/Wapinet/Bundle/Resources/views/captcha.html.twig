@@ -5,15 +5,7 @@
         {% spaceless %}
             <img id="{{ image_id }}" src="{{ captcha_code }}" alt="код" width="{{ captcha_width }}" height="{{ captcha_height }}" />
             {% if reload %}
-                {% block javascripts %}
-                    <script type="text/javascript">
-                        function reload_{{ image_id }}() {
-                            var img = document.getElementById('{{ image_id }}');
-                            img.src = '{{ captcha_code }}?n=' + (new Date()).getTime();
-                        }
-                    </script>
-                {% endblock javascripts %}
-                <a class="captcha_reload" href="javascript:reload_{{ image_id }}();">Обновить</a>
+                <a data-role="button" data-inline="true" data-mini="true" data-icon="refresh" class="captcha-reload" href="#" data-path="{{ captcha_code }}" data-id="{{ image_id }}">Обновить</a>
             {% endif %}
             {{ form_widget(form) }}
         {% endspaceless %}

@@ -1,6 +1,7 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\Sms;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
@@ -9,6 +10,18 @@ use Symfony\Component\Form\AbstractType;
  */
 class SmsType extends AbstractType
 {
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+    /**
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * @var FormBuilderInterface $builder
      * @var array                $options
@@ -129,6 +142,10 @@ class SmsType extends AbstractType
                 ),
             ),
         ));
+
+        if (false === $this->container->get('security.context')->isGranted($this->container->getParameter('wapinet_role_nocaptcha'))) {
+            $builder->add('captcha', 'captcha', array('required' => true, 'label' => 'Код', 'reload' => true));
+        }
 
         $builder->add('submit', 'submit', array('label' => 'Отправить'));
     }

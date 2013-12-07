@@ -37,3 +37,6 @@ li.menu-head {
     /* 40 - 7 - 7 + 1*/
     height: 27px;
 }
+a.captcha-reload {
+    vertical-align: baseline;
+}

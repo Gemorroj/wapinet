@@ -38,6 +38,10 @@ var Helper = {
         } while (fileSizeInBytes > 1024);
 
         return Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
+    },
+    captchaReload: function (path, id) {
+        var img = document.getElementById(id);
+        img.src = path + '?n=' + (new Date()).getTime();
     }
 };
 
@@ -78,6 +82,12 @@ $(document)/*.bind("mobileinit", function () {
             state = 'disable';
         }
         fileUrl.find('input[type="file"]').textinput(state);
+    });
+
+    // обновление капчи
+    $('a.captcha-reload').click(function () {
+        var $this = $(this);
+        Helper.captchaReload($this.data('path'), $this.data('id'));
     });
 });
 

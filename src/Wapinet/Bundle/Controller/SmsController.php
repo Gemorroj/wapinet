@@ -12,7 +12,7 @@ class SmsController extends Controller
     public function indexAction(Request $request)
     {
         $result = null;
-        $form = $this->createForm(new SmsType());
+        $form = $this->createForm(new SmsType($this->container));
 
         try {
             $form->handleRequest($request);
