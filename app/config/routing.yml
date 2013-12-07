@@ -57,3 +57,7 @@ fos_comment_api:
 fos_message:
     resource: "@FOSMessageBundle/Resources/config/routing.xml"
     prefix: /message
+
+_imagine:
+    resource: .
+    type:     imagine

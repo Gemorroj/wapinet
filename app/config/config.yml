@@ -156,3 +156,10 @@ vich_uploader:
             inject_on_load: true # determines whether to inject a File instance upon load
             uri_prefix: /avatar
             upload_destination: %kernel.web_dir%/avatar
+
+#liip_imagine:
+#    filter_sets:
+#        avatar_login_thumb:
+#            quality: 75
+#            filters:
+#                thumbnail: { size: [15, 15], mode: outbound }
