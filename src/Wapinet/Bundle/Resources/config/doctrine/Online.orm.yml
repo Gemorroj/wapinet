@@ -2,7 +2,7 @@ Wapinet\Bundle\Entity\Online:
     type: entity
     table: online
     options:
-        engine: MEMORY # не ставится связь с пользователями для типа MEMORY
+        engine: MEMORY
     fields:
         id:
             type: integer
@@ -17,17 +17,6 @@ Wapinet\Bundle\Entity\Online:
         browser:
             type: string
             length: 255
-
-    manyToOne:
-        user:
-            fetch: LAZY
-            type: integer
-            targetEntity: Wapinet\UserBundle\Entity\User
-            joinColumns:
-                user_id:
-                    onDelete: CASCADE
-                    onUpdate: CASCADE # не ставится автоматически. проставить вручную.
-                    nullable: true
 
     uniqueConstraints:
         unique_idx:

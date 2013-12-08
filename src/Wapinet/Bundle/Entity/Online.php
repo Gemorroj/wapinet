@@ -2,8 +2,6 @@
 
 namespace Wapinet\Bundle\Entity;
 
-use Wapinet\UserBundle\Entity\User;
-
 /**
  * Online
  */
@@ -13,11 +11,6 @@ class Online
      * @var integer
      */
     private $id;
-
-    /**
-     * @var User|null
-     */
-    private $user;
 
     /**
      * @var \DateTime
@@ -56,29 +49,6 @@ class Online
         $this->id = $id;
 
         return $this;
-    }
-
-    /**
-     * Set user
-     *
-     * @param User|null $user
-     * @return Online
-     */
-    public function setUser(User $user = null)
-    {
-        $this->user = $user;
-    
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return User|null
-     */
-    public function getUser()
-    {
-        return $this->user;
     }
 
     /**
