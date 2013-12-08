@@ -41,10 +41,16 @@ class User extends BaseUser implements ParticipantInterface
      * @var \DateTime
      */
     protected $createdAt;
+
     /**
      * @var \DateTime|null
      */
     protected $updatedAt;
+
+    /**
+     * @var \DateTime|null
+     */
+    protected $lastActivity;
 
     /**
      * @var string|null
@@ -247,6 +253,19 @@ class User extends BaseUser implements ParticipantInterface
         $this->updatedAt = new \DateTime();
         return $this;
     }
+
+
+    public function setLastActivity(\DateTime $lastActivity)
+    {
+        $this->lastActivity = $lastActivity;
+        return $this;
+    }
+
+    public function getLastActivity()
+    {
+        return $this->lastActivity;
+    }
+
 
     /**
      * return bool

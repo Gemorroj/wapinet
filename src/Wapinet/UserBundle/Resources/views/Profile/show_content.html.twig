@@ -28,6 +28,14 @@
             <td>{{ user.birthday is null ? 'Не указано' : user.birthday|wapinet_date }}</td>
         </tr>
         <tr>
+            <td>Дата регистрации</td>
+            <td>{{ user.createdAt|wapinet_datetime }}</td>
+        </tr>
+        <tr>
+            <td>Последняя активность</td>
+            <td>{{ user.lastActivity is null ? 'Неизвестно' : user.lastActivity|wapinet_datetime }}</td>
+        </tr>
+        <tr>
             <td>Аватар</td>
             <td>
                 {% if user.hasAvatar %}

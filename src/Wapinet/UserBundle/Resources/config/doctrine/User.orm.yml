@@ -27,6 +27,10 @@ Wapinet\UserBundle\Entity\User:
             type: datetime
             nullable: true
             column: updated_at
+        lastActivity:
+            type: datetime
+            nullable: true
+            column: last_activity
         sex:
             type: string
             columnDefinition: ENUM('m', 'f') DEFAULT NULL

@@ -41,9 +41,9 @@ class CommentAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
+            ->add('author', null, array('label' => 'Автор'))
             ->add('body', null, array('label' => 'Комментарий'))
             ->add('createdAt', null, array('label' => 'Дата и время'))
-            ->add('author', null, array('label' => 'Автор'))
             ->add('score', null, array('label' => 'Понравилось'))
         ;
     }
@@ -56,9 +56,9 @@ class CommentAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('body', null, array('label' => 'Комментарий'))
             ->add('author', null, array('label' => 'Автор'))
-            ->add('createdAt', null, array('label' => 'Дата и время'))
+            ->add('body', null, array('label' => 'Комментарий'))
+            ->add('createdAt', 'doctrine_orm_datetime_range', array('label' => 'Дата и время'), null, array('widget' => 'single_text'))
         ;
     }
 

@@ -2,7 +2,9 @@
 
 {% block title %}Редактирование профиля{% endblock %}
 {% block breadcrumbs %}
-    {{ wapinet_breadcrumbs() }}
+    {{wapinet_breadcrumbs({
+    1: {'uri': path('fos_user_profile_show'), 'title': 'Просмотр профиля'}
+    })}}
 {% endblock %}
 
 

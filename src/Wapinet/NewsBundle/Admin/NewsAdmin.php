@@ -17,6 +17,7 @@ class NewsAdmin extends Admin
     {
         $datagridMapper
             ->add('subject', null, array('label' => 'Заголовок'))
+            ->add('createdAt', 'doctrine_orm_datetime_range', array('label' => 'Создано'), null, array('widget' => 'single_text'))
         ;
     }
 

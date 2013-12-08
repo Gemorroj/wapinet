@@ -40,9 +40,9 @@ class MessageAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
+            ->add('sender', null, array('label' => 'Автор'))
             ->add('body', null, array('label' => 'Сообщение'))
             ->add('createdAt', null, array('label' => 'Дата и время'))
-            ->add('sender', null, array('label' => 'Автор'))
         ;
     }
 
@@ -54,9 +54,9 @@ class MessageAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('body', null, array('label' => 'Сообщение'))
             ->add('sender', null, array('label' => 'Автор'))
-            ->add('createdAt', null, array('label' => 'Дата и время'))
+            ->add('body', null, array('label' => 'Сообщение'))
+            ->add('createdAt', 'doctrine_orm_datetime_range', array('label' => 'Дата и время'), null, array('widget' => 'single_text'))
         ;
     }
 

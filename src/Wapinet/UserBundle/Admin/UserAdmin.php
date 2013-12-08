@@ -28,8 +28,9 @@ class UserAdmin extends Admin
             ->add('locked', null, array('label' => 'Заблокирован'))
             ->add('last_login', 'datetime', array('label' => 'Последняя авторизация'))
             ->add('roles', null, array('label' => 'Роли'))
-            ->add('created_at', 'datetime', array('label' => 'Зарегистрирован'))
+            ->add('created_at', 'datetime', array('label' => 'Регистрация'))
             ->add('updated_at', 'datetime', array('label' => 'Обновление профиля'))
+            ->add('last_activity', 'datetime', array('label' => 'Последняя активность'))
             ->add('avatar', null, array('label' => 'Аватар'))
             ->add('sex', null, array('label' => 'Пол'))
             ->add('birthday', null, array('label' => 'День рождения'))
@@ -112,6 +113,7 @@ class UserAdmin extends Admin
             ->add('username', null, array('label' => 'Логин'))
             ->add('email', null, array('label' => 'Email'))
             ->add('roles', null, array('label' => 'Роли'))
+            ->add('lastActivity', 'doctrine_orm_datetime_range', array('label' => 'Последняя активность'), null, array('widget' => 'single_text'))
         ;
     }
 
@@ -127,8 +129,8 @@ class UserAdmin extends Admin
             ->addIdentifier('username', null, array('label' => 'Логин'))
             ->add('email', null, array('label' => 'Email'))
             ->add('roles', null, array('label' => 'Роли'))
-            ->add('created_at', 'datetime', array('label' => 'Зарегистрирован'))
-            ->add('last_login', 'datetime', array('label' => 'Последняя авторизация'))
+            ->add('created_at', 'datetime', array('label' => 'Регистрация'))
+            ->add('last_activity', 'datetime', array('label' => 'Последняя активность'))
             ->add('_action', 'actions', array(
                 'label' => 'Операции',
                 'actions' => array(
