@@ -28,6 +28,11 @@ class OnlineListener
             return;
         }
 
+        $this->em->createQuery('DELETE FROM Wapinet\Bundle\Entity\Online o WHERE o.datetime < :lifetime')
+            ->setParameter('lifetime', new \DateTime('-' . $this->container->getParameter('wapinet_lifetime') . ' seconds'))
+            ->execute();
+
+
         $online = new Online;
         $online->setBrowser($this->container->get('request')->headers->get('User-Agent'));
         $online->setIp($this->container->get('request')->getClientIp());
@@ -43,10 +48,6 @@ class OnlineListener
         } else {
             $this->em->persist($online);
         }
-
-        $this->em->createQuery('DELETE FROM Wapinet\Bundle\Entity\Online o WHERE o.datetime < :lifetime')
-            ->setParameter('lifetime', new \DateTime('-' . $this->container->getParameter('wapinet_lifetime') . ' seconds'))
-            ->execute();
 
         $this->em->flush();
     }
