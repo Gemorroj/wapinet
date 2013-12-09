@@ -7,6 +7,14 @@ Wapinet\Bundle\Entity\File:
             generator:
                 strategy: AUTO
     fields:
+        ip:
+            type: string
+            nullable: false
+            column: ip
+        browser:
+            type: string
+            nullable: false
+            column: browser
         createdAt:
             type: datetime
             nullable: false

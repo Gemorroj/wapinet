@@ -18,6 +18,14 @@ class File
      */
     protected $user;
     /**
+     * @var string
+     */
+    protected $ip;
+    /**
+     * @var string
+     */
+    protected $browser;
+    /**
      * @var \DateTime
      */
     protected $createdAt;
@@ -104,6 +112,44 @@ class File
     public function setUser(User $user = null)
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIp()
+    {
+        return $this->ip;
+    }
+
+    /**
+     * @param string $ip
+     * @return File
+     */
+    public function setIp($ip)
+    {
+        $this->ip = $ip;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBrowser()
+    {
+        return $this->browser;
+    }
+
+    /**
+     * @param string $browser
+     * @return File
+     */
+    public function setBrowser($browser)
+    {
+        $this->browser = $browser;
 
         return $this;
     }
