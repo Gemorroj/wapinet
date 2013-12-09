@@ -5,9 +5,9 @@ namespace Wapinet\Bundle\Entity;
 use Wapinet\UserBundle\Entity\User;
 
 /**
- * Files
+ * File
  */
-class Files
+class File
 {
     /**
      * @var integer
@@ -76,7 +76,7 @@ class Files
      * Set id
      *
      * @param int $id
-     * @return Files
+     * @return File
      */
     public function setId($id)
     {
@@ -99,7 +99,7 @@ class Files
      * Set user
      *
      * @param User $user
-     * @return Files
+     * @return File
      */
     public function setUser(User $user = null)
     {
@@ -117,7 +117,7 @@ class Files
     }
 
     /**
-     * @return Files
+     * @return File
      */
     public function setCreatedAtValue()
     {
@@ -135,7 +135,7 @@ class Files
     }
 
     /**
-     * @return Files
+     * @return File
      */
     public function setUpdatedAtValue()
     {
@@ -154,7 +154,7 @@ class Files
 
     /**
      * @param \DateTime $lastDownloadAt
-     * @return Files
+     * @return File
      */
     public function setLastDownloadAt(\DateTime $lastDownloadAt)
     {
@@ -173,7 +173,7 @@ class Files
 
     /**
      * @param \DateTime $lastViewAt
-     * @return Files
+     * @return File
      */
     public function setLastViewAt(\DateTime $lastViewAt)
     {
@@ -192,7 +192,7 @@ class Files
 
     /**
      * @param int $countDownloads
-     * @return Files
+     * @return File
      */
     public function setCountDownloads($countDownloads)
     {
@@ -211,7 +211,7 @@ class Files
 
     /**
      * @param int $countViews
-     * @return Files
+     * @return File
      */
     public function setCountViews($countViews)
     {
@@ -229,7 +229,7 @@ class Files
     }
 
     /**
-     * @return Files
+     * @return File
      */
     public function setSaltValue()
     {
@@ -248,7 +248,7 @@ class Files
 
     /**
      * @param string|null $password
-     * @return Files
+     * @return File
      */
     public function setPassword($password = null)
     {
@@ -276,7 +276,7 @@ class Files
 
     /**
      * @param string $mimeType
-     * @return Files
+     * @return File
      */
     public function setMimeType($mimeType)
     {
@@ -296,7 +296,7 @@ class Files
 
     /**
      * @param string $directoryPath
-     * @return Files
+     * @return File
      */
     public function setDirectoryPath($directoryPath)
     {
@@ -315,7 +315,7 @@ class Files
 
     /**
      * @param string $fileName
-     * @return Files
+     * @return File
      */
     public function setFileName($fileName)
     {

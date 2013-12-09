@@ -126,9 +126,9 @@ archiver:
     resource: "@WapinetBundle/Resources/config/routing/archiver.yml"
     prefix:   /archiver
 
-files:
-    resource: "@WapinetBundle/Resources/config/routing/files.yml"
-    prefix:   /files
+file:
+    resource: "@WapinetBundle/Resources/config/routing/file.yml"
+    prefix:   /file
 
 
 proxy_index:

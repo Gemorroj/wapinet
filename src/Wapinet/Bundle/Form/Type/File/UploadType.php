@@ -1,5 +1,5 @@
 <?php
-namespace Wapinet\Bundle\Form\Type\Files;
+namespace Wapinet\Bundle\Form\Type\File;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;

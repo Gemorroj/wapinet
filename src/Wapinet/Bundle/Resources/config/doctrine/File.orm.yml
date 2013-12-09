@@ -1,6 +1,6 @@
-Wapinet\Bundle\Entity\Files:
+Wapinet\Bundle\Entity\File:
     type:  entity
-    table: files
+    table: file
     id:
         id:
             type: integer

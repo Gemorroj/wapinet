@@ -7,7 +7,7 @@ namespace Wapinet\UserBundle\Entity;
 class Panel extends \ArrayObject
 {
     const ROUTE_FORUM = 'forum_index';
-    const ROUTE_FILES = 'files_index';
+    const ROUTE_FILE = 'file_index';
     const ROUTE_ARCHIVER = 'archiver_index';
     const ROUTE_PROXY = 'proxy_index';
     const ROUTE_DOWNLOADS = 'downloads';
@@ -16,7 +16,7 @@ class Panel extends \ArrayObject
 
     protected $id;
     protected $forum = true;
-    protected $files = true;
+    protected $file = true;
     protected $archiver = false;
     protected $proxy = false;
     protected $downloads = true;
@@ -42,10 +42,10 @@ class Panel extends \ArrayObject
                 'name' => 'Форум',
                 'enabled' => $this->getForum(),
             ),
-            self::ROUTE_FILES => array(
-                'route' => self::ROUTE_FILES,
+            self::ROUTE_FILE => array(
+                'route' => self::ROUTE_FILE,
                 'name' => 'Файлообменник',
-                'enabled' => $this->getFiles(),
+                'enabled' => $this->getFile(),
             ),
             self::ROUTE_ARCHIVER => array(
                 'route' => self::ROUTE_ARCHIVER,
@@ -190,12 +190,12 @@ class Panel extends \ArrayObject
     }
 
     /**
-     * @param boolean $files
+     * @param boolean $file
      * @return Panel
      */
-    public function setFiles($files)
+    public function setFile($file)
     {
-        $this->files = (bool)$files;
+        $this->file = (bool)$file;
 
         return $this;
     }
@@ -203,9 +203,9 @@ class Panel extends \ArrayObject
     /**
      * @return boolean
      */
-    public function getFiles()
+    public function getFile()
     {
-        return $this->files;
+        return $this->file;
     }
 
     /**

@@ -30,7 +30,7 @@ class PanelAdmin extends Admin
         $showMapper
             ->add('id', null, array('label' => 'Идентификатор'))
             ->add('forum', null, array('label' => 'Форум'))
-            ->add('files', null, array('label' => 'Файлообменник'))
+            ->add('file', null, array('label' => 'Файлообменник'))
             ->add('archiver', null, array('label' => 'Архиватор'))
             ->add('proxy', null, array('label' => 'Анонимайзер'))
             ->add('downloads', null, array('label' => 'Загрузки, развлечения'))
@@ -47,7 +47,7 @@ class PanelAdmin extends Admin
     {
         $formMapper
             ->add('forum', null, array('label' => 'Форум', 'required' => false))
-            ->add('files', null, array('label' => 'Файлообменник', 'required' => false))
+            ->add('file', null, array('label' => 'Файлообменник', 'required' => false))
             ->add('archiver', null, array('label' => 'Архиватор', 'required' => false))
             ->add('proxy', null, array('label' => 'Анонимайзер', 'required' => false))
             ->add('downloads', null, array('label' => 'Загрузки, развлечения', 'required' => false))
@@ -76,7 +76,7 @@ class PanelAdmin extends Admin
         $listMapper
             ->addIdentifier('id', null, array('label' => 'Идентификатор'))
             ->add('forum', null, array('label' => 'Форум'))
-            ->add('files', null, array('label' => 'Файлообменник'))
+            ->add('file', null, array('label' => 'Файлообменник'))
             ->add('archiver', null, array('label' => 'Архиватор'))
             ->add('proxy', null, array('label' => 'Анонимайзер'))
             ->add('downloads', null, array('label' => 'Загрузки, развлечения'))

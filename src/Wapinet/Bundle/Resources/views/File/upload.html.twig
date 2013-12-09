@@ -4,12 +4,12 @@
 {% block breadcrumbs %}
     {{wapinet_breadcrumbs({
     1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'},
-    2: {'uri': path('files_index'), 'title': 'Файлообменник'}
+    2: {'uri': path('file_index'), 'title': 'Файлообменник'}
     })}}
 {% endblock %}
 
 {% block content %}
-    {{ form_start(form, {'action': path('files_upload'), 'method': 'POST'}) }}
+    {{ form_start(form, {'action': path('file_upload'), 'method': 'POST'}) }}
         {{ form_errors(form) }}
 
         {{ form_row(form.file) }}

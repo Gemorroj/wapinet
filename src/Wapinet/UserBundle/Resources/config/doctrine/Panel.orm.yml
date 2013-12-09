@@ -10,7 +10,7 @@ Wapinet\UserBundle\Entity\Panel:
         forum:
             type: boolean
             nullable: false
-        files:
+        file:
             type: boolean
             nullable: false
         archiver:

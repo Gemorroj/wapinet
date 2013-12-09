@@ -1,0 +1,16 @@
+file_index:
+    pattern: /
+    defaults: { _controller: WapinetBundle:File:index }
+
+file_information:
+    pattern: /information
+    defaults: { _controller: WapinetBundle:File:information }
+
+file_statistics:
+    pattern: /statistics
+    defaults: { _controller: WapinetBundle:File:statistics }
+
+file_upload:
+    pattern: /upload
+    defaults: { _controller: WapinetBundle:File:upload }
+
