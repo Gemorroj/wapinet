@@ -19,10 +19,38 @@ Wapinet\Bundle\Entity\Files:
             type: datetime
             nullable: true
             column: last_download_at
+        lastViewAt:
+            type: datetime
+            nullable: true
+            column: last_view_at
         countDownloads:
             type: integer
             nullable: false
             column: count_downloads
+        countViews:
+            type: integer
+            nullable: false
+            column: count_views
+        salt:
+            type: string
+            nullable: true
+            column: salt
+        password:
+            type: string
+            nullable: true
+            column: password
+        mimeType:
+            type: string
+            nullable: false
+            column: mime_type
+        directoryPath:
+            type: string
+            nullable: false
+            column: directory_path
+        fileName:
+            type: string
+            nullable: false
+            column: file_name
 
     lifecycleCallbacks:
         prePersist: [ setCreatedAtValue ]
