@@ -10,6 +10,19 @@
 
 {% block content %}
     {{ form_start(form, {'action': path('files_upload'), 'method': 'POST'}) }}
-        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+
+        {{ form_row(form.file) }}
+        {{ form_row(form.description) }}
+
+        <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+            <input type="checkbox" id="upload-password" onchange="$('#upload-password-row').toggle();" />
+            <label for="upload-password" title="Включите, если файл нужно защитить паролем">Пароль</label>
+        </fieldset>
+        <span id="upload-password-row" style="display: none">
+            {{ form_widget(form.password) }}
+        </span>
+
+        {{ form_rest(form) }}
     {{ form_end(form) }}
 {% endblock %}

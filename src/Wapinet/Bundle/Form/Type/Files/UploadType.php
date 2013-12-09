@@ -18,6 +18,8 @@ class UploadType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder->add('file', 'file_url', array('required' => true, 'label' => false));
+        $builder->add('description', 'textarea', array('required' => false, 'label' => 'Описание'));
+        $builder->add('password', 'password', array('required' => false, 'label' => 'Пароль'));
 
         $builder->add('submit', 'submit', array('label' => 'Загрузить'));
     }
