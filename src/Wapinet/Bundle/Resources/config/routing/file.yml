@@ -14,3 +14,8 @@ file_upload:
     pattern: /upload
     defaults: { _controller: WapinetBundle:File:upload }
 
+file_view:
+    pattern: /{id}
+    defaults: { _controller: WapinetBundle:File:view }
+    requirements:
+        id: \d+
