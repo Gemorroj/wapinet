@@ -228,39 +228,63 @@ class User extends BaseUser implements ParticipantInterface
     public function setAvatarName($avatarName)
     {
         $this->avatarName = $avatarName;
+
         return $this;
     }
 
 
+    /**
+     * @return \DateTime
+     */
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
+
+    /**
+     * @return User
+     */
     public function setCreatedAtValue()
     {
         $this->createdAt = new \DateTime();
+
         return $this;
     }
 
+    /**
+     * @return \DateTime|null
+     */
     public function getUpdatedAt()
     {
         return $this->updatedAt;
     }
 
+    /**
+     * @return User
+     */
     public function setUpdatedAtValue()
     {
         $this->updatedAt = new \DateTime();
+
         return $this;
     }
 
-
+    /**
+     * @param \DateTime $lastActivity
+     *
+     * @return User
+     */
     public function setLastActivity(\DateTime $lastActivity)
     {
         $this->lastActivity = $lastActivity;
+
         return $this;
     }
 
+    /**
+     * @return \DateTime|null
+     */
     public function getLastActivity()
     {
         return $this->lastActivity;

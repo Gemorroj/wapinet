@@ -1,0 +1,38 @@
+Wapinet\Bundle\Entity\Files:
+    type:  entity
+    table: files
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+        updatedAt:
+            type: datetime
+            nullable: true
+            column: updated_at
+        lastDownloadAt:
+            type: datetime
+            nullable: true
+            column: last_download_at
+        countDownloads:
+            type: integer
+            nullable: false
+            column: count_downloads
+
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]
+
+    manyToOne:
+        user:
+            targetEntity: Wapinet\UserBundle\Entity\User
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: true
