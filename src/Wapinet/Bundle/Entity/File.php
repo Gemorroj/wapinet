@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\File\File as BaseFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @todo https://github.com/FabienPennequin/FPNTagBundle
  * File
  * @Vich\Uploadable
  */
