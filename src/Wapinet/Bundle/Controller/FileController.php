@@ -48,14 +48,8 @@ class FileController extends Controller
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
-                    /** @var File $data */
                     $data = $form->getData();
-                    $data->setUser($this->getUser());
-                    $data->setIp($request->getClientIp());
-                    $data->setBrowser($request->headers->get('User-Agent', ''));
-                    $data->setMimeType($data->getFile()->getMimeType());
-
-                    $file = $this->saveFile($data);
+                    $file = $this->setFileData($request, $data);
 
                     $router = $this->container->get('router');
                     return new RedirectResponse(
@@ -75,10 +69,9 @@ class FileController extends Controller
         ));
     }
 
+
     /**
      * @param File $file
-     * @return File
-     * @see http://symfony.com/doc/current/cookbook/security/acl.html
      */
     protected function saveFile(File $file)
     {
@@ -87,6 +80,16 @@ class FileController extends Controller
         $entityManager->persist($file);
         $entityManager->flush();
 
+        $this->saveFileAcl($file);
+    }
+
+
+    /**
+     * @param File $file
+     * @see http://symfony.com/doc/current/cookbook/security/acl.html
+     */
+    protected function saveFileAcl(File $file)
+    {
         $user = $this->getUser();
         if (null !== $user) {
             // creating the ACL
@@ -101,7 +104,32 @@ class FileController extends Controller
             $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
             $aclProvider->updateAcl($acl);
         }
+    }
 
-        return $file;
+
+    /**
+     * @param Request $request
+     * @param File    $data
+     *
+     * @return File
+     */
+    protected function setFileData(Request $request, File $data)
+    {
+        $data->setUser($this->getUser());
+        $data->setIp($request->getClientIp());
+        $data->setBrowser($request->headers->get('User-Agent', ''));
+        $data->setMimeType($data->getFile()->getMimeType());
+
+        if (null !== $data->getPassword()) {
+            $data->setSaltValue();
+
+            $encoder = $this->get('security.encoder_factory')->getEncoder($data);
+            $password = $encoder->encodePassword($data->getPassword(), $data->getSalt());
+            $data->setPassword($password);
+        }
+
+        $this->saveFile($data);
+
+        return $data;
     }
 }

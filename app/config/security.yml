@@ -3,6 +3,7 @@ security:
         connection: default
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512
+        Wapinet\Bundle\Entity\File: sha512
 
     role_hierarchy:
         ROLE_USER:
