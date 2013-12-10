@@ -49,16 +49,17 @@ Wapinet\Bundle\Entity\File:
             column: password
         mimeType:
             type: string
-            nullable: false
+            nullable: true
             column: mime_type
-        directoryPath:
-            type: string
-            nullable: false
-            column: directory_path
         fileName:
             type: string
             nullable: false
             column: file_name
+        description:
+            type: string
+            nullable: false
+            column: description
+            length: 5000
 
     lifecycleCallbacks:
         prePersist: [ setCreatedAtValue ]

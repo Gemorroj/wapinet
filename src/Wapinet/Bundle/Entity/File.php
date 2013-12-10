@@ -49,11 +49,11 @@ class File
     /**
      * @var int
      */
-    protected $countDownloads;
+    protected $countDownloads = 0;
     /**
      * @var int
      */
-    protected $countViews;
+    protected $countViews = 0;
     /**
      * @var string|null
      */
@@ -69,10 +69,6 @@ class File
     /**
      * @var string
      */
-    protected $directoryPath;
-    /**
-     * @var string
-     */
     protected $fileName;
     /**
      * @Assert\File()
@@ -81,6 +77,10 @@ class File
      * @var File
      */
     protected $file;
+    /**
+     * @var string
+     */
+    protected $description;
 
     /**
      * Get id
@@ -325,7 +325,7 @@ class File
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getMimeType()
     {
@@ -333,32 +333,13 @@ class File
     }
 
     /**
-     * @param string $mimeType
+     * @param string|null $mimeType
      * @return File
      */
     public function setMimeType($mimeType)
     {
         // по mime определять принадлежность к категории
         $this->mimeType = $mimeType;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDirectoryPath()
-    {
-        return $this->directoryPath;
-    }
-
-    /**
-     * @param string $directoryPath
-     * @return File
-     */
-    public function setDirectoryPath($directoryPath)
-    {
-        $this->directoryPath = $directoryPath;
 
         return $this;
     }
@@ -404,6 +385,25 @@ class File
         if ($this->file !== $tmp) {
             $this->setUpdatedAtValue();
         }
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     * @return File
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
 
         return $this;
     }
