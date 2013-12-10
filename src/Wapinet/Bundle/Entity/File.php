@@ -309,15 +309,6 @@ class File
      */
     public function setPassword($password = null)
     {
-        /*
-         // пример в контроллере
-         $factory = $this->get('security.encoder_factory');
-        $user = new Acme\UserBundle\Entity\User();
-
-        $encoder = $factory->getEncoder($user);
-        $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
-        $user->setPassword($password);
-         */
         $this->password = $password;
 
         return $this;

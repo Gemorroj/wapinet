@@ -20,6 +20,7 @@ class UploadType extends AbstractType
 
         $builder->add('file', 'file_url', array('required' => true, 'label' => false));
         $builder->add('description', 'textarea', array('max_length' => 5000, 'required' => true, 'label' => 'Описание'));
+        //$builder->add('categories', 'choice', array('required' => false, 'label' => 'Категории', 'multiple' => true, 'choices' => array('sdfg','asdfasd'), 'attr' => array('data-icon' => 'grid', 'data-native-menu' => 'false')));
         $builder->add('password', 'password', array('required' => false, 'label' => 'Пароль', 'attr' => array('autocomplete' => 'off')));
 
         $builder->add('submit', 'submit', array('label' => 'Загрузить'));
