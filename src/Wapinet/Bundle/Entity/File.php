@@ -397,4 +397,120 @@ class File
 
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function isImage()
+    {
+        return (0 === strpos($this->getMimeType(), 'image/'));
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVideo()
+    {
+        return (0 === strpos($this->getMimeType(), 'video/'));
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAudio()
+    {
+        return (0 === strpos($this->getMimeType(), 'audio/'));
+    }
+
+    /**
+     * @return bool
+     */
+    public function isText()
+    {
+        return (0 === strpos($this->getMimeType(), 'text/'));
+    }
+
+    /**
+     * @return bool
+     */
+    public function isArchive()
+    {
+        return in_array($this->getMimeType(), array(
+                'application/zip', // zip
+                'application/x-rar-compressed', // rar
+                'application/x-bzip', // bz
+                'application/x-bzip2', // bz2
+                'application/x-7z-compressed', // 7z
+                'application/x-tar', // tar
+                'application/vnd.ms-cab-compressed', // cab
+                'application/x-iso9660-image', // iso
+                'application/x-gzip', // gz
+                'application/x-ace-compressed', // ace
+                'application/x-lzh-compressed', // lzh
+            ));
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFlash()
+    {
+        return ('application/x-shockwave-flash' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isJavaApp()
+    {
+        return ('application/java-archive' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAndroidApp()
+    {
+        return ('application/vnd.android.package-archive' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSymbianApp()
+    {
+        return ('application/vnd.symbian.install' === $this->getMimeType() || 'x-epoc/x-sisx-app' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWindowsApp()
+    {
+        return ('application/x-msdownload' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPdf()
+    {
+        return ('application/pdf' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWord()
+    {
+        return ('application/vnd.openxmlformats-officedocument.wordprocessingml.document' === $this->getMimeType() || 'application/msword' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExcel()
+    {
+        return ('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' === $this->getMimeType() || 'application/vnd.ms-excel' === $this->getMimeType());
+    }
 }
