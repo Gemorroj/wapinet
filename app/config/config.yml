@@ -153,12 +153,20 @@ vich_uploader:
     mappings:
         user_avatar:
             namer: vich_uploader.namer_origname
-            directory_namer: wapinet_uploader.directory_namer
+            directory_namer: wapinet_uploader.user_avatar_directory_namer
             delete_on_update: true # Set to true if the file should be deleted from the filesystem when the file is replaced by an other one
             delete_on_remove: true # determines whether to delete file upon removal of entity
             inject_on_load: true # determines whether to inject a File instance upon load
-            uri_prefix: /avatar
-            upload_destination: %kernel.web_dir%/avatar
+            uri_prefix: /static/avatar
+            upload_destination: %kernel.web_dir%/static/avatar
+        file:
+            namer: vich_uploader.namer_origname
+            directory_namer: wapinet_uploader.file_directory_namer
+            delete_on_update: true # Set to true if the file should be deleted from the filesystem when the file is replaced by an other one
+            delete_on_remove: true # determines whether to delete file upon removal of entity
+            inject_on_load: true # determines whether to inject a File instance upon load
+            uri_prefix: /static/file
+            upload_destination: %kernel.web_dir%/static/file
 
 gregwar_captcha:
     as_url: true

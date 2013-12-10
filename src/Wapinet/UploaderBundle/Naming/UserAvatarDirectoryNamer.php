@@ -3,28 +3,23 @@
 namespace Wapinet\UploaderBundle\Naming;
 
 use Vich\UploaderBundle\Naming\DirectoryNamerInterface;
+use Wapinet\UserBundle\Entity\User;
 
 /**
- * DateDirectoryNamer
+ * UserAvatarDateDirectoryNamer
  */
-class DirectoryNamer implements DirectoryNamerInterface
+class UserAvatarDirectoryNamer implements DirectoryNamerInterface
 {
     /**
      * Creates a directory name for the file being uploaded.
      *
-     * @param object $obj The object the upload is attached to.
+     * @param User $obj The object the upload is attached to.
      * @param string $field The name of the uploadable field to generate a name for.
      * @param string $uploadDir The upload directory set in config
      * @return string The directory name.
      */
     public function directoryName($obj, $field, $uploadDir)
     {
-        // Proxies/__CG__/Wapinet/UserBundle/Entity/User
-        $class = get_class($obj);
-        $list = explode('\\Entity\\', $class);
-        // User
-        $class = $list[1];
-
-        return $uploadDir . '/' . str_replace('\\', '/', $class) . '/' . $obj->getId();
+        return $uploadDir . '/' . $obj->getCreatedAt()->format('Y/m/d') . '/id' . $obj->getId();
     }
 }
