@@ -3,9 +3,13 @@
 namespace Wapinet\Bundle\Entity;
 
 use Wapinet\UserBundle\Entity\User;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File as BaseFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * File
+ * @Vich\Uploadable
  */
 class File
 {
@@ -69,6 +73,13 @@ class File
      * @var string
      */
     protected $fileName;
+    /**
+     * @Assert\File()
+     * @Vich\UploadableField(mapping="file", fileNameProperty="fileName")
+     *
+     * @var File
+     */
+    protected $file;
 
     /**
      * Get id
@@ -366,6 +377,32 @@ class File
     public function setFileName($fileName)
     {
         $this->fileName = $fileName;
+
+        return $this;
+    }
+
+    /**
+     * @return BaseFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param BaseFile $file
+     *
+     * @return File
+     */
+    public function setFile(BaseFile $file)
+    {
+        $tmp = $this->file;
+
+        $this->file = $file;
+
+        if ($this->file !== $tmp) {
+            $this->setUpdatedAtValue();
+        }
 
         return $this;
     }

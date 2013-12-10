@@ -28,7 +28,7 @@ class User extends BaseUser implements ParticipantInterface
      * )
      * @Vich\UploadableField(mapping="user_avatar", fileNameProperty="avatarName")
      *
-     * @var File|null $avatar
+     * @var File|null
      */
     protected $avatar;
 
