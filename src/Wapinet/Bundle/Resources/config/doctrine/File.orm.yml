@@ -1,4 +1,5 @@
 Wapinet\Bundle\Entity\File:
+    repositoryClass: Wapinet\Bundle\Entity\FileRepository
     type:  entity
     table: file
     id:

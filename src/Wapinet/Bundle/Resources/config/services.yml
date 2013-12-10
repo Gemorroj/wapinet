@@ -27,6 +27,12 @@ services:
         tags:
             - {name: twig.extension, alias: wapinet_panel}
 
+    wapinet.file.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\File
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - {name: twig.extension, alias: wapinet_file}
+
     base64.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Base64
         tags:
