@@ -78,6 +78,7 @@ class FileController extends Controller
     /**
      * @param File $file
      * @return File
+     * @see http://symfony.com/doc/current/cookbook/security/acl.html
      */
     protected function saveFile(File $file)
     {
