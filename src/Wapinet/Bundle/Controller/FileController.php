@@ -29,9 +29,29 @@ class FileController extends Controller
         return $this->render('WapinetBundle:File:information.html.twig');
     }
 
-    public function statisticsAction()
+    public function statisticAction()
     {
-        return $this->render('WapinetBundle:File:statistics.html.twig');
+        return $this->render('WapinetBundle:File:statistic.html.twig');
+    }
+
+    public function searchAction()
+    {
+        return $this->render('WapinetBundle:File:search.html.twig');
+    }
+
+    public function categoriesAction()
+    {
+        return $this->render('WapinetBundle:File:categories.html.twig');
+    }
+
+    public function listAction($date)
+    {
+        return $this->render('WapinetBundle:File:list.html.twig');
+    }
+
+    public function viewAction($id)
+    {
+        return $this->render('WapinetBundle:File:view.html.twig');
     }
 
     /**

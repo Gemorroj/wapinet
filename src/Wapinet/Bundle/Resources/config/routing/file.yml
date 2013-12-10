@@ -6,16 +6,30 @@ file_information:
     pattern: /information
     defaults: { _controller: WapinetBundle:File:information }
 
-file_statistics:
-    pattern: /statistics
-    defaults: { _controller: WapinetBundle:File:statistics }
+file_statistic:
+    pattern: /statistic
+    defaults: { _controller: WapinetBundle:File:statistic }
 
 file_upload:
     pattern: /upload
     defaults: { _controller: WapinetBundle:File:upload }
+
+file_search:
+    pattern: /search
+    defaults: { _controller: WapinetBundle:File:search }
+
+file_categories:
+    pattern: /categories
+    defaults: { _controller: WapinetBundle:File:categories }
+
+file_list:
+    pattern: /list/{date}
+    defaults: { _controller: WapinetBundle:File:list, date: null }
 
 file_view:
     pattern: /{id}
     defaults: { _controller: WapinetBundle:File:view }
     requirements:
         id: \d+
+
+

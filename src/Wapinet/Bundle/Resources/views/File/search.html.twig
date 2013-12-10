@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Поиск{% endblock %}
+{% block breadcrumbs %}
+    {{wapinet_breadcrumbs({
+    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'},
+    2: {'uri': path('file_index'), 'title': 'Файлообменник'}
+    })}}
+{% endblock %}
+
+{% block content %}
+    Поиск
+{% endblock %}
