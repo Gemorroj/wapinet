@@ -44,9 +44,12 @@ class FileController extends Controller
         return $this->render('WapinetBundle:File:categories.html.twig');
     }
 
-    public function listAction($date)
+    public function listAction($page = 1, $date)
     {
-        return $this->render('WapinetBundle:File:list.html.twig');
+        $query = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->getListBuilder($date);
+        $pagerfanta = $this->get('paginate')->paginate($query, $page);
+
+        return $this->render('WapinetBundle:File:list.html.twig', array('files' => $pagerfanta));
     }
 
     public function viewAction($id)

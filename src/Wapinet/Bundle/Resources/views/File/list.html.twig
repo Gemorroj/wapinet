@@ -9,5 +9,19 @@
 {% endblock %}
 
 {% block content %}
-    Файлы
+    <ul data-role="listview" data-inset="true">
+        {% for file in files %}
+            <li>
+                {{ dump(file) }}
+            </li>
+        {% else %}
+            <li>
+                Нет файлов для отображения.
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="pagerfanta">
+        {{ pagerfanta(files) }}
+    </div>
 {% endblock %}

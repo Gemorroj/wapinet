@@ -12,7 +12,7 @@
 namespace Wapinet\CommentBundle\Controller;
 
 use FOS\CommentBundle\Controller\ThreadController as BaseThreadController;
-use FOS\Rest\Util\Codes;
+use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View;
 use Symfony\Bundle\FrameworkBundle\Templating\TemplateReference;
 use Symfony\Component\HttpFoundation\Response;
