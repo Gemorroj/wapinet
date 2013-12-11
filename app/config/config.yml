@@ -178,4 +178,4 @@ liip_imagine:
         thumbnail:
             quality: 75
             filters:
-                thumbnail: { size: [80, 80], mode: outbound }
+                thumbnail: { size: [null, 80], mode: inset }

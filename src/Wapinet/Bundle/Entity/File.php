@@ -355,6 +355,16 @@ class File extends ContainerAware
     }
 
     /**
+     * @return string
+     */
+    public function getOriginalFileName()
+    {
+        // зависит от fileNamer
+        $name = explode('_', $this->fileName, 2);
+        return $name[1];
+    }
+
+    /**
      * @return BaseFile
      */
     public function getFile()
