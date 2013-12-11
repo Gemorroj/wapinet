@@ -12,7 +12,15 @@
     <ul data-role="listview" data-inset="true">
         {% for file in files %}
             <li>
-                {{ dump(file) }}
+                <a href="{{ path('file_view', {'id': file.id}) }}">
+                    {% if file.isImage %}
+                        <img src="{{ vich_uploader_asset(file, 'file')|imagine_filter('thumbnail') }}" alt="{{ file.fileName }}" />
+                        <h2>{{ file.fileName }}</h2>
+                        <p>{{ file.file.size|wapinet_size }}</p><p>{{ file.imageSize.width }}x{{ file.imageSize.height }}</p>
+                    {% else %}
+                        {{ vich_uploader_asset(file, 'file') }}
+                    {% endif %}
+                </a>
             </li>
         {% else %}
             <li>

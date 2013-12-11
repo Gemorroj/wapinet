@@ -2,6 +2,7 @@
 
 namespace Wapinet\Bundle\Entity;
 
+use Symfony\Component\DependencyInjection\ContainerAware;
 use Wapinet\UserBundle\Entity\User;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
@@ -11,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * File
  * @Vich\Uploadable
  */
-class File
+class File extends ContainerAware
 {
     /**
      * @var integer
@@ -396,6 +397,22 @@ class File
         $this->description = $description;
 
         return $this;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getImageSize()
+    {
+        $file = $this->getFile();
+
+        list($width, $height) = getimagesize($file->getPathname());
+
+        return array(
+            'width' => $width,
+            'height' => $height,
+        );
     }
 
     /**

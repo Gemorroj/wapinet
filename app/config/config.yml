@@ -172,9 +172,10 @@ gregwar_captcha:
     as_url: true
     reload: true
 
-#liip_imagine:
-#    filter_sets:
-#        avatar_login_thumb:
-#            quality: 75
-#            filters:
-#                thumbnail: { size: [15, 15], mode: outbound }
+liip_imagine:
+    cache_prefix: /static/cache
+    filter_sets:
+        thumbnail:
+            quality: 75
+            filters:
+                thumbnail: { size: [80, 80], mode: outbound }
