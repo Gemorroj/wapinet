@@ -170,6 +170,7 @@ vich_uploader:
 
 gregwar_captcha:
     as_url: true
+    reload: true
 
 #liip_imagine:
 #    filter_sets:

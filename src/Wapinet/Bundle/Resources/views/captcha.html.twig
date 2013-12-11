@@ -7,7 +7,7 @@
             {% if reload %}
                 <a data-role="button" data-inline="true" data-mini="true" data-icon="refresh" class="captcha-reload" href="#" data-path="{{ captcha_code }}" data-id="{{ image_id }}">Обновить</a>
             {% endif %}
-            {{ form_widget(form) }}
+            {{ form_widget(form, {'attr': {'autocomplete': 'off'}}) }}
         {% endspaceless %}
     {% endif %}
 {% endblock %}

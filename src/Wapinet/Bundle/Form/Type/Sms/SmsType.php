@@ -144,7 +144,7 @@ class SmsType extends AbstractType
         ));
 
         if (false === $this->container->get('security.context')->isGranted($this->container->getParameter('wapinet_role_nocaptcha'))) {
-            $builder->add('captcha', 'captcha', array('required' => true, 'label' => 'Код', 'reload' => true));
+            $builder->add('captcha', 'captcha', array('required' => true, 'label' => 'Код'));
         }
 
         $builder->add('submit', 'submit', array('label' => 'Отправить'));
