@@ -14,6 +14,7 @@ class Date extends \Twig_Extension
         return array(
             new \Twig_SimpleFilter('wapinet_date', array($this, 'getDate')),
             new \Twig_SimpleFilter('wapinet_datetime', array($this, 'getDateTime')),
+            new \Twig_SimpleFilter('wapinet_length', array($this, 'getLength')),
         );
     }
 
@@ -77,6 +78,45 @@ class Date extends \Twig_Extension
         }
 
         return null;
+    }
+
+    /**
+     * @param int $seconds
+     * @return string|null
+     */
+    public function getLength($seconds)
+    {
+        $length = null;
+        $d1 = new \DateTime();
+        $d2 = new \DateTime('- ' . intval($seconds) . ' seconds');
+
+        $iv = $d2->diff($d1);
+
+        if ($iv->y) {
+            $length .= $iv->y . 'г.';
+        }
+
+        if ($iv->m) {
+            $length .= $iv->m . 'м.';
+        }
+
+        if ($iv->d) {
+            $length .= $iv->d . 'д.';
+        }
+
+        if ($iv->h) {
+            $length .= $iv->h . 'ч.';
+        }
+
+        if ($iv->i) {
+            $length .= $iv->i . 'мин.';
+        }
+
+        if ($iv->s) {
+            $length .= $iv->s . 'сек.';
+        }
+
+        return $length;
     }
 
     /**

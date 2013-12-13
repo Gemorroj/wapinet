@@ -18,9 +18,10 @@
                         <h2>{{ file.originalFileName }}</h2>
                         <p>{{ file.file.size|wapinet_size }}, {{ file.imageSize.width }}x{{ file.imageSize.height }}</p>
                     {% elseif file.isVideo %}
-                        <img src="{{ vich_uploader_asset(file, 'file')|imagine_filter('thumbnail') }}" alt="{{ file.originalFileName }}" />
+                        {% set info = wapinet_video_info(file.file) %}
+                        <img src="{{ vich_uploader_asset(file, 'file')|wapinet_video_screenshot|imagine_filter('thumbnail') }}" alt="{{ file.originalFileName }}" />
                         <h2>{{ file.originalFileName }}</h2>
-                        <p>{{ file.file.size|wapinet_size }}</p>
+                        <p>{{ file.file.size|wapinet_size }}, {{ info.dimensions.width }}x{{ info.dimensions.height }}, {{ info.get('duration')|wapinet_length }}</p>
                     {% else %}
                         <h2>{{ file.originalFileName }}</h2>
                         <p>{{ file.file.size|wapinet_size }}</p>
