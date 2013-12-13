@@ -15,6 +15,18 @@ services:
         tags:
             - {name: twig.extension, alias: wapinet_video}
 
+    wapinet.image.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\Image
+        arguments: [@service_container]
+        tags:
+            - {name: twig.extension, alias: wapinet_image}
+
+    wapinet.audio.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\Audio
+        arguments: [@service_container]
+        tags:
+            - {name: twig.extension, alias: wapinet_audio}
+
     wapinet.online.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Online
         arguments: [@doctrine.orm.entity_manager]

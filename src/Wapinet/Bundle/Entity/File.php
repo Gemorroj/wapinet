@@ -409,22 +409,6 @@ class File extends ContainerAware
         return $this;
     }
 
-
-    /**
-     * @return array
-     */
-    public function getImageSize()
-    {
-        $file = $this->getFile();
-
-        list($width, $height) = getimagesize($file->getPathname());
-
-        return array(
-            'width' => $width,
-            'height' => $height,
-        );
-    }
-
     /**
      * @return bool
      */
