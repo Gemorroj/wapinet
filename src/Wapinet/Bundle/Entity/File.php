@@ -460,6 +460,14 @@ class File extends ContainerAware
     /**
      * @return bool
      */
+    public function isXml()
+    {
+        return ('application/xml' === $this->getMimeType() || false !== strpos($this->getMimeType(), '+xml'));
+    }
+
+    /**
+     * @return bool
+     */
     public function isArchive()
     {
         return in_array($this->getMimeType(), array(

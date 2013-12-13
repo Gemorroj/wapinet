@@ -32,6 +32,7 @@ twig:
         wapinet_nophoto: "%wapinet_nophoto%"
         wapinet_title: "%wapinet_title%"
         wapinet_contact_email: "%wapinet_contact_email%"
+        wapinet_video_screenshot_extension: "%wapinet_video_screenshot_extension%"
 
 # Assetic Configuration
 assetic:
@@ -173,9 +174,14 @@ gregwar_captcha:
     reload: true
 
 liip_imagine:
+    data_loader: wapinet
     cache_prefix: /static/cache
     filter_sets:
         thumbnail:
             quality: 75
             filters:
                 thumbnail: { size: [null, 80], mode: inset }
+
+dubture_f_fmpeg:
+    ffmpeg_binary: %wapinet_ffmpeg_path%
+    ffprobe_binary: %wapinet_ffprobe_path%

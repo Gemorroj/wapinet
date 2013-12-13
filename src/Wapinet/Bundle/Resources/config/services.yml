@@ -1,4 +1,14 @@
 services:
+    wapinet.data.transformer:
+        class: Wapinet\Bundle\File\Transformer\VideoTransformer
+        arguments: [@service_container]
+
+    wapinet.data.loader:
+        class: Wapinet\Bundle\File\Loader\WapinetLoader
+        arguments: [@liip_imagine, %liip_imagine.formats%, %liip_imagine.data_root%, [@wapinet.data.transformer]]
+        tags:
+            - {name: liip_imagine.data.loader, loader: wapinet}
+
     wapinet.date.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Date
         tags:

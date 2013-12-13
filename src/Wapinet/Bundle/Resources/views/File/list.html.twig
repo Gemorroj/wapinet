@@ -14,11 +14,16 @@
             <li>
                 <a href="{{ path('file_view', {'id': file.id}) }}">
                     {% if file.isImage %}
-                        <img src="{{ vich_uploader_asset(file, 'file')|imagine_filter('thumbnail') }}" alt="{{ file.fileName }}" />
+                        <img src="{{ vich_uploader_asset(file, 'file')|imagine_filter('thumbnail') }}" alt="{{ file.originalFileName }}" />
                         <h2>{{ file.originalFileName }}</h2>
                         <p>{{ file.file.size|wapinet_size }}, {{ file.imageSize.width }}x{{ file.imageSize.height }}</p>
+                    {% elseif file.isVideo %}
+                        <img src="{{ vich_uploader_asset(file, 'file')|imagine_filter('thumbnail') }}" alt="{{ file.originalFileName }}" />
+                        <h2>{{ file.originalFileName }}</h2>
+                        <p>{{ file.file.size|wapinet_size }}</p>
                     {% else %}
-                        {{ vich_uploader_asset(file, 'file') }}
+                        <h2>{{ file.originalFileName }}</h2>
+                        <p>{{ file.file.size|wapinet_size }}</p>
                     {% endif %}
                 </a>
             </li>
