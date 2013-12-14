@@ -12,6 +12,7 @@ use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 use Wapinet\Bundle\Entity\File;
+use Wapinet\Bundle\Form\Type\File\SearchType;
 use Wapinet\Bundle\Form\Type\File\UploadType;
 
 /**
@@ -34,9 +35,27 @@ class FileController extends Controller
         return $this->render('WapinetBundle:File:statistic.html.twig');
     }
 
-    public function searchAction()
+    public function searchAction(Request $request)
     {
-        return $this->render('WapinetBundle:File:search.html.twig');
+        $form = $this->createForm(new SearchType());
+
+        try {
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $data = $form->getData();
+                    //
+
+                }
+            }
+        } catch (\Exception $e) {
+            $form->addError(new FormError($e->getMessage()));
+        }
+
+        return $this->render('WapinetBundle:File:search.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
 
     public function categoriesAction()
