@@ -19,6 +19,7 @@ class SearchType extends AbstractType
 
         $builder->add('search', 'search', array('max_length' => 5000, 'required' => true, 'label' => 'Что ищем?'));
 
+        $builder->add('use_description', 'checkbox', array('required' => false, 'label' => 'Искать в описании', 'data' => true));
         $builder->add('mime_type', 'choice', array('required' => false, 'multiple' => true, 'empty_value' => 'Все', 'label' => 'Тип', 'choices' => array(
             'video' => 'Видео',
             'audio' => 'Аудио',

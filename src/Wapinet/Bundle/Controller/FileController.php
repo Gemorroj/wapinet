@@ -68,6 +68,7 @@ class FileController extends Controller
     {
         return $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->getSearchQuery(
             $data['search'],
+            $data['use_description'],
             $data['mime_type'],
             $data['created_after'],
             $data['created_before']

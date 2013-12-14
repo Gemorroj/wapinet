@@ -64,19 +64,22 @@ class FileRepository extends EntityRepository
 
     /**
      * @param string $search
+     * @param bool $useDescription
      * @param array|null $mimeType
      * @param \DateTime|null $createdAfter
      * @param \DateTime|null $createdBefore
      * @return \Doctrine\ORM\Query
      */
-    public function getSearchQuery($search, array $mimeType = null, \DateTime $createdAfter = null, \DateTime $createdBefore = null)
+    public function getSearchQuery($search, $useDescription = true, array $mimeType = null, \DateTime $createdAfter = null, \DateTime $createdBefore = null)
     {
         $q = $this->createQueryBuilder('f');
 
         $search = '%' . addcslashes($search, '%_') . '%';
         // 15 символов - это результат uniqid + _
         $q->where('SUBSTRING(f.fileName, 15) LIKE :search');
-        $q->orWhere('f.description LIKE :search');
+        if (true === $useDescription) {
+            $q->orWhere('f.description LIKE :search');
+        }
         $q->setParameter('search', $search);
 
         foreach ($mimeType as $mimeTypeValue) {

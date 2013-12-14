@@ -13,12 +13,18 @@
     {{ form_errors(form) }}
     {{ form_row(form.search) }}
 
-    {{ form_row(form.mime_type, {'attr': {'data-native-menu': 'false'}}) }}
+    <div data-role="collapsible">
+        <h4>Дополнительные параметры</h4>
+        {{ form_row(form.use_description) }}
 
-    <fieldset class="ui-grid-a">
-        <div class="ui-block-a">{{ form_row(form.created_after) }}</div>
-        <div class="ui-block-b">{{ form_row(form.created_before) }}</div>
-    </fieldset>
+        {{ form_row(form.mime_type, {'attr': {'data-native-menu': 'false'}}) }}
+
+        <fieldset class="ui-grid-a">
+            <div class="ui-block-a">{{ form_row(form.created_after) }}</div>
+            <div class="ui-block-b">{{ form_row(form.created_before) }}</div>
+        </fieldset>
+    </div>
+
 
     {{ form_rest(form) }}
 
