@@ -1,0 +1,12 @@
+<?php
+namespace Wapinet\Bundle\Pagerfanta;
+
+use Pagerfanta\View\DefaultView;
+
+class View extends DefaultView
+{
+    protected function createDefaultTemplate()
+    {
+        return new Template();
+    }
+}

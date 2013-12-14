@@ -1,4 +1,9 @@
 services:
+    pagerfanta.view.default:
+        class: Wapinet\Bundle\Pagerfanta\View
+        public: false
+        tags: [{ name: pagerfanta.view, alias: default }]
+
     wapinet.date.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Date
         tags:
