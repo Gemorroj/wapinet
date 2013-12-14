@@ -13,15 +13,7 @@
     {{ form_errors(form) }}
     {{ form_row(form.search) }}
 
-
-    <fieldset data-role="controlgroup">
-        {{ form_widget(form.name) }}
-        {{ form_label(form.name) }}
-        {{ form_widget(form.description) }}
-        {{ form_label(form.description) }}
-    </fieldset>
-
-    {{ form_row(form.mime, {'attr': {'data-native-menu': 'false'}}) }}
+    {{ form_row(form.mime_type, {'attr': {'data-native-menu': 'false'}}) }}
 
     <fieldset class="ui-grid-a">
         <div class="ui-block-a">{{ form_row(form.created_after) }}</div>
@@ -31,4 +23,8 @@
     {{ form_rest(form) }}
 
     {{ form_end(form) }}
+
+    {% if files is not null %}
+        {% include '@Wapinet/File/list_content.html.twig' with {'files': files} %}
+    {% endif %}
 {% endblock %}

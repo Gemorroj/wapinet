@@ -38,6 +38,7 @@ class FileController extends Controller
     public function searchAction(Request $request)
     {
         $form = $this->createForm(new SearchType());
+        $files = null;
 
         try {
             $form->handleRequest($request);
@@ -45,8 +46,7 @@ class FileController extends Controller
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    //
-
+                    $files = $this->search($data);
                 }
             }
         } catch (\Exception $e) {
@@ -54,8 +54,24 @@ class FileController extends Controller
         }
 
         return $this->render('WapinetBundle:File:search.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'files' => $files,
         ));
+    }
+
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected function search (array $data)
+    {
+        return $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->getSearchQuery(
+            $data['search'],
+            $data['mime_type'],
+            $data['created_after'],
+            $data['created_before']
+        )->getResult();
     }
 
     public function categoriesAction()
@@ -65,7 +81,7 @@ class FileController extends Controller
 
     public function listAction($page = 1, $date)
     {
-        $query = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->getListBuilder($date);
+        $query = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->getListQuery($date);
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
         return $this->render('WapinetBundle:File:list.html.twig', array('files' => $pagerfanta));

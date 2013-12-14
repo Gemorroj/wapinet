@@ -9,36 +9,7 @@
 {% endblock %}
 
 {% block content %}
-    <ul data-role="listview" data-inset="true">
-        {% for file in files %}
-            <li>
-                <a href="{{ path('file_view', {'id': file.id}) }}">
-                    {% if file.isImage %}
-                        {% set size = wapinet_image_size(file.file) %}
-                        <img src="{{ vich_uploader_asset(file, 'file')|imagine_filter('thumbnail') }}" alt="{{ file.originalFileName }}" />
-                        <h2>{{ file.originalFileName }}</h2>
-                        <p>{{ file.file.size|wapinet_size }}, {{ size.width }}x{{ size.height }}</p>
-                    {% elseif file.isVideo %}
-                        {% set info = wapinet_video_info(file.file) %}
-                        <img src="{{ vich_uploader_asset(file, 'file')|wapinet_video_screenshot|imagine_filter('thumbnail') }}" alt="{{ file.originalFileName }}" />
-                        <h2>{{ file.originalFileName }}</h2>
-                        <p>{{ file.file.size|wapinet_size }}, {{ info.dimensions.width }}x{{ info.dimensions.height }}, {{ info.get('duration')|wapinet_length }}</p>
-                    {% elseif file.isAudio %}
-                        {% set info = wapinet_audio_info(file.file) %}
-                        <h2>{{ file.originalFileName }}</h2>
-                        <p>{{ file.file.size|wapinet_size }}, {{ info.get('duration')|wapinet_length }}</p>
-                    {% else %}
-                        <h2>{{ file.originalFileName }}</h2>
-                        <p>{{ file.file.size|wapinet_size }}</p>
-                    {% endif %}
-                </a>
-            </li>
-        {% else %}
-            <li>
-                Нет файлов для отображения.
-            </li>
-        {% endfor %}
-    </ul>
+    {% include '@Wapinet/File/list_content.html.twig' with {'files': files} %}
 
     <div class="pagerfanta">
         {{ pagerfanta(files) }}
