@@ -28,6 +28,7 @@ class File extends \Twig_Extension
             'file_count_all'  => new \Twig_Function_Method($this, 'getCountAll'),
             'file_count_today' => new \Twig_Function_Method($this, 'getCountToday'),
             'file_count_yesterday' => new \Twig_Function_Method($this, 'getCountYesterday'),
+            'file_count_category' => new \Twig_Function_Method($this, 'getCountCategory'),
         );
     }
 
@@ -44,6 +45,11 @@ class File extends \Twig_Extension
     public function getCountYesterday()
     {
         return $this->fileRepository->countYesterday();
+    }
+
+    public function getCountCategory($category)
+    {
+        return $this->fileRepository->countCategory($category);
     }
 
     /**

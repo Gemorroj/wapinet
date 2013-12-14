@@ -20,14 +20,15 @@ class SearchType extends AbstractType
         $builder->add('search', 'search', array('max_length' => 5000, 'required' => true, 'label' => 'Что ищем?'));
 
         $builder->add('use_description', 'checkbox', array('required' => false, 'label' => 'Искать в описании', 'data' => true));
-        $builder->add('mime_type', 'choice', array('required' => false, 'multiple' => true, 'empty_value' => 'Все', 'label' => 'Тип', 'choices' => array(
+        $builder->add('categories', 'choice', array('required' => false, 'multiple' => true, 'empty_value' => 'Все', 'label' => 'Тип', 'choices' => array(
             'video' => 'Видео',
             'audio' => 'Аудио',
             'image' => 'Картинки',
             'text' => 'Текстовые файлы',
+            'office' => 'Офисные документы',
             'archive' => 'Архивы',
-            'android_app' => 'Приложения Android',
-            'java_app' => 'Приложения Java',
+            'android' => 'Приложения Android',
+            'java' => 'Приложения Java',
         )));
         $builder->add('created_after', 'date', array('widget' => 'single_text', 'label' => 'Загружены после', 'required' => false));
         $builder->add('created_before', 'date', array('widget' => 'single_text', 'label' => 'Загружены до', 'required' => false));

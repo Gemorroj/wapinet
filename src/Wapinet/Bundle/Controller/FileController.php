@@ -59,17 +59,16 @@ class FileController extends Controller
         ));
     }
 
-
     /**
      * @param array $data
-     * @return array
+     * @return File[]
      */
     protected function search (array $data)
     {
         return $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->getSearchQuery(
             $data['search'],
             $data['use_description'],
-            $data['mime_type'],
+            $data['categories'],
             $data['created_after'],
             $data['created_before']
         )->getResult();
@@ -80,12 +79,22 @@ class FileController extends Controller
         return $this->render('WapinetBundle:File:categories.html.twig');
     }
 
-    public function listAction($page = 1, $date)
+    /**
+     * @param int $page
+     * @param string|null $date
+     * @param string|null $category
+     * @return Response
+     */
+    public function listAction($page = 1, $date = null, $category = null)
     {
-        $query = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->getListQuery($date);
+        $query = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->getListQuery($date, $category);
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
-        return $this->render('WapinetBundle:File:list.html.twig', array('files' => $pagerfanta));
+        return $this->render('WapinetBundle:File:list.html.twig', array(
+            'files' => $pagerfanta,
+            'date' => $date,
+            'category' => $category,
+        ));
     }
 
     public function viewAction($id)

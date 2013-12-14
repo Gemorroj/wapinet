@@ -23,11 +23,12 @@ file_categories:
     defaults: { _controller: WapinetBundle:File:categories }
 
 file_list:
-    pattern: /list/{page}/{date}
-    defaults: { _controller: WapinetBundle:File:list, page: 1, date: null }
+    pattern: /list/{page}/{date}/{category}
+    defaults: { _controller: WapinetBundle:File:list, page: 1, date: all, category: null }
     requirements:
         page: \d+
-        date: (today|yesterday)
+        date: (all|today|yesterday)
+        category: (video|audio|image|text|office|archive|android|java)
 
 file_view:
     pattern: /{id}
