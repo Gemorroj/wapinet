@@ -13,9 +13,8 @@
 <ul data-role="listview" data-inset="true">
 {% block fos_comment_comment %}
 
-
     {% block fos_comment_comment_metas %}
-        <li class="fos_comment_comment_metas" data-role="list-divider">
+        <li class="fos_comment_comment_metas ui-bar-d" data-role="list-divider">
             {% block fos_comment_comment_metas_authorline %}
                 <span class="fos_comment_comment_authorname">
                     {% if comment is fos_comment_in_state(constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_DELETED')) %}

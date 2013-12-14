@@ -46,10 +46,7 @@ var Helper = {
 };
 
 
-$(document)/*.bind("mobileinit", function () {
-    $.mobile.ajaxEnabled = false;
-    $.mobile.ajaxFormsEnabled = false;
-})*/.ready(function () {
+$(document).on("pagebeforeshow", "#page", function () {
     $.mobile.ajaxEnabled = false;
     $.mobile.ajaxFormsEnabled = false;
 
@@ -91,17 +88,19 @@ $(document)/*.bind("mobileinit", function () {
     });
 });
 
-$.ajaxSetup({
-    "complete": function () {
-        $("#page").trigger("pagecreate");
-    },
-    "error": function () {
-        $.mobile.loading("show", {
-            text: "Ошибка",
-            textVisible: true
-        });
-        setTimeout(function () {
-            $.mobile.loading("hide");
-        }, 3000);
-    }
+$(document).ajaxStart(function () {
+    $.mobile.loading('show');
+}).ajaxSuccess(function () {
+    $.mobile.loading('hide');
+    $("#page").trigger("pagecreate");
+}).ajaxError(function () {
+    $.mobile.loading('hide');
+    $.mobile.loading("show", {
+        text: "Ошибка",
+        textVisible: true,
+        textonly: true
+    });
+    setTimeout(function () {
+        $.mobile.loading("hide");
+    }, 3000);
 });

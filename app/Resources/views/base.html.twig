@@ -17,6 +17,10 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerjquerymobile/css/jquery.mobile.css') }}" />
     <script type="text/javascript" src="{{ asset('bundles/bmatznerjquerymobile/js/jquery.mobile.js') }}"></script>
 
+    {# jplayer #}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/wapinet/js/jplayer/blue.monday/jplayer.blue.monday.css') }}" />
+    <script type="text/javascript" src="{{ asset('bundles/wapinet/js/jplayer/jquery.jplayer.min.js') }}"></script>
+
     {# pagerfanta #}
     <link rel="stylesheet" href="{{ asset('bundles/whiteoctoberpagerfanta/css/pagerfantaDefault.css') }}" type="text/css" />
 
@@ -30,16 +34,14 @@
             var fos_comment_thread_api_base_url = '{{ path('fos_comment_get_threads') }}';
 
             // Snippet for asynchronously loading the comments
-            var comments = function () {
+            $(document).on("pagebeforeshow", "#page", function () {
                 var fos_comment_script = document.createElement('script');
                 {# fos_comment_script.async = 'async'; #}
                 fos_comment_script.src = '{{ asset('bundles/wapinetcomment/js/comments.js') }}';
                 fos_comment_script.type = 'text/javascript';
 
                 (document.getElementsByTagName('head')[0]).appendChild(fos_comment_script);
-            };
-
-            $(document).bind("mobileinit", comments).ready(comments);
+            });
         </script>
         <link rel="stylesheet" href="{{ asset('bundles/wapinetcomment/css/comments.css') }}" type="text/css" />
         {# <script async="async" type="text/javascript" src="{{ asset('bundles/wapinetcomment/js/comments.js') }}"></script> #}
