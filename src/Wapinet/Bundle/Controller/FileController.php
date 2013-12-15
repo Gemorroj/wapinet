@@ -5,6 +5,7 @@ namespace Wapinet\Bundle\Controller;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -126,10 +127,38 @@ class FileController extends Controller
         ));
     }
 
+    /**
+     * @param int $id
+     * @return Response
+     */
     public function viewAction($id)
     {
         $file = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->find($id);
+
         return $this->render('WapinetBundle:File:view.html.twig', array('file' => $file));
+    }
+
+    /**
+     * @param Request $request
+     * @param int $id
+     * @param string $name
+     * @return BinaryFileResponse
+     */
+    public function archiveDownloadFileAction(Request $request, $id, $name)
+    {
+        $path = $request->get('path');
+        $tmpDir = $this->get('kernel')->getTmpFileDir();
+
+        $entry = $tmpDir . DIRECTORY_SEPARATOR . str_replace('\\', '/', $path);
+
+        if (true !== file_exists($entry)) {
+            $file = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->find($id);
+            $archive = $this->get('archive_7z');
+
+            $archive->extractEntry($file->getFile(), $path, $tmpDir);
+        }
+
+        return new BinaryFileResponse($entry);
     }
 
     /**

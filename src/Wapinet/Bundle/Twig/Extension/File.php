@@ -22,6 +22,18 @@ class File extends \Twig_Extension
      *
      * @return array An array of global functions
      */
+    public function getFilters()
+    {
+        return array(
+            new \Twig_SimpleFilter('basename', 'basename'),
+        );
+    }
+
+    /**
+     * Returns a list of global functions to add to the existing list.
+     *
+     * @return array An array of global functions
+     */
     public function getFunctions()
     {
         return array(

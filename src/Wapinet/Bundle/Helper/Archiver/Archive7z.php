@@ -41,8 +41,34 @@ class Archive7z extends Archive
      */
     public function extract($directory, File $file)
     {
-        $archive7z = new Base7zArchive($file->getPathname());
+        $archive7z = new Base7zArchive($file->getPathname(), $this->container->getParameter('wapinet_7z_path'));
         $archive7z->setOutputDirectory($directory);
         $archive7z->extract();
+    }
+
+
+    /**
+     * @param File $file
+     * @throws ArchiverException
+     * @return \Archive7z\Entry[]
+     */
+    public function getEntries(File $file)
+    {
+        $archive7z = new Base7zArchive($file->getPathname(), $this->container->getParameter('wapinet_7z_path'));
+
+        return $archive7z->getEntries();
+    }
+
+    /**
+     * @param File $file
+     * @param string $entry
+     * @param string $directory
+     * @throws ArchiverException
+     */
+    public function extractEntry(File $file, $entry, $directory)
+    {
+        $archive7z = new Base7zArchive($file->getPathname(), $this->container->getParameter('wapinet_7z_path'));
+        $archive7z->setOutputDirectory($directory);
+        $archive7z->extractEntry($entry);
     }
 }

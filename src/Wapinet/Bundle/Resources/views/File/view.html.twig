@@ -26,6 +26,7 @@
     {% if file is null%}
         Файл не найден
     {% else %}
+        <p><a data-role="button" href="{{ vich_uploader_asset(file, 'file') }}">Скачать</a></p>
         {% if file.isImage %}
             {% set size = wapinet_image_size(file.file) %}
             {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': vich_uploader_asset(file, 'file') } } %}
@@ -44,10 +45,13 @@
                 {% include '@Wapinet/audio.html.twig' with {'file': file} %}
             {% endif %}
             <p>{{ file.file.size|wapinet_size }}, {{ info.get('duration')|wapinet_length }}</p>
+        {% elseif file.isArchive %}
+            <p>{{ file.file.size|wapinet_size }}</p>
+            {% if file.isExtractableArchive %}
+                {% include '@Wapinet/archive.html.twig' with {'file': file} %}
+            {% endif %}
         {% else %}
             <p>{{ file.file.size|wapinet_size }}</p>
         {% endif %}
-        <p>{{ file.mimeType }}</p>
-        <p><a data-role="button" href="{{ vich_uploader_asset(file, 'file') }}">Скачать</a></p>
     {% endif %}
 {% endblock %}

@@ -657,4 +657,12 @@ class File extends ContainerAware
             $this->isFlac()
         );
     }
+
+    /**
+     * @return bool
+     */
+    public function isExtractableArchive ()
+    {
+        return $this->isArchive();
+    }
 }

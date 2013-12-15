@@ -39,4 +39,10 @@ file_view:
     requirements:
         id: \d+
 
+file_archive_download_file:
+    pattern: /{id}/download/{name}
+    defaults: { _controller: WapinetBundle:File:archiveDownloadFile }
+    requirements:
+        id: \d+
+
 

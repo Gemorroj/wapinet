@@ -1,0 +1,22 @@
+<ul data-role="listview" data-inset="true">
+{% for entry in wapinet_archive_list(file.file) %}
+    {% set pathView = entry.path %}
+    {% set path = entry.path %}
+
+    {% if entry.isDirectory %}
+        <li class="ui-bar-d" data-icon="false">
+            <a href="#">{{ pathView }}</a>
+        </li>
+    {% else %}
+        <li>
+            <a href="{{ path('file_archive_download_file', {'id': file.id, 'name': entry.path|basename, 'path': entry.path}) }}">{{ pathView }}</a>
+            <span class="ui-li-count">{{ entry.size|wapinet_size }}</span>
+        </li>
+    {% endif %}
+
+    {% else %}
+    <li>
+        Не удается открыть архив.
+    </li>
+{% endfor %}
+</ul>

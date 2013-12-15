@@ -201,12 +201,12 @@ class ArchiverController extends Controller
      */
     protected function extractArchive(File $file)
     {
-        $archiveZip = $this->get('archive_zip');
-        if (true === $archiveZip->isValid($file)) {
-            $archiveDirectory = $this->createArchiveDirectory();
-            $archiveZip->extract($archiveDirectory, $file);
-            return $archiveDirectory;
-        }
+        //$archiveZip = $this->get('archive_zip');
+        //if (true === $archiveZip->isValid($file)) {
+        //    $archiveDirectory = $this->createArchiveDirectory();
+        //    $archiveZip->extract($archiveDirectory, $file);
+        //    return $archiveDirectory;
+        //}
         //$archiveRar = $this->get('archive_rar');
         //if (true === $archiveRar->isValid($file)) {
         //    $archiveDirectory = $this->createArchiveDirectory();
