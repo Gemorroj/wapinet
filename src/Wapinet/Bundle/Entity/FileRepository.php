@@ -171,7 +171,6 @@ class FileRepository extends EntityRepository
 
         $q->andWhere('f.password IS NULL');
         $q->orderBy('f.id', 'DESC');
-        $q->setMaxResults(100); //
 
         return $q->getQuery();
     }

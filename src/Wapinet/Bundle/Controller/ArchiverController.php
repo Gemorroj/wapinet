@@ -42,7 +42,7 @@ class ArchiverController extends Controller
                     $this->addFile($archiveDirectory, $data['file']);
 
                     $archive = basename($archiveDirectory);
-                    return new RedirectResponse($this->get('router')->generate('archiver_edit', array('archive' => $archive), Router::ABSOLUTE_URL));
+                    return $this->redirect($this->get('router')->generate('archiver_edit', array('archive' => $archive), Router::ABSOLUTE_URL));
                 }
             }
         } catch (\Exception $e) {
@@ -133,7 +133,7 @@ class ArchiverController extends Controller
 
         $this->get('filesystem')->remove($file);
 
-        return new RedirectResponse($this->get('router')->generate('archiver_edit', array('archive' => $archive), Router::ABSOLUTE_URL));
+        return $this->redirect($this->get('router')->generate('archiver_edit', array('archive' => $archive), Router::ABSOLUTE_URL));
     }
 
 
@@ -181,7 +181,7 @@ class ArchiverController extends Controller
                     $archiveDirectory = $this->extractArchive($data['file']);
 
                     $archive = basename($archiveDirectory);
-                    return new RedirectResponse($this->get('router')->generate('archiver_edit', array('archive' => $archive), Router::ABSOLUTE_URL));
+                    return $this->redirect($this->get('router')->generate('archiver_edit', array('archive' => $archive), Router::ABSOLUTE_URL));
                 }
             }
         } catch (\Exception $e) {

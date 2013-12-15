@@ -23,7 +23,7 @@ class WeatherController extends Controller
                 if ($form->isValid()) {
                     $data = $form->getData();
                     $url = $this->get('router')->generate('weather_city', array('country' => $data['country']));
-                    return new RedirectResponse($url);
+                    return $this->redirect($url);
                 }
             }
         } catch (\Exception $e) {
@@ -48,7 +48,7 @@ class WeatherController extends Controller
                 if ($form->isValid()) {
                     $data = $form->getData();
                     $url = $this->get('router')->generate('weather_show', array('country' => $country, 'city' => $data['city']));
-                    return new RedirectResponse($url);
+                    return $this->redirect($url);
                 }
             }
         } catch (\Exception $e) {

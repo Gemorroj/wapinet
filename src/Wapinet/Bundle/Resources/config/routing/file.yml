@@ -15,8 +15,11 @@ file_upload:
     defaults: { _controller: WapinetBundle:File:upload }
 
 file_search:
-    pattern: /search
-    defaults: { _controller: WapinetBundle:File:search }
+    pattern: /search/{page}/{key}
+    defaults: { _controller: WapinetBundle:File:search, page: 1, key: null }
+    requirements:
+        page: \d+
+        key: "[a-zA-Z0-9]+"
 
 file_categories:
     pattern: /categories

@@ -2,6 +2,7 @@
 
 namespace Wapinet\Bundle\Controller;
 
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -35,10 +36,17 @@ class FileController extends Controller
         return $this->render('WapinetBundle:File:statistic.html.twig');
     }
 
-    public function searchAction(Request $request)
+    /**
+     * @param Request $request
+     * @param int $page
+     * @param string|null $key
+     * @return Response|RedirectResponse
+     */
+    public function searchAction(Request $request, $page = 1, $key = null)
     {
         $form = $this->createForm(new SearchType());
-        $files = null;
+        $pagerfanta = null;
+        $session = $this->get('session');
 
         try {
             $form->handleRequest($request);
@@ -46,7 +54,23 @@ class FileController extends Controller
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    $files = $this->search($data);
+                    $key = uniqid();
+                    $session->set('file_search', array(
+                        'key' => $key,
+                        'data' => $data
+                    ));
+                }
+
+                return $this->redirect(
+                    $this->get('router')->generate('file_search', array('key' => $key), Router::ABSOLUTE_URL)
+                );
+            }
+
+            if (null !== $key && true === $session->has('file_search')) {
+                $search = $session->get('file_search');
+                if ($key === $search['key']) {
+                    $form->setData($search['data']);
+                    $pagerfanta = $this->search($search['data'], $page);
                 }
             }
         } catch (\Exception $e) {
@@ -55,23 +79,27 @@ class FileController extends Controller
 
         return $this->render('WapinetBundle:File:search.html.twig', array(
             'form' => $form->createView(),
-            'files' => $files,
+            'files' => $pagerfanta,
+            'key' => $key,
         ));
     }
 
     /**
      * @param array $data
-     * @return File[]
+     * @param int $page
+     * @return Pagerfanta
      */
-    protected function search (array $data)
+    protected function search (array $data, $page = 1)
     {
-        return $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->getSearchQuery(
+        $query = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->getSearchQuery(
             $data['search'],
             $data['use_description'],
             $data['categories'],
             $data['created_after'],
             $data['created_before']
-        )->getResult();
+        );
+
+        return $this->get('paginate')->paginate($query, $page);
     }
 
     public function categoriesAction()
@@ -120,7 +148,7 @@ class FileController extends Controller
                     $file = $this->setFileData($request, $data);
 
                     $router = $this->container->get('router');
-                    return new RedirectResponse(
+                    return $this->redirect(
                         $router->generate('file_view', array(
                                 'id' => $file->getId()
                             ), Router::ABSOLUTE_URL

@@ -63,11 +63,11 @@ class SizaController extends Controller
 
     protected function download($query)
     {
-        return new RedirectResponse('http://f.siza.ru' . $query, 301);
+        return $this->redirect('http://f.siza.ru' . $query, 301);
     }
 
     protected function screen($query)
     {
-        return new RedirectResponse('http://load.siza.ru' . $query, 301);
+        return $this->redirect('http://load.siza.ru' . $query, 301);
     }
 }
