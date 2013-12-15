@@ -559,6 +559,14 @@ class File extends ContainerAware
     /**
      * @return bool
      */
+    public function is3gp()
+    {
+        return ('video/3gpp' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
     public function isMp3()
     {
         return ('audio/mpeg' === $this->getMimeType());
@@ -653,7 +661,8 @@ class File extends ContainerAware
             $this->isM4v() ||
             $this->isOgv() ||
             $this->isWebmv() ||
-            $this->isFlv()
+            $this->isFlv() ||
+            $this->is3gp()
         );
     }
 

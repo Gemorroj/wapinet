@@ -1,5 +1,5 @@
 {% set format %}{% spaceless %}
-    {% if file.isM4v %}
+    {% if file.isM4v or file.is3gp %}
         m4v
     {% elseif file.isOgv %}
         ogv
@@ -10,11 +10,19 @@
     {% endif %}
 {% endspaceless %}{% endset %}
 
+{% set video %}{% spaceless %}
+    {% if file.is3gp %}
+        {{ vich_uploader_asset(file, 'file')|wapinet_video_3gp_to_mp4 }}
+    {% else %}
+        {{ vich_uploader_asset(file, 'file') }}
+    {% endif %}
+{% endspaceless %}{% endset %}
+
 $(document).ready(function(){
     $("#jquery_jplayer_1").jPlayer({
         "ready": function () {
             $(this).jPlayer("setMedia", {
-                "{{ format }}": "{{ vich_uploader_asset(file, 'file') }}",
+                "{{ format }}": "{{ video }}",
                 "poster": "{{ vich_uploader_asset(file, 'file')|wapinet_video_screenshot }}"
             });
         },

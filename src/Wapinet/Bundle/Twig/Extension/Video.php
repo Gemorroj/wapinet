@@ -2,7 +2,7 @@
 
 namespace Wapinet\Bundle\Twig\Extension;
 
-use FFMpeg\FFMpeg;
+use FFMpeg\Format\Video\X264;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\FFProbe\DataMapping\Stream;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -29,6 +29,7 @@ class Video extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFilter('wapinet_video_screenshot', array($this, 'getScreenshot')),
+            new \Twig_SimpleFilter('wapinet_video_3gp_to_mp4', array($this, 'convert3gpToMp4')),
         );
     }
 
@@ -42,6 +43,23 @@ class Video extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('wapinet_video_info', array($this, 'getInfo')),
         );
+    }
+
+    /**
+     * @param string $path
+     * @return string
+     */
+    public function convert3gpToMp4 ($path)
+    {
+        $mp4File = $path . '.mp4';
+
+        if (false === file_exists(\AppKernel::getWebDir() . $mp4File)) {
+            $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
+            $video = $ffmpeg->open(\AppKernel::getWebDir() . $path);
+            $video->save(new X264('libvo_aacenc'), \AppKernel::getWebDir() . $mp4File);
+        }
+
+        return $mp4File;
     }
 
     /**
