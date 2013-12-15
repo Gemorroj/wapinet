@@ -5,6 +5,7 @@ namespace Wapinet\Bundle\Controller;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -127,7 +128,8 @@ class FileController extends Controller
 
     public function viewAction($id)
     {
-        return $this->render('WapinetBundle:File:view.html.twig');
+        $file = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->find($id);
+        return $this->render('WapinetBundle:File:view.html.twig', array('file' => $file));
     }
 
     /**
@@ -214,7 +216,10 @@ class FileController extends Controller
         $data->setUser($this->getUser());
         $data->setIp($request->getClientIp());
         $data->setBrowser($request->headers->get('User-Agent', ''));
-        $data->setMimeType($data->getFile()->getMimeType());
+
+        /** @var UploadedFile $file */
+        $file = $data->getFile();
+        $data->setMimeType($this->get('mime')->getMimeType($file->getClientOriginalName()));
 
         if (null !== $data->getPassword()) {
             $data->setSaltValue();

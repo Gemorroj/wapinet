@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Файл{% endblock %}
+{% block title %}{% if file is null%}Файл не найден{% else %}{{ file.originalFileName }}{% endif %}{% endblock %}
 {% block breadcrumbs %}
     {{wapinet_breadcrumbs({
     1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'},
@@ -8,6 +8,46 @@
     })}}
 {% endblock %}
 
+{% block javascripts %}
+    {% if file is not null %}
+        {% if file.isPlayableVideo %}
+            <script type="text/javascript">
+                {% include '@Wapinet/video.js.twig' with {'file': file} %}
+            </script>
+        {% elseif file.isPlayableAudio %}
+            <script type="text/javascript">
+                {% include '@Wapinet/audio.js.twig' with {'file': file} %}
+            </script>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
 {% block content %}
-    Файл
+    {% if file is null%}
+        Файл не найден
+    {% else %}
+        {% if file.isImage %}
+            {% set size = wapinet_image_size(file.file) %}
+            {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': vich_uploader_asset(file, 'file') } } %}
+            <p>{{ file.file.size|wapinet_size }}, {{ size.width }}x{{ size.height }}</p>
+        {% elseif file.isVideo %}
+            {% set info = wapinet_video_info(file.file) %}
+            {% if file.isPlayableVideo %}
+                {% include '@Wapinet/video.html.twig' with {'file': file} %}
+            {% else %}
+                {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': vich_uploader_asset(file, 'file')|wapinet_video_screenshot } } %}
+            {% endif %}
+            <p>{{ file.file.size|wapinet_size }}, {{ info.dimensions.width }}x{{ info.dimensions.height }}, {{ info.get('duration')|wapinet_length }}</p>
+        {% elseif file.isAudio %}
+            {% set info = wapinet_audio_info(file.file) %}
+            {% if file.isPlayableAudio %}
+                {% include '@Wapinet/audio.html.twig' with {'file': file} %}
+            {% endif %}
+            <p>{{ file.file.size|wapinet_size }}, {{ info.get('duration')|wapinet_length }}</p>
+        {% else %}
+            <p>{{ file.file.size|wapinet_size }}</p>
+        {% endif %}
+        <p>{{ file.mimeType }}</p>
+        <p><a data-role="button" href="{{ vich_uploader_asset(file, 'file') }}">Скачать</a></p>
+    {% endif %}
 {% endblock %}

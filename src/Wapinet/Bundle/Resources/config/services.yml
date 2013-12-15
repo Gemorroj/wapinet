@@ -73,6 +73,10 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
 
+    mime:
+        class: Wapinet\Bundle\Helper\Mime
+        arguments: [@service_container]
+
     curl:
         class: Wapinet\Bundle\Helper\Curl
         arguments: [@service_container]

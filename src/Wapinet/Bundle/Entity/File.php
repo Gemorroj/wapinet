@@ -365,6 +365,14 @@ class File extends ContainerAware
     }
 
     /**
+     * @return string
+     */
+    public function getOriginalFileNameWithoutExtension()
+    {
+        return pathinfo($this->getOriginalFileName(), PATHINFO_FILENAME);
+    }
+
+    /**
      * @return BaseFile
      */
     public function getFile()
@@ -531,5 +539,122 @@ class File extends ContainerAware
     public function isExcel()
     {
         return ('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' === $this->getMimeType() || 'application/vnd.ms-excel' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMp3()
+    {
+        return ('audio/mpeg' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isM4a()
+    {
+        return ('audio/mp4' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isM4v()
+    {
+        return ('video/mp4' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOga()
+    {
+        return ('audio/ogg' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOgv()
+    {
+        return ('video/ogg' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWebma()
+    {
+        return ('audio/webm' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWebmv()
+    {
+        return ('video/webm' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWav()
+    {
+        return ('audio/wav' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFla()
+    {
+        return ('audio/x-flv' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFlv()
+    {
+        return ('video/x-flv' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFlac()
+    {
+        return ('audio/x-flac' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPlayableVideo()
+    {
+        return $this->isVideo() && (
+            $this->isM4v() ||
+            $this->isOgv() ||
+            $this->isWebmv() ||
+            $this->isFlv()
+        );
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPlayableAudio()
+    {
+        return $this->isAudio() && (
+            $this->isMp3() ||
+            $this->isM4a() ||
+            $this->isOga() ||
+            $this->isWebma() ||
+            $this->isWav() ||
+            $this->isFla() ||
+            $this->isFlac()
+        );
     }
 }

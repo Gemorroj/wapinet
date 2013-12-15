@@ -1,0 +1,24 @@
+{% set format %}{% spaceless %}
+    {% if file.isM4v %}
+        m4v
+    {% elseif file.isOgv %}
+        ogv
+    {% elseif file.isWebmv %}
+        webmv
+    {% elseif file.isFlv %}
+        flv
+    {% endif %}
+{% endspaceless %}{% endset %}
+
+$(document).ready(function(){
+    $("#jquery_jplayer_1").jPlayer({
+        "ready": function () {
+            $(this).jPlayer("setMedia", {
+                "{{ format }}": "{{ vich_uploader_asset(file, 'file') }}",
+                "poster": "{{ vich_uploader_asset(file, 'file')|wapinet_video_screenshot }}"
+            });
+        },
+        "supplied": "{{ format }}",
+        "swfPath": "{{ asset('bundles/wapinet/js/jplayer/Jplayer.swf') }}"
+    });
+});

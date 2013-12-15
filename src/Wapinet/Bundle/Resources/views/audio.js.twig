@@ -1,0 +1,29 @@
+{% set format %}{% spaceless %}
+    {% if file.isMp3 %}
+        mp3
+    {% elseif file.isM4a %}
+        m4a
+    {% elseif file.isOga %}
+        oga
+    {% elseif file.isWebma %}
+        webma
+    {% elseif file.isWav %}
+        wav
+    {% elseif file.isFla %}
+        fla
+    {% elseif file.isFlac %}
+        flac
+    {% endif %}
+{% endspaceless %}{% endset %}
+
+$(document).ready(function(){
+    $("#jquery_jplayer_1").jPlayer({
+        "ready": function () {
+            $(this).jPlayer("setMedia", {
+                "{{ format }}": "{{ vich_uploader_asset(file, 'file') }}"
+            });
+        },
+        "supplied": "{{ format }}",
+        "swfPath": "{{ asset('bundles/wapinet/js/jplayer/Jplayer.swf') }}"
+    });
+});
