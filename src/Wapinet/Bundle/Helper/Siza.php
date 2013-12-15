@@ -281,13 +281,29 @@ class Siza
                 $href = (string)$a->getAttribute('href');
                 $href = str_replace('?', '&', $href);
                 $a->setAttribute('href', '?q=' . $href);
+                $a->setAttribute('data-role', 'button');
+                $a->removeAttribute('class');
             }
 
             $out .= $v->ownerDocument->saveXML($v);
         }
 
-        $out = str_replace(array('<span>|</span>', '<div id="listingNagivation">', '</div>'), array('', '', ''), $out);
-        return $out;
+        if (!$out) {
+            return '';
+        }
+
+        $out = str_replace(array("\t", "\r", "\n", '<br/>', '<span>|</span>', '<div id="listingNagivation">', '</div>'), array('', '', '', '', '', '', ''), $out);
+        $out = str_replace(array('<span>', '</span>'), array('<a href="#" class="ui-disabled" data-role="button">', '</a>'), $out);
+
+        $out = preg_replace('/<\/a>(\d+) /', '</a><a href="#" class="ui-disabled" data-role="button">$1</a> ', $out);
+        $out = preg_replace('/<\/a>\.\.\.<a/', '</a><a href="#" class="ui-disabled" data-role="button">...</a><a', $out);
+
+        preg_match('/(<a [^>]+>Далее<\/a>)/u', $out, $matches);
+        $next = $matches[1];
+        $out = str_replace($next, '', $out);
+        $out .= $next;
+
+        return '<nav data-role="controlgroup" data-type="horizontal">' . $out . '</nav>';
     }
 
 
