@@ -11,11 +11,11 @@
                     {% set info = wapinet_video_info(file.file) %}
                     <img src="{{ vich_uploader_asset(file, 'file')|wapinet_video_screenshot|imagine_filter('thumbnail') }}" alt="{{ file.originalFileName }}" />
                     <h2>{{ file.originalFileName }}</h2>
-                    <p>{{ file.file.size|wapinet_size }}, {{ info.dimensions.width }}x{{ info.dimensions.height }}, {{ info.get('duration')|wapinet_length }}</p>
+                    <p>{{ file.file.size|wapinet_size }}, {{ info.dimensions.width }}x{{ info.dimensions.height }}, {{ info.has('duration') ? info.get('duration')|wapinet_length : '' }}</p>
                 {% elseif file.isAudio %}
                     {% set info = wapinet_audio_info(file.file) %}
                     <h2>{{ file.originalFileName }}</h2>
-                    <p>{{ file.file.size|wapinet_size }}, {{ info.get('duration')|wapinet_length }}</p>
+                    <p>{{ file.file.size|wapinet_size }}, {{ info.has('duration') ? info.get('duration')|wapinet_length : '' }}</p>
                 {% else %}
                     <h2>{{ file.originalFileName }}</h2>
                     <p>{{ file.file.size|wapinet_size }}</p>

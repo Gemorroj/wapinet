@@ -44,7 +44,7 @@
             {% if file.isPlayableAudio %}
                 {% include '@Wapinet/audio.html.twig' with {'file': file} %}
             {% endif %}
-            <p>{{ file.file.size|wapinet_size }}, {{ info.get('duration')|wapinet_length }}</p>
+            <p>{{ file.file.size|wapinet_size }}, {{ info.has('duration') ? info.get('duration')|wapinet_length : '' }}</p>
         {% elseif file.isArchive %}
             <p>{{ file.file.size|wapinet_size }}</p>
             {% if file.isExtractableArchive %}
