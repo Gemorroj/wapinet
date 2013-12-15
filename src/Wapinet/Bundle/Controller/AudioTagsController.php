@@ -83,7 +83,9 @@ class AudioTagsController extends Controller
         $form = $this->createForm(new AudioTagsEditType());
 
         $info = $this->getInfo($fileName);
-        $this->setFormData($form, $info['comments']);
+        $comments = isset($info['comments']) ? $info['comments'] : array();
+
+        $this->setFormData($form, $comments);
         $originalForm = clone $form; //hack stupid symfony
 
         try {
@@ -96,7 +98,8 @@ class AudioTagsController extends Controller
 
                     $form = $originalForm;
                     $info = $this->getInfo($fileName);
-                    $this->setFormData($form, $info['comments']);
+                    $comments = isset($info['comments']) ? $info['comments'] : array();
+                    $this->setFormData($form, $comments);
                 }
             }
         } catch (\Exception $e) {

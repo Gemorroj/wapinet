@@ -56,6 +56,10 @@ Wapinet\Bundle\Entity\File:
             type: string
             nullable: false
             column: file_name
+        originalFileName:
+            type: string
+            nullable: false
+            column: original_file_name
         description:
             type: string
             nullable: false

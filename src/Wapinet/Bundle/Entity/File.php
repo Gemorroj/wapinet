@@ -80,6 +80,10 @@ class File extends ContainerAware
     /**
      * @var string
      */
+    protected $originalFileName;
+    /**
+     * @var string
+     */
     protected $description;
 
     /**
@@ -354,15 +358,26 @@ class File extends ContainerAware
         return $this;
     }
 
+
     /**
      * @return string
      */
     public function getOriginalFileName()
     {
-        // зависит от fileNamer
-        $name = explode('_', $this->fileName, 2);
-        return $name[1];
+        return $this->originalFileName;
     }
+
+    /**
+     * @param string $originalFileName
+     * @return File
+     */
+    public function setOriginalFileName($originalFileName)
+    {
+        $this->originalFileName = $originalFileName;
+
+        return $this;
+    }
+
 
     /**
      * @return string

@@ -249,6 +249,7 @@ class FileController extends Controller
         /** @var UploadedFile $file */
         $file = $data->getFile();
         $data->setMimeType($this->get('mime')->getMimeType($file->getClientOriginalName()));
+        $data->setOriginalFileName($file->getClientOriginalName());
 
         if (null !== $data->getPassword()) {
             $data->setSaltValue();

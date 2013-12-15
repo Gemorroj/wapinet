@@ -9,7 +9,7 @@
 
 {% block content %}
     <p>
-        <a title="{{ originalFileName }}" href="{{ path('audio_tags_download', {'fileName': fileName, 'originalFileName': originalFileName}) }}">Скачать файл</a><br />
+        <a data-role="button" title="{{ originalFileName }}" href="{{ path('audio_tags_download', {'fileName': fileName, 'originalFileName': originalFileName}) }}">Скачать файл</a>
         Формат: {{ info.audio.dataformat }}<br />
         Битрейт: {{ info.audio.bitrate }} ({{ info.audio.bitrate_mode }})<br />
         Частота дискретизации: {{ info.audio.sample_rate }}<br />
