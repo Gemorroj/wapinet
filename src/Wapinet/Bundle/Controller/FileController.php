@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -164,7 +165,7 @@ class FileController extends Controller
     /**
      * @param Request $request
      *
-     * @return RedirectResponse|Response
+     * @return RedirectResponse|JsonResponse|Response
      */
     public function uploadAction(Request $request)
     {
@@ -179,11 +180,22 @@ class FileController extends Controller
                     $file = $this->setFileData($request, $data);
 
                     $router = $this->container->get('router');
+                    $url = $router->generate('file_view', array(
+                            'id' => $file->getId()
+                        ), Router::ABSOLUTE_URL
+                    );
+
+                    // загрузка через ajax
+                    if (true === $request->isXmlHttpRequest()) {
+                        return new JsonResponse(array(
+                            'id' => $file->getId(),
+                            'url' => $url
+                        ));
+                    }
+
+                    // обычная загрузка
                     return $this->redirect(
-                        $router->generate('file_view', array(
-                                'id' => $file->getId()
-                            ), Router::ABSOLUTE_URL
-                        )
+                        $url
                     );
                 }
             }

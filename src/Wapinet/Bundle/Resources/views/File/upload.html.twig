@@ -8,8 +8,82 @@
     })}}
 {% endblock %}
 
+{% block javascripts %}
+    <script type="text/javascript">
+        function uploadFile($form) {
+            initProgressbar();
+            var xhr = new XMLHttpRequest();
+
+            var formData = new FormData();
+            $form.find('input[type!="file"], select, checkbox, textarea').each(function () {
+                formData.append(this.name, this.value);
+            });
+            $form.find('input[type="file"]').each(function () {
+                formData.append(this.name, this.files[0]);
+            });
+
+            /* event listners */
+            xhr.upload.addEventListener("progress", uploadProgress, false);
+            xhr.addEventListener("load", uploadComplete, false);
+            xhr.addEventListener("error", uploadFailed, false);
+            xhr.addEventListener("abort", uploadCanceled, false);
+
+            /* Be sure to change the url below to the url of your upload server side script */
+            xhr.open($form.attr('method'), $form.attr('action'));
+            xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            xhr.send(formData);
+        }
+
+        function uploadProgress(evt) {
+            if (evt.lengthComputable) {
+                var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+
+                $('div.ui-loader-textonly h1').text(percentComplete.toString() + '%');
+            } else {
+                $('div.ui-loader-textonly h1').text('Неизвестно');
+            }
+        }
+
+        function uploadComplete(evt) {
+            /* This event is raised when the server send back a response */
+            $.mobile.loading("hide");
+            var responseJson = JSON.parse(evt.target.responseText);
+
+            if (evt.target.status === 200) {
+                alert('OK');
+                window.location.assign(responseJson.url);
+            } else {
+                alert('Error');
+            }
+        }
+
+        function uploadFailed(evt) {
+            alert("There was an error attempting to upload the file.");
+        }
+
+        function uploadCanceled(evt) {
+            alert("The upload has been canceled by the user or the browser dropped the connection.");
+        }
+
+        function initProgressbar() {
+            $.mobile.loading("show", {
+                text: "Началась загрузка файла",
+                textVisible: true,
+                textonly: true
+            });
+        }
+
+        $(document).ready(function() {
+            $('#file_upload').submit(function () {
+                uploadFile($(this));
+                return false;
+            });
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
-    {{ form_start(form, {'action': path('file_upload'), 'method': 'POST'}) }}
+    {{ form_start(form, {'action': path('file_upload'), 'method': 'POST', 'attr': {'id': 'file_upload'}}) }}
         {{ form_errors(form) }}
 
         {{ form_row(form.file) }}

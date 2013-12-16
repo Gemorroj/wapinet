@@ -68,8 +68,12 @@ class FileUrlDataTransformer implements DataTransformerInterface
         $uploadedFile = null;
 
         if ($fileDataFromForm['file']) {
-            // UploadedFile
+            // UploadedFile|string
             $uploadedFile = $fileDataFromForm['file'];
+            // TODO: вероятно эта проверка не нужна
+            if (!$uploadedFile instanceof UploadedFile) {
+                throw new TransformationFailedException('Ошибка при загрузке файла');
+            }
         }
 
         if ($fileDataFromForm['url']) {
@@ -100,6 +104,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
             throw new TransformationFailedException('Не заполнено обязательное поле');
         }
         // TODO: вероятно эта проверка не нужна
+        //var_dump($uploadedFile);
         if (null !== $uploadedFile && true !== $uploadedFile->isValid()) {
             throw new TransformationFailedException('Ошибка при загрузке файла');
         }
