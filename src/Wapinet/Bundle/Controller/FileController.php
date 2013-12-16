@@ -15,9 +15,12 @@ use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wapinet\Bundle\Entity\File;
+use Wapinet\Bundle\Form\Type\File\PasswordType;
 use Wapinet\Bundle\Form\Type\File\SearchType;
 use Wapinet\Bundle\Form\Type\File\UploadType;
+use Wapinet\UserBundle\Entity\User;
 
 /**
  * @see http://wap4file.org
@@ -136,7 +139,46 @@ class FileController extends Controller
     {
         $file = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->find($id);
 
+        if (null !== $file->getPassword() && (!($this->getUser() instanceof User) || !($file->getUser() instanceof User) || $file->getUser()->getId() !== $this->getUser()->getId())) {
+            return $this->passwordAction($file);
+        }
+
         return $this->render('WapinetBundle:File:view.html.twig', array('file' => $file));
+    }
+
+
+    /**
+     * @param File $file
+     *
+     * @return Response
+     */
+    public function passwordAction(File $file)
+    {
+        $encoder = $this->get('security.encoder_factory')->getEncoder($file);
+        $form = $this->createForm(new PasswordType());
+        $request = $this->get('request');
+
+        try {
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $data = $form->getData();
+                    if (true !== $encoder->isPasswordValid($file->getPassword(), $data['password'], $file->getSalt())) {
+                        throw new AccessDeniedException('Неверный пароль');
+                    }
+
+                    return $this->render('WapinetBundle:File:view.html.twig', array('file' => $file));
+                }
+            }
+        } catch (\Exception $e) {
+            $form->addError(new FormError($e->getMessage()));
+        }
+
+        return $this->render('WapinetBundle:File:password.html.twig', array(
+            'form' => $form->createView(),
+            'id' => $file->getId(),
+        ));
     }
 
     /**
