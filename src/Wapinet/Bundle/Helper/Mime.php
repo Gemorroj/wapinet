@@ -33,7 +33,12 @@ class Mime
         $curl->addCompression();
         $response = $curl->exec();
 
-        $mime = array();
+        $mime = array(
+            'amr' => 'audio/amr',
+            'ini' => 'text/plain',
+            'php' => 'text/html',
+            'm4a' => 'audio/x-m4a',
+        );
         foreach (explode("\n", $response->getContent()) as $x) {
             if (isset($x[0]) && $x[0] !== '#' && preg_match_all('#([^\s]+)#', $x, $out) && isset($out[1]) && ($c = count($out[1])) > 1) {
                 for ($i = 1; $i < $c; $i++) {

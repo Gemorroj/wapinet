@@ -38,13 +38,13 @@
             {% else %}
                 {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': vich_uploader_asset(file, 'file')|wapinet_video_screenshot } } %}
             {% endif %}
-            <p>{{ file.file.size|wapinet_size }}, {{ info.dimensions.width }}x{{ info.dimensions.height }}, {{ info.has('duration') ? info.get('duration')|wapinet_length : '' }}</p>
+            <p>{{ file.file.size|wapinet_size }}{% if info is not null %}, {{ info.dimensions.width }}x{{ info.dimensions.height }}{{ info.has('duration') ? ', ' ~ info.get('duration')|wapinet_length : '' }}{% endif %}</p>
         {% elseif file.isAudio %}
             {% set info = wapinet_audio_info(file.file) %}
             {% if file.isPlayableAudio %}
                 {% include '@Wapinet/audio.html.twig' with {'file': file} %}
             {% endif %}
-            <p>{{ file.file.size|wapinet_size }}, {{ info.has('duration') ? info.get('duration')|wapinet_length : '' }}</p>
+            <p>{{ file.file.size|wapinet_size }}{% if info is not null %}{{ info.has('duration') ? ', ' ~ info.get('duration')|wapinet_length : '' }}{% endif %}</p>
         {% elseif file.isArchive %}
             <p>{{ file.file.size|wapinet_size }}</p>
             {% if file.isExtractableArchive %}

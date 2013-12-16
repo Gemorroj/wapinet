@@ -585,7 +585,7 @@ class File extends ContainerAware
      */
     public function isM4a()
     {
-        return ('audio/mp4' === $this->getMimeType());
+        return ('audio/mp4' === $this->getMimeType() || 'audio/x-m4a' === $this->getMimeType());
     }
 
     /**
@@ -593,7 +593,7 @@ class File extends ContainerAware
      */
     public function isM4v()
     {
-        return ('video/mp4' === $this->getMimeType());
+        return ('video/mp4' === $this->getMimeType()|| 'video/x-m4v' === $this->getMimeType());
     }
 
     /**

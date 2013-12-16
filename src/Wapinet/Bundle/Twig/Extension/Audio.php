@@ -34,7 +34,7 @@ class Audio extends \Twig_Extension
     /**
      * @param File $file
      *
-     * @return Stream
+     * @return Stream|null
      */
     public function getInfo (File $file)
     {

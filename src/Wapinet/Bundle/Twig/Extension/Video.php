@@ -57,8 +57,10 @@ class Video extends \Twig_Extension
 
         if (false === file_exists(\AppKernel::getWebDir() . $mp4File)) {
             $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
-            $video = $ffmpeg->open(\AppKernel::getWebDir() . $path);
-            $video->save(new X264('libvo_aacenc'), \AppKernel::getWebDir() . $mp4File);
+            $media = $ffmpeg->open(\AppKernel::getWebDir() . $path);
+            if ($media instanceof \FFMpeg\Media\Video) {
+                $media->save(new X264('libvo_aacenc'), \AppKernel::getWebDir() . $mp4File);
+            }
         }
 
         return $mp4File;
@@ -74,8 +76,10 @@ class Video extends \Twig_Extension
 
         if (false === file_exists(\AppKernel::getWebDir() . $webmFile)) {
             $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
-            $video = $ffmpeg->open(\AppKernel::getWebDir() . $path);
-            $video->save(new WebM(), \AppKernel::getWebDir() . $webmFile);
+            $media = $ffmpeg->open(\AppKernel::getWebDir() . $path);
+            if ($media instanceof \FFMpeg\Media\Video) {
+                $media->save(new WebM(), \AppKernel::getWebDir() . $webmFile);
+            }
         }
 
         return $webmFile;
@@ -92,9 +96,11 @@ class Video extends \Twig_Extension
         if (false === file_exists(\AppKernel::getWebDir() . $screenshot)) {
             $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
             $second = $this->container->getParameter('wapinet_video_screenshot_second');
-
-            $frame = $ffmpeg->open(\AppKernel::getWebDir() . $path)->frame(TimeCode::fromSeconds($second));
-            $frame->save(\AppKernel::getWebDir() . $screenshot);
+            $media = $ffmpeg->open(\AppKernel::getWebDir() . $path);
+            if ($media instanceof \FFMpeg\Media\Video) {
+                $frame = $media->frame(TimeCode::fromSeconds($second));
+                $frame->save(\AppKernel::getWebDir() . $screenshot);
+            }
         }
 
         return $screenshot;
@@ -104,7 +110,7 @@ class Video extends \Twig_Extension
     /**
      * @param File $file
      *
-     * @return Stream
+     * @return Stream|null
      */
     public function getInfo (File $file)
     {
