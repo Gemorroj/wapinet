@@ -49,10 +49,6 @@ class File extends ContainerAware
     /**
      * @var int
      */
-    protected $countDownloads = 0;
-    /**
-     * @var int
-     */
     protected $countViews = 0;
     /**
      * @var string|null
@@ -240,25 +236,6 @@ class File extends ContainerAware
     public function setLastViewAt(\DateTime $lastViewAt)
     {
         $this->lastViewAt = $lastViewAt;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCountDownloads()
-    {
-        return $this->countDownloads;
-    }
-
-    /**
-     * @param int $countDownloads
-     * @return File
-     */
-    public function setCountDownloads($countDownloads)
-    {
-        $this->countDownloads = $countDownloads;
 
         return $this;
     }

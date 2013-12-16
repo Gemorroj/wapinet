@@ -32,10 +32,6 @@ Wapinet\Bundle\Entity\File:
             type: datetime
             nullable: true
             column: last_view_at
-        countDownloads:
-            type: integer
-            nullable: false
-            column: count_downloads
         countViews:
             type: integer
             nullable: false
