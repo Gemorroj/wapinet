@@ -143,16 +143,19 @@ class FileController extends Controller
             return $this->passwordAction($file);
         }
 
-        $this->incrementCountViews($file);
-        return $this->render('WapinetBundle:File:view.html.twig', array('file' => $file));
+        $response = $this->render('WapinetBundle:File:view.html.twig', array('file' => $file));
+        $this->incrementViews($file);
+
+        return $response;
     }
 
     /**
      * @param File $file
      */
-    protected function incrementCountViews(File $file)
+    protected function incrementViews(File $file)
     {
         $file->setCountViews($file->getCountViews() + 1);
+        $file->setLastViewAt(new \DateTime());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($file);
         $entityManager->flush();
@@ -179,8 +182,11 @@ class FileController extends Controller
                         throw new AccessDeniedException('Неверный пароль');
                     }
 
-                    $this->incrementCountViews($file);
-                    return $this->render('WapinetBundle:File:view.html.twig', array('file' => $file));
+
+                    $response = $this->render('WapinetBundle:File:view.html.twig', array('file' => $file));
+                    $this->incrementViews($file);
+
+                    return $response;
                 }
             }
         } catch (\Exception $e) {

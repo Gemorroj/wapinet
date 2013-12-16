@@ -26,20 +26,19 @@
     {% if file is null%}
         Файл не найден
     {% else %}
-        <p><a data-role="button" href="{{ vich_uploader_asset(file, 'file') }}" download="{{ file.originalFileName }}">Скачать</a></p>
-        {% if file.user is not null %}
-            <p>Загружено: <a href="{{ path('wapinet_user_profile', {'username': file.user.username}) }}">{{ file.user.username }}</a></p>
-        {% endif %}
-        <p>Просмотров: {{ file.countViews }}</p>
+        <a data-role="button" href="{{ vich_uploader_asset(file, 'file') }}" download="{{ file.originalFileName }}">Скачать</a>
+
         {% if file.isImage %}
             {% set info = wapinet_image_info(file.file) %}
+
             {% if info is not null %}
                 {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': vich_uploader_asset(file, 'file') } } %}
+                <p>{{ info.size.width }}x{{ info.size.height }}</p>
             {% endif %}
-            <p>{{ file.file.size|wapinet_size }}{% if info is not null %}, {{ info.size.width }}x{{ info.size.height }}{% endif %}</p>
         {% elseif file.isVideo %}
             {% set info = wapinet_video_info(file.file) %}
             {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_video_screenshot %}
+
             {% if file.isPlayableVideo %}
                 {% include '@Wapinet/video.html.twig' with {'file': file} %}
             {% else %}
@@ -47,20 +46,60 @@
                     {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot } } %}
                 {% endif %}
             {% endif %}
-            <p>{{ file.file.size|wapinet_size }}{% if info is not null %}, {{ info.dimensions.width }}x{{ info.dimensions.height }}{{ info.has('duration') ? ', ' ~ info.get('duration')|wapinet_length : '' }}{% endif %}</p>
+
+            {% if info is not null %}
+                <p>{{ info.dimensions.width }}x{{ info.dimensions.height }}{{ info.has('duration') ? ', ' ~ info.get('duration')|wapinet_length : '' }}</p>
+            {% endif %}
         {% elseif file.isAudio %}
             {% set info = wapinet_audio_info(file.file) %}
+
             {% if file.isPlayableAudio %}
                 {% include '@Wapinet/audio.html.twig' with {'file': file} %}
             {% endif %}
-            <p>{{ file.file.size|wapinet_size }}{% if info is not null %}{{ info.has('duration') ? ', ' ~ info.get('duration')|wapinet_length : '' }}{% endif %}</p>
+
+            {% if info is not null %}<p>{{ info.has('duration') ? info.get('duration')|wapinet_length : '' }}</p>{% endif %}
         {% elseif file.isArchive %}
-            <p>{{ file.file.size|wapinet_size }}</p>
             {% if file.isExtractableArchive %}
                 {% include '@Wapinet/archive.html.twig' with {'file': file} %}
             {% endif %}
-        {% else %}
-            <p>{{ file.file.size|wapinet_size }}</p>
         {% endif %}
+
+        <pre>{{ file.description }}</pre>
+        <table data-role="table" class="ui-responsive table-stroke">
+            <thead>
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Загружено:</td>
+                <td>{{ file.createdAt|wapinet_datetime }}</td>
+            </tr>
+            <tr>
+                <td>Размер:</td>
+                <td>{{ file.file.size|wapinet_size }}</td>
+            </tr>
+            <tr>
+                <td>Всего просмотров:</td>
+                <td>{{ file.countViews }}</td>
+            </tr>
+            <tr>
+                <td>Последний просмотр:</td>
+                <td>{{ file.lastViewAt|wapinet_datetime }}</td>
+            </tr>
+            {% if file.user is not null %}
+            <tr>
+                <td>Пользователь:</td>
+                <td><a href="{{ path('wapinet_user_profile', {'username': file.user.username}) }}">{{ file.user.username }}</a></td>
+            </tr>
+            {% endif %}
+            <tr>
+                <td>Пароль:</td>
+                <td>&#x2713;</td>
+            </tr>
+            </tbody>
+        </table>
     {% endif %}
 {% endblock %}

@@ -41,10 +41,6 @@ class File extends ContainerAware
     /**
      * @var \DateTime|null
      */
-    protected $lastDownloadAt;
-    /**
-     * @var \DateTime|null
-     */
     protected $lastViewAt;
     /**
      * @var int
@@ -198,25 +194,6 @@ class File extends ContainerAware
     public function setUpdatedAtValue()
     {
         $this->updatedAt = new \DateTime();
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getLastDownloadAt()
-    {
-        return $this->lastDownloadAt;
-    }
-
-    /**
-     * @param \DateTime $lastDownloadAt
-     * @return File
-     */
-    public function setLastDownloadAt(\DateTime $lastDownloadAt)
-    {
-        $this->lastDownloadAt = $lastDownloadAt;
 
         return $this;
     }

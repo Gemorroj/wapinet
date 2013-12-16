@@ -24,10 +24,6 @@ Wapinet\Bundle\Entity\File:
             type: datetime
             nullable: true
             column: updated_at
-        lastDownloadAt:
-            type: datetime
-            nullable: true
-            column: last_download_at
         lastViewAt:
             type: datetime
             nullable: true
