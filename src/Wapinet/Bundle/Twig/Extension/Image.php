@@ -5,7 +5,7 @@ namespace Wapinet\Bundle\Twig\Extension;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Imagine\Gd\Imagine;
-use Imagine\Image\Box;
+use Imagine\Gd\Image as GdImage;
 
 class Image extends \Twig_Extension
 {
@@ -27,7 +27,7 @@ class Image extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('wapinet_image_size', array($this, 'getSize')),
+            new \Twig_SimpleFunction('wapinet_image_info', array($this, 'getInfo')),
         );
     }
 
@@ -35,14 +35,18 @@ class Image extends \Twig_Extension
     /**
      * @param File $file
      *
-     * @return Box
+     * @return GdImage|null
      */
-    public function getSize (File $file)
+    public function getInfo (File $file)
     {
         $imagine = new Imagine();
-        $image = $imagine->open($file->getPathname());
+        try {
+            $info = $imagine->open($file->getPathname());
+        } catch (\Exception $e) {
+            $info = null;
+        }
 
-        return $image->getSize();
+        return $info;
     }
 
 

@@ -28,9 +28,11 @@
     {% else %}
         <p><a data-role="button" href="{{ vich_uploader_asset(file, 'file') }}" download="{{ file.originalFileName }}">Скачать</a></p>
         {% if file.isImage %}
-            {% set size = wapinet_image_size(file.file) %}
-            {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': vich_uploader_asset(file, 'file') } } %}
-            <p>{{ file.file.size|wapinet_size }}, {{ size.width }}x{{ size.height }}</p>
+            {% set info = wapinet_image_info(file.file) %}
+            {% if info is not null %}
+                {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': vich_uploader_asset(file, 'file') } } %}
+            {% endif %}
+            <p>{{ file.file.size|wapinet_size }}{% if info is not null %}, {{ info.size.width }}x{{ info.size.height }}{% endif %}</p>
         {% elseif file.isVideo %}
             {% set info = wapinet_video_info(file.file) %}
             {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_video_screenshot %}
