@@ -2,6 +2,7 @@
 
 namespace Wapinet\Bundle\Twig\Extension;
 
+use FFMpeg\Format\Video\WebM;
 use FFMpeg\Format\Video\X264;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\FFProbe\DataMapping\Stream;
@@ -30,6 +31,7 @@ class Video extends \Twig_Extension
         return array(
             new \Twig_SimpleFilter('wapinet_video_screenshot', array($this, 'getScreenshot')),
             new \Twig_SimpleFilter('wapinet_video_3gp_to_mp4', array($this, 'convert3gpToMp4')),
+            new \Twig_SimpleFilter('wapinet_video_avi_to_webm', array($this, 'convertAviToWebm')),
         );
     }
 
@@ -60,6 +62,23 @@ class Video extends \Twig_Extension
         }
 
         return $mp4File;
+    }
+
+    /**
+     * @param string $path
+     * @return string
+     */
+    public function convertAviToWebm ($path)
+    {
+        $webmFile = $path . '.webm';
+
+        if (false === file_exists(\AppKernel::getWebDir() . $webmFile)) {
+            $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
+            $video = $ffmpeg->open(\AppKernel::getWebDir() . $path);
+            $video->save(new WebM(), \AppKernel::getWebDir() . $webmFile);
+        }
+
+        return $webmFile;
     }
 
     /**
