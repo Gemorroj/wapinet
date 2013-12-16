@@ -33,10 +33,13 @@
             <p>{{ file.file.size|wapinet_size }}, {{ size.width }}x{{ size.height }}</p>
         {% elseif file.isVideo %}
             {% set info = wapinet_video_info(file.file) %}
+            {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_video_screenshot %}
             {% if file.isPlayableVideo %}
                 {% include '@Wapinet/video.html.twig' with {'file': file} %}
             {% else %}
-                {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': vich_uploader_asset(file, 'file')|wapinet_video_screenshot } } %}
+                {% if screenshot is not null %}
+                    {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot } } %}
+                {% endif %}
             {% endif %}
             <p>{{ file.file.size|wapinet_size }}{% if info is not null %}, {{ info.dimensions.width }}x{{ info.dimensions.height }}{{ info.has('duration') ? ', ' ~ info.get('duration')|wapinet_length : '' }}{% endif %}</p>
         {% elseif file.isAudio %}

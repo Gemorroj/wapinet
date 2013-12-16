@@ -20,15 +20,24 @@
     {% endif %}
 {% endspaceless %}{% endset %}
 
-$(document).ready(function(){
-    $("#jquery_jplayer_1").jPlayer({
-        "ready": function () {
-            $(this).jPlayer("setMedia", {
-                "{{ format }}": "{{ video }}",
-                "poster": "{{ vich_uploader_asset(file, 'file')|wapinet_video_screenshot }}"
-            });
-        },
-        "supplied": "{{ format }}",
-        "swfPath": "{{ asset('bundles/wapinet/js/jplayer/Jplayer.swf') }}"
-    });
+{% set screenshot = vich_uploader_asset(file, 'file')|wapinet_video_screenshot %}
+
+$(document).ready(function () {
+    {% if video %}
+        $("#jquery_jplayer_1").jPlayer({
+            "ready": function () {
+                $(this).jPlayer("setMedia", {
+                    {% if screenshot is not null %}
+                        "poster": "{{ screenshot }}",
+                    {% endif %}
+                    "{{ format }}": "{{ video }}"
+                });
+            },
+            "supplied": "{{ format }}",
+            "swfPath": "{{ asset('bundles/wapinet/js/jplayer/Jplayer.swf') }}"
+        });
+    {% else %}
+        $("#jp_container_1").hide();
+    {% endif %}
 });
+

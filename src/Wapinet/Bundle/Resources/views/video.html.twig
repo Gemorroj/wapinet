@@ -1,7 +1,13 @@
 {% if file.is3gp %}
-    <p><a data-inline="true" data-role="button" href="{{ vich_uploader_asset(file, 'file')|wapinet_video_3gp_to_mp4 }}" download="{{ file.originalFileName }}.mp4">Скачать MP4</a></p>
+    {% set videoMp4 = vich_uploader_asset(file, 'file')|wapinet_video_3gp_to_mp4 %}
+    {% if videoMp4 is not null %}
+        <p><a data-inline="true" data-role="button" href="{{ videoMp4 }}" download="{{ file.originalFileName }}.mp4">Скачать MP4</a></p>
+    {% endif %}
 {% elseif file.isAvi %}
-    <p><a data-inline="true" data-role="button" href="{{ vich_uploader_asset(file, 'file')|wapinet_video_avi_to_webm }}" download="{{ file.originalFileName }}.mp4">Скачать Webm</a></p>
+    {% set videoWebm = vich_uploader_asset(file, 'file')|wapinet_video_avi_to_webm %}
+    {% if videoWebm is not null %}
+        <p><a data-inline="true" data-role="button" href="{{ videoWebm }}" download="{{ file.originalFileName }}.mp4">Скачать Webm</a></p>
+    {% endif %}
 {% endif %}
 
 <div id="jp_container_1" class="jp-video">

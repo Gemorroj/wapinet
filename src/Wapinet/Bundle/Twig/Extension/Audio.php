@@ -40,7 +40,13 @@ class Audio extends \Twig_Extension
     {
         $ffprobe = $this->container->get('dubture_ffmpeg.ffprobe');
 
-        return $ffprobe->streams($file->getPathname())->audios()->first();
+        try {
+            $info = $ffprobe->streams($file->getPathname())->audios()->first();
+        } catch (\Exception $e) {
+            $info = null;
+        }
+
+        return $info;
     }
 
 

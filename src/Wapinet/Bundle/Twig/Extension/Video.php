@@ -49,7 +49,7 @@ class Video extends \Twig_Extension
 
     /**
      * @param string $path
-     * @return string
+     * @return string|null
      */
     public function convert3gpToMp4 ($path)
     {
@@ -57,9 +57,14 @@ class Video extends \Twig_Extension
 
         if (false === file_exists(\AppKernel::getWebDir() . $mp4File)) {
             $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
-            $media = $ffmpeg->open(\AppKernel::getWebDir() . $path);
-            if ($media instanceof \FFMpeg\Media\Video) {
+            try {
+                $media = $ffmpeg->open(\AppKernel::getWebDir() . $path);
                 $media->save(new X264('libvo_aacenc'), \AppKernel::getWebDir() . $mp4File);
+                if (false === file_exists(\AppKernel::getWebDir() . $mp4File)) {
+                    throw new \RuntimeException('Не удалось создать MP4 файл');
+                }
+            } catch (\Exception $e) {
+                return null;
             }
         }
 
@@ -68,7 +73,7 @@ class Video extends \Twig_Extension
 
     /**
      * @param string $path
-     * @return string
+     * @return string|null
      */
     public function convertAviToWebm ($path)
     {
@@ -76,9 +81,14 @@ class Video extends \Twig_Extension
 
         if (false === file_exists(\AppKernel::getWebDir() . $webmFile)) {
             $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
-            $media = $ffmpeg->open(\AppKernel::getWebDir() . $path);
-            if ($media instanceof \FFMpeg\Media\Video) {
+            try {
+                $media = $ffmpeg->open(\AppKernel::getWebDir() . $path);
                 $media->save(new WebM(), \AppKernel::getWebDir() . $webmFile);
+                if (false === file_exists(\AppKernel::getWebDir() . $webmFile)) {
+                    throw new \RuntimeException('Не удалось создать WEBM файл');
+                }
+            } catch (\Exception $e) {
+                return null;
             }
         }
 
@@ -87,7 +97,7 @@ class Video extends \Twig_Extension
 
     /**
      * @param string $path
-     * @return string
+     * @return string|null
      */
     public function getScreenshot($path)
     {
@@ -96,10 +106,20 @@ class Video extends \Twig_Extension
         if (false === file_exists(\AppKernel::getWebDir() . $screenshot)) {
             $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
             $second = $this->container->getParameter('wapinet_video_screenshot_second');
-            $media = $ffmpeg->open(\AppKernel::getWebDir() . $path);
-            if ($media instanceof \FFMpeg\Media\Video) {
-                $frame = $media->frame(TimeCode::fromSeconds($second));
-                $frame->save(\AppKernel::getWebDir() . $screenshot);
+
+            try {
+                $media = $ffmpeg->open(\AppKernel::getWebDir() . $path);
+                if ($media instanceof \FFMpeg\Media\Video) {
+                    $frame = $media->frame(TimeCode::fromSeconds($second));
+                    $frame->save(\AppKernel::getWebDir() . $screenshot);
+                    if (false === file_exists(\AppKernel::getWebDir() . $screenshot)) {
+                        throw new \RuntimeException('Не удалось создать скриншот');
+                    }
+                } else {
+                    throw new \RuntimeException('Не найден видео поток');
+                }
+            } catch (\Exception $e) {
+                return null;
             }
         }
 
@@ -116,7 +136,13 @@ class Video extends \Twig_Extension
     {
         $ffprobe = $this->container->get('dubture_ffmpeg.ffprobe');
 
-        return $ffprobe->streams($file->getPathname())->videos()->first();
+        try {
+            $info = $ffprobe->streams($file->getPathname())->videos()->first();
+        } catch (\Exception $e) {
+            $info = null;
+        }
+
+        return $info;
     }
 
 
