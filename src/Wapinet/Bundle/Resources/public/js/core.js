@@ -26,6 +26,54 @@ var FileLoader = {
     },
     previewCleaner: function (previewElement) {
         $(previewElement).parent().find('p.container-preview').remove();
+    },
+    uploadFile: function (form) {
+        $.mobile.loading("show", {
+            text: "Загрузка файла...",
+            textVisible: true,
+            textonly: true
+        });
+        if (window.FormData === undefined || window.XMLHttpRequest === undefined) {
+            return true;
+        }
+
+        var xhr = new window.XMLHttpRequest();
+        if (xhr.upload === undefined) {
+            xhr.close();
+            return true;
+        }
+
+        var formData = new window.FormData(form);
+        var $uploadLoader = $('div.ui-loader-textonly h1');
+
+        xhr.upload.addEventListener("progress", function (e) {
+            if (e.lengthComputable) {
+                var percentComplete = Math.round(e.loaded * 100 / e.total);
+                $uploadLoader.text(percentComplete.toString() + '%');
+            } else {
+                $uploadLoader.text('Неизвестно.');
+            }
+        }, false);
+        xhr.addEventListener("load", function (e) {
+            if (e.target.status === 200) {
+                var responseJson = JSON.parse(e.target.responseText);
+                window.location.assign(responseJson.url);
+            } else {
+                $uploadLoader.text('Ошибка при загрузке.');
+            }
+        }, false);
+        xhr.addEventListener("error", function () {
+            $uploadLoader.text('Загрузка прервана.');
+        }, false);
+        xhr.addEventListener("abort", function () {
+            $uploadLoader.text('Загрузка остановлена.');
+        }, false);
+
+        xhr.open(form.getAttribute('method'), form.getAttribute('action'));
+        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        xhr.send(formData);
+
+        return false;
     }
 };
 var Helper = {
@@ -55,12 +103,12 @@ $(document).on("pagebeforeshow", "#page", function () {
         var fileElement = e.target;
         // только если поддерживается
         if (fileElement.files) {
+            var file = fileElement.files[0];
             FileLoader.previewCleaner(fileElement);
-            $.each(fileElement.files, function (i, file) {
-                FileLoader.readFile(file, function (e) {
-                    FileLoader.preview(e, file, fileElement);
-                });
+            FileLoader.readFile(file, function (e) {
+                FileLoader.preview(e, file, fileElement);
             });
+
         }
     });
 
