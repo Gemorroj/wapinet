@@ -33,13 +33,19 @@ class Archive extends \Twig_Extension
     /**
      * @param File $file
      *
-     * @return \Archive7z\Entry[]
+     * @return \Archive7z\Entry[]|null
      */
     public function getList (File $file)
     {
         $archive = $this->container->get('archive_7z');
 
-        return $archive->getEntries($file);
+        try {
+            $entries = $archive->getEntries($file);
+        } catch (\Exception $e) {
+            $entries = null;
+        }
+
+        return $entries;
     }
 
 
