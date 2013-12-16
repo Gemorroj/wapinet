@@ -28,11 +28,13 @@ var FileLoader = {
         $(previewElement).parent().find('p.container-preview').remove();
     },
     uploadFile: function (form) {
+        var $uploadLoader = $('<span></span>');
+
         $.mobile.loading("show", {
-            text: "Загрузка файла...",
-            textVisible: true,
-            textonly: true
+            text: "Загрузка файла... ",
+            textVisible: true
         });
+
         if (window.FormData === undefined || window.XMLHttpRequest === undefined) {
             return true;
         }
@@ -44,7 +46,7 @@ var FileLoader = {
         }
 
         var formData = new window.FormData(form);
-        var $uploadLoader = $('div.ui-loader-textonly h1');
+        $uploadLoader.appendTo('div.ui-loader h1');
 
         xhr.upload.addEventListener("progress", function (e) {
             if (e.lengthComputable) {
