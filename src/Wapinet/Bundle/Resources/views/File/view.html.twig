@@ -27,6 +27,10 @@
         Файл не найден
     {% else %}
         <p><a data-role="button" href="{{ vich_uploader_asset(file, 'file') }}" download="{{ file.originalFileName }}">Скачать</a></p>
+        {% if file.user is not null %}
+            <p>Загружено: <a href="{{ path('wapinet_user_profile', {'username': file.user.username}) }}">{{ file.user.username }}</a></p>
+        {% endif %}
+        <p>Просмотров: {{ file.countViews }}</p>
         {% if file.isImage %}
             {% set info = wapinet_image_info(file.file) %}
             {% if info is not null %}
