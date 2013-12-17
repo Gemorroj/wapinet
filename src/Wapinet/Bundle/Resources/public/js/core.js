@@ -153,4 +153,5 @@ $(document).ajaxStart(function () {
     setTimeout(function () {
         $.mobile.loading("hide");
     }, 3000);
+    $("#page").trigger("pagecreate");
 });
