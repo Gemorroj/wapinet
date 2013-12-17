@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript">
+    <script type="text/javascript">{% autoescape 'js' %}
         $(document).bind("pageinit", function () {
             var deletePath;
 
@@ -24,7 +24,7 @@
                 );
             });
         });
-    </script>
+    {% endautoescape %}</script>
 {% endblock %}
 
 {% block content %}

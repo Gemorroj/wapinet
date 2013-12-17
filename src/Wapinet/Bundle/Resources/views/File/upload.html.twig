@@ -9,13 +9,13 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript">
+    <script type="text/javascript">{% autoescape 'js' %}
         $(document).on("pagebeforeshow", "#page", function () {
             $('#file_upload').submit(function () {
                 return FileLoader.uploadFile(this);
             });
         });
-    </script>
+    {% endautoescape %}</script>
 {% endblock %}
 
 {% block content %}

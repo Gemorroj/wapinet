@@ -26,7 +26,7 @@
 
     {# comments #}
     {% if comments_id is defined %}
-        <script type="text/javascript">
+        <script type="text/javascript">{% autoescape 'js' %}
             // thread id
             var fos_comment_thread_id = '{{ comments_id }}';
 
@@ -42,7 +42,7 @@
 
                 (document.getElementsByTagName('head')[0]).appendChild(fos_comment_script);
             });
-        </script>
+        {% endautoescape %}</script>
         <link rel="stylesheet" href="{{ asset('bundles/wapinetcomment/css/comments.css') }}" type="text/css" />
         {# <script async="async" type="text/javascript" src="{{ asset('bundles/wapinetcomment/js/comments.js') }}"></script> #}
     {% endif %}
