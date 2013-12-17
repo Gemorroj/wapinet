@@ -1,22 +1,25 @@
-<ul data-role="listview" data-inset="true">
-{% for entry in wapinet_archive_list(file.file) %}
-    {% set pathView = entry.path %}
-    {% set path = entry.path %}
+<div data-role="collapsible">
+    <h4>Содержимое архива</h4>
+    <ul data-role="listview" data-inset="true">
+    {% for entry in wapinet_archive_list(file.file) %}
+        {% set pathView = entry.path %}
+        {% set path = entry.path %}
 
-    {% if entry.isDirectory %}
-        <li class="ui-bar-d" data-icon="false">
-            <a href="#">{{ pathView }}</a>
-        </li>
-    {% else %}
+        {% if entry.isDirectory %}
+            <li class="ui-bar-d" data-icon="false">
+                <a href="#">{{ pathView }}</a>
+            </li>
+        {% else %}
+            <li>
+                <a href="{{ path('file_archive_download_file', {'id': file.id, 'name': entry.path|basename, 'path': entry.path}) }}">{{ pathView }}</a>
+                <span class="ui-li-count">{{ entry.size|wapinet_size }}</span>
+            </li>
+        {% endif %}
+
+        {% else %}
         <li>
-            <a href="{{ path('file_archive_download_file', {'id': file.id, 'name': entry.path|basename, 'path': entry.path}) }}">{{ pathView }}</a>
-            <span class="ui-li-count">{{ entry.size|wapinet_size }}</span>
+            Не удается открыть архив.
         </li>
-    {% endif %}
-
-    {% else %}
-    <li>
-        Не удается открыть архив.
-    </li>
-{% endfor %}
-</ul>
+    {% endfor %}
+    </ul>
+</div>
