@@ -43,6 +43,10 @@ class ThreadController extends BaseThreadController
 
         // We're now sure it is no duplicate id, so create the thread
         if (null === $thread) {
+            if (!$this->get('fos_comment.acl.thread')->canCreate()) {
+                return new Response('<p>0 комментариев</p>');
+            }
+
             // Decode the permalink for cleaner storage (it is encoded on the client side)
             $permalink = urldecode($request->query->get('permalink'));
 
