@@ -125,6 +125,7 @@ class AppKernel extends Kernel
             new Liip\ImagineBundle\LiipImagineBundle(),
             new Gregwar\CaptchaBundle\GregwarCaptchaBundle(),
             new Dubture\FFmpegBundle\DubtureFFmpegBundle(),
+            new FPN\TagBundle\FPNTagBundle(),
 
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
@@ -141,6 +142,7 @@ class AppKernel extends Kernel
             new Wapinet\CommentBundle\WapinetCommentBundle(),
             new Wapinet\NewsBundle\WapinetNewsBundle(),
             new Wapinet\UploaderBundle\WapinetUploaderBundle(),
+            new Wapinet\TagBundle\WapinetTagBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -184,3 +184,9 @@ liip_imagine:
 dubture_f_fmpeg:
     ffmpeg_binary: %wapinet_ffmpeg_path%
     ffprobe_binary: %wapinet_ffprobe_path%
+
+fpn_tag:
+    model:
+        tag_class:     Wapinet\TagBundle\Entity\Tag
+        tagging_class: Wapinet\TagBundle\Entity\Tagging
+
