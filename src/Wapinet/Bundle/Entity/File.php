@@ -2,7 +2,6 @@
 
 namespace Wapinet\Bundle\Entity;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
 use Wapinet\UserBundle\Entity\User;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
@@ -12,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * File
  * @Vich\Uploadable
  */
-class File extends ContainerAware
+class File
 {
     /**
      * @var integer
@@ -77,6 +76,10 @@ class File extends ContainerAware
      * @var string
      */
     protected $description;
+    /**
+     * @var string
+     */
+    protected $hash;
 
     /**
      * Get id
@@ -382,6 +385,29 @@ class File extends ContainerAware
     public function setDescription($description)
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * MD5 file hash
+     *
+     * @return string
+     */
+    public function getHash()
+    {
+        return $this->hash;
+    }
+
+    /**
+     * MD5 file hash
+     *
+     * @param string $hash
+     * @return File
+     */
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
 
         return $this;
     }

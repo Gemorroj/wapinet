@@ -79,10 +79,11 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
 
+    error:
+        class: Wapinet\Bundle\Helper\Error
     mime:
         class: Wapinet\Bundle\Helper\Mime
         arguments: [@service_container]
-
     curl:
         class: Wapinet\Bundle\Helper\Curl
         arguments: [@service_container]

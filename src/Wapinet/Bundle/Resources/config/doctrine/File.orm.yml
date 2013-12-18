@@ -7,6 +7,9 @@ Wapinet\Bundle\Entity\File:
             type: integer
             generator:
                 strategy: AUTO
+    indexes:
+        hash_idx:
+            columns: [ hash ]
     fields:
         ip:
             type: string
@@ -57,6 +60,10 @@ Wapinet\Bundle\Entity\File:
             nullable: false
             column: description
             length: 5000
+        hash:
+            type: string
+            nullable: false
+            column: hash
 
     lifecycleCallbacks:
         prePersist: [ setCreatedAtValue ]

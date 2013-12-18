@@ -3,6 +3,7 @@ namespace Wapinet\Bundle\Form\Type\File;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Password
@@ -17,7 +18,7 @@ class PasswordType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('password', 'password', array('required' => true, 'label' => 'Пароль'));
+        $builder->add('password', 'password', array('required' => true, 'label' => 'Пароль', 'constraints' => new NotBlank()));
 
         $builder->add('submit', 'submit', array('label' => 'Готово'));
     }

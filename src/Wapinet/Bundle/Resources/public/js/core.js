@@ -57,11 +57,14 @@ var FileLoader = {
             }
         }, false);
         xhr.addEventListener("load", function (e) {
+            var responseJson = JSON.parse(e.target.responseText);
             if (e.target.status === 200) {
-                var responseJson = JSON.parse(e.target.responseText);
                 window.location.assign(responseJson.url);
             } else {
-                $uploadLoader.text('Ошибка при загрузке.');
+                $uploadLoader.text('Ошибка: ' + responseJson.errors.join(". "));
+                setTimeout(function () {
+                    $.mobile.loading("hide");
+                }, 5000);
             }
         }, false);
         xhr.addEventListener("error", function () {
@@ -152,6 +155,6 @@ $(document).ajaxStart(function () {
     });
     setTimeout(function () {
         $.mobile.loading("hide");
-    }, 3000);
+    }, 5000);
     $("#page").trigger("pagecreate");
 });

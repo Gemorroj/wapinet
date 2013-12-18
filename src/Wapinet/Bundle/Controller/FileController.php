@@ -17,6 +17,7 @@ use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wapinet\Bundle\Entity\File;
+use Wapinet\Bundle\Exception\FileDuplicatedException;
 use Wapinet\Bundle\Form\Type\File\PasswordType;
 use Wapinet\Bundle\Form\Type\File\SearchType;
 use Wapinet\Bundle\Form\Type\File\UploadType;
@@ -269,6 +270,13 @@ class FileController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
+        // загрузка через ajax
+        if (true === $request->isXmlHttpRequest() && $form->isSubmitted() && !$form->isValid()) {
+            return new JsonResponse(array(
+                'errors' => $this->get('error')->makeErrors($form),
+            ), Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         return $this->render('WapinetBundle:File:upload.html.twig', array(
             'form' => $form->createView()
         ));
@@ -315,19 +323,29 @@ class FileController extends Controller
     /**
      * @param Request $request
      * @param File    $data
-     *
+     * @throws FileDuplicatedException
      * @return File
      */
     protected function setFileData(Request $request, File $data)
     {
+        /** @var UploadedFile $file */
+        $file = $data->getFile();
+
+        $hash = md5_file($file->getPathname());
+
+        $existingFile = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->findOneBy(array('hash' => $hash));
+        if (null !== $existingFile) {
+            throw new FileDuplicatedException($existingFile);
+        }
+
+        $data->setHash($hash);
+        $data->setMimeType($this->get('mime')->getMimeType($file->getClientOriginalName()));
+        $data->setOriginalFileName($file->getClientOriginalName());
+
+
         $data->setUser($this->getUser());
         $data->setIp($request->getClientIp());
         $data->setBrowser($request->headers->get('User-Agent', ''));
-
-        /** @var UploadedFile $file */
-        $file = $data->getFile();
-        $data->setMimeType($this->get('mime')->getMimeType($file->getClientOriginalName()));
-        $data->setOriginalFileName($file->getClientOriginalName());
 
         if (null !== $data->getPassword()) {
             $data->setSaltValue();
