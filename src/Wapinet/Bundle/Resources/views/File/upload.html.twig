@@ -24,7 +24,7 @@
 
         {{ form_row(form.file) }}
         {{ form_row(form.description) }}
-        {# {{ form_row(form.categories) }} #}
+        {{ form_row(form.tags_string) }}
 
         <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
             <input type="checkbox" id="upload-password" onchange="$('#upload-password-row').toggle();" />

@@ -105,6 +105,12 @@
                 <td><abbr title="Message Digest 5 — 128-битный алгоритм хеширования">MD5</abbr>:</td>
                 <td>{{ file.hash }}</td>
             </tr>
+            {% if not file.tags.isEmpty %}
+                <tr>
+                    <td>Тэги:</td>
+                    <td>{{ file.tags|join(' ') }}</td>
+                </tr>
+            {% endif %}
             </tbody>
         </table>
 

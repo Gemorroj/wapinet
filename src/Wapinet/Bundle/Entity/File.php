@@ -2,6 +2,9 @@
 
 namespace Wapinet\Bundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use DoctrineExtensions\Taggable\Taggable;
+use Wapinet\TagBundle\Entity\Tag;
 use Wapinet\UserBundle\Entity\User;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
@@ -11,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * File
  * @Vich\Uploadable
  */
-class File
+class File implements Taggable
 {
     /**
      * @var integer
@@ -80,6 +83,37 @@ class File
      * @var string
      */
     protected $hash;
+    /**
+     * @var ArrayCollection|null
+     */
+    protected $tags;
+
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getTags()
+    {
+        $this->tags = $this->tags ? $this->tags : new ArrayCollection();
+
+        return $this->tags;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTaggableType()
+    {
+        return 'file_tag';
+    }
+
+    /**
+     * @return int
+     */
+    public function getTaggableId()
+    {
+        return $this->getId();
+    }
 
     /**
      * Get id

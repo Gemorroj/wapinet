@@ -166,6 +166,9 @@ class FileController extends Controller
      */
     protected function viewFile(File $file)
     {
+        // подгружаем тэги
+        $this->get('fpn_tag.tag_manager')->loadTagging($file);
+
         $response = $this->render('WapinetBundle:File:view.html.twig', array('comments_id' => 'file-' . $file->getId(), 'file' => $file));
         $this->incrementViews($file);
 
@@ -244,7 +247,8 @@ class FileController extends Controller
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    $file = $this->setFileData($request, $data);
+                    $tagsString = $form['tags_string']->getData();
+                    $file = $this->setFileData($request, $data, $tagsString);
 
                     $router = $this->container->get('router');
                     $url = $router->generate('file_view', array(
@@ -285,15 +289,33 @@ class FileController extends Controller
 
     /**
      * @param File $file
+     * @param string $tagsString
      */
-    protected function saveFile(File $file)
+    protected function saveFile(File $file, $tagsString = null)
     {
         // сохраняем в БД
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($file);
         $entityManager->flush();
 
+        $this->saveFileTags($file, $tagsString);
         $this->saveFileAcl($file);
+    }
+
+
+    /**
+     * @param File $file
+     * @param string $tagsString
+     */
+    protected function saveFileTags(File $file, $tagsString = null)
+    {
+        if (null !== $tagsString) {
+            $tagManager = $this->get('fpn_tag.tag_manager');
+            $tagsArray = $tagManager->splitTagNames($tagsString);
+            $tagsObject = $tagManager->loadOrCreateTags($tagsArray);
+            $tagManager->addTags($tagsObject, $file);
+            $tagManager->saveTagging($file);
+        }
     }
 
 
@@ -323,10 +345,11 @@ class FileController extends Controller
     /**
      * @param Request $request
      * @param File    $data
+     * @param string $tagsString
      * @throws FileDuplicatedException
      * @return File
      */
-    protected function setFileData(Request $request, File $data)
+    protected function setFileData(Request $request, File $data, $tagsString = null)
     {
         /** @var UploadedFile $file */
         $file = $data->getFile();
@@ -355,7 +378,7 @@ class FileController extends Controller
             $data->setPassword($password);
         }
 
-        $this->saveFile($data);
+        $this->saveFile($data, $tagsString);
 
         return $data;
     }

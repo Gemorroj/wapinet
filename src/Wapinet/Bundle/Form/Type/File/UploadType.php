@@ -21,7 +21,13 @@ class UploadType extends AbstractType
 
         $builder->add('file', 'file_url', array('required' => true, 'label' => false));
         $builder->add('description', 'textarea', array('max_length' => 5000, 'required' => true, 'label' => 'Описание', 'constraints' => new NotBlank()));
-        $builder->add('password', 'password', array('required' => false, 'label' => 'Пароль', 'attr' => array('autocomplete' => 'off'), 'constraints' => new NotBlank()));
+
+        // http://view.jquerymobile.com/1.3.2/dist/demos/widgets/autocomplete/autocomplete-remote.html
+        // тэги
+        $builder->add('tags_string', 'text', array('required' => false, 'label' => 'Тэги', 'mapped' => false));
+
+
+        $builder->add('password', 'password', array('required' => false, 'label' => 'Пароль', 'attr' => array('autocomplete' => 'off')));
 
         $builder->add('submit', 'submit', array('label' => 'Загрузить'));
     }
