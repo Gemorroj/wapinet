@@ -1,7 +1,9 @@
 <?php
 namespace Wapinet\Bundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 
 class FileRepository extends EntityRepository
@@ -174,4 +176,163 @@ class FileRepository extends EntityRepository
 
         return $q->getQuery();
     }
+
+
+
+
+
+
+
+
+
+    /**
+     * @return \Doctrine\ORM\Query
+     */
+    public function getTagsQuery()
+    {
+        return $this->getEntityManager()->createQueryBuilder()
+            ->select('f')
+            ->from('Wapinet\Bundle\Entity\Tag', 'f')
+            // ->orderBy('t.name', 'ASC')
+            ->getQuery()
+            ;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Tag|null
+     */
+    public function getTagByName($name)
+    {
+        return $this->getEntityManager()->createQueryBuilder()
+
+            ->select('t')
+            ->from('Wapinet\Bundle\Entity\Tag', 't')
+
+            ->where('t.name = :name')
+            ->setParameter('name', $name)
+
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
+    /**
+     * @param Tag $tag
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getFilesQuery(Tag $tag)
+    {
+        $q = $this->createQueryBuilder('f')
+
+            //  AND t.file_id = f.id
+            ->innerJoin('Wapinet\Bundle\Entity\Tag', 't')
+            ->where('t = :tag')
+            ->setParameter('tag', $tag)
+
+            // ->orderBy('f.createdAt', 'DESC')
+
+            ->getQuery()
+            ;
+        var_dump($q->getDQL());
+
+        return $q;
+
+
+        return $this->createQueryBuilder('f')
+
+            //  AND t.file_id = f.id
+            //->innerJoin('Wapinet\Bundle\Entity\Tag', 't', Join::WITH, 't = :tag')
+            ->innerJoin('file_tag', 'ft', Join::WITH, 'ft.tag = :tag')
+            //->where('f.tags = :tag')
+            ->setParameter('tag', $tag->getId())
+
+            // ->orderBy('f.createdAt', 'DESC')
+
+            ->getQuery()
+            ;
+    }
+
+    /**
+     * Loads or creates multiples tags from a list of tag names
+     *
+     * @param array  $names   Array of tag names
+     * @param File $file
+     * @return ArrayCollection
+     */
+    public function loadOrCreateTags(array $names, File $file)
+    {
+        if (empty($names)) {
+            return array();
+        }
+
+        $names = array_unique($names);
+
+        $builder = $this->getEntityManager()->createQueryBuilder();
+
+        $tags = $builder
+            ->select('t')
+            ->from('Wapinet\Bundle\Entity\Tag', 't')
+
+            ->where($builder->expr()->in('t.name', $names))
+
+            ->getQuery()
+            ->getResult()
+        ;
+
+        $loadedNames = array();
+        foreach ($tags as $tag) {
+            $loadedNames[] = $tag->getName();
+        }
+
+        $missingNames = array_udiff($names, $loadedNames, 'strcasecmp');
+        if (sizeof($missingNames)) {
+            foreach ($missingNames as $name) {
+                $tag = $this->createTag($name, $file);
+                //$this->getEntityManager()->persist($tag);
+                //$this->getEntityManager()->flush($tag);
+                $tags[] = $tag;
+            }
+
+            //$this->getEntityManager()->flush();
+        }
+
+        return new ArrayCollection($tags);
+    }
+
+    /**
+     * Creates a new Tag object
+     *
+     * @param string    $name   Tag name
+     * @param File $file
+     * @return Tag
+     */
+    protected function createTag($name, File $file)
+    {
+        $tag = new Tag();
+        $tag->setName($name);
+        $tag->setFiles(new ArrayCollection(array($file)));
+
+        return $tag;
+    }
+
+
+    /**
+     * Splits an string into an array of valid tag names
+     *
+     * @param string    $names      String of tag names
+     * @param string    $separator  Tag name separator
+     * @return array
+     */
+    public function splitTagNames($names, $separator = ',')
+    {
+        $tags = explode($separator, $names);
+        $tags = array_map('trim', $tags);
+        $tags = array_filter($tags, function ($value) { return !empty($value); });
+
+        return array_values($tags);
+    }
+
 }

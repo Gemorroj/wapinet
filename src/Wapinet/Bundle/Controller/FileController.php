@@ -11,12 +11,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wapinet\Bundle\Entity\File;
+use Wapinet\Bundle\Entity\FileRepository;
 use Wapinet\Bundle\Exception\FileDuplicatedException;
 use Wapinet\Bundle\Form\Type\File\PasswordType;
 use Wapinet\Bundle\Form\Type\File\SearchType;
@@ -116,6 +118,51 @@ class FileController extends Controller
 
     /**
      * @param int $page
+     *
+     * @return Response
+     */
+    public function tagsAction($page = 1)
+    {
+        /** @var FileRepository $tagManager */
+        $tagManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File');
+        $query = $tagManager->getTagsQuery();
+
+        $pagerfanta = $this->get('paginate')->paginate($query, $page);
+
+        return $this->render('WapinetBundle:File:tags.html.twig', array(
+            'tags' => $pagerfanta,
+        ));
+    }
+
+    /**
+     * @param int $page
+     * @param string $tagName
+     * @throws NotFoundHttpException
+     *
+     * @return Response
+     */
+    public function tagAction($page = 1, $tagName)
+    {
+        /** @var FileRepository $tagManager */
+        $tagManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File');
+
+        $tag = $tagManager->getTagByName($tagName);
+        if (null === $tag) {
+            throw $this->createNotFoundException('Тэг не найден');
+        }
+
+        $query = $tagManager->getFilesQuery($tag);
+
+        $pagerfanta = $this->get('paginate')->paginate($query, $page);
+
+        return $this->render('WapinetBundle:File:tag.html.twig', array(
+            'files' => $pagerfanta,
+            'tag' => $tag,
+        ));
+    }
+
+    /**
+     * @param int $page
      * @param string|null $date
      * @param string|null $category
      * @return Response
@@ -166,9 +213,6 @@ class FileController extends Controller
      */
     protected function viewFile(File $file)
     {
-        // подгружаем тэги
-        $this->get('fpn_tag.tag_manager')->loadTagging($file);
-
         $response = $this->render('WapinetBundle:File:view.html.twig', array('comments_id' => 'file-' . $file->getId(), 'file' => $file));
         $this->incrementViews($file);
 
@@ -295,10 +339,12 @@ class FileController extends Controller
     {
         // сохраняем в БД
         $entityManager = $this->getDoctrine()->getManager();
+
+        $this->saveTags($file, $tagsString);
+
         $entityManager->persist($file);
         $entityManager->flush();
 
-        $this->saveFileTags($file, $tagsString);
         $this->saveFileAcl($file);
     }
 
@@ -307,14 +353,14 @@ class FileController extends Controller
      * @param File $file
      * @param string $tagsString
      */
-    protected function saveFileTags(File $file, $tagsString = null)
+    protected function saveTags(File $file, $tagsString = null)
     {
         if (null !== $tagsString) {
-            $tagManager = $this->get('fpn_tag.tag_manager');
+            /** @var FileRepository $tagManager */
+            $tagManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File');
             $tagsArray = $tagManager->splitTagNames($tagsString);
-            $tagsObject = $tagManager->loadOrCreateTags($tagsArray);
-            $tagManager->addTags($tagsObject, $file);
-            $tagManager->saveTagging($file);
+            $tagsObjectArray = $tagManager->loadOrCreateTags($tagsArray, $file);
+            $file->setTags($tagsObjectArray);
         }
     }
 

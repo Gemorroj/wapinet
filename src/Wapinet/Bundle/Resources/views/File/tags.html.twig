@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Тэги{% endblock %}
+{% block breadcrumbs %}
+    {{wapinet_breadcrumbs({
+    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'},
+    2: {'uri': path('file_index'), 'title': 'Файлообменник'}
+    })}}
+{% endblock %}
+
+{% block content %}
+    <ul data-role="listview" data-inset="true">
+        {% for tag in tags %}
+            <li>
+                <a href="{{ path('file_tag', {'tagName': tag.name}) }}">
+                    <h2>{{ tag.name }}</h2>
+                </a>
+            </li>
+        {% else %}
+            <li>
+                Нет тэгов для отображения.
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="pagerfanta">
+        {{ pagerfanta(tags) }}
+    </div>
+
+{% endblock %}

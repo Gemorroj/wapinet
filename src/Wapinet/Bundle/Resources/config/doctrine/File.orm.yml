@@ -77,3 +77,9 @@ Wapinet\Bundle\Entity\File:
                 referencedColumnName: id
                 onDelete: CASCADE
                 nullable: true
+
+    manyToMany:
+        tags:
+            targetEntity: Wapinet\Bundle\Entity\Tag
+            cascade: ["persist", "remove"]
+            orphanRemoval: true

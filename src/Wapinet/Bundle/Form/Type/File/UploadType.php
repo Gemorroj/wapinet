@@ -24,7 +24,7 @@ class UploadType extends AbstractType
 
         // http://view.jquerymobile.com/1.3.2/dist/demos/widgets/autocomplete/autocomplete-remote.html
         // тэги
-        $builder->add('tags_string', 'text', array('required' => false, 'label' => 'Тэги', 'mapped' => false));
+        $builder->add('tags_string', 'text', array('required' => false, 'label' => 'Тэги через запятую', 'mapped' => false));
 
 
         $builder->add('password', 'password', array('required' => false, 'label' => 'Пароль', 'attr' => array('autocomplete' => 'off')));

@@ -108,7 +108,7 @@
             {% if not file.tags.isEmpty %}
                 <tr>
                     <td>Тэги:</td>
-                    <td>{{ file.tags|join(' ') }}</td>
+                    <td>{{ file.tags|join(', ') }}</td>
                 </tr>
             {% endif %}
             </tbody>

@@ -3,8 +3,6 @@
 namespace Wapinet\Bundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use DoctrineExtensions\Taggable\Taggable;
-use Wapinet\TagBundle\Entity\Tag;
 use Wapinet\UserBundle\Entity\User;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
@@ -14,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * File
  * @Vich\Uploadable
  */
-class File implements Taggable
+class File
 {
     /**
      * @var integer
@@ -84,35 +82,14 @@ class File implements Taggable
      */
     protected $hash;
     /**
-     * @var ArrayCollection|null
+     * @var ArrayCollection
      */
     protected $tags;
 
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getTags()
+    public function __construct()
     {
-        $this->tags = $this->tags ? $this->tags : new ArrayCollection();
-
-        return $this->tags;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTaggableType()
-    {
-        return 'file_tag';
-    }
-
-    /**
-     * @return int
-     */
-    public function getTaggableId()
-    {
-        return $this->getId();
+        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -134,6 +111,29 @@ class File implements Taggable
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get tags
+     *
+     * @return ArrayCollection
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Set tags
+     *
+     * @param ArrayCollection $tags
+     * @return File
+     */
+    public function setTags(ArrayCollection $tags)
+    {
+        $this->tags = $tags;
 
         return $this;
     }

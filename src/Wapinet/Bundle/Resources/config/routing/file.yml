@@ -21,6 +21,19 @@ file_search:
         page: \d+
         key: "[a-zA-Z0-9]+"
 
+file_tags:
+    pattern: /tags/{page}
+    defaults: { _controller: WapinetBundle:File:tags, page: 1 }
+    requirements:
+        page: \d+
+
+file_tag:
+    pattern: /tags/{page}/{tagName}
+    defaults: { _controller: WapinetBundle:File:tag, page: 1 }
+    requirements:
+        page: \d+
+        tagName: ".+"
+
 file_categories:
     pattern: /categories
     defaults: { _controller: WapinetBundle:File:categories }

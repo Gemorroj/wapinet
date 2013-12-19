@@ -1,0 +1,33 @@
+Wapinet\Bundle\Entity\Tag:
+    type:  entity
+    table: tag
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    uniqueConstraints:
+        name_idx:
+            columns: [ name ]
+    fields:
+        name:
+            type: string
+            nullable: false
+            column: name
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+        updatedAt:
+            type: datetime
+            nullable: true
+            column: updated_at
+
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]
+
+    manyToMany:
+        files:
+            targetEntity: Wapinet\Bundle\Entity\File
+
