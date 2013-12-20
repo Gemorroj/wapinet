@@ -225,10 +225,10 @@ class FileRepository extends EntityRepository
      */
     public function getFilesQuery(Tag $tag)
     {
-        $q = $this->createQueryBuilder('f')
+        $q = $this->getEntityManager()->createQueryBuilder()
+            ->select('f')
+            ->add('from', 'Wapinet\Bundle\Entity\File f INNER JOIN f.tags t')
 
-            //  AND t.file_id = f.id
-            ->innerJoin('Wapinet\Bundle\Entity\Tag', 't')
             ->where('t = :tag')
             ->setParameter('tag', $tag)
 
@@ -236,23 +236,7 @@ class FileRepository extends EntityRepository
 
             ->getQuery()
             ;
-        var_dump($q->getDQL());
-
         return $q;
-
-
-        return $this->createQueryBuilder('f')
-
-            //  AND t.file_id = f.id
-            //->innerJoin('Wapinet\Bundle\Entity\Tag', 't', Join::WITH, 't = :tag')
-            ->innerJoin('file_tag', 'ft', Join::WITH, 'ft.tag = :tag')
-            //->where('f.tags = :tag')
-            ->setParameter('tag', $tag->getId())
-
-            // ->orderBy('f.createdAt', 'DESC')
-
-            ->getQuery()
-            ;
     }
 
     /**
