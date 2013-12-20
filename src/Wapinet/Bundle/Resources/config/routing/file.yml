@@ -34,6 +34,12 @@ file_tag:
         page: \d+
         tagName: ".+"
 
+file_user:
+    pattern: /users/{page}/{username}
+    defaults: { _controller: WapinetBundle:File:user, page: 1 }
+    requirements:
+        page: \d+
+
 file_categories:
     pattern: /categories
     defaults: { _controller: WapinetBundle:File:categories }

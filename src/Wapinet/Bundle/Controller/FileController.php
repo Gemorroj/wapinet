@@ -151,13 +151,42 @@ class FileController extends Controller
             throw $this->createNotFoundException('Тэг не найден');
         }
 
-        $query = $tagManager->getFilesQuery($tag);
+        $query = $tagManager->getTagFilesQuery($tag);
 
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
         return $this->render('WapinetBundle:File:tag.html.twig', array(
             'files' => $pagerfanta,
             'tag' => $tag,
+        ));
+    }
+
+
+    /**
+     * @param int $page
+     * @param string $username
+     * @throws NotFoundHttpException
+     *
+     * @return Response
+     */
+    public function userAction($page = 1, $username)
+    {
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserByUsername($username);
+        if (null === $user) {
+            throw $this->createNotFoundException('Пользователь не найден');
+        }
+
+        /** @var FileRepository $tagManager */
+        $tagManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File');
+
+        $query = $tagManager->getUserFilesQuery($user);
+
+        $pagerfanta = $this->get('paginate')->paginate($query, $page);
+
+        return $this->render('WapinetBundle:File:user.html.twig', array(
+            'files' => $pagerfanta,
+            'user' => $user,
         ));
     }
 

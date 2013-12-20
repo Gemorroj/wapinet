@@ -4,6 +4,7 @@ namespace Wapinet\Bundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Wapinet\UserBundle\Entity\User;
 
 class FileRepository extends EntityRepository
 {
@@ -207,11 +208,33 @@ class FileRepository extends EntityRepository
     }
 
     /**
+     * @param User $user
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getUserFilesQuery(User $user)
+    {
+        $q = $this->getEntityManager()->createQueryBuilder()
+            ->select('f')
+            ->from('Wapinet\Bundle\Entity\File', 'f')
+            ->innerJoin('f.user', 'u')
+
+            ->where('u = :user')
+            ->setParameter('user', $user)
+
+            ->orderBy('f.id', 'DESC')
+
+            ->getQuery()
+        ;
+        return $q;
+    }
+
+    /**
      * @param Tag $tag
      *
      * @return \Doctrine\ORM\Query
      */
-    public function getFilesQuery(Tag $tag)
+    public function getTagFilesQuery(Tag $tag)
     {
         $q = $this->getEntityManager()->createQueryBuilder()
             ->select('f')
@@ -221,7 +244,7 @@ class FileRepository extends EntityRepository
             ->where('t = :tag')
             ->setParameter('tag', $tag)
 
-            ->orderBy('f.createdAt', 'DESC')
+            ->orderBy('f.id', 'DESC')
 
             ->getQuery()
             ;
