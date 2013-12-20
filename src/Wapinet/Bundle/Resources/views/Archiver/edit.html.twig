@@ -18,10 +18,9 @@
             });
 
             $("#delete-popup-do").on("click", function () {
-                $.get('{{ path('archiver_delete_file', {'archive': archive, 'name': 'file'}) }}?path=' + deletePath, function () {
+                $.post('{{ path('archiver_delete_file', {'archive': archive, 'name': 'file'}) }}?path=' + deletePath, function () {
                     window.location.assign(window.location.href);
-                }
-                );
+                });
             });
         });
     {% endautoescape %}</script>

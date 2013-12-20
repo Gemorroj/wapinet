@@ -21,6 +21,7 @@ archiver_delete_file:
     defaults: { _controller: WapinetBundle:Archiver:deleteFile }
     requirements:
         archive: "archive[a-z0-9]+"
+        _method: POST
 
 archiver_download_file:
     pattern: /download/{archive}/{name}

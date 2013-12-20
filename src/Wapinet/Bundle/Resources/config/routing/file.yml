@@ -14,6 +14,13 @@ file_upload:
     pattern: /upload
     defaults: { _controller: WapinetBundle:File:upload }
 
+file_delete:
+    pattern: /delete/{id}
+    defaults: { _controller: WapinetBundle:File:delete }
+    requirements:
+        id: \d+
+        _method: POST
+
 file_search:
     pattern: /search/{page}/{key}
     defaults: { _controller: WapinetBundle:File:search, page: 1, key: null }
