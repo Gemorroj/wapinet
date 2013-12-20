@@ -23,6 +23,10 @@ class Tag
      */
     protected $files;
     /**
+     * @var int
+     */
+    protected $count = 1;
+    /**
      * @var \DateTime
      */
     protected $createdAt;
@@ -57,6 +61,29 @@ class Tag
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get count
+     *
+     * @return integer
+     */
+    public function getCount()
+    {
+        return $this->count;
+    }
+
+    /**
+     * Set count
+     *
+     * @param int $count
+     * @return Tag
+     */
+    public function setCount($count)
+    {
+        $this->count = $count;
 
         return $this;
     }

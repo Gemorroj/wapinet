@@ -107,8 +107,11 @@
             </tr>
             {% if not file.tags.isEmpty %}
                 <tr>
-                    <td>Тэги:</td>
-                    <td>{{ file.tags|join(', ') }}</td>
+                    <td colspan="2">
+                        {% for tag in file.tags %}
+                            <a data-role="button" data-inline="true" data-mini="true" href="{{ path('file_tag', {'tagName': tag}) }}">{{ tag }}</a>
+                        {% endfor %}
+                    </td>
                 </tr>
             {% endif %}
             </tbody>

@@ -83,3 +83,5 @@ Wapinet\Bundle\Entity\File:
             targetEntity: Wapinet\Bundle\Entity\Tag
             cascade: ["persist", "remove"]
             orphanRemoval: true
+            orderBy:
+                count: DESC

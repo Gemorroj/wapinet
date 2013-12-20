@@ -3,7 +3,6 @@ namespace Wapinet\Bundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 
 class FileRepository extends EntityRepository
@@ -50,10 +49,6 @@ class FileRepository extends EntityRepository
 
         $this->addCategoryMime($q, $category);
         $q = $q->getQuery();
-
-        //TODO: кэширование
-        //$q->setResultCacheDriver(new \Doctrine\Common\Cache\PhpFileCache(\AppKernel::getTmpDir() . '/doctrine'));
-        //$q->useResultCache(true, 300, 'category_' . $category);
 
         return $q->getSingleScalarResult();
     }
@@ -178,22 +173,15 @@ class FileRepository extends EntityRepository
     }
 
 
-
-
-
-
-
-
-
     /**
      * @return \Doctrine\ORM\Query
      */
     public function getTagsQuery()
     {
         return $this->getEntityManager()->createQueryBuilder()
-            ->select('f')
-            ->from('Wapinet\Bundle\Entity\Tag', 'f')
-            // ->orderBy('t.name', 'ASC')
+            ->select('t')
+            ->from('Wapinet\Bundle\Entity\Tag', 't')
+            ->orderBy('t.count', 'DESC')
             ->getQuery()
             ;
     }
@@ -227,12 +215,13 @@ class FileRepository extends EntityRepository
     {
         $q = $this->getEntityManager()->createQueryBuilder()
             ->select('f')
-            ->add('from', 'Wapinet\Bundle\Entity\File f INNER JOIN f.tags t')
+            ->from('Wapinet\Bundle\Entity\File', 'f')
+            ->innerJoin('f.tags', 't')
 
             ->where('t = :tag')
             ->setParameter('tag', $tag)
 
-            // ->orderBy('f.createdAt', 'DESC')
+            ->orderBy('f.createdAt', 'DESC')
 
             ->getQuery()
             ;
@@ -267,39 +256,24 @@ class FileRepository extends EntityRepository
         ;
 
         $loadedNames = array();
-        foreach ($tags as $tag) {
+        /** @var Tag $tag */
+        foreach ($tags as &$tag) {
+            $tag->getFiles()->add($file);
+            $tag->setCount($tag->getCount() + 1);
             $loadedNames[] = $tag->getName();
         }
 
         $missingNames = array_udiff($names, $loadedNames, 'strcasecmp');
-        if (sizeof($missingNames)) {
+        if ($missingNames) {
             foreach ($missingNames as $name) {
-                $tag = $this->createTag($name, $file);
-                //$this->getEntityManager()->persist($tag);
-                //$this->getEntityManager()->flush($tag);
+                $tag = new Tag();
+                $tag->setName($name);
+                $tag->setFiles(new ArrayCollection(array($file)));
                 $tags[] = $tag;
             }
-
-            //$this->getEntityManager()->flush();
         }
 
         return new ArrayCollection($tags);
-    }
-
-    /**
-     * Creates a new Tag object
-     *
-     * @param string    $name   Tag name
-     * @param File $file
-     * @return Tag
-     */
-    protected function createTag($name, File $file)
-    {
-        $tag = new Tag();
-        $tag->setName($name);
-        $tag->setFiles(new ArrayCollection(array($file)));
-
-        return $tag;
     }
 
 

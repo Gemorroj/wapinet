@@ -14,6 +14,7 @@
             <li>
                 <a href="{{ path('file_tag', {'tagName': tag.name}) }}">
                     <h2>{{ tag.name }}</h2>
+                    <span class="ui-li-count">{{ tag.count }}</span>
                 </a>
             </li>
         {% else %}
