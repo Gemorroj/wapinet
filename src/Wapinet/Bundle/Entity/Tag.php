@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Tag
+ * @todo удалять не привязанные ни к одному файлу тэги
  */
 class Tag
 {

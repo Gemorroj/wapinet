@@ -81,7 +81,7 @@ Wapinet\Bundle\Entity\File:
     manyToMany:
         tags:
             targetEntity: Wapinet\Bundle\Entity\Tag
-            cascade: ["persist", "remove"]
+            cascade: ["persist"]
             orphanRemoval: true
             orderBy:
                 count: DESC
