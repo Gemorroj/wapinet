@@ -284,6 +284,16 @@ class File
     /**
      * @return File
      */
+    public function removeSalt()
+    {
+        $this->salt = null;
+
+        return $this;
+    }
+
+    /**
+     * @return File
+     */
     public function setSaltValue()
     {
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
@@ -391,7 +401,7 @@ class File
      *
      * @return File
      */
-    public function setFile(BaseFile $file)
+    public function setFile(BaseFile $file = null)
     {
         $tmp = $this->file;
 

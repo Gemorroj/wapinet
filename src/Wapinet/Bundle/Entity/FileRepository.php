@@ -284,13 +284,17 @@ class FileRepository extends EntityRepository
         ;
 
         $loadedNames = array();
-        /** @var Tag $tag */
-        foreach ($tags as &$tag) {
-            $tag->getFiles()->add($file);
-            if (null !== $file->getPassword()) {
-                $tag->setCount($tag->getCount() + 1);
+        /** @var Tag $loadedTag */
+        foreach ($tags as &$loadedTag) {
+            if (false === $loadedTag->getFiles()->contains($file)) {
+                $loadedTag->getFiles()->add($file);
+
+                if (null !== $file->getPassword()) {
+                    $loadedTag->setCount($loadedTag->getCount() + 1);
+                }
             }
-            $loadedNames[] = $tag->getName();
+
+            $loadedNames[] = $loadedTag->getName();
         }
 
         $missingNames = array_udiff($names, $loadedNames, 'strcasecmp');
@@ -299,6 +303,7 @@ class FileRepository extends EntityRepository
                 $tag = new Tag();
                 $tag->setName($name);
                 $tag->setFiles(new ArrayCollection(array($file)));
+                $tag->setCount(1);
                 $tags[] = $tag;
             }
         }

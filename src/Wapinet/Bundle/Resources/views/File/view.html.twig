@@ -99,6 +99,12 @@
             <td>Загружено:</td>
             <td>{{ file.createdAt|wapinet_datetime }}</td>
         </tr>
+        {% if file.updatedAt is not null %}
+            <tr>
+                <td>Обновлено:</td>
+                <td>{{ file.updatedAt|wapinet_datetime }}</td>
+            </tr>
+        {% endif %}
         <tr>
             <td>Размер:</td>
             <td>{{ file.file.size|wapinet_size }}</td>

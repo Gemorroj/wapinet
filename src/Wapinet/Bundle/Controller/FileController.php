@@ -2,6 +2,7 @@
 
 namespace Wapinet\Bundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
@@ -373,7 +374,7 @@ class FileController extends Controller
      * @param int $id
      *
      * @throws AccessDeniedException|NotFoundHttpException
-     * @return RedirectResponse|Response
+     * @return RedirectResponse|JsonResponse|Response
      */
     public function editAction(Request $request, $id)
     {
@@ -399,10 +400,17 @@ class FileController extends Controller
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
-                    //TODO
+                    $newFile = $form->getData();
+                    $tagsString = $form['tags_string']->getData();
+                    $this->editFileData($request, $file, $newFile, $tagsString);
 
                     $router = $this->container->get('router');
                     $url = $router->generate('file_view', array('id' => $file->getId()), Router::ABSOLUTE_URL);
+
+                    if (true === $request->isXmlHttpRequest()) {
+                        return new JsonResponse(array('url' => $url));
+                    }
+
                     return new RedirectResponse($url);
                 }
             }
@@ -414,6 +422,72 @@ class FileController extends Controller
             'form' => $form->createView(),
             'file' => $file,
         ));
+    }
+
+
+    /**
+     * @param Request $request
+     * @param File    $data
+     * @param File    $newData
+     * @param string $tagsString
+     * @throws FileDuplicatedException
+     * @return File
+     */
+    protected function editFileData(Request $request, File $data, File $newData, $tagsString = null)
+    {
+        $oldData = clone $data;
+
+        /** @var UploadedFile|null $file */
+        $file = $newData->getFile();
+        if (null !== $file) {
+            $hash = md5_file($file->getPathname());
+
+            $existingFile = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->findOneBy(array('hash' => $hash));
+            if (null !== $existingFile) {
+                throw new FileDuplicatedException($existingFile);
+            }
+
+            $data->setHash($hash);
+            $data->setMimeType($this->get('mime')->getMimeType($file->getClientOriginalName()));
+            $data->setOriginalFileName($file->getClientOriginalName());
+        }
+
+        // обновляем ip и браузер только если файл редактирует владелец
+        if ($data->getUser()->getId() === $this->getUser()->getId()) {
+            //$data->setUser($this->getUser());
+            $data->setIp($request->getClientIp());
+            $data->setBrowser($request->headers->get('User-Agent', ''));
+        }
+
+        if (null !== $newData->getPassword()) {
+            $data->setSaltValue();
+
+            $encoder = $this->get('security.encoder_factory')->getEncoder($data);
+            $password = $encoder->encodePassword($newData->getPassword(), $data->getSalt());
+            $data->setPassword($password);
+        } else {
+            $data->removeSalt();
+            $data->setPassword(null);
+        }
+
+        $data->setTags(new ArrayCollection());
+        $this->saveTags($data, $tagsString);
+        $this->mergeFile($data);
+
+        if (null !== $file) {
+            // кэш картинок
+            $cache = $this->get('liip_imagine.cache.manager');
+            $helper = $this->get('vich_uploader.templating.helper.uploader_helper');
+            $path = $helper->asset($oldData, 'file');
+            $cache->remove($path, 'thumbnail');
+
+            // сам файл и сконвертированные видео
+            $filesystem = $this->get('filesystem');
+            $path = $oldData->getFile()->getPathname();
+            $filesystem->remove(array($path, $path . '.jpg', $path . '.mp4', $path . '.webm'));
+        }
+
+        return $data;
     }
 
     /**
@@ -432,7 +506,7 @@ class FileController extends Controller
                 if ($form->isValid()) {
                     $data = $form->getData();
                     $tagsString = $form['tags_string']->getData();
-                    $file = $this->setFileData($request, $data, $tagsString);
+                    $file = $this->saveFileData($request, $data, $tagsString);
 
                     $router = $this->container->get('router');
                     $url = $router->generate('file_view', array(
@@ -473,19 +547,24 @@ class FileController extends Controller
 
     /**
      * @param File $file
-     * @param string $tagsString
      */
-    protected function saveFile(File $file, $tagsString = null)
+    protected function mergeFile(File $file)
     {
         // сохраняем в БД
         $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->merge($file);
+        $entityManager->flush();
+    }
 
-        $this->saveTags($file, $tagsString);
-
+    /**
+     * @param File $file
+     */
+    protected function saveFile(File $file)
+    {
+        // сохраняем в БД
+        $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($file);
         $entityManager->flush();
-
-        $this->saveFileAcl($file);
     }
 
 
@@ -535,7 +614,7 @@ class FileController extends Controller
      * @throws FileDuplicatedException
      * @return File
      */
-    protected function setFileData(Request $request, File $data, $tagsString = null)
+    protected function saveFileData(Request $request, File $data, $tagsString = null)
     {
         /** @var UploadedFile $file */
         $file = $data->getFile();
@@ -564,7 +643,9 @@ class FileController extends Controller
             $data->setPassword($password);
         }
 
-        $this->saveFile($data, $tagsString);
+        $this->saveTags($data, $tagsString);
+        $this->saveFile($data);
+        $this->saveFileAcl($data);
 
         return $data;
     }
