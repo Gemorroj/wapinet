@@ -31,16 +31,25 @@ use Wapinet\UserBundle\Entity\User;
  */
 class FileController extends Controller
 {
+    /**
+     * @return Response
+     */
     public function indexAction()
     {
         return $this->render('WapinetBundle:File:index.html.twig');
     }
 
+    /**
+     * @return Response
+     */
     public function informationAction()
     {
         return $this->render('WapinetBundle:File:information.html.twig');
     }
 
+    /**
+     * @return Response
+     */
     public function statisticAction()
     {
         return $this->render('WapinetBundle:File:statistic.html.twig');
@@ -112,6 +121,9 @@ class FileController extends Controller
         return $this->get('paginate')->paginate($query, $page);
     }
 
+    /**
+     * @return Response
+     */
     public function categoriesAction()
     {
         return $this->render('WapinetBundle:File:categories.html.twig');

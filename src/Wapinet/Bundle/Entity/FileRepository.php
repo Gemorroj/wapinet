@@ -183,6 +183,7 @@ class FileRepository extends EntityRepository
         return $this->getEntityManager()->createQueryBuilder()
             ->select('t')
             ->from('Wapinet\Bundle\Entity\Tag', 't')
+            ->where('t.count > 0')
             ->orderBy('t.count', 'DESC')
             ->getQuery()
             ;
@@ -202,6 +203,7 @@ class FileRepository extends EntityRepository
 
             ->where('t.name = :name')
             ->setParameter('name', $name)
+            ->andWhere('t.count > 0')
 
             ->getQuery()
             ->getOneOrNullResult()
@@ -222,6 +224,7 @@ class FileRepository extends EntityRepository
 
             ->where('u = :user')
             ->setParameter('user', $user)
+            ->andWhere('f.password IS NULL')
 
             ->orderBy('f.id', 'DESC')
 
@@ -244,6 +247,7 @@ class FileRepository extends EntityRepository
 
             ->where('t = :tag')
             ->setParameter('tag', $tag)
+            ->andWhere('f.password IS NULL')
 
             ->orderBy('f.id', 'DESC')
 
@@ -283,7 +287,9 @@ class FileRepository extends EntityRepository
         /** @var Tag $tag */
         foreach ($tags as &$tag) {
             $tag->getFiles()->add($file);
-            $tag->setCount($tag->getCount() + 1);
+            if (null !== $file->getPassword()) {
+                $tag->setCount($tag->getCount() + 1);
+            }
             $loadedNames[] = $tag->getName();
         }
 
