@@ -13,8 +13,10 @@ namespace Wapinet\CommentBundle\Entity;
 
 use FOS\CommentBundle\Entity\CommentManager as BaseCommentManager;
 use FOS\CommentBundle\Model\ThreadInterface;
+use Pagerfanta\Pagerfanta;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\ORM\Query\Expr;
+use Wapinet\UserBundle\Entity\User;
 
 /**
  * Default ORM CommentManager.
@@ -100,6 +102,33 @@ class CommentManager extends BaseCommentManager
 
         $commentsByThread['comments'] = $this->organiseComments($commentsByThread['comments'], $sorter);
         return $commentsByThread;
+    }
+
+
+    /**
+     * @param User $user
+     * @param integer         $depth
+     * @param int $page
+     * @return Pagerfanta
+     */
+    public function findCommentsByUser(User $user, $depth = null, $page = 1)
+    {
+        $qb = $this->repository->createQueryBuilder('c');
+
+        $qb->where('c.author = :user')
+            ->setParameter('user', $user)
+            ->join('c.thread', 't')
+            ->orderBy('c.id', 'DESC');
+
+        if (null !== $depth && $depth >= 0) {
+            // Queries for an additional level so templates can determine
+            // if the final 'depth' layer has children.
+
+            $qb->andWhere('c.depth < :depth')
+                ->setParameter('depth', $depth + 1);
+        }
+
+        return $this->container->get('paginate')->paginate($qb, $page);
     }
 
 

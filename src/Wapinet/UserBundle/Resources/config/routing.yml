@@ -8,3 +8,9 @@ wapinet_user_panel_edit:
     pattern:  /panel/edit
     defaults: { _controller: WapinetUserBundle:Panel:edit }
 
+wapinet_user_comments:
+    pattern:  /comments/{username}/{page}
+    defaults: { _controller: WapinetUserBundle:Comments:index, page: 1 }
+    requirements:
+        page: \d+
+

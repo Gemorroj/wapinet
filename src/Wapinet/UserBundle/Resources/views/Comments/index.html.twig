@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Комментарии {{ user.username }}{% endblock %}
+{% block breadcrumbs %}
+    {{ wapinet_breadcrumbs({
+    1: {'uri': path('wapinet_user_profile', {'username': user.username}), 'title': 'Профиль ' ~ user.username}
+    }) }}
+{% endblock %}
+
+{% block content %}
+
+    <ul data-role="listview" data-inset="true">
+        {% for comment in comments %}
+            <li data-role="list-divider" class="ui-bar-d">{{ comment.createdAt|wapinet_datetime  }} <span class="ui-li-count">{{ comment.score }}</span></li>
+            <li>
+                <a href="{{ comment.thread.permalink }}#fos_comment_{{ comment.id }}">{{ comment.body }}</a>
+            </li>
+        {% else %}
+            <li>Комментариев нет</li>
+        {% endfor %}
+    </ul>
+
+    <div class="pagerfanta">
+        {{ pagerfanta(comments) }}
+    </div>
+
+{% endblock %}

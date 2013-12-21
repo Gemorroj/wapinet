@@ -4,6 +4,7 @@ namespace Wapinet\NewsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * News controller.
@@ -34,6 +35,7 @@ class NewsController extends Controller
      * Finds and displays a News entity.
      *
      * @param int $id
+     * @throws NotFoundHttpException
      * @return Response
      */
     public function showAction($id)

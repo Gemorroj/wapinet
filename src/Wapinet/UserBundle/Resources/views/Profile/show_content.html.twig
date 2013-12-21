@@ -49,7 +49,11 @@
     </table>
 </div>
 
-<a data-role="button" data-inline="true" href="{{ path('file_user', {'username': user.username}) }}">Файлы пользователя</a>
+<fieldset data-role="controlgroup" data-type="horizontal">
+    <a data-role="button" href="{{ path('file_user', {'username': user.username}) }}">Файлы</a>
+    <a data-role="button" href="{{ path('wapinet_user_comments', {'username': user.username}) }}">Комментарии</a>
+</fieldset>
+
 
 {% if app.user.id == user.id %}
     <fieldset data-role="controlgroup" data-type="horizontal">
