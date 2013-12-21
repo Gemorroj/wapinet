@@ -6,7 +6,7 @@
 {% elseif file.isAvi %}
     {% set videoWebm = vich_uploader_asset(file, 'file')|wapinet_video_avi_to_webm %}
     {% if videoWebm is not null %}
-        <a data-inline="true" data-role="button" href="{{ videoWebm }}" download="{{ file.originalFileName }}.mp4">Скачать Webm</a>
+        <a data-inline="true" data-role="button" href="{{ videoWebm }}" download="{{ file.originalFileName }}.webm">Скачать Webm</a>
     {% endif %}
 {% endif %}
 

@@ -307,6 +307,52 @@ class FileController extends Controller
 
     /**
      * @param Request $request
+     * @param int $id
+     *
+     * @throws AccessDeniedException|NotFoundHttpException
+     * @return RedirectResponse|JsonResponse
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $file = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->find($id);
+        if (null === $file) {
+            throw $this->createNotFoundException('Файл не найден.');
+        }
+
+        $securityContext = $this->get('security.context');
+        if (false === $securityContext->isGranted('DELETE', $file)) {
+            throw new AccessDeniedException();
+        }
+
+        // кэш картинок
+        $cache = $this->get('liip_imagine.cache.manager');
+        $helper = $this->get('vich_uploader.templating.helper.uploader_helper');
+        $path = $helper->asset($file, 'file');
+        $cache->remove($path, 'thumbnail');
+
+        // БД
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($file);
+        $em->flush();
+
+        // сам файл и сконвертированные видео
+        $filesystem = $this->get('filesystem');
+        $path = $file->getFile()->getPathname();
+        $filesystem->remove(array($path, $path . '.jpg', $path . '.mp4', $path . '.webm'));
+
+        // переадресация на главную
+        $router = $this->container->get('router');
+        $url = $router->generate('file_index', array(), Router::ABSOLUTE_URL);
+
+        if (true === $request->isXmlHttpRequest()) {
+            return new JsonResponse(array('url' => $url));
+        }
+
+        return new RedirectResponse($url);
+    }
+
+    /**
+     * @param Request $request
      *
      * @return RedirectResponse|JsonResponse|Response
      */
