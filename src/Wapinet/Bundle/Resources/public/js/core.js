@@ -103,6 +103,32 @@ $(document).on("pagebeforeshow", "#page", function () {
     $.mobile.ajaxEnabled = false;
     $.mobile.ajaxFormsEnabled = false;
 
+    // подгрузка картинок в попапах
+    $("a[href^='#image-'], a[href^='#avatar-']").on("click", function () {
+        $.mobile.loading("show");
+
+        var popup = $(this.getAttribute('href'));
+        var img = popup.find("img");
+
+        var src = img.attr('src');
+        var srcData = img.data('src');
+
+        if (src === srcData) {
+            popup.popup("open");
+            $.mobile.loading("hide");
+        } else {
+            img.load(function () {
+                popup.popup("open");
+                $.mobile.loading("hide");
+            });
+
+            img.attr('src', srcData);
+        }
+
+        return false;
+    });
+
+
     // предпросмотр картинок в загружаемых файлах
     $('input[type="file"]').change(function (e) {
         var fileElement = e.target;

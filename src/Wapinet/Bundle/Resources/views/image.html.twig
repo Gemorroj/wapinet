@@ -1,7 +1,7 @@
 <a href="#image-{{ image.id }}" data-rel="popup" data-position-to="window" data-transition="fade">
-    <img src="{{ image.src }}" alt="{{ image.alt }}" class="image-preview" />
+    <img src="{{ image.src|imagine_filter('thumbnail') }}" alt="{{ image.alt }}" class="image-preview" />
 </a>
-<div data-role="popup" id="image-{{ image.id }}" data-overlay-theme="a" data-theme="d" data-corners="false">
+<div class="image-popup" data-role="popup" id="image-{{ image.id }}" data-overlay-theme="a" data-theme="d" data-corners="false">
     <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Закрыть</a>
-    <img src="{{ image.src }}" alt="{{ image.alt }}" />
+    <img data-src="{{ image.src }}" src="{{ image.src|imagine_filter('thumbnail') }}" alt="{{ image.alt }}" />
 </div>

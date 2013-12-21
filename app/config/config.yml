@@ -174,7 +174,7 @@ gregwar_captcha:
 
 liip_imagine:
     data_loader: filesystem
-    cache_prefix: /static/cache
+    cache_prefix: /cache
     filter_sets:
         thumbnail:
             quality: 75
