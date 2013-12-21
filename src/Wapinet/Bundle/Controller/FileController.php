@@ -20,6 +20,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wapinet\Bundle\Entity\File;
 use Wapinet\Bundle\Entity\FileRepository;
 use Wapinet\Bundle\Exception\FileDuplicatedException;
+use Wapinet\Bundle\Form\Type\File\EditType;
 use Wapinet\Bundle\Form\Type\File\PasswordType;
 use Wapinet\Bundle\Form\Type\File\SearchType;
 use Wapinet\Bundle\Form\Type\File\UploadType;
@@ -210,11 +211,15 @@ class FileController extends Controller
 
     /**
      * @param int $id
+     * @throws NotFoundHttpException
      * @return Response
      */
     public function viewAction($id)
     {
         $file = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->find($id);
+        if (null === $file) {
+            throw $this->createNotFoundException('Файл не найден.');
+        }
 
         if (null !== $file->getPassword() && (!($this->getUser() instanceof User) || !($file->getUser() instanceof User) || $file->getUser()->getId() !== $this->getUser()->getId())) {
             return $this->passwordAction($file);
@@ -353,6 +358,54 @@ class FileController extends Controller
 
     /**
      * @param Request $request
+     * @param int $id
+     *
+     * @throws AccessDeniedException|NotFoundHttpException
+     * @return RedirectResponse|Response
+     */
+    public function editAction(Request $request, $id)
+    {
+        $repository = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File');
+        $file = $repository->find($id);
+        if (null === $file) {
+            throw $this->createNotFoundException('Файл не найден.');
+        }
+
+        $securityContext = $this->get('security.context');
+        if (false === $securityContext->isGranted('EDIT', $file)) {
+            throw new AccessDeniedException();
+        }
+
+
+        $tagsString = $repository->joinTagNames($file->getTags());
+
+        $form = $this->createForm(new EditType($tagsString));
+        $form->setData($file);
+
+        try {
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    //TODO
+
+                    $router = $this->container->get('router');
+                    $url = $router->generate('file_view', array('id' => $file->getId()), Router::ABSOLUTE_URL);
+                    return new RedirectResponse($url);
+                }
+            }
+        } catch (\Exception $e) {
+            $form->addError(new FormError($e->getMessage()));
+        }
+
+        return $this->render('WapinetBundle:File:edit.html.twig', array(
+            'form' => $form->createView(),
+            'file' => $file,
+        ));
+    }
+
+    /**
+     * @param Request $request
      *
      * @return RedirectResponse|JsonResponse|Response
      */
@@ -401,7 +454,7 @@ class FileController extends Controller
         }
 
         return $this->render('WapinetBundle:File:upload.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ));
     }
 

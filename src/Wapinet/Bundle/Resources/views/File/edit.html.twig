@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Редактирование файла - {{ file.originalFileName }}{% endblock %}
+{% block breadcrumbs %}
+    {{wapinet_breadcrumbs({
+    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'},
+    2: {'uri': path('file_index'), 'title': 'Файлообменник'},
+    3: {'uri': path('file_view', {'id': file.id}), 'title': file.originalFileName},
+    })}}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">{% autoescape 'js' %}
+        $(document).on("pagebeforeshow", "#page", function () {
+            $('#file_upload').submit(function () {
+                return FileLoader.uploadFile(this);
+            });
+        });
+        {% endautoescape %}</script>
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form, {'action': path('file_edit', {'id': file.id}), 'method': 'POST', 'attr': {'id': 'file_upload'}}) }}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.file) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.tags_string) }}
+
+    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+        <input type="checkbox" id="upload-password" onchange="$('#upload-password-row').toggle();" />
+        <label for="upload-password" title="Включите, если файл нужно защитить паролем">Пароль</label>
+    </fieldset>
+    <span id="upload-password-row" style="display: none">
+        {{ form_widget(form.password) }}
+    </span>
+
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}

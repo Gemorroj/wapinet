@@ -2,6 +2,7 @@
 namespace Wapinet\Bundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Wapinet\UserBundle\Entity\User;
@@ -311,9 +312,22 @@ class FileRepository extends EntityRepository
     {
         $tags = explode($separator, $names);
         $tags = array_map('trim', $tags);
-        $tags = array_filter($tags, function ($value) { return !empty($value); });
+        $tags = array_filter($tags, function ($value) {
+            return !empty($value);
+        });
 
         return array_values($tags);
     }
 
+    /**
+     * Splits an string into an array of valid tag names
+     *
+     * @param Collection    $tags      ArrayCollection of tags
+     * @param string   $separator  Tag name separator
+     * @return string
+     */
+    public function joinTagNames(Collection $tags, $separator = ', ')
+    {
+        return implode($separator, $tags->toArray());
+    }
 }
