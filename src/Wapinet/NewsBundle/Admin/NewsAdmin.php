@@ -10,6 +10,11 @@ use Sonata\AdminBundle\Show\ShowMapper;
 
 class NewsAdmin extends Admin
 {
+    protected $datagridValues = array(
+        '_sort_order' => 'DESC',
+        '_sort_by' => 'id',
+    );
+
     /**
      * @param DatagridMapper $datagridMapper
      */
@@ -27,7 +32,6 @@ class NewsAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id', null, array('label' => 'Идентификатор'))
             ->addIdentifier('subject', null, array('label' => 'Заголовок'))
             ->add('createdAt', null, array('label' => 'Создано'))
             ->add('updatedAt', null, array('label' => 'Обновлено'))

@@ -11,6 +11,11 @@ use Sonata\AdminBundle\Show\ShowMapper;
 
 class PanelAdmin extends Admin
 {
+    protected $datagridValues = array(
+        '_sort_order' => 'DESC',
+        '_sort_by' => 'id',
+    );
+
     /**
      * {@inheritdoc}
      */

@@ -84,6 +84,9 @@ services:
     mime:
         class: Wapinet\Bundle\Helper\Mime
         arguments: [@service_container]
+    file:
+        class: Wapinet\Bundle\Helper\File
+        arguments: [@service_container]
     curl:
         class: Wapinet\Bundle\Helper\Curl
         arguments: [@service_container]
@@ -147,6 +150,8 @@ services:
     wapinet.admin.file:
         class: Wapinet\Bundle\Admin\FileAdmin
         arguments: [null, Wapinet\Bundle\Entity\File, SonataAdminBundle:CRUD]
+        calls:
+            - [setFileHelper, ["@file"]]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Пользователи, label: Файлы }
 

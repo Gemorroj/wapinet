@@ -12,7 +12,13 @@ use Wapinet\UserBundle\Entity\User;
 
 class UserAdmin extends Admin
 {
+    protected $datagridValues = array(
+        '_sort_order' => 'DESC',
+        '_sort_by' => 'id',
+    );
+
     protected $userManager;
+
     /**
      * Конфигурация отображения записи
      *

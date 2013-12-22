@@ -12,6 +12,7 @@
 namespace Wapinet\CommentBundle\Entity;
 
 use FOS\CommentBundle\Entity\CommentManager as BaseCommentManager;
+use FOS\CommentBundle\Model\CommentInterface;
 use FOS\CommentBundle\Model\ThreadInterface;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -129,6 +130,23 @@ class CommentManager extends BaseCommentManager
         }
 
         return $this->container->get('paginate')->paginate($qb, $page);
+    }
+
+
+    /**
+     * Performs persisting of the comment.
+     *
+     * @param CommentInterface $comment
+     */
+    protected function doSaveComment(CommentInterface $comment)
+    {
+        $request = $this->container->get('request');
+        $comment->setIp($request->getClientIp());
+        $comment->setBrowser($request->headers->get('User-Agent', ''));
+
+        $this->em->persist($comment->getThread());
+        $this->em->persist($comment);
+        $this->em->flush();
     }
 
 

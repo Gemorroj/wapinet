@@ -352,7 +352,7 @@ class FileController extends Controller
         $em->flush();
 
         // файл и кэш
-        $this->cleanupFile($file);
+        $this->get('file')->cleanupFile($file);
 
         // переадресация на главную
         $router = $this->container->get('router');
@@ -363,24 +363,6 @@ class FileController extends Controller
         }
 
         return new RedirectResponse($url);
-    }
-
-
-    /**
-     * @param File $file
-     */
-    protected function cleanupFile(File $file)
-    {
-        // кэш картинок
-        $cache = $this->get('liip_imagine.cache.manager');
-        $helper = $this->get('vich_uploader.templating.helper.uploader_helper');
-        $path = $helper->asset($file, 'file');
-        $cache->remove($path, 'thumbnail');
-
-        // сам файл и сконвертированные видео
-        $filesystem = $this->get('filesystem');
-        $path = $file->getFile()->getPathname();
-        $filesystem->remove(array($path, $path . '.jpg', $path . '.mp4', $path . '.webm'));
     }
 
 
@@ -405,7 +387,8 @@ class FileController extends Controller
         }
 
 
-        $tagsString = $repository->joinTagNames($file->getTags());
+        $fileHelper = $this->get('file');
+        $tagsString = $fileHelper->joinTagNames($file->getTags());
 
         $form = $this->createForm(new EditType($tagsString));
         $form->setData($file);
@@ -475,14 +458,9 @@ class FileController extends Controller
         }
 
         if (null !== $newData->getPassword()) {
-            $data->setSaltValue();
-
-            $encoder = $this->get('security.encoder_factory')->getEncoder($data);
-            $password = $encoder->encodePassword($newData->getPassword(), $data->getSalt());
-            $data->setPassword($password);
+            $this->get('file')->setPassword($data, $newData->getPassword());
         } else {
-            $data->removeSalt();
-            $data->setPassword(null);
+            $this->get('file')->removePassword($data);
         }
 
         $data->setTags(new ArrayCollection());
@@ -491,7 +469,7 @@ class FileController extends Controller
 
         if (null !== $file) {
             // файл и кэш
-            $this->cleanupFile($oldData);
+            $this->get('file')->cleanupFile($oldData);
         }
 
         return $data;
@@ -584,7 +562,8 @@ class FileController extends Controller
         if (null !== $tagsString) {
             /** @var FileRepository $tagManager */
             $tagManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File');
-            $tagsArray = $tagManager->splitTagNames($tagsString);
+            $fileHelper = $this->get('file');
+            $tagsArray = $fileHelper->splitTagNames($tagsString);
             $tagsObjectArray = $tagManager->loadOrCreateTags($tagsArray, $file);
             $file->setTags($tagsObjectArray);
         }

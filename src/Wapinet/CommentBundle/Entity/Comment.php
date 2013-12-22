@@ -43,7 +43,54 @@ class Comment extends BaseComment implements SignedCommentInterface, VotableComm
      * @var int
      */
     protected $score = 0;
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected $ip;
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected $browser;
 
+    /**
+     * @return string
+     */
+    public function getIp()
+    {
+        return $this->ip;
+    }
+
+    /**
+     * @param string $ip
+     * @return Comment
+     */
+    public function setIp($ip)
+    {
+        $this->ip = $ip;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBrowser()
+    {
+        return $this->browser;
+    }
+
+    /**
+     * @param string $browser
+     * @return Comment
+     */
+    public function setBrowser($browser)
+    {
+        $this->browser = $browser;
+
+        return $this;
+    }
 
     public function setAuthor(UserInterface $author)
     {

@@ -10,6 +10,11 @@ use Sonata\AdminBundle\Show\ShowMapper;
 
 class CommentAdmin extends Admin
 {
+    protected $datagridValues = array(
+        '_sort_order' => 'DESC',
+        '_sort_by' => 'id',
+    );
+
     /**
      * {@inheritdoc}
      */
@@ -31,6 +36,8 @@ class CommentAdmin extends Admin
             ->add('createdAt', null, array('label' => 'Дата и время'))
             ->add('author', null, array('label' => 'Автор'))
             ->add('score', null, array('label' => 'Понравилось'))
+            ->add('ip', null, array('label' => 'IP'))
+            ->add('browser', null, array('label' => 'Браузер'))
         ;
     }
 

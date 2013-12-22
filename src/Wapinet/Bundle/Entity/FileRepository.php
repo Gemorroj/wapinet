@@ -310,35 +310,4 @@ class FileRepository extends EntityRepository
 
         return new ArrayCollection($tags);
     }
-
-
-    /**
-     * Splits an string into an array of valid tag names
-     *
-     * @param string    $names      String of tag names
-     * @param string    $separator  Tag name separator
-     * @return array
-     */
-    public function splitTagNames($names, $separator = ',')
-    {
-        $tags = explode($separator, $names);
-        $tags = array_map('trim', $tags);
-        $tags = array_filter($tags, function ($value) {
-            return !empty($value);
-        });
-
-        return array_values($tags);
-    }
-
-    /**
-     * Splits an string into an array of valid tag names
-     *
-     * @param Collection    $tags      ArrayCollection of tags
-     * @param string   $separator  Tag name separator
-     * @return string
-     */
-    public function joinTagNames(Collection $tags, $separator = ', ')
-    {
-        return implode($separator, $tags->toArray());
-    }
 }
