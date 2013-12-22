@@ -3,6 +3,7 @@
 namespace Wapinet\NewsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -15,19 +16,20 @@ class NewsController extends Controller
     /**
      * Lists all News entities.
      *
-     * @param int $page
+     * @param Request $request
      * @return Response
      */
-    public function indexAction($page = 1)
+    public function indexAction(Request $request)
     {
+        $page = $request->get('page', 1);
         $result = $this->getDoctrine()
             ->getRepository('WapinetNewsBundle:News')
             ->getAllBuilder();
 
-        $result = $this->get('paginate')->paginate($result, $page);
+        $pagerfanta = $this->get('paginate')->paginate($result, $page);
 
         return $this->render('WapinetNewsBundle:News:index.html.twig', array(
-            'news' => $result,
+            'pagerfanta' => $pagerfanta,
         ));
     }
 

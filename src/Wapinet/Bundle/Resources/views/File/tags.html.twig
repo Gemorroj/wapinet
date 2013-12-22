@@ -10,7 +10,7 @@
 
 {% block content %}
     <ul data-role="listview" data-inset="true">
-        {% for tag in tags %}
+        {% for tag in pagerfanta %}
             <li>
                 <a href="{{ path('file_tag', {'tagName': tag.name}) }}">
                     <h2>{{ tag.name }}</h2>
@@ -25,7 +25,7 @@
     </ul>
 
     <div class="pagerfanta">
-        {{ pagerfanta(tags) }}
+        {{ pagerfanta(pagerfanta) }}
     </div>
 
 {% endblock %}

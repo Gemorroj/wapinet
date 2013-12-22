@@ -18,11 +18,14 @@
     <script type="text/javascript" src="{{ asset('bundles/bmatznerjquerymobile/js/jquery.mobile.js') }}"></script>
 
     {# jplayer #}
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/wapinet/js/jplayer/blue.monday/jplayer.blue.monday.css') }}" />
-    <script type="text/javascript" src="{{ asset('bundles/wapinet/js/jplayer/jquery.jplayer.min.js') }}"></script>
+    {% if file is defined and (file.isPlayableVideo or file.isPlayableAudio) %}
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/wapinet/js/jplayer/blue.monday/jplayer.blue.monday.css') }}" />
+        <script type="text/javascript" src="{{ asset('bundles/wapinet/js/jplayer/jquery.jplayer.min.js') }}"></script>
+    {% endif %}
 
     {# pagerfanta #}
     {# <link rel="stylesheet" href="{{ asset('bundles/whiteoctoberpagerfanta/css/pagerfantaDefault.css') }}" type="text/css" /> #}
+    {% include '@Wapinet/swiper.js.twig' %}
 
     {# comments #}
     {% if comments_id is defined %}

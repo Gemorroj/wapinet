@@ -3,16 +3,18 @@
 namespace Wapinet\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class BashController extends Controller
 {
-    public function indexAction($page = null)
+    public function indexAction(Request $request)
     {
+        $page = $request->get('page');
         $bashHelper = $this->get('bash');
-        $page = $bashHelper->getPage($page);
+        $items = $bashHelper->getPage($page);
 
         $response = $this->render('WapinetBundle:Bash:index.html.twig', array(
-            'items' => $page,
+            'pagerfanta' => $items,
         ));
         $response->setMaxAge(3600);
         $response->setSharedMaxAge(3600);

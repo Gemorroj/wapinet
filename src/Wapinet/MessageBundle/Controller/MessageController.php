@@ -3,6 +3,7 @@
 namespace Wapinet\MessageBundle\Controller;
 
 use FOS\MessageBundle\Controller\MessageController as BaseController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -12,45 +13,48 @@ class MessageController extends BaseController
     /**
      * Displays the authenticated participant inbox
      *
-     * @param int $page
      * @return Response
      */
-    public function inboxAction($page = 1)
+    public function inboxAction()
     {
-        $threads = $this->getProvider()->getInboxThreads($page);
+        $request = $this->container->get('request');
+        $page = $request->get('page', 1);
+        $pagerfanta = $this->getProvider()->getInboxThreads($page);
 
         return $this->container->get('templating')->renderResponse('WapinetMessageBundle:Message:inbox.html.twig', array(
-            'threads' => $threads
+            'pagerfanta' => $pagerfanta
         ));
     }
 
     /**
      * Displays the authenticated participant messages sent
      *
-     * @param int $page
      * @return Response
      */
-    public function sentAction($page = 1)
+    public function sentAction()
     {
-        $threads = $this->getProvider()->getSentThreads($page);
+        $request = $this->container->get('request');
+        $page = $request->get('page', 1);
+        $pagerfanta = $this->getProvider()->getSentThreads($page);
 
         return $this->container->get('templating')->renderResponse('WapinetMessageBundle:Message:sent.html.twig', array(
-            'threads' => $threads
+            '$pagerfanta' => $pagerfanta
         ));
     }
 
     /**
      * Displays the authenticated participant deleted threads
      *
-     * @param int $page
      * @return Response
      */
-    public function deletedAction($page = 1)
+    public function deletedAction()
     {
-        $threads = $this->getProvider()->getDeletedThreads($page);
+        $request = $this->container->get('request');
+        $page = $request->get('page', 1);
+        $pagerfanta = $this->getProvider()->getDeletedThreads($page);
 
         return $this->container->get('templating')->renderResponse('WapinetMessageBundle:Message:deleted.html.twig', array(
-            'threads' => $threads
+            'threads' => $pagerfanta
         ));
     }
 
@@ -58,12 +62,13 @@ class MessageController extends BaseController
      * Displays a thread, also allows to reply to it
      *
      * @param string $threadId the thread id
-     * @param int $page
      *
      * @return Response
      */
-    public function threadAction($threadId, $page = 1)
+    public function threadAction($threadId)
     {
+        $request = $this->container->get('request');
+        $page = $request->get('page', 1);
         /** @var array('thread'=>\Wapinet\MessageBundle\Entity\Thread, 'messages'=>Pagerfanta) $threadMessages */
         $threadMessages = $this->getProvider()->getThreadMesages($threadId, $page);
 
@@ -77,7 +82,7 @@ class MessageController extends BaseController
         }
 
         return $this->container->get('templating')->renderResponse('WapinetMessageBundle:Message:thread.html.twig', array(
-            'messages' => $threadMessages['messages'],
+            'pagerfanta' => $threadMessages['messages'],
             'form' => $form->createView(),
             'thread' => $threadMessages['thread']
         ));

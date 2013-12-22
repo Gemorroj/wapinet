@@ -1,24 +1,18 @@
 wapinet_message_inbox:
-    pattern:  /inbox/{page}
-    defaults: { _controller: WapinetMessageBundle:Message:inbox, page: 1 }
-    requirements:
-        page: \d+
+    pattern:  /inbox
+    defaults: { _controller: WapinetMessageBundle:Message:inbox }
 
 wapinet_message_sent:
-    pattern:  /sent/{page}
-    defaults: { _controller: WapinetMessageBundle:Message:sent, page: 1 }
-    requirements:
-        page: \d+
+    pattern:  /sent
+    defaults: { _controller: WapinetMessageBundle:Message:sent }
 
 wapinet_message_deleted:
-    pattern:  /deleted/{page}
-    defaults: { _controller: WapinetMessageBundle:Message:deleted, page: 1 }
-    requirements:
-        page: \d+
+    pattern:  /deleted
+    defaults: { _controller: WapinetMessageBundle:Message:deleted }
 
 wapinet_message_thread_view:
-    pattern: /{threadId}/{page}
-    defaults: {_controller: WapinetMessageBundle:Message:thread, page: 1 }
+    pattern: /{threadId}
+    defaults: {_controller: WapinetMessageBundle:Message:thread }
     requirements:
         threadId: \d+
-        page: \d+
+

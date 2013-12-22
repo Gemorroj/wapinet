@@ -58,12 +58,12 @@ class FileController extends Controller
 
     /**
      * @param Request $request
-     * @param int $page
      * @param string|null $key
      * @return Response|RedirectResponse
      */
-    public function searchAction(Request $request, $page = 1, $key = null)
+    public function searchAction(Request $request, $key = null)
     {
+        $page = $request->get('page', 1);
         $form = $this->createForm(new SearchType());
         $pagerfanta = null;
         $session = $this->get('session');
@@ -99,7 +99,7 @@ class FileController extends Controller
 
         return $this->render('WapinetBundle:File:search.html.twig', array(
             'form' => $form->createView(),
-            'files' => $pagerfanta,
+            'pagerfanta' => $pagerfanta,
             'key' => $key,
         ));
     }
@@ -131,12 +131,13 @@ class FileController extends Controller
     }
 
     /**
-     * @param int $page
+     * @param Request $request
      *
      * @return Response
      */
-    public function tagsAction($page = 1)
+    public function tagsAction(Request $request)
     {
+        $page = $request->get('page', 1);
         /** @var FileRepository $tagManager */
         $tagManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File');
         $query = $tagManager->getTagsQuery();
@@ -144,19 +145,20 @@ class FileController extends Controller
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
         return $this->render('WapinetBundle:File:tags.html.twig', array(
-            'tags' => $pagerfanta,
+            'pagerfanta' => $pagerfanta,
         ));
     }
 
     /**
-     * @param int $page
+     * @param Request $request
      * @param string $tagName
      * @throws NotFoundHttpException
      *
      * @return Response
      */
-    public function tagAction($page = 1, $tagName)
+    public function tagAction(Request $request, $tagName)
     {
+        $page = $request->get('page', 1);
         /** @var FileRepository $tagManager */
         $tagManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File');
 
@@ -170,21 +172,22 @@ class FileController extends Controller
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
         return $this->render('WapinetBundle:File:tag.html.twig', array(
-            'files' => $pagerfanta,
+            'pagerfanta' => $pagerfanta,
             'tag' => $tag,
         ));
     }
 
 
     /**
-     * @param int $page
+     * @param Request $request
      * @param string $username
      * @throws NotFoundHttpException
      *
      * @return Response
      */
-    public function userAction($page = 1, $username)
+    public function userAction(Request $request, $username)
     {
+        $page = $request->get('page', 1);
         $userManager = $this->get('fos_user.user_manager');
         $user = $userManager->findUserByUsername($username);
         if (null === $user) {
@@ -199,24 +202,25 @@ class FileController extends Controller
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
         return $this->render('WapinetBundle:File:user.html.twig', array(
-            'files' => $pagerfanta,
+            'pagerfanta' => $pagerfanta,
             'user' => $user,
         ));
     }
 
     /**
-     * @param int $page
+     * @param Request $request
      * @param string|null $date
      * @param string|null $category
      * @return Response
      */
-    public function listAction($page = 1, $date = null, $category = null)
+    public function listAction(Request $request, $date = null, $category = null)
     {
+        $page = $request->get('page', 1);
         $query = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->getListQuery($date, $category);
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
         return $this->render('WapinetBundle:File:list.html.twig', array(
-            'files' => $pagerfanta,
+            'pagerfanta' => $pagerfanta,
             'date' => $date,
             'category' => $category,
         ));

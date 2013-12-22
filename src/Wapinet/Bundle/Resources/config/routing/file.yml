@@ -28,40 +28,33 @@ file_delete:
         _method: POST
 
 file_search:
-    pattern: /search/{page}/{key}
-    defaults: { _controller: WapinetBundle:File:search, page: 1, key: null }
+    pattern: /search/{key}
+    defaults: { _controller: WapinetBundle:File:search, key: null }
     requirements:
-        page: \d+
         key: "[a-zA-Z0-9]+"
 
 file_tags:
-    pattern: /tags/{page}
-    defaults: { _controller: WapinetBundle:File:tags, page: 1 }
-    requirements:
-        page: \d+
+    pattern: /tags
+    defaults: { _controller: WapinetBundle:File:tags }
 
 file_tag:
-    pattern: /tags/{page}/{tagName}
-    defaults: { _controller: WapinetBundle:File:tag, page: 1 }
+    pattern: /tags/{tagName}
+    defaults: { _controller: WapinetBundle:File:tag }
     requirements:
-        page: \d+
         tagName: ".+"
 
 file_user:
-    pattern: /users/{page}/{username}
-    defaults: { _controller: WapinetBundle:File:user, page: 1 }
-    requirements:
-        page: \d+
+    pattern: /users/{username}
+    defaults: { _controller: WapinetBundle:File:user }
 
 file_categories:
     pattern: /categories
     defaults: { _controller: WapinetBundle:File:categories }
 
 file_list:
-    pattern: /list/{page}/{date}/{category}
-    defaults: { _controller: WapinetBundle:File:list, page: 1, date: all, category: null }
+    pattern: /list/{date}/{category}
+    defaults: { _controller: WapinetBundle:File:list, date: all, category: null }
     requirements:
-        page: \d+
         date: (all|today|yesterday)
         category: (video|audio|image|text|office|archive|android|java)
 

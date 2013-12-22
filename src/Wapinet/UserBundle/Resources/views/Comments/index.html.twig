@@ -10,7 +10,7 @@
 {% block content %}
 
     <ul data-role="listview" data-inset="true">
-        {% for comment in comments %}
+        {% for comment in pagerfanta %}
             <li data-role="list-divider" class="ui-bar-d">{{ comment.createdAt|wapinet_datetime  }} <span class="ui-li-count">{{ comment.score }}</span></li>
             <li>
                 <a href="{{ comment.thread.permalink }}#fos_comment_{{ comment.id }}">{{ comment.body }}</a>
@@ -21,7 +21,7 @@
     </ul>
 
     <div class="pagerfanta">
-        {{ pagerfanta(comments) }}
+        {{ pagerfanta(pagerfanta) }}
     </div>
 
 {% endblock %}

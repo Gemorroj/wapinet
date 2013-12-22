@@ -1,0 +1,16 @@
+{% if pagerfanta is defined and (pagerfanta.hasPreviousPage or pagerfanta.hasNextPage) %}
+    <script type="text/javascript">
+        $(document).on("pagebeforeshow", "#page", function () {
+            {% if pagerfanta.hasPreviousPage %}
+                $(this).on("swipeleft", function () {
+                    window.location.search = "?page={{ pagerfanta.previousPage }}";
+                });
+            {% endif %}
+            {% if pagerfanta.hasNextPage %}
+                $(this).on("swiperight", function () {
+                    window.location.search = "?page={{ pagerfanta.nextPage }}";
+                });
+            {% endif %}
+        });
+    </script>
+{% endif %}

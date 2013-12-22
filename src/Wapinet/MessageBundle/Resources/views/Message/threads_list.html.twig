@@ -1,6 +1,6 @@
 <ul data-role="listview" data-inset="true">
-    {% if threads %}
-        {% for thread in threads %}
+    {% if pagerfanta %}
+        {% for thread in pagerfanta %}
             <li data-role="list-divider">{{ thread.lastMessage.createdAt|wapinet_datetime }} <span class="ui-li-count">{{ thread.messages|length }}</span></li>
             <li>
                 <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}">
@@ -35,5 +35,5 @@
 </ul>
 
 <div class="pagerfanta">
-    {{ pagerfanta(threads) }}
+    {{ pagerfanta(pagerfanta) }}
 </div>

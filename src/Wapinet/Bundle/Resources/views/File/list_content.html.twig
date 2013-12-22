@@ -1,5 +1,5 @@
 <ul data-role="listview" data-inset="true">
-    {% for file in files %}
+    {% for file in pagerfanta %}
         <li>
             <a href="{{ path('file_view', {'id': file.id}) }}">
                 {% if file.isImage %}
@@ -35,5 +35,5 @@
 </ul>
 
 <div class="pagerfanta">
-    {{ pagerfanta(files) }}
+    {{ pagerfanta(pagerfanta) }}
 </div>

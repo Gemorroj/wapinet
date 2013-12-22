@@ -1,11 +1,9 @@
 wapinet_news:
-    pattern:  /{page}
-    defaults: { _controller: WapinetNewsBundle:News:index, page: 1 }
-    requirements:
-        id: \d+
+    pattern:  /
+    defaults: { _controller: WapinetNewsBundle:News:index }
 
 wapinet_news_show:
-    pattern:  /show/{id}
+    pattern:  /{id}
     defaults: { _controller: WapinetNewsBundle:News:show }
     requirements:
         id: \d+

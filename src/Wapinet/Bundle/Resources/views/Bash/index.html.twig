@@ -9,7 +9,7 @@
 
 {% block content %}
     <ul data-role="listview" data-inset="true">
-        {% for item in items %}
+        {% for item in pagerfanta %}
             {% if item %}
                 <li>
                     <p class="long-description">{{ item|raw }}</p>
@@ -19,6 +19,6 @@
     </ul>
 
     <div class="pagerfanta">
-        {{ pagerfanta(items) }}
+        {{ pagerfanta(pagerfanta) }}
     </div>
 {% endblock %}
