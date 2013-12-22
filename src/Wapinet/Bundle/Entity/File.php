@@ -722,4 +722,13 @@ class File
     {
         return $this->isArchive();
     }
+
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getOriginalFileName();
+    }
 }
