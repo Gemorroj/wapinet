@@ -21,6 +21,7 @@ class NewsAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
+            ->add('createdBy', null, array('label' => 'Автор'))
             ->add('subject', null, array('label' => 'Заголовок'))
             ->add('createdAt', 'doctrine_orm_datetime_range', array('label' => 'Создано'), null, array('widget' => 'single_text'))
         ;
@@ -35,6 +36,7 @@ class NewsAdmin extends Admin
             ->addIdentifier('subject', null, array('label' => 'Заголовок'))
             ->add('createdAt', null, array('label' => 'Создано'))
             ->add('updatedAt', null, array('label' => 'Обновлено'))
+            ->add('createdBy', null, array('label' => 'Автор'))
             ->add('_action', 'actions', array(
                 'label' => 'Операции',
                 'actions' => array(
@@ -68,6 +70,7 @@ class NewsAdmin extends Admin
             ->add('body', null, array('label' => 'Новость'))
             ->add('createdAt', null, array('label' => 'Создано'))
             ->add('updatedAt', null, array('label' => 'Обновлено'))
+            ->add('createdBy', null, array('label' => 'Автор'))
         ;
     }
 }

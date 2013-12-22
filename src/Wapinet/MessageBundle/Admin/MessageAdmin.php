@@ -34,6 +34,7 @@ class MessageAdmin extends Admin
             ->add('id', null, array('label' => 'Идентификатор'))
             ->add('body', null, array('label' => 'Сообщение'))
             ->add('createdAt', null, array('label' => 'Дата и время'))
+            ->add('thread.subject', null, array('label' => 'Тема треда'))
             ->add('sender', null, array('label' => 'Автор'))
         ;
     }

@@ -34,6 +34,7 @@ class CommentAdmin extends Admin
             ->add('id', null, array('label' => 'Идентификатор'))
             ->add('body', null, array('label' => 'Комментарий'))
             ->add('createdAt', null, array('label' => 'Дата и время'))
+            ->add('thread.permalink', 'url', array('label' => 'Тред'))
             ->add('author', null, array('label' => 'Автор'))
             ->add('score', null, array('label' => 'Понравилось'))
             ->add('ip', null, array('label' => 'IP'))
