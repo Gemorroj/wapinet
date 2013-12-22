@@ -70,8 +70,7 @@ class CommentAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('id', null, array('label' => 'Идентификатор'))
-            ->add('body', null, array('label' => 'Комментарий'))
+            ->addIdentifier('body', null, array('label' => 'Комментарий'))
             ->add('createdAt', null, array('label' => 'Дата и время'))
             ->add('author', null, array('label' => 'Автор'))
             ->add('score', null, array('label' => 'Понравилось'))

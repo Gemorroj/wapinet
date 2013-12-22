@@ -22,6 +22,10 @@ class Panel extends \ArrayObject
     protected $downloads = true;
     protected $utilities = true;
     protected $programming = true;
+    /**
+     * @var User
+     */
+    protected $user;
 
     /**
      * @return int
@@ -29,6 +33,25 @@ class Panel extends \ArrayObject
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     * @return Panel
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
     /**

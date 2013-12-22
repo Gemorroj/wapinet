@@ -143,3 +143,10 @@ services:
     archive_7z:
         class: Wapinet\Bundle\Helper\Archiver\Archive7z
         arguments: [@service_container]
+
+    wapinet.admin.file:
+        class: Wapinet\Bundle\Admin\FileAdmin
+        arguments: [null, Wapinet\Bundle\Entity\File, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Пользователи, label: Файлы }
+

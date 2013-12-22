@@ -28,3 +28,11 @@ Wapinet\UserBundle\Entity\Panel:
         programming:
             type: boolean
             nullable: false
+
+    oneToOne:
+        user:
+            targetEntity: Wapinet\UserBundle\Entity\User
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+                nullable: false

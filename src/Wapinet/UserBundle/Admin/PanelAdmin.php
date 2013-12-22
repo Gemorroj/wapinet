@@ -29,6 +29,7 @@ class PanelAdmin extends Admin
     {
         $showMapper
             ->add('id', null, array('label' => 'Идентификатор'))
+            ->add('user', null, array('label' => 'Пользователь'))
             ->add('forum', null, array('label' => 'Форум'))
             ->add('file', null, array('label' => 'Файлообменник'))
             ->add('archiver', null, array('label' => 'Архиватор'))
@@ -74,7 +75,7 @@ class PanelAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('id', null, array('label' => 'Идентификатор'))
+            ->addIdentifier('user', null, array('label' => 'Пользователь'))
             ->add('forum', null, array('label' => 'Форум'))
             ->add('file', null, array('label' => 'Файлообменник'))
             ->add('archiver', null, array('label' => 'Архиватор'))

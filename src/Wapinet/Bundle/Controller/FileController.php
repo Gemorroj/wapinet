@@ -346,21 +346,13 @@ class FileController extends Controller
             throw new AccessDeniedException();
         }
 
-        // кэш картинок
-        $cache = $this->get('liip_imagine.cache.manager');
-        $helper = $this->get('vich_uploader.templating.helper.uploader_helper');
-        $path = $helper->asset($file, 'file');
-        $cache->remove($path, 'thumbnail');
-
         // БД
         $em = $this->getDoctrine()->getManager();
         $em->remove($file);
         $em->flush();
 
-        // сам файл и сконвертированные видео
-        $filesystem = $this->get('filesystem');
-        $path = $file->getFile()->getPathname();
-        $filesystem->remove(array($path, $path . '.jpg', $path . '.mp4', $path . '.webm'));
+        // файл и кэш
+        $this->cleanupFile($file);
 
         // переадресация на главную
         $router = $this->container->get('router');
@@ -372,6 +364,25 @@ class FileController extends Controller
 
         return new RedirectResponse($url);
     }
+
+
+    /**
+     * @param File $file
+     */
+    protected function cleanupFile(File $file)
+    {
+        // кэш картинок
+        $cache = $this->get('liip_imagine.cache.manager');
+        $helper = $this->get('vich_uploader.templating.helper.uploader_helper');
+        $path = $helper->asset($file, 'file');
+        $cache->remove($path, 'thumbnail');
+
+        // сам файл и сконвертированные видео
+        $filesystem = $this->get('filesystem');
+        $path = $file->getFile()->getPathname();
+        $filesystem->remove(array($path, $path . '.jpg', $path . '.mp4', $path . '.webm'));
+    }
+
 
     /**
      * @param Request $request
@@ -479,16 +490,8 @@ class FileController extends Controller
         $this->mergeFile($data);
 
         if (null !== $file) {
-            // кэш картинок
-            $cache = $this->get('liip_imagine.cache.manager');
-            $helper = $this->get('vich_uploader.templating.helper.uploader_helper');
-            $path = $helper->asset($oldData, 'file');
-            $cache->remove($path, 'thumbnail');
-
-            // сам файл и сконвертированные видео
-            $filesystem = $this->get('filesystem');
-            $path = $oldData->getFile()->getPathname();
-            $filesystem->remove(array($path, $path . '.jpg', $path . '.mp4', $path . '.webm'));
+            // файл и кэш
+            $this->cleanupFile($oldData);
         }
 
         return $data;

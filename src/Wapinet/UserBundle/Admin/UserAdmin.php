@@ -125,7 +125,6 @@ class UserAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
             ->addIdentifier('username', null, array('label' => 'Логин'))
             ->add('email', null, array('label' => 'Email'))
             ->add('roles', null, array('label' => 'Роли'))
