@@ -89,6 +89,11 @@ class User extends BaseUser implements ParticipantInterface
      */
     protected $friends;
 
+    /**
+     * @var string
+     */
+    protected $info;
+
 
     public function __construct()
     {
@@ -148,6 +153,25 @@ class User extends BaseUser implements ParticipantInterface
         return $this->panel;
     }
 
+
+    /**
+     * @return string|null
+     */
+    public function getInfo()
+    {
+        return $this->info;
+    }
+
+    /**
+     * @param string $info
+     * @return User
+     */
+    public function setInfo($info)
+    {
+        $this->info = $info;
+
+        return $this;
+    }
 
     /**
      * @return bool

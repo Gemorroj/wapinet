@@ -42,6 +42,10 @@ Wapinet\UserBundle\Entity\User:
         birthday:
             type: date
             nullable: true
+        info:
+            type: string
+            nullable: true
+            length: 5000
 
     lifecycleCallbacks:
         prePersist: [ setCreatedAtValue ]
