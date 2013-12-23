@@ -46,6 +46,9 @@ class SubscriberCommand extends ContainerAwareCommand
     }
 
 
+    /**
+     * @param array $emails
+     */
     protected function sendEmails(array $emails)
     {
         $robotEmail = $this->getContainer()->getParameter('wapinet_robot_email');
@@ -66,6 +69,9 @@ class SubscriberCommand extends ContainerAwareCommand
     }
 
 
+    /**
+     * @param string $className
+     */
     protected function truncate($className)
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');

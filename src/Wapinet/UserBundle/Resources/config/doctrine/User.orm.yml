@@ -15,6 +15,10 @@ Wapinet\UserBundle\Entity\User:
             type: boolean
             nullable: false
             column: subscribe_messages
+        subscribeNews:
+            type: boolean
+            nullable: false
+            column: subscribe_news
         avatarName:
             type: string
             nullable: true

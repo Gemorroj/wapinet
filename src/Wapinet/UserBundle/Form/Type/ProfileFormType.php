@@ -32,6 +32,7 @@ class ProfileFormType extends BaseType
             ->add('birthday', 'birthday', array('widget' => 'single_text', 'label' => 'Дата рождения', 'required' => false))
             ->add('subscribeComments', 'checkbox', array('label' => 'Присылать E-mail о новых комментариях', 'required' => false))
             ->add('subscribeMessages', 'checkbox', array('label' => 'Присылать E-mail о новых сообщениях', 'required' => false))
+            ->add('subscribeNews', 'checkbox', array('label' => 'Присылать E-mail о новостях сайта', 'required' => false))
             ->add('avatar', 'file_url', array(
                 'attr' => array(
                     'accept' => 'image/*'

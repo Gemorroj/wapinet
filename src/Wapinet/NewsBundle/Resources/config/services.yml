@@ -2,6 +2,8 @@ services:
     wapinet_news.admin.news:
         class: Wapinet\NewsBundle\Admin\NewsAdmin
         arguments: [~, Wapinet\NewsBundle\Entity\News, SonataAdminBundle:CRUD]
+        calls:
+            - [setContainer, ["@service_container"]]
         tags:
             - {name: sonata.admin, manager_type: orm, group: Новости, label: Новости}
 

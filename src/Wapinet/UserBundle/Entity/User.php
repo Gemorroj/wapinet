@@ -73,6 +73,11 @@ class User extends BaseUser implements ParticipantInterface
     protected $subscribeMessages = true;
 
     /**
+     * @var bool
+     */
+    protected $subscribeNews = true;
+
+    /**
      * @var Panel
      */
     protected $panel;
@@ -103,6 +108,25 @@ class User extends BaseUser implements ParticipantInterface
         return $this->panel;
     }
 
+
+    /**
+     * @return bool
+     */
+    public function getSubscribeNews()
+    {
+        return $this->subscribeNews;
+    }
+
+    /**
+     * @param bool $subscribeNews
+     * @return User
+     */
+    public function setSubscribeNews($subscribeNews)
+    {
+        $this->subscribeNews = (bool)$subscribeNews;
+
+        return $this;
+    }
 
     /**
      * @return bool
