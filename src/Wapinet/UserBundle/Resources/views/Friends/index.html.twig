@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Друзья {{ user.username }}{% endblock %}
+{% block breadcrumbs %}
+    {{ wapinet_breadcrumbs({
+    1: {'uri': path('wapinet_user_profile', {'username': user.username}), 'title': 'Профиль ' ~ user.username}
+    }) }}
+{% endblock %}
+
+{% block content %}
+
+    <ul data-role="listview" data-inset="true">
+        {% for friend in pagerfanta %}
+            <li>
+                <a href="{{ path('wapinet_user_profile', {'username': friend}) }}">
+                    {% if friend.friend.hasAvatar %}
+                        <img src="{{ vich_uploader_asset(friend.friend, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ friend }}" class="image-preview" />
+                        <h2>{{ friend }}</h2>
+                    {% else %}
+                        {{ friend }}
+                    {% endif %}
+                </a>
+            </li>
+        {% else %}
+            <li>Друзей нет</li>
+        {% endfor %}
+    </ul>
+
+    <div class="pagerfanta">
+        {{ pagerfanta(pagerfanta) }}
+    </div>
+
+{% endblock %}

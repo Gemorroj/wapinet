@@ -56,3 +56,12 @@ Wapinet\UserBundle\Entity\User:
                 referencedColumnName: id
                 onDelete: CASCADE
                 nullable: false
+
+    oneToMany:
+        friends:
+            targetEntity: Wapinet\UserBundle\Entity\Friend
+            mappedBy: user
+            cascade: ["remove"]
+            orphanRemoval: true
+            orderBy:
+                id: DESC

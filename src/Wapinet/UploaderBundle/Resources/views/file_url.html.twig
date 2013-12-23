@@ -5,7 +5,7 @@
             {{ form_row(form.url) }}
 
             {% if value and (value.file_url.valid is defined ? value.file_url.valid : 1) %}
-                {% if value.file_url.mimeType|slice(0, 6) == 'image/' %}
+                {% if value.web_path and value.file_url.mimeType|slice(0, 6) == 'image/' %}
                     {% include 'WapinetBundle::image.html.twig' with {'image': {'id': 'image', 'alt': '', 'src': value.web_path } } %}
                 {% else %}
                     <p>{{ (value.file_url.clientOriginalName is defined ? value.file_url.clientOriginalName : '') }} ({{ value.file_url.size|wapinet_size }})</p>

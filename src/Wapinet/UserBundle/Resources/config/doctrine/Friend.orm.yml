@@ -1,0 +1,27 @@
+Wapinet\UserBundle\Entity\Friend:
+    type:  entity
+    table: fos_user_friend
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+        updatedAt:
+            type: datetime
+            nullable: true
+            column: updated_at
+
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]
+
+    manyToOne:
+        user:
+            targetEntity: Wapinet\UserBundle\Entity\User
+        friend:
+            targetEntity: Wapinet\UserBundle\Entity\User

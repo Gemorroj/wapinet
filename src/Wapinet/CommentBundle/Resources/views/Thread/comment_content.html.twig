@@ -67,8 +67,10 @@
             {% if comment is fos_comment_in_state(constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_DELETED')) %}
                 {% trans from 'FOSCommentBundle' %}fos_comment_comment_deleted{% endtrans %}
             {% else %}
-                {% if comment.author and comment.author.avatar %}
-                    <span class="fos_comment_comment_avatar">{% include 'WapinetBundle::avatar.html.twig' with {'user': comment.author} %}</span>
+                {% if comment.author and comment.author.hasAvatar %}
+                    <span class="fos_comment_comment_avatar">
+                        <img src="{{ vich_uploader_asset(comment.author, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ comment.author }}" class="image-preview" />
+                    </span>
                 {% endif %}
                 <h2 class="fos_comment_comment_text">
                     {% if comment is fos_comment_raw %}

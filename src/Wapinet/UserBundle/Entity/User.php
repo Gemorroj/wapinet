@@ -3,6 +3,7 @@ namespace Wapinet\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use FOS\MessageBundle\Model\ParticipantInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -82,11 +83,25 @@ class User extends BaseUser implements ParticipantInterface
      */
     protected $panel;
 
+    /**
+     * @var Friend[]
+     */
+    protected $friends = array();
+
 
     public function __construct()
     {
         parent::__construct();
         $this->panel = new Panel();
+    }
+
+
+    /**
+     * @return Friend[]
+     */
+    public function getFriends()
+    {
+        return $this->friends;
     }
 
 
@@ -337,6 +352,10 @@ class User extends BaseUser implements ParticipantInterface
      */
     public function hasAvatar()
     {
+        if ($this->avatar instanceof UploadedFile) {
+            return false;
+        }
+
         return (null !== $this->avatar);
     }
 

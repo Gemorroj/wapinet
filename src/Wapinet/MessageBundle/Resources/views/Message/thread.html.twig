@@ -13,8 +13,9 @@
 {% for message in pagerfanta %}
     <li data-role="list-divider" class="ui-bar-d"><a href="{{ path('wapinet_user_profile', {'username': message.sender.username}) }}">{{ message.sender.username }}</a> <span class="ui-li-count">{{ message.createdAt|wapinet_datetime  }}</span></li>
     <li data-icon="false">
-        {% if message.sender.avatar %}
-            {% include 'WapinetBundle::avatar.html.twig' with {'user': message.sender, 'text_after_avatar': message.body } %}
+        {% if message.sender.hasAvatar %}
+            <img src="{{ vich_uploader_asset(message.sender, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ message.sender }}" class="image-preview" />
+            <h2>{{ message.body }}</h2>
         {% else %}
             {{ message.body }}
         {% endif %}
