@@ -58,6 +58,8 @@
     <a data-role="button" href="{{ path('wapinet_user_friends', {'username': user.username}) }}">Друзья</a>
 </fieldset>
 
+<a data-role="button" data-inline="true" href="#">Добавить в друзья</a>
+<a data-role="button" data-inline="true" href="#">Удалить из друзей</a>
 
 {% if app.user.id == user.id %}
     <fieldset data-role="controlgroup" data-type="horizontal">
