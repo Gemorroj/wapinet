@@ -58,8 +58,13 @@
     <a data-role="button" href="{{ path('wapinet_user_friends', {'username': user.username}) }}">Друзья</a>
 </fieldset>
 
-<a data-role="button" data-inline="true" href="#">Добавить в друзья</a>
-<a data-role="button" data-inline="true" href="#">Удалить из друзей</a>
+{% if app.user.id != user.id %}
+    {% if wapinet_user_friend(user) %}
+        <a data-role="button" data-inline="true" href="#">Удалить из друзей</a>
+    {% else %}
+        <a data-role="button" data-inline="true" href="#">Добавить в друзья</a>
+    {% endif %}
+{% endif %}
 
 {% if app.user.id == user.id %}
     <fieldset data-role="controlgroup" data-type="horizontal">
