@@ -34,9 +34,13 @@ class Mime
         $response = $curl->exec();
 
         $mime = array(
+            'mod' => 'audio/mod',
+            'it' => 'audio/it',
             'amr' => 'audio/amr',
             'ini' => 'text/plain',
             'php' => 'text/html',
+            'phtml' => 'text/html',
+            'shtml' => 'text/html',
             'm4a' => 'audio/x-m4a',
         );
         foreach (explode("\n", $response->getContent()) as $x) {
