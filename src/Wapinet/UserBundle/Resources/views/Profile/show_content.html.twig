@@ -58,6 +58,11 @@
     <a data-role="button" href="{{ path('wapinet_user_friends', {'username': user.username}) }}">Друзья</a>
 </fieldset>
 
+
+<p>Поиск друзей (поиск по всем пользователям)</p>
+<p>Уведомления действий друзей (отправка на email действий друзей)</p>
+
+
 {% if app.user.id != user.id %}
     {% if wapinet_user_friend(user) %}
         <a data-role="button" data-inline="true" href="{{ path('wapinet_user_friends_delete', {'username': user.username}) }}">Удалить из друзей</a>
