@@ -68,7 +68,7 @@ class PhpValidator
      */
     public function validateFragment($source)
     {
-        $tmp = tempnam(\AppKernel::getTmpDir(), 'php_validator');
+        $tmp = tempnam($this->container->getTmpDir(), 'php_validator');
         if (false === $tmp) {
             throw new \RuntimeException('Не удалось создать временный файл');
         }

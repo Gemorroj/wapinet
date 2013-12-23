@@ -70,7 +70,7 @@ class AppKernel extends Kernel
      *
      * @return string
      */
-    public static function getTmpDir()
+    public function getTmpDir()
     {
         return __DIR__ . DIRECTORY_SEPARATOR . 'tmp';
     }
@@ -80,7 +80,7 @@ class AppKernel extends Kernel
      *
      * @return string
      */
-    public static function getWebDir()
+    public function getWebDir()
     {
         return realpath(__DIR__.'/../web');
     }

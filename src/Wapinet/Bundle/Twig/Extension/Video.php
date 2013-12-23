@@ -55,12 +55,12 @@ class Video extends \Twig_Extension
     {
         $mp4File = $path . '.mp4';
 
-        if (false === file_exists(\AppKernel::getWebDir() . $mp4File)) {
+        if (false === file_exists($this->getWebDir() . $mp4File)) {
             $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
             try {
-                $media = $ffmpeg->open(\AppKernel::getWebDir() . $path);
-                $media->save(new X264('libvo_aacenc'), \AppKernel::getWebDir() . $mp4File);
-                if (false === file_exists(\AppKernel::getWebDir() . $mp4File)) {
+                $media = $ffmpeg->open($this->getWebDir() . $path);
+                $media->save(new X264('libvo_aacenc'), $this->getWebDir() . $mp4File);
+                if (false === file_exists($this->getWebDir() . $mp4File)) {
                     throw new \RuntimeException('Не удалось создать MP4 файл');
                 }
             } catch (\Exception $e) {
@@ -79,12 +79,12 @@ class Video extends \Twig_Extension
     {
         $webmFile = $path . '.webm';
 
-        if (false === file_exists(\AppKernel::getWebDir() . $webmFile)) {
+        if (false === file_exists($this->getWebDir() . $webmFile)) {
             $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
             try {
-                $media = $ffmpeg->open(\AppKernel::getWebDir() . $path);
-                $media->save(new WebM(), \AppKernel::getWebDir() . $webmFile);
-                if (false === file_exists(\AppKernel::getWebDir() . $webmFile)) {
+                $media = $ffmpeg->open($this->getWebDir() . $path);
+                $media->save(new WebM(), $this->getWebDir() . $webmFile);
+                if (false === file_exists($this->getWebDir() . $webmFile)) {
                     throw new \RuntimeException('Не удалось создать WEBM файл');
                 }
             } catch (\Exception $e) {
@@ -103,16 +103,16 @@ class Video extends \Twig_Extension
     {
         $screenshot = $path . '.jpg';
 
-        if (false === file_exists(\AppKernel::getWebDir() . $screenshot)) {
+        if (false === file_exists($this->getWebDir() . $screenshot)) {
             $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
             $second = $this->container->getParameter('wapinet_video_screenshot_second');
 
             try {
-                $media = $ffmpeg->open(\AppKernel::getWebDir() . $path);
+                $media = $ffmpeg->open($this->getWebDir() . $path);
                 if ($media instanceof \FFMpeg\Media\Video) {
                     $frame = $media->frame(TimeCode::fromSeconds($second));
-                    $frame->save(\AppKernel::getWebDir() . $screenshot);
-                    if (false === file_exists(\AppKernel::getWebDir() . $screenshot)) {
+                    $frame->save($this->getWebDir() . $screenshot);
+                    if (false === file_exists($this->getWebDir() . $screenshot)) {
                         throw new \RuntimeException('Не удалось создать скриншот');
                     }
                 } else {
@@ -124,6 +124,15 @@ class Video extends \Twig_Extension
         }
 
         return $screenshot;
+    }
+
+
+    /**
+     * @return string
+     */
+    protected function getWebDir()
+    {
+        return $this->container->getWebDir();
     }
 
 
