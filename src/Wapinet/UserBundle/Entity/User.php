@@ -1,6 +1,7 @@
 <?php
 namespace Wapinet\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use FOS\MessageBundle\Model\ParticipantInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -84,20 +85,20 @@ class User extends BaseUser implements ParticipantInterface
     protected $panel;
 
     /**
-     * @var Friend[]
+     * @var ArrayCollection
      */
-    protected $friends = array();
+    protected $friends;
 
 
     public function __construct()
     {
         parent::__construct();
-        $this->panel = new Panel();
+        $this->friends = new ArrayCollection();
     }
 
 
     /**
-     * @return Friend[]
+     * @return ArrayCollection
      */
     public function getFriends()
     {
@@ -137,6 +138,13 @@ class User extends BaseUser implements ParticipantInterface
      */
     public function getPanel()
     {
+        if (null === $this->panel) {
+            $panel = new Panel();
+            $panel->setUser($this);
+
+            return $panel;
+        }
+
         return $this->panel;
     }
 

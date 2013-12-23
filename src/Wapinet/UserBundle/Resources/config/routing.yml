@@ -16,4 +16,11 @@ wapinet_user_friends:
     pattern:  /friends/{username}
     defaults: { _controller: WapinetUserBundle:Friends:index }
 
+wapinet_user_friends_add:
+    pattern:  /friends/add/{username}
+    defaults: { _controller: WapinetUserBundle:Friends:add }
+
+wapinet_user_friends_delete:
+    pattern:  /friends/delete/{username}
+    defaults: { _controller: WapinetUserBundle:Friends:delete }
 

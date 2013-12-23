@@ -50,18 +50,18 @@ Wapinet\UserBundle\Entity\User:
     oneToOne:
         panel:
             targetEntity: Wapinet\UserBundle\Entity\Panel
-            cascade: ["persist", "remove"]
+            cascade: ["merge", "remove"]
             joinColumn:
                 name: panel_id
                 referencedColumnName: id
                 onDelete: CASCADE
-                nullable: false
+                nullable: true
 
     oneToMany:
         friends:
             targetEntity: Wapinet\UserBundle\Entity\Friend
             mappedBy: user
-            cascade: ["remove"]
+            cascade: ["persist", "remove"]
             orphanRemoval: true
             orderBy:
                 id: DESC

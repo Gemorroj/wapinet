@@ -97,7 +97,7 @@ class Friend
      *
      * @return Friend
      */
-    public function seFriend(User $friend)
+    public function setFriend(User $friend)
     {
         $this->friend = $friend;
 
