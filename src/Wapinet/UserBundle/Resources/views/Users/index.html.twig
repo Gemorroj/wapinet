@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Пользователи{% endblock %}
+
+{% block content %}
+
+    <ul data-role="listview" data-inset="true">
+        {% for user in pagerfanta %}
+            <li>
+                <a href="{{ path('wapinet_user_profile', {'username': user}) }}">
+                    {% if user.hasAvatar %}
+                        <img src="{{ vich_uploader_asset(user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ user }}" class="image-preview" />
+                        <h2>{{ user }}</h2>
+                    {% else %}
+                        {{ user }}
+                    {% endif %}
+                </a>
+            </li>
+        {% else %}
+            <li>Пользователей нет</li>
+        {% endfor %}
+    </ul>
+
+    <div class="pagerfanta">
+        {{ pagerfanta(pagerfanta) }}
+    </div>
+
+{% endblock %}

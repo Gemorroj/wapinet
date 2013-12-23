@@ -12,6 +12,10 @@ wapinet_user_comments:
     pattern:  /comments/{username}
     defaults: { _controller: WapinetUserBundle:Comments:index }
 
+wapinet_users:
+    pattern:  /users
+    defaults: { _controller: WapinetUserBundle:Users:index }
+
 wapinet_user_friends:
     pattern:  /friends/{username}
     defaults: { _controller: WapinetUserBundle:Friends:index }
