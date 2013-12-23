@@ -38,7 +38,7 @@ class MessageController extends BaseController
         $pagerfanta = $this->getProvider()->getSentThreads($page);
 
         return $this->container->get('templating')->renderResponse('WapinetMessageBundle:Message:sent.html.twig', array(
-            '$pagerfanta' => $pagerfanta
+            'pagerfanta' => $pagerfanta
         ));
     }
 
@@ -54,7 +54,7 @@ class MessageController extends BaseController
         $pagerfanta = $this->getProvider()->getDeletedThreads($page);
 
         return $this->container->get('templating')->renderResponse('WapinetMessageBundle:Message:deleted.html.twig', array(
-            'threads' => $pagerfanta
+            'pagerfanta' => $pagerfanta
         ));
     }
 

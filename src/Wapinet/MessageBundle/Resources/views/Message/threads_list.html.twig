@@ -34,6 +34,8 @@
     {% endif %}
 </ul>
 
-<div class="pagerfanta">
-    {{ pagerfanta(pagerfanta) }}
-</div>
+{% if pagerfanta %}
+    <div class="pagerfanta">
+        {{ pagerfanta(pagerfanta) }}
+    </div>
+{% endif %}

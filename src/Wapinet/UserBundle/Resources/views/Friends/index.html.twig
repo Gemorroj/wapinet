@@ -15,9 +15,10 @@
                 <a href="{{ path('wapinet_user_profile', {'username': friend}) }}">
                     {% if friend.friend.hasAvatar %}
                         <img src="{{ vich_uploader_asset(friend.friend, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ friend }}" class="image-preview" />
-                        <h2>{{ friend }}</h2>
-                    {% else %}
-                        {{ friend }}
+                    {% endif %}
+                    <h2>{{ friend }}</h2>
+                    {% if friend.friend.isOnline %}
+                        <p class="p-online">Онлайн</p>
                     {% endif %}
                 </a>
             </li>

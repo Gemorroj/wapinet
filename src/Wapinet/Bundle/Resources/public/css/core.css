@@ -40,7 +40,9 @@ li.menu-head {
 a.captcha-reload {
     vertical-align: baseline;
 }
-
+p.p-online {
+    color: #0a0;
+}
 div.avatar-popup, div.image-popup {
 
 }

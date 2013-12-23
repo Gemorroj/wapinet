@@ -20,11 +20,13 @@
                     {% if comment is fos_comment_in_state(constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_DELETED')) %}
                         {% trans from 'FOSCommentBundle' %}fos_comment_comment_deleted{% endtrans %}
                     {% else %}
-                        {% if comment.author %}
-                            <a href="{{ path('wapinet_user_profile', {'username': comment.authorName}) }}">{{ comment.authorName }}</a>
-                        {% else %}
-                            {{ comment.authorName }}
-                        {% endif %}
+                        <div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
+                            {% if comment.author %}
+                                <a data-mini="true" data-role="button" href="{{ path('wapinet_user_profile', {'username': comment.authorName}) }}">{{ comment.authorName }}</a>
+                            {% else %}
+                                <a data-mini="true" data-role="button" href="#">{{ comment.authorName }}</a>
+                            {% endif %}
+                        </div>
                     {% endif %}
                 </span>
                 <span class="ui-li-count">{{ comment.createdAt|wapinet_datetime }}</span>
@@ -79,6 +81,9 @@
                         {{ comment.body | nl2br }}
                     {% endif %}
                 </h2>
+                {% if comment.author and comment.author.isOnline %}
+                    <p class="fos_comment_comment_text_online p-online">Онлайн</p>
+                {% endif %}
             {% endif %}
         {% endblock fos_comment_comment_body %}
         </div>
