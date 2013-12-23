@@ -82,7 +82,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
             $curl->addBrowserHeaders();
             $responseHeaders = $curl->checkFileSize(false);
 
-            $temp = tempnam($this->container->getTmpDir(), 'file_url');
+            $temp = tempnam($this->container->get('kernel')->getTmpDir(), 'file_url');
             $f = fopen($temp, 'w');
 
             $curl->setOpt(CURLOPT_HEADER, false);

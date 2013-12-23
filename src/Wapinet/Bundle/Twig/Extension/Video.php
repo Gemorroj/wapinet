@@ -132,7 +132,7 @@ class Video extends \Twig_Extension
      */
     protected function getWebDir()
     {
-        return $this->container->getWebDir();
+        return $this->container->get('kernel')->getWebDir();
     }
 
 

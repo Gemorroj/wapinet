@@ -20,7 +20,7 @@ class TmpClearCommand extends ContainerAwareCommand
             ->setName('wapinet:tmp:clear')
             ->setDescription('Clean tmp files')
             ->setDefinition(array(
-                new InputArgument('lifetime', InputArgument::OPTIONAL, 'The lifetime seconds', 86400),
+                new InputArgument('lifetime', InputArgument::OPTIONAL, 'The lifetime timeout', '1 day'),
             ))
             ->setHelp(<<<EOT
 The <info>wapinet:tmp:clear</info> command removes old tmp files:
@@ -36,13 +36,13 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $lifetime = $input->getArgument('lifetime');
-        $tmpDir = $this->getContainer()->getTmpDir();
+        $tmpDir = $this->getContainer()->get('kernel')->getTmpDir();
 
-        $oldFiles = Finder::create()->date('< now - ' . $lifetime . ' seconds')->in($tmpDir);
+        $oldFiles = Finder::create()->date('< now - ' . $lifetime)->in($tmpDir);
         $oldFileCount = $oldFiles->count();
         $filesystem = $this->getContainer()->get('filesystem');
         $filesystem->remove($oldFiles);
 
-        $output->writeln(sprintf('Files over "%d" seconds are removed. Removed "%d" files.', $lifetime, $oldFileCount));
+        $output->writeln(sprintf('Files over "%s" are removed. Removed "%d" files.', $lifetime, $oldFileCount));
     }
 }
