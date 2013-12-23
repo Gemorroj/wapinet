@@ -89,6 +89,23 @@ class User extends BaseUser implements ParticipantInterface
         $this->panel = new Panel();
     }
 
+
+    /**
+     * @return bool
+     */
+    public function isOnline()
+    {
+        $lastActivity = $this->getLastActivity();
+        if (null !== $lastActivity) {
+            if ($lastActivity > new \DateTime('-5 minutes')) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
     /**
      * @param Panel $panel
      * @return User
