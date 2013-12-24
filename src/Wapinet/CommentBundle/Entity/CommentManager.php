@@ -136,7 +136,7 @@ class CommentManager extends BaseCommentManager
     /**
      * Performs persisting of the comment.
      *
-     * @param CommentInterface $comment
+     * @param Comment $comment
      */
     protected function doSaveComment(CommentInterface $comment)
     {

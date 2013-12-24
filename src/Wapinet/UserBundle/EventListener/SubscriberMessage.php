@@ -58,14 +58,4 @@ class SubscriberMessage implements EventSubscriberInterface
         }
         $this->em->flush();
     }
-
-    public function read(ReadableEvent $event)
-    {
-        // TODO:unsubscribe
-    }
-
-    public function delete(ThreadEvent $event)
-    {
-        // TODO:unsubscribe
-    }
 }

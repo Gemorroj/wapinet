@@ -96,6 +96,11 @@ class User extends BaseUser implements ParticipantInterface
     protected $friends;
 
     /**
+     * @var ArrayCollection
+     */
+    protected $friended;
+
+    /**
      * @var string
      */
     protected $info;
@@ -105,6 +110,7 @@ class User extends BaseUser implements ParticipantInterface
     {
         parent::__construct();
         $this->friends = new ArrayCollection();
+        $this->friended = new ArrayCollection();
     }
 
 
@@ -114,6 +120,14 @@ class User extends BaseUser implements ParticipantInterface
     public function getFriends()
     {
         return $this->friends;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getFriended()
+    {
+        return $this->friended;
     }
 
 

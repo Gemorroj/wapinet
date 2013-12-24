@@ -26,3 +26,4 @@ Wapinet\UserBundle\Entity\Friend:
             inversedBy: friends
         friend:
             targetEntity: Wapinet\UserBundle\Entity\User
+            inversedBy: friended

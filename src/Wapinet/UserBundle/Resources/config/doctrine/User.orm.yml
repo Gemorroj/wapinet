@@ -74,3 +74,8 @@ Wapinet\UserBundle\Entity\User:
             orphanRemoval: true
             orderBy:
                 id: DESC
+        friended:
+            targetEntity: Wapinet\UserBundle\Entity\Friend
+            mappedBy: friend
+            orderBy:
+                id: DESC
