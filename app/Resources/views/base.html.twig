@@ -25,7 +25,9 @@
 
     {# pagerfanta #}
     {# <link rel="stylesheet" href="{{ asset('bundles/whiteoctoberpagerfanta/css/pagerfantaDefault.css') }}" type="text/css" /> #}
-    {% include '@Wapinet/swiper.js.twig' %}
+    {% if pagerfanta is defined and pagerfanta is not null %}
+        {% include '@Wapinet/swiper.js.twig' %}
+    {% endif %}
 
     {# comments #}
     {% if comments_id is defined %}

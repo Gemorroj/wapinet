@@ -1,4 +1,4 @@
-{% if pagerfanta is defined and (pagerfanta.hasPreviousPage or pagerfanta.hasNextPage) %}
+{% if pagerfanta.hasPreviousPage or pagerfanta.hasNextPage %}
     <script type="text/javascript">
         $(document).on("pagebeforeshow", "#page", function () {
             {% if pagerfanta.hasPreviousPage %}
