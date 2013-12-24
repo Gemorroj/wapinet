@@ -18,6 +18,10 @@ Wapinet\Bundle\Entity\Tag:
             type: integer
             nullable: false
             column: count
+        countPassword:
+            type: integer
+            nullable: false
+            column: count_password
         createdAt:
             type: datetime
             nullable: false

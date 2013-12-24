@@ -292,8 +292,10 @@ class FileRepository extends EntityRepository
             if (false === $loadedTag->getFiles()->contains($file)) {
                 $loadedTag->getFiles()->add($file);
 
-                if (null !== $file->getPassword()) {
+                if (null === $file->getPassword()) {
                     $loadedTag->setCount($loadedTag->getCount() + 1);
+                } else {
+                    $loadedTag->setCountPassword($loadedTag->getCountPassword() + 1);
                 }
             }
 
@@ -306,7 +308,11 @@ class FileRepository extends EntityRepository
                 $tag = new Tag();
                 $tag->setName($name);
                 $tag->setFiles(new ArrayCollection(array($file)));
-                $tag->setCount(1);
+                if (null === $file->getPassword()) {
+                    $tag->setCount(1);
+                } else {
+                    $tag->setCountPassword(1);
+                }
                 $tags[] = $tag;
             }
         }
