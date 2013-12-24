@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User extends BaseUser implements ParticipantInterface
 {
+    const LIFETIME = '5 minutes';
     const SEX_M = 'm';
     const SEX_F = 'f';
 
@@ -118,7 +119,7 @@ class User extends BaseUser implements ParticipantInterface
     {
         $lastActivity = $this->getLastActivity();
         if (null !== $lastActivity) {
-            if ($lastActivity > new \DateTime('-5 minutes')) {
+            if ($lastActivity > new \DateTime('now -' . self::LIFETIME)) {
                 return true;
             }
         }

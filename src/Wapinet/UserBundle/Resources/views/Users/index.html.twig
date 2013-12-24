@@ -7,7 +7,27 @@
 
 {% block content %}
 
-    <p>TODO: Поиск</p>
+    {{ form_start(form, {'action': path('wapinet_users'), 'method': 'POST'}) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.search) }}
+
+    <div data-role="collapsible">
+        <h4>Дополнительные параметры</h4>
+        {{ form_row(form.use_info) }}
+        {{ form_row(form.only_online) }}
+
+        {{ form_row(form.sex, {'attr': {'data-native-menu': 'false'}}) }}
+
+        <fieldset class="ui-grid-a">
+            <div class="ui-block-a">{{ form_row(form.created_after) }}</div>
+            <div class="ui-block-b">{{ form_row(form.created_before) }}</div>
+        </fieldset>
+    </div>
+
+
+    {{ form_rest(form) }}
+
+    {{ form_end(form) }}
 
     <ul data-role="listview" data-inset="true">
         {% for user in pagerfanta %}
