@@ -43,6 +43,7 @@ class UserAdmin extends Admin
             ->add('subscribeComments', null, array('label' => 'Рассылка комментариев'))
             ->add('subscribeMessages', null, array('label' => 'Рассылка сообщений'))
             ->add('panel', null, array('label' => 'Меню'))
+            ->add('friends', null, array('label' => 'Друзья'))
         ;
     }
 
