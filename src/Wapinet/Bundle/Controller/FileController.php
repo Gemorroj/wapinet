@@ -20,6 +20,7 @@ use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wapinet\Bundle\Entity\File;
 use Wapinet\Bundle\Entity\FileRepository;
+use Wapinet\Bundle\Event\FileEvent;
 use Wapinet\Bundle\Exception\FileDuplicatedException;
 use Wapinet\Bundle\Form\Type\File\EditType;
 use Wapinet\Bundle\Form\Type\File\PasswordType;
@@ -632,6 +633,11 @@ class FileController extends Controller
         $this->saveTags($data, $tagsString);
         $this->saveFile($data);
         $this->saveFileAcl($data);
+
+        $this->container->get('event_dispatcher')->dispatch(
+            FileEvent::FILE_ADD,
+            new FileEvent($data->getUser(), $data)
+        );
 
         return $data;
     }

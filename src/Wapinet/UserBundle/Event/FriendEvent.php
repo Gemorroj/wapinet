@@ -22,6 +22,7 @@ class FriendEvent extends Event
     public function __construct(User $user, User $friend)
     {
         $this->user = $user;
+        $this->friend = $friend;
     }
 
     /**
