@@ -46,7 +46,7 @@ class SubscriberMessage implements EventSubscriberInterface
         foreach ($participants as $participant) {
             $user = $this->em->find('Wapinet\UserBundle\Entity\User', $participant->getId());
 
-            if ($user->getSubscribeMessages()) {
+            if (true === $user->getSubscribeMessages()) {
                 $subscriber = new EntitySubscriber();
                 $subscriber->setSubject('Новое сообщение');
                 $subscriber->setUrl($path);
@@ -56,6 +56,7 @@ class SubscriberMessage implements EventSubscriberInterface
                 $this->em->persist($subscriber);
             }
         }
+
         $this->em->flush();
     }
 }

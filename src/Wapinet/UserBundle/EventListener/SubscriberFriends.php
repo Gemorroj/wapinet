@@ -58,9 +58,10 @@ class SubscriberFriends implements EventSubscriberInterface
                 $subscriber->setUser($friend->getUser());
 
                 $this->em->persist($subscriber);
-                $this->em->flush();
             }
         }
+
+        $this->em->flush();
     }
 
 
@@ -68,6 +69,15 @@ class SubscriberFriends implements EventSubscriberInterface
     {
         $urlFriend = $this->router->generate('wapinet_user_profile', array('username' => $event->getFriend()->getUsername()), Router::ABSOLUTE_URL);
         $urlUser = $this->router->generate('wapinet_user_profile', array('username' => $event->getUser()->getUsername()), Router::ABSOLUTE_URL);
+
+        // Уведомление о добавлении  в друзья
+        $subscriber = new EntitySubscriber();
+        $subscriber->setSubject($event->getUser()->getUsername() . ' добавил Вас в друзья');
+        $subscriber->setUrl($urlUser);
+        $subscriber->setMessage('Пользователь ' . $event->getUser()->getUsername() . ' ( ' . $urlUser . ' ) добавил Вас в друзья.');
+        $subscriber->setUser($event->getFriend());
+        $this->em->persist($subscriber);
+
 
         /** @var Friend $friend */
         foreach ($event->getUser()->getFriended() as $friend) {
@@ -79,15 +89,24 @@ class SubscriberFriends implements EventSubscriberInterface
                 $subscriber->setUser($friend->getUser());
 
                 $this->em->persist($subscriber);
-                $this->em->flush();
             }
         }
+
+        $this->em->flush();
     }
 
     public function friendDelete(FriendEvent $event)
     {
         $urlFriend = $this->router->generate('wapinet_user_profile', array('username' => $event->getFriend()->getUsername()), Router::ABSOLUTE_URL);
         $urlUser = $this->router->generate('wapinet_user_profile', array('username' => $event->getUser()->getUsername()), Router::ABSOLUTE_URL);
+
+        // Уведомление об удалении из друзей
+        $subscriber = new EntitySubscriber();
+        $subscriber->setSubject($event->getUser()->getUsername() . ' удалил Вас из друзей');
+        $subscriber->setUrl($urlUser);
+        $subscriber->setMessage('Пользователь ' . $event->getUser()->getUsername() . ' ( ' . $urlUser . ' ) удалил Вас из друзей.');
+        $subscriber->setUser($event->getFriend());
+        $this->em->persist($subscriber);
 
         /** @var Friend $friend */
         foreach ($event->getUser()->getFriended() as $friend) {
@@ -99,9 +118,10 @@ class SubscriberFriends implements EventSubscriberInterface
                 $subscriber->setUser($friend->getUser());
 
                 $this->em->persist($subscriber);
-                $this->em->flush();
             }
         }
+
+        $this->em->flush();
     }
 
 
@@ -119,8 +139,9 @@ class SubscriberFriends implements EventSubscriberInterface
                 $subscriber->setUser($friend->getUser());
 
                 $this->em->persist($subscriber);
-                $this->em->flush();
             }
         }
+
+        $this->em->flush();
     }
 }
