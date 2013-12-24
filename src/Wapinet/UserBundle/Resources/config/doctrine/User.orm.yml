@@ -20,6 +20,10 @@ Wapinet\UserBundle\Entity\User:
             type: boolean
             nullable: false
             column: subscribe_news
+        subscribeFriends:
+            type: boolean
+            nullable: false
+            column: subscribe_friends
         avatarName:
             type: string
             nullable: true
