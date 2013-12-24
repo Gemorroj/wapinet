@@ -7,6 +7,7 @@ use FOS\CommentBundle\Events as Event;
 use FOS\CommentBundle\Event\CommentEvent;
 use Wapinet\Bundle\Event\FileEvent;
 use Wapinet\CommentBundle\Entity\Comment;
+use Wapinet\UserBundle\Entity\Friend;
 use Wapinet\UserBundle\Entity\Subscriber as EntitySubscriber;
 use Doctrine\Orm\EntityManager;
 use Wapinet\UserBundle\Entity\User;
@@ -47,14 +48,14 @@ class SubscriberFriends implements EventSubscriberInterface
         $thread = $comment->getThread();
         $path = $thread->getPermalink();
 
-        /** @var User $friend */
+        /** @var Friend $friend */
         foreach ($user->getFriended() as $friend) {
-            if (true === $friend->getSubscribeFriends()) {
+            if (true === $friend->getUser()->getSubscribeFriends()) {
                 $subscriber = new EntitySubscriber();
                 $subscriber->setSubject('Новый комментарий от ' . $user->getUsername());
                 $subscriber->setUrl($path);
                 $subscriber->setMessage($comment->getBody());
-                $subscriber->setUser($friend);
+                $subscriber->setUser($friend->getUser());
 
                 $this->em->persist($subscriber);
                 $this->em->flush();
@@ -68,14 +69,14 @@ class SubscriberFriends implements EventSubscriberInterface
         $urlFriend = $this->router->generate('wapinet_user_profile', array('username' => $event->getFriend()->getUsername()), Router::ABSOLUTE_URL);
         $urlUser = $this->router->generate('wapinet_user_profile', array('username' => $event->getUser()->getUsername()), Router::ABSOLUTE_URL);
 
-        /** @var User $friend */
+        /** @var Friend $friend */
         foreach ($event->getUser()->getFriended() as $friend) {
-            if (true === $friend->getSubscribeFriends()) {
+            if (true === $friend->getUser()->getSubscribeFriends()) {
                 $subscriber = new EntitySubscriber();
                 $subscriber->setSubject($event->getUser()->getUsername() . ' добавил в друзья ' . $event->getFriend()->getUsername());
                 $subscriber->setUrl($urlUser);
                 $subscriber->setMessage('Ваш друг ' . $event->getUser()->getUsername() . ' ( ' . $urlUser . ' ) добавил в друзья ' . $event->getFriend()->getUsername() . '( ' . $urlFriend . ' ).');
-                $subscriber->setUser($friend);
+                $subscriber->setUser($friend->getUser());
 
                 $this->em->persist($subscriber);
                 $this->em->flush();
@@ -88,14 +89,14 @@ class SubscriberFriends implements EventSubscriberInterface
         $urlFriend = $this->router->generate('wapinet_user_profile', array('username' => $event->getFriend()->getUsername()), Router::ABSOLUTE_URL);
         $urlUser = $this->router->generate('wapinet_user_profile', array('username' => $event->getUser()->getUsername()), Router::ABSOLUTE_URL);
 
-        /** @var User $friend */
+        /** @var Friend $friend */
         foreach ($event->getUser()->getFriended() as $friend) {
-            if (true === $friend->getSubscribeFriends()) {
+            if (true === $friend->getUser()->getSubscribeFriends()) {
                 $subscriber = new EntitySubscriber();
                 $subscriber->setSubject($event->getUser()->getUsername() . ' удалил из друзей ' . $event->getFriend()->getUsername());
                 $subscriber->setUrl($urlUser);
                 $subscriber->setMessage('Ваш друг ' . $event->getUser()->getUsername() . ' ( ' . $urlUser . ' ) удалил из друзей ' . $event->getFriend()->getUsername() . ' ( ' . $urlFriend . ').');
-                $subscriber->setUser($friend);
+                $subscriber->setUser($friend->getUser());
 
                 $this->em->persist($subscriber);
                 $this->em->flush();
@@ -108,14 +109,14 @@ class SubscriberFriends implements EventSubscriberInterface
     {
         $url = $this->router->generate('file_view', array('id' => $event->getFile()->getId()), Router::ABSOLUTE_URL);
 
-        /** @var User $friend */
+        /** @var Friend $friend */
         foreach ($event->getUser()->getFriended() as $friend) {
-            if (true === $friend->getSubscribeFriends()) {
+            if (true === $friend->getUser()->getSubscribeFriends()) {
                 $subscriber = new EntitySubscriber();
                 $subscriber->setSubject($event->getUser()->getUsername() . ' добавил файл ' . $event->getFile()->getOriginalFileName());
                 $subscriber->setUrl($url);
-                $subscriber->setMessage('Ваш друг ' . $event->getUser()->getUsername() . ' добавил файл "' . $event->getFile()->getOriginalFileName() . '".');
-                $subscriber->setUser($friend);
+                $subscriber->setMessage('Ваш друг ' . $event->getUser()->getUsername() . ' загрузил файл "' . $event->getFile()->getOriginalFileName() . '".');
+                $subscriber->setUser($friend->getUser());
 
                 $this->em->persist($subscriber);
                 $this->em->flush();
