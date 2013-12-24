@@ -39,7 +39,7 @@ class SubscriberFriends implements EventSubscriberInterface
         $comment = $event->getComment();
         /** @var User $user */
         $user = $comment->getAuthor();
-        if (null === $user || false === $user->getSubscribeFriends()) {
+        if (null === $user) {
             return;
         }
 
@@ -49,14 +49,16 @@ class SubscriberFriends implements EventSubscriberInterface
 
         /** @var User $friend */
         foreach ($user->getFriended() as $friend) {
-            $subscriber = new EntitySubscriber();
-            $subscriber->setSubject('Новый комментарий от ' . $user->getUsername());
-            $subscriber->setUrl($path);
-            $subscriber->setMessage($comment->getBody());
-            $subscriber->setUser($friend);
+            if (true === $friend->getSubscribeFriends()) {
+                $subscriber = new EntitySubscriber();
+                $subscriber->setSubject('Новый комментарий от ' . $user->getUsername());
+                $subscriber->setUrl($path);
+                $subscriber->setMessage($comment->getBody());
+                $subscriber->setUser($friend);
 
-            $this->em->persist($subscriber);
-            $this->em->flush();
+                $this->em->persist($subscriber);
+                $this->em->flush();
+            }
         }
     }
 
@@ -68,14 +70,16 @@ class SubscriberFriends implements EventSubscriberInterface
 
         /** @var User $friend */
         foreach ($event->getUser()->getFriended() as $friend) {
-            $subscriber = new EntitySubscriber();
-            $subscriber->setSubject($event->getUser()->getUsername() . ' добавил в друзья ' . $event->getFriend()->getUsername());
-            $subscriber->setUrl($urlUser);
-            $subscriber->setMessage('Ваш друг ' . $event->getUser()->getUsername() . ' ( ' . $urlUser . ' ) добавил в друзья ' . $event->getFriend()->getUsername() . '( ' . $urlFriend . ' ).');
-            $subscriber->setUser($friend);
+            if (true === $friend->getSubscribeFriends()) {
+                $subscriber = new EntitySubscriber();
+                $subscriber->setSubject($event->getUser()->getUsername() . ' добавил в друзья ' . $event->getFriend()->getUsername());
+                $subscriber->setUrl($urlUser);
+                $subscriber->setMessage('Ваш друг ' . $event->getUser()->getUsername() . ' ( ' . $urlUser . ' ) добавил в друзья ' . $event->getFriend()->getUsername() . '( ' . $urlFriend . ' ).');
+                $subscriber->setUser($friend);
 
-            $this->em->persist($subscriber);
-            $this->em->flush();
+                $this->em->persist($subscriber);
+                $this->em->flush();
+            }
         }
     }
 
@@ -86,14 +90,16 @@ class SubscriberFriends implements EventSubscriberInterface
 
         /** @var User $friend */
         foreach ($event->getUser()->getFriended() as $friend) {
-            $subscriber = new EntitySubscriber();
-            $subscriber->setSubject($event->getUser()->getUsername() . ' удалил из друзей ' . $event->getFriend()->getUsername());
-            $subscriber->setUrl($urlUser);
-            $subscriber->setMessage('Ваш друг ' . $event->getUser()->getUsername() . ' ( ' . $urlUser . ' ) удалил из друзей ' . $event->getFriend()->getUsername() . ' ( ' . $urlFriend . ').');
-            $subscriber->setUser($friend);
+            if (true === $friend->getSubscribeFriends()) {
+                $subscriber = new EntitySubscriber();
+                $subscriber->setSubject($event->getUser()->getUsername() . ' удалил из друзей ' . $event->getFriend()->getUsername());
+                $subscriber->setUrl($urlUser);
+                $subscriber->setMessage('Ваш друг ' . $event->getUser()->getUsername() . ' ( ' . $urlUser . ' ) удалил из друзей ' . $event->getFriend()->getUsername() . ' ( ' . $urlFriend . ').');
+                $subscriber->setUser($friend);
 
-            $this->em->persist($subscriber);
-            $this->em->flush();
+                $this->em->persist($subscriber);
+                $this->em->flush();
+            }
         }
     }
 
@@ -104,14 +110,16 @@ class SubscriberFriends implements EventSubscriberInterface
 
         /** @var User $friend */
         foreach ($event->getUser()->getFriended() as $friend) {
-            $subscriber = new EntitySubscriber();
-            $subscriber->setSubject($event->getUser()->getUsername() . ' добавил файл ' . $event->getFile()->getOriginalFileName());
-            $subscriber->setUrl($url);
-            $subscriber->setMessage('Ваш друг ' . $event->getUser()->getUsername() . ' добавил файл "' . $event->getFile()->getOriginalFileName() . '".');
-            $subscriber->setUser($friend);
+            if (true === $friend->getSubscribeFriends()) {
+                $subscriber = new EntitySubscriber();
+                $subscriber->setSubject($event->getUser()->getUsername() . ' добавил файл ' . $event->getFile()->getOriginalFileName());
+                $subscriber->setUrl($url);
+                $subscriber->setMessage('Ваш друг ' . $event->getUser()->getUsername() . ' добавил файл "' . $event->getFile()->getOriginalFileName() . '".');
+                $subscriber->setUser($friend);
 
-            $this->em->persist($subscriber);
-            $this->em->flush();
+                $this->em->persist($subscriber);
+                $this->em->flush();
+            }
         }
     }
 }
