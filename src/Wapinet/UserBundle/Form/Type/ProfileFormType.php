@@ -28,7 +28,7 @@ class ProfileFormType extends BaseType
     {
         parent::buildUserForm($builder, $options);
         $builder
-            ->add('sex', 'choice', array('label' => 'Пол:', 'required' => false, 'choices' => User::getSexChoices()))
+            ->add('sex', 'choice', array('label' => 'Пол', 'required' => false, 'choices' => User::getSexChoices()))
             ->add('birthday', 'birthday', array('widget' => 'single_text', 'label' => 'Дата рождения', 'required' => false))
             ->add('subscribeComments', 'checkbox', array('label' => 'Присылать E-mail о новых комментариях', 'required' => false))
             ->add('subscribeMessages', 'checkbox', array('label' => 'Присылать E-mail о новых сообщениях', 'required' => false))
