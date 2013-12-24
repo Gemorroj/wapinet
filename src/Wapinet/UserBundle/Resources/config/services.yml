@@ -43,3 +43,9 @@ services:
         tags:
             - {name: twig.extension, alias: wapinet_user_friend}
 
+    wapinet_user.subscriber.friends:
+        class: Wapinet\UserBundle\EventListener\SubscriberFriends
+        arguments: [@doctrine.orm.entity_manager, @router]
+        tags:
+            - { name: kernel.event_subscriber }
+

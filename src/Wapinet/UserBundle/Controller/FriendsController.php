@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wapinet\UserBundle\Entity\Friend;
 use Wapinet\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Wapinet\UserBundle\Event\FriendEvent;
 
 
 class FriendsController extends Controller
@@ -78,6 +79,11 @@ class FriendsController extends Controller
         $this->getDoctrine()->getManager()->merge($user);
         $this->getDoctrine()->getManager()->flush();
 
+        $this->container->get('event_dispatcher')->dispatch(
+            FriendEvent::FRIEND_ADD,
+            new FriendEvent($user, $friend)
+        );
+
         $router = $this->get('router');
         $url = $router->generate('wapinet_user_profile', array('username' => $friend->getUsername()), Router::ABSOLUTE_URL);
 
@@ -123,6 +129,11 @@ class FriendsController extends Controller
         $user->getFriends()->removeElement($objFriend);
         $this->getDoctrine()->getManager()->merge($user);
         $this->getDoctrine()->getManager()->flush();
+
+        $this->container->get('event_dispatcher')->dispatch(
+            FriendEvent::FRIEND_DELETE,
+            new FriendEvent($user, $friend)
+        );
 
         $router = $this->get('router');
         $url = $router->generate('wapinet_user_profile', array('username' => $friend->getUsername()), Router::ABSOLUTE_URL);
