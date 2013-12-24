@@ -3,7 +3,6 @@ namespace Wapinet\UserBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Wapinet\UserBundle\Entity\User;
 
 /**
@@ -19,7 +18,7 @@ class SearchType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('search', 'search', array('max_length' => 5000, 'required' => true, 'label' => 'Кого ищем?', 'constraints' => new NotBlank()));
+        $builder->add('search', 'search', array('max_length' => 5000, 'required' => false, 'label' => 'Кого ищем?'));
 
         $builder->add('use_info', 'checkbox', array('required' => false, 'label' => 'Искать в дополнительной информации', 'data' => true));
         $builder->add('only_online', 'checkbox', array('required' => false, 'label' => 'Только онлайн', 'data' => true));

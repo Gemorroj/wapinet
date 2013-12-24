@@ -13,8 +13,10 @@ wapinet_user_comments:
     defaults: { _controller: WapinetUserBundle:Comments:index }
 
 wapinet_users:
-    pattern:  /users
-    defaults: { _controller: WapinetUserBundle:Users:index }
+    pattern:  /users/{key}
+    defaults: { _controller: WapinetUserBundle:Users:index, key: null }
+    requirements:
+        key: "[a-zA-Z0-9]+"
 
 wapinet_user_friends:
     pattern:  /friends/{username}

@@ -136,24 +136,27 @@ class FileRepository extends EntityRepository
 
 
     /**
-     * @param string $search
+     * @param string|null $search
      * @param bool $useDescription
      * @param array|null $categories
      * @param \DateTime|null $createdAfter
      * @param \DateTime|null $createdBefore
      * @return \Doctrine\ORM\Query
      */
-    public function getSearchQuery($search, $useDescription = true, array $categories = null, \DateTime $createdAfter = null, \DateTime $createdBefore = null)
+    public function getSearchQuery($search = null, $useDescription = true, array $categories = null, \DateTime $createdAfter = null, \DateTime $createdBefore = null)
     {
         $q = $this->createQueryBuilder('f');
 
-        $search = '%' . addcslashes($search, '%_') . '%';
-        // 15 символов - это результат uniqid + _
-        $q->where('SUBSTRING(f.fileName, 15) LIKE :search');
-        if (true === $useDescription) {
-            $q->orWhere('f.description LIKE :search');
+        if (null !== $search) {
+            $search = '%' . addcslashes($search, '%_') . '%';
+
+            // 15 символов - это результат uniqid + _
+            $q->where('SUBSTRING(f.fileName, 15) LIKE :search');
+            if (true === $useDescription) {
+                $q->orWhere('f.description LIKE :search');
+            }
+            $q->setParameter('search', $search);
         }
-        $q->setParameter('search', $search);
 
         foreach ($categories as $category) {
             $this->addCategoryMime($q, $category);
