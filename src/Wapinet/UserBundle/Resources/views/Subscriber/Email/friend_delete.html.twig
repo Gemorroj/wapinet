@@ -1,5 +1,9 @@
 {% extends '@WapinetUser/Subscriber/Email/_layout.html.twig' %}
 
 {% block content %}
-    тест
+    {% if friend.isWoman %}
+        Вас удалила из друзей <a href="{{ url('fos_user_profile_show', {'username': friend.username}) }}">{{ friend }}</a>.
+    {% else %}
+        Вас удалил из друзей <a href="{{ url('fos_user_profile_show', {'username': friend.username}) }}">{{ friend }}</a>.
+    {% endif %}
 {% endblock %}

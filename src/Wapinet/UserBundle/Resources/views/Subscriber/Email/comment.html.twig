@@ -1,5 +1,11 @@
 {% extends '@WapinetUser/Subscriber/Email/_layout.html.twig' %}
 
 {% block content %}
-    тест
+    Ваш комментарий:<br />
+    <pre>{{ parent_comment.body }}</pre><br />
+
+    Ответ <a href="{{ url('wapinet_user_profile', {'username': comment.author.username}) }}">{{ comment.author }}</a>:<br />
+    <pre>{{ comment.body }}</pre>
+
+    <strong><a href="{{ comment.thread.permalink }}#fos_comment_{{ comment.id }}">Ответить</a></strong>
 {% endblock %}
