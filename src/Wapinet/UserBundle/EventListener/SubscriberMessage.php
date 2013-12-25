@@ -29,8 +29,6 @@ class SubscriberMessage implements EventSubscriberInterface
     {
         return array(
             Event::POST_SEND => 'send',
-            Event::POST_DELETE => 'delete',
-            Event::POST_READ => 'read',
         );
     }
 

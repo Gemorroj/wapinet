@@ -1,5 +1,44 @@
 {% extends '::base.html.twig' %}
 
+{% block javascripts %}
+    <script type="text/javascript">{% autoescape 'js' %}
+        $(document).bind("pageinit", function () {
+            var deletePath, restorePath;
+
+            var listThreads = $("#list-threads");
+            listThreads.find("a[href='#delete-popup']").on("click", function () {
+                deletePath = $(this).data('path');
+            });
+            listThreads.find("a[href='#restore-popup']").on("click", function () {
+                restorePath = $(this).data('path');
+            });
+
+            $("#delete-popup-do").on("click", function () {
+                $.post(deletePath, function () {
+                    window.location.assign(window.location.href);
+                });
+            });
+            $("#restore-popup-do").on("click", function () {
+                $.post(restorePath, function () {
+                    window.location.assign(window.location.href);
+                });
+            });
+        });
+    {% endautoescape %}</script>
+{% endblock %}
+
+{% block navbar %}
+    {% set active_page = app.request.attributes.get('_route') %}
+    <div data-role="navbar">
+        <ul>
+            <li><a href="{{ path('wapinet_message_thread_new') }}" data-icon="edit"{% if active_page == 'wapinet_message_thread_new' %} class="ui-btn-active"{% endif %}>Написать</a></li>
+            <li><a href="{{ path('wapinet_message_inbox') }}" data-icon="arrow-l"{% if active_page == 'wapinet_message_inbox' %} class="ui-btn-active"{% endif %}>Входящие{% if fos_message_nb_unread() > 0 %} <span class="ui-li-count">+{{ fos_message_nb_unread() }}</span>{% endif %}</a></li>
+            <li><a href="{{ path('wapinet_message_sent') }}" data-icon="arrow-r"{% if active_page == 'wapinet_message_sent' %} class="ui-btn-active"{% endif %}>Исходящие</a></li>
+            <li><a href="{{ path('wapinet_message_deleted') }}" data-icon="delete"{% if active_page == 'wapinet_message_deleted' %} class="ui-btn-active"{% endif %}>Корзина</a></li>
+        </ul>
+    </div>
+{% endblock %}
+
 {% block content %}
     {% block fos_message_content %}{% endblock %}
 

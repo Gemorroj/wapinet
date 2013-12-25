@@ -1,14 +1,7 @@
 {% extends 'WapinetMessageBundle::layout.html.twig' %}
 
-{% block title %}Входящие{% endblock %}
-{% block breadcrumbs %}
-    {{ wapinet_breadcrumbs({
-        1: {'uri': path('fos_message_thread_new'), 'title': 'Новое сообщение'}
-    }) }}
-{% endblock %}
+{% block title %}Входящие сообщения{% endblock %}
 
 {% block fos_message_content %}
-
-{% include 'WapinetMessageBundle:Message:threads_list.html.twig' %}
-
+    {% include 'WapinetMessageBundle:Message:threads_list.html.twig' %}
 {% endblock %}

@@ -23,9 +23,9 @@ file_edit:
 file_delete:
     pattern: /delete/{id}
     defaults: { _controller: WapinetBundle:File:delete }
+    methods: [POST]
     requirements:
         id: \d+
-        _method: POST
 
 file_search:
     pattern: /search/{key}

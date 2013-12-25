@@ -33,14 +33,10 @@ code.html-validator strong {
 p.long-description {
     white-space: pre-wrap;
 }
-li.menu-head {
-    /* 40 - 7 - 7 + 1*/
-    height: 27px;
-}
 a.captcha-reload {
     vertical-align: baseline;
 }
-p.p-online {
+p.p-online, p.p-new {
     color: #0a0;
 }
 div.avatar-popup, div.image-popup {

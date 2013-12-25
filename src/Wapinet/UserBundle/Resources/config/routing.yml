@@ -1,8 +1,7 @@
 wapinet_user_profile:
     pattern:  /profile/user/{username}
     defaults: { _controller: WapinetUserBundle:Profile:showUser, username: null }
-    requirements:
-        _method: GET
+    methods: [GET]
 
 wapinet_user_panel_edit:
     pattern:  /panel/edit

@@ -1,30 +1,26 @@
-<ul data-role="listview" data-inset="true">
-    {% if pagerfanta %}
+<ul data-role="listview" data-inset="true" id="list-threads">
+    {% if pagerfanta and pagerfanta.count > 0 %}
         {% for thread in pagerfanta %}
-            <li data-role="list-divider">{{ thread.lastMessage.createdAt|wapinet_datetime }} <span class="ui-li-count">{{ thread.messages|length }}</span></li>
+            <li data-role="list-divider" class="ui-bar-d">{{ thread.lastMessage.createdAt|wapinet_datetime }} <span class="ui-li-count">{{ thread.messages|length }}</span></li>
             <li>
                 <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}">
                     <h2>
                         {{ thread.subject }}
                     </h2>
                     {% if not fos_message_is_read(thread) %}
-                        <p><strong>Новое!</strong></p>
+                        <p class="ui-li-aside p-new">Новое!</p>
                     {% endif %}
                     <p>{% trans with {'%sender%': thread.lastMessage.sender|e } from 'FOSMessageBundle' %}by{% endtrans %}</p>
-                    <p>
-                        {% if fos_message_can_delete_thread(thread) %}
-                            {% if fos_message_deleted_by_participant(thread) %}
-                                <form action="{{ url('fos_message_thread_undelete', {'threadId': thread.id}) }}" method="post">
-                                    <input data-icon="refresh" data-mini="true" data-inline="true" type="submit" value="Восстановить" />
-                                </form>
-                            {% else %}
-                                <form action="{{ url('fos_message_thread_delete', {'threadId': thread.id}) }}" method="post">
-                                    <input data-icon="delete" data-mini="true" data-inline="true" type="submit" value="Удалить" />
-                                </form>
-                            {% endif %}
-                        {% endif %}
-                    </p>
                 </a>
+
+                {% if fos_message_can_delete_thread(thread) %}
+                    {% if fos_message_deleted_by_participant(thread) %}
+                        <a data-path="{{ url('fos_message_thread_undelete', {'threadId': thread.id}) }}" href="#restore-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="back">Восстановить</a>
+                    {% else %}
+                        <a data-path="{{ url('fos_message_thread_delete', {'threadId': thread.id}) }}" href="#delete-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
+                    {% endif %}
+                {% endif %}
+
             </li>
         {% endfor %}
     {% else %}
