@@ -4,6 +4,7 @@ namespace Wapinet\MessageBundle\Controller;
 
 use FOS\MessageBundle\Controller\MessageController as BaseController;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -120,5 +121,50 @@ class MessageController extends BaseController
             'form' => $form->createView(),
             'data' => $form->getData()
         ));
+    }
+
+
+    /**
+     * Deletes a thread
+     *
+     * @param string $threadId the thread id
+     *
+     * @return RedirectResponse|JsonResponse
+     */
+    public function deleteAction($threadId)
+    {
+        $thread = $this->getProvider()->getThread($threadId);
+        $this->container->get('fos_message.deleter')->markAsDeleted($thread);
+        $this->container->get('fos_message.thread_manager')->saveThread($thread);
+
+        $url = $this->container->get('router')->generate('wapinet_message_inbox');
+
+        if (true === $this->container->get('request')->isXmlHttpRequest()) {
+            return new JsonResponse(array('url' => $url));
+        }
+
+        return new RedirectResponse($url);
+    }
+
+    /**
+     * Undeletes a thread
+     *
+     * @param string $threadId
+     *
+     * @return RedirectResponse
+     */
+    public function undeleteAction($threadId)
+    {
+        $thread = $this->getProvider()->getThread($threadId);
+        $this->container->get('fos_message.deleter')->markAsUndeleted($thread);
+        $this->container->get('fos_message.thread_manager')->saveThread($thread);
+
+        $url = $this->container->get('router')->generate('wapinet_message_inbox');
+
+        if (true === $this->container->get('request')->isXmlHttpRequest()) {
+            return new JsonResponse(array('url' => $url));
+        }
+
+        return new RedirectResponse($url);
     }
 }

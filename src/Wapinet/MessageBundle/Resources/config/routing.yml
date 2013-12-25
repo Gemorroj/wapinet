@@ -20,3 +20,13 @@ wapinet_message_thread_new:
     pattern: /new/{recipient}
     defaults: {_controller: WapinetMessageBundle:Message:newThread, recipient: null }
 
+wapinet_message_thread_delete:
+    pattern: /{threadId}/delete
+    methods: [POST, DELETE]
+    defaults: {_controller: WapinetMessageBundle:Message:delete }
+
+wapinet_message_thread_undelete:
+    pattern: /{threadId}/undelete
+    methods: [POST]
+    defaults: {_controller: WapinetMessageBundle:Message:undelete }
+

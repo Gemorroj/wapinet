@@ -15,9 +15,9 @@
 
                 {% if fos_message_can_delete_thread(thread) %}
                     {% if fos_message_deleted_by_participant(thread) %}
-                        <a data-path="{{ url('fos_message_thread_undelete', {'threadId': thread.id}) }}" href="#restore-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="back">Восстановить</a>
+                        <a data-path="{{ url('wapinet_message_thread_undelete', {'threadId': thread.id}) }}" href="#restore-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="back">Восстановить</a>
                     {% else %}
-                        <a data-path="{{ url('fos_message_thread_delete', {'threadId': thread.id}) }}" href="#delete-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
+                        <a data-path="{{ url('wapinet_message_thread_delete', {'threadId': thread.id}) }}" href="#delete-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
                     {% endif %}
                 {% endif %}
 

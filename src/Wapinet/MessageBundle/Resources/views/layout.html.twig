@@ -1,5 +1,8 @@
 {% extends '::base.html.twig' %}
 
+{% block breadcrumbs %}
+    {{wapinet_breadcrumbs()}}
+{% endblock %}
 {% block javascripts %}
     <script type="text/javascript">{% autoescape 'js' %}
         $(document).bind("pageinit", function () {
@@ -41,6 +44,30 @@
 
 {% block content %}
     {% block fos_message_content %}{% endblock %}
-
     {% block fos_user_content %}{% endblock %}
+{% endblock %}
+
+{% block popup %}
+    <div data-role="popup" id="restore-popup" data-overlay-theme="a" data-theme="c" data-dismissible="false" class="ui-corner-all">
+        <div data-role="header" data-theme="a" class="ui-corner-top">
+            <h1>Восстановление</h1>
+        </div>
+        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+            <h3 class="ui-title">Вы уверенны что хотите восстановить цепочку сообщений?</h3>
+            <p></p>
+            <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Отмена</a>
+            <a href="#" id="restore-popup-do" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Восстановить</a>
+        </div>
+    </div>
+    <div data-role="popup" id="delete-popup" data-overlay-theme="a" data-theme="c" data-dismissible="false" class="ui-corner-all">
+        <div data-role="header" data-theme="a" class="ui-corner-top">
+            <h1>Удаление</h1>
+        </div>
+        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+            <h3 class="ui-title">Вы уверенны что хотите удалить цепочку сообщений?</h3>
+            <p>Цепочка сообщений попадет в корзину.</p>
+            <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Отмена</a>
+            <a href="#" id="delete-popup-do" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Удалить</a>
+        </div>
+    </div>
 {% endblock %}
