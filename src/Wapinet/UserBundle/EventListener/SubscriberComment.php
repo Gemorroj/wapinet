@@ -34,17 +34,18 @@ class SubscriberComment implements EventSubscriberInterface
 
         /** @var User $user */
         $user = $parentComment->getAuthor();
-        if (null === $user || false === $user->getSubscribeComments()) {
+        if (null === $user) {
             return;
         }
 
-        $thread = $comment->getThread();
-        $path = $thread->getPermalink();
-
         $subscriber = new EntitySubscriber();
-        $subscriber->setSubject('Новый ответ на Ваш комментарий');
-        $subscriber->setUrl($path);
-        $subscriber->setMessage($comment->getBody());
+        $subscriber->setSubject('Поступил ответ на Ваш комментарий.');
+        $subscriber->setTemplate('comment');
+        $subscriber->setVariables(array(
+            'parent_comment' => $parentComment,
+            'comment' => $comment,
+        ));
+        $subscriber->setNeedEmail($user->getEmailComments());
         $subscriber->setUser($user);
 
         $this->em->persist($subscriber);

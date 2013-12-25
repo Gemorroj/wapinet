@@ -44,21 +44,23 @@ class SubscriberFriends implements EventSubscriberInterface
             return;
         }
 
-
-        $thread = $comment->getThread();
-        $path = $thread->getPermalink();
-
         /** @var Friend $friend */
         foreach ($user->getFriended() as $friend) {
-            if (true === $friend->getUser()->getSubscribeFriends()) {
-                $subscriber = new EntitySubscriber();
-                $subscriber->setSubject('Новый комментарий от ' . $user->getUsername());
-                $subscriber->setUrl($path);
-                $subscriber->setMessage($comment->getBody());
-                $subscriber->setUser($friend->getUser());
-
-                $this->em->persist($subscriber);
+            $subscriber = new EntitySubscriber();
+            if (true === $friend->getFriend()->isWoman()) {
+                $subscriber->setSubject('Ваша подруга ' . $friend->getFriend()->getUsername() . ' оставила комментарий.');
+            } else {
+                $subscriber->setSubject('Ваш друг ' . $friend->getFriend()->getUsername() . ' оставил комментарий.');
             }
+            $subscriber->setTemplate('friend_comment');
+            $subscriber->setVariables(array(
+                'friend' => $friend->getFriend(),
+                'comment' => $comment,
+            ));
+            $subscriber->setNeedEmail($friend->getUser()->getEmailFriends());
+            $subscriber->setUser($friend->getUser());
+
+            $this->em->persist($subscriber);
         }
 
         $this->em->flush();
@@ -67,29 +69,39 @@ class SubscriberFriends implements EventSubscriberInterface
 
     public function friendAdd(FriendEvent $event)
     {
-        $urlFriend = $this->router->generate('wapinet_user_profile', array('username' => $event->getFriend()->getUsername()), Router::ABSOLUTE_URL);
-        $urlUser = $this->router->generate('wapinet_user_profile', array('username' => $event->getUser()->getUsername()), Router::ABSOLUTE_URL);
-
         // Уведомление о добавлении  в друзья
         $subscriber = new EntitySubscriber();
-        $subscriber->setSubject($event->getUser()->getUsername() . ' добавил Вас в друзья');
-        $subscriber->setUrl($urlUser);
-        $subscriber->setMessage('Пользователь ' . $event->getUser()->getUsername() . ' ( ' . $urlUser . ' ) добавил Вас в друзья.');
+        if (true === $event->getUser()->isWoman()) {
+            $subscriber->setSubject('Вас добавила в друзья ' . $event->getUser()->getUsername() . '.');
+        } else {
+            $subscriber->setSubject('Вас добавил в друзья ' . $event->getUser()->getUsername() . '.');
+        }
+        $subscriber->setTemplate('friend_add');
+        $subscriber->setVariables(array(
+            'friend' => $event->getUser(),
+        ));
+        $subscriber->setNeedEmail($event->getFriend()->getEmailFriends());
         $subscriber->setUser($event->getFriend());
         $this->em->persist($subscriber);
 
 
         /** @var Friend $friend */
         foreach ($event->getUser()->getFriended() as $friend) {
-            if (true === $friend->getUser()->getSubscribeFriends()) {
-                $subscriber = new EntitySubscriber();
-                $subscriber->setSubject($event->getUser()->getUsername() . ' добавил в друзья ' . $event->getFriend()->getUsername());
-                $subscriber->setUrl($urlUser);
-                $subscriber->setMessage('Ваш друг ' . $event->getUser()->getUsername() . ' ( ' . $urlUser . ' ) добавил в друзья ' . $event->getFriend()->getUsername() . '( ' . $urlFriend . ' ).');
-                $subscriber->setUser($friend->getUser());
-
-                $this->em->persist($subscriber);
+            $subscriber = new EntitySubscriber();
+            if (true === $event->getUser()->isWoman()) {
+                $subscriber->setSubject('Ваша подруга ' . $event->getUser()->getUsername() . ' добавила в друзья ' . $event->getFriend()->getUsername() . '.');
+            } else {
+                $subscriber->setSubject('Ваш друг ' . $event->getUser()->getUsername() . ' добавил в друзья ' . $event->getFriend()->getUsername() . '.');
             }
+            $subscriber->setTemplate('friend_friend_add');
+            $subscriber->setVariables(array(
+                'friend' => $event->getUser(),
+                'friend_friend' => $event->getFriend(),
+            ));
+            $subscriber->setNeedEmail($friend->getUser()->getEmailFriends());
+            $subscriber->setUser($friend->getUser());
+
+            $this->em->persist($subscriber);
         }
 
         $this->em->flush();
@@ -97,28 +109,38 @@ class SubscriberFriends implements EventSubscriberInterface
 
     public function friendDelete(FriendEvent $event)
     {
-        $urlFriend = $this->router->generate('wapinet_user_profile', array('username' => $event->getFriend()->getUsername()), Router::ABSOLUTE_URL);
-        $urlUser = $this->router->generate('wapinet_user_profile', array('username' => $event->getUser()->getUsername()), Router::ABSOLUTE_URL);
-
         // Уведомление об удалении из друзей
         $subscriber = new EntitySubscriber();
-        $subscriber->setSubject($event->getUser()->getUsername() . ' удалил Вас из друзей');
-        $subscriber->setUrl($urlUser);
-        $subscriber->setMessage('Пользователь ' . $event->getUser()->getUsername() . ' ( ' . $urlUser . ' ) удалил Вас из друзей.');
+        if (true === $event->getUser()->isWoman()) {
+            $subscriber->setSubject('Вас удалила из друзей ' . $event->getUser()->getUsername() . '.');
+        } else {
+            $subscriber->setSubject('Вас удалил из друзей ' . $event->getUser()->getUsername() . '.');
+        }
+        $subscriber->setTemplate('friend_delete');
+        $subscriber->setVariables(array(
+            'friend' => $event->getUser(),
+        ));
+        $subscriber->setNeedEmail($event->getFriend()->getEmailFriends());
         $subscriber->setUser($event->getFriend());
         $this->em->persist($subscriber);
 
         /** @var Friend $friend */
         foreach ($event->getUser()->getFriended() as $friend) {
-            if (true === $friend->getUser()->getSubscribeFriends()) {
-                $subscriber = new EntitySubscriber();
-                $subscriber->setSubject($event->getUser()->getUsername() . ' удалил из друзей ' . $event->getFriend()->getUsername());
-                $subscriber->setUrl($urlUser);
-                $subscriber->setMessage('Ваш друг ' . $event->getUser()->getUsername() . ' ( ' . $urlUser . ' ) удалил из друзей ' . $event->getFriend()->getUsername() . ' ( ' . $urlFriend . ').');
-                $subscriber->setUser($friend->getUser());
-
-                $this->em->persist($subscriber);
+            $subscriber = new EntitySubscriber();
+            if (true === $event->getUser()->isWoman()) {
+                $subscriber->setSubject('Ваша подруга ' . $event->getUser()->getUsername() . ' удалила из друзей ' . $event->getFriend()->getUsername() . '.');
+            } else {
+                $subscriber->setSubject('Ваш друг ' . $event->getUser()->getUsername() . ' удалил из друзей ' . $event->getFriend()->getUsername() . '.');
             }
+            $subscriber->setTemplate('friend_friend_delete');
+            $subscriber->setVariables(array(
+                'friend' => $event->getUser(),
+                'friend_friend' => $event->getFriend(),
+            ));
+            $subscriber->setNeedEmail($friend->getUser()->getEmailFriends());
+            $subscriber->setUser($friend->getUser());
+
+            $this->em->persist($subscriber);
         }
 
         $this->em->flush();
@@ -127,19 +149,23 @@ class SubscriberFriends implements EventSubscriberInterface
 
     public function fileAdd(FileEvent $event)
     {
-        $url = $this->router->generate('file_view', array('id' => $event->getFile()->getId()), Router::ABSOLUTE_URL);
-
         /** @var Friend $friend */
         foreach ($event->getUser()->getFriended() as $friend) {
-            if (true === $friend->getUser()->getSubscribeFriends()) {
-                $subscriber = new EntitySubscriber();
-                $subscriber->setSubject($event->getUser()->getUsername() . ' добавил файл ' . $event->getFile()->getOriginalFileName());
-                $subscriber->setUrl($url);
-                $subscriber->setMessage('Ваш друг ' . $event->getUser()->getUsername() . ' загрузил файл "' . $event->getFile()->getOriginalFileName() . '".');
-                $subscriber->setUser($friend->getUser());
-
-                $this->em->persist($subscriber);
+            $subscriber = new EntitySubscriber();
+            if (true === $event->getUser()->isWoman()) {
+                $subscriber->setSubject('Ваша подруга ' . $event->getUser()->getUsername() . ' добавила файл ' . $event->getFile()->getOriginalFileName() . '.');
+            } else {
+                $subscriber->setSubject('Ваш друг ' . $event->getUser()->getUsername() . ' добавил файл ' . $event->getFile()->getOriginalFileName() . '.');
             }
+            $subscriber->setTemplate('friend_file_add');
+            $subscriber->setVariables(array(
+                'friend' => $event->getUser(),
+                'file' => $event->getFile(),
+            ));
+            $subscriber->setNeedEmail($friend->getUser()->getEmailFriends());
+            $subscriber->setUser($friend->getUser());
+
+            $this->em->persist($subscriber);
         }
 
         $this->em->flush();

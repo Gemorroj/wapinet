@@ -1,16 +1,14 @@
 <?php
 namespace Wapinet\UserBundle\EventListener;
 
-use FOS\MessageBundle\Model\ParticipantInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use FOS\MessageBundle\Event\MessageEvent;
-use FOS\MessageBundle\Event\ReadableEvent;
-use FOS\MessageBundle\Event\ThreadEvent;
 use FOS\MessageBundle\Event\FOSMessageEvents as Event;
 use FOS\MessageBundle\ModelManager\MessageManagerInterface;
 use Wapinet\UserBundle\Entity\Subscriber as EntitySubscriber;
 use Doctrine\Orm\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Wapinet\UserBundle\Entity\User;
 
 class SubscriberMessage implements EventSubscriberInterface
 {
@@ -36,23 +34,20 @@ class SubscriberMessage implements EventSubscriberInterface
     {
         $message = $event->getMessage();
         $sender = $message->getSender();
-        /** @var ParticipantInterface[] $participants */
         $participants = $message->getThread()->getOtherParticipants($sender);
-        $threadId = $message->getThread()->getId();
-        $path = $this->router->generate('wapinet_message_thread_view', array('threadId' => $threadId), Router::ABSOLUTE_URL);
 
+        /** @var User $participant */
         foreach ($participants as $participant) {
-            $user = $this->em->find('Wapinet\UserBundle\Entity\User', $participant->getId());
+            $subscriber = new EntitySubscriber();
+            $subscriber->setSubject('Вам пришло новое сообщение.');
+            $subscriber->setTemplate('message');
+            $subscriber->setVariables(array(
+                'message' => $message,
+            ));
+            $subscriber->setNeedEmail($participant->getEmailMessages());
+            $subscriber->setUser($participant);
 
-            if (true === $user->getSubscribeMessages()) {
-                $subscriber = new EntitySubscriber();
-                $subscriber->setSubject('Новое сообщение');
-                $subscriber->setUrl($path);
-                $subscriber->setMessage($message->getBody());
-                $subscriber->setUser($user);
-
-                $this->em->persist($subscriber);
-            }
+            $this->em->persist($subscriber);
         }
 
         $this->em->flush();

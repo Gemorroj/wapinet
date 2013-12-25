@@ -2,6 +2,7 @@
 
 namespace Wapinet\UserBundle\Command;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -28,58 +29,45 @@ class SubscriberCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $repository = $em->getRepository('Wapinet\UserBundle\Entity\Subscriber');
 
-        $rows = $repository->findAll();
+        $rows = $repository->findNeedEmail();
 
-        $emails = array();
         foreach ($rows as $v) {
-            $emails[$v->getUser()->getEmail()][] = $v;
+            if (true === $this->sendEmail($v)) {
+                $v->setNeedEmail(false);
+                $em->merge($v);
+            }
         }
-
-        $this->truncate($repository->getClassName());
-
-        $this->sendEmails($emails);
+        $em->flush();
 
         $output->writeln('All Emails sended.');
     }
 
 
     /**
-     * @param array $emails
+     * @param Subscriber $subscriber
+     * @return bool
      */
-    protected function sendEmails(array $emails)
+    protected function sendEmail(Subscriber $subscriber)
     {
+        $siteTitle = $this->getContainer()->getParameter('wapinet_title');
         $robotEmail = $this->getContainer()->getParameter('wapinet_robot_email');
         $mailer = $this->getContainer()->get('mailer');
+        /** @var \Symfony\Bundle\TwigBundle\TwigEngine $templating */
+        $templating = $this->getContainer()->get('templating');
 
-        /** @var Subscriber[] $subscribers */
-        foreach ($emails as $email => $subscribers) {
-            $body = '';
-            foreach ($subscribers as $subscriber) {
-                $body .= $subscriber->getSubject() . "\r\n" . $subscriber->getUrl() . "\r\n" . $subscriber->getMessage() . "\r\n\r\n";
-            }
-            $message = \Swift_Message::newInstance($subscribers[0]->getSubject(), $body, 'text/plain', 'UTF-8');
-            $message->setFrom($robotEmail);
-            $message->setTo($email);
+        $variables = $subscriber->getVariables();
+        $variables['subject'] = $subscriber->getSubject();
 
-            $mailer->send($message);
-        }
-    }
+        $body = $templating->render('WapinetUserBundle:Subscriber/Email:' . $subscriber->getTemplate() . '.html.twig', $variables);
 
+        $message = \Swift_Message::newInstance($siteTitle . ' - ' . $subscriber->getSubject(), $body, 'text/html', 'UTF-8');
+        $message->setFrom($robotEmail);
+        $message->setTo($subscriber->getUser()->getEmail());
 
-    /**
-     * @param string $className
-     */
-    protected function truncate($className)
-    {
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $connection = $em->getConnection();
-
-        //$connection->query('SET FOREIGN_KEY_CHECKS=0');
-        $q = $connection->getDatabasePlatform()->getTruncateTableSql($em->getClassMetadata($className)->getTableName());
-        $connection->executeUpdate($q);
-        //$connection->query('SET FOREIGN_KEY_CHECKS=1');
+        return ($mailer->send($message) > 0);
     }
 }

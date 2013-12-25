@@ -1,4 +1,5 @@
 Wapinet\UserBundle\Entity\Subscriber:
+    repositoryClass: Wapinet\UserBundle\Entity\SubscriberRepository
     type:  entity
     table: subscriber
     id:
@@ -7,12 +8,25 @@ Wapinet\UserBundle\Entity\Subscriber:
             generator:
                 strategy: AUTO
     fields:
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
         subject:
             type: string
-        message:
-            type: text
-        url:
+            nullable: false
+        variables:
+            type: array
+            nullable: true
+        template:
             type: string
+        needEmail:
+            type: boolean
+            nullable: false
+            column: need_email
+
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
 
     manyToOne:
         user:

@@ -68,22 +68,22 @@ class User extends BaseUser implements ParticipantInterface
     /**
      * @var bool
      */
-    protected $subscribeComments = true;
+    protected $emailComments = false;
 
     /**
      * @var bool
      */
-    protected $subscribeMessages = true;
+    protected $emailMessages = true;
 
     /**
      * @var bool
      */
-    protected $subscribeNews = true;
+    protected $emailNews = true;
 
     /**
      * @var bool
      */
-    protected $subscribeFriends = false;
+    protected $emailFriends = false;
 
     /**
      * @var Panel
@@ -196,18 +196,18 @@ class User extends BaseUser implements ParticipantInterface
     /**
      * @return bool
      */
-    public function getSubscribeFriends()
+    public function getEmailFriends()
     {
-        return $this->subscribeFriends;
+        return $this->emailFriends;
     }
 
     /**
-     * @param bool $subscribeFriends
+     * @param bool $emailFriends
      * @return User
      */
-    public function setSubscribeFriends($subscribeFriends)
+    public function setEmailFriends($emailFriends)
     {
-        $this->subscribeFriends = (bool)$subscribeFriends;
+        $this->emailFriends = (bool)$emailFriends;
 
         return $this;
     }
@@ -215,18 +215,18 @@ class User extends BaseUser implements ParticipantInterface
     /**
      * @return bool
      */
-    public function getSubscribeNews()
+    public function getEmailNews()
     {
-        return $this->subscribeNews;
+        return $this->emailNews;
     }
 
     /**
-     * @param bool $subscribeNews
+     * @param bool $emailNews
      * @return User
      */
-    public function setSubscribeNews($subscribeNews)
+    public function setEmailNews($emailNews)
     {
-        $this->subscribeNews = (bool)$subscribeNews;
+        $this->emailNews = (bool)$emailNews;
 
         return $this;
     }
@@ -234,18 +234,18 @@ class User extends BaseUser implements ParticipantInterface
     /**
      * @return bool
      */
-    public function getSubscribeComments()
+    public function getEmailComments()
     {
-        return $this->subscribeComments;
+        return $this->emailComments;
     }
 
     /**
-     * @param bool $subscribeComments
+     * @param bool $emailComments
      * @return User
      */
-    public function setSubscribeComments($subscribeComments)
+    public function setEmailComments($emailComments)
     {
-        $this->subscribeComments = (bool)$subscribeComments;
+        $this->emailComments = (bool)$emailComments;
 
         return $this;
     }
@@ -253,18 +253,18 @@ class User extends BaseUser implements ParticipantInterface
     /**
      * @return bool
      */
-    public function getSubscribeMessages()
+    public function getEmailMessages()
     {
-        return $this->subscribeMessages;
+        return $this->emailMessages;
     }
 
     /**
-     * @param bool $subscribeMessages
+     * @param bool $emailMessages
      * @return User
      */
-    public function setSubscribeMessages($subscribeMessages)
+    public function setEmailMessages($emailMessages)
     {
-        $this->subscribeMessages = (bool)$subscribeMessages;
+        $this->emailMessages = (bool)$emailMessages;
 
         return $this;
     }
@@ -436,5 +436,21 @@ class User extends BaseUser implements ParticipantInterface
     public static function getSexChoices()
     {
         return array(User::SEX_M => 'Мужской', User::SEX_F => 'Женский');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMan()
+    {
+        return (self::SEX_M === $this->getSex());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWoman()
+    {
+        return (self::SEX_F === $this->getSex());
     }
 }

@@ -17,6 +17,11 @@ class Subscriber
     private $user;
 
     /**
+     * @var \DateTime
+     */
+    private $createdAt;
+
+    /**
      * @var string
      */
     private $subject;
@@ -24,12 +29,17 @@ class Subscriber
     /**
      * @var string
      */
-    private $message;
+    private $template;
 
     /**
-     * @var string
+     * @var array|null
      */
-    private $url;
+    private $variables;
+
+    /**
+     * @var bool
+     */
+    private $needEmail = false;
 
     /**
      * @param int $id
@@ -51,24 +61,24 @@ class Subscriber
         return $this->id;
     }
 
-    /**
-     * @param string $message
-     *
-     * @return Subscriber
-     */
-    public function setMessage($message)
-    {
-        $this->message = $message;
 
-        return $this;
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 
+
     /**
-     * @return string
+     * @return Subscriber
      */
-    public function getMessage()
+    public function setCreatedAtValue()
     {
-        return $this->message;
+        $this->createdAt = new \DateTime();
+
+        return $this;
     }
 
     /**
@@ -92,6 +102,46 @@ class Subscriber
     }
 
     /**
+     * @param string $template
+     *
+     * @return Subscriber
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param array $variables
+     *
+     * @return Subscriber
+     */
+    public function setVariables(array $variables = null)
+    {
+        $this->variables = $variables;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getVariables()
+    {
+        return $this->variables;
+    }
+
+    /**
      * @param User $user
      *
      * @return Subscriber
@@ -112,22 +162,22 @@ class Subscriber
     }
 
     /**
-     * @param string $url
+     * @param bool $needEmail
      *
      * @return Subscriber
      */
-    public function setUrl($url)
+    public function setNeedEmail($needEmail)
     {
-        $this->url = $url;
+        $this->needEmail = $needEmail;
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function getUrl()
+    public function getNeedEmail()
     {
-        return $this->url;
+        return $this->needEmail;
     }
 }

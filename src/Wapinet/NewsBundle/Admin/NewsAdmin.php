@@ -105,20 +105,18 @@ class NewsAdmin extends Admin
     public function postPersist($news)
     {
         $connection = $this->container->get('doctrine.orm.entity_manager')->getConnection();
-        $url = $this->container->get('router')->generate('wapinet_news_show', array('id' => $news->getId()), Router::ABSOLUTE_URL);
-        $subject = 'Новости сайта ' . $this->container->getParameter('wapinet_title');
-        $message = $news->getSubject() . "\r\n\r\n" . $news->getBody();
 
         $q = $connection->prepare('
-            INSERT INTO subscriber(user_id, subject, message, url)
-            SELECT fos_user.id, :subject, :message, :url
+            INSERT INTO subscriber(user_id, template, variables, need_email)
+            SELECT fos_user.id, :template, :variables, fos_user.email_news
             FROM fos_user
-            WHERE fos_user.enabled = 1 AND fos_user.locked = 0 AND fos_user.expired = 0 AND fos_user.subscribe_news = 1
+            WHERE fos_user.enabled = 1 AND fos_user.locked = 0 AND fos_user.expired = 0
         ');
 
-        $q->bindValue('subject', $subject);
-        $q->bindValue('message', $message);
-        $q->bindValue('url', $url);
+        $q->bindValue('template', 'news');
+        $q->bindValue('variables', array(
+            'news' => $news,
+        ));
 
         $result = $q->execute();
 

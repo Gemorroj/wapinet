@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * File
  * @Vich\Uploadable
  */
-class File
+class File implements \Serializable
 {
     /**
      * @var integer
@@ -66,7 +66,7 @@ class File
      * @Assert\File()
      * @Vich\UploadableField(mapping="file", fileNameProperty="fileName")
      *
-     * @var File
+     * @var BaseFile
      */
     protected $file;
     /**
@@ -90,6 +90,31 @@ class File
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function serialize()
+    {
+        $vars = get_object_vars($this);
+        $vars['file'] = $this->getFile()->getPathname();
+
+        return serialize($vars);
+    }
+
+    /**
+     * @param string $serialized
+     */
+    public function unserialize($serialized)
+    {
+        $vars = unserialize($serialized);
+        $this->file = new BaseFile($vars['file']);
+        unset($vars['file']);
+
+        foreach ($vars as $key => $value) {
+            $this->{$key} = $value;
+        }
     }
 
     /**

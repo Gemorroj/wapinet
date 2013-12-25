@@ -30,10 +30,10 @@ class ProfileFormType extends BaseType
         $builder
             ->add('sex', 'choice', array('label' => 'Пол', 'required' => false, 'choices' => User::getSexChoices()))
             ->add('birthday', 'birthday', array('widget' => 'single_text', 'label' => 'Дата рождения', 'required' => false))
-            ->add('subscribeComments', 'checkbox', array('label' => 'Присылать E-mail о новых комментариях', 'required' => false))
-            ->add('subscribeMessages', 'checkbox', array('label' => 'Присылать E-mail о новых сообщениях', 'required' => false))
-            ->add('subscribeNews', 'checkbox', array('label' => 'Присылать E-mail о новостях сайта', 'required' => false))
-            ->add('subscribeFriends', 'checkbox', array('label' => 'Присылать E-mail о действиях друзей', 'required' => false))
+            ->add('emailComments', 'checkbox', array('label' => 'Присылать E-mail о новых комментариях', 'required' => false))
+            ->add('emailMessages', 'checkbox', array('label' => 'Присылать E-mail о новых сообщениях', 'required' => false))
+            ->add('emailNews', 'checkbox', array('label' => 'Присылать E-mail о новостях сайта', 'required' => false))
+            ->add('emailFriends', 'checkbox', array('label' => 'Присылать E-mail о действиях друзей', 'required' => false))
             ->add('info', 'textarea', array('label' => 'Дополнительная информация', 'required' => false, 'max_length' => 5000))
             ->add('avatar', 'file_url', array(
                 'attr' => array(

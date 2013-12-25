@@ -8,22 +8,22 @@ Wapinet\UserBundle\Entity\User:
             generator:
                 strategy: AUTO
     fields:
-        subscribeComments:
+        emailComments:
             type: boolean
             nullable: false
-            column: subscribe_comments
-        subscribeMessages:
+            column: email_comments
+        emailMessages:
             type: boolean
             nullable: false
-            column: subscribe_messages
-        subscribeNews:
+            column: email_messages
+        emailNews:
             type: boolean
             nullable: false
-            column: subscribe_news
-        subscribeFriends:
+            column: email_news
+        emailFriends:
             type: boolean
             nullable: false
-            column: subscribe_friends
+            column: email_friends
         avatarName:
             type: string
             nullable: true
