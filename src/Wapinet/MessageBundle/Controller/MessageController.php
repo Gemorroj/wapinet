@@ -3,10 +3,10 @@
 namespace Wapinet\MessageBundle\Controller;
 
 use FOS\MessageBundle\Controller\MessageController as BaseController;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class MessageController extends BaseController
 {
@@ -85,6 +85,40 @@ class MessageController extends BaseController
             'pagerfanta' => $threadMessages['messages'],
             'form' => $form->createView(),
             'thread' => $threadMessages['thread']
+        ));
+    }
+
+    /**
+     * Create a new message thread
+     *
+     * @param string $recipient
+     * @throws NotFoundHttpException
+     * @return Response
+     */
+    public function newThreadAction($recipient = null)
+    {
+        /** @var Form $form */
+        $form = $this->container->get('fos_message.new_thread_form.factory')->create();
+        if (null !== $recipient) {
+            $userManager = $this->container->get('fos_user.user_manager');
+            $user = $userManager->findUserByUsername($recipient);
+            if (null === $user) {
+                throw new NotFoundHttpException('Пользователь не найден');
+            }
+            $form['recipient']->setData($user);
+        }
+
+        $formHandler = $this->container->get('fos_message.new_thread_form.handler');
+
+        if ($message = $formHandler->process($form)) {
+            return new RedirectResponse($this->container->get('router')->generate('fos_message_thread_view', array(
+                'threadId' => $message->getThread()->getId()
+            )));
+        }
+
+        return $this->container->get('templating')->renderResponse('WapinetMessageBundle:Message:newThread.html.twig', array(
+            'form' => $form->createView(),
+            'data' => $form->getData()
         ));
     }
 }

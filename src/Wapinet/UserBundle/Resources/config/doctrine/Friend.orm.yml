@@ -1,4 +1,5 @@
 Wapinet\UserBundle\Entity\Friend:
+    repositoryClass: Wapinet\UserBundle\Entity\FriendRepository
     type:  entity
     table: fos_user_friend
     id:

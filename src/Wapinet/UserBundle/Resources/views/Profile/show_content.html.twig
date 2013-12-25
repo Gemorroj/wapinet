@@ -62,10 +62,12 @@
 </fieldset>
 
 {% if app.user.id != user.id %}
+    <a data-icon="edit" data-role="button" href="{{ path('wapinet_message_thread_new', {'recipient': user.username}) }}">Личное сообщение</a>
+
     {% if wapinet_user_friend(user) %}
-        <a data-role="button" data-inline="true" href="{{ path('wapinet_user_friends_delete', {'username': user.username}) }}">Удалить из друзей</a>
+        <a class="friends-button" data-mini="true" data-icon="delete" data-role="button" data-inline="true" href="{{ path('wapinet_user_friends_delete', {'username': user.username}) }}">Удалить из друзей</a>
     {% else %}
-        <a data-role="button" data-inline="true" href="{{ path('wapinet_user_friends_add', {'username': user.username}) }}">Добавить в друзья</a>
+        <a class="friends-button" data-mini="true" data-icon="star" data-role="button" data-inline="true" href="{{ path('wapinet_user_friends_add', {'username': user.username}) }}">Добавить в друзья</a>
     {% endif %}
 {% endif %}
 

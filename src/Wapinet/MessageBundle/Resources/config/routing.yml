@@ -16,3 +16,7 @@ wapinet_message_thread_view:
     requirements:
         threadId: \d+
 
+wapinet_message_thread_new:
+    pattern: /new/{recipient}
+    defaults: {_controller: WapinetMessageBundle:Message:newThread, recipient: null }
+

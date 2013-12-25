@@ -2,7 +2,6 @@
 namespace Wapinet\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,7 +29,7 @@ class FriendsController extends Controller
         }
 
         $friendRepository = $this->getDoctrine()->getRepository('Wapinet\UserBundle\Entity\Friend');
-        $friends = $friendRepository->findBy(array('user' => $user));
+        $friends = $friendRepository->getFriendsQuery($user);
         $pagerfanta = $this->get('paginate')->paginate($friends, $page);
 
         return $this->render('WapinetUserBundle:Friends:index.html.twig', array(
@@ -44,7 +43,7 @@ class FriendsController extends Controller
      * @param Request $request
      * @param string  $username
      *
-     * @return JsonResponse|RedirectResponse
+     * @return RedirectResponse
      * @throws \LogicException|AccessDeniedException
      */
     public function addAction(Request $request, $username)
@@ -62,12 +61,9 @@ class FriendsController extends Controller
         }
 
         $friendRepository = $this->getDoctrine()->getRepository('WapinetUserBundle:Friend');
-        $isFriend = $friendRepository->findOneBy(array(
-            'user' => $user,
-            'friend' => $friend,
-        ));
+        $objFriend = $friendRepository->getFriend($user, $friend);
 
-        if (null !== $isFriend) {
+        if (null !== $objFriend) {
             throw new \LogicException($user->getUsername() . ' уже в друзьях.');
         }
 
@@ -87,10 +83,6 @@ class FriendsController extends Controller
         $router = $this->get('router');
         $url = $router->generate('wapinet_user_profile', array('username' => $friend->getUsername()), Router::ABSOLUTE_URL);
 
-        if (true === $request->isXmlHttpRequest()) {
-            return new JsonResponse(array('url' => $url));
-        }
-
         return new RedirectResponse($url);
     }
 
@@ -99,7 +91,7 @@ class FriendsController extends Controller
      * @param Request $request
      * @param string  $username
      *
-     * @return JsonResponse|RedirectResponse
+     * @return RedirectResponse
      * @throws \LogicException|AccessDeniedException
      */
     public function deleteAction(Request $request, $username)
@@ -117,10 +109,7 @@ class FriendsController extends Controller
         }
 
         $friendRepository = $this->getDoctrine()->getRepository('WapinetUserBundle:Friend');
-        $objFriend = $friendRepository->findOneBy(array(
-            'user' => $user,
-            'friend' => $friend,
-        ));
+        $objFriend = $friendRepository->getFriend($user, $friend);
 
         if (null === $objFriend) {
             throw new \LogicException($user->getUsername() . ' не в друзьях.');
@@ -137,10 +126,6 @@ class FriendsController extends Controller
 
         $router = $this->get('router');
         $url = $router->generate('wapinet_user_profile', array('username' => $friend->getUsername()), Router::ABSOLUTE_URL);
-
-        if (true === $request->isXmlHttpRequest()) {
-            return new JsonResponse(array('url' => $url));
-        }
 
         return new RedirectResponse($url);
     }
