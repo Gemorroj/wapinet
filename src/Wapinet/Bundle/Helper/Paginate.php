@@ -40,7 +40,7 @@ class Paginate
         if ($data instanceof Collection) {
             $adapter = new DoctrineCollectionAdapter($data);
         } elseif ($data instanceof Query || $data instanceof QueryBuilder) {
-            $adapter = new DoctrineORMAdapter($data);
+            $adapter = new DoctrineORMAdapter($data, false);
         } elseif (is_array($data)) {
             $adapter = new ArrayAdapter($data);
         } else {
