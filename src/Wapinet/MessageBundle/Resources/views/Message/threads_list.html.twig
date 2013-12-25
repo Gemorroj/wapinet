@@ -7,7 +7,7 @@
                     <h2>
                         {{ thread.subject }}
                     </h2>
-                    {% if not fos_message_is_read(thread) %}
+                    {% if not fos_message_is_read(thread.lastMessage) %}
                         <p class="ui-li-aside p-new">Новое!</p>
                     {% endif %}
                     <p>{% trans with {'%sender%': thread.lastMessage.sender|e } from 'FOSMessageBundle' %}by{% endtrans %}</p>
