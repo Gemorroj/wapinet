@@ -4,6 +4,7 @@ namespace Wapinet\Bundle\Twig\Extension;
 
 use Doctrine\ORM\EntityManager;
 use Wapinet\Bundle\Entity\FileRepository;
+use Wapinet\UserBundle\Entity\User;
 
 class File extends \Twig_Extension
 {
@@ -41,6 +42,7 @@ class File extends \Twig_Extension
             'file_count_today' => new \Twig_Function_Method($this, 'getCountToday'),
             'file_count_yesterday' => new \Twig_Function_Method($this, 'getCountYesterday'),
             'file_count_category' => new \Twig_Function_Method($this, 'getCountCategory'),
+            'file_count_user' => new \Twig_Function_Method($this, 'getCountUser'),
         );
     }
 
@@ -62,6 +64,15 @@ class File extends \Twig_Extension
     public function getCountCategory($category)
     {
         return $this->fileRepository->countCategory($category);
+    }
+
+    /**
+     * @param User $user
+     * @return int
+     */
+    public function getCountUser(User $user)
+    {
+        return $this->fileRepository->countUser($user);
     }
 
     /**

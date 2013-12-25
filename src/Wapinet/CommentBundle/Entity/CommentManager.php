@@ -108,6 +108,22 @@ class CommentManager extends BaseCommentManager
 
     /**
      * @param User $user
+     * @return int
+     */
+    public function countUserComments(User $user)
+    {
+        $q = $this->repository->createQueryBuilder('c')
+            ->select('COUNT(c.id)')
+            ->where('c.author = :user')
+            ->setParameter('user', $user)
+            ->getQuery();
+
+        return $q->getSingleScalarResult();
+    }
+
+
+    /**
+     * @param User $user
      * @param integer         $depth
      * @param int $page
      * @return Pagerfanta

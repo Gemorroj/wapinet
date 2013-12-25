@@ -39,7 +39,7 @@ services:
 
     wapinet_user.friend.twig_extension:
         class: Wapinet\UserBundle\Twig\Extension\Friend
-        arguments: [@doctrine.orm.entity_manager, @security.context]
+        arguments: [@doctrine.orm.entity_manager]
         tags:
             - {name: twig.extension, alias: wapinet_user_friend}
 

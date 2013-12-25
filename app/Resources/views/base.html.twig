@@ -67,10 +67,13 @@
                 <ul data-role="listview" data-icon="false" data-divider-theme="a" data-inset="false">
                     {% if is_granted('ROLE_USER') %}
                         <li data-role="list-divider" class="menu-head">Сообщения</li>
-                        <li><a href="{{ url('fos_message_thread_new') }}">Написать</a></li>
-                        <li><a href="{{ url('wapinet_message_inbox') }}">Входящие</a> <span class="ui-li-count">{{ fos_message_nb_unread() }}</span></li>
-                        <li><a href="{{ url('wapinet_message_sent') }}">Исходящие</a></li>
-                        <li><a href="{{ url('wapinet_message_deleted') }}">Корзина</a></li>
+                        <li><a href="{{ path('fos_message_thread_new') }}">Написать</a></li>
+                        <li><a href="{{ path('wapinet_message_inbox') }}">Входящие</a> <span class="ui-li-count">{{ fos_message_nb_unread() }}</span></li>
+                        <li><a href="{{ path('wapinet_message_sent') }}">Исходящие</a></li>
+                        <li><a href="{{ path('wapinet_message_deleted') }}">Корзина</a></li>
+
+                        <li>доделать</li>
+                        <li><a href="{{ path('wapinet_user_friends', {'username': app.user.username}) }}">Друзья</a> <span class="ui-li-count">{{ wapinet_user_count_friends(app.user) }}</span></li>
                     {% endif %}
                     <li data-role="list-divider" class="menu-head">Закладки</li>
                     {% for item in wapinet_panel() %}

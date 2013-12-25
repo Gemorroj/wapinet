@@ -55,16 +55,16 @@
     {% endif %}
 </div>
 
-<fieldset data-role="controlgroup" data-type="horizontal">
-    <a data-role="button" href="{{ path('file_user', {'username': user.username}) }}">Файлы</a>
-    <a data-role="button" href="{{ path('wapinet_user_comments', {'username': user.username}) }}">Комментарии</a>
-    <a data-role="button" href="{{ path('wapinet_user_friends', {'username': user.username}) }}">Друзья</a>
-</fieldset>
+<ul data-role="listview" data-inset="true">
+    <li><a href="{{ path('file_user', {'username': user.username}) }}">Файлы</a> <span class="ui-li-count">{{ file_count_user(user) }}</span></li>
+    <li><a href="{{ path('wapinet_user_comments', {'username': user.username}) }}">Комментарии</a> <span class="ui-li-count">{{ wapinet_comment_count_comments(user) }}</span></li>
+    <li><a href="{{ path('wapinet_user_friends', {'username': user.username}) }}">Друзья</a> <span class="ui-li-count">{{ wapinet_user_count_friends(user) }}</span></li>
+</ul>
 
 {% if app.user.id != user.id %}
     <a data-icon="edit" data-role="button" href="{{ path('wapinet_message_thread_new', {'recipient': user.username}) }}">Личное сообщение</a>
 
-    {% if wapinet_user_friend(user) %}
+    {% if wapinet_user_is_friends(app.user, user) %}
         <a class="friends-button" data-mini="true" data-icon="delete" data-role="button" data-inline="true" href="{{ path('wapinet_user_friends_delete', {'username': user.username}) }}">Удалить из друзей</a>
     {% else %}
         <a class="friends-button" data-mini="true" data-icon="star" data-role="button" data-inline="true" href="{{ path('wapinet_user_friends_add', {'username': user.username}) }}">Добавить в друзья</a>

@@ -18,3 +18,9 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: Пользователи, label: Комментарии }
 
+    wapinet_comment.twig_extension:
+        class: Wapinet\CommentBundle\Twig\Extension\Comment
+        arguments: [@wapinet_comment.manager.comment]
+        tags:
+            - {name: twig.extension, alias: wapinet_comment}
+

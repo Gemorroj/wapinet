@@ -56,6 +56,22 @@ class FileRepository extends EntityRepository
     }
 
     /**
+     * @param User $user
+     * @return int
+     */
+    public function countUser(User $user)
+    {
+        $q = $this->createQueryBuilder('f')
+            ->select('COUNT(f.id)')
+            ->where('f.password IS NULL')
+            ->andWhere('f.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery();
+
+        return $q->getSingleScalarResult();
+    }
+
+    /**
      * @param string $date
      * @param string $category
      * @return \Doctrine\ORM\Query

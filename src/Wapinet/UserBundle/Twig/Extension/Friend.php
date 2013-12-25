@@ -12,15 +12,10 @@ class Friend extends \Twig_Extension
      * @var EntityManager
      */
     protected $em;
-    /**
-     * @var SecurityContext
-     */
-    protected $context;
 
-    public function __construct(EntityManager $em, SecurityContext $context)
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
-        $this->context = $context;
     }
 
     /**
@@ -31,33 +26,34 @@ class Friend extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('wapinet_user_friend', array($this, 'isFriend')),
+            new \Twig_SimpleFunction('wapinet_user_is_friends', array($this, 'isFriends')),
+            new \Twig_SimpleFunction('wapinet_user_count_friends', array($this, 'countFriends')),
         );
     }
 
     /**
+     * @param User $user
      * @param User $friend
      *
      * @return bool
      */
-    public function isFriend(User $friend)
+    public function isFriends(User $user, User $friend)
     {
-        $token = $this->context->getToken();
-        if (null === $token) {
-            return false;
-        }
-        $user = $token->getUser();
-        if (!$user instanceof User) {
-            return false;
-        }
-
         $friendRepository = $this->em->getRepository('WapinetUserBundle:Friend');
-        $isFriend = $friendRepository->findOneBy(array(
-            'user' => $user,
-            'friend' => $friend,
-        ));
+        $objFriend = $friendRepository->getFriend($user, $friend);
 
-        return (null !== $isFriend);
+        return (null !== $objFriend);
+    }
+
+
+    /**
+     * @param User $user
+     * @return int
+     */
+    public function countFriends(User $user)
+    {
+        $friendRepository = $this->em->getRepository('WapinetUserBundle:Friend');
+        return $friendRepository->getFriendsCount($user);
     }
 
 
