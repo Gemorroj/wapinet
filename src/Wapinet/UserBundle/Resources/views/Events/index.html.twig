@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}События{% endblock %}
+{% block breadcrumbs %}
+    {{ wapinet_breadcrumbs() }}
+{% endblock %}
+
+{% block content %}
+
+    <ul data-role="listview" data-inset="true">
+        {% for event in pagerfanta %}
+            <li data-role="list-divider" class="ui-bar-d">{{ event.subject }} <span class="ui-li-count">{{ event.createdAt|wapinet_datetime  }}</span></li>
+            <li>
+                {% include 'WapinetUserBundle:Subscriber/Event:' ~ event.template ~ '.html.twig' %}
+            </li>
+        {% else %}
+            <li>Событий нет</li>
+        {% endfor %}
+    </ul>
+
+    <div class="pagerfanta">
+        {{ pagerfanta(pagerfanta) }}
+    </div>
+
+{% endblock %}

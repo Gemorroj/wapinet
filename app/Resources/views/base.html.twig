@@ -66,7 +66,7 @@
             <div data-role="panel" id="panel">
                 <ul data-role="listview" data-icon="false" data-divider-theme="a" data-inset="false">
                     {% if is_granted('ROLE_USER') %}
-                        <li><a href="#">События</a></li>
+                        <li><a href="{{ path('wapinet_user_events') }}">События</a></li>
                         <li><a href="{{ path('wapinet_message_inbox') }}">Сообщения</a>{% if fos_message_nb_unread() > 0 %} <span class="ui-li-count">+{{ fos_message_nb_unread() }}</span>{% endif %}</li>
                         <li><a href="{{ path('wapinet_user_friends', {'username': app.user.username}) }}">Друзья</a> <span class="ui-li-count">{{ wapinet_user_count_friends(app.user) }}</span></li>
                     {% endif %}

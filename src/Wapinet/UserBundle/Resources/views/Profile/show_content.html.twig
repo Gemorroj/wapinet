@@ -59,6 +59,9 @@
     <li><a href="{{ path('file_user', {'username': user.username}) }}">Файлы</a> <span class="ui-li-count">{{ file_count_user(user) }}</span></li>
     <li><a href="{{ path('wapinet_user_comments', {'username': user.username}) }}">Комментарии</a> <span class="ui-li-count">{{ wapinet_comment_count_comments(user) }}</span></li>
     <li><a href="{{ path('wapinet_user_friends', {'username': user.username}) }}">Друзья</a> <span class="ui-li-count">{{ wapinet_user_count_friends(user) }}</span></li>
+    {% if app.user.id == user.id %}
+        <li data-icon="alert"><a href="{{ path('wapinet_user_events') }}">События</a></li>
+    {% endif %}
 </ul>
 
 {% if app.user.id != user.id %}

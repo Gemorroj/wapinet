@@ -1,0 +1,7 @@
+<a href="{{ path('wapinet_user_friends', {'username': event.variables.friend.username}) }}">
+    {% if event.variables.friend.isWoman %}
+        Ваша подруга {{ event.variables.friend }} удалила из друзей {{ event.variables.friend_friend }}.
+    {% else %}
+        Ваш друг {{ event.variables.friend }} удалил из друзей {{ event.variables.friend_friend }}.
+    {% endif %}
+</a>
