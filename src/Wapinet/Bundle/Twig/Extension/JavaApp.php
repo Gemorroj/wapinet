@@ -68,13 +68,13 @@ class JavaApp extends \Twig_Extension
 
         preg_match('/MIDlet\-Icon:[\s*](.*)/iux', $manifestContent, $arr);
         if (true === isset($arr[1])) {
-            $issetIcon = $this->exctractManifestIcon($arr[1], $path, $screenshot);
+            $issetIcon = $this->extractManifestIcon($arr[1], $path, $screenshot);
         }
 
         if (false === $issetIcon) {
             preg_match('/MIDlet\-1:[\s*](.*)/iux', $manifestContent, $arr);
             if (true === isset($arr[1])) {
-                $issetIcon = $this->exctractManifestIcon($arr[1], $path, $screenshot);
+                $issetIcon = $this->extractManifestIcon($arr[1], $path, $screenshot);
             }
         }
 
@@ -126,7 +126,7 @@ class JavaApp extends \Twig_Extension
      *
      * @return bool
      */
-    protected function exctractManifestIcon($content, $path, $screenshot)
+    protected function extractManifestIcon($content, $path, $screenshot)
     {
         foreach (explode(',', $content) as $v) {
             $v = trim(trim($v), '/');
