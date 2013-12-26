@@ -71,6 +71,16 @@
         {% if file.isExtractableArchive %}
             {% include '@Wapinet/archive.html.twig' with {'file': file} %}
         {% endif %}
+    {% elseif file.isJavaApp %}
+        {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_java_app_screenshot %}
+        {% if screenshot is not null %}
+            {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot } } %}
+        {% endif %}
+    {% elseif file.isAndroidApp %}
+        {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_android_app_screenshot %}
+        {% if screenshot is not null %}
+            {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot } } %}
+        {% endif %}
     {% endif %}
 
     <pre>{{ file.description }}</pre>

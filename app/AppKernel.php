@@ -12,7 +12,7 @@ class AppKernel extends Kernel
     {
         $container = parent::buildContainer();
 
-        $this->createDir(self::getTmpDir());
+        $this->createDir($this->getTmpDir());
         $this->createDir($this->getCacheWeatherDir());
         $this->createDir($this->getTmpArchiverDir());
         $this->createDir($this->getTmpFileDir());
@@ -45,7 +45,7 @@ class AppKernel extends Kernel
      */
     public function getTmpArchiverDir()
     {
-        return self::getTmpDir() . DIRECTORY_SEPARATOR . 'archiver';
+        return $this->getTmpDir() . DIRECTORY_SEPARATOR . 'archiver';
     }
 
     /**
@@ -53,7 +53,7 @@ class AppKernel extends Kernel
      */
     public function getTmpFileDir()
     {
-        return self::getTmpDir() . DIRECTORY_SEPARATOR . 'file';
+        return $this->getTmpDir() . DIRECTORY_SEPARATOR . 'file';
     }
 
     /**

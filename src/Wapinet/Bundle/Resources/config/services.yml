@@ -20,6 +20,18 @@ services:
         tags:
             - {name: twig.extension, alias: wapinet_video}
 
+    wapinet.java_app.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\JavaApp
+        arguments: [@service_container]
+        tags:
+            - {name: twig.extension, alias: wapinet_java_app}
+
+    wapinet.android_app.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\AndroidApp
+        arguments: [@service_container]
+        tags:
+            - {name: twig.extension, alias: wapinet_android_app}
+
     wapinet.image.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Image
         arguments: [@service_container]
