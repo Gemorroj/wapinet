@@ -149,17 +149,22 @@ class SubscriberFriends implements EventSubscriberInterface
 
     public function fileAdd(FileEvent $event)
     {
+        $user = $event->getUser();
+        if (null === $user) {
+            return;
+        }
+
         /** @var Friend $friend */
-        foreach ($event->getUser()->getFriended() as $friend) {
+        foreach ($user->getFriended() as $friend) {
             $subscriber = new EntitySubscriber();
-            if (true === $event->getUser()->isWoman()) {
-                $subscriber->setSubject('Ваша подруга ' . $event->getUser()->getUsername() . ' добавила файл ' . $event->getFile()->getOriginalFileName() . '.');
+            if (true === $user->isWoman()) {
+                $subscriber->setSubject('Ваша подруга ' . $user->getUsername() . ' добавила файл ' . $event->getFile()->getOriginalFileName() . '.');
             } else {
-                $subscriber->setSubject('Ваш друг ' . $event->getUser()->getUsername() . ' добавил файл ' . $event->getFile()->getOriginalFileName() . '.');
+                $subscriber->setSubject('Ваш друг ' . $user->getUsername() . ' добавил файл ' . $event->getFile()->getOriginalFileName() . '.');
             }
             $subscriber->setTemplate('friend_file_add');
             $subscriber->setVariables(array(
-                'friend' => $event->getUser(),
+                'friend' => $user,
                 'file' => $event->getFile(),
             ));
             $subscriber->setNeedEmail($friend->getUser()->getEmailFriends());

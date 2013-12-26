@@ -39,10 +39,32 @@
 
     {% if file.isImage %}
         {% set info = wapinet_image_info(file.file) %}
+        {% set exif = wapinet_image_exif(file.file) %}
 
         {% if info is not null %}
             {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': vich_uploader_asset(file, 'file') } } %}
             <p>{{ info.size.width }}x{{ info.size.height }}</p>
+        {% endif %}
+        {% if exif is not null %}
+            <pre>
+            {%- if exif.DateTime is defined -%}
+                Дата: {{ exif.DateTime }}<br />
+            {%- elseif exif.DateTimeOriginal is defined -%}
+                Дата: {{ exif.DateTimeOriginal }}<br />
+            {%- endif %}
+            {%- if exif.Make is defined -%}
+                Производитель фотокамеры: {{ exif.Make }}<br />
+            {%- endif %}
+            {%- if exif.Model is defined -%}
+                Модель фотокамеры: {{ exif.Model }}<br />
+            {%- endif %}
+            {%- if exif.Software is defined -%}
+                Редактировалось в {{ exif.Software }}<br />
+            {%- endif %}
+            {%- if exif.COMMENT is defined -%}
+                Комментарий: {{ exif.COMMENT|join("\r\n") }}<br />
+            {%- endif -%}
+            </pre>
         {% endif %}
     {% elseif file.isVideo %}
         {% set info = wapinet_video_info(file.file) %}
