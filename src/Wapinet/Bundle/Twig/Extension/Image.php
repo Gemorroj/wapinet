@@ -2,10 +2,9 @@
 
 namespace Wapinet\Bundle\Twig\Extension;
 
+use Imagine\Image\ImageInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\File;
-use Imagine\Gd\Imagine;
-use Imagine\Gd\Image as GdImage;
 
 class Image extends \Twig_Extension
 {
@@ -35,11 +34,11 @@ class Image extends \Twig_Extension
     /**
      * @param File $file
      *
-     * @return GdImage|null
+     * @return ImageInterface|null
      */
     public function getInfo (File $file)
     {
-        $imagine = new Imagine();
+        $imagine = $this->container->get('liip_imagine');
         try {
             $info = $imagine->open($file->getPathname());
         } catch (\Exception $e) {
