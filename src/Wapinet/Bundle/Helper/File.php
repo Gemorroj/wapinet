@@ -62,10 +62,10 @@ class File
         $path = $helper->asset($file, 'file');
         $cache->remove($path, 'thumbnail');
 
-        // сам файл и сконвертированные видео
+        // сам файл, скриншоты и сконвертированные видео
         $filesystem = $this->container->get('filesystem');
         $path = $file->getFile()->getPathname();
-        $filesystem->remove(array($path, $path . '.jpg', $path . '.mp4', $path . '.webm'));
+        $filesystem->remove(array($path, $path . '.png', $path . '.jpg', $path . '.mp4', $path . '.webm'));
     }
 
     /**
