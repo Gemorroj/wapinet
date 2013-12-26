@@ -26,6 +26,7 @@ class EventsController extends Controller
         $pagerfanta = $this->get('paginate')->paginate($events, $page);
 
         return $this->render('WapinetUserBundle:Events:index.html.twig', array(
+            'user' => $user,
             'pagerfanta' => $pagerfanta,
         ));
     }

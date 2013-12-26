@@ -2,7 +2,9 @@
 
 {% block title %}Профиль - {{ user.username }}{% endblock %}
 {% block breadcrumbs %}
-    {{ wapinet_breadcrumbs() }}
+    {{ wapinet_breadcrumbs({
+    1: {'uri': path('wapinet_users'), 'title': 'Пользователи'}
+    }) }}
 {% endblock %}
 
 {% block fos_user_content %}

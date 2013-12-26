@@ -3,6 +3,7 @@
 {% block title %}Комментарии {{ user.username }}{% endblock %}
 {% block breadcrumbs %}
     {{ wapinet_breadcrumbs({
+    1: {'uri': path('wapinet_users'), 'title': 'Пользователи'},
     1: {'uri': path('wapinet_user_profile', {'username': user.username}), 'title': 'Профиль ' ~ user.username}
     }) }}
 {% endblock %}

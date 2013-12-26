@@ -3,7 +3,8 @@
 {% block title %}Друзья {{ user.username }}{% endblock %}
 {% block breadcrumbs %}
     {{ wapinet_breadcrumbs({
-    1: {'uri': path('wapinet_user_profile', {'username': user.username}), 'title': 'Профиль ' ~ user.username}
+    1: {'uri': path('wapinet_users'), 'title': 'Пользователи'},
+    2: {'uri': path('wapinet_user_profile', {'username': user.username}), 'title': 'Профиль ' ~ user.username}
     }) }}
 {% endblock %}
 
