@@ -67,7 +67,8 @@
             </pre>
         {% endif %}
     {% elseif file.isVideo %}
-        {% set info = wapinet_video_info(file.file) %}
+        {% set video_info = wapinet_video_info(file.file) %}
+        {% set audio_info = wapinet_audio_info(file.file) %}
         {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_video_screenshot %}
 
         {% if file.isPlayableVideo %}
@@ -78,17 +79,51 @@
             {% endif %}
         {% endif %}
 
-        {% if info is not null %}
-            <p>{{ info.dimensions.width }}x{{ info.dimensions.height }}{{ info.has('duration') ? ', ' ~ info.get('duration')|wapinet_length : '' }}</p>
+        {% if video_info is not null %}
+            <p>{{ video_info.dimensions.width }}x{{ video_info.dimensions.height }}{{ video_info.has('duration') ? ', ' ~ video_info.get('duration')|wapinet_length : '' }}</p>
+            <pre>
+                {%- if video_info.has('codec_name') -%}
+                    Видео кодек: {{ video_info.get('codec_name') }}<br />
+                {%- endif -%}
+                {%- if video_info.has('bit_rate') -%}
+                    Видео битрейт: {{ (video_info.get('bit_rate') / 1000)|round }} кбит/сек<br />
+                {%- endif -%}
+            </pre>
+        {% endif %}
+        {% if audio_info is not null %}
+            <pre>
+                {%- if audio_info.has('codec_name') -%}
+                    Аудио кодек: {{ audio_info.get('codec_name') }}<br />
+                {%- endif -%}
+                {%- if audio_info.has('bit_rate') -%}
+                    Аудио битрейт: {{ (audio_info.get('bit_rate') / 1000)|round }} кбит/сек<br />
+                {%- endif -%}
+                {%- if audio_info.has('sample_rate') -%}
+                    Частота дискретизации: {{ (audio_info.get('sample_rate') / 1000)|round(1) }} КГц<br />
+                {%- endif -%}
+            </pre>
         {% endif %}
     {% elseif file.isAudio %}
-        {% set info = wapinet_audio_info(file.file) %}
+        {% set audio_info = wapinet_audio_info(file.file) %}
 
         {% if file.isPlayableAudio %}
             {% include '@Wapinet/audio.html.twig' with {'file': file} %}
         {% endif %}
 
-        {% if info is not null %}<p>{{ info.has('duration') ? info.get('duration')|wapinet_length : '' }}</p>{% endif %}
+        {% if audio_info is not null %}
+            <p>{{ audio_info.has('duration') ? audio_info.get('duration')|wapinet_length : '' }}</p>
+            <pre>
+                {%- if audio_info.has('codec_name') -%}
+                    Аудио кодек: {{ audio_info.get('codec_name') }}<br />
+                {%- endif -%}
+                {%- if audio_info.has('bit_rate') -%}
+                    Аудио битрейт: {{ (audio_info.get('bit_rate') / 1000)|round }} кбит/сек<br />
+                {%- endif -%}
+                {%- if audio_info.has('sample_rate') -%}
+                    Частота дискретизации: {{ (audio_info.get('sample_rate') / 1000)|round(1) }} КГц<br />
+                {%- endif -%}
+            </pre>
+        {% endif %}
     {% elseif file.isArchive %}
         {% if file.isExtractableArchive %}
             {% include '@Wapinet/archive.html.twig' with {'file': file} %}
