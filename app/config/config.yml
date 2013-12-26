@@ -173,7 +173,7 @@ gregwar_captcha:
     reload: true
 
 liip_imagine:
-    driver: imagick
+    driver: gd
     data_loader: filesystem
     cache_prefix: /cache
     filter_sets:
