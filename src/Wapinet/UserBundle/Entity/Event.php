@@ -2,9 +2,9 @@
 namespace Wapinet\UserBundle\Entity;
 
 /**
- * Subscriber
+ * Event
  */
-class Subscriber
+class Event
 {
     /**
      * @var integer
@@ -44,7 +44,7 @@ class Subscriber
     /**
      * @param int $id
      *
-     * @return Subscriber
+     * @return Event
      */
     public function setId($id)
     {
@@ -72,7 +72,7 @@ class Subscriber
 
 
     /**
-     * @return Subscriber
+     * @return Event
      */
     public function setCreatedAtValue()
     {
@@ -84,7 +84,7 @@ class Subscriber
     /**
      * @param string $subject
      *
-     * @return Subscriber
+     * @return Event
      */
     public function setSubject($subject)
     {
@@ -104,7 +104,7 @@ class Subscriber
     /**
      * @param string $template
      *
-     * @return Subscriber
+     * @return Event
      */
     public function setTemplate($template)
     {
@@ -124,7 +124,7 @@ class Subscriber
     /**
      * @param array $variables
      *
-     * @return Subscriber
+     * @return Event
      */
     public function setVariables(array $variables = null)
     {
@@ -144,7 +144,7 @@ class Subscriber
     /**
      * @param User $user
      *
-     * @return Subscriber
+     * @return Event
      */
     public function setUser(User $user)
     {
@@ -164,7 +164,7 @@ class Subscriber
     /**
      * @param bool $needEmail
      *
-     * @return Subscriber
+     * @return Event
      */
     public function setNeedEmail($needEmail)
     {

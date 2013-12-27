@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use FOS\UserBundle\Form\Type\ProfileFormType as BaseType;
 use Wapinet\UserBundle\Entity\User;
 
-class ProfileFormType extends BaseType
+class ProfileType extends BaseType
 {
     /**
      * @var ContainerInterface
@@ -30,10 +30,6 @@ class ProfileFormType extends BaseType
         $builder
             ->add('sex', 'choice', array('label' => 'Пол', 'required' => false, 'choices' => User::getSexChoices()))
             ->add('birthday', 'birthday', array('widget' => 'single_text', 'label' => 'Дата рождения', 'required' => false))
-            ->add('emailComments', 'checkbox', array('label' => 'Присылать E-mail о новых комментариях', 'required' => false))
-            ->add('emailMessages', 'checkbox', array('label' => 'Присылать E-mail о новых сообщениях', 'required' => false))
-            ->add('emailNews', 'checkbox', array('label' => 'Присылать E-mail о новостях сайта', 'required' => false))
-            ->add('emailFriends', 'checkbox', array('label' => 'Присылать E-mail о действиях друзей', 'required' => false))
             ->add('info', 'textarea', array('label' => 'Дополнительная информация', 'required' => false, 'max_length' => 5000))
             ->add('avatar', 'file_url', array(
                 'attr' => array(

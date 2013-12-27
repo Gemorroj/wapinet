@@ -7,9 +7,7 @@
     })}}
 {% endblock %}
 
-{% block content -%}
-    <h2>{{ entity.subject }}</h2>
-
+{% block content %}
     <ul data-role="listview" data-inset="true">
         <li data-role="list-divider">{{ entity.createdAt|wapinet_datetime }}</li>
         <li>

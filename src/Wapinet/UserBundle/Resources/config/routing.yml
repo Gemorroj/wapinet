@@ -7,6 +7,10 @@ wapinet_user_panel_edit:
     pattern:  /panel/edit
     defaults: { _controller: WapinetUserBundle:Panel:edit }
 
+wapinet_user_subscriber_edit:
+    pattern:  /subscriber/edit
+    defaults: { _controller: WapinetUserBundle:Subscriber:edit }
+
 wapinet_user_events:
     pattern:  /events
     defaults: { _controller: WapinetUserBundle:Events:index }

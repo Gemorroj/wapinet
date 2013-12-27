@@ -4,11 +4,11 @@ namespace Wapinet\UserBundle\EventListener;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use FOS\CommentBundle\Events as Event;
 use FOS\CommentBundle\Event\CommentEvent;
-use Wapinet\UserBundle\Entity\Subscriber as EntitySubscriber;
+use Wapinet\UserBundle\Entity\Event as EntityEvent;
 use Doctrine\Orm\EntityManager;
 use Wapinet\UserBundle\Entity\User;
 
-class SubscriberComment implements EventSubscriberInterface
+class EventComment implements EventSubscriberInterface
 {
     private $em;
 
@@ -38,17 +38,17 @@ class SubscriberComment implements EventSubscriberInterface
             return;
         }
 
-        $subscriber = new EntitySubscriber();
-        $subscriber->setSubject('Поступил ответ на Ваш комментарий.');
-        $subscriber->setTemplate('comment');
-        $subscriber->setVariables(array(
+        $entityEvent = new EntityEvent();
+        $entityEvent->setSubject('Поступил ответ на Ваш комментарий.');
+        $entityEvent->setTemplate('comment');
+        $entityEvent->setVariables(array(
             'parent_comment' => $parentComment,
             'comment' => $comment,
         ));
-        $subscriber->setNeedEmail($user->getEmailComments());
-        $subscriber->setUser($user);
+        $entityEvent->setNeedEmail($user->getEmailComments());
+        $entityEvent->setUser($user);
 
-        $this->em->persist($subscriber);
+        $this->em->persist($entityEvent);
         $this->em->flush();
     }
 }

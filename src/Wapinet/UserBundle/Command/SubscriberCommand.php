@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Wapinet\UserBundle\Entity\Subscriber;
+use Wapinet\UserBundle\Entity\Event;
 
 /**
  * Subscriber
@@ -31,7 +31,7 @@ class SubscriberCommand extends ContainerAwareCommand
     {
         /** @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $repository = $em->getRepository('Wapinet\UserBundle\Entity\Subscriber');
+        $repository = $em->getRepository('Wapinet\UserBundle\Entity\Event');
 
         $rows = $repository->findNeedEmail();
 
@@ -48,10 +48,10 @@ class SubscriberCommand extends ContainerAwareCommand
 
 
     /**
-     * @param Subscriber $subscriber
+     * @param Event $event
      * @return bool
      */
-    protected function sendEmail(Subscriber $subscriber)
+    protected function sendEmail(Event $event)
     {
         $siteTitle = $this->getContainer()->getParameter('wapinet_title');
         $robotEmail = $this->getContainer()->getParameter('wapinet_robot_email');
@@ -59,14 +59,14 @@ class SubscriberCommand extends ContainerAwareCommand
         /** @var \Symfony\Bundle\TwigBundle\TwigEngine $templating */
         $templating = $this->getContainer()->get('templating');
 
-        $variables = $subscriber->getVariables();
-        $variables['subject'] = $subscriber->getSubject();
+        $variables = $event->getVariables();
+        $variables['subject'] = $event->getSubject();
 
-        $body = $templating->render('WapinetUserBundle:Subscriber/Email:' . $subscriber->getTemplate() . '.html.twig', $variables);
+        $body = $templating->render('WapinetUserBundle:Subscriber/Email:' . $event->getTemplate() . '.html.twig', $variables);
 
-        $message = \Swift_Message::newInstance($siteTitle . ' - ' . $subscriber->getSubject(), $body, 'text/html', 'UTF-8');
+        $message = \Swift_Message::newInstance($siteTitle . ' - ' . $event->getSubject(), $body, 'text/html', 'UTF-8');
         $message->setFrom($robotEmail);
-        $message->setTo($subscriber->getUser()->getEmail());
+        $message->setTo($event->getUser()->getEmail());
 
         return ($mailer->send($message) > 0);
     }

@@ -107,7 +107,7 @@ class NewsAdmin extends Admin
         $connection = $this->container->get('doctrine.orm.entity_manager')->getConnection();
 
         $q = $connection->prepare('
-            INSERT INTO subscriber(user_id, template, variables, need_email)
+            INSERT INTO event(user_id, template, variables, need_email)
             SELECT fos_user.id, :template, :variables, fos_user.email_news
             FROM fos_user
             WHERE fos_user.enabled = 1 AND fos_user.locked = 0 AND fos_user.expired = 0

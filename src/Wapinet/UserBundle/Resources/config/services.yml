@@ -1,6 +1,6 @@
 services:
     wapinet_user.profile.form.type:
-        class: Wapinet\UserBundle\Form\Type\ProfileFormType
+        class: Wapinet\UserBundle\Form\Type\ProfileType
         arguments: [%fos_user.model.user.class%, @service_container]
         tags:
             - { name: form.type, alias: wapinet_user_profile }
@@ -19,14 +19,14 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: Пользователи, label: Меню }
 
-    wapinet_user.subscriber.message:
-        class: Wapinet\UserBundle\EventListener\SubscriberMessage
+    wapinet_user.event.message:
+        class: Wapinet\UserBundle\EventListener\EventMessage
         arguments: [@fos_message.message_manager, @doctrine.orm.entity_manager, @router]
         tags:
             - { name: kernel.event_subscriber }
 
-    wapinet_user.subscriber.comment:
-        class: Wapinet\UserBundle\EventListener\SubscriberComment
+    wapinet_user.event.comment:
+        class: Wapinet\UserBundle\EventListener\EventComment
         arguments: [@doctrine.orm.entity_manager]
         tags:
             - { name: kernel.event_subscriber }
@@ -43,8 +43,8 @@ services:
         tags:
             - {name: twig.extension, alias: wapinet_user_friend}
 
-    wapinet_user.subscriber.friends:
-        class: Wapinet\UserBundle\EventListener\SubscriberFriends
+    wapinet_user.event.friends:
+        class: Wapinet\UserBundle\EventListener\EventFriends
         arguments: [@doctrine.orm.entity_manager, @router]
         tags:
             - { name: kernel.event_subscriber }

@@ -4,16 +4,16 @@ namespace Wapinet\UserBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
-class SubscriberRepository extends EntityRepository
+class EventRepository extends EntityRepository
 {
     /**
-     * @return Subscriber[]
+     * @return Event[]
      */
     public function findNeedEmail()
     {
-        return $this->createQueryBuilder('s')
-            ->where('s.needEmail = 1')
-            ->orderBy('s.id', 'ASC')
+        return $this->createQueryBuilder('e')
+            ->where('e.needEmail = 1')
+            ->orderBy('e.id', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -25,10 +25,10 @@ class SubscriberRepository extends EntityRepository
      */
     public function findEventsQuery(User $user)
     {
-        return $this->createQueryBuilder('s')
-            ->where('s.user = :user')
+        return $this->createQueryBuilder('e')
+            ->where('e.user = :user')
             ->setParameter('user', $user)
-            ->orderBy('s.id', 'DESC')
+            ->orderBy('e.id', 'DESC')
             ->getQuery();
     }
 }

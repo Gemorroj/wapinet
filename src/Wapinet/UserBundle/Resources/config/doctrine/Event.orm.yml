@@ -1,7 +1,7 @@
-Wapinet\UserBundle\Entity\Subscriber:
-    repositoryClass: Wapinet\UserBundle\Entity\SubscriberRepository
+Wapinet\UserBundle\Entity\Event:
+    repositoryClass: Wapinet\UserBundle\Entity\EventRepository
     type:  entity
-    table: subscriber
+    table: event
     id:
         id:
             type: integer

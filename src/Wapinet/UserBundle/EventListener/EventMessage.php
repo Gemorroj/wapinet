@@ -5,12 +5,12 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use FOS\MessageBundle\Event\MessageEvent;
 use FOS\MessageBundle\Event\FOSMessageEvents as Event;
 use FOS\MessageBundle\ModelManager\MessageManagerInterface;
-use Wapinet\UserBundle\Entity\Subscriber as EntitySubscriber;
+use Wapinet\UserBundle\Entity\Event as EntityEvent;
 use Doctrine\Orm\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Wapinet\UserBundle\Entity\User;
 
-class SubscriberMessage implements EventSubscriberInterface
+class EventMessage implements EventSubscriberInterface
 {
     private $messageManager;
     private $em;
@@ -38,16 +38,16 @@ class SubscriberMessage implements EventSubscriberInterface
 
         /** @var User $participant */
         foreach ($participants as $participant) {
-            $subscriber = new EntitySubscriber();
-            $subscriber->setSubject('Вам пришло новое сообщение.');
-            $subscriber->setTemplate('message');
-            $subscriber->setVariables(array(
+            $entityEvent = new EntityEvent();
+            $entityEvent->setSubject('Вам пришло новое сообщение.');
+            $entityEvent->setTemplate('message');
+            $entityEvent->setVariables(array(
                 'message' => $message,
             ));
-            $subscriber->setNeedEmail($participant->getEmailMessages());
-            $subscriber->setUser($participant);
+            $entityEvent->setNeedEmail($participant->getEmailMessages());
+            $entityEvent->setUser($participant);
 
-            $this->em->persist($subscriber);
+            $this->em->persist($entityEvent);
         }
 
         $this->em->flush();
