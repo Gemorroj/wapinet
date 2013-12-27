@@ -47,7 +47,8 @@ class UsersController extends Controller
                 $search = $session->get('users_search');
                 if ($key === $search['key']) {
                     $form->setData($search['data']);
-                    $pagerfanta = $this->search($search['data'], $page);
+                    $pagerfanta = $this->searchSphinx($search['data'], $page);
+                    //$pagerfanta = $this->search($search['data'], $page);
                 }
             } else {
                 $pagerfanta = $this->online($page);
@@ -78,6 +79,30 @@ class UsersController extends Controller
 
     /**
      * @param array $data
+     * @param int   $page
+     *
+     * @throws \RuntimeException
+     * @return Pagerfanta
+     */
+    protected function searchSphinx(array $data, $page = 1)
+    {
+        throw new \Exception('Not implemented');
+        //TODO: доделать
+        $client = $this->container->get('sphinx');
+        $client->setPage($page);
+
+        $client->AddQuery($data['search'], 'users');
+
+        $result = $client->RunQueries();
+        if (false === $result) {
+            throw new \RuntimeException($client->GetLastError());
+        }
+
+        return $client->getPagerfanta($result);
+    }
+
+    /**
+     * @param array $data
      * @param int $page
      * @return Pagerfanta
      */
@@ -86,11 +111,8 @@ class UsersController extends Controller
         $userRepository = $this->getDoctrine()->getRepository('WapinetUserBundle:User');
         $query = $userRepository->getSearchUsersQuery(
             $data['search'],
-            $data['use_info'],
             $data['only_online'],
-            $data['sex'],
-            $data['created_after'],
-            $data['created_before']
+            $data['sex']
         );
 
         return $this->get('paginate')->paginate($query, $page);

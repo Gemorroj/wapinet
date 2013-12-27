@@ -3,6 +3,7 @@ namespace Wapinet\UserBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Wapinet\UserBundle\Entity\User;
 
 /**
@@ -18,13 +19,10 @@ class SearchType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('search', 'search', array('max_length' => 5000, 'required' => false, 'label' => 'Кого ищем?'));
+        $builder->add('search', 'search', array('attr' => array('title' => 'Слова разделенные пробелами. Работает модификатор *, кавычки и др.'), 'max_length' => 5000, 'required' => true, 'label' => false, 'constraints' => new NotBlank()));
 
-        $builder->add('use_info', 'checkbox', array('required' => false, 'label' => 'Искать в дополнительной информации', 'data' => true));
         $builder->add('only_online', 'checkbox', array('required' => false, 'label' => 'Только онлайн', 'data' => true));
         $builder->add('sex', 'choice', array('required' => false, 'multiple' => true, 'empty_value' => 'Все', 'label' => 'Пол', 'choices' => User::getSexChoices()));
-        $builder->add('created_after', 'date', array('widget' => 'single_text', 'label' => 'Зарегистрирован после', 'required' => false));
-        $builder->add('created_before', 'date', array('widget' => 'single_text', 'label' => 'Зарегистрирован до', 'required' => false));
 
         $builder->add('submit', 'submit', array('label' => 'Искать'));
     }

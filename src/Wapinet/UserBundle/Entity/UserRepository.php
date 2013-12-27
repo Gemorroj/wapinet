@@ -23,14 +23,11 @@ class UserRepository extends EntityRepository
 
     /**
      * @param string|null $search
-     * @param bool       $useInfo
      * @param bool       $onlyOnline
      * @param array|null $sex
-     * @param \DateTime  $createdAfter
-     * @param \DateTime  $createdBefore
      * @return Query
      */
-    public function getSearchUsersQuery($search = null, $useInfo = true, $onlyOnline = true, array $sex = null, \DateTime $createdAfter = null, \DateTime $createdBefore = null)
+    public function getSearchUsersQuery($search = null, $onlyOnline = true, array $sex = null)
     {
         $q = $this->createQueryBuilder('u');
 
@@ -38,9 +35,7 @@ class UserRepository extends EntityRepository
             $search = '%' . addcslashes($search, '%_') . '%';
 
             $q->where('u.username LIKE :search');
-            if (true === $useInfo) {
-                $q->orWhere('u.info LIKE :search');
-            }
+            $q->orWhere('u.info LIKE :search');
             $q->setParameter('search', $search);
         }
 
@@ -52,15 +47,6 @@ class UserRepository extends EntityRepository
         if ($sex) {
             $q->andWhere('u.sex IN (:sex)');
             $q->setParameter('sex', $sex);
-        }
-
-        if (null !== $createdAfter) {
-            $q->andWhere('u.createdAt >= :created_after');
-            $q->setParameter('created_after', $createdAfter);
-        }
-        if (null !== $createdBefore) {
-            $q->andWhere('u.createdAt <= :created_before');
-            $q->setParameter('created_before', $createdBefore);
         }
 
         $q->andWhere('u.enabled = 1');

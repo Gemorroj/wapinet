@@ -13,15 +13,9 @@
 
     <div data-role="collapsible">
         <h4>Дополнительные параметры</h4>
-        {{ form_row(form.use_info) }}
         {{ form_row(form.only_online) }}
 
         {{ form_row(form.sex, {'attr': {'data-native-menu': 'false'}}) }}
-
-        <fieldset class="ui-grid-a">
-            <div class="ui-block-a">{{ form_row(form.created_after) }}</div>
-            <div class="ui-block-b">{{ form_row(form.created_before) }}</div>
-        </fieldset>
     </div>
 
 
