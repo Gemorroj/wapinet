@@ -1,0 +1,1 @@
+s:\sphinx\bin\searchd.exe --delete --servicename SphinxSearch

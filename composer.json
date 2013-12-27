@@ -38,6 +38,7 @@
         "liip/imagine-bundle": "dev-master",
         "gregwar/captcha-bundle": "dev-master",
         "pulse00/ffmpeg-bundle": "dev-master",
+        "highco/sphinx-bundle": "dev-master",
         "gemorroj/phpwhois": "dev-master",
         "gemorroj/archive7z": "dev-master",
         "pear-pear/Services_W3C_CSSValidator": "*",

@@ -1,0 +1,1 @@
+s:\sphinx\bin\indexer --all --config s:\OpenServer\domains\wapinet-new.loc\app\config\sphinx.conf

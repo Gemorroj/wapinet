@@ -147,6 +147,11 @@ services:
         class: Wapinet\Bundle\Helper\Siza
         arguments: [@service_container]
 
+    sphinx:
+        class: Wapinet\Bundle\Helper\Sphinx
+        arguments: [@service_container]
+        scope: prototype
+
     archive_zip:
         class: Wapinet\Bundle\Helper\Archiver\ArchiveZip
         arguments: [@service_container]

@@ -153,39 +153,17 @@ class FileRepository extends EntityRepository
 
     /**
      * @param string|null $search
-     * @param bool $useDescription
-     * @param array|null $categories
-     * @param \DateTime|null $createdAfter
-     * @param \DateTime|null $createdBefore
      * @return \Doctrine\ORM\Query
      */
-    public function getSearchQuery($search = null, $useDescription = true, array $categories = null, \DateTime $createdAfter = null, \DateTime $createdBefore = null)
+    public function getSearchQuery($search = null)
     {
         $q = $this->createQueryBuilder('f');
 
-        if (null !== $search) {
-            $search = '%' . addcslashes($search, '%_') . '%';
+        $search = '%' . addcslashes($search, '%_') . '%';
 
-            // 15 символов - это результат uniqid + _
-            $q->where('SUBSTRING(f.fileName, 15) LIKE :search');
-            if (true === $useDescription) {
-                $q->orWhere('f.description LIKE :search');
-            }
-            $q->setParameter('search', $search);
-        }
-
-        foreach ($categories as $category) {
-            $this->addCategoryMime($q, $category);
-        }
-
-        if (null !== $createdAfter) {
-            $q->andWhere('f.createdAt >= :created_after');
-            $q->setParameter('created_after', $createdAfter);
-        }
-        if (null !== $createdBefore) {
-            $q->andWhere('f.createdAt <= :created_before');
-            $q->setParameter('created_before', $createdBefore);
-        }
+        $q->where('f.originalFileName LIKE :search');
+        $q->orWhere('f.description LIKE :search');
+        $q->setParameter('search', $search);
 
         $q->andWhere('f.password IS NULL');
         $q->orderBy('f.id', 'DESC');

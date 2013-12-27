@@ -91,7 +91,8 @@ class FileController extends Controller
                 $search = $session->get('file_search');
                 if ($key === $search['key']) {
                     $form->setData($search['data']);
-                    $pagerfanta = $this->search($search['data'], $page);
+                    $pagerfanta = $this->searchSphinx($search['data'], $page);
+                    //$pagerfanta = $this->search($search['data'], $page);
                 }
             }
         } catch (\Exception $e) {
@@ -110,18 +111,38 @@ class FileController extends Controller
      * @param int $page
      * @return Pagerfanta
      */
-    protected function search (array $data, $page = 1)
+    protected function search(array $data, $page = 1)
     {
         $query = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->getSearchQuery(
-            $data['search'],
-            $data['use_description'],
-            $data['categories'],
-            $data['created_after'],
-            $data['created_before']
+            $data['search']
         );
 
         return $this->get('paginate')->paginate($query, $page);
     }
+
+
+    /**
+     * @param array $data
+     * @param int   $page
+     *
+     * @throws \RuntimeException
+     * @return Pagerfanta
+     */
+    protected function searchSphinx(array $data, $page = 1)
+    {
+        $client = $this->container->get('sphinx');
+        $client->setPage($page);
+
+        $client->AddQuery($data['search'], 'files');
+
+        $result = $client->RunQueries();
+        if (false === $result) {
+            throw new \RuntimeException($client->GetLastError());
+        }
+
+        return $client->getPagerfanta($result);
+    }
+
 
     /**
      * @return Response
