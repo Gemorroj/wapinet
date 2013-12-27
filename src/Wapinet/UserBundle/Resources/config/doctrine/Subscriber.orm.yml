@@ -27,6 +27,8 @@ Wapinet\UserBundle\Entity\Subscriber:
     oneToOne:
         user:
             targetEntity: Wapinet\UserBundle\Entity\User
+            cascade: ["persist"]
+            inversedBy: subscriber
             joinColumn:
                 name: user_id
                 referencedColumnName: id

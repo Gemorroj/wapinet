@@ -43,7 +43,8 @@ Wapinet\UserBundle\Entity\User:
     oneToOne:
         panel:
             targetEntity: Wapinet\UserBundle\Entity\Panel
-            cascade: ["merge", "remove"]
+            cascade: ["persist", "remove"]
+            mappedBy: user
             joinColumn:
                 name: panel_id
                 referencedColumnName: id
@@ -51,7 +52,8 @@ Wapinet\UserBundle\Entity\User:
                 nullable: true
         subscriber:
             targetEntity: Wapinet\UserBundle\Entity\Subscriber
-            cascade: ["merge", "remove"]
+            mappedBy: user
+            cascade: ["persist", "remove"]
             joinColumn:
                 name: subscriber_id
                 referencedColumnName: id

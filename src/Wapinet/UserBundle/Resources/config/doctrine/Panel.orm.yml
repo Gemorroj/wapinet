@@ -32,6 +32,8 @@ Wapinet\UserBundle\Entity\Panel:
     oneToOne:
         user:
             targetEntity: Wapinet\UserBundle\Entity\User
+            cascade: ["persist"]
+            inversedBy: panel
             joinColumn:
                 name: user_id
                 referencedColumnName: id
