@@ -40,10 +40,7 @@ class UserAdmin extends Admin
             ->add('avatar', null, array('label' => 'Аватар'))
             ->add('sex', null, array('label' => 'Пол'))
             ->add('birthday', null, array('label' => 'День рождения'))
-            ->add('emailComments', null, array('label' => 'Рассылка комментариев'))
-            ->add('emailMessages', null, array('label' => 'Рассылка сообщений'))
-            ->add('emailNews', null, array('label' => 'Рассылка новостей'))
-            ->add('emailFriends', null, array('label' => 'Рассылка действий друзей'))
+            ->add('subscriber', null, array('label' => 'Подписки'))
             ->add('panel', null, array('label' => 'Меню'))
             ->add('friends', null, array('label' => 'Друзья'))
         ;
@@ -69,12 +66,16 @@ class UserAdmin extends Admin
             ->add('roles', 'choice', array('choices' => $roles, 'multiple' => true))
             ->add('sex', 'choice', array('label' => 'Пол', 'required' => false, 'choices' => User::getSexChoices()))
             ->add('birthday', 'date', array('widget' => 'single_text', 'label' => 'День рождения', 'required' => false))
-            ->add('emailComments', null, array('label' => 'Рассылка комментариев'))
-            ->add('emailMessages', null, array('label' => 'Рассылка сообщений'))
-            ->add('emailNews', null, array('label' => 'Рассылка новостей'))
-            ->add('emailFriends', null, array('label' => 'Рассылка действий друзей'))
             ->with('Аватар')
             ->add('avatar', 'file_url', array('delete_button' => true, 'label' => false, 'required' => false, 'attr' => array('accept' => 'image/*')))
+            ->end()
+            ->with('Подписки')
+            ->add('subscriber', 'sonata_type_admin', array(
+                'label' => false,
+                'required' => true,
+                'delete' => false,
+                'btn_add' => false,
+            ))
             ->end()
             ->with('Меню')
             ->add('panel', 'sonata_type_admin', array(

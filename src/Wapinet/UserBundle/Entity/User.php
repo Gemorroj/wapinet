@@ -66,29 +66,14 @@ class User extends BaseUser implements ParticipantInterface
     protected $birthday;
 
     /**
-     * @var bool
-     */
-    protected $emailComments = false;
-
-    /**
-     * @var bool
-     */
-    protected $emailMessages = true;
-
-    /**
-     * @var bool
-     */
-    protected $emailNews = true;
-
-    /**
-     * @var bool
-     */
-    protected $emailFriends = false;
-
-    /**
      * @var Panel
      */
     protected $panel;
+
+    /**
+     * @var Subscriber
+     */
+    protected $subscriber;
 
     /**
      * @var ArrayCollection
@@ -175,6 +160,32 @@ class User extends BaseUser implements ParticipantInterface
 
 
     /**
+     * @param Subscriber $subscriber
+     * @return User
+     */
+    public function setSubscriber(Subscriber $subscriber)
+    {
+        $this->subscriber = $subscriber;
+
+        return $this;
+    }
+
+    /**
+     * @return Subscriber
+     */
+    public function getSubscriber()
+    {
+        if (null === $this->subscriber) {
+            $subscriber = new Subscriber();
+            $subscriber->setUser($this);
+
+            return $subscriber;
+        }
+
+        return $this->subscriber;
+    }
+
+    /**
      * @return string|null
      */
     public function getInfo()
@@ -189,82 +200,6 @@ class User extends BaseUser implements ParticipantInterface
     public function setInfo($info)
     {
         $this->info = $info;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getEmailFriends()
-    {
-        return $this->emailFriends;
-    }
-
-    /**
-     * @param bool $emailFriends
-     * @return User
-     */
-    public function setEmailFriends($emailFriends)
-    {
-        $this->emailFriends = (bool)$emailFriends;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getEmailNews()
-    {
-        return $this->emailNews;
-    }
-
-    /**
-     * @param bool $emailNews
-     * @return User
-     */
-    public function setEmailNews($emailNews)
-    {
-        $this->emailNews = (bool)$emailNews;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getEmailComments()
-    {
-        return $this->emailComments;
-    }
-
-    /**
-     * @param bool $emailComments
-     * @return User
-     */
-    public function setEmailComments($emailComments)
-    {
-        $this->emailComments = (bool)$emailComments;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getEmailMessages()
-    {
-        return $this->emailMessages;
-    }
-
-    /**
-     * @param bool $emailMessages
-     * @return User
-     */
-    public function setEmailMessages($emailMessages)
-    {
-        $this->emailMessages = (bool)$emailMessages;
 
         return $this;
     }

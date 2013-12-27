@@ -55,7 +55,7 @@ class Panel extends \ArrayObject
     }
 
     /**
-     * @return array
+     * @return \ArrayIterator
      */
     public function getIterator()
     {
@@ -238,7 +238,7 @@ class Panel extends \ArrayObject
     {
         $result = '';
         foreach ($this->getIterator() as $item) {
-            if ($item['enabled']) {
+            if (true === $item['enabled']) {
                 $result .= $item['name'] . ', ';
             }
         }

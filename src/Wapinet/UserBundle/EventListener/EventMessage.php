@@ -44,7 +44,7 @@ class EventMessage implements EventSubscriberInterface
             $entityEvent->setVariables(array(
                 'message' => $message,
             ));
-            $entityEvent->setNeedEmail($participant->getEmailMessages());
+            $entityEvent->setNeedEmail($participant->getSubscriber()->getEmailMessages());
             $entityEvent->setUser($participant);
 
             $this->em->persist($entityEvent);

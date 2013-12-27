@@ -43,6 +43,6 @@ class PanelType extends AbstractType
      */
     public function getName()
     {
-        return 'panel';
+        return 'wapinet_user_panel';
     }
 }

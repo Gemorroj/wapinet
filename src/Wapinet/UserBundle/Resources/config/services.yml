@@ -19,6 +19,12 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: Пользователи, label: Меню }
 
+    wapinet_user.admin.subscriber:
+        class: Wapinet\UserBundle\Admin\SubscriberAdmin
+        arguments: [null, Wapinet\UserBundle\Entity\Subscriber, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Пользователи, label: Подписки }
+
     wapinet_user.event.message:
         class: Wapinet\UserBundle\EventListener\EventMessage
         arguments: [@fos_message.message_manager, @doctrine.orm.entity_manager, @router]

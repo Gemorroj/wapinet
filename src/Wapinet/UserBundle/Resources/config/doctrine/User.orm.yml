@@ -8,22 +8,6 @@ Wapinet\UserBundle\Entity\User:
             generator:
                 strategy: AUTO
     fields:
-        emailComments:
-            type: boolean
-            nullable: false
-            column: email_comments
-        emailMessages:
-            type: boolean
-            nullable: false
-            column: email_messages
-        emailNews:
-            type: boolean
-            nullable: false
-            column: email_news
-        emailFriends:
-            type: boolean
-            nullable: false
-            column: email_friends
         avatarName:
             type: string
             nullable: true
@@ -62,6 +46,14 @@ Wapinet\UserBundle\Entity\User:
             cascade: ["merge", "remove"]
             joinColumn:
                 name: panel_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: true
+        subscriber:
+            targetEntity: Wapinet\UserBundle\Entity\Subscriber
+            cascade: ["merge", "remove"]
+            joinColumn:
+                name: subscriber_id
                 referencedColumnName: id
                 onDelete: CASCADE
                 nullable: true

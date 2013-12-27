@@ -45,7 +45,7 @@ class EventComment implements EventSubscriberInterface
             'parent_comment' => $parentComment,
             'comment' => $comment,
         ));
-        $entityEvent->setNeedEmail($user->getEmailComments());
+        $entityEvent->setNeedEmail($user->getSubscriber()->getEmailComments());
         $entityEvent->setUser($user);
 
         $this->em->persist($entityEvent);
