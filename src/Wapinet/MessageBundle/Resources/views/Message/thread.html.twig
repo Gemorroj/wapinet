@@ -15,7 +15,7 @@
             {% if message.sender.hasAvatar %}
                 <img src="{{ vich_uploader_asset(message.sender, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ message.sender }}" class="image-preview" />
             {% endif %}
-            <h2>{{ message.body }}</h2>
+            <h2>{{ message.body|wapinet_bbcode_parse }}</h2>
             {% if message.sender.isOnline %}
                 <p class="p-online">Онлайн</p>
             {% endif %}

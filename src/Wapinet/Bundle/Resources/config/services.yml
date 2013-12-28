@@ -4,6 +4,11 @@ services:
         public: false
         tags: [{ name: pagerfanta.view, alias: default }]
 
+    wapinet.bbcode.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\Bbcode
+        tags:
+            - {name: twig.extension, alias: wapinet_bbcode}
+
     wapinet.date.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Date
         tags:
@@ -93,12 +98,15 @@ services:
 
     error:
         class: Wapinet\Bundle\Helper\Error
+
     mime:
         class: Wapinet\Bundle\Helper\Mime
         arguments: [@service_container]
+
     file:
         class: Wapinet\Bundle\Helper\File
         arguments: [@service_container]
+
     curl:
         class: Wapinet\Bundle\Helper\Curl
         arguments: [@service_container]

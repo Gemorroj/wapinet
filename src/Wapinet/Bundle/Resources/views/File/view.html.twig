@@ -147,11 +147,10 @@
         {% endif %}
     {% endif %}
 
-    <pre>{{ file.description }}</pre>
+    <fieldset>{{ file.description|wapinet_bbcode_parse }}</fieldset>
 
     {% if app.user and (is_granted('EDIT', file) or is_granted('DELETE', file)) %}
         <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-            <legend>Управление:</legend>
             {% if is_granted('EDIT', file) %}
                 <a data-role="button" data-icon="edit" href="{{ path('file_edit', {'id': file.id}) }}">Редактировать</a>
             {% endif %}

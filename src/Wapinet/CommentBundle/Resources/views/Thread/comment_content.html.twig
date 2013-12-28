@@ -78,7 +78,7 @@
                     {% if comment is fos_comment_raw %}
                         {{ comment.rawBody | raw }}
                     {% else %}
-                        {{ comment.body | nl2br }}
+                        {{ comment.body | wapinet_bbcode_parse }}
                     {% endif %}
                 </h2>
                 {% if comment.author and comment.author.isOnline %}
