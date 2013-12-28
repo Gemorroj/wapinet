@@ -94,10 +94,10 @@ class UsersController extends Controller
         // пол
         if (null !== $data['sex'] && sizeof($data['sex']) > 0) {
             $sex = array();
-            if (false !== array_search(User::SEX_M, $data['sex'])) {
+            if (false !== array_search(User::SEX_MALE, $data['sex'])) {
                 $sex[] = 1;
             }
-            if (false !== array_search(User::SEX_F, $data['sex'])) {
+            if (false !== array_search(User::SEX_FEMALE, $data['sex'])) {
                 $sex[] = 2;
             }
 

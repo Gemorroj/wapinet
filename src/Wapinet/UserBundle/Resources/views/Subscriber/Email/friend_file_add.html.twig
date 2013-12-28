@@ -1,7 +1,7 @@
 {% extends '@WapinetUser/Subscriber/Email/_layout.html.twig' %}
 
 {% block content %}
-    {% if friend.isWoman %}
+    {% if friend.isFemale %}
         Ваша подруга <a href="{{ url('fos_user_profile_show', {'username': friend.username}) }}">{{ friend }}</a> добавила новый файл <a href="{{ url('file_view', {'id': file.id}) }}">{{ file.originalFileName }}</a> ({{ file.file.size|wapinet_size }}).
     {% else %}
         Ваш друг <a href="{{ url('fos_user_profile_show', {'username': friend.username}) }}">{{ friend }}</a> добавил новый файл <a href="{{ url('file_view', {'id': file.id}) }}">{{ file.originalFileName }}</a> ({{ file.file.size|wapinet_size }}).

@@ -1,5 +1,5 @@
 <a href="{{ path('fos_user_profile_show', {'username': event.variables.friend.username}) }}">
-    {% if event.variables.friend.isWoman %}
+    {% if event.variables.friend.isFemale %}
         Вас добавила в друзья {{ event.variables.friend }}.
     {% else %}
         Вас добавил в друзья {{ event.variables.friend }}.

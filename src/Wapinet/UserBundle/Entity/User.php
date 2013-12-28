@@ -16,8 +16,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User extends BaseUser implements ParticipantInterface
 {
     const LIFETIME = '5 minutes';
-    const SEX_M = 'm';
-    const SEX_F = 'f';
+    const SEX_MALE = 'm';
+    const SEX_FEMALE = 'f';
 
     /**
      * @Assert\Image(
@@ -230,7 +230,7 @@ class User extends BaseUser implements ParticipantInterface
      */
     public function setSex($sex)
     {
-        if ($sex !== self::SEX_M && $sex !== self::SEX_F) {
+        if ($sex !== self::SEX_MALE && $sex !== self::SEX_FEMALE) {
             throw new \InvalidArgumentException('Invalid sex');
         }
 
@@ -370,22 +370,22 @@ class User extends BaseUser implements ParticipantInterface
      */
     public static function getSexChoices()
     {
-        return array(User::SEX_M => 'Мужской', User::SEX_F => 'Женский');
+        return array(User::SEX_MALE => 'Мужской', User::SEX_FEMALE => 'Женский');
     }
 
     /**
      * @return bool
      */
-    public function isMan()
+    public function isMale()
     {
-        return (self::SEX_M === $this->getSex());
+        return (self::SEX_MALE === $this->getSex());
     }
 
     /**
      * @return bool
      */
-    public function isWoman()
+    public function isFemale()
     {
-        return (self::SEX_F === $this->getSex());
+        return (self::SEX_FEMALE === $this->getSex());
     }
 }

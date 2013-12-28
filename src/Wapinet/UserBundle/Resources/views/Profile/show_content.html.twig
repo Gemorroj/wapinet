@@ -17,9 +17,9 @@
         <tr>
             <td>Пол</td>
             <td>
-                {% if user.sex == constant('Wapinet\\UserBundle\\Entity\\User::SEX_M') %}
+                {% if user.isMale %}
                     Мужской
-                {% elseif user.sex == constant('Wapinet\\UserBundle\\Entity\\User::SEX_F') %}
+                {% elseif user.isFemale %}
                     Женский
                 {% else %}
                     Не указан
