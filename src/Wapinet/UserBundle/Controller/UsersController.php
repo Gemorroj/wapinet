@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Wapinet\UserBundle\Entity\User;
 use Wapinet\UserBundle\Form\Type\SearchType;
 
 
@@ -51,6 +52,7 @@ class UsersController extends Controller
                     //$pagerfanta = $this->search($search['data'], $page);
                 }
             } else {
+                $form['only_online']->setData(true);
                 $pagerfanta = $this->online($page);
             }
         } catch (\Exception $e) {
@@ -86,11 +88,31 @@ class UsersController extends Controller
      */
     protected function searchSphinx(array $data, $page = 1)
     {
-        throw new \Exception('Not implemented');
-        //TODO: доделать
         $client = $this->container->get('sphinx');
         $client->setPage($page);
 
+        // пол
+        if (null !== $data['sex'] && sizeof($data['sex']) > 0) {
+            $sex = array();
+            if (false !== array_search(User::SEX_M, $data['sex'])) {
+                $sex[] = 1;
+            }
+            if (false !== array_search(User::SEX_F, $data['sex'])) {
+                $sex[] = 2;
+            }
+
+            $client->SetFilter('sex_number', $sex);
+        }
+
+        // онлайн
+        if (true === $data['only_online']) {
+            $lifetime = new \DateTime('now -' . User::LIFETIME);
+            $now = new \DateTime('+10 seconds');
+
+            $client->SetFilterRange('last_activity_ts', $lifetime->getTimestamp(), $now->getTimestamp());
+        }
+
+        // поиск
         $client->AddQuery($data['search'], 'users');
 
         $result = $client->RunQueries();
@@ -98,7 +120,7 @@ class UsersController extends Controller
             throw new \RuntimeException($client->GetLastError());
         }
 
-        return $client->getPagerfanta($result);
+        return $client->getPagerfanta($result, 'Wapinet\UserBundle\Entity\User');
     }
 
     /**

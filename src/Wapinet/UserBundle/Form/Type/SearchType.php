@@ -21,8 +21,11 @@ class SearchType extends AbstractType
 
         $builder->add('search', 'search', array('attr' => array('title' => 'Слова разделенные пробелами. Работает модификатор *, кавычки и др.'), 'max_length' => 5000, 'required' => true, 'label' => false, 'constraints' => new NotBlank()));
 
-        $builder->add('only_online', 'checkbox', array('required' => false, 'label' => 'Только онлайн', 'data' => true));
-        $builder->add('sex', 'choice', array('required' => false, 'multiple' => true, 'empty_value' => 'Все', 'label' => 'Пол', 'choices' => User::getSexChoices()));
+        $builder->add('only_online', 'checkbox', array('required' => false, 'label' => 'Только онлайн'));
+
+        $sex = User::getSexChoices();
+        $sex[''] = 'Любой пол';
+        $builder->add('sex', 'choice', array('required' => false, 'multiple' => true, 'label' => false, 'choices' => $sex));
 
         $builder->add('submit', 'submit', array('label' => 'Искать'));
     }

@@ -54,13 +54,14 @@ class Sphinx extends DefaultClient
 
     /**
      * @param array $result
+     * @param string $entityClass
      *
      * @return \Pagerfanta\Pagerfanta
      */
-    public function getPagerfanta(array $result)
+    public function getPagerfanta(array $result, $entityClass)
     {
         $bridge = $this->container->get('highco.sphinx.pager.white_october.doctrine_orm');
-        $bridge->setRepositoryClass('Wapinet\Bundle\Entity\File');
+        $bridge->setRepositoryClass($entityClass);
         $bridge->setPkColumn('id');
 
         $bridge->setSphinxResults($result, true);

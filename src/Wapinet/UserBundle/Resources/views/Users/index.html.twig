@@ -11,13 +11,14 @@
     {{ form_errors(form) }}
     {{ form_row(form.search) }}
 
-    <div data-role="collapsible">
-        <h4>Дополнительные параметры</h4>
-        {{ form_row(form.only_online) }}
-
-        {{ form_row(form.sex, {'attr': {'data-native-menu': 'false'}}) }}
+    <div class="ui-grid-a">
+        <div class="ui-block-a">
+            {{ form_row(form.only_online) }}
+        </div>
+        <div class="ui-block-b">
+            {{ form_row(form.sex, {'attr': {'data-native-menu': 'false'}}) }}
+        </div>
     </div>
-
 
     {{ form_rest(form) }}
 

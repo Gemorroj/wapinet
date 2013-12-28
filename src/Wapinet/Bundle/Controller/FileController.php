@@ -140,7 +140,7 @@ class FileController extends Controller
             throw new \RuntimeException($client->GetLastError());
         }
 
-        return $client->getPagerfanta($result);
+        return $client->getPagerfanta($result, 'Wapinet\Bundle\Entity\File');
     }
 
 
