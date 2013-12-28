@@ -10,6 +10,9 @@
 
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
+    {# bbcode #}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/wapinet/xbbcode/resources/style.css') }}" />
+
     {# jquery #}
     <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.js') }}"></script>
 
@@ -19,8 +22,8 @@
 
     {# jplayer #}
     {% if file is defined and (file.isPlayableVideo or file.isPlayableAudio) %}
-        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/wapinet/js/jplayer/blue.monday/jplayer.blue.monday.css') }}" />
-        <script type="text/javascript" src="{{ asset('bundles/wapinet/js/jplayer/jquery.jplayer.min.js') }}"></script>
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/wapinet/jplayer/blue.monday/jplayer.blue.monday.css') }}" />
+        <script type="text/javascript" src="{{ asset('bundles/wapinet/jplayer/jquery.jplayer.min.js') }}"></script>
     {% endif %}
 
     {# pagerfanta #}
