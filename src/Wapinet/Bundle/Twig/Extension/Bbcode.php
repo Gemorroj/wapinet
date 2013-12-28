@@ -27,7 +27,7 @@ class Bbcode extends \Twig_Extension
     {
         $xbbcode = new Xbbcode($text);
 
-        return $xbbcode->get_html();
+        return $xbbcode->getHtml();
     }
 
     /**
