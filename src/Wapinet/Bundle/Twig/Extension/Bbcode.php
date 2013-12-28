@@ -25,7 +25,7 @@ class Bbcode extends \Twig_Extension
      */
     public function bbcodeParse($text)
     {
-        $xbbcode = new Xbbcode($text);
+        $xbbcode = new Xbbcode($text, '/bundles/wapinet/xbbcode');
 
         return $xbbcode->getHtml();
     }
