@@ -14,7 +14,9 @@
         {% for comment in pagerfanta %}
             <li data-role="list-divider" class="ui-bar-d">{{ comment.createdAt|wapinet_datetime  }} <span class="ui-li-count">{{ comment.score }}</span></li>
             <li>
-                <a href="{{ comment.thread.permalink }}#fos_comment_{{ comment.id }}">{{ comment.body }}</a>
+                <a href="{{ comment.thread.permalink }}#fos_comment_{{ comment.id }}">
+                    {{ comment.body|wapinet_bbcode_parse }}
+                </a>
             </li>
         {% else %}
             <li>Комментариев нет</li>
