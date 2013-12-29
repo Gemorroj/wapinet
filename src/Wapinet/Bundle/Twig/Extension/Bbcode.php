@@ -26,6 +26,7 @@ class Bbcode extends \Twig_Extension
     public function bbcodeParse($text)
     {
         $xbbcode = new Xbbcode($text, '/bundles/wapinet/xbbcode');
+        $xbbcode->tags['spoiler'] = 'Wapinet\Bundle\Twig\Extension\WapinetSpoiler';
 
         return $xbbcode->getHtml();
     }
@@ -38,5 +39,25 @@ class Bbcode extends \Twig_Extension
     public function getName()
     {
         return 'wapinet_bbcode';
+    }
+}
+
+class WapinetSpoiler extends \Xbbcode\Tag\Spoiler
+{
+    /**
+     * @param string $id
+     * @return string
+     */
+    protected function getSpoiler($id)
+    {
+        return '<input data-inline="true" class="bb_spoiler" type="button" value="' . htmlspecialchars(
+            $this->showButton
+        ) . '" onclick="var node = document.getElementById(\'' . $id . '\'); (node.style.display == \'none\' ? (node.style.display = \'block\', this.value = \'' . htmlspecialchars(
+            $this->hideButton,
+            ENT_QUOTES
+        ) . '\') : (node.style.display = \'none\', this.value = \'' . htmlspecialchars(
+            $this->showButton,
+            ENT_QUOTES
+        ) . '\'));" />';
     }
 }
