@@ -38,7 +38,8 @@ class FileController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('WapinetBundle:File:index.html.twig');
+        $comments = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->getComments();
+        return $this->render('WapinetBundle:File:index.html.twig', array('comments' => $comments));
     }
 
     /**

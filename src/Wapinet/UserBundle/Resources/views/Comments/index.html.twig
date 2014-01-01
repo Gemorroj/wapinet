@@ -15,7 +15,7 @@
             <li data-role="list-divider" class="ui-bar-d">{{ comment.createdAt|wapinet_datetime  }} <span class="ui-li-count">{{ comment.score }}</span></li>
             <li>
                 <a href="{{ comment.thread.permalink }}#fos_comment_{{ comment.id }}">
-                    {{ comment.body|wapinet_bbcode_parse }}
+                    <div class="ui-li-desc">{{ comment.body|wapinet_bbcode_parse }}</div>
                 </a>
             </li>
         {% else %}

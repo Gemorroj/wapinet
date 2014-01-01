@@ -51,6 +51,6 @@ class WapinetSpoiler extends \Xbbcode\Tag\Spoiler
      */
     protected function getSpoiler($id)
     {
-        return '<input data-inline="true" class="bb_spoiler" type="button" value="Спойлер" onclick="$(\'#' . $id . '\').toggle();" />';
+        return '<input data-inline="true" data-mini="true" class="bb_spoiler" type="button" value="Спойлер" onclick="$(\'#' . $id . '\').toggle();" />';
     }
 }
