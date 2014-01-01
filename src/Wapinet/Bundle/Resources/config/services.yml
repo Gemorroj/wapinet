@@ -143,8 +143,8 @@ services:
         class: Wapinet\Bundle\Helper\Horoscope
         arguments: [@service_container]
 
-    news:
-        class: Wapinet\Bundle\Helper\News
+    mass_media:
+        class: Wapinet\Bundle\Helper\MassMedia
         arguments: [@service_container]
 
     bash:

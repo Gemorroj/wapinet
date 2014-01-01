@@ -110,9 +110,9 @@ horoscope:
     resource: "@WapinetBundle/Resources/config/routing/horoscope.yml"
     prefix:   /horoscope
 
-news:
-    resource: "@WapinetBundle/Resources/config/routing/news.yml"
-    prefix:   /news
+mass_media:
+    resource: "@WapinetBundle/Resources/config/routing/mass_media.yml"
+    prefix:   /mass_media
 
 bash:
     resource: "@WapinetBundle/Resources/config/routing/bash.yml"

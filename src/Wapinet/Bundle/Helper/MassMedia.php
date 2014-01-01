@@ -5,9 +5,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
 /**
- * News хэлпер
+ * MassMedia хэлпер
  */
-class News
+class MassMedia
 {
     /**
      * @var ContainerInterface
@@ -22,7 +22,7 @@ class News
     /**
      * @return array
      */
-    public function getNewsRt()
+    public function getRt()
     {
         $curl = $this->container->get('curl');
         $curl->addCompression();
@@ -66,7 +66,7 @@ class News
     /**
      * @return array
      */
-    public function getNewsInotv()
+    public function getInotv()
     {
         $curl = $this->container->get('curl');
         $curl->addCompression();

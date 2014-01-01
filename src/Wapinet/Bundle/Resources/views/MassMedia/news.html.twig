@@ -1,10 +1,10 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Новости - {{ name }}{% endblock %}
+{% block title %}СМИ - {{ name }}{% endblock %}
 {% block breadcrumbs %}
     {{wapinet_breadcrumbs({
     1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'},
-    2: {'uri': path('news_index'), 'title': 'Новости'},
+    2: {'uri': path('mass_media_index'), 'title': 'СМИ'},
     })}}
 {% endblock %}
 

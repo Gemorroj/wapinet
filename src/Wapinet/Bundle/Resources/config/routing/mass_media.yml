@@ -1,0 +1,12 @@
+mass_media_index:
+    pattern: /
+    defaults: { _controller: WapinetBundle:MassMedia:index }
+
+mass_media_rt:
+    pattern: /rt
+    defaults: { _controller: WapinetBundle:MassMedia:rt }
+
+mass_media_inotv:
+    pattern: /inotv
+    defaults: { _controller: WapinetBundle:MassMedia:inotv }
+
