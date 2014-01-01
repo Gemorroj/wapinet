@@ -9,5 +9,27 @@
 {% endblock %}
 
 {% block content %}
-    Статистика
+    <ul data-role="listview" data-inset="true">
+        <li>
+            Файлов <span class="ui-li-count">{{ statistic.count_files }}</span>
+        </li>
+        <li>
+            Просмотров <span class="ui-li-count">{{ statistic.count_views }}</span>
+        </li>
+        <li data-role="list-divider">
+            Активные пользователи
+        </li>
+        {% for user in statistic.users %}
+            <li>
+                <a href="{{ path('wapinet_user_profile', {'username': user.username}) }}">
+                    {{ user.username }}
+                </a>
+                <span class="ui-li-count">{{ user.uploads }}</span>
+            </li>
+        {% else %}
+            <li>
+                Не найдены.
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

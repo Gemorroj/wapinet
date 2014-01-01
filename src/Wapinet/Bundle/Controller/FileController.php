@@ -54,7 +54,9 @@ class FileController extends Controller
      */
     public function statisticAction()
     {
-        return $this->render('WapinetBundle:File:statistic.html.twig');
+        $statistic = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->getStatistic();
+
+        return $this->render('WapinetBundle:File:statistic.html.twig', array('statistic' => $statistic));
     }
 
     /**

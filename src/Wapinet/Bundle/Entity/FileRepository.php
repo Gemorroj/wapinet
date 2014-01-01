@@ -10,6 +10,34 @@ use Wapinet\UserBundle\Entity\User;
 class FileRepository extends EntityRepository
 {
     /**
+     * @param int $maxUsers
+     * @return array
+     */
+    public function getStatistic($maxUsers = 10)
+    {
+        $em = $this->getEntityManager();
+        $countFiles = $em->createQuery('SELECT COUNT(f.id) FROM Wapinet\Bundle\Entity\File f');
+        $countViews = $em->createQuery('SELECT SUM(f.countViews) FROM Wapinet\Bundle\Entity\File f');
+
+        $users = $em->createQuery('
+            SELECT u.username, COUNT(f.id) AS uploads
+            FROM Wapinet\Bundle\Entity\File f
+            INNER JOIN Wapinet\UserBundle\Entity\User u WITH f.user = u
+            WHERE u.enabled = 1 AND u.locked = 0 AND u.expired = 0
+            GROUP BY u.id
+            ORDER BY uploads DESC
+        ');
+        $users->setMaxResults($maxUsers);
+
+        return array(
+            'count_files' => $countFiles->getSingleScalarResult(),
+            'count_views' => $countViews->getSingleScalarResult(),
+            'users' => $users->getResult(),
+        );
+    }
+
+
+    /**
      * @return int
      */
     public function countAll()
