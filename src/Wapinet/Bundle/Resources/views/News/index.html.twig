@@ -10,7 +10,7 @@
             {% for entity in pagerfanta %}
                 <li data-role="list-divider">{{ entity.createdAt|wapinet_datetime }} <span class="ui-li-count">123</span></li>
                 <li>
-                    <a href="{{ url('wapinet_news_show', {'id': entity.id}) }}">
+                    <a href="{{ path('news_show', {'id': entity.id}) }}">
                         <h2>{{ entity.subject }}</h2>
                         {% if entity.updatedAt is not null %}
                             <p><strong>Обновлено {{ entity.updatedAt|wapinet_datetime }}</strong></p>

@@ -1,0 +1,9 @@
+{% extends '@WapinetUser/Subscriber/Email/_layout.html.twig' %}
+
+{% block content %}
+    Новость на сайте.
+    <h2>{{ news.subject }}</h2>
+    <div>{{ news.body|wapinet_bbcode_parse }}</div>
+
+    <strong><a href="{{ url('news_show', {'id': news.id}) }}">Смотреть</a></strong>
+{% endblock %}

@@ -1,5 +1,5 @@
 <?php
-namespace Wapinet\NewsBundle\Entity;
+namespace Wapinet\Bundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -9,7 +9,7 @@ class NewsRepository extends EntityRepository
     {
         return $this->getEntityManager()->createQueryBuilder()
             ->select('news')
-            ->from('WapinetNewsBundle:News', 'news')
+            ->from('WapinetBundle:News', 'news')
             ->orderBy('news.id', 'DESC')
             ->getQuery();
     }
@@ -18,7 +18,7 @@ class NewsRepository extends EntityRepository
     {
         return $this->getEntityManager()->createQueryBuilder()
             ->select('news.createdAt')
-            ->from('WapinetNewsBundle:News', 'news')
+            ->from('WapinetBundle:News', 'news')
             ->orderBy('news.id', 'DESC')
             ->setMaxResults(1)
             ->getQuery();

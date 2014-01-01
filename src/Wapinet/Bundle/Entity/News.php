@@ -1,6 +1,6 @@
 <?php
 
-namespace Wapinet\NewsBundle\Entity;
+namespace Wapinet\Bundle\Entity;
 
 use Wapinet\UserBundle\Entity\User;
 

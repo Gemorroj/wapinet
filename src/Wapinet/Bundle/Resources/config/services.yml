@@ -188,3 +188,17 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: Пользователи, label: Тэги }
 
+    wapinet.admin.news:
+        class: Wapinet\Bundle\Admin\NewsAdmin
+        arguments: [~, Wapinet\Bundle\Entity\News, SonataAdminBundle:CRUD]
+        calls:
+            - [setContainer, ["@service_container"]]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Новости, label: Новости}
+
+    wapinet.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\News
+        arguments: [@service_container, @doctrine.orm.entity_manager]
+        tags:
+            - {name: twig.extension, alias: news}
+

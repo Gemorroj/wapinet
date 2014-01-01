@@ -6,7 +6,7 @@
     {% else %}
         Ваш друг <a href="{{ url('fos_user_profile_show', {'username': friend.username}) }}">{{ friend }}</a> оставил комментарий:<br />
     {% endif %}
-    <pre>{{ comment.body }}</pre>
+    <pre>{{ comment.body|wapinet_bbcode_parse }}</pre>
 
     <strong><a href="{{ comment.thread.permalink }}#fos_comment_{{ comment.id }}">Ответить</a></strong>
 {% endblock %}

@@ -1,0 +1,9 @@
+news_index:
+    pattern:  /
+    defaults: { _controller: WapinetBundle:News:index }
+
+news_show:
+    pattern:  /{id}
+    defaults: { _controller: WapinetBundle:News:show }
+    requirements:
+        id: \d+

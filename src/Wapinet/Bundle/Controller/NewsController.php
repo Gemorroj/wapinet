@@ -1,6 +1,6 @@
 <?php
 
-namespace Wapinet\NewsBundle\Controller;
+namespace Wapinet\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,12 +23,12 @@ class NewsController extends Controller
     {
         $page = $request->get('page', 1);
         $result = $this->getDoctrine()
-            ->getRepository('WapinetNewsBundle:News')
+            ->getRepository('WapinetBundle:News')
             ->getAllBuilder();
 
         $pagerfanta = $this->get('paginate')->paginate($result, $page);
 
-        return $this->render('WapinetNewsBundle:News:index.html.twig', array(
+        return $this->render('WapinetBundle:News:index.html.twig', array(
             'pagerfanta' => $pagerfanta,
         ));
     }
@@ -44,13 +44,13 @@ class NewsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('WapinetNewsBundle:News')->find($id);
+        $entity = $em->getRepository('WapinetBundle:News')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find News entity.');
         }
 
-        return $this->render('WapinetNewsBundle:News:show.html.twig', array(
+        return $this->render('WapinetBundle:News:show.html.twig', array(
             'entity' => $entity,
             'comments_id' => 'news-' . $id
         ));

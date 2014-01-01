@@ -1,3 +1,3 @@
 <a href="{{ event.variables.comment.thread.permalink }}#fos_comment_{{ event.variables.comment.id }}">
-    {{ event.variables.comment.body }}
+    {{ event.variables.comment.body|wapinet_bbcode_parse }}
 </a>

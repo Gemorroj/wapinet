@@ -1,6 +1,6 @@
 <?php
 
-namespace Wapinet\NewsBundle\Admin;
+namespace Wapinet\Bundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -9,7 +9,8 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Wapinet\NewsBundle\Entity\News;
+use Wapinet\Bundle\Entity\News;
+use Wapinet\UserBundle\Entity\Event as EntityEvent;
 
 class NewsAdmin extends Admin
 {
@@ -18,6 +19,8 @@ class NewsAdmin extends Admin
      */
     protected $container;
 
+    protected $baseRouteName = 'sonata_news';
+    protected $baseRoutePattern = 'news';
     protected $datagridValues = array(
         '_sort_order' => 'DESC',
         '_sort_by' => 'id',
@@ -98,36 +101,33 @@ class NewsAdmin extends Admin
     /**
      * Подписка
      *
-     * @throws \PDOException
      * @param News $news
-     * @return bool
      */
     public function postPersist($news)
     {
-        $connection = $this->container->get('doctrine.orm.entity_manager')->getConnection();
+        $em = $this->container->get('doctrine.orm.entity_manager');
 
-        $q = $connection->prepare('
-            INSERT INTO event(user_id, template, variables, need_email)
-            SELECT fos_user.id, :template, :variables, fos_user.email_news
-            FROM fos_user
-            WHERE fos_user.enabled = 1 AND fos_user.locked = 0 AND fos_user.expired = 0
-        ');
-
-        $q->bindValue('template', 'news');
-        $q->bindValue('variables', array(
-            'news' => $news,
+        $userRepository = $em->getRepository('WapinetUserBundle:User');
+        $users = $userRepository->findBy(array(
+            'enabled' => true,
+            'locked' => false,
+            'expired' => false,
         ));
 
-        $result = $q->execute();
+        foreach ($users as $user) {
+            $entityEvent = new EntityEvent();
+            $entityEvent->setSubject('Новость на сайте.');
+            $entityEvent->setTemplate('news');
+            $entityEvent->setVariables(array(
+                'news' => $news,
+            ));
 
-        if (false === $result) {
-            $exception = new \PDOException('Ошибка при добавлении подписчиков.');
-            $exception->errorInfo = $q->errorInfo();
+            $entityEvent->setNeedEmail($user->getSubscriber()->getEmailNews());
+            $entityEvent->setUser($user);
 
-            $this->container->get('logger')->critical('Ошибка при добавлении подписчиков.', $exception->errorInfo);
-            //throw new $exception;
+            $em->persist($entityEvent);
         }
 
-        return $result;
+        $em->flush();
     }
 }

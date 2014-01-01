@@ -1,6 +1,6 @@
 <?php
 
-namespace Wapinet\NewsBundle\Tests\Controller;
+namespace Wapinet\Bundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

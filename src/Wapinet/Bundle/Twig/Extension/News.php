@@ -1,6 +1,6 @@
 <?php
 
-namespace Wapinet\NewsBundle\Twig\Extension;
+namespace Wapinet\Bundle\Twig\Extension;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\ORM\EntityManager;
@@ -24,7 +24,7 @@ class News extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('wapinet_news_last_date', array($this, 'getLastDate')),
+            new \Twig_SimpleFunction('news_last_date', array($this, 'getLastDate')),
         );
     }
 
@@ -33,7 +33,7 @@ class News extends \Twig_Extension
      */
     public function getLastDate()
     {
-        $result = $this->em->getRepository('WapinetNewsBundle:News')->getLastDate()->getOneOrNullResult();
+        $result = $this->em->getRepository('WapinetBundle:News')->getLastDate()->getOneOrNullResult();
 
         return (null === $result ? null : $result['createdAt']);
     }
@@ -45,6 +45,6 @@ class News extends \Twig_Extension
      */
     public function getName()
     {
-        return 'wapinet_news';
+        return 'news';
     }
 }

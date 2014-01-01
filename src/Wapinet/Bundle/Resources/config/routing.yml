@@ -130,6 +130,10 @@ file:
     resource: "@WapinetBundle/Resources/config/routing/file.yml"
     prefix:   /file
 
+news:
+    resource: "@WapinetBundle/Resources/config/routing/news.yml"
+    prefix:   /news
+
 guestbook:
     resource: "@WapinetBundle/Resources/config/routing/guestbook.yml"
     prefix:   /guestbook
