@@ -1,0 +1,5 @@
+guestbook_index:
+    pattern: /
+    defaults: { _controller: WapinetBundle:Guestbook:index }
+
+

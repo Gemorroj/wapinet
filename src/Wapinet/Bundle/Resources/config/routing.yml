@@ -130,6 +130,9 @@ file:
     resource: "@WapinetBundle/Resources/config/routing/file.yml"
     prefix:   /file
 
+guestbook:
+    resource: "@WapinetBundle/Resources/config/routing/guestbook.yml"
+    prefix:   /guestbook
 
 proxy_index:
     pattern: /proxy
