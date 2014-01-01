@@ -35,6 +35,9 @@ Wapinet\UserBundle\Entity\User:
             type: string
             nullable: true
             length: 5000
+        timezone:
+            type: string
+            nullable: true
 
     lifecycleCallbacks:
         prePersist: [ setCreatedAtValue ]

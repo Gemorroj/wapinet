@@ -37,6 +37,12 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    wapinet_user.listener.timezone:
+        class: Wapinet\UserBundle\EventListener\ListenerTimezone
+        arguments: [ @security.context ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
+
     wapinet_user.listener.last_activity:
             class: Wapinet\UserBundle\EventListener\ListenerLastActivity
             arguments: [@service_container, @doctrine.orm.entity_manager]

@@ -90,6 +90,11 @@ class User extends BaseUser implements ParticipantInterface
      */
     protected $info;
 
+    /**
+     * @var \DateTimeZone|null
+     */
+    protected $timezone;
+
 
     public function __construct()
     {
@@ -113,6 +118,26 @@ class User extends BaseUser implements ParticipantInterface
     public function getFriended()
     {
         return $this->friended;
+    }
+
+
+    /**
+     * @return string|null
+     */
+    public function getTimezone()
+    {
+        return $this->timezone;
+    }
+
+    /**
+     * @param string|null $timezone
+     * @return User
+     */
+    public function setTimezone($timezone = null)
+    {
+        $this->timezone = $timezone;
+
+        return $this;
     }
 
 
