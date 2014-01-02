@@ -104,7 +104,7 @@ $(document).on("pagebeforeshow", "#page", function () {
     $.mobile.ajaxFormsEnabled = false;
 
     // подгрузка картинок в попапах
-    $("a[href^='#image-'], a[href^='#avatar-']").on("click", function () {
+    $("a[href^='#image-']").on("click", function () {
         $.mobile.loading("show");
 
         var popup = $(this.getAttribute('href'));
