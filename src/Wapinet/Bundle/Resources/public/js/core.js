@@ -171,7 +171,7 @@ $(document).ajaxStart(function () {
     $.mobile.loading('show');
 }).ajaxSuccess(function () {
     $.mobile.loading('hide');
-    $("#page").trigger("pagecreate");
+    $("#page").enhanceWithin();
 }).ajaxError(function () {
     $.mobile.loading('hide');
     $.mobile.loading("show", {
@@ -182,5 +182,5 @@ $(document).ajaxStart(function () {
     setTimeout(function () {
         $.mobile.loading("hide");
     }, 5000);
-    $("#page").trigger("pagecreate");
+    $("#page").enhanceWithin();
 });

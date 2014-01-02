@@ -23,8 +23,8 @@
             <li>
                 <a href="{{ path('wapinet_user_profile', {'username': user.username}) }}">
                     {{ user.username }}
+                    <span class="ui-li-count">{{ user.uploads }}</span>
                 </a>
-                <span class="ui-li-count">{{ user.uploads }}</span>
             </li>
         {% else %}
             <li>

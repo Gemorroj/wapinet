@@ -48,8 +48,9 @@
         {% else %}
 
             <li>
-                <a href="{{ path('archiver_download_file', {'archive': archive, 'name': file.basename, 'path': path }) }}">{{ pathView }}</a>
-                <span class="ui-li-count">{{ file.size|wapinet_size }}</span>
+                <a href="{{ path('archiver_download_file', {'archive': archive, 'name': file.basename, 'path': path }) }}">{{ pathView }}
+                    <span class="ui-li-count">{{ file.size|wapinet_size }}</span>
+                </a>
                 <a data-path="{{ path|url_encode }}" href="#delete-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
             </li>
         {% endif %}

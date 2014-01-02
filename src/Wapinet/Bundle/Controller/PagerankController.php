@@ -113,7 +113,7 @@ class PagerankController extends Controller
             if (strpos($response->getContent(), 'did not match any documents')) {
                 $out = 0;
             } else {
-                preg_match('/<div id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
+                preg_match('/<div class="sd" id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
 
                 if (isset($match[1])) {
                     $match[1] = str_replace('About ', '', $match[1]);
@@ -149,7 +149,7 @@ class PagerankController extends Controller
             if (strpos($response->getContent(), 'did not match any documents')) {
                 $out = 0;
             } else {
-                preg_match('/<div id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
+                preg_match('/<div class="sd" id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
 
                 if (isset($match[1])) {
                     $match[1] = str_replace('About ', '', $match[1]);

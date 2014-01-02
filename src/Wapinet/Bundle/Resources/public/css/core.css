@@ -45,3 +45,6 @@ div.avatar-popup, div.image-popup {
 a.friends-button {
     margin-left: 0;
 }
+p.breadcrumbs {
+    margin-top: -1em;
+}

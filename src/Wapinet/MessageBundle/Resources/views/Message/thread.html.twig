@@ -6,9 +6,9 @@
     <ul data-role="listview" data-inset="true">
     {% for message in pagerfanta %}
         <li data-role="list-divider" class="ui-bar-d">
-            <div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
-                <a data-mini="true" data-role="button" href="{{ path('wapinet_user_profile', {'username': message.sender.username}) }}">{{ message.sender.username }}</a>
-            </div>
+            <span>
+                <a data-mini="true" data-inline="true" data-role="button" href="{{ path('wapinet_user_profile', {'username': message.sender.username}) }}">{{ message.sender.username }}</a>
+            </span>
             <span class="ui-li-count">{{ message.createdAt|wapinet_datetime  }}</span>
         </li>
         <li data-icon="false">

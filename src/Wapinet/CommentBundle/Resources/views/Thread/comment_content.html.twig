@@ -20,13 +20,11 @@
                     {% if comment is fos_comment_in_state(constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_DELETED')) %}
                         {% trans from 'FOSCommentBundle' %}fos_comment_comment_deleted{% endtrans %}
                     {% else %}
-                        <div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
-                            {% if comment.author %}
-                                <a data-mini="true" data-role="button" href="{{ path('wapinet_user_profile', {'username': comment.authorName}) }}">{{ comment.authorName }}</a>
-                            {% else %}
-                                <a data-mini="true" data-role="button" href="#">{{ comment.authorName }}</a>
-                            {% endif %}
-                        </div>
+                        {% if comment.author %}
+                            <a data-mini="true" data-inline="true" data-role="button" href="{{ path('wapinet_user_profile', {'username': comment.authorName}) }}">{{ comment.authorName }}</a>
+                        {% else %}
+                            <a data-mini="true" data-inline="true" data-role="button" href="#">{{ comment.authorName }}</a>
+                        {% endif %}
                     {% endif %}
                 </span>
                 <span class="ui-li-count">{{ comment.createdAt|wapinet_datetime }}</span>
@@ -42,23 +40,25 @@
                 {% endif %}
             {% endblock fos_comment_comment_metas_voting %}
 
-            {% block fos_comment_comment_metas_edit %}
-                {% if fos_comment_can_edit_comment(comment) %}
-                    <a href="#" data-role="button" data-icon="edit" data-mini="true" data-inline="true" data-container="#fos_comment_comment_body_{{ comment.id }}" data-url="{{ url("fos_comment_edit_thread_comment", {"id": comment.thread.id, "commentId": comment.id}) }}" class="fos_comment_comment_edit_show_form">Изменить комментарий</a>
-                {% endif %}
-            {% endblock fos_comment_comment_metas_edit %}
-
-            {% block fos_comment_comment_metas_delete %}
-                {% if fos_comment_can_delete_comment(comment) %}
-                    {% if comment is fos_comment_in_state(constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_DELETED')) %}
-                        {# undelete #}
-                        <a href="#" data-role="button" data-icon="back" data-mini="true" data-inline="true" data-url="{{ url("fos_comment_remove_thread_comment", {"id": comment.thread.id, "commentId": comment.id, "value": constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_VISIBLE') }) }}" class="fos_comment_comment_remove">Восстановить комментарий</a>
-                    {% else %}
-                        {# delete #}
-                        <a href="#" data-role="button" data-icon="delete" data-mini="true" data-inline="true" data-url="{{ url("fos_comment_remove_thread_comment", {"id": comment.thread.id, "commentId": comment.id, "value":  constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_DELETED')}) }}" class="fos_comment_comment_remove">Удалить комментарий</a>
+            <span class="fos_comment_comment_metas">
+                {% block fos_comment_comment_metas_edit %}
+                    {% if fos_comment_can_edit_comment(comment) %}
+                        <a href="#" data-role="button" data-icon="edit" data-mini="true" data-inline="true" data-container="#fos_comment_comment_body_{{ comment.id }}" data-url="{{ url("fos_comment_edit_thread_comment", {"id": comment.thread.id, "commentId": comment.id}) }}" class="fos_comment_comment_edit_show_form">Изменить комментарий</a>
                     {% endif %}
-                {% endif %}
-            {% endblock fos_comment_comment_metas_delete %}
+                {% endblock fos_comment_comment_metas_edit %}
+
+                {% block fos_comment_comment_metas_delete %}
+                    {% if fos_comment_can_delete_comment(comment) %}
+                        {% if comment is fos_comment_in_state(constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_DELETED')) %}
+                            {# undelete #}
+                            <a href="#" data-role="button" data-icon="back" data-mini="true" data-inline="true" data-url="{{ url("fos_comment_remove_thread_comment", {"id": comment.thread.id, "commentId": comment.id, "value": constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_VISIBLE') }) }}" class="fos_comment_comment_remove">Восстановить комментарий</a>
+                        {% else %}
+                            {# delete #}
+                            <a href="#" data-role="button" data-icon="delete" data-mini="true" data-inline="true" data-url="{{ url("fos_comment_remove_thread_comment", {"id": comment.thread.id, "commentId": comment.id, "value":  constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_DELETED')}) }}" class="fos_comment_comment_remove">Удалить комментарий</a>
+                        {% endif %}
+                    {% endif %}
+                {% endblock fos_comment_comment_metas_delete %}
+            </span>
         </li>
     {% endblock fos_comment_comment_metas %}
 
@@ -90,7 +90,7 @@
 
 
         {% block fos_comment_comment_children %}
-            <div class="ui-li-desc">
+
             {% if view is not sameas('flat') %}
                 {% if fos_comment_can_comment(comment) %}
                     <div class="fos_comment_comment_reply">
@@ -108,7 +108,7 @@
             {% elseif view is sameas('flat') and children is defined %}
                 {% include "FOSCommentBundle:Thread:comments.html.twig" with { "comments": children, "depth": depth + 1, "parent": comment, "view": view } %}
             {% endif %}
-            </div>
+
         {% endblock fos_comment_comment_children %}
     </li>
 {% endblock fos_comment_comment %}

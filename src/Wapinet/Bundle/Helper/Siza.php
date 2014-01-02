@@ -247,6 +247,8 @@ class Siza
             /** @var \DOMElement $span */
             foreach ($spanArr as $span) {
                 $span->setAttribute('class', 'ui-li-count');
+                $span->previousSibling->previousSibling->appendChild(clone $span);
+                $span->parentNode->removeChild($span);
             }
 
 

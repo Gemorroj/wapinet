@@ -49,10 +49,10 @@ class Curl
     /**
      * Деструктор
      */
-    public function __destruct()
+    /*public function __destruct()
     {
         $this->close();
-    }
+    }*/
 
     /**
      * Закрываем соединение

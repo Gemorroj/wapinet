@@ -14,11 +14,11 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/wapinet/xbbcode/resources/style.css') }}" />
 
     {# jquery #}
-    <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/wapinet/jquery/jquery-2.0.3.min.js') }}"></script>
 
     {# jquery mobile #}
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerjquerymobile/css/jquery.mobile.css') }}" />
-    <script type="text/javascript" src="{{ asset('bundles/bmatznerjquerymobile/js/jquery.mobile.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/wapinet/jquerymobile/jquery.mobile-1.4.0.min.css') }}" />
+    <script type="text/javascript" src="{{ asset('bundles/wapinet/jquerymobile/jquery.mobile-1.4.0.min.js') }}"></script>
 
     {# jplayer #}
     {% if file is defined and (file.isPlayableVideo or file.isPlayableAudio) %}
@@ -70,8 +70,8 @@
                 <ul data-role="listview" data-icon="false" data-divider-theme="a" data-inset="false">
                     {% if is_granted('ROLE_USER') %}
                         <li><a href="{{ path('wapinet_user_events') }}">События</a></li>
-                        <li><a href="{{ path('wapinet_message_inbox') }}">Сообщения</a>{% if fos_message_nb_unread() > 0 %} <span class="ui-li-count">+{{ fos_message_nb_unread() }}</span>{% endif %}</li>
-                        <li><a href="{{ path('wapinet_user_friends', {'username': app.user.username}) }}">Друзья</a> <span class="ui-li-count">{{ wapinet_user_count_friends(app.user) }}</span></li>
+                        <li><a href="{{ path('wapinet_message_inbox') }}">Сообщения{% if fos_message_nb_unread() > 0 %} <span class="ui-li-count">+{{ fos_message_nb_unread() }}</span>{% endif %}</a></li>
+                        <li><a href="{{ path('wapinet_user_friends', {'username': app.user.username}) }}">Друзья <span class="ui-li-count">{{ wapinet_user_count_friends(app.user) }}</span></a></li>
                     {% endif %}
                     <li data-role="list-divider">Закладки</li>
                     {% for item in wapinet_panel() %}
@@ -103,11 +103,10 @@
             {% endblock %}
         </div>
 
-
         <div data-role="content">
             {% block breadcrumbs %}{% endblock %}
             {% block navbar %}{% endblock %}
-            <div>{% block content %}{% endblock %}</div>
+            <fieldset>{% block content %}{% endblock %}</fieldset>
         </div>
 
         <div data-role="footer">

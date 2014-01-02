@@ -25,7 +25,7 @@
 
         <div class="fos_comment_submit">
             {% block fos_comment_form_submit %}
-                <input type="submit" data-inline="true" value="{{ (isCommentable ? 'fos_comment_thread_open' : 'fos_comment_thread_close') | trans({}, 'FOSCommentBundle') }}" />
+                <input type="submit" data-inline="true" data-mini="true" value="{{ (isCommentable ? 'fos_comment_thread_open' : 'fos_comment_thread_close') | trans({}, 'FOSCommentBundle') }}" />
             {% endblock %}
         </div>
 

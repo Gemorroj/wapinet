@@ -29,7 +29,6 @@
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
         "sonata-project/core-bundle": "dev-master",
-        "bmatzner/jquery-mobile-bundle": "dev-master",
         "friendsofsymfony/comment-bundle": "dev-master",
         "friendsofsymfony/message-bundle": "dev-master",
         "white-october/pagerfanta-bundle": "dev-master",

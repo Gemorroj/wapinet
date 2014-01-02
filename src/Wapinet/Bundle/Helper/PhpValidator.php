@@ -2,7 +2,7 @@
 namespace Wapinet\Bundle\Helper;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\File as BaseFile;
 use Syntax\Php;
 
 /**
@@ -21,11 +21,11 @@ class PhpValidator
     }
 
     /**
-     * @param File $file
+     * @param BaseFile $file
      * @return array
      * @throws \Exception
      */
-    public function validateFile(File $file)
+    public function validateFile(BaseFile $file)
     {
         $cli = $this->container->getParameter('wapinet_php_path');
 

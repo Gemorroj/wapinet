@@ -11,8 +11,9 @@
             </li>
         {% else %}
             <li>
-                <a href="{{ path('file_archive_download_file', {'id': file.id, 'name': entry.path|basename, 'path': entry.path}) }}">{{ pathView }}</a>
-                <span class="ui-li-count">{{ entry.size|wapinet_size }}</span>
+                <a href="{{ path('file_archive_download_file', {'id': file.id, 'name': entry.path|basename, 'path': entry.path}) }}">{{ pathView }}
+                    <span class="ui-li-count">{{ entry.size|wapinet_size }}</span>
+                </a>
             </li>
         {% endif %}
 

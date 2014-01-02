@@ -20,9 +20,10 @@
 }
 .fos_comment_comment_reply {
     text-align: left;
-    margin-top: 1em;
-    padding: 1em 20px;
-    background: #d6d6d6;
+    /*margin-top: 1em;*/
+    /*padding: 1em 20px;*/
+    padding: 0 1em;
+    /*background: #d6d6d6;*/
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
