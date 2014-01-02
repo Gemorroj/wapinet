@@ -69,9 +69,9 @@
             <div data-role="panel" id="panel">
                 <ul data-role="listview" data-icon="false" data-divider-theme="a" data-inset="false">
                     {% if is_granted('ROLE_USER') %}
-                        <li><a href="{{ path('wapinet_user_events') }}">События</a></li>
-                        <li><a href="{{ path('wapinet_message_inbox') }}">Сообщения{% if fos_message_nb_unread() > 0 %} <span class="ui-li-count">+{{ fos_message_nb_unread() }}</span>{% endif %}</a></li>
-                        <li><a href="{{ path('wapinet_user_friends', {'username': app.user.username}) }}">Друзья <span class="ui-li-count">{{ wapinet_user_count_friends(app.user) }}</span></a></li>
+                        <li data-icon="calendar"><a href="{{ path('wapinet_user_events') }}">События</a></li>
+                        <li data-icon="comment"><a href="{{ path('wapinet_message_inbox') }}">Сообщения{% if fos_message_nb_unread() > 0 %} <span class="ui-li-count">+{{ fos_message_nb_unread() }}</span>{% endif %}</a></li>
+                        <li data-icon="user"><a href="{{ path('wapinet_user_friends', {'username': app.user.username}) }}">Друзья <span class="ui-li-count">{{ wapinet_user_count_friends(app.user) }}</span></a></li>
                     {% endif %}
                     <li data-role="list-divider">Закладки</li>
                     {% for item in wapinet_panel() %}

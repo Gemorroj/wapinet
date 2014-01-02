@@ -48,3 +48,6 @@ a.friends-button {
 p.breadcrumbs {
     margin-top: -1em;
 }
+a.user {
+    margin: 0;
+}

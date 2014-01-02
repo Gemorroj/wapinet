@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-    <div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="c">
+    <div data-role="collapsible" data-collapsed="false">
         <h2>Новые файлы</h2>
         <ul data-role="listview">
             <li><a href="{{ path('file_list', {'date': 'yesterday'}) }}">За вчера <span class="ui-li-count">{{ file_count_yesterday() }}</span></a></li>
@@ -23,15 +23,19 @@
         <li data-icon="search"><a href="{{ path('file_search') }}">Поиск</a></li>
     </ul>
 
-    <div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="c">
+    <div data-role="collapsible" data-collapsed="false">
         <h2>Комментарии</h2>
         <ul data-role="listview">
             {% for comment in comments %}
+                <li data-role="list-divider" class="ui-bar-d">
+                    <span>
+                        <a class="user" data-icon="user" data-mini="true" data-inline="true" data-role="button" href="{{ path('wapinet_user_profile', {'username': comment.username}) }}">{{ comment.username }}</a>
+                    </span>
+                    <span class="ui-li-count">{{ comment.createdAt|wapinet_datetime }}</span>
+                </li>
                 <li>
                     <a href="{{ comment.permalink }}">
-                        <h2>{{ comment.username }}</h2>
-                        <div class="ui-li-desc">{{ comment.body|wapinet_bbcode_parse }}</div>
-                        <span class="ui-li-count">{{ comment.createdAt|wapinet_datetime }}</span>
+                        {{ comment.body|wapinet_bbcode_parse }}
                     </a>
                 </li>
             {% else %}
@@ -41,7 +45,7 @@
     </div>
 
     <ul data-role="listview" data-inset="true">
-        <li data-icon="forward"><a href="{{ path('file_upload') }}">Загрузить файл</a></li>
+        <li data-icon="action"><a href="{{ path('file_upload') }}">Загрузить файл</a></li>
         <li data-icon="info"><a href="{{ path('file_statistic') }}">Статистика</a></li>
         <li data-icon="alert"><a href="{{ path('file_information') }}">Информация</a></li>
     </ul>

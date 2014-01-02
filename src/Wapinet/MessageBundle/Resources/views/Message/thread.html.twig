@@ -7,7 +7,7 @@
     {% for message in pagerfanta %}
         <li data-role="list-divider" class="ui-bar-d">
             <span>
-                <a data-mini="true" data-inline="true" data-role="button" href="{{ path('wapinet_user_profile', {'username': message.sender.username}) }}">{{ message.sender.username }}</a>
+                <a class="user" data-icon="user" data-mini="true" data-inline="true" data-role="button" href="{{ path('wapinet_user_profile', {'username': message.sender.username}) }}">{{ message.sender.username }}</a>
             </span>
             <span class="ui-li-count">{{ message.createdAt|wapinet_datetime  }}</span>
         </li>

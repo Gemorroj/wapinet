@@ -29,7 +29,7 @@
     -moz-border-radius: 5px;
 }
 .fos_comment_comment_reply_show_form {
-    padding: 2px 5px;
+    /*padding: 2px 5px;*/
     font-size: 0.8em;
 }
 .fos_comment_comment_body {
