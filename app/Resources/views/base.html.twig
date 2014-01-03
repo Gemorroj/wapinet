@@ -70,7 +70,7 @@
                 <ul data-role="listview" data-inset="true" data-divider-theme="b">
                     {% if is_granted('ROLE_USER') %}
                         <li data-icon="calendar"><a href="{{ path('wapinet_user_events') }}">События</a></li>
-                        <li data-icon="comment"><a href="{{ path('wapinet_message_inbox') }}">Сообщения{% if fos_message_nb_unread() > 0 %} <span class="ui-li-count">+{{ fos_message_nb_unread() }}</span>{% endif %}</a></li>
+                        <li data-icon="mail"><a href="{{ path('wapinet_message_inbox') }}">Сообщения{% if fos_message_nb_unread() > 0 %} <span class="ui-li-count">+{{ fos_message_nb_unread() }}</span>{% endif %}</a></li>
                         <li data-icon="user"><a href="{{ path('wapinet_user_friends', {'username': app.user.username}) }}">Друзья <span class="ui-li-count">{{ wapinet_user_count_friends(app.user) }}</span></a></li>
                     {% endif %}
                     <li data-role="list-divider">Закладки</li>

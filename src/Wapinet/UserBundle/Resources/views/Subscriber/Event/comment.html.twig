@@ -1,3 +1,12 @@
-<a href="{{ event.variables.comment.thread.permalink }}#fos_comment_{{ event.variables.comment.id }}">
-    {{ event.variables.comment.body|wapinet_bbcode_parse }}
-</a>
+<li data-role="list-divider">
+    <span>
+        <a class="bar-button ui-btn-icon-right ui-icon-comment ui-mini ui-btn-inline ui-btn" href="{{ event.variables.comment.thread.permalink }}#fos_comment_{{ event.variables.comment.id }}">&gt;&gt;&gt;</a>
+    </span>
+    {{ event.subject }}
+    <span class="ui-li-count">{{ event.variables.comment.createdAt|wapinet_datetime }}</span>
+</li>
+<li>
+    <div>
+        {{ event.variables.comment.body|wapinet_bbcode_parse }}
+    </div>
+</li>

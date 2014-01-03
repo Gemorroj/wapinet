@@ -1,7 +1,13 @@
-<a href="{{ path('file_view', {'id': event.variables.file.id}) }}">
-    {% if event.variables.friend.isFemale %}
-        Ваша подруга {{ event.variables.friend }} добавила новый файл {{ event.variables.file.originalFileName }} ({{ event.variables.file.file.size|wapinet_size }}).
-    {% else %}
-        Ваш друг {{ event.variables.friend }} добавил новый файл {{ event.variables.file.originalFileName }} ({{ event.variables.file.file.size|wapinet_size }}).
-    {% endif %}
-</a>
+<li data-role="list-divider">
+    {{ event.subject }}
+    <span class="ui-li-count">{{ event.createdAt|wapinet_datetime  }}</span>
+</li>
+<li>
+    <a href="{{ path('file_view', {'id': event.variables.file.id}) }}">
+        {% if event.variables.friend.isFemale %}
+            Ваша подруга {{ event.variables.friend }} добавила новый файл {{ event.variables.file.originalFileName }} ({{ event.variables.file.file.size|wapinet_size }}).
+        {% else %}
+            Ваш друг {{ event.variables.friend }} добавил новый файл {{ event.variables.file.originalFileName }} ({{ event.variables.file.file.size|wapinet_size }}).
+        {% endif %}
+    </a>
+</li>

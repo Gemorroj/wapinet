@@ -1,3 +1,12 @@
-<a href="{{ path('wapinet_message_thread_view', {'threadId': event.variables.message.thread.id}) }}">
-    {{ event.variables.message.body|wapinet_bbcode_parse }}
-</a>
+<li data-role="list-divider">
+    <span>
+        <a class="bar-button ui-btn-icon-right ui-icon-mail ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_message_thread_view', {'threadId': event.variables.message.thread.id}) }}">&gt;&gt;&gt;</a>
+    </span>
+    {{ event.subject }}
+    <span class="ui-li-count">{{ event.variables.comment.createdAt|wapinet_datetime }}</span>
+</li>
+<li>
+    <div>
+        {{ event.variables.message.body|wapinet_bbcode_parse }}
+    </div>
+</li>

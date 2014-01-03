@@ -1,7 +1,13 @@
-<a href="{{ path('fos_user_profile_show', {'username': event.variables.friend.username}) }}">
-    {% if event.variables.friend.isFemale %}
-        Вас удалила из друзей {{ event.variables.friend }}.
-    {% else %}
-        Вас удалил из друзей {{ event.variables.friend }}.
-    {% endif %}
-</a>
+<li data-role="list-divider">
+    {{ event.subject }}
+    <span class="ui-li-count">{{ event.createdAt|wapinet_datetime  }}</span>
+</li>
+<li>
+    <a href="{{ path('fos_user_profile_show', {'username': event.variables.friend.username}) }}">
+        {% if event.variables.friend.isFemale %}
+            Вас удалила из друзей {{ event.variables.friend }}.
+        {% else %}
+            Вас удалил из друзей {{ event.variables.friend }}.
+        {% endif %}
+    </a>
+</li>

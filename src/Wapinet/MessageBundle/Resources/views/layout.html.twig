@@ -35,9 +35,9 @@
     <div data-role="navbar">
         <ul>
             <li><a href="{{ path('wapinet_message_thread_new') }}" data-icon="edit"{% if active_page == 'wapinet_message_thread_new' %} class="ui-btn-active"{% endif %}>Написать</a></li>
-            <li><a href="{{ path('wapinet_message_inbox') }}" data-icon="arrow-l"{% if active_page == 'wapinet_message_inbox' %} class="ui-btn-active"{% endif %}>Входящие{% if fos_message_nb_unread() > 0 %} <span class="ui-li-count">+{{ fos_message_nb_unread() }}</span>{% endif %}</a></li>
-            <li><a href="{{ path('wapinet_message_sent') }}" data-icon="arrow-r"{% if active_page == 'wapinet_message_sent' %} class="ui-btn-active"{% endif %}>Исходящие</a></li>
-            <li><a href="{{ path('wapinet_message_deleted') }}" data-icon="delete"{% if active_page == 'wapinet_message_deleted' %} class="ui-btn-active"{% endif %}>Корзина</a></li>
+            <li><a href="{{ path('wapinet_message_inbox') }}" data-icon="arrow-d-l"{% if active_page == 'wapinet_message_inbox' %} class="ui-btn-active"{% endif %}>Входящие{% if fos_message_nb_unread() > 0 %} <span class="ui-li-count">+{{ fos_message_nb_unread() }}</span>{% endif %}</a></li>
+            <li><a href="{{ path('wapinet_message_sent') }}" data-icon="arrow-u-r"{% if active_page == 'wapinet_message_sent' %} class="ui-btn-active"{% endif %}>Исходящие</a></li>
+            <li><a href="{{ path('wapinet_message_deleted') }}" data-icon="recycle"{% if active_page == 'wapinet_message_deleted' %} class="ui-btn-active"{% endif %}>Корзина</a></li>
         </ul>
     </div>
 {% endblock %}

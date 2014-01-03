@@ -29,14 +29,15 @@
             {% for comment in comments %}
                 <li data-role="list-divider">
                     <span>
-                        <a class="user" data-icon="user" data-mini="true" data-inline="true" data-role="button" href="{{ path('wapinet_user_profile', {'username': comment.username}) }}">{{ comment.username }}</a>
+                        <a class="bar-button ui-btn-icon-right ui-icon-comment ui-mini ui-btn-inline ui-btn" href="{{ comment.permalink }}">&gt;&gt;&gt;</a>
+                        <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': comment.username}) }}">{{ comment.username }}</a>
                     </span>
                     <span class="ui-li-count">{{ comment.createdAt|wapinet_datetime }}</span>
                 </li>
                 <li>
-                    <a href="{{ comment.permalink }}">
+                    <div>
                         {{ comment.body|wapinet_bbcode_parse }}
-                    </a>
+                    </div>
                 </li>
             {% else %}
                 <li>Комментариев нет.</li>

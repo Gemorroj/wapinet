@@ -7,7 +7,7 @@
     {% for message in pagerfanta %}
         <li data-role="list-divider">
             <span>
-                <a class="user" data-icon="user" data-mini="true" data-inline="true" data-role="button" href="{{ path('wapinet_user_profile', {'username': message.sender.username}) }}">{{ message.sender.username }}</a>
+                <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': message.sender.username}) }}">{{ message.sender.username }}</a>
             </span>
             <span class="ui-li-count">{{ message.createdAt|wapinet_datetime  }}</span>
         </li>
@@ -15,7 +15,9 @@
             {% if message.sender.hasAvatar %}
                 <img src="{{ vich_uploader_asset(message.sender, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ message.sender }}" class="image-preview" />
             {% endif %}
-            <h2>{{ message.body|wapinet_bbcode_parse }}</h2>
+            <div>
+                {{ message.body|wapinet_bbcode_parse }}
+            </div>
             {% if message.sender.isOnline %}
                 <p class="p-online">Онлайн</p>
             {% endif %}
