@@ -8,6 +8,6 @@ class GuestbookController extends Controller
 {
     public function indexAction()
     {
-        $this->render('WapinetBundle:Guestbook:index.html.twig');
+        return $this->render('WapinetBundle:Guestbook:index.html.twig');
     }
 }
