@@ -6,8 +6,8 @@
         {% set path = entry.path %}
 
         {% if entry.isDirectory %}
-            <li class="ui-bar-d" data-icon="false">
-                <a href="#">{{ pathView }}</a>
+            <li class="directory" data-icon="false">
+                <a href="#" class="no-link">{{ pathView }}</a>
             </li>
         {% else %}
             <li>

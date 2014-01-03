@@ -67,7 +67,7 @@
     {% block page %}
         {% block panel %}
             <div data-role="panel" id="panel">
-                <ul data-role="listview" data-icon="false" data-divider-theme="a" data-inset="false">
+                <ul data-role="listview" data-inset="true" data-divider-theme="b">
                     {% if is_granted('ROLE_USER') %}
                         <li data-icon="calendar"><a href="{{ path('wapinet_user_events') }}">События</a></li>
                         <li data-icon="comment"><a href="{{ path('wapinet_message_inbox') }}">Сообщения{% if fos_message_nb_unread() > 0 %} <span class="ui-li-count">+{{ fos_message_nb_unread() }}</span>{% endif %}</a></li>
@@ -83,7 +83,7 @@
             </div>
         {% endblock %}
 
-        <div data-role="header" data-position="fixed">
+        <div data-theme="b" data-role="header" data-position="fixed">
             {% block header %}
                 <div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
                     <a href="javascript:history.back();" data-role="button" data-icon="back">Назад</a>
@@ -109,7 +109,7 @@
             <fieldset>{% block content %}{% endblock %}</fieldset>
         </div>
 
-        <div data-role="footer">
+        <div data-theme="b" data-role="footer">
             {% block footer %}
                 <p class="footer-right"><a href="{{ path('about') }}">О сайте</a></p>
                 <p class="footer">Online: {{ wapinet_online() }}</p>

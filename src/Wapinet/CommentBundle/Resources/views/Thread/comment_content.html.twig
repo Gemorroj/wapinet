@@ -32,7 +32,7 @@
 
             {% block fos_comment_comment_metas_voting %}
                 <span class="fos_comment_comment_voting">
-                    <a href="#" class="fos_comment_comment_score" data-role="button" data-inline="true" data-mini="true" data-icon="heart" id="fos_comment_score_{{ comment.id }}" style="cursor: default">{{ comment.score }}</a>
+                    <a href="#" class="fos_comment_comment_score no-link" data-role="button" data-inline="true" data-mini="true" data-icon="heart" id="fos_comment_score_{{ comment.id }}">{{ comment.score }}</a>
                     {% if fos_comment_can_vote(comment) %}
                         <a data-role="button" data-inline="true" href="#" data-url="{{ url("fos_comment_new_thread_comment_votes", {"id": comment.thread.id, "commentId": comment.id, "value": 1}) }}" class="fos_comment_comment_vote ui-alt-icon ui-nodisc-icon" data-iconpos="notext" data-icon="plus">Голосовать за</a>
                         <a data-role="button" data-inline="true" href="#" data-url="{{ url("fos_comment_new_thread_comment_votes", {"id": comment.thread.id, "commentId": comment.id, "value": -1}) }}" class="fos_comment_comment_vote ui-alt-icon ui-nodisc-icon" data-iconpos="notext" data-icon="minus">Голосовать против</a>

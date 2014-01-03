@@ -35,18 +35,17 @@
         <a data-inline="true" data-role="button" data-icon="check" href="{{ path('archiver_download', {'archive': archive}) }}">Скачать ZIP архив</a>
     </p>
 
-    <ul id="list-archive" data-role="listview" data-inset="true" data-divider-theme="d">
+    <ul id="list-archive" data-role="listview" data-inset="true">
     {% for file in files %}
         {% set pathView = (file.pathInfo.archiveName ? file.pathInfo.archiveName ~ ' / ' : '') ~ file.basename %}
         {% set path = (file.pathInfo.archiveName ? file.pathInfo.archiveName ~ '/' : '') ~ file.basename %}
 
         {% if file.dir %}
-            <li class="ui-bar-d">
-                <a href="#">{{ pathView }}</a>
+            <li class="directory">
+                <a href="#" class="no-link">{{ pathView }}</a>
                 <a data-path="{{ path|url_encode }}" href="#delete-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
             </li>
         {% else %}
-
             <li>
                 <a href="{{ path('archiver_download_file', {'archive': archive, 'name': file.basename, 'path': path }) }}">{{ pathView }}
                     <span class="ui-li-count">{{ file.size|wapinet_size }}</span>
@@ -59,14 +58,14 @@
 {% endblock %}
 
 {% block popup %}
-    <div data-role="popup" id="delete-popup" data-overlay-theme="a" data-theme="c" data-dismissible="false" class="ui-corner-all">
-        <div data-role="header" data-theme="a" class="ui-corner-top">
+    <div data-role="popup" id="delete-popup" data-overlay-theme="a" data-dismissible="false" class="ui-corner-all">
+        <div data-role="header" class="ui-corner-top" data-theme="b">
             <h1>Удаление</h1>
         </div>
-        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+        <div data-role="content" class="ui-corner-bottom ui-content">
             <h3 class="ui-title">Вы уверенны что хотите удалить элемент из архива?</h3>
             <p>Это безвозвратная операция.</p>
-            <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Отмена</a>
+            <a href="#" data-role="button" data-inline="true" data-rel="back">Отмена</a>
             <a href="#" id="delete-popup-do" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Удалить</a>
         </div>
     </div>

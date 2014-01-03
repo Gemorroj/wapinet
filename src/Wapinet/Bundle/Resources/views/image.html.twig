@@ -3,7 +3,7 @@
 <a href="#image-{{ image.id }}" data-rel="popup" data-position-to="window" data-transition="fade">
     <img src="{{ preview }}" alt="{{ image.alt }}" class="image-preview" />
 </a>
-<div class="image-popup" data-role="popup" id="image-{{ image.id }}" data-overlay-theme="a" data-theme="d" data-corners="false">
-    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Закрыть</a>
+<div class="image-popup" data-role="popup" id="image-{{ image.id }}" data-overlay-theme="a" data-corners="false">
+    <a href="#" data-rel="back" data-role="button" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Закрыть</a>
     <img data-src="{{ image.src }}" src="{{ preview }}" alt="{{ image.alt }}" />
 </div>
