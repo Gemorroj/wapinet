@@ -12,7 +12,7 @@
 
     <ul data-role="listview" data-inset="true">
         {% for event in pagerfanta %}
-            <li data-role="list-divider" class="ui-bar-d">{{ event.subject }} <span class="ui-li-count">{{ event.createdAt|wapinet_datetime  }}</span></li>
+            <li data-role="list-divider">{{ event.subject }} <span class="ui-li-count">{{ event.createdAt|wapinet_datetime  }}</span></li>
             <li>
                 {% include 'WapinetUserBundle:Subscriber/Event:' ~ event.template ~ '.html.twig' %}
             </li>

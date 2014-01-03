@@ -27,7 +27,7 @@
         <h2>Комментарии</h2>
         <ul data-role="listview">
             {% for comment in comments %}
-                <li data-role="list-divider" class="ui-bar-d">
+                <li data-role="list-divider">
                     <span>
                         <a class="user" data-icon="user" data-mini="true" data-inline="true" data-role="button" href="{{ path('wapinet_user_profile', {'username': comment.username}) }}">{{ comment.username }}</a>
                     </span>

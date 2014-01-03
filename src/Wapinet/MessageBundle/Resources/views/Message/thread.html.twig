@@ -5,7 +5,7 @@
 {% block fos_message_content %}
     <ul data-role="listview" data-inset="true">
     {% for message in pagerfanta %}
-        <li data-role="list-divider" class="ui-bar-d">
+        <li data-role="list-divider">
             <span>
                 <a class="user" data-icon="user" data-mini="true" data-inline="true" data-role="button" href="{{ path('wapinet_user_profile', {'username': message.sender.username}) }}">{{ message.sender.username }}</a>
             </span>

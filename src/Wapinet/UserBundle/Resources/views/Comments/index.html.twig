@@ -12,7 +12,7 @@
 
     <ul data-role="listview" data-inset="true">
         {% for comment in pagerfanta %}
-            <li data-role="list-divider" class="ui-bar-d">{{ comment.createdAt|wapinet_datetime  }} <span class="ui-li-count">{{ comment.score }}</span></li>
+            <li data-role="list-divider">{{ comment.createdAt|wapinet_datetime  }} <span class="ui-li-count">{{ comment.score }}</span></li>
             <li>
                 <a href="{{ comment.thread.permalink }}#fos_comment_{{ comment.id }}">
                     <div class="ui-li-desc">{{ comment.body|wapinet_bbcode_parse }}</div>

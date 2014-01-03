@@ -1,7 +1,7 @@
 <ul data-role="listview" data-inset="true" id="list-threads">
     {% if pagerfanta and pagerfanta.count > 0 %}
         {% for thread in pagerfanta %}
-            <li data-role="list-divider" class="ui-bar-d">{{ thread.lastMessage.createdAt|wapinet_datetime }} <span class="ui-li-count">{{ thread.messages|length }}</span></li>
+            <li data-role="list-divider">{{ thread.lastMessage.createdAt|wapinet_datetime }} <span class="ui-li-count">{{ thread.messages|length }}</span></li>
             <li>
                 <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}">
                     <h2>
