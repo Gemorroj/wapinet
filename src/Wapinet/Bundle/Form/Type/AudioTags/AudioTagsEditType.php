@@ -28,9 +28,7 @@ class AudioTagsEditType extends AbstractType
         $builder->add('comment', 'textarea', array('required' => false, 'label' => 'Комментарий'));
         $builder->add('picture', 'file_url', array(
             'delete_button' => true,
-            'attr' => array(
-                'accept' => 'image/*'
-            ),
+            'accept' => 'image/*',
             'required' => false,
             'label' => 'Изображение',
         ));

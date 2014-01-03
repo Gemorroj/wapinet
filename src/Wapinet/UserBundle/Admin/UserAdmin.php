@@ -71,7 +71,7 @@ class UserAdmin extends Admin
             ->add('timezone', 'timezone', array('label' => 'Временная зона', 'required' => false))
             ->add('info', 'textarea', array('label' => 'Дополнительная информация'))
             ->with('Аватар')
-            ->add('avatar', 'file_url', array('delete_button' => true, 'label' => false, 'required' => false, 'attr' => array('accept' => 'image/*')))
+            ->add('avatar', 'file_url', array('delete_button' => true, 'label' => false, 'required' => false, 'accept' => 'image/*'))
             ->end()
             ->with('Подписки')
             ->add('subscriber', 'sonata_type_admin', array(

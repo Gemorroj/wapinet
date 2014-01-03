@@ -33,9 +33,7 @@ class ProfileType extends BaseType
             ->add('timezone', 'timezone', array('label' => 'Временная зона', 'required' => false))
             ->add('info', 'textarea', array('label' => 'Дополнительная информация', 'required' => false, 'max_length' => 5000))
             ->add('avatar', 'file_url', array(
-                'attr' => array(
-                    'accept' => 'image/*'
-                ),
+                'accept' => 'image/*',
                 'label' => 'Аватар',
                 'required' => false,
                 'delete_button' => true,

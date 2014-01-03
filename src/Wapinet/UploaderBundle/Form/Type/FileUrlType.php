@@ -34,7 +34,9 @@ class FileUrlType extends AbstractType
         );
 
         $attrFile = array();
-        $attrFile = (isset($options['attr']['accept']) ? array_merge($attrFile, array('accept' => $options['attr']['accept'])) : $attrFile);
+        if ($options['accept']) {
+            $attrFile = array_merge($attrFile, array('accept' => $options['accept']));
+        }
 
         $builder->add('file', 'file', array('attr' => $attrFile, 'label' => 'Файл', 'required' => false));
         $builder->add('url', 'url', array('label' => 'Ссылка', 'required' => false));
@@ -56,6 +58,7 @@ class FileUrlType extends AbstractType
         $resolver->setDefaults(array(
             'required' => false,
             'delete_button' => false,
+            'accept' => false,
         ));
     }
 

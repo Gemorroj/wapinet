@@ -17,7 +17,7 @@ class AudioTagsType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('file', 'file_url', array('attr' => array('accept' => 'audio/*'), 'required' => true, 'label' => false));
+        $builder->add('file', 'file_url', array('accept' => 'audio/*', 'required' => true, 'label' => false));
 
         $builder->add('submit', 'submit', array('label' => 'Отправить'));
     }
