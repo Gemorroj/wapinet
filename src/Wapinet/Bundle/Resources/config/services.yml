@@ -178,6 +178,12 @@ services:
         class: Wapinet\Bundle\Helper\Archiver\Archive7z
         arguments: [@service_container]
 
+    wapinet.admin.guestbook:
+        class: Wapinet\Bundle\Admin\GuestbookAdmin
+        arguments: [null, Wapinet\Bundle\Entity\Guestbook, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Гостевая, label: Гостевая }
+
     wapinet.admin.file:
         class: Wapinet\Bundle\Admin\FileAdmin
         arguments: [null, Wapinet\Bundle\Entity\File, SonataAdminBundle:CRUD]
