@@ -1,6 +1,6 @@
 Wapinet\UserBundle\Entity\Subscriber:
     type:  entity
-    table: fos_user_subscriber
+    table: user_subscriber
     id:
         id:
             type: integer

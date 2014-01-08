@@ -45,10 +45,10 @@ class FileRepository extends EntityRepository
     {
         $connection = $this->getEntityManager()->getConnection();
         $q = $connection->query('
-            SELECT comment.body, comment.created_at, fos_user.username, comment_thread.permalink
+            SELECT comment.body, comment.created_at, user.username, comment_thread.permalink
             FROM comment
             INNER JOIN comment_thread ON comment_thread.id = comment.thread_id
-            LEFT JOIN fos_user ON fos_user.id = comment.author_id
+            LEFT JOIN user ON user.id = comment.author_id
             WHERE comment.thread_id LIKE "file-%"
             ORDER BY comment.id DESC
             LIMIT ' . (int)$maxComments . '

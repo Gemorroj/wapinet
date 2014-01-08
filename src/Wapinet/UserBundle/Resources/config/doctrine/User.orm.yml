@@ -1,7 +1,7 @@
 Wapinet\UserBundle\Entity\User:
     repositoryClass: Wapinet\UserBundle\Entity\UserRepository
     type:  entity
-    table: fos_user
+    table: user
     id:
         id:
             type: integer

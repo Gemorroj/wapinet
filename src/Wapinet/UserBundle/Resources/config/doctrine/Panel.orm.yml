@@ -1,6 +1,6 @@
 Wapinet\UserBundle\Entity\Panel:
     type:  entity
-    table: fos_user_panel
+    table: user_panel
     id:
         id:
             type: integer
