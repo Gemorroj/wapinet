@@ -18,7 +18,25 @@ class SearchType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('search', 'search', array('attr' => array('title' => 'Слова разделенные пробелами. Работает модификатор *, кавычки и др.'), 'max_length' => 5000, 'required' => true, 'label' => false, 'constraints' => new NotBlank()));
+        $builder->add('search', 'search', array(
+            'attr' => array('title' => 'Слова разделенные пробелами. Работает модификатор *, кавычки и др.'),
+            'max_length' => 5000,
+            'required' => true,
+            'label' => false,
+            'constraints' => new NotBlank()
+        ));
+
+        $builder->add('sort', 'choice', array(
+            'choices' => array(
+                'relevance' => 'релевантности',
+                'date' => 'дате',
+            ),
+            'expanded' => true,
+            'required' => true,
+            //'data' => 'relevance',
+            'label' => 'Сортировать по',
+        ));
+
 
         $builder->add('submit', 'submit', array('label' => 'Искать'));
     }

@@ -136,6 +136,12 @@ class FileController extends Controller
         $client = $this->container->get('sphinx');
         $client->setPage($page);
 
+        if ('date' === $data['sort']) {
+            $client->SetSortMode(SPH_SORT_ATTR_DESC, 'created_at_ts');
+        } else {
+            $client->SetSortMode(SPH_SORT_RELEVANCE);
+        }
+
         $client->AddQuery($data['search'], 'files');
 
         $result = $client->RunQueries();
