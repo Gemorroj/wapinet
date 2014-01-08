@@ -79,6 +79,12 @@ services:
         tags:
             - {name: twig.extension, alias: wapinet_file}
 
+    wapinet.guestbook.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\Guestbook
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - {name: twig.extension, alias: wapinet_guestbook}
+
     base64.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Base64
         tags:
