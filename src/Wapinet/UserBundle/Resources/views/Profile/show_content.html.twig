@@ -1,6 +1,14 @@
 <div class="fos_user_user_show">
-    {% if user.isOnline %}
-        <p class="p-online"><strong>Пользователь онлайн</strong></p>
+    {% if user.hasAvatar %}
+        {% include 'WapinetBundle::image.html.twig' with {
+            'image': {
+                'badge': user.isOnline ? 'avatar-online' : null,
+                'id': user.id,
+                'alt': user,
+                'src': vich_uploader_asset(user, 'avatar'),
+                'preview': vich_uploader_asset(user, 'avatar')|imagine_filter('thumbnail')
+            }
+        } %}
     {% endif %}
     <table data-role="table" id="profile-table" class="ui-responsive table-stroke">
         <thead>
@@ -38,25 +46,9 @@
             <td>Последняя активность</td>
             <td>{{ user.lastActivity is null ? 'Неизвестно' : user.lastActivity|wapinet_datetime }}</td>
         </tr>
-        <tr>
-            <td>Аватар</td>
-            <td>
-                {% if user.hasAvatar %}
-                    {% include 'WapinetBundle::image.html.twig' with {
-                        'image': {
-                            'id': user.id,
-                            'alt': user,
-                            'src': vich_uploader_asset(user, 'avatar'),
-                            'preview': vich_uploader_asset(user, 'avatar')|imagine_filter('thumbnail')
-                        }
-                    } %}
-                {% else %}
-                    Не указан
-                {% endif %}
-            </td>
-        </tr>
         </tbody>
     </table>
+
     {% if user.info is not null %}
         <fieldset>{{ user.info|wapinet_bbcode_parse }}</fieldset>
     {% endif %}

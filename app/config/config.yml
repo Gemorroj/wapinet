@@ -29,7 +29,6 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     globals:
-        wapinet_nophoto: "%wapinet_nophoto%"
         wapinet_title: "%wapinet_title%"
         wapinet_contact_email: "%wapinet_contact_email%"
 

@@ -6,6 +6,19 @@ img.avatar-login {
     width: auto;
     height: 15px;
 }
+span.avatar-online {
+    background-image: url('/static/online.png');
+    display: block;
+    height: 15px;
+    width: 15px;
+    position: absolute;
+    margin-left: 68px;
+    margin-top: -18px;
+}
+span.avatar-online-list {
+    margin-left: -33px;
+    margin-top: 56px;
+}
 p.footer {
     font-size: 0.8em;
     margin-left: 10px;
@@ -40,7 +53,7 @@ p.long-description {
 a.captcha-reload {
     vertical-align: baseline;
 }
-p.p-online, p.p-new {
+p.p-new {
     color: #0a0;
 }
 div.image-popup {

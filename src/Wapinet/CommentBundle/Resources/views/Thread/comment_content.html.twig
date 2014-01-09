@@ -69,11 +69,16 @@
             {% if comment is fos_comment_in_state(constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_DELETED')) %}
                 {% trans from 'FOSCommentBundle' %}fos_comment_comment_deleted{% endtrans %}
             {% else %}
-                {% if comment.author and comment.author.hasAvatar %}
-                    <span class="fos_comment_comment_avatar">
+                <span class="fos_comment_comment_avatar">
+                    {% if comment.author and comment.author.hasAvatar %}
                         <img src="{{ vich_uploader_asset(comment.author, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ comment.author }}" class="image-preview" />
-                    </span>
-                {% endif %}
+                    {% else %}
+                        <img src="{{ asset('static/noavatar.png') }}" alt="{{ comment.author }}" class="image-preview" />
+                    {% endif %}
+                    {% if comment.author and comment.author.isOnline %}
+                        <span class="avatar-online"></span>
+                    {% endif %}
+                </span>
                 <div class="fos_comment_comment_text">
                     {% if comment is fos_comment_raw %}
                         {{ comment.rawBody | raw }}
@@ -81,9 +86,6 @@
                         {{ comment.body | wapinet_bbcode_parse }}
                     {% endif %}
                 </div>
-                {% if comment.author and comment.author.isOnline %}
-                    <p class="fos_comment_comment_text_online p-online">Онлайн</p>
-                {% endif %}
             {% endif %}
         {% endblock fos_comment_comment_body %}
         </div>

@@ -30,11 +30,13 @@
                 <a href="{{ path('wapinet_user_profile', {'username': user}) }}">
                     {% if user.hasAvatar %}
                         <img src="{{ vich_uploader_asset(user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ user }}" class="image-preview" />
+                    {% else %}
+                        <img src="{{ asset('static/noavatar.png') }}" alt="{{ user }}" class="image-preview" />
+                    {% endif %}
+                    {% if user.isOnline %}
+                        <span class="avatar-online avatar-online-list"></span>
                     {% endif %}
                     <h2>{{ user }}</h2>
-                    {% if user.isOnline %}
-                        <p class="p-online">Онлайн</p>
-                    {% endif %}
                 </a>
             </li>
         {% else %}

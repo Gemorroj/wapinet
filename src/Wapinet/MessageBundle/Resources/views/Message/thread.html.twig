@@ -14,13 +14,15 @@
         <li data-icon="false">
             {% if message.sender.hasAvatar %}
                 <img src="{{ vich_uploader_asset(message.sender, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ message.sender }}" class="image-preview" />
+            {% else %}
+                <img src="{{ asset('static/noavatar.png') }}" alt="{{ message.sender }}" class="image-preview" />
+            {% endif %}
+            {% if message.sender.isOnline %}
+                <span class="avatar-online avatar-online-list"></span>
             {% endif %}
             <div>
                 {{ message.body|wapinet_bbcode_parse }}
             </div>
-            {% if message.sender.isOnline %}
-                <p class="p-online">Онлайн</p>
-            {% endif %}
         </li>
     {% endfor %}
     </ul>
