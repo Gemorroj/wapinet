@@ -34,6 +34,11 @@ textbook:
     pattern:  /textbook
     defaults: { _controller: WapinetBundle:Default:textbook }
 
+# Проверка синтаксиса для Gmanager
+syntax:
+    pattern:  /syntax2
+    defaults: { _controller: WapinetBundle:Syntax:index }
+
 browser_info:
     pattern: /browser_info
     defaults: { _controller: WapinetBundle:BrowserInfo:index }

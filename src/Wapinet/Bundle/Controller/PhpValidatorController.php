@@ -49,6 +49,6 @@ class PhpValidatorController extends Controller
         if (null !== $data['file']) {
             return $phpValidator->validateFile($data['file']);
         }
-        throw new ValidatorException('Не заполнено ни одного поля с PHP кодом ');
+        throw new ValidatorException('Не заполнено ни одного поля с PHP кодом');
     }
 }
