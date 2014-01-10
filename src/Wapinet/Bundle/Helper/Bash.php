@@ -3,6 +3,7 @@ namespace Wapinet\Bundle\Helper;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Pagerfanta\Pagerfanta;
+use Wapinet\Bundle\Pagerfanta\FixedPaginate;
 
 /**
  * Bash хэлпер
@@ -44,16 +45,18 @@ class Bash
         // текущая страница
         $currentPage = null === $page ? $allPages : $page;
 
-        // увеличиваем размер массива для пагинатора
-        $items = array_pad(array(), $allPages * $maxPerPage, null);
-
         // вырезаем цитаты
         preg_match_all('/(?:<div class="text">+)(.*?)(?:<\/div>+)/is', $content, $matchItems, PREG_SET_ORDER);
-        $itemCount = $currentPage * $maxPerPage - 50;
+
+        // заносим цитаты в массив
+        $items = array();
         foreach($matchItems as $v) {
-            $items[$itemCount++] = strip_tags($v[1]);
+            $items[] = strip_tags($v[1]);
         }
 
-        return $this->container->get('paginate')->paginate($items, $currentPage, $maxPerPage);
+        // создаем фиксированный пагинатор
+        $paginate = new FixedPaginate($allPages * $maxPerPage, $items);
+
+        return $this->container->get('paginate')->paginate($paginate, $currentPage, $maxPerPage);
     }
 }
