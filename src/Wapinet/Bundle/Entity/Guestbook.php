@@ -177,5 +177,4 @@ class Guestbook
 
         return $this;
     }
-
 }

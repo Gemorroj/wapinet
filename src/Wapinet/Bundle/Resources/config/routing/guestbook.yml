@@ -2,4 +2,8 @@ guestbook_index:
     pattern: /
     defaults: { _controller: WapinetBundle:Guestbook:index }
 
+guestbook_add:
+    pattern: /add
+    defaults: { _controller: WapinetBundle:Guestbook:add }
+
 
