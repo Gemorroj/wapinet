@@ -10,7 +10,7 @@ class NewsControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/news');
+        $crawler = $client->request('GET', '/news/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

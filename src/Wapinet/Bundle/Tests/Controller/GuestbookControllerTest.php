@@ -10,7 +10,7 @@ class GuestbookControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/guestbook');
+        $crawler = $client->request('GET', '/guestbook/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

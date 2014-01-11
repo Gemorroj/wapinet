@@ -5,13 +5,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Wapinet\UserBundle\Entity\User;
 
 
 class EventsController extends Controller
 {
     /**
      * @param Request $request
+     * @throws AccessDeniedException
      * @return Response
      */
     public function indexAction(Request $request)
@@ -19,7 +19,7 @@ class EventsController extends Controller
         $page = $request->get('page', 1);
         $user = $this->getUser();
         if (null === $user) {
-            $this->createNotFoundException('Пользователь не найден');
+            throw new AccessDeniedException('Пользователь не найден');
         }
 
         $repository = $this->getDoctrine()->getRepository('WapinetUserBundle:Event');

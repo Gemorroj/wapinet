@@ -10,7 +10,7 @@ class RenameControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/rename');
+        $crawler = $client->request('GET', '/rename/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

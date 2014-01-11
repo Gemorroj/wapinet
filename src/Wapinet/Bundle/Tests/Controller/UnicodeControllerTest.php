@@ -10,7 +10,7 @@ class UnicodeControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/unicode');
+        $crawler = $client->request('GET', '/unicode/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

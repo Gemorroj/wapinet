@@ -10,7 +10,7 @@ class PhpValidatorControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/php_validator');
+        $crawler = $client->request('GET', '/php_validator/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

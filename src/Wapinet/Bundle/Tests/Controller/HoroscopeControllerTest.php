@@ -10,7 +10,7 @@ class HoroscopeControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/horoscope');
+        $crawler = $client->request('GET', '/horoscope/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

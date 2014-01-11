@@ -2,15 +2,16 @@
 
 namespace Wapinet\UserBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Wapinet\UserBundle\Tests\WebTestCaseUser;
 
-class ProfileControllerTest extends WebTestCase
+class ProfileControllerTest extends WebTestCaseUser
 {
     public function testIndex()
     {
-        $client = static::createClient();
+        $client = static::createClientUser('admin');
 
-        $crawler = $client->request('GET', '/profile');
+        $crawler = $client->request('GET', '/profile/');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
 }

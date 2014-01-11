@@ -10,7 +10,7 @@ class SizaControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/siza');
+        $crawler = $client->request('GET', '/siza/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

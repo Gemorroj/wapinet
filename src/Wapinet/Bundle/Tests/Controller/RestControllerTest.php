@@ -10,7 +10,7 @@ class RestControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/rest');
+        $crawler = $client->request('GET', '/rest/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

@@ -10,7 +10,7 @@ class EmailControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/email');
+        $crawler = $client->request('GET', '/email/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }
