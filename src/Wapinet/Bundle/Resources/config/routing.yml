@@ -88,9 +88,9 @@ whois:
     resource: "@WapinetBundle/Resources/config/routing/whois.yml"
     prefix:   /whois
 
-obfuscator:
-    resource: "@WapinetBundle/Resources/config/routing/obfuscator.yml"
-    prefix:   /obfuscator
+php_obfuscator:
+    resource: "@WapinetBundle/Resources/config/routing/php_obfuscator.yml"
+    prefix:   /php_obfuscator
 
 rest:
     resource: "@WapinetBundle/Resources/config/routing/rest.yml"

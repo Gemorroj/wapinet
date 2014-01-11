@@ -34,7 +34,7 @@ class AudioTagsEditType extends AbstractType
         ));
         $builder->add('remove_other_tags', 'checkbox', array('required' => false, 'label' => 'Удалить другие тэги'));
 
-        $builder->add('submit', 'submit', array('label' => 'Отправить'));
+        $builder->add('submit', 'submit', array('label' => 'Редактировать'));
     }
 
 

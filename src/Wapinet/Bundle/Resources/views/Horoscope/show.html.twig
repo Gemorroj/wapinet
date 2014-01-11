@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Гороскоп на день - {{ name }}{% endblock %}
+{% block title %}{{ name }}{% endblock %}
 {% block breadcrumbs %}
     {{wapinet_breadcrumbs({
     1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'},

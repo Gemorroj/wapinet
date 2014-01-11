@@ -12,4 +12,13 @@
     {{ form_start(form, {'action': path('archiver_create'), 'method': 'POST'}) }}
         {{ form_widget(form) }}
     {{ form_end(form) }}
+
+    <div class="ui-corner-all custom-corners">
+        <div class="ui-body ui-body-a">
+            <p>
+                Поддерживаемые форматы:
+                <em>ZIP</em>
+            </p>
+        </div>
+    </div>
 {% endblock %}

@@ -10,26 +10,33 @@
 {% block content %}
 <table data-role="table" class="ui-responsive table-stroke">
     <thead>
-    <tr><th>Название</th><th>Значение</th></tr>
+    <tr><td></td><td></td></tr>
     </thead>
     <tbody>
-        <tr><td>Браузер:</td> <td>{{ userAgent }}</td></tr>
-        <tr><td>Дополнительная информация:</td> <td>{{ wapProfile }}</td></tr>
-        <tr><td>Номер телефона:</td> <td>{{ phoneNumber }}</td></tr>
-        <tr><td>IP-адрес:</td> <td>{{ ip }} ({{ ipHost }})</td></tr>
-        <tr><td>Локальный IP-адрес:</td> <td>{{ local }} ({{ localHost }})</td></tr>
-        <tr><td>Прокси:</td> <td>{{ proxy }}</td></tr>
-        <tr><td>Порт:</td> <td>{{ port }}</td></tr>
-        <tr><td>Реферер:</td> <td>{{ referer }}</td></tr>
-        <tr><td>Типы компрессии:</td> <td>{{ encoding }}</td></tr>
-        <tr><td>Кэш:</td> <td>{{ cache }}</td></tr>
-        <tr><td>Тип соединения:</td> <td>{{ connection }}</td></tr>
-        <tr><td>Тип канала:</td> <td>{{ bearerType }}</td></tr>
-        <tr><td>HTTP протокол:</td> <td>{{ httpProtocol }}</td></tr>
-        <tr><td>MIME типы:</td> <td>{{ accept }}</td></tr>
-        <tr><td>Языки:</td> <td>{{ lang }}</td></tr>
-        <tr><td>Кодировки:</td> <td>{{ charset }}</td></tr>
-        <tr><td>DNT</td><td>{{ dnt }}</td></tr>
+        {% if user_agent is not null %}<tr><td>Браузер</td> <td>{{ user_agent }}</td></tr>{% endif %}
+        {% if phone_number is not null %}<tr><td>Номер телефона</td> <td>{{ phone_number }}</td></tr>{% endif %}
+        {% if ip is not null %}<tr><td><abbr title="Internet Protocol Address">IP-адрес</abbr></td> <td>{{ ip }} ({{ ip_host }})</td></tr>{% endif %}
+        {% if local is not null %}<tr><td>Локальный <abbr title="Internet Protocol Address">IP-адрес</abbr></td> <td>{{ local }} {{ local_host ? '(' ~ local_host ~ ')' : '' }}</td></tr>{% endif %}
+        {% if proxy is not null %}<tr><td>Прокси</td> <td>{{ proxy }}</td></tr>{% endif %}
+        {% if port is not null %}<tr><td>Порт</td> <td>{{ port }}</td></tr>{% endif %}
+        {% if referer is not null %}<tr><td>Реферер</td> <td>{{ referer }}</td></tr>{% endif %}
+        {% if encoding is not null %}<tr><td>Типы компрессии</td> <td>{{ encoding }}</td></tr>{% endif %}
+        {% if cache is not null %}<tr><td>Кэш</td> <td>{{ cache }}</td></tr>{% endif %}
+        {% if connection is not null %}<tr><td>Тип соединения</td> <td>{{ connection }}</td></tr>{% endif %}
+        {% if http_protocol is not null %}<tr><td>HTTP протокол</td> <td>{{ http_protocol }}</td></tr>{% endif %}
+        {% if accept is not null %}<tr><td><abbr title="Multipurpose Internet Mail Extensions">MIME</abbr> типы</td> <td>{{ accept }}</td></tr>{% endif %}
+        {% if lang is not null %}<tr><td>Языки</td> <td>{{ lang }}</td></tr>{% endif %}
+        {% if charset is not null %}<tr><td>Кодировки</td> <td>{{ charset }}</td></tr>{% endif %}
+        {% if dnt is not null %}<tr><td><abbr title="Do Not Track">DNT</abbr></td><td>{{ dnt }}</td></tr>{% endif %}
     </tbody>
 </table>
+
+<div class="ui-corner-all custom-corners">
+    <div class="ui-bar ui-bar-a">
+        <h3>Все <abbr title="HyperText Transfer Protocol">HTTP</abbr> заголовки</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <pre>{{ all }}</pre>
+    </div>
+</div>
 {% endblock %}

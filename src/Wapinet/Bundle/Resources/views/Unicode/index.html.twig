@@ -9,9 +9,6 @@
 
 
 {% block content %}
-    Данный сервис позволяет перекодировать текст в кодировку <abbr title="Юникод (англ. Unicode) — стандарт кодирования символов, позволяющий представить знаки практически всех письменных языков">Unicode</abbr>.
-    <br/>
-
     {{ form_start(form, {'action': path('unicode_index'), 'method': 'POST'}) }}
     {% if result is not null %}
         <label>Результат <textarea>{{ result }}</textarea></label>
@@ -19,4 +16,10 @@
 
     {{ form_widget(form) }}
     {{ form_end(form) }}
+
+<div class="ui-corner-all custom-corners">
+    <div class="ui-body ui-body-a">
+        <p>Сервис позволяет перекодировать текст в кодировку <abbr title="Юникод (англ. Unicode) — стандарт кодирования символов, позволяющий представить знаки практически всех письменных языков">Unicode</abbr>.</p>
+    </div>
+</div>
 {% endblock %}

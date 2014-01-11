@@ -10,9 +10,19 @@
 {% block content %}
     {{ form_start(form, {'action': path('whois_index'), 'method': 'POST'}) }}
     {% if resultHtml is not null %}
-        <fieldset>{{ resultHtml|raw }}</fieldset>
+    <div class="ui-corner-all custom-corners">
+        <div class="ui-body ui-body-a">
+            <p>{{ resultHtml|raw }}</p>
+        </div>
+    </div>
     {% endif %}
 
     {{ form_widget(form) }}
     {{ form_end(form) }}
+
+    <div class="ui-corner-all custom-corners">
+        <div class="ui-body ui-body-a">
+            <p>Сервис позволяет получить регистрационные данные о владельцах доменных имён, IP-адресов и автономных систем.</p>
+        </div>
+    </div>
 {% endblock %}

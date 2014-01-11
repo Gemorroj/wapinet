@@ -10,7 +10,7 @@ class BrowserInfoController extends Controller
     /**
      * @param Request $request
      *
-     * @return string
+     * @return string|null
      */
     protected function getPhoneNumber(Request $request)
     {
@@ -33,13 +33,13 @@ class BrowserInfoController extends Controller
             return $request->server->get('HTTP_X_NOKIA_MSISDN');
         }
 
-        return '';
+        return null;
     }
 
     /**
      * @param Request $request
      *
-     * @return string
+     * @return string|null
      */
     protected function getProxy(Request $request)
     {
@@ -50,19 +50,19 @@ class BrowserInfoController extends Controller
             return $request->server->get('HTTP_CLIENT_IP');
         }
 
-        return '';
+        return null;
     }
 
 
     /**
      * @param Request $request
      *
-     * @return string
+     * @return string|null
      */
     protected function getProxyHost(Request $request)
     {
         $proxy = $this->getProxy($request);
-        if ('' !== $proxy) {
+        if (null !== $proxy) {
             $proxyHost = array();
             foreach(explode(',', $proxy) as $v) {
                 $proxyHost[] = gethostbyaddr(trim($v));
@@ -70,14 +70,14 @@ class BrowserInfoController extends Controller
             return implode(',', $proxyHost);
         }
 
-        return '';
+        return null;
     }
 
 
     /**
      * @param Request $request
      *
-     * @return string
+     * @return string|null
      */
     protected function getEncoding(Request $request)
     {
@@ -88,32 +88,31 @@ class BrowserInfoController extends Controller
             return $request->server->get('HTTP_TE');
         }
 
-        return '';
+        return null;
     }
 
 
     public function indexAction(Request $request)
     {
         return $this->render('WapinetBundle:BrowserInfo:index.html.twig', array(
-            'userAgent' => $request->server->get('HTTP_USER_AGENT'),
-            'wapProfile' => $request->server->get('HTTP_X_WAP_PROFILE'),
-            'phoneNumber' => $this->getPhoneNumber($request),
+            'user_agent' => $request->server->get('HTTP_USER_AGENT'),
+            'phone_number' => $this->getPhoneNumber($request),
             'ip' => $request->server->get('REMOTE_ADDR'),
-            'ipHost' => gethostbyaddr($request->server->get('REMOTE_ADDR')),
+            'ip_host' => gethostbyaddr($request->server->get('REMOTE_ADDR')),
             'local' => $this->getProxy($request),
-            'localHost' => $this->getProxyHost($request),
+            'local_host' => $this->getProxyHost($request),
             'port' => $request->server->get('REMOTE_PORT'),
             'referer' => $request->server->get('HTTP_REFERER'),
             'encoding' => $this->getEncoding($request),
             'cache' => $request->server->get('HTTP_CACHE_CONTROL'),
             'connection' => $request->server->get('HTTP_CONNECTION'),
             'proxy' => $request->server->get('HTTP_VIA'),
-            'bearerType' => $request->server->get('HTTP_X_UP_BEARER_TYPE'),
-            'httpProtocol' => $request->server->get('SERVER_PROTOCOL'),
+            'http_protocol' => $request->server->get('SERVER_PROTOCOL'),
             'accept' => $request->server->get('HTTP_ACCEPT'),
             'lang' => $request->server->get('HTTP_ACCEPT_LANGUAGE'),
             'charset' => $request->server->get('HTTP_ACCEPT_CHARSET'),
             'dnt' => $request->server->get('HTTP_DNT'),
+            'all' => $request->headers,
         ));
     }
 }

@@ -11,4 +11,10 @@
     {{ form_start(form, {'action': path('rename_index'), 'method': 'POST'}) }}
         {{ form_widget(form) }}
     {{ form_end(form) }}
+
+    <div class="ui-corner-all custom-corners">
+        <div class="ui-body ui-body-a">
+            <p>Сервис позволяет переименовать загруженный файл.</p>
+        </div>
+    </div>
 {% endblock %}

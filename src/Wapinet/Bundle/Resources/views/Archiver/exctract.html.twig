@@ -12,4 +12,13 @@
     {{ form_start(form, {'action': path('archiver_extract'), 'method': 'POST'}) }}
         {{ form_widget(form) }}
     {{ form_end(form) }}
+
+    <div class="ui-corner-all custom-corners">
+        <div class="ui-body ui-body-a">
+            <p>
+                Поддерживаемые форматы:
+                <em>7z, ZIP, GZIP, BZIP2, TAR, ARJ, CAB, CHM, CPIO, DEB, DMG, HFS, ISO, LZH, LZMA, MSI, NSIS, RAR, RPM, UDF, WIM, XAR, Z</em>
+            </p>
+        </div>
+    </div>
 {% endblock %}

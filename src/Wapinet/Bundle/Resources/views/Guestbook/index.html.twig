@@ -40,11 +40,12 @@
         {% endfor %}
     </ul>
 
+    <div class="pagerfanta">
+        {{ pagerfanta(pagerfanta) }}
+    </div>
+
     {{ form_start(form, {'action': path('guestbook_add'), 'method': 'POST'}) }}
         {{ form_widget(form) }}
     {{ form_end(form) }}
 
-    <div class="pagerfanta">
-        {{ pagerfanta(pagerfanta) }}
-    </div>
 {% endblock %}

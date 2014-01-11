@@ -5,10 +5,16 @@ namespace Wapinet\Bundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class SizaController extends Controller
 {
+    /**
+     * @param Request $request
+     *
+     * @return RedirectResponse|Response
+     */
     public function indexAction(Request $request)
     {
         $q = $request->get('q');
@@ -30,6 +36,13 @@ class SizaController extends Controller
         return $this->show($q, $page, $scr);
     }
 
+    /**
+     * @param string $query
+     * @param int    $page
+     * @param int    $scr
+     *
+     * @return Response
+     */
     protected function show($query, $page = null, $scr = null)
     {
         $siza = $this->get('siza');
@@ -38,7 +51,7 @@ class SizaController extends Controller
         $content = '';
         $pages = '';
 
-        if (strpos($query, '/artists/') === 0) {
+        if (0 === strpos($query, '/artists/')) {
             $content .= $siza->getContent();
         } else {
             $content .= $siza->getContentList();
@@ -61,11 +74,22 @@ class SizaController extends Controller
     }
 
 
+    /**
+     * @param string $query
+     *
+     * @return RedirectResponse
+     */
     protected function download($query)
     {
         return $this->redirect('http://f.siza.ru' . $query, 301);
     }
 
+
+    /**
+     * @param string $query
+     *
+     * @return RedirectResponse
+     */
     protected function screen($query)
     {
         return $this->redirect('http://load.siza.ru' . $query, 301);

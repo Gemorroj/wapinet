@@ -125,7 +125,7 @@ class Siza
             $this->removeNodeList($imgArr, function (\DOMElement $img) {
                 $src = (string)$img->getAttribute('src');
 
-                if (strpos($src, '/pics/') === 0) {
+                if (0 === strpos($src, '/pics/')) {
                     $img->parentNode->removeChild($img);
                 } else {
                     $img->setAttribute('src', '?screen=yes&q=' . $src);
@@ -226,7 +226,7 @@ class Siza
 
                 if ($href === '/orders/') {
                     $a->parentNode->removeChild($a);
-                } else if (strpos($href, 'http://') === 0) {
+                } else if (0 === strpos($href, 'http://')) {
                     $that->ignoreNode = true;
                 } else {
                     $a->setAttribute('href', '?q=' . $href);
@@ -341,14 +341,32 @@ class Siza
             /** @var \DOMElement $a */
             foreach ($aArr as $a) {
                 $href = (string)$a->getAttribute('href');
-                if (strpos($href, 'http://') === 0 && strpos($href, 'http://f.siza.ru') !== 0) {
+                if (0 === strpos($href, 'http://') && 0 !== strpos($href, 'http://f.siza.ru')) {
                     $end = true;
                 }
 
-                if (strpos($href, 'http://f.siza.ru') === 0) {
+                if (0 === strpos($href, 'http://f.siza.ru')) {
+
+                    $prevNode = $a->previousSibling;
+                    if ($prevNode->nodeType === \XML_TEXT_NODE && $prevNode->nodeValue === ' / ') {
+                        $prevNode->parentNode->removeChild($prevNode);
+                    }
+
                     $a->setAttribute('href', '?download=yes&q=' . str_replace('http://f.siza.ru', '', $href));
-                } else if (strpos($href, '/Image/') === 0 || strpos($href, '/Screenshot/') === 0) {
+                    $a->setAttribute('data-role', 'button');
+                    $a->setAttribute('data-inline', 'true');
+                    $a->setAttribute('data-icon', 'arrow-d');
+                } else if (0 === strpos($href, '/Image/') || 0 === strpos($href, '/Screenshot/')) {
+
+                    $prevNode = $a->previousSibling;
+                    if ($prevNode->nodeType === \XML_TEXT_NODE && $prevNode->nodeValue === ' / ') {
+                        $prevNode->parentNode->removeChild($prevNode);
+                    }
+
                     $a->setAttribute('href', '?screen=yes&q=' . $href);
+                    $a->setAttribute('data-role', 'button');
+                    $a->setAttribute('data-inline', 'true');
+                    $a->setAttribute('data-icon', 'arrow-d');
                 } else {
                     $href = str_replace('?scr=', '&scr=', $href);
                     $a->setAttribute('href', '?q=' . $href);
@@ -367,7 +385,7 @@ class Siza
             foreach ($objectArr as $object) {
                 $data = (string)$object->getAttribute('data');
 
-                if (strpos($data, '/swf/dewplayer-rect.swf') === 0) {
+                if (0 === strpos($data, '/swf/dewplayer-rect.swf')) {
                     $object->setAttribute('data', $this->contentDirectory . '/' . $data);
                 }
             }

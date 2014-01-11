@@ -16,20 +16,20 @@
         <li>
             Просмотров <span class="ui-li-count">{{ statistic.count_views }}</span>
         </li>
-        <li data-role="list-divider">
-            Активные пользователи
-        </li>
-        {% for user in statistic.users %}
-            <li>
-                <a href="{{ path('wapinet_user_profile', {'username': user.username}) }}">
-                    {{ user.username }}
-                    <span class="ui-li-count">{{ user.uploads }}</span>
-                </a>
-            </li>
-        {% else %}
-            <li>
-                Не найдены.
-            </li>
-        {% endfor %}
     </ul>
+    {% if statistic.users %}
+        <ul data-role="listview" data-inset="true">
+            <li data-role="list-divider">
+                Активные пользователи
+            </li>
+            {% for user in statistic.users %}
+                <li>
+                    <a href="{{ path('wapinet_user_profile', {'username': user.username}) }}">
+                        {{ user.username }}
+                        <span class="ui-li-count">{{ user.uploads }}</span>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}

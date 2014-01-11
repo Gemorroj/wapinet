@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Wapinet\Bundle\Form\Type\Obfuscator\ObfuscatorType;
 
-class ObfuscatorController extends Controller
+class PhpObfuscatorController extends Controller
 {
     public function indexAction(Request $request)
     {
@@ -27,7 +27,7 @@ class ObfuscatorController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:Obfuscator:index.html.twig', array(
+        return $this->render('WapinetBundle:PhpObfuscator:index.html.twig', array(
             'form' => $form->createView(),
             'result' => $result,
         ));

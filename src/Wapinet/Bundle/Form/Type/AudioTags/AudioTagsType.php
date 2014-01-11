@@ -19,7 +19,7 @@ class AudioTagsType extends AbstractType
 
         $builder->add('file', 'file_url', array('accept' => 'audio/*', 'required' => true, 'label' => false));
 
-        $builder->add('submit', 'submit', array('label' => 'Отправить'));
+        $builder->add('submit', 'submit', array('label' => 'Редактировать'));
     }
 
     /**

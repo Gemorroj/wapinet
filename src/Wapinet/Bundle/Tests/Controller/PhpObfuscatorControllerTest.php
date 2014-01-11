@@ -4,13 +4,13 @@ namespace Wapinet\Bundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class ObfuscatorControllerTest extends WebTestCase
+class PhpObfuscatorControllerTest extends WebTestCase
 {
     public function testIndex()
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/obfuscator');
+        $crawler = $client->request('GET', '/php_obfuscator');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }
