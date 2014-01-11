@@ -33,13 +33,13 @@ class FileUrlType extends AbstractType
             $options['required']
         );
 
-        $attrFile = array();
+        $attrFile = array('placeholder' => 'Файл');
         if ($options['accept']) {
             $attrFile = array_merge($attrFile, array('accept' => $options['accept']));
         }
 
-        $builder->add('file', 'file', array('attr' => $attrFile, 'label' => 'Файл', 'required' => false));
-        $builder->add('url', 'url', array('label' => 'Ссылка', 'required' => false));
+        $builder->add('file', 'file', array('attr' => $attrFile, 'label' => false, 'required' => false));
+        $builder->add('url', 'url', array('attr' => array('placeholder' => 'Ссылка'), 'label' => false, 'required' => false));
 
         if ($options['delete_button']) {
             $builder->add('file_url_delete', 'checkbox', array(

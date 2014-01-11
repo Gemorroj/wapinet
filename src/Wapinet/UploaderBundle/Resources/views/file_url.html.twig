@@ -1,6 +1,7 @@
 {% block file_url_widget %}
     {% spaceless %}
         <fieldset class="file-url ui-field-contain" {{ block('widget_container_attributes') }}>
+            <legend>Файл или ссылка</legend>
             {{ form_row(form.file) }}
             {{ form_row(form.url) }}
 
