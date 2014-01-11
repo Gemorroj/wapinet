@@ -32,7 +32,7 @@ fieldset.file-url {
     -webkit-border-radius: 1em !important;
     border-radius: 1em !important;
     border-left: 1px solid #bbb !important;
-    margin-left: 1em !important;
+    /*margin-left: 1em !important;*/
     padding-left: 1em !important;
 }
 p.container-preview {
