@@ -45,11 +45,13 @@ div.bb_quote_author:after {
     content: " писал(а):";
 }
 div.bb_code {
-    border: #d0d0d0 6px double;
+    border: #d0d0d0 1px dotted;
+    -webkit-border-radius: .3125em;
+    border-radius: .3125em;
     background-color: #f6f6f6;
     color: #404060;
     padding: 5px;
-    margin: 1em 0 0 0.8em;
+    margin: .8em 0 0 0;
     font-family: Monaco,'Courier New',monospace;
 }
 div.bb_code_header {

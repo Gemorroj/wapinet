@@ -85,6 +85,12 @@ services:
         tags:
             - {name: twig.extension, alias: wapinet_guestbook}
 
+    wapinet.govnokod.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\Govnokod
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - {name: twig.extension, alias: wapinet_govnokod}
+
     base64.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Base64
         tags:

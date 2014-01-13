@@ -1,0 +1,39 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Говнокод{% endblock %}
+{% block breadcrumbs %}
+    {{wapinet_breadcrumbs({
+    1: {'uri': path('programming'), 'title': 'WEB мастерская'}
+    })}}
+{% endblock %}
+
+{% block content %}
+    <ul data-role="listview" data-inset="true">
+        {% for item in pagerfanta %}
+            <li class="ui-li-has-thumb govnokod-header">
+                {% if item.user.hasAvatar %}
+                    <img src="{{ vich_uploader_asset(item.user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ item.user }}" class="image-preview" />
+                {% else %}
+                    <img src="{{ asset('static/noavatar.png') }}" alt="Anonymous" class="image-preview" />
+                {% endif %}
+                {% if item.user.isOnline %}
+                    <span class="avatar-online avatar-online-list"></span>
+                {% endif %}
+                <span>
+                    <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': item.user.username}) }}">{{ item.user.username }}</a>
+                </span>
+                <p>{{ item.subject }}</p>
+                <span class="ui-li-count">{{ item.createdAt|wapinet_datetime  }}</span>
+            </li>
+            <li data-icon="false">
+                {{ item.body|wapinet_bbcode_parse }}
+            </li>
+        {% else %}
+            <li>Говнокода нет.</li>
+        {% endfor %}
+    </ul>
+
+    <div class="pagerfanta">
+        {{ pagerfanta(pagerfanta) }}
+    </div>
+{% endblock %}

@@ -148,6 +148,10 @@ guestbook:
     resource: "@WapinetBundle/Resources/config/routing/guestbook.yml"
     prefix:   /guestbook
 
+govnokod:
+    resource: "@WapinetBundle/Resources/config/routing/govnokod.yml"
+    prefix:   /govnokod
+
 proxy_index:
     pattern: /proxy
     defaults:
@@ -167,13 +171,6 @@ forum_index:
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: %wapinet_forum_url%
-        permanent: true
-
-govnowap_index:
-    pattern: /govnowap
-    defaults:
-        _controller: FrameworkBundle:Redirect:urlRedirect
-        path: %wapinet_govnowap_url%
         permanent: true
 
 sea_index:
