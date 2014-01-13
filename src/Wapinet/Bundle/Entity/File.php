@@ -486,7 +486,7 @@ class File implements \Serializable
      */
     public function isImage()
     {
-        return (0 === strpos($this->getMimeType(), 'image/'));
+        return (0 === strpos($this->getMimeType(), 'image/') || 'application/postscript' === $this->getMimeType() || 'application/illustrator' === $this->getMimeType());
     }
 
     /**
@@ -494,7 +494,7 @@ class File implements \Serializable
      */
     public function isVideo()
     {
-        return (0 === strpos($this->getMimeType(), 'video/'));
+        return (0 === strpos($this->getMimeType(), 'video/') || 'application/vnd.rn-realmedia' === $this->getMimeType());
     }
 
     /**
@@ -527,18 +527,18 @@ class File implements \Serializable
     public function isArchive()
     {
         return in_array($this->getMimeType(), array(
-                'application/zip', // zip
-                'application/x-rar-compressed', // rar
-                'application/x-bzip', // bz
-                'application/x-bzip2', // bz2
-                'application/x-7z-compressed', // 7z
-                'application/x-tar', // tar
-                'application/vnd.ms-cab-compressed', // cab
-                'application/x-iso9660-image', // iso
-                'application/x-gzip', // gz
-                'application/x-ace-compressed', // ace
-                'application/x-lzh-compressed', // lzh
-            ));
+            'application/zip', // zip
+            'application/x-rar-compressed', // rar
+            'application/x-bzip', // bz
+            'application/x-bzip2', // bz2
+            'application/x-7z-compressed', // 7z
+            'application/x-tar', // tar
+            'application/vnd.ms-cab-compressed', // cab
+            'application/x-iso9660-image', // iso
+            'application/x-gzip', // gz
+            'application/x-ace-compressed', // ace
+            'application/x-lzh-compressed', // lzh
+        ));
     }
 
     /**
