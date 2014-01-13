@@ -148,9 +148,9 @@ guestbook:
     resource: "@WapinetBundle/Resources/config/routing/guestbook.yml"
     prefix:   /guestbook
 
-govnokod:
-    resource: "@WapinetBundle/Resources/config/routing/govnokod.yml"
-    prefix:   /govnokod
+gist:
+    resource: "@WapinetBundle/Resources/config/routing/gist.yml"
+    prefix:   /gist
 
 proxy_index:
     pattern: /proxy

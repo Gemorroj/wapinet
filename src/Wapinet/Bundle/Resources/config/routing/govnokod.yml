@@ -1,5 +1,0 @@
-govnokod_index:
-    pattern: /
-    defaults: { _controller: WapinetBundle:Govnokod:index }
-
-

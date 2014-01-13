@@ -3,18 +3,18 @@
 namespace Wapinet\Bundle\Twig\Extension;
 
 use Doctrine\ORM\EntityManager;
-use Wapinet\Bundle\Entity\GovnokodRepository;
+use Wapinet\Bundle\Entity\GistRepository;
 
-class Govnokod extends \Twig_Extension
+class Gist extends \Twig_Extension
 {
     /**
-     * @var GovnokodRepository
+     * @var GistRepository
      */
-    protected $govnokodRepository;
+    protected $gistRepository;
 
     public function __construct(EntityManager $em)
     {
-        $this->guestbookRepository = $em->getRepository('Wapinet\Bundle\Entity\Govnokod');
+        $this->guestbookRepository = $em->getRepository('Wapinet\Bundle\Entity\Gist');
     }
 
     /**
@@ -25,7 +25,7 @@ class Govnokod extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'govnokod_count_all'  => new \Twig_Function_Method($this, 'getCountAll'),
+            'gist_count_all'  => new \Twig_Function_Method($this, 'getCountAll'),
         );
     }
 
@@ -41,6 +41,6 @@ class Govnokod extends \Twig_Extension
      */
     public function getName()
     {
-        return 'govnokod';
+        return 'gist';
     }
 }

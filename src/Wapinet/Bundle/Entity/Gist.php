@@ -6,9 +6,9 @@ use Wapinet\UserBundle\Entity\User;
 
 
 /**
- * Govnokod
+ * Gist
  */
-class Govnokod
+class Gist
 {
     /**
      * @var integer
@@ -57,7 +57,7 @@ class Govnokod
      * Set id
      *
      * @param int $id
-     * @return Govnokod
+     * @return Gist
      */
     public function setId($id)
     {
@@ -80,7 +80,7 @@ class Govnokod
      * Set user
      *
      * @param User $user
-     * @return Govnokod
+     * @return Gist
      */
     public function setUser(User $user)
     {
@@ -99,7 +99,7 @@ class Govnokod
 
     /**
      * @param string $ip
-     * @return Govnokod
+     * @return Gist
      */
     public function setIp($ip)
     {
@@ -118,7 +118,7 @@ class Govnokod
 
     /**
      * @param string $browser
-     * @return Govnokod
+     * @return Gist
      */
     public function setBrowser($browser)
     {
@@ -136,7 +136,7 @@ class Govnokod
     }
 
     /**
-     * @return Govnokod
+     * @return Gist
      */
     public function setCreatedAtValue()
     {
@@ -154,7 +154,7 @@ class Govnokod
     }
 
     /**
-     * @return Govnokod
+     * @return Gist
      */
     public function setUpdatedAtValue()
     {
@@ -173,7 +173,7 @@ class Govnokod
 
     /**
      * @param string $body
-     * @return Govnokod
+     * @return Gist
      */
     public function setBody($body)
     {
@@ -193,7 +193,7 @@ class Govnokod
 
     /**
      * @param string $subject
-     * @return Govnokod
+     * @return Gist
      */
     public function setSubject($subject)
     {

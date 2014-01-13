@@ -1,7 +1,7 @@
-Wapinet\Bundle\Entity\Govnokod:
-    repositoryClass: Wapinet\Bundle\Entity\GovnokodRepository
+Wapinet\Bundle\Entity\Gist:
+    repositoryClass: Wapinet\Bundle\Entity\GistRepository
     type:  entity
-    table: govnokod
+    table: gist
     id:
         id:
             type: integer

@@ -1,0 +1,5 @@
+gist_index:
+    pattern: /
+    defaults: { _controller: WapinetBundle:Gist:index }
+
+
