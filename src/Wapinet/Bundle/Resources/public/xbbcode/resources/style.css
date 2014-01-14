@@ -52,7 +52,7 @@ div.bb_code {
     color: #404060;
     padding: 5px;
     margin: .8em 0 0 0;
-    font-family: Monaco,'Courier New',monospace;
+    font-family: "Monaco", "Courier New",monospace;
 }
 div.bb_code_header {
     border: #d0d0d0 1px solid;
@@ -79,8 +79,10 @@ div.bb_code_footer {
     text-align: center;
 }
 code.bb_code {
-    font-size: 1em;
     color: #000000;
+    line-height: 1;
+    font-size: .81em;
+    font-family: "Monaco", "Courier New", monospace;
 }
 span.bb_spec_char {
     color: #000099;

@@ -22,6 +22,7 @@
                 <h2>{{ item.subject }}</h2>
                 <span>
                     <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': item.user.username}) }}">{{ item.user.username }}</a>
+                    <a class="bar-button ui-btn-icon-left ui-icon-comment ui-mini ui-btn-inline ui-btn" href="#">Комментарии</a>
                 </span>
                 <span class="ui-li-count">{{ item.createdAt|wapinet_datetime  }}</span>
             </li>
@@ -36,4 +37,14 @@
     <div class="pagerfanta">
         {{ pagerfanta(pagerfanta) }}
     </div>
+
+    {% if app.user %}
+        <div data-role="collapsible">
+            <h4>Добавить код</h4>
+            <form>
+                <textarea></textarea>
+                <input type="submit"/>
+            </form>
+        </div>
+    {% endif %}
 {% endblock %}
