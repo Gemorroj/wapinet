@@ -13,6 +13,6 @@
         <li><a href="{{ path('forum_index') }}">Форум <span class="ui-li-count">{{ wapinet_forum_topics_count() }} | {{ wapinet_forum_posts_count() }}</span></a></li>
         <li><a href="{{ path('guestbook_index') }}">Гостевая <span class="ui-li-count">{{ guestbook_count_all() }}</span></a></li>
         <li><a href="{{ path('news_index') }}">Новости <span class="ui-li-count">{{ news_last_date()|wapinet_datetime|default('Новостей нет') }}</span></a></li>
-        <li><a href="{{ path('gist_index') }}">Код <span class="ui-li-count">{{ gist_count_all() }}</span></a></li>
+        <li><a href="{{ path('gist_index') }}">Блоги <span class="ui-li-count">{{ gist_count_all() }}</span></a></li>
     </ul>
 {% endblock %}

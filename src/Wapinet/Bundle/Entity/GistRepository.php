@@ -2,6 +2,7 @@
 namespace Wapinet\Bundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Wapinet\UserBundle\Entity\User;
 
 class GistRepository extends EntityRepository
 {
@@ -12,9 +13,37 @@ class GistRepository extends EntityRepository
         return $q->getSingleScalarResult();
     }
 
-    public function getListQuery()
+    /**
+     * @param User $user
+     *
+     * @return int
+     */
+    public function count(User $user = null)
     {
-        $q = $this->getEntityManager()->createQuery('SELECT g FROM Wapinet\Bundle\Entity\Gist g ORDER BY g.id DESC');
-        return $q;
+        if (null !== $user) {
+            $q = $this->getEntityManager()->createQuery('SELECT COUNT(g.id) FROM Wapinet\Bundle\Entity\Gist g WHERE g.user = :user');
+            $q->setParameter('user', $user);
+        } else {
+            $q = $this->getEntityManager()->createQuery('SELECT COUNT(g.id) FROM Wapinet\Bundle\Entity\Gist g');
+        }
+
+        return $q->getSingleScalarResult();
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getListQuery(User $user = null)
+    {
+        $qb = $this->createQueryBuilder('g');
+        if (null !== $user) {
+            $qb->where('g.user = :user');
+            $qb->setParameter('user', $user);
+        }
+        $qb->orderBy('g.id', 'DESC');
+
+        return $qb->getQuery();
     }
 }

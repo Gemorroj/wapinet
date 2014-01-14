@@ -4,6 +4,7 @@ namespace Wapinet\Bundle\Twig\Extension;
 
 use Doctrine\ORM\EntityManager;
 use Wapinet\Bundle\Entity\GistRepository;
+use Wapinet\UserBundle\Entity\User;
 
 class Gist extends \Twig_Extension
 {
@@ -26,12 +27,23 @@ class Gist extends \Twig_Extension
     {
         return array(
             'gist_count_all'  => new \Twig_Function_Method($this, 'getCountAll'),
+            'gist_count'  => new \Twig_Function_Method($this, 'getCount'),
         );
     }
 
     public function getCountAll()
     {
         return $this->guestbookRepository->countAll();
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return int
+     */
+    public function getCount(User $user = null)
+    {
+        return $this->guestbookRepository->count($user);
     }
 
     /**

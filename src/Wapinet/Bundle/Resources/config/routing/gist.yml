@@ -2,4 +2,8 @@ gist_index:
     pattern: /
     defaults: { _controller: WapinetBundle:Gist:index }
 
+gist_user:
+    pattern: /users/{username}
+    defaults: { _controller: WapinetBundle:Gist:user }
+
 

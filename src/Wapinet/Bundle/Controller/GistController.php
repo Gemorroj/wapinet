@@ -18,4 +18,25 @@ class GistController extends Controller
             'pagerfanta' => $pagerfanta,
         ));
     }
+
+
+    public function userAction(Request $request, $username)
+    {
+        $page = $request->get('page', 1);
+
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserByUsername($username);
+        if (null === $user) {
+            $this->createNotFoundException('Пользователь не найден');
+        }
+
+        $gistManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Gist');
+        $query = $gistManager->getListQuery($user);
+        $pagerfanta = $this->get('paginate')->paginate($query, $page);
+
+        return $this->render('WapinetBundle:Gist:index.html.twig', array(
+            'pagerfanta' => $pagerfanta,
+            'user' => $user,
+        ));
+    }
 }

@@ -1,15 +1,11 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Код{% endblock %}
+{% block title %}Блоги{% endblock %}
 {% block breadcrumbs %}
-    {{wapinet_breadcrumbs({
-    1: {'uri': path('programming'), 'title': 'WEB мастерская'}
-    })}}
+    {{wapinet_breadcrumbs()}}
 {% endblock %}
 
 {% block content %}
-    НАЗВАТЬ ЭТО не кодом, а мини блогами
-
     <ul data-role="listview" data-inset="true">
         {% for item in pagerfanta %}
             <li class="ui-li-has-thumb gist-header">
@@ -42,7 +38,7 @@
 
     {% if app.user %}
         <div data-role="collapsible">
-            <h4>Добавить код</h4>
+            <h4>Добавить</h4>
             <form>
                 <textarea></textarea>
                 <input type="submit"/>
