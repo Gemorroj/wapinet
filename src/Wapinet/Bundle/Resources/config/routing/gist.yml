@@ -6,4 +6,10 @@ gist_user:
     pattern: /users/{username}
     defaults: { _controller: WapinetBundle:Gist:user }
 
+gist_add:
+    pattern: /add
+    defaults: { _controller: WapinetBundle:Gist:add }
+    methods: [POST]
+
+
 

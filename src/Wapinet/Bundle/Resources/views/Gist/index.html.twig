@@ -6,6 +6,12 @@
 {% endblock %}
 
 {% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div>
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
     <ul data-role="listview" data-inset="true">
         {% for item in pagerfanta %}
             <li class="ui-li-has-thumb gist-header">
@@ -39,10 +45,9 @@
     {% if app.user %}
         <div data-role="collapsible">
             <h4>Добавить</h4>
-            <form>
-                <textarea></textarea>
-                <input type="submit"/>
-            </form>
+            {{ form_start(form, {'action': path('gist_add'), 'method': 'POST'}) }}
+                {{ form_widget(form) }}
+            {{ form_end(form) }}
         </div>
     {% endif %}
 {% endblock %}
