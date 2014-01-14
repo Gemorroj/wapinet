@@ -7,6 +7,7 @@ namespace Wapinet\UserBundle\Entity;
 class Panel extends \ArrayObject
 {
     const ROUTE_FORUM = 'forum_index';
+    const ROUTE_GIST = 'gist_index';
     const ROUTE_FILE = 'file_index';
     const ROUTE_ARCHIVER = 'archiver_index';
     const ROUTE_PROXY = 'proxy_index';
@@ -16,6 +17,7 @@ class Panel extends \ArrayObject
 
     protected $id;
     protected $forum = true;
+    protected $gist = true;
     protected $file = true;
     protected $archiver = false;
     protected $proxy = false;
@@ -64,6 +66,11 @@ class Panel extends \ArrayObject
                 'route' => self::ROUTE_FORUM,
                 'name' => 'Форум',
                 'enabled' => $this->getForum(),
+            ),
+            self::ROUTE_GIST => array(
+                'route' => self::ROUTE_GIST,
+                'name' => 'Блоги',
+                'enabled' => $this->getGist(),
             ),
             self::ROUTE_FILE => array(
                 'route' => self::ROUTE_FILE,
@@ -210,6 +217,25 @@ class Panel extends \ArrayObject
     public function getArchiver()
     {
         return $this->archiver;
+    }
+
+    /**
+     * @param boolean $gist
+     * @return Panel
+     */
+    public function setGist($gist)
+    {
+        $this->gist = (bool)$gist;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getGist()
+    {
+        return $this->gist;
     }
 
     /**

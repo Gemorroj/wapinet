@@ -36,6 +36,7 @@ class PanelAdmin extends Admin
             ->add('id', null, array('label' => 'Идентификатор'))
             ->add('user', null, array('label' => 'Пользователь'))
             ->add('forum', null, array('label' => 'Форум'))
+            ->add('gist', null, array('label' => 'Блоги'))
             ->add('file', null, array('label' => 'Файлообменник'))
             ->add('archiver', null, array('label' => 'Архиватор'))
             ->add('proxy', null, array('label' => 'Анонимайзер'))
@@ -53,6 +54,7 @@ class PanelAdmin extends Admin
     {
         $formMapper
             ->add('forum', null, array('label' => 'Форум', 'required' => false))
+            ->add('gist', null, array('label' => 'Блоги', 'required' => false))
             ->add('file', null, array('label' => 'Файлообменник', 'required' => false))
             ->add('archiver', null, array('label' => 'Архиватор', 'required' => false))
             ->add('proxy', null, array('label' => 'Анонимайзер', 'required' => false))
@@ -82,6 +84,7 @@ class PanelAdmin extends Admin
         $listMapper
             ->addIdentifier('user', null, array('label' => 'Пользователь'))
             ->add('forum', null, array('label' => 'Форум'))
+            ->add('gist', null, array('label' => 'Блоги'))
             ->add('file', null, array('label' => 'Файлообменник'))
             ->add('archiver', null, array('label' => 'Архиватор'))
             ->add('proxy', null, array('label' => 'Анонимайзер'))
