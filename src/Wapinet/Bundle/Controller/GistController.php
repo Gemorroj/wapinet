@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wapinet\Bundle\Entity\Gist;
+use Wapinet\Bundle\Event\GistEvent;
 use Wapinet\Bundle\Form\Type\Gist\AddType;
 
 class GistController extends Controller
@@ -85,6 +86,10 @@ class GistController extends Controller
                     $entityManager->persist($gist);
                     $entityManager->flush();
 
+                    $this->container->get('event_dispatcher')->dispatch(
+                        GistEvent::GIST_ADD,
+                        new GistEvent($data->getUser(), $gist)
+                    );
                     $this->get('session')->getFlashBag()->add('notice', 'Сообщение успешно добавлено');
                 }
             }

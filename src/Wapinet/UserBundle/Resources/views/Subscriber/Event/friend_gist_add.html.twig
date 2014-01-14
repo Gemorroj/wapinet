@@ -1,0 +1,13 @@
+<li data-role="list-divider">
+    {{ event.subject }}
+    <span class="ui-li-count">{{ event.createdAt|wapinet_datetime  }}</span>
+</li>
+<li>
+    <a href="{{ path('gist_view', {'id': event.variables.gist.id}) }}">
+        {% if event.variables.friend.isFemale %}
+            Ваша подруга {{ event.variables.friend }} добавила в блог новое сообщение.
+        {% else %}
+            Ваш друг {{ event.variables.friend }} добавил в блог новое сообщение.
+        {% endif %}
+    </a>
+</li>

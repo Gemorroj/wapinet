@@ -1,0 +1,9 @@
+{% extends '@WapinetUser/Subscriber/Email/_layout.html.twig' %}
+
+{% block content %}
+    {% if friend.isFemale %}
+        Ваша подруга <a href="{{ url('fos_user_profile_show', {'username': friend.username}) }}">{{ friend }}</a> добавила в блог новое сообщение с темой <a href="{{ url('gist_view', {'id': gist.id}) }}">{{ gist.subject }}</a>.
+    {% else %}
+        Ваш друг <a href="{{ url('fos_user_profile_show', {'username': friend.username}) }}">{{ friend }}</a> добавил в блог новое сообщение с темой <a href="{{ url('gist_view', {'id': gist.id}) }}">{{ gist.subject }}</a>.
+    {% endif %}
+{% endblock %}

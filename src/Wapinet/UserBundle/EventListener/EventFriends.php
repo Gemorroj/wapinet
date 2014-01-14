@@ -6,6 +6,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use FOS\CommentBundle\Events as Event;
 use FOS\CommentBundle\Event\CommentEvent;
 use Wapinet\Bundle\Event\FileEvent;
+use Wapinet\Bundle\Event\GistEvent;
 use Wapinet\CommentBundle\Entity\Comment;
 use Wapinet\UserBundle\Entity\Friend;
 use Wapinet\UserBundle\Entity\Event as EntityEvent;
@@ -31,6 +32,7 @@ class EventFriends implements EventSubscriberInterface
             FriendEvent::FRIEND_ADD => 'friendAdd',
             FriendEvent::FRIEND_DELETE => 'friendDelete',
             FileEvent::FILE_ADD => 'fileAdd',
+            GistEvent::GIST_ADD => 'gistAdd',
         );
     }
 
@@ -166,6 +168,35 @@ class EventFriends implements EventSubscriberInterface
             $entityEvent->setVariables(array(
                 'friend' => $user,
                 'file' => $event->getFile(),
+            ));
+            $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()->getEmailFriends());
+            $entityEvent->setUser($friend->getUser());
+
+            $this->em->persist($entityEvent);
+        }
+
+        $this->em->flush();
+    }
+
+    public function gistAdd(GistEvent $event)
+    {
+        $user = $event->getUser();
+        if (null === $user) {
+            return;
+        }
+
+        /** @var Friend $friend */
+        foreach ($user->getFriended() as $friend) {
+            $entityEvent = new EntityEvent();
+            if (true === $user->isFemale()) {
+                $entityEvent->setSubject('Ваша подруга ' . $user->getUsername() . ' добавила в блог сообщение с темой ' . $event->getGist()->getSubject() . '.');
+            } else {
+                $entityEvent->setSubject('Ваш друг ' . $user->getUsername() . ' добавил в блог сообщение с темой ' . $event->getGist()->getSubject() . '.');
+            }
+            $entityEvent->setTemplate('friend_gist_add');
+            $entityEvent->setVariables(array(
+                'friend' => $user,
+                'gist' => $event->getGist(),
             ));
             $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()->getEmailFriends());
             $entityEvent->setUser($friend->getUser());
