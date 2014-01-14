@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Router;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wapinet\Bundle\Entity\Gist;
 use Wapinet\Bundle\Form\Type\Gist\AddType;
 
@@ -54,9 +55,15 @@ class GistController extends Controller
      * @param Request $request
      *
      * @return RedirectResponse
+     * @throws AccessDeniedException
      */
     public function addAction(Request $request)
     {
+        $user = $this->getUser();
+        if (null === $user) {
+            throw new AccessDeniedException('Вы должны быть авторизованы для добавления сообщения');
+        }
+
         $form = $this->createForm(new AddType());
 
         try {
@@ -70,7 +77,7 @@ class GistController extends Controller
                     $gist->setBody($data['body']);
                     $gist->setSubject($data['subject']);
 
-                    $gist->setUser($this->getUser());
+                    $gist->setUser($user);
                     $gist->setIp($request->getClientIp());
                     $gist->setBrowser($request->headers->get('User-Agent', ''));
 
