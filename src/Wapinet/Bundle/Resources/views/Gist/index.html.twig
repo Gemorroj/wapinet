@@ -26,7 +26,7 @@
                 <h2>{{ item.subject }}</h2>
                 <span>
                     <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': item.user.username}) }}">{{ item.user.username }}</a>
-                    <a class="bar-button ui-btn-icon-left ui-icon-comment ui-mini ui-btn-inline ui-btn" href="#">Комментарии</a>
+                    <a class="bar-button ui-btn-icon-left ui-icon-cloud ui-mini ui-btn-inline ui-btn" href="{{ path('gist_view', {'id': item.id}) }}">Смотреть</a>
                 </span>
                 <span class="ui-li-count">{{ item.createdAt|wapinet_datetime  }}</span>
             </li>

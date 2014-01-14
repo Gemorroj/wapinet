@@ -6,6 +6,19 @@ gist_user:
     pattern: /users/{username}
     defaults: { _controller: WapinetBundle:Gist:user }
 
+gist_view:
+    pattern: /view/{id}
+    defaults: { _controller: WapinetBundle:Gist:view }
+    requirements:
+        id: \d+
+
+gist_delete:
+    pattern: /delete/{id}
+    defaults: { _controller: WapinetBundle:Gist:delete }
+    methods: [POST]
+    requirements:
+        id: \d+
+
 gist_add:
     pattern: /add
     defaults: { _controller: WapinetBundle:Gist:add }

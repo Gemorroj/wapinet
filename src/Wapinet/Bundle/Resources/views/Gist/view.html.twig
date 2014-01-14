@@ -1,0 +1,70 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ gist.subject }}{% endblock %}
+{% block breadcrumbs %}
+    {{wapinet_breadcrumbs({
+    1: {'uri': path('gist_index'), 'title': 'Блоги'}
+    })}}
+{% endblock %}
+
+{% block javascripts %}
+        {% if app.user and is_granted('DELETE', gist) %}
+            <script type="text/javascript">{% autoescape 'js' %}
+                $(document).bind("pageinit", function () {
+                    $("#delete-popup-do").on("click", function () {
+                        $.post('{{ path('gist_delete', {'id': gist.id}) }}', function () {
+                            window.location.assign('{{ path('gist_index') }}');
+                        });
+                    });
+                });
+            {% endautoescape %}</script>
+        {% endif %}
+{% endblock %}
+
+{% block content %}
+
+    <ul data-role="listview" data-inset="true">
+        <li class="ui-li-has-thumb gist-header">
+            {% if gist.user.hasAvatar %}
+                <img src="{{ vich_uploader_asset(gist.user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ gist.user }}" class="image-preview" />
+            {% else %}
+                <img src="{{ asset('static/noavatar.png') }}" alt="Anonymous" class="image-preview" />
+            {% endif %}
+            {% if gist.user.isOnline %}
+                <span class="avatar-online avatar-online-list"></span>
+            {% endif %}
+            <h2>{{ gist.subject }}</h2>
+            <span>
+                <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': gist.user.username}) }}">{{ gist.user.username }}</a>
+            </span>
+            <span class="ui-li-count">{{ gist.createdAt|wapinet_datetime  }}</span>
+        </li>
+        <li data-icon="false">
+            {{ gist.body|wapinet_bbcode_parse }}
+        </li>
+    </ul>
+
+    {% if app.user and is_granted('DELETE', gist) %}
+        <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+            <a data-role="button" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete" href="#delete-popup">Удалить</a>
+        </fieldset>
+    {% endif %}
+
+    {% include 'WapinetCommentBundle::comments_block.html.twig' %}
+{% endblock %}
+
+
+{% block popup %}
+    <div data-role="popup" id="delete-popup" data-overlay-theme="a" data-dismissible="false" class="ui-corner-all">
+        <div data-role="header" class="ui-corner-top" data-theme="b">
+            <h1>Удаление</h1>
+        </div>
+        <div data-role="content" class="ui-corner-bottom ui-content">
+            <h3 class="ui-title">Вы уверенны что хотите удалить сообщение?</h3>
+            <p>Это безвозвратная операция.</p>
+            <a href="#" data-role="button" data-inline="true" data-rel="back">Отмена</a>
+            <a href="#" id="delete-popup-do" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Удалить</a>
+        </div>
+    </div>
+{% endblock %}
+

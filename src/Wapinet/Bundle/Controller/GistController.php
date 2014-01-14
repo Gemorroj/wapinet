@@ -3,13 +3,19 @@
 namespace Wapinet\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Router;
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
+use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
+use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wapinet\Bundle\Entity\Gist;
 use Wapinet\Bundle\Event\GistEvent;
 use Wapinet\Bundle\Form\Type\Gist\AddType;
+use Wapinet\UserBundle\Entity\User;
 
 class GistController extends Controller
 {
@@ -86,6 +92,8 @@ class GistController extends Controller
                     $entityManager->persist($gist);
                     $entityManager->flush();
 
+                    $this->saveAcl($user, $gist);
+
                     $this->container->get('event_dispatcher')->dispatch(
                         GistEvent::GIST_ADD,
                         new GistEvent($data->getUser(), $gist)
@@ -98,5 +106,72 @@ class GistController extends Controller
         }
 
         return $this->redirect($this->get('router')->generate('gist_index', array(), Router::ABSOLUTE_URL));
+    }
+
+
+    protected function saveAcl(User $user, Gist $gist)
+    {
+        // creating the ACL
+        $aclProvider = $this->get('security.acl.provider');
+        $objectIdentity = ObjectIdentity::fromDomainObject($gist);
+        $acl = $aclProvider->createAcl($objectIdentity);
+
+        // retrieving the security identity of the currently logged-in user
+        $securityIdentity = UserSecurityIdentity::fromAccount($user);
+
+        // grant owner access
+        $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
+        $aclProvider->updateAcl($acl);
+    }
+
+
+    public function viewAction($id)
+    {
+        $gistManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Gist');
+        $gist = $gistManager->find($id);
+        if (null === $gist) {
+            $this->createNotFoundException('Сообщение не найдено.');
+        }
+
+        return $this->render('WapinetBundle:Gist:view.html.twig', array(
+            'comments_id' => 'gist-' . $gist->getId(),
+            'gist' => $gist,
+        ));
+    }
+
+
+    /**
+     * @param Request $request
+     * @param int $id
+     *
+     * @throws AccessDeniedException|NotFoundHttpException
+     * @return RedirectResponse|JsonResponse
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $gist = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Gist')->find($id);
+        if (null === $gist) {
+            throw $this->createNotFoundException('Сообщение не найдено.');
+        }
+
+        $securityContext = $this->get('security.context');
+        if (false === $securityContext->isGranted('DELETE', $gist)) {
+            throw new AccessDeniedException();
+        }
+
+        // БД
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($gist);
+        $em->flush();
+
+        // переадресация на главную
+        $router = $this->container->get('router');
+        $url = $router->generate('gist_index', array(), Router::ABSOLUTE_URL);
+
+        if (true === $request->isXmlHttpRequest()) {
+            return new JsonResponse(array('url' => $url));
+        }
+
+        return new RedirectResponse($url);
     }
 }

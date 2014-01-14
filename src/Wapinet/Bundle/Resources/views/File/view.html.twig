@@ -9,28 +9,26 @@
 {% endblock %}
 
 {% block javascripts %}
-    {% if file is not null %}
-        {% if file.isPlayableVideo %}
-            <script type="text/javascript">
-                {% include '@Wapinet/video.js.twig' with {'file': file} %}
-            </script>
-        {% elseif file.isPlayableAudio %}
-            <script type="text/javascript">
-                {% include '@Wapinet/audio.js.twig' with {'file': file} %}
-            </script>
-        {% endif %}
+    {% if file.isPlayableVideo %}
+        <script type="text/javascript">
+            {% include '@Wapinet/video.js.twig' with {'file': file} %}
+        </script>
+    {% elseif file.isPlayableAudio %}
+        <script type="text/javascript">
+            {% include '@Wapinet/audio.js.twig' with {'file': file} %}
+        </script>
+    {% endif %}
 
-        {% if app.user and is_granted('DELETE', file) %}
-            <script type="text/javascript">{% autoescape 'js' %}
-                $(document).bind("pageinit", function () {
-                    $("#delete-popup-do").on("click", function () {
-                        $.post('{{ path('file_delete', {'id': file.id}) }}', function () {
-                            window.location.assign('{{ path('file_index') }}');
-                        });
+    {% if app.user and is_granted('DELETE', file) %}
+        <script type="text/javascript">{% autoescape 'js' %}
+            $(document).bind("pageinit", function () {
+                $("#delete-popup-do").on("click", function () {
+                    $.post('{{ path('file_delete', {'id': file.id}) }}', function () {
+                        window.location.assign('{{ path('file_index') }}');
                     });
                 });
-            {% endautoescape %}</script>
-        {% endif %}
+            });
+        {% endautoescape %}</script>
     {% endif %}
 {% endblock %}
 
