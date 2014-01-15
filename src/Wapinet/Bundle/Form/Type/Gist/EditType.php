@@ -6,9 +6,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * Add
+ * Edit
  */
-class AddType extends AbstractType
+class EditType extends AbstractType
 {
     /**
      * @var FormBuilderInterface $builder
@@ -20,7 +20,7 @@ class AddType extends AbstractType
 
         $builder->add('subject', 'text', array('attr' => array('placeholder' => 'Тема'), 'max_length' => 5000, 'required' => true, 'label' => false, 'constraints' => new NotBlank()));
         $builder->add('body', 'textarea', array('attr' => array('placeholder' => 'Сообщение'), 'required' => true, 'label' => false, 'constraints' => new NotBlank()));
-        $builder->add('submit', 'submit', array('label' => 'Добавить'));
+        $builder->add('submit', 'submit', array('label' => 'Изменить'));
     }
 
 
@@ -31,6 +31,6 @@ class AddType extends AbstractType
      */
     public function getName()
     {
-        return 'gist_add_form';
+        return 'gist_edit_form';
     }
 }

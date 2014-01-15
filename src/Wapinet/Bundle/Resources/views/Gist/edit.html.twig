@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Редактирование сообщения - {{ gist.subject }}{% endblock %}
+{% block breadcrumbs %}
+    {{wapinet_breadcrumbs({
+    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'},
+    2: {'uri': path('gist_index'), 'title': 'Блоги'}
+    })}}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form, {'action': path('gist_edit', {'id': gist.id}), 'method': 'POST'}) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

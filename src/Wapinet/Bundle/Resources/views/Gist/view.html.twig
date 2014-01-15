@@ -35,6 +35,9 @@
                 <span class="avatar-online avatar-online-list"></span>
             {% endif %}
             <h2>{{ gist.subject }}</h2>
+            {% if gist.updatedAt is not null %}
+                <p>Обновлено {{ gist.updatedAt|wapinet_datetime }}</p>
+            {% endif %}
             <span class="ui-li-count">{{ gist.createdAt|wapinet_datetime  }}</span>
         </li>
         <li data-icon="false">
@@ -42,9 +45,14 @@
         </li>
     </ul>
 
-    {% if app.user and is_granted('DELETE', gist) %}
+    {% if app.user and (is_granted('EDIT', gist) or is_granted('DELETE', gist)) %}
         <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-            <a data-role="button" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete" href="#delete-popup">Удалить</a>
+            {% if is_granted('EDIT', gist) %}
+                <a data-role="button" data-icon="edit" href="{{ path('gist_edit', {'id': gist.id}) }}">Редактировать</a>
+            {% endif %}
+            {% if is_granted('DELETE', gist) %}
+                <a data-role="button" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete" href="#delete-popup">Удалить</a>
+            {% endif %}
         </fieldset>
     {% endif %}
 

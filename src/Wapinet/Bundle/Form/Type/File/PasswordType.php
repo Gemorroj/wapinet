@@ -30,6 +30,6 @@ class PasswordType extends AbstractType
      */
     public function getName()
     {
-        return 'password_form';
+        return 'file_password_form';
     }
 }

@@ -18,6 +18,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wapinet\Bundle\Entity\Gist;
 use Wapinet\Bundle\Event\GistEvent;
 use Wapinet\Bundle\Form\Type\Gist\AddType;
+use Wapinet\Bundle\Form\Type\Gist\EditType;
 use Wapinet\Bundle\Form\Type\Gist\SearchType;
 use Wapinet\UserBundle\Entity\User;
 
@@ -256,5 +257,85 @@ class GistController extends Controller
         }
 
         return $client->getPagerfanta($result, 'Wapinet\Bundle\Entity\Gist');
+    }
+
+
+    /**
+     * @param Request $request
+     * @param int $id
+     *
+     * @throws AccessDeniedException|NotFoundHttpException
+     * @return RedirectResponse|JsonResponse|Response
+     */
+    public function editAction(Request $request, $id)
+    {
+        $repository = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Gist');
+        $gist = $repository->find($id);
+        if (null === $gist) {
+            throw $this->createNotFoundException('Сообщение не найдено.');
+        }
+
+        $securityContext = $this->get('security.context');
+        if (false === $securityContext->isGranted('EDIT', $gist)) {
+            throw new AccessDeniedException();
+        }
+
+
+        $form = $this->createForm(new EditType());
+        $form['body']->setData($gist->getBody());
+        $form['subject']->setData($gist->getSubject());
+
+        try {
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $data = $form->getData();
+                    $this->editGistData($request, $gist, $data);
+
+                    $router = $this->container->get('router');
+                    $url = $router->generate('gist_view', array('id' => $gist->getId()), Router::ABSOLUTE_URL);
+
+                    if (true === $request->isXmlHttpRequest()) {
+                        return new JsonResponse(array('url' => $url));
+                    }
+
+                    return new RedirectResponse($url);
+                }
+            }
+        } catch (\Exception $e) {
+            $form->addError(new FormError($e->getMessage()));
+        }
+
+        return $this->render('WapinetBundle:Gist:edit.html.twig', array(
+            'form' => $form->createView(),
+            'gist' => $gist,
+        ));
+    }
+
+
+    /**
+     * @param Request $request
+     * @param Gist    $data
+     * @param array   $newData
+     * @return Gist
+     */
+    protected function editGistData(Request $request, Gist $data, array $newData)
+    {
+        $data->setSubject($newData['subject']);
+        $data->setBody($newData['body']);
+
+        // обновляем ip и браузер только если сообщение редактирует владелец
+        if ($data->getUser()->getId() === $this->getUser()->getId()) {
+            //$data->setUser($this->getUser());
+            $data->setIp($request->getClientIp());
+            $data->setBrowser($request->headers->get('User-Agent', ''));
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->merge($data);
+        $entityManager->flush();
+
+        return $data;
     }
 }

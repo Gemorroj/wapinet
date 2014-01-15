@@ -24,6 +24,12 @@ gist_add:
     defaults: { _controller: WapinetBundle:Gist:add }
     methods: [POST]
 
+gist_edit:
+    pattern: /edit/{id}
+    defaults: { _controller: WapinetBundle:Gist:edit }
+    requirements:
+        id: \d+
+
 gist_search:
     pattern: /search/{key}
     defaults: { _controller: WapinetBundle:Gist:search, key: null }

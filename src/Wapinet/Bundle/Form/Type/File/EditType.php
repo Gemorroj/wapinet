@@ -62,6 +62,6 @@ class EditType extends AbstractType
      */
     public function getName()
     {
-        return 'edit_form';
+        return 'file_edit_form';
     }
 }

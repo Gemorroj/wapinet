@@ -49,6 +49,6 @@ class UploadType extends AbstractType
      */
     public function getName()
     {
-        return 'upload_form';
+        return 'file_upload_form';
     }
 }
