@@ -21,7 +21,7 @@
                     <img onclick="window.location.assign('{{ path('wapinet_user_profile', {'username': item.user.username}) }}');" src="{{ asset('static/noavatar.png') }}" alt="Anonymous" class="image-preview" />
                 {% endif %}
                 {% if item.user.isOnline %}
-                    <span class="avatar-online avatar-online-list"></span>
+                    <span class="avatar-online avatar-online-list-gist"></span>
                 {% endif %}
                 <a href="{{ path('gist_view', {'id': item.id}) }}">
                     <h2>{{ item.subject }}</h2>

@@ -19,6 +19,10 @@ span.avatar-online-list {
     margin-left: -33px;
     margin-top: 56px;
 }
+span.avatar-online-list-gist {
+    margin-left: 68px;
+    margin-top: 68px;
+}
 p.footer {
     font-size: 0.8em;
     margin-left: 10px;
