@@ -28,7 +28,7 @@
             {% if gist.user.hasAvatar %}
                 <img onclick="window.location.assign('{{ path('wapinet_user_profile', {'username': gist.user.username}) }}'); event.stopPropagation();" src="{{ vich_uploader_asset(gist.user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ gist.user }}" class="image-preview" />
             {% else %}
-                <img onclick="window.location.assign('{{ path('wapinet_user_profile', {'username': gist.user.username}) }}');" src="{{ asset('static/noavatar.png') }}" alt="Anonymous" class="image-preview" />
+                <img onclick="window.location.assign('{{ path('wapinet_user_profile', {'username': gist.user.username}) }}');" src="{{ asset('static/noavatar.png') }}" alt="{{ gist.user }}" title="{{ gist.user }}" class="image-preview" />
             {% endif %}
             {% if gist.user.isOnline %}
                 <span class="avatar-online avatar-online-list"></span>

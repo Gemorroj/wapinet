@@ -16,9 +16,9 @@
         {% for item in pagerfanta %}
             <li class="ui-li-has-thumb gist-header">
                 {% if item.user.hasAvatar %}
-                    <img onclick="window.location.assign('{{ path('wapinet_user_profile', {'username': item.user.username}) }}'); event.stopPropagation();" src="{{ vich_uploader_asset(item.user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ item.user }}" class="image-preview" />
+                    <img onclick="window.location.assign('{{ path('wapinet_user_profile', {'username': item.user.username}) }}'); event.stopPropagation();" src="{{ vich_uploader_asset(item.user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ item.user }}" title="{{ item.user }}" class="image-preview" />
                 {% else %}
-                    <img onclick="window.location.assign('{{ path('wapinet_user_profile', {'username': item.user.username}) }}');" src="{{ asset('static/noavatar.png') }}" alt="Anonymous" class="image-preview" />
+                    <img onclick="window.location.assign('{{ path('wapinet_user_profile', {'username': item.user.username}) }}');" src="{{ asset('static/noavatar.png') }}" alt="{{ item.user }}" title="{{ item.user }}" class="image-preview" />
                 {% endif %}
                 {% if item.user.isOnline %}
                     <span class="avatar-online avatar-online-list-gist"></span>
@@ -27,9 +27,6 @@
                     <h2>{{ item.subject }}</h2>
                     <span class="ui-li-count">{{ item.createdAt|wapinet_datetime  }}</span>
                 </a>
-            </li>
-            <li data-icon="false">
-                {{ item.body|wapinet_bbcode_parse }}
             </li>
         {% else %}
             <li>Кода нет.</li>
