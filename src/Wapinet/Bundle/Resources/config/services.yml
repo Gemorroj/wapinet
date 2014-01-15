@@ -190,13 +190,19 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: Гостевая, label: Гостевая }
 
+    wapinet.admin.gist:
+        class: Wapinet\Bundle\Admin\GistAdmin
+        arguments: [null, Wapinet\Bundle\Entity\Gist, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Блоги, label: Блоги }
+
     wapinet.admin.file:
         class: Wapinet\Bundle\Admin\FileAdmin
         arguments: [null, Wapinet\Bundle\Entity\File, SonataAdminBundle:CRUD]
         calls:
             - [setFileHelper, ["@file"]]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Пользователи, label: Файлы }
+            - { name: sonata.admin, manager_type: orm, group: Файлы, label: Файлы }
 
     wapinet.admin.tag:
         class: Wapinet\Bundle\Admin\TagAdmin
@@ -204,7 +210,7 @@ services:
         calls:
             - [setFileHelper, ["@file"]]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Пользователи, label: Тэги }
+            - { name: sonata.admin, manager_type: orm, group: Файлы, label: Тэги }
 
     wapinet.admin.news:
         class: Wapinet\Bundle\Admin\NewsAdmin

@@ -8,10 +8,10 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class GuestbookAdmin extends Admin
+class GistAdmin extends Admin
 {
-    protected $baseRouteName = 'sonata_guestbook';
-    protected $baseRoutePattern = 'guestbook';
+    protected $baseRouteName = 'sonata_gist';
+    protected $baseRoutePattern = 'gist';
     protected $datagridValues = array(
         '_sort_order' => 'DESC',
         '_sort_by' => 'id',
@@ -37,7 +37,8 @@ class GuestbookAdmin extends Admin
             ->add('createdAt', null, array('label' => 'Дата и время создания'))
             ->add('updatedAt', null, array('label' => 'Дата и время обновления'))
             ->add('user', null, array('label' => 'Пользователь'))
-            ->add('description', null, array('label' => 'Сообщение'))
+            ->add('subject', null, array('label' => 'Тема'))
+            ->add('body', null, array('label' => 'Сообщение'))
             ->add('ip', null, array('label' => 'IP'))
             ->add('browser', null, array('label' => 'Браузер'))
         ;
@@ -50,7 +51,8 @@ class GuestbookAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('message', null, array('label' => 'Сообщение'))
+            ->add('subject', null, array('label' => 'Тема'))
+            ->add('body', null, array('label' => 'Сообщение'))
         ;
     }
 
@@ -64,7 +66,7 @@ class GuestbookAdmin extends Admin
     {
         $datagridMapper
             ->add('user', null, array('label' => 'Пользователь'))
-            ->add('message', null, array('label' => 'Сообщение'))
+            ->add('subject', null, array('label' => 'Тема'))
             ->add('createdAt', 'doctrine_orm_datetime_range', array('label' => 'Дата и время'), null, array('widget' => 'single_text'))
         ;
     }
@@ -77,7 +79,7 @@ class GuestbookAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('message', null, array('label' => 'Сообщение'))
+            ->addIdentifier('subject', null, array('label' => 'Тема'))
             ->add('createdAt', null, array('label' => 'Дата и время'))
             ->add('user', null, array('label' => 'Пользователь'))
             ->add('_action', 'actions', array(
