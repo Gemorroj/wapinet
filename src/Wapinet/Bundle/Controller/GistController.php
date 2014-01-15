@@ -2,10 +2,13 @@
 
 namespace Wapinet\Bundle\Controller;
 
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
@@ -15,6 +18,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wapinet\Bundle\Entity\Gist;
 use Wapinet\Bundle\Event\GistEvent;
 use Wapinet\Bundle\Form\Type\Gist\AddType;
+use Wapinet\Bundle\Form\Type\Gist\SearchType;
 use Wapinet\UserBundle\Entity\User;
 
 class GistController extends Controller
@@ -173,5 +177,84 @@ class GistController extends Controller
         }
 
         return new RedirectResponse($url);
+    }
+
+
+    /**
+     * @param Request $request
+     * @param string|null $key
+     * @return Response|RedirectResponse
+     */
+    public function searchAction(Request $request, $key = null)
+    {
+        $page = $request->get('page', 1);
+        $form = $this->createForm(new SearchType());
+        $pagerfanta = null;
+        $session = $this->get('session');
+
+        try {
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $data = $form->getData();
+                    $key = uniqid();
+                    $session->set('gist_search', array(
+                        'key' => $key,
+                        'data' => $data
+                    ));
+                }
+
+                return $this->redirect(
+                    $this->get('router')->generate('gist_search', array('key' => $key), Router::ABSOLUTE_URL)
+                );
+            }
+
+            if (null !== $key && true === $session->has('gist_search')) {
+                $search = $session->get('gist_search');
+                if ($key === $search['key']) {
+                    $form->setData($search['data']);
+                    $pagerfanta = $this->searchSphinx($search['data'], $page);
+                    //$pagerfanta = $this->search($search['data'], $page);
+                }
+            }
+        } catch (\Exception $e) {
+            $form->addError(new FormError($e->getMessage()));
+        }
+
+        return $this->render('WapinetBundle:Gist:search.html.twig', array(
+            'form' => $form->createView(),
+            'pagerfanta' => $pagerfanta,
+            'key' => $key,
+        ));
+    }
+
+
+    /**
+     * @param array $data
+     * @param int   $page
+     *
+     * @throws \RuntimeException
+     * @return Pagerfanta
+     */
+    protected function searchSphinx(array $data, $page = 1)
+    {
+        $client = $this->container->get('sphinx');
+        $client->setPage($page);
+
+        if ('date' === $data['sort']) {
+            $client->SetSortMode(SPH_SORT_ATTR_DESC, 'created_at_ts');
+        } else {
+            $client->SetSortMode(SPH_SORT_RELEVANCE);
+        }
+
+        $client->AddQuery($data['search'], 'gist');
+
+        $result = $client->RunQueries();
+        if (false === $result) {
+            throw new \RuntimeException($client->GetLastError());
+        }
+
+        return $client->getPagerfanta($result, 'Wapinet\Bundle\Entity\Gist');
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Wapinet\Bundle\Form\Type\File;
+namespace Wapinet\Bundle\Form\Type\Gist;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
@@ -48,6 +48,6 @@ class SearchType extends AbstractType
      */
     public function getName()
     {
-        return 'file_search_form';
+        return 'gist_search_form';
     }
 }

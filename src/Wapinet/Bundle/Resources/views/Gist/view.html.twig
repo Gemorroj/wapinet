@@ -3,7 +3,8 @@
 {% block title %}{{ gist.subject }}{% endblock %}
 {% block breadcrumbs %}
     {{wapinet_breadcrumbs({
-    1: {'uri': path('gist_index'), 'title': 'Блоги'}
+    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'},
+    2: {'uri': path('gist_index'), 'title': 'Блоги'}
     })}}
 {% endblock %}
 

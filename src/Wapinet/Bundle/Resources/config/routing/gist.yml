@@ -24,5 +24,10 @@ gist_add:
     defaults: { _controller: WapinetBundle:Gist:add }
     methods: [POST]
 
+gist_search:
+    pattern: /search/{key}
+    defaults: { _controller: WapinetBundle:Gist:search, key: null }
+    requirements:
+        key: "[a-zA-Z0-9]+"
 
 

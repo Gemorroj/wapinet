@@ -2,7 +2,9 @@
 
 {% block title %}Блоги{% endblock %}
 {% block breadcrumbs %}
-    {{wapinet_breadcrumbs()}}
+    {{wapinet_breadcrumbs({
+    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'}
+    })}}
 {% endblock %}
 
 {% block content %}
@@ -12,31 +14,7 @@
         </div>
     {% endfor %}
 
-    <ul data-role="listview" data-inset="true">
-        {% for item in pagerfanta %}
-            <li class="ui-li-has-thumb gist-header">
-                {% if item.user.hasAvatar %}
-                    <img onclick="window.location.assign('{{ path('wapinet_user_profile', {'username': item.user.username}) }}'); event.stopPropagation();" src="{{ vich_uploader_asset(item.user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ item.user }}" title="{{ item.user }}" class="image-preview" />
-                {% else %}
-                    <img onclick="window.location.assign('{{ path('wapinet_user_profile', {'username': item.user.username}) }}');" src="{{ asset('static/noavatar.png') }}" alt="{{ item.user }}" title="{{ item.user }}" class="image-preview" />
-                {% endif %}
-                {% if item.user.isOnline %}
-                    <span class="avatar-online avatar-online-list-gist"></span>
-                {% endif %}
-                <a href="{{ path('gist_view', {'id': item.id}) }}">
-                    <h2>{{ item.subject }}</h2>
-                    <p>{{ item.createdAt|wapinet_datetime  }}</p>
-                    <span class="ui-li-count">{{ gist_comments_count(item.id) }}</span>
-                </a>
-            </li>
-        {% else %}
-            <li>Кода нет.</li>
-        {% endfor %}
-    </ul>
-
-    <div class="pagerfanta">
-        {{ pagerfanta(pagerfanta) }}
-    </div>
+    {% include '@Wapinet/Gist/list_content.html.twig' %}
 
     {% if app.user %}
         <div data-role="collapsible">
@@ -46,4 +24,7 @@
             {{ form_end(form) }}
         </div>
     {% endif %}
+    <fieldset>
+        <a href="{{ path('gist_search') }}" data-role="button" data-icon="search">Поиск</a>
+    </fieldset>
 {% endblock %}
