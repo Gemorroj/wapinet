@@ -31,6 +31,21 @@ class GistRepository extends EntityRepository
     }
 
     /**
+     * @param int $id
+     *
+     * @return int
+     */
+    public function countComments($id)
+    {
+        $q = $this->getEntityManager()->createQuery('SELECT t.numComments FROM Wapinet\CommentBundle\Entity\Thread t WHERE t.id = :id');
+        $q->setParameter('id', 'gist-' . $id);
+
+        $result = $q->getOneOrNullResult();
+
+        return (null !== $result ? $result['numComments'] : 0);
+    }
+
+    /**
      * @param User $user
      *
      * @return \Doctrine\ORM\Query

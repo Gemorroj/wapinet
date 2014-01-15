@@ -15,7 +15,7 @@ class Gist extends \Twig_Extension
 
     public function __construct(EntityManager $em)
     {
-        $this->guestbookRepository = $em->getRepository('Wapinet\Bundle\Entity\Gist');
+        $this->gistRepository = $em->getRepository('Wapinet\Bundle\Entity\Gist');
     }
 
     /**
@@ -27,13 +27,14 @@ class Gist extends \Twig_Extension
     {
         return array(
             'gist_count_all'  => new \Twig_Function_Method($this, 'getCountAll'),
-            'gist_count'  => new \Twig_Function_Method($this, 'getCount'),
+            'gist_count' => new \Twig_Function_Method($this, 'getCount'),
+            'gist_comments_count' => new \Twig_Function_Method($this, 'getCommentsCount'),
         );
     }
 
     public function getCountAll()
     {
-        return $this->guestbookRepository->countAll();
+        return $this->gistRepository->countAll();
     }
 
     /**
@@ -43,7 +44,18 @@ class Gist extends \Twig_Extension
      */
     public function getCount(User $user = null)
     {
-        return $this->guestbookRepository->count($user);
+        return $this->gistRepository->count($user);
+    }
+
+
+    /**
+     * @param int $id
+     *
+     * @return int
+     */
+    public function getCommentsCount($id)
+    {
+        return $this->gistRepository->countComments($id);
     }
 
     /**
