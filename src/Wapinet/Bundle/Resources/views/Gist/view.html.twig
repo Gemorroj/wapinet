@@ -26,17 +26,14 @@
     <ul data-role="listview" data-inset="true">
         <li class="ui-li-has-thumb gist-header">
             {% if gist.user.hasAvatar %}
-                <img src="{{ vich_uploader_asset(gist.user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ gist.user }}" class="image-preview" />
+                <img onclick="window.location.assign('{{ path('wapinet_user_profile', {'username': gist.user.username}) }}'); event.stopPropagation();" src="{{ vich_uploader_asset(gist.user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ gist.user }}" class="image-preview" />
             {% else %}
-                <img src="{{ asset('static/noavatar.png') }}" alt="Anonymous" class="image-preview" />
+                <img onclick="window.location.assign('{{ path('wapinet_user_profile', {'username': gist.user.username}) }}');" src="{{ asset('static/noavatar.png') }}" alt="Anonymous" class="image-preview" />
             {% endif %}
             {% if gist.user.isOnline %}
                 <span class="avatar-online avatar-online-list"></span>
             {% endif %}
             <h2>{{ gist.subject }}</h2>
-            <span>
-                <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': gist.user.username}) }}">{{ gist.user.username }}</a>
-            </span>
             <span class="ui-li-count">{{ gist.createdAt|wapinet_datetime  }}</span>
         </li>
         <li data-icon="false">

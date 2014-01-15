@@ -16,19 +16,17 @@
         {% for item in pagerfanta %}
             <li class="ui-li-has-thumb gist-header">
                 {% if item.user.hasAvatar %}
-                    <img src="{{ vich_uploader_asset(item.user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ item.user }}" class="image-preview" />
+                    <img onclick="window.location.assign('{{ path('wapinet_user_profile', {'username': item.user.username}) }}'); event.stopPropagation();" src="{{ vich_uploader_asset(item.user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ item.user }}" class="image-preview" />
                 {% else %}
-                    <img src="{{ asset('static/noavatar.png') }}" alt="Anonymous" class="image-preview" />
+                    <img onclick="window.location.assign('{{ path('wapinet_user_profile', {'username': item.user.username}) }}');" src="{{ asset('static/noavatar.png') }}" alt="Anonymous" class="image-preview" />
                 {% endif %}
                 {% if item.user.isOnline %}
                     <span class="avatar-online avatar-online-list"></span>
                 {% endif %}
-                <h2>{{ item.subject }}</h2>
-                <span>
-                    <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': item.user.username}) }}">{{ item.user.username }}</a>
-                    <a class="bar-button ui-btn-icon-left ui-icon-cloud ui-mini ui-btn-inline ui-btn" href="{{ path('gist_view', {'id': item.id}) }}">Смотреть</a>
-                </span>
-                <span class="ui-li-count">{{ item.createdAt|wapinet_datetime  }}</span>
+                <a href="{{ path('gist_view', {'id': item.id}) }}">
+                    <h2>{{ item.subject }}</h2>
+                    <span class="ui-li-count">{{ item.createdAt|wapinet_datetime  }}</span>
+                </a>
             </li>
             <li data-icon="false">
                 {{ item.body|wapinet_bbcode_parse }}
