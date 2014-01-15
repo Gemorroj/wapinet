@@ -96,3 +96,7 @@ li.gist-header a {
     margin-left: 80px !important;
     padding-left: 1em !important;
 }
+ul.file-comments {
+    max-height: 18em;
+    overflow: auto;
+}
