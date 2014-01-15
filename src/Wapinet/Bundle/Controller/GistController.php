@@ -96,7 +96,7 @@ class GistController extends Controller
 
                     $this->container->get('event_dispatcher')->dispatch(
                         GistEvent::GIST_ADD,
-                        new GistEvent($data->getUser(), $gist)
+                        new GistEvent($this->getUser(), $gist)
                     );
                     $this->get('session')->getFlashBag()->add('notice', 'Сообщение успешно добавлено');
                 }
