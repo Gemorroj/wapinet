@@ -36,10 +36,10 @@
     <a data-role="button" data-icon="arrow-d" href="{{ vich_uploader_asset(file, 'file') }}" download="{{ file.originalFileName }}">Скачать</a>
 
     {% if file.isImage %}
-        {% set info = wapinet_image_info(file.file) %}
+        {% set image_info = wapinet_image_info(file.file) %}
         {% set exif = wapinet_image_exif(file.file) %}
 
-        {% if info is not null %}
+        {% if image_info is not null %}
             {% include 'WapinetBundle::image.html.twig' with {
                 'image': {
                     'id': file.id,
@@ -48,7 +48,7 @@
                     'preview': vich_uploader_asset(file, 'file')|imagine_filter('thumbnail')
                 }
             } %}
-            <p>{{ info.size.width }}x{{ info.size.height }}</p>
+            <p>{{ image_info.size.width }}x{{ image_info.size.height }}</p>
         {% endif %}
         {% if exif is not null %}
             <pre>

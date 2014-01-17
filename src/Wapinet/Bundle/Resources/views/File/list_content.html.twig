@@ -3,12 +3,12 @@
         <li>
             <a href="{{ path('file_view', {'id': file.id}) }}">
                 {% if file.isImage %}
-                    {% set info = wapinet_image_info(file.file) %}
-                    {% if info is not null %}
+                    {% set image_info = wapinet_image_info(file.file) %}
+                    {% if image_info is not null %}
                         <img src="{{ vich_uploader_asset(file, 'file')|imagine_filter('thumbnail') }}" alt="{{ file.originalFileName }}" />
                     {% endif %}
                     <h2>{{ file.originalFileName }}</h2>
-                    <p>{{ file.fileSize|wapinet_size }}{% if info is not null %}, {{ info.size.width }}x{{ info.size.height }}{% endif %}</p>
+                    <p>{{ file.fileSize|wapinet_size }}{% if image_info is not null %}, {{ image_info.size.width }}x{{ image_info.size.height }}{% endif %}</p>
                 {% elseif file.isVideo %}
                     {% set info = file_get_media_info(file.file) %}
                     {% set video_info = info is not null ? info.videos.first : null %}
