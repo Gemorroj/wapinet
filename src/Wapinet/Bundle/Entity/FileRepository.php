@@ -17,6 +17,7 @@ class FileRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
         $countFiles = $em->createQuery('SELECT COUNT(f.id) FROM Wapinet\Bundle\Entity\File f');
+        $sizeFiles = $em->createQuery('SELECT SUM(f.fileSize) FROM Wapinet\Bundle\Entity\File f');
         $countViews = $em->createQuery('SELECT SUM(f.countViews) FROM Wapinet\Bundle\Entity\File f');
 
         $users = $em->createQuery('
@@ -31,6 +32,7 @@ class FileRepository extends EntityRepository
 
         return array(
             'count_files' => $countFiles->getSingleScalarResult(),
+            'size_files' => $sizeFiles->getSingleScalarResult(),
             'count_views' => $countViews->getSingleScalarResult(),
             'users' => $users->getResult(),
         );

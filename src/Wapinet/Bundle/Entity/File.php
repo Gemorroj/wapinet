@@ -59,6 +59,10 @@ class File implements \Serializable
      */
     protected $mimeType;
     /**
+     * @var int
+     */
+    protected $fileSize;
+    /**
      * @var string
      */
     protected $fileName;
@@ -361,6 +365,25 @@ class File implements \Serializable
     {
         // по mime определять принадлежность к категории
         $this->mimeType = $mimeType;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFileSize()
+    {
+        return $this->fileSize;
+    }
+
+    /**
+     * @param int $fileSize
+     * @return File
+     */
+    public function setFileSize($fileSize)
+    {
+        $this->fileSize = $fileSize;
 
         return $this;
     }

@@ -478,6 +478,7 @@ class FileController extends Controller
 
             $data->setHash($hash);
             $data->setMimeType($this->get('mime')->getMimeType($file->getClientOriginalName()));
+            $data->setFileSize($file->getSize());
             $data->setOriginalFileName($file->getClientOriginalName());
         }
 
@@ -645,6 +646,7 @@ class FileController extends Controller
 
         $data->setHash($hash);
         $data->setMimeType($this->get('mime')->getMimeType($file->getClientOriginalName()));
+        $data->setFileSize($file->getSize());
         $data->setOriginalFileName($file->getClientOriginalName());
 
 

@@ -8,7 +8,7 @@
                         <img src="{{ vich_uploader_asset(file, 'file')|imagine_filter('thumbnail') }}" alt="{{ file.originalFileName }}" />
                     {% endif %}
                     <h2>{{ file.originalFileName }}</h2>
-                    <p>{{ file.file.size|wapinet_size }}{% if info is not null %}, {{ info.size.width }}x{{ info.size.height }}{% endif %}</p>
+                    <p>{{ file.fileSize|wapinet_size }}{% if info is not null %}, {{ info.size.width }}x{{ info.size.height }}{% endif %}</p>
                 {% elseif file.isVideo %}
                     {% set info = wapinet_video_info(file.file) %}
                     {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_video_screenshot %}
@@ -16,28 +16,28 @@
                         <img src="{{ screenshot|imagine_filter('thumbnail') }}" alt="{{ file.originalFileName }}" />
                     {% endif %}
                     <h2>{{ file.originalFileName }}</h2>
-                    <p>{{ file.file.size|wapinet_size }}{% if info is not null %}, {{ info.dimensions.width }}x{{ info.dimensions.height }}{{ info.has('duration') ? ', ' ~ info.get('duration')|wapinet_length : '' }}{% endif %}</p>
+                    <p>{{ file.fileSize|wapinet_size }}{% if info is not null %}, {{ info.dimensions.width }}x{{ info.dimensions.height }}{{ info.has('duration') ? ', ' ~ info.get('duration')|wapinet_length : '' }}{% endif %}</p>
                 {% elseif file.isAudio %}
                     {% set info = wapinet_audio_info(file.file) %}
                     <h2>{{ file.originalFileName }}</h2>
-                    <p>{{ file.file.size|wapinet_size }}{% if info is not null %}{{ info.has('duration') ? ', ' ~ info.get('duration')|wapinet_length : '' }}{% endif %}</p>
+                    <p>{{ file.fileSize|wapinet_size }}{% if info is not null %}{{ info.has('duration') ? ', ' ~ info.get('duration')|wapinet_length : '' }}{% endif %}</p>
                 {% elseif file.isJavaApp %}
                     {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_java_app_screenshot %}
                     {% if screenshot is not null %}
                         <img src="{{ screenshot|imagine_filter('thumbnail') }}" alt="{{ file.originalFileName }}" />
                     {% endif %}
                     <h2>{{ file.originalFileName }}</h2>
-                    <p>{{ file.file.size|wapinet_size }}</p>
+                    <p>{{ file.fileSize|wapinet_size }}</p>
                 {% elseif file.isAndroidApp %}
                     {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_android_app_screenshot %}
                     {% if screenshot is not null %}
                         <img src="{{ screenshot|imagine_filter('thumbnail') }}" alt="{{ file.originalFileName }}" />
                     {% endif %}
                     <h2>{{ file.originalFileName }}</h2>
-                    <p>{{ file.file.size|wapinet_size }}</p>
+                    <p>{{ file.fileSize|wapinet_size }}</p>
                 {% else %}
                     <h2>{{ file.originalFileName }}</h2>
-                    <p>{{ file.file.size|wapinet_size }}</p>
+                    <p>{{ file.fileSize|wapinet_size }}</p>
                 {% endif %}
             </a>
         </li>

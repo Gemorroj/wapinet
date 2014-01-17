@@ -14,6 +14,9 @@
             Файлов <span class="ui-li-count">{{ statistic.count_files }}</span>
         </li>
         <li>
+            Объем <span class="ui-li-count">{{ statistic.size_files|wapinet_size }}</span>
+        </li>
+        <li>
             Просмотров <span class="ui-li-count">{{ statistic.count_views }}</span>
         </li>
     </ul>

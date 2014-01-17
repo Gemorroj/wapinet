@@ -47,6 +47,10 @@ Wapinet\Bundle\Entity\File:
             type: string
             nullable: true
             column: mime_type
+        fileSize:
+            type: integer
+            nullable: false
+            column: file_size
         fileName:
             type: string
             nullable: false
