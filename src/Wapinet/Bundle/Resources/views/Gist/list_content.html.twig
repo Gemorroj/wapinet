@@ -12,7 +12,7 @@
             <a href="{{ path('gist_view', {'id': item.id}) }}">
                 <h2>{{ item.subject }}</h2>
                 <p>{{ item.createdAt|wapinet_datetime  }}</p>
-                <span class="ui-li-count">{{ gist_comments_count(item.id) }}</span>
+                <span class="ui-li-count">{{ gist_comments_count(item.id)|wapinet_count }}</span>
             </a>
         </li>
     {% else %}

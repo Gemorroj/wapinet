@@ -19,6 +19,11 @@ services:
         tags:
             - {name: twig.extension, alias: wapinet_size}
 
+    wapinet.count.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\Count
+        tags:
+            - {name: twig.extension, alias: wapinet_count}
+
     wapinet.video.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Video
         arguments: [@service_container]

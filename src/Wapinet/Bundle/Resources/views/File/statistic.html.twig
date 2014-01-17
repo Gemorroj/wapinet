@@ -11,13 +11,13 @@
 {% block content %}
     <ul data-role="listview" data-inset="true">
         <li>
-            Файлов <span class="ui-li-count">{{ statistic.count_files }}</span>
+            Файлов <span class="ui-li-count">{{ statistic.count_files|wapinet_count }}</span>
         </li>
         <li>
             Объем <span class="ui-li-count">{{ statistic.size_files|wapinet_size }}</span>
         </li>
         <li>
-            Просмотров <span class="ui-li-count">{{ statistic.count_views }}</span>
+            Просмотров <span class="ui-li-count">{{ statistic.count_views|wapinet_count }}</span>
         </li>
     </ul>
     {% if statistic.users %}

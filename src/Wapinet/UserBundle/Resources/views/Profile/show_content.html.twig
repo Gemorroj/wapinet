@@ -55,10 +55,10 @@
 </div>
 
 <ul data-role="listview" data-inset="true">
-    <li data-icon="cloud"><a href="{{ path('gist_user', {'username': user.username}) }}">Блог <span class="ui-li-count">{{ gist_count(user) }}</span></a></li>
-    <li data-icon="action"><a href="{{ path('file_user', {'username': user.username}) }}">Файлы <span class="ui-li-count">{{ file_count_user(user) }}</span></a></li>
-    <li data-icon="comment"><a href="{{ path('wapinet_user_comments', {'username': user.username}) }}">Комментарии <span class="ui-li-count">{{ wapinet_comment_count_comments(user) }}</span></a></li>
-    <li data-icon="user"><a href="{{ path('wapinet_user_friends', {'username': user.username}) }}">Друзья <span class="ui-li-count">{{ wapinet_user_count_friends(user) }}</span></a></li>
+    <li data-icon="cloud"><a href="{{ path('gist_user', {'username': user.username}) }}">Блог <span class="ui-li-count">{{ gist_count(user)|wapinet_count }}</span></a></li>
+    <li data-icon="action"><a href="{{ path('file_user', {'username': user.username}) }}">Файлы <span class="ui-li-count">{{ file_count_user(user)|wapinet_count }}</span></a></li>
+    <li data-icon="comment"><a href="{{ path('wapinet_user_comments', {'username': user.username}) }}">Комментарии <span class="ui-li-count">{{ wapinet_comment_count_comments(user)|wapinet_count }}</span></a></li>
+    <li data-icon="user"><a href="{{ path('wapinet_user_friends', {'username': user.username}) }}">Друзья <span class="ui-li-count">{{ wapinet_user_count_friends(user)|wapinet_count }}</span></a></li>
     {% if app.user.id == user.id %}
         <li data-icon="calendar"><a href="{{ path('wapinet_user_events') }}">События</a></li>
     {% endif %}
