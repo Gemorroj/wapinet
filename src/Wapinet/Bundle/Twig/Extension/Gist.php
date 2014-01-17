@@ -26,9 +26,9 @@ class Gist extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'gist_count_all'  => new \Twig_Function_Method($this, 'getCountAll'),
-            'gist_count' => new \Twig_Function_Method($this, 'getCount'),
-            'gist_comments_count' => new \Twig_Function_Method($this, 'getCommentsCount'),
+            new \Twig_SimpleFunction('gist_count_all', array($this, 'getCountAll')),
+            new \Twig_SimpleFunction('gist_count', array($this, 'getCount')),
+            new \Twig_SimpleFunction('gist_comments_count', array($this, 'getCommentsCount')),
         );
     }
 

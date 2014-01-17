@@ -25,7 +25,7 @@ class Guestbook extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'guestbook_count_all'  => new \Twig_Function_Method($this, 'getCountAll'),
+            new \Twig_SimpleFunction('guestbook_count_all', array($this, 'getCountAll')),
         );
     }
 

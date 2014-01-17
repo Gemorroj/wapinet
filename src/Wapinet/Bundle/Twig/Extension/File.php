@@ -38,11 +38,11 @@ class File extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'file_count_all'  => new \Twig_Function_Method($this, 'getCountAll'),
-            'file_count_today' => new \Twig_Function_Method($this, 'getCountToday'),
-            'file_count_yesterday' => new \Twig_Function_Method($this, 'getCountYesterday'),
-            'file_count_category' => new \Twig_Function_Method($this, 'getCountCategory'),
-            'file_count_user' => new \Twig_Function_Method($this, 'getCountUser'),
+            new \Twig_SimpleFunction('file_count_all', array($this, 'getCountAll')),
+            new \Twig_SimpleFunction('file_count_today', array($this, 'getCountToday')),
+            new \Twig_SimpleFunction('file_count_yesterday', array($this, 'getCountYesterday')),
+            new \Twig_SimpleFunction('file_count_category', array($this, 'getCountCategory')),
+            new \Twig_SimpleFunction('file_count_user', array($this, 'getCountUser')),
         );
     }
 
