@@ -72,8 +72,9 @@
             </pre>
         {% endif %}
     {% elseif file.isVideo %}
-        {% set video_info = wapinet_video_info(file.file) %}
-        {% set audio_info = wapinet_audio_info(file.file) %}
+        {% set info = file_get_media_info(file.file) %}
+        {% set audio_info = info is not null ? info.audios.first : null %}
+        {% set video_info = info is not null ? info.videos.first : null %}
         {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_video_screenshot %}
 
         {% if file.isPlayableVideo %}
@@ -109,7 +110,8 @@
             </pre>
         {% endif %}
     {% elseif file.isAudio %}
-        {% set audio_info = wapinet_audio_info(file.file) %}
+        {% set info = file_get_media_info(file.file) %}
+        {% set audio_info = info is not null ? info.audios.first : null %}
 
         {% if file.isPlayableAudio %}
             {% include '@Wapinet/audio.html.twig' with {'file': file} %}

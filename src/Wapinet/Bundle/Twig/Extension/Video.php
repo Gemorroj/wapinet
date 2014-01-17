@@ -5,9 +5,7 @@ namespace Wapinet\Bundle\Twig\Extension;
 use FFMpeg\Format\Video\WebM;
 use FFMpeg\Format\Video\X264;
 use FFMpeg\Coordinate\TimeCode;
-use FFMpeg\FFProbe\DataMapping\Stream;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\File\File;
 
 class Video extends \Twig_Extension
 {
@@ -32,18 +30,6 @@ class Video extends \Twig_Extension
             new \Twig_SimpleFilter('wapinet_video_screenshot', array($this, 'getScreenshot')),
             new \Twig_SimpleFilter('wapinet_video_3gp_to_mp4', array($this, 'convert3gpToMp4')),
             new \Twig_SimpleFilter('wapinet_video_avi_to_webm', array($this, 'convertAviToWebm')),
-        );
-    }
-
-    /**
-     * Returns a list of global functions to add to the existing list.
-     *
-     * @return array An array of global functions
-     */
-    public function getFunctions()
-    {
-        return array(
-            new \Twig_SimpleFunction('wapinet_video_info', array($this, 'getInfo')),
         );
     }
 
@@ -133,25 +119,6 @@ class Video extends \Twig_Extension
     protected function getWebDir()
     {
         return $this->container->get('kernel')->getWebDir();
-    }
-
-
-    /**
-     * @param File $file
-     *
-     * @return Stream|null
-     */
-    public function getInfo (File $file)
-    {
-        $ffprobe = $this->container->get('dubture_ffmpeg.ffprobe');
-
-        try {
-            $info = $ffprobe->streams($file->getPathname())->videos()->first();
-        } catch (\Exception $e) {
-            $info = null;
-        }
-
-        return $info;
     }
 
 

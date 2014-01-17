@@ -43,12 +43,6 @@ services:
         tags:
             - {name: twig.extension, alias: wapinet_image}
 
-    wapinet.audio.twig_extension:
-        class: Wapinet\Bundle\Twig\Extension\Audio
-        arguments: [@service_container]
-        tags:
-            - {name: twig.extension, alias: wapinet_audio}
-
     wapinet.archive.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Archive
         arguments: [@service_container]
@@ -75,7 +69,7 @@ services:
 
     wapinet.file.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\File
-        arguments: [@doctrine.orm.entity_manager]
+        arguments: [@service_container, @doctrine.orm.entity_manager]
         tags:
             - {name: twig.extension, alias: wapinet_file}
 

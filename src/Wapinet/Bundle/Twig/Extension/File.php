@@ -3,6 +3,7 @@
 namespace Wapinet\Bundle\Twig\Extension;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Wapinet\Bundle\Entity\FileRepository;
 use Wapinet\UserBundle\Entity\User;
 
@@ -12,9 +13,14 @@ class File extends \Twig_Extension
      * @var FileRepository
      */
     protected $fileRepository;
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
 
-    public function __construct(EntityManager $em)
+    public function __construct(ContainerInterface $container, EntityManager $em)
     {
+        $this->container = $container;
         $this->fileRepository = $em->getRepository('Wapinet\Bundle\Entity\File');
     }
 
@@ -43,6 +49,7 @@ class File extends \Twig_Extension
             new \Twig_SimpleFunction('file_count_yesterday', array($this, 'getCountYesterday')),
             new \Twig_SimpleFunction('file_count_category', array($this, 'getCountCategory')),
             new \Twig_SimpleFunction('file_count_user', array($this, 'getCountUser')),
+            new \Twig_SimpleFunction('file_get_media_info', array($this, 'getMediaInfo')),
         );
     }
 
@@ -73,6 +80,25 @@ class File extends \Twig_Extension
     public function getCountUser(User $user)
     {
         return $this->fileRepository->countUser($user);
+    }
+
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\File\File $file
+     *
+     * @return null|\FFMpeg\FFProbe\DataMapping\StreamCollection
+     */
+    public function getMediaInfo(\Symfony\Component\HttpFoundation\File\File $file)
+    {
+        $ffprobe = $this->container->get('dubture_ffmpeg.ffprobe');
+
+        try {
+            $info = $ffprobe->streams($file->getPathname());
+        } catch (\Exception $e) {
+            $info = null;
+        }
+
+        return $info;
     }
 
     /**
