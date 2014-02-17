@@ -38,16 +38,19 @@ class DeleteFile
     {
         $data = $this->request->get($form->getName());
 
+
         /** @var PropertyMapping[] $mappings */
         $mappings = $this->factory->fromObject($entity);
         foreach ($mappings as $mapping) {
-            $formName = $mapping->getPropertyName();
-            $fileName = $mapping->getFileNamePropertyName();
+            $mapping->getMappingName();
+            $filePropertyName = $mapping->getFilePropertyName();
+            /*$fileName = $mapping->fileNameProperty;*/ //FIXME: https://github.com/dustin10/VichUploaderBundle/issues/208
+            $fileName = $filePropertyName . 'Name';
 
-            $fileForm = $form->get($formName);
-            $fileFormName = $fileForm->getName();
-            if (isset($data[$fileFormName]['file_url_delete']) && $data[$fileFormName]['file_url_delete'] && null === $fileForm->getData()) {
-                $entity->{'set' . ucfirst($formName)}(null);
+            $filePropertyNameForm = $form->get($filePropertyName);
+            $filePropertyNameFormName = $filePropertyNameForm->getName();
+            if (isset($data[$filePropertyNameFormName]['file_url_delete']) && $data[$filePropertyNameFormName]['file_url_delete'] && null === $filePropertyNameForm->getData()) {
+                $entity->{'set' . ucfirst($filePropertyName)}(null);
                 $entity->{'set' . ucfirst($fileName)}(null);
             }
         }
