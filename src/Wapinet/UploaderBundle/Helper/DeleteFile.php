@@ -44,14 +44,13 @@ class DeleteFile
         foreach ($mappings as $mapping) {
             $mapping->getMappingName();
             $filePropertyName = $mapping->getFilePropertyName();
-            /*$fileName = $mapping->fileNameProperty;*/ //FIXME: https://github.com/dustin10/VichUploaderBundle/issues/208
-            $fileName = $filePropertyName . 'Name';
+            $fileNamePropertyName = $mapping->getFileNamePropertyName();
 
             $filePropertyNameForm = $form->get($filePropertyName);
             $filePropertyNameFormName = $filePropertyNameForm->getName();
             if (isset($data[$filePropertyNameFormName]['file_url_delete']) && $data[$filePropertyNameFormName]['file_url_delete'] && null === $filePropertyNameForm->getData()) {
                 $entity->{'set' . ucfirst($filePropertyName)}(null);
-                $entity->{'set' . ucfirst($fileName)}(null);
+                $entity->{'set' . ucfirst($fileNamePropertyName)}(null);
             }
         }
     }
