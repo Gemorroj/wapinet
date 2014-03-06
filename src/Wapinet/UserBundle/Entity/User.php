@@ -95,6 +95,11 @@ class User extends BaseUser implements ParticipantInterface
      */
     protected $timezone;
 
+    /**
+     * @var string|null
+     */
+    protected $country;
+
 
     public function __construct()
     {
@@ -120,6 +125,49 @@ class User extends BaseUser implements ParticipantInterface
         return $this->friended;
     }
 
+
+    /**
+     * @return string|null
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param string|null $country
+     * @return User
+     */
+    public function setCountry($country = null)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCountryName()
+    {
+        if (null !== $this->getCountry()) {
+            return \Symfony\Component\Intl\Intl::getRegionBundle()->getCountryName($this->getCountry());
+        }
+
+        return null;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCountryImage()
+    {
+        if (null !== $this->getCountry()) {
+            return '/bundles/wapinet/images/countries/' . strtolower($this->getCountry()) . '.png';
+        }
+
+        return null;
+    }
 
     /**
      * @return string|null

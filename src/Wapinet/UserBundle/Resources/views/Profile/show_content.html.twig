@@ -30,13 +30,29 @@
                 {% elseif user.isFemale %}
                     Женский
                 {% else %}
-                    Не указан
+                    Не указано
                 {% endif %}
             </td>
         </tr>
         <tr>
             <td>День рождения</td>
-            <td>{{ user.birthday is null ? 'Не указано' : user.birthday|wapinet_date }}</td>
+            <td>
+                {% if user.country %}
+                    {{ user.birthday|wapinet_date }}
+                {% else %}
+                    Не указано
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>Страна</td>
+            <td>
+                {% if user.country %}
+                    {{ user.countryName }} <img src="{{ user.countryImage }}" alt="{{ user.countryName }}" />
+                {% else %}
+                    Не указано
+                {% endif %}
+            </td>
         </tr>
         <tr>
             <td>Дата регистрации</td>

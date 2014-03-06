@@ -31,6 +31,7 @@ class ProfileType extends BaseType
             ->add('sex', 'choice', array('label' => 'Пол', 'required' => false, 'choices' => User::getSexChoices()))
             ->add('birthday', 'birthday', array('widget' => 'single_text', 'label' => 'Дата рождения', 'required' => false))
             ->add('timezone', 'timezone', array('label' => 'Временная зона', 'required' => false))
+            ->add('country', 'country', array('label' => 'Страна', 'required' => false))
             ->add('info', 'textarea', array('label' => 'Дополнительная информация', 'required' => false, 'max_length' => 5000))
             ->add('avatar', 'file_url', array(
                 'accept' => 'image/*',

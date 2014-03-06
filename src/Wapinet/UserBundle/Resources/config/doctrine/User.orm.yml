@@ -38,6 +38,9 @@ Wapinet\UserBundle\Entity\User:
         timezone:
             type: string
             nullable: true
+        country:
+            type: string
+            nullable: true
 
     lifecycleCallbacks:
         prePersist: [ setCreatedAtValue ]
