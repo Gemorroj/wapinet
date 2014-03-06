@@ -15,11 +15,11 @@
     <ul data-role="listview" data-inset="true">
         {% for item in pagerfanta %}
             <li data-role="list-divider">
-            <span>
+            <span data-mini="true">
                 {% if item.user %}
                     <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': item.user.username}) }}">{{ item.user.username }}</a>
                 {% else %}
-                    <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn no-link" href="#">Anonymous</a>
+                    <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn no-link" href="#" title="{{ item.ip ~ "\r\n" ~ item.browser }}">Anonymous</a>
                 {% endif %}
             </span>
                 <span class="ui-li-count">{{ item.createdAt|wapinet_datetime  }}</span>
