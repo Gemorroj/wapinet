@@ -37,7 +37,7 @@
         "liip/imagine-bundle": "dev-master",
         "gregwar/captcha-bundle": "dev-master",
         "pulse00/ffmpeg-bundle": "dev-master",
-        "highco/sphinx-bundle": "v2.0.0",
+        "highco/sphinx-bundle": "~2.0",
         "gemorroj/phpwhois": "dev-master",
         "gemorroj/archive7z": "dev-master",
         "gemorroj/xbbcode": "dev-master",
