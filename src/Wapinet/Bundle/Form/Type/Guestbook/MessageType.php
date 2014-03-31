@@ -18,7 +18,7 @@ class MessageType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('message', 'textarea', array('attr' => array('placeholder' => 'Сообщение'), 'max_length' => 5000, 'required' => true, 'label' => false, 'constraints' => new NotBlank()));
+        $builder->add('message', 'textarea', array('attr' => array('placeholder' => 'Сообщение', 'maxlength' => 5000), 'required' => true, 'label' => false, 'constraints' => new NotBlank()));
         $builder->add('submit', 'submit', array('label' => 'Написать'));
     }
 

@@ -21,11 +21,11 @@ class RegistrationType extends AbstractType
         $builder->add('reg_type', 'hidden');
         $builder->add('csrf', 'hidden');
         $builder->add('gnm', 'hidden');
-        $builder->add('first_name', 'text', array('label' => 'Имя (1-20 символов)', 'max_length' => 20));
-        $builder->add('last_name', 'text', array('label' => 'Фамилия (1-20 символов)', 'max_length' => 20));
+        $builder->add('first_name', 'text', array('label' => 'Имя (1-20 символов)', 'attr' => array('maxlength' => 20)));
+        $builder->add('last_name', 'text', array('label' => 'Фамилия (1-20 символов)', 'attr' => array('maxlength' => 20)));
         $builder->add('email', 'email', array('label' => 'E-mail'));
-        $builder->add('password', 'password', array('label' => 'Пароль (6-8 символов, латиница, цифры)', 'max_length' => 8, 'pattern' => '[a-zA-Z0-9]{6,8}'));
-        $builder->add('captcha', 'number', array('label' => 'Код с картинки', 'max_length' => 6));
+        $builder->add('password', 'password', array('label' => 'Пароль (6-8 символов, латиница, цифры)', 'attr' => array('pattern' => '[a-zA-Z0-9]{6,8}', 'maxlength' => 20)));
+        $builder->add('captcha', 'number', array('label' => 'Код с картинки', 'attr' => array('maxlength' => 6)));
 
         $builder->add('submit', 'submit', array('label' => 'Зарегистрироваться'));
     }

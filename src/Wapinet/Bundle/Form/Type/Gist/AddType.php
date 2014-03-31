@@ -18,7 +18,7 @@ class AddType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('subject', 'text', array('attr' => array('placeholder' => 'Тема'), 'max_length' => 5000, 'required' => true, 'label' => false, 'constraints' => new NotBlank()));
+        $builder->add('subject', 'text', array('attr' => array('placeholder' => 'Тема', 'maxlength' => 5000), 'required' => true, 'label' => false, 'constraints' => new NotBlank()));
         $builder->add('body', 'textarea', array('attr' => array('placeholder' => 'Сообщение'), 'required' => true, 'label' => false, 'constraints' => new NotBlank()));
         $builder->add('submit', 'submit', array('label' => 'Добавить'));
     }

@@ -30,8 +30,8 @@ class SmsType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('message', 'textarea', array('max_length' => 160, 'label' => 'Сообщение'));
-        $builder->add('number', 'text', array('pattern' => '^\+?[0-9]+$', 'label' => 'Номер'));
+        $builder->add('message', 'textarea', array('attr' => array('maxlength' => 160), 'label' => 'Сообщение'));
+        $builder->add('number', 'text', array('attr' => array('pattern' => '^\+?[0-9]+$'), 'label' => 'Номер'));
 
         /**
          * @see http://www.en2ru.com/mobile.php

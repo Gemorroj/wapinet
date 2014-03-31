@@ -19,7 +19,7 @@ class SearchType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('search', 'search', array('attr' => array('title' => 'Слова разделенные пробелами. Работает модификатор *, кавычки и др.'), 'max_length' => 5000, 'required' => true, 'label' => false, 'constraints' => new NotBlank()));
+        $builder->add('search', 'search', array('attr' => array('maxlength' => 5000, 'title' => 'Слова разделенные пробелами. Работает модификатор *, кавычки и др.'), 'required' => true, 'label' => false, 'constraints' => new NotBlank()));
 
         $builder->add('only_online', 'checkbox', array('required' => false, 'label' => 'Только онлайн'));
 
