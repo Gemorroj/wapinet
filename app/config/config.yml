@@ -174,10 +174,7 @@ gregwar_captcha:
 liip_imagine:
     driver: gd
     data_loader: filesystem
-    resolvers:
-        default:
-            web_path:
-                cache_prefix: /cache
+    cache_prefix: /cache
     filter_sets:
         thumbnail:
             quality: 75
