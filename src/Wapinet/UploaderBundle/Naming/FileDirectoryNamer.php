@@ -3,7 +3,7 @@
 namespace Wapinet\UploaderBundle\Naming;
 
 use Vich\UploaderBundle\Naming\DirectoryNamerInterface;
-use Wapinet\Bundle\Entity\File;
+use Vich\UploaderBundle\Mapping\PropertyMapping;
 
 /**
  * FileDirectoryNamer
@@ -13,13 +13,15 @@ class FileDirectoryNamer implements DirectoryNamerInterface
     /**
      * Creates a directory name for the file being uploaded.
      *
-     * @param File $obj The object the upload is attached to.
-     * @param string $field The name of the uploadable field to generate a name for.
-     * @param string $uploadDir The upload directory set in config
+     * @param object          $object  The object the upload is attached to.
+     * @param Propertymapping $mapping The mapping to use to manipulate the given object.
+     *
+     * @note The $object parameter can be null.
+     *
      * @return string The directory name.
      */
-    public function directoryName($obj, $field, $uploadDir)
+    public function directoryName($object, PropertyMapping $mapping)
     {
-        return $uploadDir . '/' . $obj->getCreatedAt()->format('Y/m/d');
+        return $mapping->getUploadDestination() . '/' . $object->getCreatedAt()->format('Y/m/d');
     }
 }
