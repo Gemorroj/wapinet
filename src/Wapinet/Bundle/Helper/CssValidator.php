@@ -13,6 +13,9 @@ class CssValidator
      */
     protected $cssValidator;
 
+    /**
+     * Конструктор
+     */
     public function __construct()
     {
         $this->cssValidator = new \Services_W3C_CSSValidator;

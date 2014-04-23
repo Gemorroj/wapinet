@@ -2,6 +2,9 @@
 namespace Wapinet\Bundle\Helper;
 
 use Symfony\Component\HttpFoundation\File\File;
+use HTMLValidator\HTMLValidator as W3CService;
+use HTMLValidator\Response as W3CServiceResponse;
+use HTMLValidator\Exception as W3CServiceException;
 
 /**
  * HtmlValidator хэлпер
@@ -9,41 +12,36 @@ use Symfony\Component\HttpFoundation\File\File;
 class HtmlValidator
 {
     /**
-     * @var \Services_W3C_HTMLValidator
+     * @var W3CService
      */
     protected $htmlValidator;
 
+    /**
+     * Конструктор
+     */
     public function __construct()
     {
-        $this->htmlValidator = new \Services_W3C_HTMLValidator;
+        $this->htmlValidator = new W3CService();
     }
 
     /**
      * @param string $html
-     * @return \Services_W3C_HTMLValidator_Response
-     * @throws \RuntimeException
+     * @return W3CServiceResponse
+     * @throws W3CServiceException
      */
     public function validateFragment($html)
     {
-        $result = $this->htmlValidator->validateFragment($html);
-        if (false === $result) {
-            throw new \RuntimeException('Ошибка при проверке HTML');
-        }
-        return $result;
+        return $this->htmlValidator->validateFragment($html);
     }
 
 
     /**
      * @param File $file
-     * @return \Services_W3C_HTMLValidator_Response
-     * @throws \RuntimeException
+     * @return W3CServiceResponse
+     * @throws W3CServiceException
      */
     public function validateFile(File $file)
     {
-        $result = $this->htmlValidator->validateFile($file->getPathname());
-        if (false === $result) {
-            throw new \RuntimeException('Ошибка при проверке HTML');
-        }
-        return $result;
+        return $this->htmlValidator->validateFile($file->getPathname());
     }
 }
