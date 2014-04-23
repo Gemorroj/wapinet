@@ -2,6 +2,10 @@
 namespace Wapinet\Bundle\Helper;
 
 use Symfony\Component\HttpFoundation\File\File;
+use CSSValidator\CSSValidator as W3CService;
+use CSSValidator\Options as W3CServiceOptions;
+use CSSValidator\Response as W3CServiceResponse;
+use CSSValidator\Exception as W3CServiceException;
 
 /**
  * CssValidator хэлпер
@@ -9,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\File;
 class CssValidator
 {
     /**
-     * @var \Services_W3C_CSSValidator
+     * @var W3CService
      */
     protected $cssValidator;
 
@@ -18,65 +22,35 @@ class CssValidator
      */
     public function __construct()
     {
-        $this->cssValidator = new \Services_W3C_CSSValidator;
-        $this->cssValidator->lang = 'ru';
+        $this->cssValidator = new W3CService();
+        $this->getOptions()->setLang('ru');
     }
 
     /**
-     * @param string $warning
-     * @return CssValidator
+     * @return W3CServiceOptions
      */
-    public function setWarning($warning)
+    public function getOptions()
     {
-        $this->cssValidator->warning = $warning;
-        return $this;
-    }
-
-    /**
-     * @param string $profile
-     * @return CssValidator
-     */
-    public function setProfile($profile)
-    {
-        $this->cssValidator->profile = $profile;
-        return $this;
-    }
-
-    /**
-     * @param string $usermedium
-     * @return CssValidator
-     */
-    public function setUsermedium($usermedium)
-    {
-        $this->cssValidator->usermedium = $usermedium;
-        return $this;
+        return $this->cssValidator->getOptions();
     }
 
     /**
      * @param string $css
-     * @throws \RuntimeException
-     * @return \Services_W3C_CSSValidator_Response
+     * @throws W3CServiceException
+     * @return W3CServiceResponse
      */
     public function validateFragment($css)
     {
-        $result = $this->cssValidator->validateFragment($css);
-        if (false === $result) {
-            throw new \RuntimeException('Ошибка при проверке CSS');
-        }
-        return $result;
+        return $this->cssValidator->validateFragment($css);
     }
 
     /**
      * @param File $file
-     * @throws \RuntimeException
-     * @return \Services_W3C_CSSValidator_Response
+     * @throws W3CServiceException
+     * @return W3CServiceResponse
      */
     public function validateFile(File $file)
     {
-        $result = $this->cssValidator->validateFile($file->getPathname());
-        if (false === $result) {
-            throw new \RuntimeException('Ошибка при проверке CSS');
-        }
-        return $result;
+        return $this->cssValidator->validateFile($file->getPathname());
     }
 }

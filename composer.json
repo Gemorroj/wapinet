@@ -43,7 +43,7 @@
         "gemorroj/xbbcode": "dev-master",
         "gemorroj/syntax": "dev-master",
         "gemorroj/htmlvalidator": "dev-master",
-        "pear-pear/Services_W3C_CSSValidator": "*"
+        "gemorroj/cssvalidator": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

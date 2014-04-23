@@ -39,14 +39,16 @@ class CssValidatorController extends Controller
     /**
      * @param array $data
      * @throws ValidatorException
-     * @return \Services_W3C_CSSValidator_Response
+     * @return \CSSValidator\Response
      */
     protected function getCssValidator(array $data)
     {
         $cssValidator = $this->get('css_validator');
-        $cssValidator->setProfile($data['profile']);
-        $cssValidator->setWarning($data['warning']);
-        $cssValidator->setUsermedium($data['usermedium']);
+        $options = $cssValidator->getOptions();
+
+        $options->setProfile($data['profile']);
+        $options->setWarning($data['warning']);
+        $options->setUsermedium($data['usermedium']);
 
         if (null !== $data['css']) {
             return $cssValidator->validateFragment($data['css']);

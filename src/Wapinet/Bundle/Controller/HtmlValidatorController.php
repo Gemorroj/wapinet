@@ -38,7 +38,7 @@ class HtmlValidatorController extends Controller
     /**
      * @param array $data
      * @throws ValidatorException
-     * @return \Services_W3C_HTMLValidator_Response
+     * @return \HTMLValidator\Response
      */
     protected function getHtmlValidator(array $data)
     {
