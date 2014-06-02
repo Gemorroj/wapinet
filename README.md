@@ -57,7 +57,7 @@ The script returns a status code of `0` if all mandatory requirements are met,
 
 Access the `config.php` script from a browser:
 
-    http://localhost/path/to/symfony/app/web/config.php
+    http://localhost/path-to-project/web/config.php
 
 If you get any warnings or recommendations, fix them before moving on.
 
@@ -100,9 +100,8 @@ playing with it, you can remove it by following these steps:
 
   * remove the `web/bundles/acmedemo` directory;
 
-  * remove the `security.providers`, `security.firewalls.login` and
-    `security.firewalls.secured_area` entries in the `security.yml` file or
-    tweak the security configuration to fit your needs.
+  * empty the `security.yml` file or tweak the security configuration to fit
+    your needs.
 
 What's inside?
 ---------------
