@@ -1,39 +1,39 @@
 wapinet_user_profile:
-    pattern:  /profile/user/{username}
+    path:  /profile/user/{username}
     defaults: { _controller: WapinetUserBundle:Profile:showUser, username: null }
     methods: [GET]
 
 wapinet_user_panel_edit:
-    pattern:  /panel/edit
+    path:  /panel/edit
     defaults: { _controller: WapinetUserBundle:Panel:edit }
 
 wapinet_user_subscriber_edit:
-    pattern:  /subscriber/edit
+    path:  /subscriber/edit
     defaults: { _controller: WapinetUserBundle:Subscriber:edit }
 
 wapinet_user_events:
-    pattern:  /events
+    path:  /events
     defaults: { _controller: WapinetUserBundle:Events:index }
 
 wapinet_user_comments:
-    pattern:  /comments/{username}
+    path:  /comments/{username}
     defaults: { _controller: WapinetUserBundle:Comments:index }
 
 wapinet_users:
-    pattern:  /users/{key}
+    path:  /users/{key}
     defaults: { _controller: WapinetUserBundle:Users:index, key: null }
     requirements:
         key: "[a-zA-Z0-9]+"
 
 wapinet_user_friends:
-    pattern:  /friends/{username}
+    path:  /friends/{username}
     defaults: { _controller: WapinetUserBundle:Friends:index }
 
 wapinet_user_friends_add:
-    pattern:  /friends/add/{username}
+    path:  /friends/add/{username}
     defaults: { _controller: WapinetUserBundle:Friends:add }
 
 wapinet_user_friends_delete:
-    pattern:  /friends/delete/{username}
+    path:  /friends/delete/{username}
     defaults: { _controller: WapinetUserBundle:Friends:delete }
 

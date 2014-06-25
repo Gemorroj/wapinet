@@ -1,32 +1,32 @@
 wapinet_message_inbox:
-    pattern:  /inbox
+    path:  /inbox
     defaults: { _controller: WapinetMessageBundle:Message:inbox }
 
 wapinet_message_sent:
-    pattern:  /sent
+    path:  /sent
     defaults: { _controller: WapinetMessageBundle:Message:sent }
 
 wapinet_message_deleted:
-    pattern:  /deleted
+    path:  /deleted
     defaults: { _controller: WapinetMessageBundle:Message:deleted }
 
 wapinet_message_thread_view:
-    pattern: /{threadId}
+    path: /{threadId}
     defaults: {_controller: WapinetMessageBundle:Message:thread }
     requirements:
         threadId: \d+
 
 wapinet_message_thread_new:
-    pattern: /new/{recipient}
+    path: /new/{recipient}
     defaults: {_controller: WapinetMessageBundle:Message:newThread, recipient: null }
 
 wapinet_message_thread_delete:
-    pattern: /{threadId}/delete
+    path: /{threadId}/delete
     methods: [POST, DELETE]
     defaults: {_controller: WapinetMessageBundle:Message:delete }
 
 wapinet_message_thread_undelete:
-    pattern: /{threadId}/undelete
+    path: /{threadId}/undelete
     methods: [POST]
     defaults: {_controller: WapinetMessageBundle:Message:undelete }
 

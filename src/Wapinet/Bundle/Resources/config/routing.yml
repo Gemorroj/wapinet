@@ -1,51 +1,51 @@
 index:
-    pattern:  /
+    path:  /
     defaults: { _controller: WapinetBundle:Default:index }
 
 about:
-    pattern:  /about
+    path:  /about
     defaults: { _controller: WapinetBundle:Default:about }
 
 utilities:
-    pattern:  /utilities
+    path:  /utilities
     defaults: { _controller: WapinetBundle:Default:utilities }
 
 downloads:
-    pattern:  /downloads
+    path:  /downloads
     defaults: { _controller: WapinetBundle:Default:downloads }
 
 programming:
-    pattern:  /programming
+    path:  /programming
     defaults: { _controller: WapinetBundle:Default:programming }
 
 open_source:
-    pattern:  /open_source
+    path:  /open_source
     defaults: { _controller: WapinetBundle:Default:openSource }
 
 gmanager:
-    pattern:  /gmanager
+    path:  /gmanager
     defaults: { _controller: WapinetBundle:Default:gmanager }
 
 buy_php_scripts:
-    pattern:  /buy_php_scripts
+    path:  /buy_php_scripts
     defaults: { _controller: WapinetBundle:Default:buyPhpScripts }
 
 textbook:
-    pattern:  /textbook
+    path:  /textbook
     defaults: { _controller: WapinetBundle:Default:textbook }
 
 
 # Проверка синтаксиса для Gmanager
 syntax:
-    pattern:  /syntax
+    path:  /syntax
     defaults: { _controller: WapinetBundle:Syntax:index }
 syntax_old:
-    pattern:  /syntax2/index.php
+    path:  /syntax2/index.php
     defaults: { _controller: WapinetBundle:Syntax:index }
 
 
 browser_info:
-    pattern: /browser_info
+    path: /browser_info
     defaults: { _controller: WapinetBundle:BrowserInfo:index }
 
 mobile_code:
@@ -153,42 +153,42 @@ gist:
     prefix:   /gist
 
 proxy_index:
-    pattern: /proxy
+    path: /proxy
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: %wapinet_proxy_url%
         permanent: true
 
 ftp_index:
-    pattern: /ftp
+    path: /ftp
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: %wapinet_ftp_url%
         permanent: true
 
 forum_index:
-    pattern: /forum
+    path: /forum
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: %wapinet_forum_url%
         permanent: true
 
 sea_index:
-    pattern: /sea
+    path: /sea
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: %wapinet_sea_url%
         permanent: true
 
 sea_readme:
-    pattern: /sea/readme
+    path: /sea/readme
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: %wapinet_sea_url%/readme.txt
         permanent: true
 
 sea_changelog:
-    pattern: /sea/changelog
+    path: /sea/changelog
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: %wapinet_sea_url%/changelog.txt
