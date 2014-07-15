@@ -8,6 +8,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Wapinet\Bundle\Form\Type\Translate\TranslateType;
 use Symfony\Component\Form\FormError;
 
+// TODO: https://github.com/nkt/yandex-translate
 class TranslateController extends Controller
 {
     public function indexAction(Request $request)
