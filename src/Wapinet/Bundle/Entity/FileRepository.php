@@ -340,7 +340,7 @@ class FileRepository extends EntityRepository
 
         $loadedNames = array();
         /** @var Tag $loadedTag */
-        foreach ($tags as &$loadedTag) {
+        foreach ($tags as $loadedTag) {
             if (false === $loadedTag->getFiles()->contains($file)) {
                 $loadedTag->getFiles()->add($file);
 
