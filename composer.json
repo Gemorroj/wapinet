@@ -27,7 +27,7 @@
         "white-october/pagerfanta-bundle": "*",
         "james-heinrich/getid3": "dev-master",
         "vich/uploader-bundle": "dev-master",
-        "liip/imagine-bundle": "v0.21.1",
+        "liip/imagine-bundle": "*",
         "gregwar/captcha-bundle": "*",
         "pulse00/ffmpeg-bundle": "*",
         "highco/sphinx-bundle": "~2.0",

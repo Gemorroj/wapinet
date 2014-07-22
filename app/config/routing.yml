@@ -58,6 +58,5 @@ gregwar_captcha_routing:
     resource: "@GregwarCaptchaBundle/Resources/config/routing/routing.yml"
     prefix: /_gcbw
 
-_imagine:
-    resource: .
-    type:     imagine
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"

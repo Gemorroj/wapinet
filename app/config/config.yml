@@ -173,8 +173,6 @@ gregwar_captcha:
 
 liip_imagine:
     driver: gd
-    data_loader: filesystem
-    cache_prefix: /cache
     filter_sets:
         thumbnail:
             quality: 75
