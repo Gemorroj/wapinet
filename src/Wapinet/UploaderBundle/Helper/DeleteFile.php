@@ -1,8 +1,8 @@
 <?php
 namespace Wapinet\UploaderBundle\Helper;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Vich\UploaderBundle\Mapping\PropertyMapping;
 use Vich\UploaderBundle\Mapping\PropertyMappingFactory;
 
@@ -12,18 +12,18 @@ use Vich\UploaderBundle\Mapping\PropertyMappingFactory;
 class DeleteFile
 {
     /**
-     * @var Request
+     * @var RequestStack
      */
-    protected $request;
+    protected $requestStack;
     /**
      * @var PropertyMappingFactory
      */
     protected $factory;
 
 
-    public function __construct(Request $request, PropertyMappingFactory $factory)
+    public function __construct(RequestStack $requestStack, PropertyMappingFactory $factory)
     {
-        $this->request = $request;
+        $this->requestStack = $requestStack;
         $this->factory = $factory;
     }
 
@@ -36,7 +36,7 @@ class DeleteFile
      */
     public function delete(FormInterface $form, $entity)
     {
-        $data = $this->request->get($form->getName());
+        $data = $this->requestStack->getCurrentRequest()->get($form->getName());
 
 
         /** @var PropertyMapping[] $mappings */

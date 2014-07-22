@@ -17,5 +17,4 @@ services:
 
     wapinet_uploader.delete_file:
         class: Wapinet\UploaderBundle\Helper\DeleteFile
-        scope: request
-        arguments: [@request, @vich_uploader.property_mapping_factory]
+        arguments: [@request_stack, @vich_uploader.property_mapping_factory]
