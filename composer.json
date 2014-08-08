@@ -19,17 +19,17 @@
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "sonata-project/admin-bundle": "*",
-        "sonata-project/core-bundle": "*",
-        "sonata-project/doctrine-orm-admin-bundle": "*",
+        "sonata-project/admin-bundle": "~2.2",
+        "sonata-project/core-bundle": "~2.2",
+        "sonata-project/doctrine-orm-admin-bundle": "~2.2",
         "friendsofsymfony/comment-bundle": "dev-master",
         "friendsofsymfony/message-bundle": "dev-master",
         "white-october/pagerfanta-bundle": "*",
         "james-heinrich/getid3": "dev-master",
         "vich/uploader-bundle": "dev-master",
-        "liip/imagine-bundle": "*",
-        "gregwar/captcha-bundle": "*",
-        "pulse00/ffmpeg-bundle": "*",
+        "liip/imagine-bundle": "~1.0",
+        "gregwar/captcha-bundle": "~1.0",
+        "pulse00/ffmpeg-bundle": "~0.2",
         "highco/sphinx-bundle": "~2.0",
         "gemorroj/phpwhois": "dev-master",
         "gemorroj/archive7z": "dev-master",
@@ -39,6 +39,7 @@
         "gemorroj/cssvalidator": "dev-master"
     },
     "require-dev": {
+        "phpunit/phpunit": "~4.2",
         "sensio/generator-bundle": "~2.3"
     },
     "scripts": {
