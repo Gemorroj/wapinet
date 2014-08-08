@@ -16,7 +16,7 @@
 
 
     <php>
-        <server name="KERNEL_DIR" value="./" />
+        <server name="KERNEL_DIR" value="/OpenServer/domains/wapinet-new.loc/app/" />
     </php>
 
 
