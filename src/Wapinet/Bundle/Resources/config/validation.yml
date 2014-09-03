@@ -1,0 +1,4 @@
+Wapinet\Bundle\Entity\File:
+    properties:
+        file:
+            - File:

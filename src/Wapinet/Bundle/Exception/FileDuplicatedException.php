@@ -1,6 +1,8 @@
 <?php
 namespace Wapinet\Bundle\Exception;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Routing\Router;
 use Wapinet\Bundle\Entity\File;
 
 /**
@@ -8,16 +10,53 @@ use Wapinet\Bundle\Entity\File;
  */
 class FileDuplicatedException extends \RuntimeException
 {
+    /**
+     * @var File
+     */
     protected $existingFile;
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
 
-    public function __construct(File $existingFile)
+
+    /**
+     * @param File $existingFile
+     * @param ContainerInterface $container
+     */
+    public function __construct(File $existingFile, ContainerInterface $container)
     {
         $this->existingFile = $existingFile;
-        parent::__construct('Такой файл уже существует.');
+        $this->container = $container;
+
+        parent::__construct('Такой файл уже существует: ' . $this->getPath());
     }
 
+    /**
+     * @return File
+     */
     public function getExistingFile()
     {
         return $this->existingFile;
+    }
+
+    /**
+     * @return ContainerInterface
+     */
+    protected function getContainer()
+    {
+        return $this->container;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->getContainer()->get('router')->generate('file_view', array(
+                'id' => $this->getExistingFile()->getId()
+            ), Router::ABSOLUTE_URL
+        );
     }
 }

@@ -12,6 +12,10 @@ class OnlineListener
     protected $container;
     protected $em;
 
+    /**
+     * @param ContainerInterface $container
+     * @param EntityManager $em
+     */
     public function __construct(ContainerInterface $container, EntityManager $em)
     {
         $this->container = $container;
@@ -24,7 +28,7 @@ class OnlineListener
      */
     public function onCoreController(FilterControllerEvent $event)
     {
-        if ($event->getRequestType() !== HttpKernel::MASTER_REQUEST) {
+        if ($event->isMasterRequest()) {
             return;
         }
 

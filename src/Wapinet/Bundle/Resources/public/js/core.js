@@ -64,7 +64,7 @@ var FileLoader = {
                 $uploadLoader.text('Ошибка: ' + responseJson.errors.join(". "));
                 setTimeout(function () {
                     $.mobile.loading("hide");
-                }, 5000);
+                }, 10000);
             }
         }, false);
         xhr.addEventListener("error", function () {
@@ -181,6 +181,6 @@ $(document).ajaxStart(function () {
     });
     setTimeout(function () {
         $.mobile.loading("hide");
-    }, 5000);
+    }, 10000);
     $("#page").enhanceWithin();
 });

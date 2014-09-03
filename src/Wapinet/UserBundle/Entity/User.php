@@ -5,13 +5,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use FOS\MessageBundle\Model\ParticipantInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
- * @Vich\Uploadable
  */
 class User extends BaseUser implements ParticipantInterface
 {
@@ -20,17 +17,6 @@ class User extends BaseUser implements ParticipantInterface
     const SEX_FEMALE = 'f';
 
     /**
-     * @Assert\Image(
-     *     maxSize="100k",
-     *     minWidth=13,
-     *     maxWidth=500,
-     *     minHeight=13,
-     *     maxHeight=500,
-     *     mimeTypes={"image/png", "image/jpeg", "image/gif"},
-     *     groups={"Profile"}
-     * )
-     * @Vich\UploadableField(mapping="avatar", fileNameProperty="avatarName")
-     *
      * @var File|null
      */
     protected $avatar;

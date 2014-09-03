@@ -473,7 +473,7 @@ class FileController extends Controller
 
             $existingFile = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->findOneBy(array('hash' => $hash));
             if (null !== $existingFile) {
-                throw new FileDuplicatedException($existingFile);
+                throw new FileDuplicatedException($existingFile, $this->container);
             }
 
             $data->setHash($hash);
@@ -540,9 +540,7 @@ class FileController extends Controller
                     }
 
                     // обычная загрузка
-                    return $this->redirect(
-                        $url
-                    );
+                    return $this->redirect($url);
                 }
             }
         } catch (\Exception $e) {
@@ -641,7 +639,7 @@ class FileController extends Controller
 
         $existingFile = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->findOneBy(array('hash' => $hash));
         if (null !== $existingFile) {
-            throw new FileDuplicatedException($existingFile);
+            throw new FileDuplicatedException($existingFile, $this->container);
         }
 
         $data->setHash($hash);

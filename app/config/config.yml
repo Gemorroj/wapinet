@@ -14,7 +14,6 @@ framework:
     validation:
         enabled: true
         api: 2.5-bc
-        #enable_annotations: true
     templating:
         engines: ['twig']
         #assets_version: SomeVersionScheme

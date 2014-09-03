@@ -4,13 +4,10 @@ namespace Wapinet\Bundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Wapinet\UserBundle\Entity\User;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * File
- * @Vich\Uploadable
  */
 class File implements \Serializable
 {
@@ -67,9 +64,6 @@ class File implements \Serializable
      */
     protected $fileName;
     /**
-     * @Assert\File()
-     * @Vich\UploadableField(mapping="file", fileNameProperty="fileName")
-     *
      * @var BaseFile
      */
     protected $file;
