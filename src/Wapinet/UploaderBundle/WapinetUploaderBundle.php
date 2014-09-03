@@ -8,11 +8,17 @@ use Wapinet\UploaderBundle\DependencyInjection\Compiler\FileUrlCompilerPass;
 
 class WapinetUploaderBundle extends Bundle
 {
+    /**
+     * @inheritdoc
+     */
     public function getParent()
     {
         return 'VichUploaderBundle';
     }
 
+    /**
+     * @inheritdoc
+     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);

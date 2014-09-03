@@ -27,6 +27,12 @@ class FileContent
      */
     protected $size;
 
+
+    /**
+     * @param null|string $content
+     * @param null $mimeType
+     * @param null $basename
+     */
     public function __construct($content, $mimeType = null, $basename = null)
     {
         $this->content = $content;

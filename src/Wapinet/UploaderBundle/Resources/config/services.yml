@@ -5,10 +5,10 @@ services:
         tags:
             - { name: form.type, alias: file_url }
 
-    wapinet_uploader.user_avatar_directory_namer:
-        class: Wapinet\UploaderBundle\Naming\UserAvatarDirectoryNamer
+    wapinet_uploader.avatar_directory_namer:
+        class: Wapinet\UploaderBundle\Naming\AvatarDirectoryNamer
         tags:
-            - { name: user_avatar_directory_namer }
+            - { name: avatar_directory_namer }
 
     wapinet_uploader.file_directory_namer:
         class: Wapinet\UploaderBundle\Naming\FileDirectoryNamer

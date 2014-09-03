@@ -13,7 +13,8 @@ framework:
     csrf_protection: true
     validation:
         enabled: true
-        api: auto
+        api: 2.5-bc
+        #enable_annotations: true
     templating:
         engines: ['twig']
         #assets_version: SomeVersionScheme
@@ -152,9 +153,9 @@ knp_menu:
 vich_uploader:
     db_driver: orm
     mappings:
-        user_avatar:
+        avatar:
             namer: vich_uploader.namer_uniqid
-            directory_namer: wapinet_uploader.user_avatar_directory_namer
+            directory_namer: wapinet_uploader.avatar_directory_namer
             delete_on_update: true # Set to true if the file should be deleted from the filesystem when the file is replaced by an other one
             delete_on_remove: true # determines whether to delete file upon removal of entity
             inject_on_load: true # determines whether to inject a File instance upon load

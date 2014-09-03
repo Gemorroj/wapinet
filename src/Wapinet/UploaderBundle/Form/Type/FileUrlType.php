@@ -16,6 +16,10 @@ class FileUrlType extends AbstractType
      */
     protected $container;
 
+
+    /**
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -53,6 +57,10 @@ class FileUrlType extends AbstractType
         $this->builder = $builder->getData();
     }
 
+
+    /**
+     * @inheritdoc
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(

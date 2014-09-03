@@ -29,7 +29,7 @@ class User extends BaseUser implements ParticipantInterface
      *     mimeTypes={"image/png", "image/jpeg", "image/gif"},
      *     groups={"Profile"}
      * )
-     * @Vich\UploadableField(mapping="user_avatar", fileNameProperty="avatarName")
+     * @Vich\UploadableField(mapping="avatar", fileNameProperty="avatarName")
      *
      * @var File|null
      */

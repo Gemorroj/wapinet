@@ -21,6 +21,10 @@ class DeleteFile
     protected $factory;
 
 
+    /**
+     * @param RequestStack $requestStack
+     * @param PropertyMappingFactory $factory
+     */
     public function __construct(RequestStack $requestStack, PropertyMappingFactory $factory)
     {
         $this->requestStack = $requestStack;
