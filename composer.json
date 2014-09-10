@@ -28,7 +28,7 @@
         "james-heinrich/getid3": "dev-master",
         "vich/uploader-bundle": "~0.10",
         "liip/imagine-bundle": "~1.0",
-        "gregwar/captcha-bundle": "~1.0",
+        "gregwar/captcha-bundle": "~1.0.12",
         "pulse00/ffmpeg-bundle": "~0.2",
         "highco/sphinx-bundle": "~2.0",
         "gemorroj/phpwhois": "dev-master",
