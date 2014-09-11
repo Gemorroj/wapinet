@@ -59,7 +59,7 @@ abstract class Archive
         $result = array();
         $tmp = array();
         foreach ($objects as $name => $object) {
-            $object->setInfoClass('Wapinet\Bundle\Helper\Archiver\ArchiveFileInfo');
+            $object->setInfoClass(ArchiveFileInfo::class);
 
             if ('' === $object->getPathInfo()->getArchiveName() && false === $object->isDir()) {
                 $result[] = $object;
