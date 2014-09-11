@@ -4,7 +4,6 @@ namespace Wapinet\UserBundle\Admin;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use FOS\UserBundle\Model\UserManagerInterface;
@@ -129,7 +128,7 @@ class UserAdmin extends Admin
             ->add('username', null, array('label' => 'Логин'))
             ->add('email', null, array('label' => 'Email'))
             ->add('roles', null, array('label' => 'Роли'))
-            ->add('lastActivity', 'doctrine_orm_datetime_range', array('label' => 'Последняя активность'), null, array('widget' => 'single_text'))
+            ->add('lastActivity', 'doctrine_orm_datetime_range', array('label' => 'Последняя активность'), 'sonata_type_date_range', array('widget' => 'single_text'))
         ;
     }
 

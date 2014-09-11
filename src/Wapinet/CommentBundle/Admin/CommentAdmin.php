@@ -66,7 +66,7 @@ class CommentAdmin extends Admin
         $datagridMapper
             ->add('author', null, array('label' => 'Автор'))
             ->add('body', null, array('label' => 'Комментарий'))
-            ->add('createdAt', 'doctrine_orm_datetime_range', array('label' => 'Дата и время'), null, array('widget' => 'single_text'))
+            ->add('createdAt', 'doctrine_orm_datetime_range', array('label' => 'Дата и время'), 'sonata_type_date_range', array('widget' => 'single_text'))
         ;
     }
 

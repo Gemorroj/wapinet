@@ -7,7 +7,6 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
-use Wapinet\Bundle\Entity\File;
 use Wapinet\Bundle\Helper\File as FileHelper;
 
 class TagAdmin extends Admin
@@ -74,7 +73,7 @@ class TagAdmin extends Admin
     {
         $datagridMapper
             ->add('name', null, array('label' => 'Имя'))
-            ->add('createdAt', 'doctrine_orm_datetime_range', array('label' => 'Дата и время'), null, array('widget' => 'single_text'))
+            ->add('createdAt', 'doctrine_orm_datetime_range', array('label' => 'Дата и время'), 'sonata_type_date_range', array('widget' => 'single_text'))
         ;
     }
 

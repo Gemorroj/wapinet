@@ -65,7 +65,7 @@ class GuestbookAdmin extends Admin
         $datagridMapper
             ->add('user', null, array('label' => 'Пользователь'))
             ->add('message', null, array('label' => 'Сообщение'))
-            ->add('createdAt', 'doctrine_orm_datetime_range', array('label' => 'Дата и время'), null, array('widget' => 'single_text'))
+            ->add('createdAt', 'doctrine_orm_datetime_range', array('label' => 'Дата и время'), 'sonata_type_date_range', array('widget' => 'single_text'))
         ;
     }
 

@@ -8,7 +8,6 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Wapinet\Bundle\Entity\News;
 use Wapinet\UserBundle\Entity\Event as EntityEvent;
 
@@ -34,7 +33,7 @@ class NewsAdmin extends Admin
         $datagridMapper
             ->add('createdBy', null, array('label' => 'Автор'))
             ->add('subject', null, array('label' => 'Заголовок'))
-            ->add('createdAt', 'doctrine_orm_datetime_range', array('label' => 'Создано'), null, array('widget' => 'single_text'))
+            ->add('createdAt', 'doctrine_orm_datetime_range', array('label' => 'Создано'), 'sonata_type_date_range', array('widget' => 'single_text'))
         ;
     }
 
