@@ -37,8 +37,8 @@
 
     <ul id="list-archive" data-role="listview" data-inset="true">
     {% for file in files %}
-        {% set pathView = (file.pathInfo.archiveName ? file.pathInfo.archiveName ~ ' / ' : '') ~ file.basename %}
-        {% set path = (file.pathInfo.archiveName ? file.pathInfo.archiveName ~ '/' : '') ~ file.basename %}
+        {% set pathView = (file.pathInfo.archiveName ? file.pathInfo.archiveName ~ ' / ' : '') ~ file.filename %}
+        {% set path = (file.pathInfo.archiveName ? file.pathInfo.archiveName ~ '/' : '') ~ file.filename %}
 
         {% if file.dir %}
             <li class="directory">
@@ -47,7 +47,7 @@
             </li>
         {% else %}
             <li>
-                <a href="{{ path('archiver_download_file', {'archive': archive, 'name': file.basename, 'path': path }) }}">{{ pathView }}
+                <a href="{{ path('archiver_download_file', {'archive': archive, 'name': file.filename, 'path': path }) }}">{{ pathView }}
                     <span class="ui-li-count">{{ file.size|wapinet_size }}</span>
                 </a>
                 <a data-path="{{ path|url_encode }}" href="#delete-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>

@@ -18,6 +18,10 @@ class File extends \Twig_Extension
      */
     protected $container;
 
+    /**
+     * @param ContainerInterface $container
+     * @param EntityManager $em
+     */
     public function __construct(ContainerInterface $container, EntityManager $em)
     {
         $this->container = $container;
@@ -53,21 +57,34 @@ class File extends \Twig_Extension
         );
     }
 
+    /**
+     * @return int
+     */
     public function getCountAll()
     {
         return $this->fileRepository->countAll();
     }
 
+    /**
+     * @return int
+     */
     public function getCountToday()
     {
         return $this->fileRepository->countToday();
     }
 
+    /**
+     * @return int
+     */
     public function getCountYesterday()
     {
         return $this->fileRepository->countYesterday();
     }
 
+    /**
+     * @param string $category
+     * @return int
+     */
     public function getCountCategory($category)
     {
         return $this->fileRepository->countCategory($category);

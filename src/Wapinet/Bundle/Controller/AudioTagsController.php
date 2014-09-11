@@ -39,7 +39,7 @@ class AudioTagsController extends Controller
 
                     return $this->redirect(
                         $router->generate('audio_tags_edit', array(
-                                'fileName' => $file->getBasename(),
+                                'fileName' => $file->getFilename(),
                                 'originalFileName' => $data['file']->getClientOriginalName()
                             ), Router::ABSOLUTE_URL
                         )
