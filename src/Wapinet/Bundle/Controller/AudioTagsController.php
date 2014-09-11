@@ -276,7 +276,10 @@ class AudioTagsController extends Controller
     public function downloadAction($fileName, $originalFileName)
     {
         $file = new BinaryFileResponse($this->getFilePath($fileName));
-        $file->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $originalFileName);
+
+        $filenameFallback = mb_convert_encoding($originalFileName, 'ASCII', 'UTF-8');
+
+        $file->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $originalFileName, $filenameFallback);
 
         return $file;
     }
