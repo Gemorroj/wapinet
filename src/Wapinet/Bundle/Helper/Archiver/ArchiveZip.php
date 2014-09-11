@@ -33,11 +33,11 @@ class ArchiveZip extends Archive
             $dir = ('' != $dir ? $dir . '/' : '');
 
             if ($entry->isDir() === true) {
-                if (false === $zip->addEmptyDir($dir . $entry->getBasename())) {
+                if (false === $zip->addEmptyDir($dir . $entry->getFilename())) {
                     throw new ArchiverException('Не удалось добавить директорию в ZIP архив');
                 }
             } else {
-                if (false === $zip->addFile($entry->getPathname(), $dir . $entry->getBasename())) {
+                if (false === $zip->addFile($entry->getPathname(), $dir . $entry->getFilename())) {
                     throw new ArchiverException('Не удалось добавить файл в ZIP архив');
                 }
             }
