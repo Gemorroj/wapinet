@@ -12,6 +12,6 @@ class Translit
      */
     public function toAscii($str)
     {
-        return transliterator_transliterate('Any-Latin; Latin-ASCII; Lower();', $str);
+        return transliterator_transliterate('Any-Latin; Latin-ASCII;', $str);
     }
 }
