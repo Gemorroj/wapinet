@@ -45,7 +45,8 @@ class Video extends \Twig_Extension
             $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
             try {
                 $media = $ffmpeg->open($this->getWebDir() . $path);
-                $media->save(new X264('libvo_aacenc'), $this->getWebDir() . $mp4File);
+                // 'libvo_aacenc', 'libfaac', 'libmp3lame'
+                $media->save(new X264('libmp3lame'), $this->getWebDir() . $mp4File);
                 if (false === file_exists($this->getWebDir() . $mp4File)) {
                     throw new \RuntimeException('Не удалось создать MP4 файл');
                 }
