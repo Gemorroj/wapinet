@@ -1,14 +1,17 @@
 <?php
 namespace Wapinet\Bundle\Helper;
 
-
 /**
  * Translit хэлпер
  */
 class Translit
 {
+    /**
+     * @param string $str
+     * @return string
+     */
     public function toAscii($str)
     {
-        return iconv('UTF-8', 'US-ASCII//TRANSLIT', $str);
+        return transliterator_transliterate('Any-Latin; Latin-ASCII; Lower();', $str);
     }
 }

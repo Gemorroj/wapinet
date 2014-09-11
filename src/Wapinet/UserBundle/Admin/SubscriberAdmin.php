@@ -30,7 +30,7 @@ class SubscriberAdmin extends Admin
      *
      * @param ShowMapper $showMapper
      */
-    protected function configureShowField(ShowMapper $showMapper)
+    protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
             ->add('id', null, array('label' => 'Идентификатор'))
