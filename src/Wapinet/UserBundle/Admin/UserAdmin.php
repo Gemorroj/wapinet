@@ -69,6 +69,7 @@ class UserAdmin extends Admin
             ->add('birthday', 'date', array('widget' => 'single_text', 'label' => 'День рождения', 'required' => false))
             ->add('timezone', 'timezone', array('label' => 'Временная зона', 'required' => false))
             ->add('info', 'textarea', array('label' => 'Дополнительная информация'))
+            ->end()
             ->with('Аватар')
             ->add('avatar', 'file_url', array('delete_button' => true, 'label' => false, 'required' => false, 'accept' => 'image/*'))
             ->end()
