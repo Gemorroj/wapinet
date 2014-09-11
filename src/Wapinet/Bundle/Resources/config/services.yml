@@ -122,6 +122,9 @@ services:
         class: Wapinet\Bundle\Helper\Curl
         arguments: [@service_container]
 
+    translit:
+        class: Wapinet\Bundle\Helper\Translit
+
     paginate:
         class: Wapinet\Bundle\Helper\Paginate
         arguments: [@service_container]

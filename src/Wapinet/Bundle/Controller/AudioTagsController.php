@@ -277,9 +277,11 @@ class AudioTagsController extends Controller
     {
         $file = new BinaryFileResponse($this->getFilePath($fileName));
 
-        $filenameFallback = mb_convert_encoding($originalFileName, 'ASCII', 'UTF-8');
-
-        $file->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $originalFileName, $filenameFallback);
+        $file->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $originalFileName,
+            $this->get('translit')->toAscii($originalFileName)
+        );
 
         return $file;
     }

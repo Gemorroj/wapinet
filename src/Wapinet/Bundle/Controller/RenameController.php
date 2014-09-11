@@ -49,10 +49,11 @@ class RenameController extends Controller
         if ($data['file'] instanceof UploadedFile) {
             $file = new BinaryFileResponse($data['file']);
 
-            $filename = $data['name'];
-            $filenameFallback = mb_convert_encoding($filename, 'ASCII', 'UTF-8');
-
-            $file->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename, $filenameFallback);
+            $file->setContentDisposition(
+                ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+                $data['name'],
+                $this->get('translit')->toAscii($data['name'])
+            );
             return $file;
         }
 

@@ -21,6 +21,9 @@ class Curl
      */
     private $curl;
 
+    /**
+     * @var array
+     */
     protected $browserHeaders = array(
         'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Connection: Close',
@@ -31,9 +34,8 @@ class Curl
     protected $postData = array();
 
 
-
     /**
-     * Конструктор
+     * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {
