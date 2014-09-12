@@ -4,6 +4,7 @@ namespace Wapinet\Bundle\Twig\Extension;
 
 use FFMpeg\Filters\Audio\AudioResamplableFilter;
 use FFMpeg\Media\Audio as FFmpegAudio;
+use FFMpeg\Media\Video as FFmpegVideo;
 use FFMpeg\Format\Video\WebM;
 use FFMpeg\Format\Video\X264;
 use FFMpeg\Coordinate\TimeCode;
@@ -116,11 +117,11 @@ class Video extends \Twig_Extension
 
         if (false === file_exists($this->getWebDir() . $screenshot)) {
             $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
-            $second = $this->container->getParameter('wapinet_video_screenshot_second');
 
             try {
                 $media = $ffmpeg->open($this->getWebDir() . $path);
-                if ($media instanceof \FFMpeg\Media\Video) {
+                if ($media instanceof FFmpegVideo) {
+                    $second = $this->getScreenshotSecond($media);
                     $frame = $media->frame(TimeCode::fromSeconds($second));
                     $frame->save($this->getWebDir() . $screenshot);
                     if (false === file_exists($this->getWebDir() . $screenshot)) {
@@ -135,6 +136,23 @@ class Video extends \Twig_Extension
         }
 
         return $screenshot;
+    }
+
+
+    /**
+     * @param FFmpegVideo $media
+     * @return int
+     */
+    protected function getScreenshotSecond(FFmpegVideo $media)
+    {
+        $second = $this->container->getParameter('wapinet_video_screenshot_second');
+        $duration = $media->getStreams()->videos()->first()->get('duration');
+
+        if ($duration && $duration < $second) {
+            $second = ceil($duration / 2);
+        }
+
+        return (int)$second;
     }
 
 
