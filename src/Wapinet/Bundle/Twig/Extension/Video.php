@@ -3,6 +3,7 @@
 namespace Wapinet\Bundle\Twig\Extension;
 
 use FFMpeg\Filters\Audio\AudioResamplableFilter;
+use FFMpeg\Filters\Audio\SimpleFilter;
 use FFMpeg\Format\Video\WebM;
 use FFMpeg\Format\Video\X264;
 use FFMpeg\Coordinate\TimeCode;
@@ -47,6 +48,7 @@ class Video extends \Twig_Extension
             try {
                 $media = $ffmpeg->open($this->getWebDir() . $path);
                 $media->addFilter(new AudioResamplableFilter(0));
+                $media->addFilter(new SimpleFilter(array('-ar', 44100)));
                 // 'libvo_aacenc', 'libfaac', 'libmp3lame'
                 $media->save(new X264('libmp3lame'), $this->getWebDir() . $mp4File);
                 if (false === file_exists($this->getWebDir() . $mp4File)) {
