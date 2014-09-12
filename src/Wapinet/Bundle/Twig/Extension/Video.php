@@ -46,7 +46,7 @@ class Video extends \Twig_Extension
             try {
                 $media = $ffmpeg->open($this->getWebDir() . $path);
                 // 'libvo_aacenc', 'libfaac', 'libmp3lame'
-                $media->save(new X264(), $this->getWebDir() . $mp4File);
+                $media->save(new X264('libmp3lame'), $this->getWebDir() . $mp4File);
                 if (false === file_exists($this->getWebDir() . $mp4File)) {
                     throw new \RuntimeException('Не удалось создать MP4 файл');
                 }
