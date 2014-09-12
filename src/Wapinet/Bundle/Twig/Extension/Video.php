@@ -66,6 +66,7 @@ class Video extends \Twig_Extension
 
     /**
      * libmp3lame не поддерживает sample_rate ниже 16000
+     * firefox не проигрывает файлы с sample_rate ниже 32000
      *
      * @param FFmpegAudio $media
      * @return Video
@@ -73,8 +74,8 @@ class Video extends \Twig_Extension
     protected function addLibMp3LameFilter(FFmpegAudio $media)
     {
         $sampleRate = $media->getStreams()->audios()->first()->get('sample_rate');
-        if ($sampleRate < 16000) {
-            $media->addFilter(new AudioResamplableFilter(16000));
+        if ($sampleRate < 32000) {
+            $media->addFilter(new AudioResamplableFilter(32000));
         }
 
         return $this;
