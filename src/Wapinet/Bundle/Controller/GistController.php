@@ -24,6 +24,10 @@ use Wapinet\UserBundle\Entity\User;
 
 class GistController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function indexAction(Request $request)
     {
         $form = $this->createForm(new AddType());
@@ -40,6 +44,11 @@ class GistController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @param string $username
+     * @return Response
+     */
     public function userAction(Request $request, $username)
     {
         $form = $this->createForm(new AddType());
@@ -114,6 +123,13 @@ class GistController extends Controller
     }
 
 
+    /**
+     * @param User $user
+     * @param Gist $gist
+     * @throws \Exception
+     * @throws \Symfony\Component\Security\Acl\Exception\AclAlreadyExistsException
+     * @throws \Symfony\Component\Security\Acl\Exception\InvalidDomainObjectException
+     */
     protected function saveAcl(User $user, Gist $gist)
     {
         // creating the ACL
@@ -130,6 +146,10 @@ class GistController extends Controller
     }
 
 
+    /**
+     * @param int $id
+     * @return Response
+     */
     public function viewAction($id)
     {
         $gistManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Gist');

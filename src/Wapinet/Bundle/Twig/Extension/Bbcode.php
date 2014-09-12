@@ -26,7 +26,7 @@ class Bbcode extends \Twig_Extension
     public function bbcodeParse($text)
     {
         $xbbcode = new Xbbcode('/bundles/wapinet/xbbcode');
-        $xbbcode->setTagHandler('spoiler', 'Wapinet\Bundle\Twig\Extension\WapinetSpoiler');
+        $xbbcode->setTagHandler('spoiler', WapinetSpoiler::class);
         $xbbcode->parse($text);
 
         return $xbbcode->getHtml();
