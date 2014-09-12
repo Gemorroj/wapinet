@@ -2,6 +2,7 @@
 
 namespace Wapinet\Bundle\Twig\Extension;
 
+use FFMpeg\Filters\Audio\AudioResamplableFilter;
 use FFMpeg\Format\Video\WebM;
 use FFMpeg\Format\Video\X264;
 use FFMpeg\Coordinate\TimeCode;
@@ -45,6 +46,7 @@ class Video extends \Twig_Extension
             $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
             try {
                 $media = $ffmpeg->open($this->getWebDir() . $path);
+                $media->addFilter(new AudioResamplableFilter(0));
                 // 'libvo_aacenc', 'libfaac', 'libmp3lame'
                 $media->save(new X264('libmp3lame'), $this->getWebDir() . $mp4File);
                 if (false === file_exists($this->getWebDir() . $mp4File)) {
