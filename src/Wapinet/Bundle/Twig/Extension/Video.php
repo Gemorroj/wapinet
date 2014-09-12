@@ -3,7 +3,7 @@
 namespace Wapinet\Bundle\Twig\Extension;
 
 use FFMpeg\Filters\Audio\AudioResamplableFilter;
-use FFMpeg\Filters\Audio\SimpleFilter;
+use FFMpeg\Media\Audio as FFmpegAudio;
 use FFMpeg\Format\Video\WebM;
 use FFMpeg\Format\Video\X264;
 use FFMpeg\Coordinate\TimeCode;
@@ -47,10 +47,11 @@ class Video extends \Twig_Extension
             $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
             try {
                 $media = $ffmpeg->open($this->getWebDir() . $path);
-                $media->addFilter(new AudioResamplableFilter(0));
-                $media->addFilter(new SimpleFilter(array('-ar', 44100)));
+
+                $this->addLibMp3LameFilter($media);
                 // 'libvo_aacenc', 'libfaac', 'libmp3lame'
                 $media->save(new X264('libmp3lame'), $this->getWebDir() . $mp4File);
+
                 if (false === file_exists($this->getWebDir() . $mp4File)) {
                     throw new \RuntimeException('Не удалось создать MP4 файл');
                 }
@@ -61,6 +62,24 @@ class Video extends \Twig_Extension
 
         return $mp4File;
     }
+
+
+    /**
+     * libmp3lame не поддерживает sample_rate ниже 16000
+     *
+     * @param FFmpegAudio $media
+     * @return Video
+     */
+    protected function addLibMp3LameFilter(FFmpegAudio $media)
+    {
+        $sampleRate = $media->getStreams()->audios()->first()->get('sample_rate');
+        if ($sampleRate < 16000) {
+            $media->addFilter(new AudioResamplableFilter(16000));
+        }
+
+        return $this;
+    }
+
 
     /**
      * @param string $path
