@@ -22,8 +22,13 @@
 
     {# jplayer #}
     {% if file is defined and (file.isPlayableVideo or file.isPlayableAudio) %}
-        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/wapinet/jplayer/blue.monday/jplayer.blue.monday.css') }}" />
+        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jplayer/2.6.4/skin/blue.monday/jplayer.blue.monday.css" />
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jplayer/2.6.4/jquery.jplayer/jquery.jplayer.min.js"></script>
+        <script type="text/javascript">
+            var Jplayer = {
+                'swfPath': "//cdnjs.cloudflare.com/ajax/libs/jplayer/2.6.4/jquery.jplayer/Jplayer.swf"
+            };
+        </script>
     {% endif %}
 
     {# pagerfanta #}

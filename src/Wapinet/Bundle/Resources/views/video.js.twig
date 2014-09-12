@@ -34,7 +34,7 @@ $(document).ready(function () {
                 });
             },
             "supplied": "{{ format }}",
-            "swfPath": "{{ asset('bundles/wapinet/jplayer/Jplayer.swf') }}"
+            "swfPath": Jplayer.swfPath
         });
     {% else %}
         $("#jp_container_1").hide();
