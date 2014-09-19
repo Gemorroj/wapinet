@@ -3,6 +3,7 @@
 namespace Wapinet\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
@@ -18,6 +19,9 @@ use Wapinet\Bundle\Form\Type\Archiver\AddType;
 
 class ArchiverController extends Controller
 {
+    /**
+     * @return Response
+     */
     public function indexAction()
     {
         return $this->render('WapinetBundle:Archiver:index.html.twig');
@@ -265,15 +269,12 @@ class ArchiverController extends Controller
 
     /**
      * @return string
-     * @throws \RuntimeException
+     * @throws IOException
      */
     protected function createArchiveDirectory()
     {
-        $archive = $this->generateArchiveName();
-        $directory = $this->getTmpDir() . DIRECTORY_SEPARATOR . $archive;
-        if (false === mkdir($directory, 0755)) {
-            throw new \RuntimeException('Не удалось создать временную директорию');
-        }
+        $directory = $this->getTmpDir() . DIRECTORY_SEPARATOR . $this->generateArchiveName();
+        $this->get('filesystem')->mkdir($directory);
 
         return $directory;
     }

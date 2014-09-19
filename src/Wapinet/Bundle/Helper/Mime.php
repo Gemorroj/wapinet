@@ -61,15 +61,15 @@ class Mime
      */
     private function getMimeArray()
     {
-        $fileName = 'mime.types.php';
         $cacheDir = $this->container->get('kernel')->getCacheDir();
+        $mimeFileName = $cacheDir . DIRECTORY_SEPARATOR . 'mime.types.php';
 
-        if (true === file_exists($cacheDir . DIRECTORY_SEPARATOR . $fileName)) {
-            return include $cacheDir . DIRECTORY_SEPARATOR . $fileName;
+        if (true === file_exists($mimeFileName)) {
+            return include $mimeFileName;
         }
 
         $mimeArray = $this->generateMime();
-        $result = file_put_contents($cacheDir . DIRECTORY_SEPARATOR . $fileName, '<?php return ' . var_export($mimeArray, true) . ';' . "\n");
+        $result = file_put_contents($mimeFileName, '<?php return ' . var_export($mimeArray, true) . ';' . "\n");
         if (false === $result) {
             throw new \RuntimeException('Не удалось записать MIME типы');
         }
