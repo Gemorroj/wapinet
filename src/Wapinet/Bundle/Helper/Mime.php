@@ -29,7 +29,7 @@ class Mime
     private function generateMime ($url = 'http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types')
     {
         $curl = $this->container->get('curl');
-        $curl->setOpt(CURLOPT_URL, $url);
+        $curl->setUrl($url);
         $curl->addCompression();
         $response = $curl->exec();
 

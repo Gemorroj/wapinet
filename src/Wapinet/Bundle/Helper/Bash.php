@@ -32,7 +32,7 @@ class Bash
         $curl = $this->container->get('curl');
         $curl->addBrowserHeaders();
         $curl->addCompression();
-        $curl->setOpt(CURLOPT_URL, 'http://bash.im/index/' . $page);
+        $curl->setUrl('http://bash.im/index/' . $page);
         $result = $curl->exec();
 
         $content = mb_convert_encoding($result->getContent(), 'UTF-8', 'Windows-1251');

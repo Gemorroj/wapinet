@@ -10,6 +10,10 @@ use Wapinet\Bundle\Form\Type\CssValidator\CssValidatorType;
 
 class CssValidatorController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function indexAction(Request $request)
     {
         $result = null;

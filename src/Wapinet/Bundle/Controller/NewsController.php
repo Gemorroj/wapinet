@@ -9,7 +9,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * News controller.
- *
  */
 class NewsController extends Controller
 {

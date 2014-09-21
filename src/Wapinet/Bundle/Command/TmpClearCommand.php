@@ -12,7 +12,7 @@ use Symfony\Component\Finder\Finder;
 class TmpClearCommand extends ContainerAwareCommand
 {
     /**
-     * @see Command
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -31,7 +31,7 @@ EOT
     }
 
     /**
-     * @see Command
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

@@ -29,7 +29,7 @@ class MassMedia
     {
         $curl = $this->container->get('curl');
         $curl->addCompression();
-        $curl->setOpt(CURLOPT_URL, 'http://russian.rt.com/rss/');
+        $curl->setUrl('http://russian.rt.com/rss/');
         $result = $curl->exec();
 
         $obj = simplexml_load_string($result->getContent());
@@ -73,7 +73,7 @@ class MassMedia
     {
         $curl = $this->container->get('curl');
         $curl->addCompression();
-        $curl->setOpt(CURLOPT_URL, 'http://inotv.rt.com/s/rss/main.rss');
+        $curl->setUrl('http://inotv.rt.com/s/rss/main.rss');
         $result = $curl->exec();
 
         $obj = simplexml_load_string($result->getContent());

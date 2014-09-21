@@ -45,7 +45,7 @@ class TranslateController extends Controller
     protected function getTranslate(array $data)
     {
         $curl = $this->get('curl');
-        $curl->setOpt(CURLOPT_URL,
+        $curl->setUrl(
             'https://translate.yandex.net/api/v1.5/tr.json/translate?key=' .
             $this->container->getParameter('wapinet_translate_key') .
             '&lang=' . $data['lang'] .

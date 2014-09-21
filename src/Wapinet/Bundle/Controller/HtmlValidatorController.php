@@ -10,6 +10,10 @@ use Wapinet\Bundle\Form\Type\HtmlValidator\HtmlValidatorType;
 
 class HtmlValidatorController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function indexAction(Request $request)
     {
         $result = null;

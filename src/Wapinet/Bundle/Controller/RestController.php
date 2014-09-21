@@ -42,7 +42,7 @@ class RestController extends Controller
     {
         $curl = $this->get('curl');
         $curl->setOpt(CURLOPT_CUSTOMREQUEST, $data['type']);
-        $curl->setOpt(CURLOPT_URL, $data['url']);
+        $curl->setUrl($data['url']);
 
         if (null !== $data['header']) {
             foreach (explode("\n", str_replace("\r", '', trim($data['header']))) as $header) {

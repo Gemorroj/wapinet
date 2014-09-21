@@ -74,6 +74,38 @@ class Curl
     public function setOpt($key, $value)
     {
         curl_setopt($this->curl, $key, $value);
+
+        return $this;
+    }
+
+
+    /**
+     * Задаем url
+     *
+     * @param string $value
+     * @return Curl
+     */
+    public function setUrl($value)
+    {
+        curl_setopt($this->curl, CURLOPT_URL, $value);
+
+        return $this;
+    }
+
+
+    /**
+     * Следовать перенаправлениям
+     *
+     * @param int $maxRedirects
+     * @return Curl
+     */
+    public function acceptRedirects($maxRedirects = null)
+    {
+        curl_setopt($this->curl, CURLOPT_FOLLOWLOCATION, true);
+        if (null !== $maxRedirects) {
+            curl_setopt($this->curl, CURLOPT_MAXREDIRS, $maxRedirects);
+        }
+
         return $this;
     }
 
@@ -188,10 +220,6 @@ class Curl
     */
 
 
-
-
-
-
     /**
      * Получаем результат
      *
@@ -257,6 +285,7 @@ class Curl
     public function addCompression()
     {
         $this->setOpt(CURLOPT_ENCODING, '');
+
         return $this;
     }
 
@@ -268,6 +297,7 @@ class Curl
     public function addHeader($key, $value)
     {
         $this->headers[] = $key . ': ' . $value;
+
         return $this;
     }
 
@@ -277,6 +307,7 @@ class Curl
     public function addBrowserHeaders()
     {
         $this->headers = array_merge($this->headers, $this->browserHeaders);
+
         return $this;
     }
 
@@ -288,6 +319,7 @@ class Curl
     public function addPostData($key, $value)
     {
         $this->postData[$key] = $value;
+
         return $this;
     }
 }

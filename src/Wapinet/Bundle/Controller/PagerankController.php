@@ -10,6 +10,10 @@ use Symfony\Component\Form\FormError;
 
 class PagerankController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function indexAction(Request $request)
     {
         $result = null;
@@ -53,15 +57,16 @@ class PagerankController extends Controller
         );
     }
 
-
-
-
+    /**
+     * @param string $url
+     * @return string
+     */
     protected function getYandexPages($url)
     {
         $curl = $this->get('curl');
-        $curl->setOpt(CURLOPT_URL, 'http://xmlsearch.yandex.ru/xmlsearch?user=gemorwapinet&key=' . $this->container->getParameter('wapinet_search_key'));
+        $curl->setUrl('http://xmlsearch.yandex.ru/xmlsearch?user=gemorwapinet&key=' . $this->container->getParameter('wapinet_search_key'));
         $curl->setOpt(CURLOPT_POST, true);
-        $curl->setOpt(CURLOPT_POSTFIELDS, '<?xml version="1.0" encoding="UTF-8"?><request><query>' . $url . '</query><groupings><groupby groups-on-page="1"/></groupings></request>');
+        $curl->setOpt(CURLOPT_POSTFIELDS, '<?xml version="1.0" encoding="UTF-8"?><request><query>' . htmlspecialchars($url, ENT_XML1) . '</query><groupings><groupby groups-on-page="1"/></groupings></request>');
 
         $out = 'N/A';
         try {
@@ -76,10 +81,14 @@ class PagerankController extends Controller
     }
 
 
+    /**
+     * @param string $url
+     * @return string
+     */
     protected function getYandexTcy($url)
     {
         $curl = $this->get('curl');
-        $curl->setOpt(CURLOPT_URL, 'http://bar-navig.yandex.ru/u?ver=2&show=32&url=http://' . $url);
+        $curl->setUrl('http://bar-navig.yandex.ru/u?ver=2&show=32&url=http://' . $url);
         $curl->addCompression();
 
         $out = 'N/A';
@@ -95,10 +104,14 @@ class PagerankController extends Controller
     }
 
 
+    /**
+     * @param string $url
+     * @return string
+     */
     protected function getGooglePages($url)
     {
         $curl = $this->get('curl');
-        $curl->setOpt(CURLOPT_URL, 'http://www.google.com/search?q=' . rawurlencode('site:' . $url));
+        $curl->setUrl('http://www.google.com/search?q=' . rawurlencode('site:' . $url));
         $curl->addCompression();
         $curl->addHeader('Accept-Language', 'en-US,en');
 
@@ -111,7 +124,7 @@ class PagerankController extends Controller
              */
 
             if (strpos($response->getContent(), 'did not match any documents')) {
-                $out = 0;
+                $out = '0';
             } else {
                 preg_match('/<div class="sd" id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
 
@@ -129,11 +142,15 @@ class PagerankController extends Controller
     }
 
 
+    /**
+     * @param string $url
+     * @return string
+     */
     protected function getGoogleInurl($url)
     {
         $curl = $this->get('curl');
-        $curl->setOpt(CURLOPT_URL, 'http://www.google.com/search?q=' . rawurlencode('"' . $url . '" -inurl:"' . $url . '"'));
-        $curl->setOpt(CURLOPT_FOLLOWLOCATION, true); // fix ipv4
+        $curl->setUrl('http://www.google.com/search?q=' . rawurlencode('"' . $url . '" -inurl:"' . $url . '"'));
+        $curl->acceptRedirects(); // fix ipv4
         $curl->addCompression();
         $curl->addHeader('Accept-Language', 'en-US,en');
 
@@ -147,7 +164,7 @@ class PagerankController extends Controller
 
 
             if (strpos($response->getContent(), 'did not match any documents')) {
-                $out = 0;
+                $out = '0';
             } else {
                 preg_match('/<div class="sd" id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
 

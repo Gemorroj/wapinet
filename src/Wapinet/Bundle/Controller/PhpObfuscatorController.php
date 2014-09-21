@@ -9,6 +9,10 @@ use Wapinet\Bundle\Form\Type\Obfuscator\ObfuscatorType;
 
 class PhpObfuscatorController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function indexAction(Request $request)
     {
         $result = null;

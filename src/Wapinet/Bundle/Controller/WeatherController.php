@@ -12,6 +12,10 @@ use Wapinet\Bundle\Form\Type\Weather\CountryType;
 
 class WeatherController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function countryAction(Request $request)
     {
         $form = $this->createForm(new CountryType($this->get('weather')->getCountries()));
@@ -36,6 +40,11 @@ class WeatherController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @param int $country
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function cityAction(Request $request, $country)
     {
         $weather = $this->get('weather');
@@ -63,6 +72,12 @@ class WeatherController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @param int $country
+     * @param int $city
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function showAction(Request $request, $country, $city)
     {
         $weather = $this->get('weather');

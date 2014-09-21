@@ -23,6 +23,10 @@ use Wapinet\UploaderBundle\Entity\FileContent;
  */
 class AudioTagsController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
     public function indexAction(Request $request)
     {
         $form = $this->createForm(new AudioTagsType());

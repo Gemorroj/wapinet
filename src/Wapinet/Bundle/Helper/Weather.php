@@ -34,7 +34,7 @@ class Weather
 
             $curl = $this->container->get('curl');
             $curl->addCompression();
-            $curl->setOpt(CURLOPT_URL, 'http://a956e985.services.gismeteo.ru/inform-service/588c42b53455e4d92511627521555fe4/countries/?lang=ru');
+            $curl->setUrl('http://a956e985.services.gismeteo.ru/inform-service/588c42b53455e4d92511627521555fe4/countries/?lang=ru');
             $curl->setOpt(CURLOPT_FILE, $f);
             $curl->setOpt(CURLOPT_HEADER, false);
             $curl->exec();
@@ -65,7 +65,7 @@ class Weather
 
             $curl = $this->container->get('curl');
             $curl->addCompression();
-            $curl->setOpt(CURLOPT_URL, 'http://a956e985.services.gismeteo.ru/inform-service/588c42b53455e4d92511627521555fe4/cities/?country=' . $country . '&lang=ru');
+            $curl->setUrl('http://a956e985.services.gismeteo.ru/inform-service/588c42b53455e4d92511627521555fe4/cities/?country=' . $country . '&lang=ru');
             $curl->setOpt(CURLOPT_FILE, $f);
             $curl->setOpt(CURLOPT_HEADER, false);
             $curl->exec();
@@ -92,7 +92,7 @@ class Weather
     {
         $curl = $this->container->get('curl');
         $curl->addCompression();
-        $curl->setOpt(CURLOPT_URL, 'http://a956e985.services.gismeteo.ru/inform-service/588c42b53455e4d92511627521555fe4/forecast/?cities=' . $city);
+        $curl->setUrl('http://a956e985.services.gismeteo.ru/inform-service/588c42b53455e4d92511627521555fe4/forecast/?cities=' . $city);
         $result = $curl->exec();
 
         $obj = simplexml_load_string($result->getContent());

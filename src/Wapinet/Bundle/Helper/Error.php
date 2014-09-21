@@ -4,7 +4,7 @@ namespace Wapinet\Bundle\Helper;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * Mime хэлпер
+ * Form errors хэлпер
  */
 class Error
 {

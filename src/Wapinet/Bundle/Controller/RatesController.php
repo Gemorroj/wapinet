@@ -6,12 +6,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class RatesController extends Controller
 {
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function indexAction()
     {
         return $this->render('WapinetBundle:Rates:index.html.twig');
     }
 
 
+    /**
+     * @param string $country
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function showAction($country)
     {
         $ratesHelper = $this->get('rates');

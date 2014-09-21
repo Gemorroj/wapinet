@@ -10,6 +10,10 @@ use Symfony\Component\Form\FormError;
 
 class EmailController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function indexAction(Request $request)
     {
         $result = null;

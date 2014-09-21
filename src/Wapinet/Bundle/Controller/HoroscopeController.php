@@ -6,12 +6,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class HoroscopeController extends Controller
 {
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function indexAction()
     {
         return $this->render('WapinetBundle:Horoscope:index.html.twig');
     }
 
-
+    /**
+     * @param string $zodiac
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function showAction($zodiac)
     {
         $horoscopeHelper = $this->get('horoscope');
@@ -25,7 +31,9 @@ class HoroscopeController extends Controller
         ));
     }
 
-
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function dayAction()
     {
         $horoscopeHelper = $this->get('horoscope');

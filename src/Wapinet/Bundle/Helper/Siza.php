@@ -100,7 +100,7 @@ class Siza
         $curl = $this->container->get('curl');
         $curl->addBrowserHeaders();
         $curl->addCompression();
-        $curl->setOpt(CURLOPT_URL, $this->link);
+        $curl->setUrl($this->link);
         return $curl->exec();
     }
 

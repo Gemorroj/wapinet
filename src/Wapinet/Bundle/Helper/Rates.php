@@ -73,7 +73,7 @@ class Rates
     {
         $curl = $this->container->get('curl');
         $curl->addCompression();
-        $curl->setOpt(CURLOPT_URL, 'http://www.cbr.ru/scripts/XML_daily.asp');
+        $curl->setUrl('http://www.cbr.ru/scripts/XML_daily.asp');
         $result = $curl->exec();
 
         $obj = simplexml_load_string($result->getContent());
@@ -99,7 +99,7 @@ class Rates
     {
         $curl = $this->container->get('curl');
         $curl->addCompression();
-        $curl->setOpt(CURLOPT_URL, 'http://nbrb.by/Services/XmlExRates.aspx');
+        $curl->setUrl('http://nbrb.by/Services/XmlExRates.aspx');
         $result = $curl->exec();
 
         $obj = simplexml_load_string($result->getContent());
@@ -125,7 +125,7 @@ class Rates
     {
         $curl = $this->container->get('curl');
         $curl->addCompression();
-        $curl->setOpt(CURLOPT_URL, 'http://bank-ua.com/export/currrate.xml');
+        $curl->setUrl('http://bank-ua.com/export/currrate.xml');
         $result = $curl->exec();
 
         $obj = simplexml_load_string($result->getContent());
@@ -151,7 +151,7 @@ class Rates
     {
         $curl = $this->container->get('curl');
         $curl->addCompression();
-        $curl->setOpt(CURLOPT_URL, 'http://www.nationalbank.kz/rss/rates_all.xml');
+        $curl->setUrl('http://www.nationalbank.kz/rss/rates_all.xml');
         $result = $curl->exec();
 
         $obj = simplexml_load_string($result->getContent());

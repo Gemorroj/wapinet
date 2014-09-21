@@ -11,6 +11,10 @@ use Symfony\Component\Routing\Router;
 
 class GuestbookController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function indexAction(Request $request)
     {
         $form = $this->createForm(new MessageType());

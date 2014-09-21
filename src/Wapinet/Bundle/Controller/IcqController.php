@@ -12,6 +12,9 @@ use Symfony\Component\Form\FormError;
 
 class IcqController extends Controller
 {
+    /**
+     * @return Response
+     */
     public function indexAction()
     {
         return $this->render('WapinetBundle:Icq:index.html.twig');
@@ -23,7 +26,7 @@ class IcqController extends Controller
     protected function getIcqVariables ()
     {
         $curl = $this->get('curl');
-        $curl->setOpt(CURLOPT_URL, 'http://www.icq.com/join/ru');
+        $curl->setUrl('http://www.icq.com/join/ru');
         $curl->addBrowserHeaders();
         $curl->addCompression();
         $response = $curl->exec();
@@ -48,10 +51,10 @@ class IcqController extends Controller
     protected function icqRegistration (array $data)
     {
         $curl = $this->get('curl');
-        $curl->setOpt(CURLOPT_URL, 'http://www.icq.com/join/commit/ru');
+        $curl->setUrl('http://www.icq.com/join/commit/ru');
         $curl->addBrowserHeaders();
         $curl->addCompression();
-        $curl->setOpt(CURLOPT_REFERER, 'http://www.icq.com/join/ru');
+        $curl->addHeader('Referer', 'http://www.icq.com/join/ru');
         $curl->addHeader('X-Requested-With', 'XMLHttpRequest');
         $curl->addHeader('Cookie', 'is_ab_mim=0; rfd=; icq_tracking=' . mt_rand(99999, PHP_INT_MAX) . '; icq_lang=ru; csrf=' . $data['csrf']);
 
@@ -73,6 +76,11 @@ class IcqController extends Controller
         }
     }
 
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function registrationAction(Request $request)
     {
         $result = null;
@@ -104,12 +112,16 @@ class IcqController extends Controller
         ));
     }
 
+    /**
+     * @param string $gnm_img
+     * @return Response
+     */
     public function registrationPicAction($gnm_img)
     {
         $curl = $this->get('curl');
-        $curl->setOpt(CURLOPT_URL, 'https://www.icq.com/utils/recaptcha/gnm/' . $gnm_img);
+        $curl->setUrl('https://www.icq.com/utils/recaptcha/gnm/' . $gnm_img);
         $curl->addBrowserHeaders();
-        $curl->setOpt(CURLOPT_REFERER, 'http://www.icq.com/join/ru');
+        $curl->addHeader('Referer', 'http://www.icq.com/join/ru');
         $response = $curl->exec();
 
         $im = @imagecreatefromstring($response->getContent());
@@ -137,51 +149,82 @@ class IcqController extends Controller
         return $response;
     }
 
+    /**
+     * @return Response
+     */
     public function aboutAction()
     {
         return $this->render('WapinetBundle:Icq:about.html.twig');
     }
 
+    /**
+     * @return Response
+     */
     public function inviseAction()
     {
         return $this->render('WapinetBundle:Icq:invise.html.twig');
     }
 
+    /**
+     * @return Response
+     */
     public function secureAction()
     {
         return $this->render('WapinetBundle:Icq:secure.html.twig');
     }
 
+    /**
+     * @return Response
+     */
     public function serversAction()
     {
         return $this->render('WapinetBundle:Icq:servers.html.twig');
     }
 
+    /**
+     * @return Response
+     */
     public function clientsAction()
     {
         return $this->render('WapinetBundle:Icq:clients.html.twig');
     }
 
+    /**
+     * @return Response
+     */
     public function servicesAction()
     {
         return $this->render('WapinetBundle:Icq:services.html.twig');
     }
 
+    /**
+     * @return Response
+     */
     public function disconnectAction()
     {
         return $this->render('WapinetBundle:Icq:disconnect.html.twig');
     }
 
+    /**
+     * @return Response
+     */
     public function errorsAction()
     {
         return $this->render('WapinetBundle:Icq:errors.html.twig');
     }
 
+    /**
+     * @return Response
+     */
     public function searchAction()
     {
         return $this->render('WapinetBundle:Icq:search.html.twig');
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function userInfoAction(Request $request)
     {
         $result = null;
@@ -222,7 +265,7 @@ class IcqController extends Controller
     protected function cleanUserInfo($uin)
     {
         $curl = $this->get('curl');
-        $curl->setOpt(CURLOPT_URL, 'http://www.icq.com/people/' . $uin . '/view/ru');
+        $curl->setUrl('http://www.icq.com/people/' . $uin . '/view/ru');
         $curl->addBrowserHeaders();
         $curl->addCompression();
         $response = $curl->exec();

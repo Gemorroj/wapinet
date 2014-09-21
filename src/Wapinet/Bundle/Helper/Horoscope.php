@@ -91,7 +91,7 @@ class Horoscope
     {
         $curl = $this->container->get('curl');
         $curl->addCompression();
-        $curl->setOpt(CURLOPT_URL, 'http://hyrax.ru/rss_daily_common_' . $zodiac . '.xml');
+        $curl->setUrl('http://hyrax.ru/rss_daily_common_' . $zodiac . '.xml');
         $result = $curl->exec();
 
         $obj = simplexml_load_string($result->getContent());
@@ -110,7 +110,7 @@ class Horoscope
     {
         $curl = $this->container->get('curl');
         $curl->addCompression();
-        $curl->setOpt(CURLOPT_URL, 'http://hyrax.ru/rss_daily_common.xml');
+        $curl->setUrl('http://hyrax.ru/rss_daily_common.xml');
         $result = $curl->exec();
 
         $obj = simplexml_load_string($result->getContent());

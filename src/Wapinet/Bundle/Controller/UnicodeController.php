@@ -10,6 +10,10 @@ use Symfony\Component\Form\FormError;
 
 class UnicodeController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function indexAction(Request $request)
     {
         $result = null;
@@ -34,6 +38,10 @@ class UnicodeController extends Controller
         ));
     }
 
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function iconsAction()
     {
         return $this->render('WapinetBundle:Unicode:icons.html.twig');
