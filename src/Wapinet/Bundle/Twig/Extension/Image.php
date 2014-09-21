@@ -27,7 +27,6 @@ class Image extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('wapinet_image_info', array($this, 'getInfo')),
-            new \Twig_SimpleFunction('wapinet_image_exif', array($this, 'getExif')),
         );
     }
 
@@ -47,23 +46,6 @@ class Image extends \Twig_Extension
         }
 
         return $info;
-    }
-
-    /**
-     * @param File $file
-     *
-     * @return array|null
-     */
-    public function getExif (File $file)
-    {
-        if (true === function_exists('exif_read_data')) {
-            $exif = @exif_read_data($file->getPathname());
-            if (false !== $exif) {
-                return $exif;
-            }
-        }
-
-        return null;
     }
 
     /**
