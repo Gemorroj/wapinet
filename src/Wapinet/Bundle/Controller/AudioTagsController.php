@@ -3,6 +3,7 @@
 namespace Wapinet\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -212,13 +213,20 @@ class AudioTagsController extends Controller
             $writer->tag_data['attached_picture'][0]['mime']          = $info['comments']['picture'][0]['image_mime'];
         }
 
-        /** @var UploadedFile $picture */
         $picture = $data['picture'];
-        if ($picture) {
-            $writer->tag_data['attached_picture'][0]['data']          = file_get_contents($picture->getPathname());
+        if ($picture instanceof UploadedFile) {
+
+            $data = file_get_contents($picture->getPathname());
+            if (false === $data) {
+                throw new IOException('Не удалось получить изображение.', 0, null, $picture->getPathname());
+            }
+
+            $writer->tag_data['attached_picture'][0]['data']          = $data;
             $writer->tag_data['attached_picture'][0]['picturetypeid'] = 0;
             $writer->tag_data['attached_picture'][0]['description']   = 'image';
             $writer->tag_data['attached_picture'][0]['mime']          = $picture->getMimeType();
+
+            unset($data); // чистим память
         }
 
         if (!$writer->WriteTags()) {
