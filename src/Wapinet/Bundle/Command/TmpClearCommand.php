@@ -25,7 +25,7 @@ class TmpClearCommand extends ContainerAwareCommand
             ->setHelp(<<<EOT
 The <info>wapinet:tmp:clear</info> command removes old tmp files:
 
-  <info>php app/console wapinet:tmp:clear 86400</info>
+  <info>php app/console wapinet:tmp:clear "1 day"</info>
 EOT
             );
     }
