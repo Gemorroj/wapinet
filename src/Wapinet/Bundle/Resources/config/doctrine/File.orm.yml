@@ -71,7 +71,7 @@ Wapinet\Bundle\Entity\File:
 
     lifecycleCallbacks:
         prePersist: [ setCreatedAtValue ]
-        preUpdate: [ setUpdatedAtValue ]
+        #preUpdate: [ setUpdatedAtValue ]
 
     manyToOne:
         user:

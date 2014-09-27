@@ -495,6 +495,7 @@ class FileController extends Controller
             $this->get('file')->removePassword($data);
         }
 
+        $data->setUpdatedAtValue();
         $data->setTags(new ArrayCollection());
         $this->saveTags($data, $tagsString);
         $this->mergeFile($data);
