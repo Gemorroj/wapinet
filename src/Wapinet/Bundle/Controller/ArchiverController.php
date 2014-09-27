@@ -202,27 +202,28 @@ class ArchiverController extends Controller
      * @param File $file
      * @throws ArchiverException
      * @return string
+     * @todo сейчас поддерживаем только ZIP
      */
     protected function extractArchive(File $file)
     {
-        //$archiveZip = $this->get('archive_zip');
-        //if (true === $archiveZip->isValid($file)) {
-        //    $archiveDirectory = $this->createArchiveDirectory();
-        //    $archiveZip->extract($archiveDirectory, $file);
-        //    return $archiveDirectory;
-        //}
+        $archiveZip = $this->get('archive_zip');
+        if (true === $archiveZip->isValid($file)) {
+            $archiveDirectory = $this->createArchiveDirectory();
+            $archiveZip->extract($archiveDirectory, $file);
+            return $archiveDirectory;
+        }
         //$archiveRar = $this->get('archive_rar');
         //if (true === $archiveRar->isValid($file)) {
         //    $archiveDirectory = $this->createArchiveDirectory();
         //    $archiveRar->extract($archiveDirectory, $file);
         //    return $archiveDirectory;
         //}
-        $archive7z = $this->get('archive_7z');
-        if (true === $archive7z->isValid($file)) {
-            $archiveDirectory = $this->createArchiveDirectory();
-            $archive7z->extract($archiveDirectory, $file);
-            return $archiveDirectory;
-        }
+        //$archive7z = $this->get('archive_7z');
+        //if (true === $archive7z->isValid($file)) {
+        //    $archiveDirectory = $this->createArchiveDirectory();
+        //    $archive7z->extract($archiveDirectory, $file);
+        //    return $archiveDirectory;
+        //}
 
         throw new ArchiverException('Неподдерживаемый тип архива');
     }

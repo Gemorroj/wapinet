@@ -7,6 +7,9 @@ namespace Wapinet\Bundle\Helper\Archiver;
  */
 class ArchiveFileInfo extends \SplFileInfo
 {
+    /**
+     * @var string
+     */
     protected static $archiveDirectory;
 
     /**
