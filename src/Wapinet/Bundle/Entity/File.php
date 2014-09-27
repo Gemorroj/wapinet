@@ -445,13 +445,7 @@ class File implements \Serializable
      */
     public function setFile(BaseFile $file = null)
     {
-        //$tmp = $this->file;
-
         $this->file = $file;
-
-        //if ($this->file !== $tmp) {
-        //    $this->setUpdatedAtValue();
-        //}
 
         return $this;
     }
