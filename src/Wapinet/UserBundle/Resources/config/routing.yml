@@ -30,7 +30,7 @@ wapinet_users:
         key: "[a-zA-Z0-9]+"
 
 wapinet_user_friends:
-    path:  /friends/{username}
+    path:  /friends/list/{username}
     defaults: { _controller: WapinetUserBundle:Friends:index }
     requirements:
         username: ".+"
