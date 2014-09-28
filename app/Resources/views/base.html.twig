@@ -91,19 +91,18 @@
         <div data-theme="b" data-role="header" data-position="fixed">
             {% block header %}
                 <div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
-                    {# <a href="javascript:history.back();" data-role="button" data-icon="back">Назад</a> #}
-                    <a href="#panel" data-role="button" data-icon="bars">Меню{% if (is_granted('ROLE_USER') and fos_message_nb_unread() > 0) %} +{{ fos_message_nb_unread()|wapinet_count }}{% endif %}</a>
+                    <a href="#panel" class="ui-btn ui-btn-inline ui-mini ui-shadow ui-corner-all ui-btn-icon-left ui-icon-bars">Меню{% if (is_granted('ROLE_USER') and fos_message_nb_unread() > 0) %} +{{ fos_message_nb_unread()|wapinet_count }}{% endif %}</a>
                 </div>
                 <h2>{{ title }}</h2>
                 {% if app.user %}
-                    <a href="{{ path('fos_user_profile_show') }}" data-role="button" data-icon="gear" class="ui-btn-right">
+                    <a href="{{ path('fos_user_profile_show') }}" class="ui-btn ui-btn-inline ui-mini ui-shadow ui-corner-all ui-btn-icon-left ui-btn-right ui-icon-user">
                         {% if app.user.hasAvatar %}
                             <img src="{{ vich_uploader_asset(app.user, 'avatar')|imagine_filter('thumbnail') }}" alt="" class="avatar-login" />
                         {% endif %}
                         {{ app.user.username }}
                     </a>
                 {% else %}
-                    <a href="{{ path('fos_user_security_login') }}" data-role="button" data-icon="gear" class="ui-btn-right">Войти</a>
+                    <a href="{{ path('fos_user_security_login') }}" class="ui-btn ui-btn-inline ui-mini ui-shadow ui-corner-all ui-btn-icon-left ui-btn-right ui-icon-user">Войти</a>
                 {% endif %}
             {% endblock %}
         </div>
