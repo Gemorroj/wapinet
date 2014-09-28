@@ -30,7 +30,12 @@ class ListenerTimezone
      */
     public function onCoreController(FilterControllerEvent $event)
     {
-        if ($event->getRequestType() !== HttpKernel::MASTER_REQUEST) {
+        if (!$event->isMasterRequest()) {
+            return;
+        }
+
+        // заменяем только на просмотре данных
+        if (!$event->getRequest()->isMethodSafe()) {
             return;
         }
 
