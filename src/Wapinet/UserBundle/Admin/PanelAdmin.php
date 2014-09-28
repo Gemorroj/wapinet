@@ -40,8 +40,8 @@ class PanelAdmin extends Admin
             ->add('file', null, array('label' => 'Файлообменник'))
             ->add('archiver', null, array('label' => 'Архиватор'))
             ->add('proxy', null, array('label' => 'Анонимайзер'))
-            ->add('downloads', null, array('label' => 'Загрузки, развлечения'))
-            ->add('utilities', null, array('label' => 'Полезные WEB приложения'))
+            ->add('downloads', null, array('label' => 'Развлечения'))
+            ->add('utilities', null, array('label' => 'Утилиты'))
             ->add('programming', null, array('label' => 'WEB мастерская'))
         ;
     }
@@ -58,8 +58,8 @@ class PanelAdmin extends Admin
             ->add('file', null, array('label' => 'Файлообменник', 'required' => false))
             ->add('archiver', null, array('label' => 'Архиватор', 'required' => false))
             ->add('proxy', null, array('label' => 'Анонимайзер', 'required' => false))
-            ->add('downloads', null, array('label' => 'Загрузки, развлечения', 'required' => false))
-            ->add('utilities', null, array('label' => 'Полезные WEB приложения', 'required' => false))
+            ->add('downloads', null, array('label' => 'Развлечения', 'required' => false))
+            ->add('utilities', null, array('label' => 'Утилиты', 'required' => false))
             ->add('programming', null, array('label' => 'WEB мастерская', 'required' => false))
         ;
     }
@@ -88,8 +88,8 @@ class PanelAdmin extends Admin
             ->add('file', null, array('label' => 'Файлообменник'))
             ->add('archiver', null, array('label' => 'Архиватор'))
             ->add('proxy', null, array('label' => 'Анонимайзер'))
-            ->add('downloads', null, array('label' => 'Загрузки, развлечения'))
-            ->add('utilities', null, array('label' => 'Полезные WEB приложения'))
+            ->add('downloads', null, array('label' => 'Развлечения'))
+            ->add('utilities', null, array('label' => 'Утилиты'))
             ->add('programming', null, array('label' => 'WEB мастерская'))
             ->add('_action', 'actions', array(
                     'label' => 'Операции',

@@ -2,7 +2,7 @@
 
 {% block title %}{{ name }}{% endblock %}
 {% block breadcrumbs %}
-    {% set items = {1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'}} %}
+    {% set items = {1: {'uri': path('downloads'), 'title': 'Развлечения'}} %}
 
     {% for item in breadcrumbs %}
         {% set key = loop.index + 1 %}

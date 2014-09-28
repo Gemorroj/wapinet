@@ -3,7 +3,7 @@
 {% block title %}Погода - {{ countryName }} - {{ cityName }}{% endblock %}
 {% block breadcrumbs %}
     {{wapinet_breadcrumbs({
-    1: {'uri': path('downloads'), 'title': 'Загрузки, развлечения'},
+    1: {'uri': path('downloads'), 'title': 'Развлечения'},
     2: {'uri': path('weather_country'), 'title': 'Погода'},
     3: {'uri': path('weather_city', {'country': country}), 'title': countryName}
     })}}

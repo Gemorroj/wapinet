@@ -23,8 +23,8 @@ class PanelType extends AbstractType
         $builder->add('file', 'checkbox', array('required' => false, 'label' => 'Файлообменник'));
         $builder->add('archiver', 'checkbox', array('required' => false, 'label' => 'Архиватор'));
         $builder->add('proxy', 'checkbox', array('required' => false, 'label' => 'Анонимайзер'));
-        $builder->add('downloads', 'checkbox', array('required' => false, 'label' => 'Загрузки, развлечения'));
-        $builder->add('utilities', 'checkbox', array('required' => false, 'label' => 'Полезные WEB приложения'));
+        $builder->add('downloads', 'checkbox', array('required' => false, 'label' => 'Развлечения'));
+        $builder->add('utilities', 'checkbox', array('required' => false, 'label' => 'Утилиты'));
         $builder->add('programming', 'checkbox', array('required' => false, 'label' => 'WEB мастерская'));
 
         $builder->add('submit', 'submit', array('label' => 'Изменить'));

@@ -89,12 +89,12 @@ class Panel extends \ArrayObject
             ),
             self::ROUTE_DOWNLOADS => array(
                 'route' => self::ROUTE_DOWNLOADS,
-                'name' => 'Загрузки, развлечения',
+                'name' => 'Развлечения',
                 'enabled' => $this->getDownloads(),
             ),
             self::ROUTE_UTILITIES => array(
                 'route' => self::ROUTE_UTILITIES,
-                'name' => 'Полезные WEB приложения',
+                'name' => 'Утилиты',
                 'enabled' => $this->getUtilities(),
             ),
             self::ROUTE_PROGRAMMING => array(
