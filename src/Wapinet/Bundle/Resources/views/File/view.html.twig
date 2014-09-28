@@ -150,7 +150,7 @@
                 {%- endif -%}
             </pre>
         {% endif %}
-    {% elseif file.isArchive %}
+    {% elseif file.isArchive and false %} {# временно отключаем поддержку архивов #}
         {% if file.isExtractableArchive %}
             {% include '@Wapinet/archive.html.twig' with {'file': file} %}
         {% endif %}
