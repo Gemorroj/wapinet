@@ -107,7 +107,7 @@ class File implements \Serializable
     public function unserialize($serialized)
     {
         $vars = unserialize($serialized);
-        $this->file = new BaseFile($vars['file']);
+        $this->file = new BaseFile($vars['file'], false); //fix события (файлы могут быть удалены)
         unset($vars['file']);
 
         foreach ($vars as $key => $value) {
