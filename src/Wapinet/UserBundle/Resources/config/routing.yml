@@ -1,6 +1,8 @@
 wapinet_user_profile:
     path:  /profile/user/{username}
     defaults: { _controller: WapinetUserBundle:Profile:showUser, username: null }
+    requirements:
+        username: ".+"
     methods: [GET]
 
 wapinet_user_panel_edit:
@@ -18,6 +20,8 @@ wapinet_user_events:
 wapinet_user_comments:
     path:  /comments/{username}
     defaults: { _controller: WapinetUserBundle:Comments:index }
+    requirements:
+        username: ".+"
 
 wapinet_users:
     path:  /users/{key}
@@ -28,12 +32,17 @@ wapinet_users:
 wapinet_user_friends:
     path:  /friends/{username}
     defaults: { _controller: WapinetUserBundle:Friends:index }
+    requirements:
+        username: ".+"
 
 wapinet_user_friends_add:
     path:  /friends/add/{username}
     defaults: { _controller: WapinetUserBundle:Friends:add }
+    requirements:
+        username: ".+"
 
 wapinet_user_friends_delete:
     path:  /friends/delete/{username}
     defaults: { _controller: WapinetUserBundle:Friends:delete }
-
+    requirements:
+        username: ".+"

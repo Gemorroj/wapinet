@@ -5,6 +5,8 @@ gist_index:
 gist_user:
     pattern: /users/{username}
     defaults: { _controller: WapinetBundle:Gist:user }
+    requirements:
+        username: ".+"
 
 gist_view:
     pattern: /view/{id}

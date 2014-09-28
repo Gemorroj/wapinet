@@ -46,6 +46,8 @@ file_tag:
 file_user:
     pattern: /users/{username}
     defaults: { _controller: WapinetBundle:File:user }
+    requirements:
+        username: ".+"
 
 file_categories:
     pattern: /categories
