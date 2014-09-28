@@ -19,6 +19,8 @@ wapinet_message_thread_view:
 wapinet_message_thread_new:
     path: /new/{recipient}
     defaults: {_controller: WapinetMessageBundle:Message:newThread, recipient: null }
+    requirements:
+        recipient: ".+"
 
 wapinet_message_thread_delete:
     path: /{threadId}/delete
