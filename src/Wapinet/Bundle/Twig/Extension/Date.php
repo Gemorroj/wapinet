@@ -2,8 +2,24 @@
 
 namespace Wapinet\Bundle\Twig\Extension;
 
+use Symfony\Component\Security\Core\SecurityContext;
+use Wapinet\UserBundle\Entity\User;
+
 class Date extends \Twig_Extension
 {
+    /**
+     * @var SecurityContext
+     */
+    protected $securityContext;
+
+    /**
+     * @param SecurityContext $securityContext
+     */
+    public function __construct(SecurityContext $securityContext)
+    {
+        $this->securityContext = $securityContext;
+    }
+
     /**
      * Returns a list of global functions to add to the existing list.
      *
@@ -18,6 +34,24 @@ class Date extends \Twig_Extension
         );
     }
 
+
+    /**
+     * @throws \Exception
+     * @return \DateTimeZone|null
+     */
+    protected function getTimezone()
+    {
+        $token = $this->securityContext->getToken();
+        if (null !== $token) {
+            $user = $token->getUser();
+            if ($user instanceof User) {
+                return new \DateTimeZone($user->getTimezone());
+            }
+        }
+
+        return null;
+    }
+
     /**
      * @param \DateTime|mixed $date
      * @return string|null
@@ -25,11 +59,17 @@ class Date extends \Twig_Extension
     public function getDate($date)
     {
         if ($date instanceof \DateTime) {
-            $today = new \DateTime('today');
-            $yesterday = new \DateTime('yesterday');
-            $dayBeforeYesterday = new \DateTime('yesterday - 1 day');
-            $tomorrow = new \DateTime('tomorrow');
-            $dayAfterTomorrow = new \DateTime('tomorrow + 1 day');
+            $timezone = $this->getTimezone();
+
+            if (null !== $timezone) {
+                $date->setTimezone($timezone);
+            }
+
+            $today = new \DateTime('today', $timezone);
+            $yesterday = new \DateTime('yesterday', $timezone);
+            $dayBeforeYesterday = new \DateTime('yesterday - 1 day', $timezone);
+            $tomorrow = new \DateTime('tomorrow', $timezone);
+            $dayAfterTomorrow = new \DateTime('tomorrow + 1 day', $timezone);
 
             if ($date->format('Ymd') === $today->format('Ymd')) {
                 return 'Сегодня';
@@ -56,11 +96,17 @@ class Date extends \Twig_Extension
     public function getDateTime($datetime)
     {
         if ($datetime instanceof \DateTime) {
-            $today = new \DateTime('today');
-            $yesterday = new \DateTime('yesterday');
-            $dayBeforeYesterday = new \DateTime('yesterday - 1 day');
-            $tomorrow = new \DateTime('tomorrow');
-            $dayAfterTomorrow = new \DateTime('tomorrow + 1 day');
+            $timezone = $this->getTimezone();
+
+            if (null !== $timezone) {
+                $datetime->setTimezone($timezone);
+            }
+
+            $today = new \DateTime('today', $timezone);
+            $yesterday = new \DateTime('yesterday', $timezone);
+            $dayBeforeYesterday = new \DateTime('yesterday - 1 day', $timezone);
+            $tomorrow = new \DateTime('tomorrow', $timezone);
+            $dayAfterTomorrow = new \DateTime('tomorrow + 1 day', $timezone);
 
             if ($datetime->format('Ymd') === $today->format('Ymd')) {
                 return 'Сегодня в ' . $datetime->format('H:i');

@@ -11,6 +11,7 @@ services:
 
     wapinet.date.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Date
+        arguments: [@security.context]
         tags:
             - {name: twig.extension, alias: wapinet_date}
 
