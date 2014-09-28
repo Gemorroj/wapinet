@@ -22,7 +22,7 @@
                     <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn no-link" href="#" title="{{ item.ip ~ "\r\n" ~ item.browser }}">Anonymous</a>
                 {% endif %}
             </span>
-                <span class="ui-li-count">{{ item.createdAt|wapinet_datetime  }}</span>
+                <span class="ui-li-count">{{ item.createdAt|wapinet_datetime }}</span>
             </li>
             <li data-icon="false">
                 {% if item.user and item.user.hasAvatar %}
@@ -33,7 +33,7 @@
                 {% if item.user and item.user.isOnline %}
                     <span class="avatar-online avatar-online-list"></span>
                 {% endif %}
-                <div>
+                <div class="long-description">
                     {{ item.message|wapinet_bbcode_parse }}
                 </div>
             </li>

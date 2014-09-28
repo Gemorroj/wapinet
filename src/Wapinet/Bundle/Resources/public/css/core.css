@@ -54,6 +54,9 @@ code.html-validator strong {
 p.long-description {
     white-space: pre-wrap !important;
 }
+div.long-description {
+    white-space: normal !important;
+}
 a.captcha-reload {
     vertical-align: baseline;
 }
