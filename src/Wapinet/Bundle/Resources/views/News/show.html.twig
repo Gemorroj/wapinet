@@ -15,7 +15,7 @@
             {% if entity.updatedAt is not null %}
                 <p><strong>Обновлено {{ entity.updatedAt|wapinet_datetime }}</strong></p>
             {% endif %}
-            <div>{{ entity.body|wapinet_bbcode_parse }}</div>
+            <div class="long-description">{{ entity.body|wapinet_bbcode_parse }}</div>
         </li>
     </ul>
 
