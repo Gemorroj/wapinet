@@ -421,7 +421,7 @@ class User extends BaseUser implements ParticipantInterface
             return false;
         }
 
-        return (null !== $this->avatar);
+        return (null !== $this->avatar && '' !== $this->avatar->getPath());
     }
 
     /**
