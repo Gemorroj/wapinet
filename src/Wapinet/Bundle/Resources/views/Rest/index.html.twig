@@ -7,7 +7,6 @@
     })}}
 {% endblock %}
 
-
 {% block content %}
     {{ form_start(form, {'action': path('rest_index'), 'method': 'POST'}) }}
     {{ form_errors(form) }}
@@ -23,7 +22,7 @@
 
     <div class="ui-grid-a">
         <div class="ui-block-a rest-type">{{ form_row(form.type) }}</div>
-        <div class="ui-block-b rest-url">{{ form_row(form.url) }}</div>
+        <div class="ui-block-b rest-url">{{ form_row(form.url, {'attr': {'class': 'block-input'}}) }}</div>
     </div>
     <div class="ui-grid-solo">
         <div class="ui-block-a">{{ form_row(form.header) }}</div>

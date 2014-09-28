@@ -107,3 +107,7 @@ ul.file-comments {
     max-height: 18em;
     overflow: auto;
 }
+input.block-input {
+    margin-top: 0.22em !important;
+    margin-bottom: 0.22em !important;
+}
