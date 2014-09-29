@@ -8,6 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Pagerfanta\Pagerfanta;
+use Wapinet\UserBundle\Entity\User;
 
 /**
  * Provides threads for the current authenticated user
@@ -81,7 +82,7 @@ class Provider extends BaseProvider
      * @throws NotFoundHttpException|AccessDeniedException
      * @return array('thread'=>\Wapinet\MessageBundle\Entity\Thread, 'messages'=>Pagerfanta)
      */
-    public function getThreadMesages($threadId, $page = 1)
+    public function getThreadMessages($threadId, $page = 1)
     {
         $thread = $this->threadManager->findThreadById($threadId);
         if (!$thread) {
@@ -93,18 +94,9 @@ class Provider extends BaseProvider
 
         $parerfanta = $this->container->get('paginate')->paginate($thread->getMessages(), $page);
 
-
+        /** @var User $currentUser */
         $currentUser = $this->container->get('security.context')->getToken()->getUser();
 
-        /*
-        $currentParticipant = null;
-        foreach ($thread->getParticipants() as $participant) {
-            if ($currentUser->getId() === $participant->getId()) {
-                $currentParticipant = $participant;
-                break;
-            }
-        }
-        */
 
         /** @var MessageInterface $message */
         foreach ($parerfanta->getCurrentPageResults() as $message) {

@@ -71,7 +71,7 @@ class MessageController extends BaseController
         $request = $this->container->get('request');
         $page = $request->get('page', 1);
         /** @var array('thread'=>\Wapinet\MessageBundle\Entity\Thread, 'messages'=>Pagerfanta) $threadMessages */
-        $threadMessages = $this->getProvider()->getThreadMesages($threadId, $page);
+        $threadMessages = $this->getProvider()->getThreadMessages($threadId, $page);
 
         $form = $this->container->get('fos_message.reply_form.factory')->create($threadMessages['thread']);
         $formHandler = $this->container->get('fos_message.reply_form.handler');
