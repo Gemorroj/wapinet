@@ -3,7 +3,17 @@
 {% block content %}
     <p>
         {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <a href="{{ path('fos_user_security_login') }}">Авторизация</a> | <a href="{{ path('fos_user_registration_register') }}">Регистрация</a>
+            {% if app.request.attributes.get('_route') == 'fos_user_security_login' %}
+                Авторизация
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">Авторизация</a>
+            {% endif %}
+            |
+            {% if app.request.attributes.get('_route') == 'fos_user_registration_register' %}
+                Регистрация
+            {% else %}
+                <a href="{{ path('fos_user_registration_register') }}">Регистрация</a>
+            {% endif %}
         {% endif %}
     </p>
 
