@@ -100,7 +100,10 @@ class Provider extends BaseProvider
 
         /** @var MessageInterface $message */
         foreach ($parerfanta->getCurrentPageResults() as $message) {
-            $this->messageManager->markAsReadByParticipant($message, $currentUser);
+            if (!$message->isReadByParticipant($currentUser)) {
+                $message->setIsReadByParticipant($currentUser, true);
+                $this->messageManager->saveMessage($message);
+            }
         }
 
         return array(
