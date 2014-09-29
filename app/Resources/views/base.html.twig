@@ -91,7 +91,12 @@
         <div data-theme="b" data-role="header" data-position="fixed">
             {% block header %}
                 <div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
-                    <a href="#panel" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-bars">Меню{% if (is_granted('ROLE_USER') and fos_message_nb_unread() > 0) %} +{{ fos_message_nb_unread()|wapinet_count }}{% endif %}</a>
+                    {% set has_unread_messages = (is_granted('ROLE_USER') and fos_message_nb_unread() > 0) %}
+                    {% if has_unread_messages %}
+                        <a href="#panel" class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-left">+{{ fos_message_nb_unread()|wapinet_count }}</a>
+                    {% else %}
+                        <a href="#panel" class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext">Меню</a>
+                    {% endif %}
                 </div>
                 <h2>{{ title }}</h2>
                 {% if app.user %}
@@ -102,7 +107,7 @@
                         {{ app.user.username }}
                     </a>
                 {% else %}
-                    <a href="{{ path('fos_user_security_login') }}" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-btn-right ui-icon-user">Войти</a>
+                    <a href="{{ path('fos_user_security_login') }}" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-btn-right ui-icon-user">Вход</a>
                 {% endif %}
             {% endblock %}
         </div>
