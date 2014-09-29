@@ -45,7 +45,10 @@ class Date extends \Twig_Extension
         if (null !== $token) {
             $user = $token->getUser();
             if ($user instanceof User) {
-                return new \DateTimeZone($user->getTimezone());
+                $timezone = $user->getTimezone();
+                if (null !== $timezone) {
+                    return new \DateTimeZone($timezone);
+                }
             }
         }
 
