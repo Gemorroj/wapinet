@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <title>Ошибка: {{ status_text }}</title>
+</head>
+<body>
+<h1>Ошибка</h1>
+<h2>Сервер вернул "{{ status_code }} {{ status_text }}".</h2>
+
+<div>
+    Возможно что-то не работает. Отправьте нам письмо с описанием ваших действий, приведших к этой ошибке.
+    Мы устраним ошибку как можно скорее.
+    Приносим свои извинения за неудобства.
+</div>
+</body>
+</html>
