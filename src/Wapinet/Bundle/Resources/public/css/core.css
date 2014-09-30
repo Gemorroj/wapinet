@@ -2,10 +2,6 @@ img.image-preview {
     width: 80px;
     height: auto;
 }
-img.avatar-login {
-    width: auto;
-    height: 15px;
-}
 span.avatar-online {
     background-image: url('/static/online.png');
     display: block;
