@@ -52,7 +52,6 @@ class UsersController extends Controller
                     //$pagerfanta = $this->search($search['data'], $page);
                 }
             } else {
-                $form['only_online']->setData(true);
                 $pagerfanta = $this->online($page);
             }
         } catch (\Exception $e) {
@@ -91,27 +90,6 @@ class UsersController extends Controller
         $client = $this->container->get('sphinx');
         $client->setPage($page);
 
-        // пол
-        if (null !== $data['sex'] && sizeof($data['sex']) > 0) {
-            $sex = array();
-            if (false !== array_search(User::SEX_MALE, $data['sex'])) {
-                $sex[] = 1;
-            }
-            if (false !== array_search(User::SEX_FEMALE, $data['sex'])) {
-                $sex[] = 2;
-            }
-
-            $client->SetFilter('sex_number', $sex);
-        }
-
-        // онлайн
-        if (true === $data['only_online']) {
-            $lifetime = new \DateTime('now -' . User::LIFETIME);
-            $now = new \DateTime('+10 seconds');
-
-            $client->SetFilterRange('last_activity_ts', $lifetime->getTimestamp(), $now->getTimestamp());
-        }
-
         // поиск
         $client->AddQuery($data['search'], 'users');
 
@@ -131,11 +109,7 @@ class UsersController extends Controller
     protected function search (array $data, $page = 1)
     {
         $userRepository = $this->getDoctrine()->getRepository('WapinetUserBundle:User');
-        $query = $userRepository->getSearchUsersQuery(
-            $data['search'],
-            $data['only_online'],
-            $data['sex']
-        );
+        $query = $userRepository->getSearchUsersQuery($data['search'], true);
 
         return $this->get('paginate')->paginate($query, $page);
     }

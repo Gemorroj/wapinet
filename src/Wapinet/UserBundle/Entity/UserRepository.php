@@ -24,10 +24,9 @@ class UserRepository extends EntityRepository
     /**
      * @param string|null $search
      * @param bool       $onlyOnline
-     * @param array|null $sex
      * @return Query
      */
-    public function getSearchUsersQuery($search = null, $onlyOnline = true, array $sex = null)
+    public function getSearchUsersQuery($search = null, $onlyOnline = true)
     {
         $q = $this->createQueryBuilder('u');
 
@@ -42,11 +41,6 @@ class UserRepository extends EntityRepository
         if (true === $onlyOnline) {
             $q->andWhere('u.lastActivity > :lastActivity');
             $q->setParameter('lastActivity', new \DateTime('now -' . User::LIFETIME));
-        }
-
-        if ($sex) {
-            $q->andWhere('u.sex IN (:sex)');
-            $q->setParameter('sex', $sex);
         }
 
         $q->andWhere('u.enabled = 1');

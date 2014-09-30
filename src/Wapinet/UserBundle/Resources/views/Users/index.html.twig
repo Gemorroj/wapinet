@@ -10,18 +10,7 @@
     {{ form_start(form, {'action': path('wapinet_users'), 'method': 'POST'}) }}
     {{ form_errors(form) }}
     {{ form_row(form.search) }}
-
-    <div class="ui-grid-a">
-        <div class="ui-block-a">
-            {{ form_row(form.only_online) }}
-        </div>
-        <div class="ui-block-b">
-            {{ form_row(form.sex, {'attr': {'data-native-menu': 'false'}}) }}
-        </div>
-    </div>
-
     {{ form_rest(form) }}
-
     {{ form_end(form) }}
 
     <ul data-role="listview" data-inset="true">
