@@ -24,8 +24,16 @@
 
 $(document).ready(function () {
     {% if video %}
+        // (Default width: "480px")
+        // (Default height: "270px")
+
+        var width = $(window).width();
+        width = (width > 480) ? 480 : (width - 20);
+
         $("#jquery_jplayer_1").jPlayer({
             "ready": function () {
+                $(".jp-controls-holder").width(width - 40 + "px");
+                $("#jquery_jplayer_1").width(width + "px");
                 $(this).jPlayer("setMedia", {
                     {% if screenshot is not null %}
                         "poster": "{{ screenshot }}",
@@ -34,6 +42,7 @@ $(document).ready(function () {
                 });
             },
             "supplied": "{{ format }}",
+            "size": {"width": width + "px"},
             "swfPath": Jplayer.swfPath
         });
     {% else %}
