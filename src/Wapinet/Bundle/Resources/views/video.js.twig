@@ -28,12 +28,14 @@ $(document).ready(function () {
         // (Default height: "270px")
 
         var width = $(window).width();
-        width = (width > 480) ? 480 : (width - 20);
+        var space = 30;
+        var defaultWidth = 480;
+        width = (width > (defaultWidth + space)) ? defaultWidth : (width - space);
 
         $("#jquery_jplayer_1").jPlayer({
             "ready": function () {
                 $(".jp-controls-holder").width(width - 40 + "px");
-                $("#jquery_jplayer_1").width(width + "px");
+                $("#jp_container_1").width(width + "px");
                 $(this).jPlayer("setMedia", {
                     {% if screenshot is not null %}
                         "poster": "{{ screenshot }}",
