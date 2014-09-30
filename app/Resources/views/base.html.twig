@@ -118,14 +118,15 @@
                 </div>
                 <h2>{{ title }}</h2>
                 {% if app.user %}
-                    <a href="{{ path('fos_user_profile_show') }}" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-btn-right ui-icon-user">
-                        {% if app.user.hasAvatar %}
+                    {% if app.user.hasAvatar %}
+                        <a href="{{ path('fos_user_profile_show') }}" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-btn-right">
                             <img src="{{ vich_uploader_asset(app.user, 'avatar')|imagine_filter('thumbnail') }}" alt="" class="avatar-login" />
-                        {% endif %}
-                        {{ app.user.username }}
-                    </a>
+                        </a>
+                    {% else %}
+                        <a href="{{ path('fos_user_profile_show') }}" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-notext ui-btn-right ui-icon-user">{{ app.user.username }}</a>
+                    {% endif %}
                 {% else %}
-                    <a href="{{ path('fos_user_security_login') }}" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-btn-right ui-icon-user">Вход</a>
+                    <a href="{{ path('fos_user_security_login') }}" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-notext ui-btn-right ui-icon-user">Вход</a>
                 {% endif %}
             {% endblock %}
         </div>
