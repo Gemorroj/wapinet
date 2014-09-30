@@ -71,10 +71,14 @@ a.friends-button {
 }
 div.breadcrumbs {
     margin-top: -1em;
-    margin-left: -1em;
+    margin-left: -1.5em;
+    margin-right: -0.7em;
 }
 div.breadcrumbs > div.ui-controlgroup-controls {
     width: 100%;
+}
+div.breadcrumbs > div.ui-controlgroup-controls > a.ui-btn-icon-notext {
+    width: 1em;
 }
 a.bar-button {
     margin: 0;
