@@ -27,12 +27,15 @@
         {{ form_row(form.tags_string) }}
 
         <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-            <input type="checkbox" id="upload-password" onchange="$('#upload-password-row').toggle();" />
+            <input type="checkbox" id="upload-password" onchange="$('#upload-password-row').slideToggle();" />
             <label for="upload-password" title="Включите, если файл нужно защитить паролем">Пароль</label>
         </fieldset>
-        <span id="upload-password-row" style="display: none">
+
+        <br />
+
+        <div id="upload-password-row" style="display: none;">
             {{ form_widget(form.password) }}
-        </span>
+        </div>
 
         {{ form_rest(form) }}
     {{ form_end(form) }}
