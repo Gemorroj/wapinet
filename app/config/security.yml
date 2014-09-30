@@ -7,7 +7,7 @@ security:
 
     role_hierarchy:
         ROLE_USER:
-        ROLE_ADMIN:       ROLE_USER
+        ROLE_ADMIN: ROLE_USER
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     providers:
@@ -16,15 +16,20 @@ security:
 
     firewalls:
         dev:
-            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             pattern: ^/
             form_login:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
-            logout:       true
-            anonymous:    true
+                remember_me: true
+            remember_me:
+                lifetime: 2592000 #30 дней
+                name: wapinet_rememberme
+                key: "%secret%"
+            logout: true
+            anonymous: true
 
     access_control:
         #- { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
