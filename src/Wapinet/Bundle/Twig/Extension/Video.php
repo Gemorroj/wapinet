@@ -74,9 +74,11 @@ class Video extends \Twig_Extension
      */
     protected function addLibMp3LameFilter(FFmpegAudio $media)
     {
-        $sampleRate = $media->getStreams()->audios()->first()->get('sample_rate');
-        if ($sampleRate < 32000) {
-            $media->addFilter(new AudioResamplableFilter(32000));
+        $stream = $media->getStreams()->audios()->first();
+        if (null !== $stream) {
+            if ($stream->get('sample_rate') < 32000) {
+                $media->addFilter(new AudioResamplableFilter(32000));
+            }
         }
 
         return $this;
