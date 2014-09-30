@@ -111,7 +111,7 @@
                 <div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
                     {% set has_unread_messages = (is_granted('ROLE_USER') and fos_message_nb_unread() > 0) %}
                     {% if has_unread_messages %}
-                        <a href="#panel" class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-left">+{{ fos_message_nb_unread()|wapinet_count }}</a>
+                        <a href="#panel" class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-left ui-btn-left">+{{ fos_message_nb_unread()|wapinet_count }}</a>
                     {% else %}
                         <a href="#panel" class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext">Меню</a>
                     {% endif %}
