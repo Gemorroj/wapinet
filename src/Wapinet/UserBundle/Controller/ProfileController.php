@@ -39,7 +39,7 @@ class ProfileController extends BaseController
             $user = $currentUser;
         }
 
-        return $this->container->get('templating')->renderResponse('FOSUserBundle:Profile:show.html.'.$this->container->getParameter('fos_user.template.engine'), array('user' => $user));
+        return $this->container->get('templating')->renderResponse('FOSUserBundle:Profile:show.html.twig', array('user' => $user));
     }
 
     /**
@@ -96,7 +96,7 @@ class ProfileController extends BaseController
         }
 
         return $this->container->get('templating')->renderResponse(
-            'FOSUserBundle:Profile:edit.html.'.$this->container->getParameter('fos_user.template.engine'),
+            'FOSUserBundle:Profile:edit.html.twig',
             array('form' => $form->createView())
         );
     }
