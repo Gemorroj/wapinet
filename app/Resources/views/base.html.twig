@@ -35,6 +35,7 @@
 
     {# pagerfanta #}
     {# <link rel="stylesheet" href="{{ asset('bundles/whiteoctoberpagerfanta/css/pagerfantaDefault.css') }}" type="text/css" /> #}
+    {# swiper отключаем, т.к. в реальности не удобно
     {% if pagerfanta is defined and pagerfanta is not null and pagerfanta.count > 0 and (pagerfanta.hasPreviousPage or pagerfanta.hasNextPage) %}
         <script type="text/javascript">{% autoescape 'js' %}
             var isTouchDevice = ('ontouchstart' in document.documentElement);
@@ -54,6 +55,7 @@
             }
         {% endautoescape %}</script>
     {% endif %}
+    #}
 
     {# comments #}
     {% if comments_id is defined %}
