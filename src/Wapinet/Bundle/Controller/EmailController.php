@@ -42,13 +42,27 @@ class EmailController extends Controller
 
 
     /**
+     * @return string
+     */
+    protected function getEmailFooter()
+    {
+        return "\r\n---\r\n" . $this->container->getParameter('wapinet_email_footer');
+    }
+
+
+    /**
      * @param array $data
      *
      * @return \Swift_Message
      */
     protected function getMessage(array $data)
     {
-        $message = \Swift_Message::newInstance($data['subject'], $data['message'], 'text/plain', 'UTF-8');
+        $message = \Swift_Message::newInstance(
+            $data['subject'],
+            $data['message'] . $this->getEmailFooter(),
+            'text/plain',
+            'UTF-8'
+        );
         $message->setFrom($data['from']);
         $message->setTo($data['to']);
 
