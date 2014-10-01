@@ -1,6 +1,6 @@
 <li data-role="list-divider">
     <span>
-        <a class="bar-button ui-btn-icon-right ui-icon-alert ui-mini ui-btn-inline ui-btn" href="{{ path('news_show', {'id': event.variables.news.id}) }}">&gt;&gt;&gt;</a>
+        <a class="bar-button ui-btn-icon-right ui-icon-alert ui-mini ui-btn-inline ui-btn" href="{{ path('news_show', {'id': event.variables.news.id}) }}">&#10150;</a>
     </span>
     {{ event.subject }}
     <span class="ui-li-count">{{ event.variables.news.createdAt|wapinet_datetime }}</span>

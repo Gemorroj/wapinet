@@ -14,7 +14,7 @@
         {% for comment in pagerfanta %}
             <li data-role="list-divider">
                 <span>
-                    <a class="bar-button ui-btn-icon-right ui-icon-comment ui-mini ui-btn-inline ui-btn" href="{{ comment.thread.permalink }}">&gt;&gt;&gt;</a>
+                    <a class="bar-button ui-btn-icon-right ui-icon-comment ui-mini ui-btn-inline ui-btn" href="{{ comment.thread.permalink }}">&#10150;</a>
                     <a href="#" class="no-link bar-button ui-btn-icon-left ui-icon-heart ui-mini ui-btn-inline ui-btn">{{ comment.score }}</a>
                 </span>
                 <span class="ui-li-count">{{ comment.createdAt|wapinet_datetime  }}</span>

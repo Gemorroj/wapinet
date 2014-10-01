@@ -1,6 +1,6 @@
 <li data-role="list-divider">
     <span>
-        <a class="bar-button ui-btn-icon-right ui-icon-mail ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_message_thread_view', {'threadId': event.variables.message.thread.id}) }}">&gt;&gt;&gt;</a>
+        <a class="bar-button ui-btn-icon-right ui-icon-mail ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_message_thread_view', {'threadId': event.variables.message.thread.id}) }}">&#10150;</a>
     </span>
     {{ event.subject }}
     <span class="ui-li-count">{{ event.variables.message.createdAt|wapinet_datetime }}</span>

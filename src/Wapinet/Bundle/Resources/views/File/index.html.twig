@@ -29,7 +29,7 @@
             {% for comment in comments %}
                 <li data-role="list-divider">
                     <span>
-                        <a class="bar-button ui-btn-icon-right ui-icon-comment ui-mini ui-btn-inline ui-btn" href="{{ comment.permalink }}">&gt;&gt;&gt;</a>
+                        <a class="bar-button ui-btn-icon-right ui-icon-comment ui-mini ui-btn-inline ui-btn" href="{{ comment.permalink }}">&#10150;</a>
                         <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': comment.username}) }}">{{ comment.username }}</a>
                     </span>
                     <span class="ui-li-count">{{ comment.createdAt|wapinet_datetime }}</span>
