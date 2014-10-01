@@ -46,7 +46,7 @@ class EmailController extends Controller
      */
     protected function getEmailFooter()
     {
-        return "\r\n---\r\n" . $this->container->getParameter('wapinet_email_footer');
+        return "\r\n\r\n---\r\n" . $this->container->getParameter('wapinet_email_footer');
     }
 
 
