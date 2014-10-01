@@ -70,7 +70,9 @@ class File extends \Twig_Extension
      */
     public function getCountToday()
     {
-        return $this->fileRepository->countToday();
+        return $this->fileRepository->countDate(
+            new \DateTime('today', $this->container->get('timezone')->getTimezone())
+        );
     }
 
     /**
@@ -78,7 +80,10 @@ class File extends \Twig_Extension
      */
     public function getCountYesterday()
     {
-        return $this->fileRepository->countYesterday();
+        return $this->fileRepository->countDate(
+            new \DateTime('yesterday', $this->container->get('timezone')->getTimezone()),
+            new \DateTime('today', $this->container->get('timezone')->getTimezone())
+        );
     }
 
     /**

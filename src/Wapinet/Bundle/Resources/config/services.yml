@@ -11,7 +11,7 @@ services:
 
     wapinet.date.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Date
-        arguments: [@security.context]
+        arguments: [@timezone]
         tags:
             - {name: twig.extension, alias: wapinet_date}
 
@@ -114,6 +114,10 @@ services:
     mime:
         class: Wapinet\Bundle\Helper\Mime
         arguments: [@service_container]
+
+    timezone:
+        class: Wapinet\Bundle\Helper\Timezone
+        arguments: [@security.context]
 
     file:
         class: Wapinet\Bundle\Helper\File

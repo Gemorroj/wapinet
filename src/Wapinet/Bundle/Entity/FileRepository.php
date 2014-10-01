@@ -77,23 +77,26 @@ class FileRepository extends EntityRepository
     }
 
     /**
+     * @param \DateTime $datetimeStart
+     * @param \DateTime $datetimeEnd
      * @return int
      */
-    public function countToday()
+    public function countDate(\DateTime $datetimeStart, \DateTime $datetimeEnd = null)
     {
-        $q = $this->getEntityManager()->createQuery('SELECT COUNT(f.id) FROM Wapinet\Bundle\Entity\File f WHERE f.password IS NULL AND f.createdAt > :date');
-        $q->setParameter('date', new \DateTime('today'));
-        return $q->getSingleScalarResult();
-    }
+        $queryBuilder = $this->createQueryBuilder('f')
+            ->select('COUNT(f.id)')
+            ->where('f.password IS NULL')
+            ->andWhere('f.createdAt > :date_start');
 
-    /**
-     * @return int
-     */
-    public function countYesterday()
-    {
-        $q = $this->getEntityManager()->createQuery('SELECT COUNT(f.id) FROM Wapinet\Bundle\Entity\File f WHERE f.password IS NULL AND f.createdAt > :date_start AND f.createdAt < :date_end');
-        $q->setParameter('date_start', new \DateTime('yesterday'));
-        $q->setParameter('date_end', new \DateTime('today'));
+        $queryBuilder->setParameter('date_start', $datetimeStart);
+
+        if (null !== $datetimeEnd) {
+            $queryBuilder->andWhere('f.createdAt < :date_end');
+            $queryBuilder->setParameter('date_end', $datetimeEnd);
+        }
+
+        $q = $queryBuilder->getQuery();
+
         return $q->getSingleScalarResult();
     }
 
@@ -130,28 +133,24 @@ class FileRepository extends EntityRepository
     }
 
     /**
-     * @param string $date
+     * @param \DateTime $datetimeStart
+     * @param \DateTime $datetimeEnd
      * @param string $category
      * @return \Doctrine\ORM\Query
      */
-    public function getListQuery($date = null, $category = null)
+    public function getListQuery(\DateTime $datetimeStart = null, \DateTime $datetimeEnd = null, $category = null)
     {
         $q = $this->createQueryBuilder('f')
             ->where('f.password IS NULL')
             ->orderBy('f.id', 'DESC');
 
-        switch ($date) {
-            case 'today':
-                $q->andWhere('f.createdAt > :date');
-                $q->setParameter('date', new \DateTime('today'));
-                break;
-
-            case 'yesterday':
-                $q->andWhere('f.createdAt > :date_start');
-                $q->andWhere('f.createdAt < :date_end');
-                $q->setParameter('date_start', new \DateTime('yesterday'));
-                $q->setParameter('date_end', new \DateTime('today'));
-                break;
+        if (null !== $datetimeStart) {
+            $q->andWhere('f.createdAt > :date_start');
+            $q->setParameter('date_start', $datetimeStart);
+        }
+        if (null !== $datetimeEnd) {
+            $q->andWhere('f.createdAt < :date_end');
+            $q->setParameter('date_end', $datetimeEnd);
         }
 
         $this->addCategoryMime($q, $category);

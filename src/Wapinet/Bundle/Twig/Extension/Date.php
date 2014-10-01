@@ -2,22 +2,21 @@
 
 namespace Wapinet\Bundle\Twig\Extension;
 
-use Symfony\Component\Security\Core\SecurityContext;
-use Wapinet\UserBundle\Entity\User;
+use Wapinet\Bundle\Helper\Timezone;
 
 class Date extends \Twig_Extension
 {
     /**
-     * @var SecurityContext
+     * @var Timezone
      */
-    protected $securityContext;
+    protected $timezone;
 
     /**
-     * @param SecurityContext $securityContext
+     * @param Timezone $timezone
      */
-    public function __construct(SecurityContext $securityContext)
+    public function __construct(Timezone $timezone)
     {
-        $this->securityContext = $securityContext;
+        $this->timezone = $timezone;
     }
 
     /**
@@ -34,27 +33,6 @@ class Date extends \Twig_Extension
         );
     }
 
-
-    /**
-     * @throws \Exception
-     * @return \DateTimeZone|null
-     */
-    protected function getTimezone()
-    {
-        $token = $this->securityContext->getToken();
-        if (null !== $token) {
-            $user = $token->getUser();
-            if ($user instanceof User) {
-                $timezone = $user->getTimezone();
-                if (null !== $timezone) {
-                    return new \DateTimeZone($timezone);
-                }
-            }
-        }
-
-        return null;
-    }
-
     /**
      * @param \DateTime|mixed $date
      * @return string|null
@@ -62,7 +40,7 @@ class Date extends \Twig_Extension
     public function getDate($date)
     {
         if ($date instanceof \DateTime) {
-            $timezone = $this->getTimezone();
+            $timezone = $this->timezone->getTimezone();
 
             if (null !== $timezone) {
                 $date->setTimezone($timezone);
@@ -99,7 +77,7 @@ class Date extends \Twig_Extension
     public function getDateTime($datetime)
     {
         if ($datetime instanceof \DateTime) {
-            $timezone = $this->getTimezone();
+            $timezone = $this->timezone->getTimezone();
 
             if (null !== $timezone) {
                 $datetime->setTimezone($timezone);

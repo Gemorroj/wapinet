@@ -247,7 +247,27 @@ class FileController extends Controller
     public function listAction(Request $request, $date = null, $category = null)
     {
         $page = $request->get('page', 1);
-        $query = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->getListQuery($date, $category);
+
+        $datetimeStart = null;
+        $datetimeEnd = null;
+        switch ($date) {
+            case 'today':
+                $datetimeStart = new \DateTime('today', $this->get('timezone')->getTimezone());
+                break;
+
+            case 'yesterday':
+                $datetimeStart = new \DateTime('yesterday', $this->get('timezone')->getTimezone());
+                $datetimeEnd = new \DateTime('today', $this->get('timezone')->getTimezone());
+                break;
+        }
+
+        $query = $this->getDoctrine()
+            ->getRepository('Wapinet\Bundle\Entity\File')
+            ->getListQuery(
+                $datetimeStart,
+                $datetimeEnd,
+                $category
+            );
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
         return $this->render('WapinetBundle:File:list.html.twig', array(
