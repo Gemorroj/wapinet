@@ -100,7 +100,8 @@ class Date extends \Twig_Extension
             } elseif ($datetime->format('Ymd') == $dayAfterTomorrow->format('Ymd')) {
                 return 'Послезавтра в ' . $datetime->format('H:i');
             } else {
-                return $datetime->format('d.m.Y H:i:s');
+                //return $datetime->format('d.m.Y H:i:s');
+                return $datetime->format('d.m.Y H:i');
             }
         }
 
