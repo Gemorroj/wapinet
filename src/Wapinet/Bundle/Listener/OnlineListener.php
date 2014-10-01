@@ -38,7 +38,7 @@ class OnlineListener
 
 
         $online = new Online;
-        $online->setBrowser($this->container->get('request')->headers->get('User-Agent'));
+        $online->setBrowser($this->container->get('request')->headers->get('User-Agent', ''));
         $online->setIp($this->container->get('request')->getClientIp());
         $online->setDatetime(new \DateTime());
 
