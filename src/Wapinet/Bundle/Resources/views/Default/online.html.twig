@@ -12,12 +12,12 @@
     <table data-role="table" data-filter="true" data-input="#filter-input" class="ui-responsive">
         <thead>
             <tr>
-                <th data-priority="1">Время</th>
+                <th data-priority="persist">Время</th>
                 <th data-priority="persist">IP</th>
-                <th data-priority="2">Браузер</th>
+                <th data-priority="3">Браузер</th>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <th data-priority="3">Путь</th>
-                    <th data-priority="4">Реферер</th>
+                    <th data-priority="4">Путь</th>
+                    <th data-priority="6">Реферер</th>
                 {% endif %}
             </tr>
         </thead>
