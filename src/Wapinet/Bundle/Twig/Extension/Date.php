@@ -28,6 +28,7 @@ class Date extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFilter('wapinet_date', array($this, 'getDate')),
+            new \Twig_SimpleFilter('wapinet_time', array($this, 'getTime')),
             new \Twig_SimpleFilter('wapinet_datetime', array($this, 'getDateTime')),
             new \Twig_SimpleFilter('wapinet_length', array($this, 'getLength')),
         );
@@ -107,6 +108,27 @@ class Date extends \Twig_Extension
 
         return null;
     }
+
+
+    /**
+     * @param \DateTime|mixed $datetime
+     * @return string|null
+     */
+    public function getTime($datetime)
+    {
+        if ($datetime instanceof \DateTime) {
+            $timezone = $this->timezone->getTimezone();
+
+            if (null !== $timezone) {
+                $datetime->setTimezone($timezone);
+            }
+
+            return $datetime->format('H ч. i м. s с.');
+        }
+
+        return null;
+    }
+
 
     /**
      * @param int $seconds

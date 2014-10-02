@@ -24,7 +24,7 @@
         <tbody>
         {% for item in online %}
             <tr>
-                <td>{{ item.datetime|wapinet_datetime }}</td>
+                <td>{{ item.datetime|wapinet_time }}</td>
                 <td>{{ item.ip }}</td>
                 <td>{{ item.browser }}</td>
                 {% if is_granted('ROLE_ADMIN') %}
