@@ -40,7 +40,7 @@ class OnlineListener
         $request = $event->getRequest();
 
         $online = new Online();
-        $online->setRequest($request);
+        $online->setPath($request->getPathInfo());
         $online->setBrowser($request->headers->get('User-Agent', ''));
         $online->setIp($request->getClientIp());
         $online->setDatetime(new \DateTime());

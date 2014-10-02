@@ -8,6 +8,18 @@
     })}}
 {% endblock %}
 
+
+{% if file.isImage %}
+    {% set screenshot = vich_uploader_asset(file, 'file') %}
+{% elseif file.isVideo %}
+    {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_video_screenshot %}
+{% elseif file.isJavaApp %}
+    {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_java_app_screenshot %}
+{% elseif file.isAndroidApp %}
+    {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_android_app_screenshot %}
+{% endif %}
+
+
 {% block javascripts %}
     {% if file.isPlayableVideo %}
         <script type="text/javascript">
@@ -30,6 +42,27 @@
             });
         {% endautoescape %}</script>
     {% endif %}
+
+    <script type="text/javascript" src="//yastatic.net/share/share.js"></script>
+    <script type="text/javascript">{% autoescape 'js' %}
+        $(document).ready(function () {
+            new Ya.share({
+                theme: 'counter',
+                element: 'share',
+                title: '{{ file.originalFileName }}',
+                description: '{{ file.description|wapinet_bbcode_parse|escape }}',
+
+                {% if screenshot is defined and screenshot is not null %}
+                    image: '{{ screenshot }}',
+                {% endif %}
+
+                elementStyle: {
+                    'type': 'none',
+                    'quickServices': ['vkontakte','facebook','twitter','odnoklassniki','moimir']
+                }
+            });
+        });
+    {% endautoescape %}</script>
 {% endblock %}
 
 {% block content %}
@@ -94,12 +127,11 @@
         {% set info = file_get_media_info(file.file) %}
         {% set audio_info = info is not null ? info.audios.first : null %}
         {% set video_info = info is not null ? info.videos.first : null %}
-        {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_video_screenshot %}
 
         {% if file.isPlayableVideo %}
             {% include '@Wapinet/video.html.twig' with {'file': file} %}
         {% else %}
-            {% if screenshot is not null %}
+            {% if screenshot is defined and screenshot is not null %}
                 {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
             {% endif %}
         {% endif %}
@@ -155,13 +187,11 @@
             {% include '@Wapinet/archive.html.twig' with {'file': file} %}
         {% endif %}
     {% elseif file.isJavaApp %}
-        {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_java_app_screenshot %}
-        {% if screenshot is not null %}
+        {% if screenshot is defined and screenshot is not null %}
             {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
         {% endif %}
     {% elseif file.isAndroidApp %}
-        {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_android_app_screenshot %}
-        {% if screenshot is not null %}
+        {% if screenshot is defined and screenshot is not null %}
             {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
         {% endif %}
     {% endif %}
@@ -236,6 +266,8 @@
         {% endif %}
         </tbody>
     </table>
+
+    <p id="share"></p>
 
     {% include 'WapinetCommentBundle::comments_block.html.twig' %}
 {% endblock %}

@@ -17,7 +17,6 @@
                 <th data-priority="3">Браузер</th>
                 {% if is_granted('ROLE_ADMIN') %}
                     <th data-priority="4">Путь</th>
-                    <th data-priority="6">Реферер</th>
                 {% endif %}
             </tr>
         </thead>
@@ -28,8 +27,7 @@
                 <td>{{ item.ip }}</td>
                 <td>{{ item.browser }}</td>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <td>{{ item.request.pathInfo }}</td>
-                    <td>{{ item.request.headers.get('referer') }}</td>
+                    <td>{{ item.path }}</td>
                 {% endif %}
             </tr>
         {% endfor %}

@@ -1,6 +1,8 @@
 Wapinet\Bundle\Entity\Online:
     type: entity
     table: online
+    options:
+        engine: MEMORY
     fields:
         id:
             type: integer
@@ -15,8 +17,9 @@ Wapinet\Bundle\Entity\Online:
         browser:
             type: string
             length: 255
-        request:
-            type: object
+        path:
+            type: string
+            length: 255
 
     uniqueConstraints:
         unique_idx:

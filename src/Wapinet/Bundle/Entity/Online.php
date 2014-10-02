@@ -2,7 +2,6 @@
 
 namespace Wapinet\Bundle\Entity;
 
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Online
@@ -30,9 +29,9 @@ class Online
     private $browser;
 
     /**
-     * @var Request
+     * @var string
      */
-    private $request;
+    private $path;
 
 
     /**
@@ -59,24 +58,24 @@ class Online
     }
 
     /**
-     * Get request
+     * Get path
      *
-     * @return Request
+     * @return string
      */
-    public function getRequest()
+    public function getPath()
     {
-        return $this->request;
+        return $this->path;
     }
 
     /**
-     * Set request
+     * Set path
      *
-     * @param Request $request
+     * @param string $path
      * @return Online
      */
-    public function setRequest(Request $request)
+    public function setPath($path)
     {
-        $this->request = $request;
+        $this->path = $path;
 
         return $this;
     }
