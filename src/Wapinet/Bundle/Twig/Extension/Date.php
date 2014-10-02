@@ -123,7 +123,7 @@ class Date extends \Twig_Extension
                 $datetime->setTimezone($timezone);
             }
 
-            return $datetime->format('H ч. i м. s с.');
+            return $datetime->format('Hч. iм. sс.');
         }
 
         return null;
