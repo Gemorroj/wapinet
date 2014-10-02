@@ -8,6 +8,7 @@ use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Wapinet\UploaderBundle\Entity\FileContent;
 use Wapinet\UploaderBundle\Entity\FileUrl;
 
@@ -81,7 +82,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
             $curl->setUrl($fileDataFromForm['url']);
             $curl->addBrowserHeaders();
             $curl->acceptRedirects();
-            $responseHeaders = $curl->checkFileSize(false);
+            $response = $curl->checkFileSize(false);
 
             $temp = tempnam($this->container->get('kernel')->getTmpDir(), 'file_url');
             if (false === $temp) {
@@ -101,9 +102,9 @@ class FileUrlDataTransformer implements DataTransformerInterface
 
             $uploadedFile = new FileUrl(
                 $temp,
-                $fileDataFromForm['url'],
-                $responseHeaders->headers->get('Content-Type'),
-                $responseHeaders->headers->get('Content-Length')
+                $this->getOriginalName($response->headers, $fileDataFromForm['url']),
+                $response->headers->get('Content-Type'),
+                $response->headers->get('Content-Length')
             );
         }
 
@@ -117,5 +118,57 @@ class FileUrlDataTransformer implements DataTransformerInterface
         }
 
         return $uploadedFile;
+    }
+
+
+    /**
+     * @param ResponseHeaderBag $headers
+     * @param string $url
+     * @return string
+     */
+    protected function getOriginalName(ResponseHeaderBag $headers, $url)
+    {
+        $contentDisposition = $headers->get('Content-Disposition');
+        if (is_array($contentDisposition)) {
+            $contentDisposition = end($contentDisposition);
+        }
+
+        if ($contentDisposition) {
+            $tmpName = explode('=', $contentDisposition, 2);
+            if ($tmpName[1]) {
+                $tmpName = trim($tmpName[1], '";\'');
+
+                $utf8Prefix = 'utf-8\'\''; // utf-8\'\'' . rawurlencode($var)
+                $utf8BPrefix = '=?UTF-8?B?'; // =?UTF-8?B?' . base64_encode($var) . '?=
+                $utf8BPostfix = '?='; // =?UTF-8?B?' . base64_encode($var) . '?=
+
+                if (0 === stripos($tmpName, $utf8Prefix)) {
+                    $tmpName = substr($tmpName, strlen($utf8Prefix));
+                    $tmpName = rawurldecode($tmpName);
+
+                    return $tmpName;
+                }
+
+                if (0 === stripos($tmpName, $utf8BPrefix)) {
+                    $tmpName = substr($tmpName, strlen($utf8BPrefix));
+                    $tmpName = substr($tmpName, 0, -strlen($utf8BPostfix));
+                    $tmpName = base64_decode($tmpName);
+
+                    return $tmpName;
+                }
+
+                return $tmpName;
+            }
+        }
+
+        $location = $headers->get('Location');
+        if (is_array($location)) {
+            $location = end($location);
+        }
+        if ($location) {
+            return parse_url($location, PHP_URL_PATH);
+        }
+
+        return parse_url($url, PHP_URL_PATH);
     }
 }

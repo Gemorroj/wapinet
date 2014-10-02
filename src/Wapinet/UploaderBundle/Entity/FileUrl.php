@@ -12,14 +12,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class FileUrl extends UploadedFile
 {
     /**
-     * @inheritdoc
-     */
-    public function __construct($file, $url, $mimeType = null, $size = null)
-    {
-        parent::__construct($file, $url, $mimeType, $size);
-    }
-
-    /**
      * Moves the file to a new location.
      *
      * @param string $directory The destination folder
