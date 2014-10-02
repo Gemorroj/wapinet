@@ -53,12 +53,12 @@
                 description: '{{ file.description|wapinet_bbcode_parse|escape }}',
 
                 {% if screenshot is defined and screenshot is not null %}
-                    image: '{{ screenshot }}',
+                    image: '{{ app.request.schemeAndHttpHost ~ screenshot }}',
                 {% endif %}
 
                 elementStyle: {
                     'type': 'none',
-                    'quickServices': ['vkontakte','facebook','twitter','odnoklassniki','moimir']
+                    'quickServices': ['vkontakte', 'facebook', 'twitter', 'odnoklassniki', 'moimir']
                 }
             });
         });
