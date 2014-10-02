@@ -80,10 +80,17 @@ class FileUrlDataTransformer implements DataTransformerInterface
             $curl = $this->container->get('curl');
             $curl->setUrl($fileDataFromForm['url']);
             $curl->addBrowserHeaders();
+            $curl->acceptRedirects();
             $responseHeaders = $curl->checkFileSize(false);
 
             $temp = tempnam($this->container->get('kernel')->getTmpDir(), 'file_url');
+            if (false === $temp) {
+                throw new TransformationFailedException('Не удалось создать временный файл');
+            }
             $f = fopen($temp, 'w');
+            if (false === $f) {
+                throw new TransformationFailedException('Не удалось открыть временный файл на запись');
+            }
 
             $curl->setOpt(CURLOPT_HEADER, false);
             $curl->setOpt(CURLOPT_FILE, $f);
@@ -92,7 +99,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
             $curl->close();
             fclose($f);
 
-            $uploadedFile =  new FileUrl(
+            $uploadedFile = new FileUrl(
                 $temp,
                 $fileDataFromForm['url'],
                 $responseHeaders->headers->get('Content-Type'),
