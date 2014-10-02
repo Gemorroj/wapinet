@@ -3,18 +3,35 @@
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    <title>Ошибка: {{ status_text }}</title>
+
+    {# jquery #}
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+
+    {# jquery mobile #}
+    <link rel="stylesheet" type="text/css" href="//code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css" />
+    <script type="text/javascript" src="//code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
+
+    <title>Ошибка сервера</title>
 </head>
 <body>
-<h1>Ошибка</h1>
-<h2>Сервер вернул "{{ status_code }} {{ status_text }}".</h2>
+<div data-role="page">
 
-<div>
-    Возможно что-то не работает. Отправьте нам письмо с описанием ваших действий, приведших к этой ошибке.
-    Мы устраним ошибку как можно скорее.
-    Приносим свои извинения за неудобства.
+    <div data-role="header">
+        <h1>Ошибка сервера</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+        <p>Возможно что-то не работает. Отправьте нам письмо с описанием ваших действий, приведших к этой ошибке.
+            Мы устраним ошибку как можно скорее.
+            Приносим свои извинения за неудобства.</p>
+    </div>
+
+    <div data-role="footer">
+        <h4><a href="{{ path('index') }}">{{ wapinet_title }}</a></h4>
+    </div>
 </div>
 </body>
 </html>
