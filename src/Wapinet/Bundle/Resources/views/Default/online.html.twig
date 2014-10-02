@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Онлайн{% endblock %}
+{% block breadcrumbs %}
+    {{ wapinet_breadcrumbs() }}
+{% endblock %}
+
+{% block content %}
+    <form class="ui-filterable" action="#">
+        <input id="filter-input" type="search" />
+    </form>
+    <table data-role="table" data-filter="true" data-input="#filter-input" class="ui-responsive">
+        <thead>
+            <tr>
+                <th data-priority="1">Время</th>
+                <th data-priority="persist"><abbr title="Internet Protocol (IP, досл. «межсетевой протокол»)">IP</abbr></th>
+                <th data-priority="2">Браузер</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th data-priority="3">Путь</th>
+                    <th data-priority="3">Реферер</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in online %}
+            <tr>
+                <td>{{ item.datetime|wapinet_datetime }}</td>
+                <td>{{ item.ip }}</td>
+                <td>{{ item.browser }}</td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td>{{ item.request.pathInfo }}</td>
+                    <td>{{ item.request.headers.get('referer') }}</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

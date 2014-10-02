@@ -28,7 +28,7 @@ class OnlineListener
      */
     public function onCoreController(FilterControllerEvent $event)
     {
-        if ($event->isMasterRequest()) {
+        if (!$event->isMasterRequest()) {
             return;
         }
 
@@ -37,9 +37,12 @@ class OnlineListener
             ->execute();
 
 
-        $online = new Online;
-        $online->setBrowser($this->container->get('request')->headers->get('User-Agent', ''));
-        $online->setIp($this->container->get('request')->getClientIp());
+        $request = $event->getRequest();
+
+        $online = new Online();
+        $online->setRequest($request);
+        $online->setBrowser($request->headers->get('User-Agent', ''));
+        $online->setIp($request->getClientIp());
         $online->setDatetime(new \DateTime());
 
         $result = $this->em->createQuery('SELECT o.id FROM Wapinet\Bundle\Entity\Online o WHERE o.ip = :ip AND o.browser = :browser')

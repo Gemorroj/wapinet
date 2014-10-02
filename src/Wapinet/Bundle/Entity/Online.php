@@ -2,6 +2,8 @@
 
 namespace Wapinet\Bundle\Entity;
 
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * Online
  */
@@ -27,6 +29,11 @@ class Online
      */
     private $browser;
 
+    /**
+     * @var Request
+     */
+    private $request;
+
 
     /**
      * Get id
@@ -50,6 +57,30 @@ class Online
 
         return $this;
     }
+
+    /**
+     * Get request
+     *
+     * @return Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * Set request
+     *
+     * @param Request $request
+     * @return Online
+     */
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+
+        return $this;
+    }
+
 
     /**
      * Set datetime

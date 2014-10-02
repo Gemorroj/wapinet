@@ -6,6 +6,10 @@ about:
     path:  /about
     defaults: { _controller: WapinetBundle:Default:about }
 
+online:
+    path:  /online
+    defaults: { _controller: WapinetBundle:Default:online }
+
 utilities:
     path:  /utilities
     defaults: { _controller: WapinetBundle:Default:utilities }

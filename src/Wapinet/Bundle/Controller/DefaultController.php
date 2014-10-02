@@ -16,6 +16,16 @@ class DefaultController extends Controller
         return $this->render('WapinetBundle:Default:about.html.twig');
     }
 
+    public function onlineAction()
+    {
+        return $this->render(
+            'WapinetBundle:Default:online.html.twig',
+            array(
+                'online' => $this->getDoctrine()->getRepository('WapinetBundle:Online')->findBy(array(), array('datetime' => 'DESC'))
+            )
+        );
+    }
+
     public function utilitiesAction()
     {
         return $this->render('WapinetBundle:Default:utilities.html.twig');
