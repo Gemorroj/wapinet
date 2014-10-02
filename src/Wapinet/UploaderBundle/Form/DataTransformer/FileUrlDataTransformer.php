@@ -66,6 +66,27 @@ class FileUrlDataTransformer implements DataTransformerInterface
      */
     public function reverseTransform($fileDataFromForm)
     {
+        $uploadedFile = $this->getUploadedFile($fileDataFromForm);
+
+        if (null === $uploadedFile && true === $this->required) {
+            throw new TransformationFailedException('Не заполнено обязательное поле');
+        }
+        // TODO: вероятно эта проверка не нужна
+        //var_dump($uploadedFile);
+        if (null !== $uploadedFile && true !== $uploadedFile->isValid()) {
+            throw new TransformationFailedException('Ошибка при загрузке файла');
+        }
+
+        return $uploadedFile;
+    }
+
+
+    /**
+     * @param array $fileDataFromForm
+     * @return null|FileUrl
+     */
+    protected function getUploadedFile(array $fileDataFromForm)
+    {
         $uploadedFile = null;
 
         if ($fileDataFromForm['file']) {
@@ -108,15 +129,6 @@ class FileUrlDataTransformer implements DataTransformerInterface
             );
         }
 
-        if (null === $uploadedFile && true === $this->required) {
-            throw new TransformationFailedException('Не заполнено обязательное поле');
-        }
-        // TODO: вероятно эта проверка не нужна
-        //var_dump($uploadedFile);
-        if (null !== $uploadedFile && true !== $uploadedFile->isValid()) {
-            throw new TransformationFailedException('Ошибка при загрузке файла');
-        }
-
         return $uploadedFile;
     }
 
@@ -132,31 +144,9 @@ class FileUrlDataTransformer implements DataTransformerInterface
         if (is_array($contentDisposition)) {
             $contentDisposition = end($contentDisposition);
         }
-
         if ($contentDisposition) {
-            $tmpName = explode('=', $contentDisposition, 2);
-            if ($tmpName[1]) {
-                $tmpName = trim($tmpName[1], '";\'');
-
-                $utf8Prefix = 'utf-8\'\''; // utf-8\'\'' . rawurlencode($var)
-                $utf8BPrefix = '=?UTF-8?B?'; // =?UTF-8?B?' . base64_encode($var) . '?=
-                $utf8BPostfix = '?='; // =?UTF-8?B?' . base64_encode($var) . '?=
-
-                if (0 === stripos($tmpName, $utf8Prefix)) {
-                    $tmpName = substr($tmpName, strlen($utf8Prefix));
-                    $tmpName = rawurldecode($tmpName);
-
-                    return $tmpName;
-                }
-
-                if (0 === stripos($tmpName, $utf8BPrefix)) {
-                    $tmpName = substr($tmpName, strlen($utf8BPrefix));
-                    $tmpName = substr($tmpName, 0, -strlen($utf8BPostfix));
-                    $tmpName = base64_decode($tmpName);
-
-                    return $tmpName;
-                }
-
+            $tmpName = $this->parseContentDisposition($contentDisposition);
+            if (null !== $tmpName) {
                 return $tmpName;
             }
         }
@@ -170,5 +160,41 @@ class FileUrlDataTransformer implements DataTransformerInterface
         }
 
         return parse_url($url, PHP_URL_PATH);
+    }
+
+
+    /**
+     * @param string $contentDisposition
+     * @return null|string
+     */
+    private function parseContentDisposition($contentDisposition)
+    {
+        $tmpName = explode('=', $contentDisposition, 2);
+        if ($tmpName[1]) {
+            $tmpName = trim($tmpName[1], '";\'');
+
+            $utf8Prefix = 'utf-8\'\''; // utf-8\'\'' . rawurlencode($var)
+            $utf8BPrefix = '=?UTF-8?B?'; // =?UTF-8?B?' . base64_encode($var) . '?=
+            $utf8BPostfix = '?='; // =?UTF-8?B?' . base64_encode($var) . '?=
+
+            if (0 === stripos($tmpName, $utf8Prefix)) {
+                $tmpName = substr($tmpName, strlen($utf8Prefix));
+                $tmpName = rawurldecode($tmpName);
+
+                return $tmpName;
+            }
+
+            if (0 === stripos($tmpName, $utf8BPrefix)) {
+                $tmpName = substr($tmpName, strlen($utf8BPrefix));
+                $tmpName = substr($tmpName, 0, -strlen($utf8BPostfix));
+                $tmpName = base64_decode($tmpName);
+
+                return $tmpName;
+            }
+
+            return $tmpName;
+        }
+
+        return null;
     }
 }
