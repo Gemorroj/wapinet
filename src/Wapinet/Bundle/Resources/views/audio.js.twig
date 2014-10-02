@@ -16,14 +16,26 @@
     {% endif %}
 {% endspaceless %}{% endset %}
 
-$(document).ready(function(){
+$(document).ready(function () {
+    // (Default width: "420px")
+
+    var width = $(window).width();
+    var space = 30;
+    var defaultWidth = 420;
+    width = (width > (defaultWidth + space)) ? defaultWidth : (width - space);
+
+
     $("#jquery_jplayer_1").jPlayer({
         "ready": function () {
+            $("#jp_container_1").width(width + "px");
+            $(".jp-controls").width(width - 40 + "px");
+            $(".jp-progress, .jp-time-holder").css({width: width - 120 + "px", maxWidth: "186px"});
             $(this).jPlayer("setMedia", {
                 "{{ format }}": "{{ vich_uploader_asset(file, 'file') }}"
             });
         },
         "supplied": "{{ format }}",
+        "size": {"width": width + "px"},
         "swfPath": Jplayer.swfPath
     });
 });
