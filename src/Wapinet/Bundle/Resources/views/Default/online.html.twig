@@ -13,11 +13,11 @@
         <thead>
             <tr>
                 <th data-priority="1">Время</th>
-                <th data-priority="persist"><abbr title="Internet Protocol (IP, досл. «межсетевой протокол»)">IP</abbr></th>
+                <th data-priority="persist">IP</th>
                 <th data-priority="2">Браузер</th>
                 {% if is_granted('ROLE_ADMIN') %}
                     <th data-priority="3">Путь</th>
-                    <th data-priority="3">Реферер</th>
+                    <th data-priority="4">Реферер</th>
                 {% endif %}
             </tr>
         </thead>
