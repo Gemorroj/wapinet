@@ -58,69 +58,32 @@ class AndroidApp extends \Twig_Extension
      */
     protected function findIcon($path, $screenshot)
     {
-        $issetIcon = $this->extractIcon('res/icon.png', $path, $screenshot);
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/main.png', $path, $screenshot);
-        }
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/ic_launcher.png', $path, $screenshot);
-        }
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/drawable-hdpi/icon.png', $path, $screenshot);
-        }
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/drawable-hdpi/main.png', $path, $screenshot);
-        }
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/drawable-hdpi/ic_launcher.png', $path, $screenshot);
-        }
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/drawable-xhdpi/icon.png', $path, $screenshot);
-        }
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/drawable-xhdpi/main.png', $path, $screenshot);
-        }
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/drawable-xhdpi/ic_launcher.png', $path, $screenshot);
-        }
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/drawable-xxhdpi/icon.png', $path, $screenshot);
-        }
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/drawable-xxhdpi/main.png', $path, $screenshot);
-        }
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/drawable-xxhdpi/ic_launcher.png', $path, $screenshot);
-        }
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/drawable-ldpi/icon.png', $path, $screenshot);
-        }
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/drawable-ldpi/main.png', $path, $screenshot);
-        }
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/drawable-ldpi/ic_launcher.png', $path, $screenshot);
-        }
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/drawable-mdpi/icon.png', $path, $screenshot);
-        }
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/drawable-mdpi/main.png', $path, $screenshot);
-        }
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/drawable-mdpi/ic_launcher.png', $path, $screenshot);
-        }
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/drawable/icon.png', $path, $screenshot);
-        }
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/drawable/main.png', $path, $screenshot);
-        }
-        if (false === $issetIcon) {
-            $issetIcon = $this->extractIcon('res/drawable/ic_launcher.png', $path, $screenshot);
+        $icons = array(
+            'icon.png',
+            'app_icon.png',
+            'main.png',
+            'ic_launcher.png',
+            'ic_app_launcher.png',
+        );
+        $dirs = array(
+            '',
+            '/drawable-hdpi',
+            '/drawable-xhdpi',
+            '/drawable-xxhdpi',
+            '/drawable-ldpi',
+            '/drawable-mdpi',
+            '/drawable',
+        );
+
+        foreach ($dirs as $dir) {
+            foreach ($icons as $icon) {
+                if ($this->extractIcon('res' . $dir . '/' . $icon, $path, $screenshot)) {
+                    return true;
+                }
+            }
         }
 
-        return $issetIcon;
+        return false;
     }
 
 
