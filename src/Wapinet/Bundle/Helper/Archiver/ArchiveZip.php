@@ -92,4 +92,27 @@ class ArchiveZip extends Archive
             throw new ArchiverException('Не удалось распаковать ZIP архив');
         }
     }
+
+
+    /**
+     * @param File $file
+     * @param string $entry
+     * @param string $directory
+     * @throws ArchiverException
+     */
+    public function extractEntry(File $file, $entry, $directory)
+    {
+        $zip = new \ZipArchive;
+        $result = $zip->open($file->getPathname());
+        if (true !== $result) {
+            throw new ArchiverException('Не удалось открыть ZIP архив', $result);
+        }
+
+        if (true !== $zip->extractTo($directory, $entry)) {
+            throw new ArchiverException('Не удалось распаковать ZIP архив');
+        }
+        if (false === $zip->close()) {
+            throw new ArchiverException('Не удалось распаковать ZIP архив');
+        }
+    }
 }

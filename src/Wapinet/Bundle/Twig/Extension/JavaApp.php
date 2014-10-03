@@ -88,7 +88,7 @@ class JavaApp extends \Twig_Extension
      */
     protected function extractManifest($path)
     {
-        $this->container->get('archive_7z')->extractEntry(
+        $this->container->get('archive_zip')->extractEntry(
             new BaseFile($this->getWebDir() . $path, false),
             'META-INF/MANIFEST.MF',
             $this->getTmpDir()
@@ -132,7 +132,7 @@ class JavaApp extends \Twig_Extension
             $v = trim(trim($v), '/');
             if ('png' === strtolower(pathinfo($v, PATHINFO_EXTENSION))) {
                 try {
-                    $this->container->get('archive_7z')->extractEntry(
+                    $this->container->get('archive_zip')->extractEntry(
                         new BaseFile($this->getWebDir() . $path, false),
                         $v,
                         $this->getTmpDir()

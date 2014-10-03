@@ -57,7 +57,7 @@ class ArchiveRar extends Archive
         }
 
         $entries = $rar->getEntries();
-        if (false === $rar) {
+        if (false === $entries) {
             throw new ArchiverException('Не удалось получить объекты RAR архива');
         }
 
@@ -65,6 +65,34 @@ class ArchiveRar extends Archive
             if (false === $entry->extract($directory)) {
                 throw new ArchiverException('Не удалось распаковать объект RAR архива');
             }
+        }
+
+        if (false === $rar->close()) {
+            throw new ArchiverException('Не удалось распаковать RAR архив');
+        }
+    }
+
+
+    /**
+     * @param File $file
+     * @param string $entry
+     * @param string $directory
+     * @throws ArchiverException
+     */
+    public function extractEntry(File $file, $entry, $directory)
+    {
+        $rar = \RarArchive::open($file->getPathname());
+        if (false === $rar) {
+            throw new ArchiverException('Не удалось открыть RAR архив');
+        }
+
+        $rarEntry = $rar->getEntry($entry);
+        if (false === $rarEntry) {
+            throw new ArchiverException('Не удалось получить объект RAR архива');
+        }
+
+        if (false === $rarEntry->extract($directory)) {
+            throw new ArchiverException('Не удалось распаковать объект RAR архива');
         }
 
         if (false === $rar->close()) {

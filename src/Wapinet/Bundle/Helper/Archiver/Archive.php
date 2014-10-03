@@ -96,4 +96,12 @@ abstract class Archive
      * @throws ArchiverException
      */
     abstract public function extract($directory, File $file);
+
+    /**
+     * @param File $file
+     * @param string $entry
+     * @param string $directory
+     * @throws ArchiverException
+     */
+    abstract public function extractEntry(File $file, $entry, $directory);
 }

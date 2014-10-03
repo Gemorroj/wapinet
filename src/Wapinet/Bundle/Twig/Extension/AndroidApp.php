@@ -134,7 +134,7 @@ class AndroidApp extends \Twig_Extension
     protected function extractIcon($icon, $path, $screenshot)
     {
         try {
-            $this->container->get('archive_7z')->extractEntry(
+            $this->container->get('archive_zip')->extractEntry(
                 new BaseFile($this->getWebDir() . $path, false),
                 $icon,
                 $this->getTmpDir()
