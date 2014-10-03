@@ -59,16 +59,41 @@ class File
      */
     public function cleanupFile(DataFile $file)
     {
+        // сам файл, скриншоты и сконвертированные видео
+        $realPath = $file->getFile()->getRealPath();
+
+        $this->container->get('filesystem')->remove(
+            array(
+                // $realPath, // сам файл удаляется entity менеджером
+                $realPath . '.png',
+                $realPath . '.jpg',
+                $realPath . '.mp4',
+                $realPath . '.webm',
+                $realPath . '.mp4.jpg',
+                $realPath . '.webm.jpg',
+                $realPath . '.mp4.png',
+                $realPath . '.webm.png',
+            )
+        );
+
         // кэш картинок
         $cache = $this->container->get('liip_imagine.cache.manager');
         $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
         $path = $helper->asset($file, 'file');
-        $cache->remove($path, 'thumbnail');
-
-        // сам файл, скриншоты и сконвертированные видео
-        $filesystem = $this->container->get('filesystem');
-        $path = $file->getFile()->getPathname();
-        $filesystem->remove(array($path, $path . '.png', $path . '.jpg', $path . '.mp4', $path . '.webm'));
+        $cache->remove(
+            array(
+                $path,
+                $path . '.png',
+                $path . '.jpg',
+                $path . '.mp4',
+                $path . '.webm',
+                $path . '.mp4.jpg',
+                $path . '.webm.jpg',
+                $path . '.mp4.png',
+                $path . '.webm.png',
+            ),
+            'thumbnail'
+        );
     }
 
     /**

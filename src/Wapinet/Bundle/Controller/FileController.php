@@ -400,10 +400,12 @@ class FileController extends Controller
         // БД
         $em = $this->getDoctrine()->getManager();
         $em->remove($file);
-        $em->flush();
 
-        // файл и кэш
+        // кэш
         $this->get('file')->cleanupFile($file);
+
+        // сам файл и сброс в БД
+        $em->flush();
 
         // переадресация на главную
         $router = $this->container->get('router');
