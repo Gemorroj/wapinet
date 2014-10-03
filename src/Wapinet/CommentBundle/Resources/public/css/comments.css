@@ -35,6 +35,7 @@
 .fos_comment_comment_body {
     display: inline-block;
     vertical-align: middle;
+    width: 100%;
 }
 
 .fos_comment_comment_avatar {
