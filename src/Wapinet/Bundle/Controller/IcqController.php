@@ -26,7 +26,7 @@ class IcqController extends Controller
     protected function getIcqVariables ()
     {
         $curl = $this->get('curl');
-        $curl->setUrl('http://www.icq.com/join/ru');
+        $curl->init('http://www.icq.com/join/ru');
         $curl->addBrowserHeaders();
         $curl->addCompression();
         $response = $curl->exec();
@@ -51,7 +51,7 @@ class IcqController extends Controller
     protected function icqRegistration (array $data)
     {
         $curl = $this->get('curl');
-        $curl->setUrl('http://www.icq.com/join/commit/ru');
+        $curl->init('http://www.icq.com/join/commit/ru');
         $curl->addBrowserHeaders();
         $curl->addCompression();
         $curl->addHeader('Referer', 'http://www.icq.com/join/ru');
@@ -119,7 +119,7 @@ class IcqController extends Controller
     public function registrationPicAction($gnm_img)
     {
         $curl = $this->get('curl');
-        $curl->setUrl('https://www.icq.com/utils/recaptcha/gnm/' . $gnm_img);
+        $curl->init('https://www.icq.com/utils/recaptcha/gnm/' . $gnm_img);
         $curl->addBrowserHeaders();
         $curl->addHeader('Referer', 'http://www.icq.com/join/ru');
         $response = $curl->exec();
@@ -265,7 +265,7 @@ class IcqController extends Controller
     protected function cleanUserInfo($uin)
     {
         $curl = $this->get('curl');
-        $curl->setUrl('http://www.icq.com/people/' . $uin . '/view/ru');
+        $curl->init('http://www.icq.com/people/' . $uin . '/view/ru');
         $curl->addBrowserHeaders();
         $curl->addCompression();
         $response = $curl->exec();

@@ -98,9 +98,10 @@ class Siza
     public function getLink ()
     {
         $curl = $this->container->get('curl');
+        $curl->init($this->link);
         $curl->addBrowserHeaders();
         $curl->addCompression();
-        $curl->setUrl($this->link);
+
         return $curl->exec();
     }
 

@@ -30,9 +30,9 @@ class Bash
     public function getPage($page = null)
     {
         $curl = $this->container->get('curl');
+        $curl->init('http://bash.im/index/' . $page);
         $curl->addBrowserHeaders();
         $curl->addCompression();
-        $curl->setUrl('http://bash.im/index/' . $page);
         $result = $curl->exec();
 
         $content = mb_convert_encoding($result->getContent(), 'UTF-8', 'Windows-1251');

@@ -90,8 +90,8 @@ class Horoscope
     public function getHoroscope($zodiac)
     {
         $curl = $this->container->get('curl');
+        $curl->init('http://hyrax.ru/rss_daily_common_' . $zodiac . '.xml');
         $curl->addCompression();
-        $curl->setUrl('http://hyrax.ru/rss_daily_common_' . $zodiac . '.xml');
         $result = $curl->exec();
 
         $obj = simplexml_load_string($result->getContent());
@@ -109,8 +109,9 @@ class Horoscope
     public function getHoroscopeDay()
     {
         $curl = $this->container->get('curl');
+        $curl->init('http://hyrax.ru/rss_daily_common.xml');
         $curl->addCompression();
-        $curl->setUrl('http://hyrax.ru/rss_daily_common.xml');
+
         $result = $curl->exec();
 
         $obj = simplexml_load_string($result->getContent());

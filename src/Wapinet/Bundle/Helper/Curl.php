@@ -40,21 +40,30 @@ class Curl
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
+    }
 
+
+    /**
+     * Инициализация
+     *
+     * @param string|null $url
+     * @return Curl
+     */
+    public function init($url = null)
+    {
         $this->curl = curl_init();
+
         $this->setOpt(CURLOPT_SSL_VERIFYPEER, false);
         $this->setOpt(CURLOPT_SSL_VERIFYHOST, false);
         $this->setOpt(CURLOPT_RETURNTRANSFER, true);
         $this->setOpt(CURLOPT_HEADER, true);
-    }
 
-    /**
-     * Деструктор
-     */
-    /*public function __destruct()
-    {
-        $this->close();
-    }*/
+        if (null !== $url) {
+            $this->setUrl($url);
+        }
+
+        return $this;
+    }
 
     /**
      * Закрываем соединение

@@ -29,9 +29,10 @@ class Mime
     private function generateMime ($url = 'http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types')
     {
         $curl = $this->container->get('curl');
-        $curl->setUrl($url);
+        $curl->init($url);
         $curl->addCompression();
         $response = $curl->exec();
+        $curl->close();
 
         $mime = array(
             'mod' => 'audio/mod',

@@ -41,8 +41,8 @@ class RestController extends Controller
     protected function getRest(array $data)
     {
         $curl = $this->get('curl');
+        $curl->init($data['url']);
         $curl->setOpt(CURLOPT_CUSTOMREQUEST, $data['type']);
-        $curl->setUrl($data['url']);
 
         if (null !== $data['header']) {
             foreach (explode("\n", str_replace("\r", '', trim($data['header']))) as $header) {
