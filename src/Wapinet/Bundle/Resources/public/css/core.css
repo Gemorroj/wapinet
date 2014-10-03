@@ -53,6 +53,9 @@ p.long-description {
 div.long-description {
     white-space: normal !important;
 }
+pre.long-description {
+    white-space: normal !important;
+}
 a.captcha-reload {
     vertical-align: baseline;
 }

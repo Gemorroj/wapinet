@@ -29,6 +29,17 @@ class AndroidApp extends \Twig_Extension
         );
     }
 
+    /**
+     * Returns a list of global functions to add to the existing list.
+     *
+     * @return array An array of global functions
+     */
+    public function getFunctions()
+    {
+        return array(
+            new \Twig_SimpleFunction('file_get_android_app_info', array($this, 'getInfo')),
+        );
+    }
 
     /**
      * @param string $path
@@ -51,6 +62,20 @@ class AndroidApp extends \Twig_Extension
 
 
     /**
+     * @param \Symfony\Component\HttpFoundation\File\File $file
+     *
+     * @return \ApkParser\Manifest
+     */
+    public function getInfo(\Symfony\Component\HttpFoundation\File\File $file)
+    {
+        $apk = $this->container->get('apk');
+        $apk->init($file->getPathname());
+
+        return $apk->getManifest();
+    }
+
+
+    /**
      * @param string $path
      * @param string $screenshot
      *
@@ -58,8 +83,19 @@ class AndroidApp extends \Twig_Extension
      */
     protected function findIcon($path, $screenshot)
     {
+        $apk = $this->container->get('apk');
+        $apk->init($this->getWebDir() . $path);
+        $icon = $apk->getIcon();
+
+        if ($icon) {
+            return $this->extractIcon($icon, $path, $screenshot);
+        }
+
         $icons = array(
             'icon.png',
+            'icon32.png',
+            'icon24.png',
+            'icon16.png',
             'app_icon.png',
             'main.png',
             'ic_launcher.png',

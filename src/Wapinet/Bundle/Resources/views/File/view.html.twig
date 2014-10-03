@@ -84,7 +84,7 @@
 
             {% set image_info_metadata = image_info.metadata %}
             {% if image_info_metadata.toArray() is not empty %}
-                <pre>
+                <pre class="long-description">
                 {%- if image_info_metadata.offsetExists('exif.DateTimeOriginal') -%}
                     Дата съемки: {{ image_info_metadata.offsetGet('exif.DateTimeOriginal') }}<br />
                 {%- elseif image_info_metadata.offsetExists('ifd0.DateTimeOriginal') -%}
@@ -138,7 +138,7 @@
 
         {% if video_info is not null %}
             <p>{{ video_info.dimensions.width }}x{{ video_info.dimensions.height }}{{ video_info.has('duration') ? ', ' ~ video_info.get('duration')|wapinet_length : '' }}</p>
-            <pre>
+            <pre class="long-description">
                 {%- if video_info.has('codec_name') -%}
                     Видео кодек: {{ video_info.get('codec_name') }}<br />
                 {%- endif -%}
@@ -148,7 +148,7 @@
             </pre>
         {% endif %}
         {% if audio_info is not null %}
-            <pre>
+            <pre class="long-description">
                 {%- if audio_info.has('codec_name') -%}
                     Аудио кодек: {{ audio_info.get('codec_name') }}<br />
                 {%- endif -%}
@@ -170,7 +170,7 @@
 
         {% if audio_info is not null %}
             <p>{{ audio_info.has('duration') ? audio_info.get('duration')|wapinet_length : '' }}</p>
-            <pre>
+            <pre class="long-description">
                 {%- if audio_info.has('codec_name') -%}
                     Аудио кодек: {{ audio_info.get('codec_name') }}<br />
                 {%- endif -%}
@@ -191,9 +191,22 @@
             {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
         {% endif %}
     {% elseif file.isAndroidApp %}
+        {% set android_app_info = file_get_android_app_info(file.file) %}
+
         {% if screenshot is defined and screenshot is not null %}
             {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
         {% endif %}
+            <pre class="long-description">Версия: {{ android_app_info.versionName }}<br />Внутреннее имя: {{ android_app_info.packageName }}<br />
+                {%- if android_app_info.minSdkLevel -%}
+                    Версия Android: {{ android_app_info.minSdk.__get('platform') }}<br />
+                {%- endif -%}
+                Доступы:<br />
+                {%- for permission in android_app_info.permissions -%}
+                    {%- if permission -%}
+                        &#187; {{ permission }}<br />
+                    {%- endif -%}
+                {%- endfor -%}
+            </pre>
     {% endif %}
 
     <fieldset>{{ file.description|wapinet_bbcode_parse }}</fieldset>

@@ -150,6 +150,9 @@ services:
         class: Wapinet\Bundle\Helper\PhpValidator
         arguments: [@service_container]
 
+    apk:
+        class: Wapinet\Bundle\Helper\Apk
+
     weather:
         class: Wapinet\Bundle\Helper\Weather
         arguments: [@service_container]
