@@ -9,33 +9,143 @@
 {% endblock %}
 
 {% block content %}
-        Все "секретные" коды вводятся в телефон путем набора специального цифрового кода при одновременном удержании клавиши <strong>*</strong><br/>
-        5806 - узнать версию прошивки.<br/>
-        5807 - a littel bit diffrent.<br/>
-        5472 - Test Mode для дата-кабеля.<br/>
-        4329 - Activate and deactivate NETMONITOR.<br/>
-        621342 - Activate and deactivate another NETMONITOR.<br/>
-        3926 - shutdown<br/>
-        #06# - show IMEI code<br/>
-        850696 - Enable/disable warm start. Если выкл, то при возникновении фатальной ошибки телефон выключится, а если вкл, то выдаст диагностическую информацию и зависнет<br/>
-        3926 - Вызов функции Fatal error<br/>
-        936505 - Display firmware version and MSID<br/>
-        5807 - Версия прошивки и версия епрома<br/>
-        3857 - ???<br/>
-        781625 - Enable/disable SUP traces - ??? (SUP is one of the firmware tasks)<br/>
-        574243 - Lock NS level<br/>
-        360608 - Lock IMSI level<br/>
-        362628 - Lock IMSI level<br/>
-        480896 - sp,corp lock??<br/>
-        482896 - sp,corp lock??<br/>
-        967678 - sp,corp lock??<br/>
-        476989 - Ext lock<br/>
-        787090 - Lock net level<br/>
-        787292 - Lock net level<br/>
-        <br/>
-        Форматирование:<br/>
-        1)Если возникают проблемы с приемом, с софтом или еще чем-то, трубу можно форматнуть (сбросить все настройки и очистить память).<br/>
-        Вынимается аккумулятор, sim&#x27;ka, подключаем зарядку, давим * и одновременно вводим 65512890 и все телефон как новенький.<br/>
-        2)В то время, когда телефон ещё работает вытащить батарейку.
-        Затем вставить её обратно, включить его, и в момент прохождения ScanDisk&#x27;a вытащить повторно, и снова запустить ( появится картинка - на манер тетриса ) и вуаля телефон абсолютно чистый, прямо как с завода. ;)<br/>
+        <p>Все "секретные" коды вводятся в телефон путем набора специального цифрового кода при одновременном удержании клавиши <strong>*</strong></p>
+
+        <div class="ui-corner-all custom-corners">
+                <div class="ui-bar ui-bar-a">
+                        <h3>Версия прошивки</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>5806</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Форматирование</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>Вынимается аккумулятор, симку, подключаем зарядку, давим * и одновременно вводим 65512890</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Форматирование</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>В то время, когда телефон ещё работает вытащить батарейку. Затем вставить её обратно, включить его, и в момент прохождения ScanDisk-a вытащить повторно, и снова запустить</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>A littel bit diffrent</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>5807</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Test Mode для дата-кабеля</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>5472</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Активация/Деактивация нетмонитора</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>4329</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Активация/Деактивация нетмонитора 2</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>621342</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Выключение</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>3926</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Версия Firmware и MSID</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>936505</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Версия прошивки и версия епрома</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>5807</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Включение/Отключение горячего старта</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>850696</p>
+                        <details>Если выкл, то при возникновении фатальной ошибки телефон выключится, а если вкл, то выдаст диагностическую информацию и зависнет.</details>
+                </div>
+
+                <div class="ui-bar ui-bar-a">
+                        <h3>Включение/Отключение трассировки SUP</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>781625</p>
+                </div>
+
+                <div class="ui-bar ui-bar-a">
+                        <h3>Lock NS level</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>574243</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Lock IMSI level</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>360608</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Lock IMSI level 2</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>362628</p>
+                </div>
+
+                <div class="ui-bar ui-bar-a">
+                        <h3>sp,corp lock</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>480896</p>
+                </div>
+
+                <div class="ui-bar ui-bar-a">
+                        <h3>sp,corp lock 2</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>482896</p>
+                </div>
+
+                <div class="ui-bar ui-bar-a">
+                        <h3>sp,corp lock 3</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>967678</p>
+                </div>
+
+                <div class="ui-bar ui-bar-a">
+                        <h3>Ext lock</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>476989</p>
+                </div>
+
+                <div class="ui-bar ui-bar-a">
+                        <h3>Lock net level</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>787090</p>
+                </div>
+
+                <div class="ui-bar ui-bar-a">
+                        <h3>Lock net level</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>787292</p>
+                </div>
+        </div>
 {% endblock %}

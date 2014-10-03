@@ -9,33 +9,67 @@
 {% endblock %}
 
 {% block content %}
-        *#07# - IMEI SV<br/>
-        2945#*# - Инженерное меню<br/>
-        2945#*1# - Еще инженерное меню<br/>
-        *#3646633# - Еще инженерное меню<br/>
-        <br/>
-        LG-200<br/>
-        *789# + Send<br/>
-        2945#* (удерживать)<br/>
-        <br/>
-        LG-600<br/>
-        2945#* (удерживать)<br/>
-        <br/>
-        LG-510<br/>
-        2945#*#<br/>
-        <br/>
-        LG-B1200<br/>
-        # и Вкл вместе, затем 668<br/>
-        <br/>
-        LG-B1200<br/>
-        *8375#<br/>
-        <br/>
-        LG-B1200<br/>
-        *6861# - (инициализация после загрузки)<br/>
-        <br/>
-        LG-KP-XXX<br/>
-        2945#*927# - инж. меню WAP.<br/>
-        2945#*2# - инж. смс меню.<br/>
-        2945#*911# - включение игры "Sudoku" (даже без сим-карты) если таковая имеется.<br/>
-        2945#*45# - сброс памяти, всех настроек и пароля (даже без сим-карты).<br/>
+        <div class="ui-corner-all custom-corners">
+                <div class="ui-bar ui-bar-a">
+                        <h3>IMEI SV</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>*#07#</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Инженерное меню</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>2945#*#</p>
+                        <details>В некоторых случаях, в код 2945#*# нужно еще поставить номер модели. Например, для е730 код будет выглядеть так: 2945#*730#. А для е739 так: 2945#*739#</details>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Инженерное меню 2</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>*#3646633#</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Инженерное меню (серия G)</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>2945#*1#</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Версия прошивки</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>8060#*</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Вход в сервисное меню, разблокировка</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>*789# Вызов</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Разблокировка</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>2947#*</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Активация без сим-карты (E-Gold платформа)</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p>*#9999#</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Разблокировка</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p># и Вкл вместе, затем 668</p>
+                </div>
+                <div class="ui-bar ui-bar-a">
+                        <h3>Сервисное меню, разблокировка</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                        <p># и Вкл вместе, затем 159</p>
+                </div>
+        </div>
 {% endblock %}
