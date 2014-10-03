@@ -345,6 +345,16 @@ class Siza
             /** @var \DOMElement $a */
             foreach ($aArr as $a) {
                 $href = (string)$a->getAttribute('href');
+
+                // http://dwloadfiles.ru/api.php?a=104275&u=http%3A%2F%2Ff.siza.ru%2F65%2F6504%2F650435%2F19th_Club_Party_Night_Nok_128x128.jar%3Fr%3D75875388&n=19th Club Party Night&d=3&mt=1&s=1&ic=2501&im=2508&f=19th_Club_Party_Night_Nok_128x128.jar?r=75875388
+                if (0 === strpos($href, 'http://dwloadfiles.ru/api.php?')) {
+                    // какой-то хак сайта
+                    $parsedHref = parse_url($href, PHP_URL_QUERY);
+                    parse_str($parsedHref, $parsedHrefQuery);
+                    $href = $parsedHrefQuery['u'];
+                    // какой-то хак сайта
+                }
+
                 if (0 === strpos($href, 'http://') && 0 !== strpos($href, 'http://f.siza.ru')) {
                     $end = true;
                 }
