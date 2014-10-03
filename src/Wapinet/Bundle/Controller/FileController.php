@@ -569,7 +569,7 @@ class FileController extends Controller
         }
 
         // загрузка через ajax
-        if (true === $request->isXmlHttpRequest() && $form->isSubmitted() && !$form->isValid()) {
+        if ($request->isXmlHttpRequest() /*&& $form->isSubmitted()*/ && !$form->isValid()) {
             return new JsonResponse(array(
                 'errors' => $this->get('error')->makeErrors($form),
             ), Response::HTTP_UNPROCESSABLE_ENTITY);
