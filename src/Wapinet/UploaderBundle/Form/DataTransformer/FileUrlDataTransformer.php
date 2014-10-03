@@ -103,7 +103,11 @@ class FileUrlDataTransformer implements DataTransformerInterface
             $curl->init($fileDataFromForm['url']);
             $curl->addBrowserHeaders();
             $curl->acceptRedirects();
-            $response = $curl->checkFileSize(false);
+            $responseHead = $curl->checkFileSize(false);
+
+            if (!$responseHead->isSuccessful() && !$responseHead->isRedirection()) {
+                throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $responseHead->getStatusCode() . ')');
+            }
 
             $temp = tempnam($this->container->get('kernel')->getTmpDir(), 'file_url');
             if (false === $temp) {
@@ -117,15 +121,29 @@ class FileUrlDataTransformer implements DataTransformerInterface
             $curl->setOpt(CURLOPT_HEADER, false);
             $curl->setOpt(CURLOPT_FILE, $f);
 
-            $curl->exec();
+            $responseBody = $curl->exec();
             $curl->close();
             fclose($f);
 
+            if (!$responseBody->isSuccessful()) {
+                throw new TransformationFailedException('Не удалось скачать файл по ссылке (HTTP код: ' . $responseBody->getStatusCode() . ')');
+            }
+
+
+            $contentType = $responseHead->headers->get('Content-Type');
+            if (is_array($contentType)) {
+                $contentType = end($contentType);
+            }
+            $contentLength = $responseHead->headers->get('Content-Length');
+            if (is_array($contentLength)) {
+                $contentLength = end($contentLength);
+            }
+
             $uploadedFile = new FileUrl(
                 $temp,
-                $this->getOriginalName($response->headers, $fileDataFromForm['url']),
-                $response->headers->get('Content-Type'),
-                $response->headers->get('Content-Length')
+                $this->getOriginalName($responseHead->headers, $fileDataFromForm['url']),
+                $contentType,
+                $contentLength
             );
         }
 

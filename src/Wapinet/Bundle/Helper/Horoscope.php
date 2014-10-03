@@ -92,9 +92,13 @@ class Horoscope
         $curl = $this->container->get('curl');
         $curl->init('http://hyrax.ru/rss_daily_common_' . $zodiac . '.xml');
         $curl->addCompression();
-        $result = $curl->exec();
+        $response = $curl->exec();
 
-        $obj = simplexml_load_string($result->getContent());
+        if (!$response->isSuccessful()) {
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+        }
+
+        $obj = simplexml_load_string($response->getContent());
 
         return array(
             'date' => new \DateTime((string)$obj->channel->item->pubDate),
@@ -112,9 +116,13 @@ class Horoscope
         $curl->init('http://hyrax.ru/rss_daily_common.xml');
         $curl->addCompression();
 
-        $result = $curl->exec();
+        $response = $curl->exec();
 
-        $obj = simplexml_load_string($result->getContent());
+        if (!$response->isSuccessful()) {
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+        }
+
+        $obj = simplexml_load_string($response->getContent());
 
         return array(
             'date' => new \DateTime((string)$obj->channel->item->pubDate),

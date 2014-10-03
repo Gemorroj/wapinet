@@ -37,9 +37,13 @@ class Weather
             $curl->addCompression();
             $curl->setOpt(CURLOPT_FILE, $f);
             $curl->setOpt(CURLOPT_HEADER, false);
-            $curl->exec();
+            $response = $curl->exec();
             $curl->close();
             fclose($f);
+
+            if (!$response->isSuccessful()) {
+                throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+            }
         }
 
         $obj = simplexml_load_file($file);
@@ -68,9 +72,13 @@ class Weather
             $curl->addCompression();
             $curl->setOpt(CURLOPT_FILE, $f);
             $curl->setOpt(CURLOPT_HEADER, false);
-            $curl->exec();
+            $response = $curl->exec();
             $curl->close();
             fclose($f);
+
+            if (!$response->isSuccessful()) {
+                throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+            }
         }
 
         $obj = simplexml_load_file($file);
@@ -93,9 +101,13 @@ class Weather
         $curl = $this->container->get('curl');
         $curl->init('http://a956e985.services.gismeteo.ru/inform-service/588c42b53455e4d92511627521555fe4/forecast/?cities=' . $city);
         $curl->addCompression();
-        $result = $curl->exec();
+        $response = $curl->exec();
 
-        $obj = simplexml_load_string($result->getContent());
+        if (!$response->isSuccessful()) {
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+        }
+
+        $obj = simplexml_load_string($response->getContent());
 
         $weather =  array(
             'now' => array(

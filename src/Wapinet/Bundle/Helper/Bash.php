@@ -33,9 +33,13 @@ class Bash
         $curl->init('http://bash.im/index/' . $page);
         $curl->addBrowserHeaders();
         $curl->addCompression();
-        $result = $curl->exec();
+        $response = $curl->exec();
 
-        $content = mb_convert_encoding($result->getContent(), 'UTF-8', 'Windows-1251');
+        if (!$response->isSuccessful()) {
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+        }
+
+        $content = mb_convert_encoding($response->getContent(), 'UTF-8', 'Windows-1251');
         $content = str_replace(array("\n", "\r", "\t", '<br>'), array('', '', '', "\r\n"), $content);
 
         // количество цитат на странице

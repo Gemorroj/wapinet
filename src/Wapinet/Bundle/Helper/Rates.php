@@ -75,9 +75,13 @@ class Rates
         $curl->init('http://www.cbr.ru/scripts/XML_daily.asp');
         $curl->addCompression();
 
-        $result = $curl->exec();
+        $response = $curl->exec();
 
-        $obj = simplexml_load_string($result->getContent());
+        if (!$response->isSuccessful()) {
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+        }
+
+        $obj = simplexml_load_string($response->getContent());
         $rates = array();
         foreach ($obj->Valute as $v) {
             $rates[] = array(
@@ -102,9 +106,13 @@ class Rates
         $curl->init('http://nbrb.by/Services/XmlExRates.aspx');
         $curl->addCompression();
 
-        $result = $curl->exec();
+        $response = $curl->exec();
 
-        $obj = simplexml_load_string($result->getContent());
+        if (!$response->isSuccessful()) {
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+        }
+
+        $obj = simplexml_load_string($response->getContent());
         $rates = array();
         foreach ($obj->Currency as $v) {
             $rates[] = array(
@@ -129,9 +137,13 @@ class Rates
         $curl->init('http://bank-ua.com/export/currrate.xml');
         $curl->addCompression();
 
-        $result = $curl->exec();
+        $response = $curl->exec();
 
-        $obj = simplexml_load_string($result->getContent());
+        if (!$response->isSuccessful()) {
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+        }
+
+        $obj = simplexml_load_string($response->getContent());
         $rates = array();
         foreach ($obj->item as $v) {
             $rates[] = array(
@@ -156,9 +168,13 @@ class Rates
         $curl->init('http://www.nationalbank.kz/rss/rates_all.xml');
         $curl->addCompression();
 
-        $result = $curl->exec();
+        $response = $curl->exec();
 
-        $obj = simplexml_load_string($result->getContent());
+        if (!$response->isSuccessful()) {
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+        }
+
+        $obj = simplexml_load_string($response->getContent());
         $rates = array();
         foreach ($obj->channel->item as $v) {
             $rates[] = array(

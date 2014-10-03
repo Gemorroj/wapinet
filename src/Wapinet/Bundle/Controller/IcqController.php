@@ -30,6 +30,9 @@ class IcqController extends Controller
         $curl->addBrowserHeaders();
         $curl->addCompression();
         $response = $curl->exec();
+        if (!$response->isSuccessful()) {
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+        }
 
         preg_match('/name="csrf"[\s+]value="(.+)"/U', $response->getContent(), $csrf);
         preg_match('/name="gnm"[\s+]value="(.+)"/U', $response->getContent(), $gnm);
@@ -68,6 +71,9 @@ class IcqController extends Controller
         $curl->addPostData('captcha', $data['captcha']);
 
         $response = $curl->exec();
+        if (!$response->isSuccessful()) {
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+        }
 
         $json = json_decode($response->getContent());
 
@@ -123,6 +129,9 @@ class IcqController extends Controller
         $curl->addBrowserHeaders();
         $curl->addHeader('Referer', 'http://www.icq.com/join/ru');
         $response = $curl->exec();
+        if (!$response->isSuccessful()) {
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+        }
 
         $im = @imagecreatefromstring($response->getContent());
         if ($im === false) {
@@ -269,6 +278,9 @@ class IcqController extends Controller
         $curl->addBrowserHeaders();
         $curl->addCompression();
         $response = $curl->exec();
+        if (!$response->isSuccessful()) {
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+        }
 
         $out = explode('<div class="form-col l">', $response->getContent());
         if (!isset($out[1])) {

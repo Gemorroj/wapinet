@@ -34,6 +34,10 @@ class Mime
         $response = $curl->exec();
         $curl->close();
 
+        if (!$response->isSuccessful()) {
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+        }
+
         $mime = array(
             'mod' => 'audio/mod',
             'it' => 'audio/it',

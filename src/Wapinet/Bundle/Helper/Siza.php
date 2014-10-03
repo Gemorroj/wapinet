@@ -102,7 +102,13 @@ class Siza
         $curl->addBrowserHeaders();
         $curl->addCompression();
 
-        return $curl->exec();
+        $response = $curl->exec();
+
+        if (!$response->isSuccessful()) {
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+        }
+
+        return $response;
     }
 
 

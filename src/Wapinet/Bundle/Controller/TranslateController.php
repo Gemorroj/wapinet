@@ -53,8 +53,7 @@ class TranslateController extends Controller
         );
 
         $response = $curl->exec();
-
-        if (200 !== $response->getStatusCode()) {
+        if (!$response->isSuccessful()) {
             throw new HttpException($response->getStatusCode());
         }
 

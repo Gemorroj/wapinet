@@ -31,9 +31,13 @@ class MassMedia
         $curl->init('http://russian.rt.com/rss/');
         $curl->addCompression();
 
-        $result = $curl->exec();
+        $response = $curl->exec();
 
-        $obj = simplexml_load_string($result->getContent());
+        if (!$response->isSuccessful()) {
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+        }
+
+        $obj = simplexml_load_string($response->getContent());
 
         $news = array();
         foreach ($obj->channel->item as $v) {
@@ -76,9 +80,13 @@ class MassMedia
         $curl->init('http://inotv.rt.com/s/rss/main.rss');
         $curl->addCompression();
 
-        $result = $curl->exec();
+        $response = $curl->exec();
 
-        $obj = simplexml_load_string($result->getContent());
+        if (!$response->isSuccessful()) {
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+        }
+
+        $obj = simplexml_load_string($response->getContent());
 
         $news = array();
         foreach ($obj->channel->item as $v) {
