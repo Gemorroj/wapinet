@@ -198,7 +198,7 @@
         {% endif %}
             <pre class="long-description">Версия: {{ android_app_info.versionName }}<br />Внутреннее имя: {{ android_app_info.packageName }}<br />
                 {%- if android_app_info.minSdkLevel -%}
-                    Версия Android: {{ android_app_info.minSdk.__get('platform') }}<br />
+                    Min {{ android_app_info.minSdk.__get('platform') }}<br />
                 {%- endif -%}
                 Доступы:<br />
                 {%- for permission in android_app_info.permissions -%}
