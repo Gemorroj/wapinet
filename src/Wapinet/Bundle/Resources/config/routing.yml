@@ -157,28 +157,28 @@ gist:
     prefix:   /gist
 
 proxy_index:
-    path: /proxy
+    path: /proxy/
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: %wapinet_proxy_url%
         permanent: true
 
 ftp_index:
-    path: /ftp
+    path: /ftp/
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: %wapinet_ftp_url%
         permanent: true
 
 forum_index:
-    path: /forum
+    path: /forum/
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: %wapinet_forum_url%
         permanent: true
 
 sea_index:
-    path: /sea
+    path: /sea/
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: %wapinet_sea_url%
