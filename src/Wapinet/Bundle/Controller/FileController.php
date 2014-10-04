@@ -342,14 +342,16 @@ class FileController extends Controller
 
                 $manifest = $apk->getManifest();
 
-
                 $meta->set('versionName', $manifest->getVersionName());
                 $meta->set('packageName', $manifest->getPackageName());
                 if ($manifest->getMinSdkLevel()) {
                     $meta->set('minSdkVersions', $manifest->getMinSdk()->versions);
                 }
-                $meta->set('permissions', $manifest->getPermissions());
 
+                $permissions = $manifest->getPermissions();
+                if ($permissions) {
+                    $meta->set('permissions', $permissions);
+                }
             } elseif ($file->isAudio()) {
                 $ffprobe = $this->container->get('dubture_ffmpeg.ffprobe');
                 $info = $ffprobe->streams($file->getFile()->getPathname())->audios()->first();
