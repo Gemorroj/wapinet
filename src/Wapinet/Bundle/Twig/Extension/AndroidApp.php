@@ -65,36 +65,36 @@ class AndroidApp extends \Twig_Extension
             if ($icon && $this->extractIcon($icon, $path, $screenshot)) {
                 return true;
             }
-
-            $icons = array(
-                'icon.png',
-                'icon32.png',
-                'icon24.png',
-                'icon16.png',
-                'app_icon.png',
-                'main.png',
-                'ic_launcher.png',
-                'ic_app_launcher.png',
-            );
-            $dirs = array(
-                '',
-                '/drawable-hdpi',
-                '/drawable-xhdpi',
-                '/drawable-xxhdpi',
-                '/drawable-ldpi',
-                '/drawable-mdpi',
-                '/drawable',
-            );
-
-            foreach ($dirs as $dir) {
-                foreach ($icons as $icon) {
-                    if ($this->extractIcon('res' . $dir . '/' . $icon, $path, $screenshot)) {
-                        return true;
-                    }
-                }
-            }
         } catch (\Exception $e) {
             $this->container->get('logger')->warning('Не удалось прочитать APK файл.', array($e));
+        }
+
+        $icons = array(
+            'icon.png',
+            'icon32.png',
+            'icon24.png',
+            'icon16.png',
+            'app_icon.png',
+            'main.png',
+            'ic_launcher.png',
+            'ic_app_launcher.png',
+        );
+        $dirs = array(
+            '',
+            '/drawable-hdpi',
+            '/drawable-xhdpi',
+            '/drawable-xxhdpi',
+            '/drawable-ldpi',
+            '/drawable-mdpi',
+            '/drawable',
+        );
+
+        foreach ($dirs as $dir) {
+            foreach ($icons as $icon) {
+                if ($this->extractIcon('res' . $dir . '/' . $icon, $path, $screenshot)) {
+                    return true;
+                }
+            }
         }
 
         return false;
