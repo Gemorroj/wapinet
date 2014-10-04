@@ -61,8 +61,8 @@ class AndroidApp extends \Twig_Extension
         $apk->init($this->getWebDir() . $path);
         $icon = $apk->getIcon();
 
-        if ($icon) {
-            return $this->extractIcon($icon, $path, $screenshot);
+        if ($icon && $this->extractIcon($icon, $path, $screenshot)) {
+            return true;
         }
 
         $icons = array(
