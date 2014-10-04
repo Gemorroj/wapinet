@@ -29,7 +29,7 @@ class ProfileType extends BaseType
         parent::buildUserForm($builder, $options);
         $builder
             ->add('sex', 'choice', array('label' => 'Пол', 'required' => false, 'choices' => User::getSexChoices()))
-            ->add('birthday', 'birthday', array('widget' => 'single_text', 'label' => 'Дата рождения', 'required' => false))
+            ->add('birthday', 'birthday', array('widget' => 'single_text', 'label' => 'Дата рождения', 'required' => false, 'attr' => array('placeholder' => 'ГГГГ-ММ-ДД')))
             ->add('timezone', 'timezone', array('label' => 'Временная зона', 'required' => false))
             ->add('country', 'country', array('label' => 'Страна', 'required' => false))
             ->add('info', 'textarea', array('label' => 'Дополнительная информация', 'required' => false, 'attr' => array('maxlength' => 5000)))
