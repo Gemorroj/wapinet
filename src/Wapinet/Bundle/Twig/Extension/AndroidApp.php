@@ -30,18 +30,6 @@ class AndroidApp extends \Twig_Extension
     }
 
     /**
-     * Returns a list of global functions to add to the existing list.
-     *
-     * @return array An array of global functions
-     */
-    public function getFunctions()
-    {
-        return array(
-            new \Twig_SimpleFunction('file_get_android_app_info', array($this, 'getInfo')),
-        );
-    }
-
-    /**
      * @param string $path
      * @return string|null
      */
@@ -58,20 +46,6 @@ class AndroidApp extends \Twig_Extension
         }
 
         return $screenshot;
-    }
-
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\File\File $file
-     *
-     * @return \ApkParser\Manifest
-     */
-    public function getInfo(\Symfony\Component\HttpFoundation\File\File $file)
-    {
-        $apk = $this->container->get('apk');
-        $apk->init($file->getPathname());
-
-        return $apk->getManifest();
     }
 
 

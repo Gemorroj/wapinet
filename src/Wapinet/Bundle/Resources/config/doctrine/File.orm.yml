@@ -68,6 +68,10 @@ Wapinet\Bundle\Entity\File:
             type: string
             nullable: false
             column: hash
+        meta:
+            type: object
+            nullable: true
+            column: meta
 
     lifecycleCallbacks:
         prePersist: [ setCreatedAtValue ]

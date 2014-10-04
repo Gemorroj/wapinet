@@ -3,6 +3,7 @@
 namespace Wapinet\Bundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Wapinet\Bundle\Entity\File\Meta;
 use Wapinet\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
 
@@ -80,6 +81,10 @@ class File implements \Serializable
      */
     protected $hash;
     /**
+     * @var Meta|null
+     */
+    protected $meta;
+    /**
      * @var ArrayCollection
      */
     protected $tags;
@@ -134,6 +139,29 @@ class File implements \Serializable
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get meta
+     *
+     * @return Meta|null
+     */
+    public function getMeta()
+    {
+        return $this->meta;
+    }
+
+    /**
+     * Set meta
+     *
+     * @param Meta $meta
+     * @return File
+     */
+    public function setMeta(Meta $meta = null)
+    {
+        $this->meta = $meta;
 
         return $this;
     }

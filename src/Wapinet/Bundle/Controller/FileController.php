@@ -303,9 +303,6 @@ class FileController extends Controller
     {
         $file->setCountViews($file->getCountViews() + 1);
         $file->setLastViewAt(new \DateTime());
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($file);
-        $entityManager->flush();
     }
 
     /**
@@ -315,10 +312,142 @@ class FileController extends Controller
      */
     protected function viewFile(File $file)
     {
+        $this->checkMeta($file);
         $response = $this->render('WapinetBundle:File:view.html.twig', array('comments_id' => 'file-' . $file->getId(), 'file' => $file));
         $this->incrementViews($file);
 
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($file);
+        $entityManager->flush();
+
         return $response;
+    }
+
+
+    /**
+     * @param File $file
+     */
+    protected function checkMeta(File $file)
+    {
+        if (null !== $file->getMeta()) {
+            return;
+        }
+
+        $meta = new File\Meta();
+
+        try {
+            if ($file->isAndroidApp()) {
+                $apk = $this->get('apk');
+                $apk->init($file->getFile()->getPathname());
+
+                $manifest = $apk->getManifest();
+
+
+                $meta->set('versionName', $manifest->getVersionName());
+                $meta->set('packageName', $manifest->getPackageName());
+                if ($manifest->getMinSdkLevel()) {
+                    $meta->set('minSdkVersions', $manifest->getMinSdk()->versions);
+                }
+                $meta->set('permissions', $manifest->getPermissions());
+
+            } elseif ($file->isAudio()) {
+                $ffprobe = $this->container->get('dubture_ffmpeg.ffprobe');
+                $info = $ffprobe->streams($file->getFile()->getPathname())->audios()->first();
+
+                if (null !== $info) {
+                    $meta->set('duration', $info->get('duration'));
+                    if ($info->has('codec_name')) {
+                        $meta->set('codecName', $info->get('codec_name'));
+                    }
+                    if ($info->has('bit_rate')) {
+                        $meta->set('bitRate', $info->get('bit_rate'));
+                    }
+                    if ($info->has('sample_rate')) {
+                        $meta->set('sampleRate', $info->get('sample_rate'));
+                    }
+                }
+            } elseif ($file->isVideo()) {
+                $ffprobe = $this->container->get('dubture_ffmpeg.ffprobe');
+                $streams = $ffprobe->streams($file->getFile()->getPathname());
+                $videoInfo = $streams->videos()->first();
+                $audioInfo = $streams->audios()->first();
+
+                if (null !== $videoInfo) {
+                    $meta->set('width', $videoInfo->getDimensions()->getWidth());
+                    $meta->set('height', $videoInfo->getDimensions()->getHeight());
+
+                    if ($videoInfo->has('duration')) {
+                        $meta->set('duration', $videoInfo->get('duration'));
+                    }
+                    if ($videoInfo->has('codec_name')) {
+                        $meta->set('codecName', $videoInfo->get('codec_name'));
+                    }
+                    if ($videoInfo->has('bit_rate')) {
+                        $meta->set('bitRate', $videoInfo->get('bit_rate'));
+                    }
+                }
+
+                if (null !== $audioInfo) {
+                    if ($audioInfo->has('codec_name')) {
+                        $meta->set('audioCodecName', $audioInfo->get('codec_name'));
+                    }
+                    if ($audioInfo->has('bit_rate')) {
+                        $meta->set('audioBitRate', $audioInfo->get('bit_rate'));
+                    }
+                    if ($audioInfo->has('sample_rate')) {
+                        $meta->set('audioSampleRate', $audioInfo->get('sample_rate'));
+                    }
+                }
+            } elseif ($file->isImage()) {
+                $imagine = $this->container->get('liip_imagine');
+                $info = $imagine->open($file->getFile()->getPathname());
+
+                $meta->set('width', $info->getSize()->getWidth());
+                $meta->set('height', $info->getSize()->getHeight());
+
+                $infoMetadata = $info->metadata();
+
+                if ($infoMetadata->offsetExists('exif.DateTimeOriginal')) {
+                    $meta->set('dateTimeOriginal', $infoMetadata->offsetGet('exif.DateTimeOriginal'));
+                } elseif ($infoMetadata->offsetExists('ifd0.DateTimeOriginal')) {
+                    $meta->set('dateTimeOriginal', $infoMetadata->offsetGet('ifd0.DateTimeOriginal'));
+                }
+
+                if ($infoMetadata->offsetExists('exif.DateTime')) {
+                    $meta->set('dateTime', $infoMetadata->offsetGet('exif.DateTime'));
+                } elseif ($infoMetadata->offsetExists('ifd0.DateTime')) {
+                    $meta->set('dateTime', $infoMetadata->offsetGet('ifd0.DateTime'));
+                }
+
+                if ($infoMetadata->offsetExists('exif.Make')) {
+                    $meta->set('make', $infoMetadata->offsetGet('exif.Make'));
+                } elseif ($infoMetadata->offsetExists('ifd0.Make')) {
+                    $meta->set('make', $infoMetadata->offsetGet('ifd0.Make'));
+                }
+
+                if ($infoMetadata->offsetExists('exif.Model')) {
+                    $meta->set('model', $infoMetadata->offsetGet('exif.Model'));
+                } elseif ($infoMetadata->offsetExists('ifd0.Model')) {
+                    $meta->set('model', $infoMetadata->offsetGet('ifd0.Model'));
+                }
+
+                if ($infoMetadata->offsetExists('exif.Software')) {
+                    $meta->set('software', $infoMetadata->offsetGet('exif.Software'));
+                } elseif ($infoMetadata->offsetExists('ifd0.Software')) {
+                    $meta->set('software', $infoMetadata->offsetGet('ifd0.Software'));
+                }
+
+                if ($infoMetadata->offsetExists('exif.COMMENT')) {
+                    $meta->set('comment', $infoMetadata->offsetGet('exif.COMMENT'));
+                } elseif ($infoMetadata->offsetExists('exif.UserComment')) {
+                    $meta->set('comment', $infoMetadata->offsetGet('exif.UserComment'));
+                }
+            }
+        } catch (\Exception $e) {
+            $this->get('logger')->warning('Не удалось получить мета информацию из файла.', array($e));
+        }
+
+        $file->setMeta($meta);
     }
 
     /**

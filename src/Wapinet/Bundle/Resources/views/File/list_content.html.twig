@@ -3,26 +3,19 @@
         <li>
             <a href="{{ path('file_view', {'id': file.id}) }}">
                 {% if file.isImage %}
-                    {% set image_info = wapinet_image_info(file.file) %}
-                    {% if image_info is not null %}
-                        <img src="{{ vich_uploader_asset(file, 'file')|imagine_filter('thumbnail') }}" alt="{{ file.originalFileName }}" />
-                    {% endif %}
+                    <img src="{{ vich_uploader_asset(file, 'file')|imagine_filter('thumbnail') }}" alt="{{ file.originalFileName }}" />
                     <h2>{{ file.originalFileName }}</h2>
-                    <p>{{ file.fileSize|wapinet_size }}{% if image_info is not null %}, {{ image_info.size.width }}x{{ image_info.size.height }}{% endif %}</p>
+                    <p>{{ file.fileSize|wapinet_size }}{% if file.meta is not null %}, {{ file.meta.get('width') }}x{{ file.meta.get('height') }}{% endif %}</p>
                 {% elseif file.isVideo %}
-                    {% set info = file_get_media_info(file.file) %}
-                    {% set video_info = info is not null ? info.videos.first : null %}
                     {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_video_screenshot %}
                     {% if screenshot is not null %}
                         <img src="{{ screenshot|imagine_filter('thumbnail') }}" alt="{{ file.originalFileName }}" />
                     {% endif %}
                     <h2>{{ file.originalFileName }}</h2>
-                    <p>{{ file.fileSize|wapinet_size }}{% if video_info is not null %}, {{ video_info.dimensions.width }}x{{ video_info.dimensions.height }}{{ video_info.has('duration') ? ', ' ~ video_info.get('duration')|wapinet_length : '' }}{% endif %}</p>
+                    <p>{{ file.fileSize|wapinet_size }}{% if file.meta is not null %}, {{ file.meta.get('width') }}x{{ file.meta.get('height') }}{{ file.meta.has('duration') ? ', ' ~ file.meta.get('duration')|wapinet_length : '' }}{% endif %}</p>
                 {% elseif file.isAudio %}
-                    {% set info = file_get_media_info(file.file) %}
-                    {% set audio_info = info is not null ? info.audios.first : null %}
                     <h2>{{ file.originalFileName }}</h2>
-                    <p>{{ file.fileSize|wapinet_size }}{% if audio_info is not null %}{{ audio_info.has('duration') ? ', ' ~ audio_info.get('duration')|wapinet_length : '' }}{% endif %}</p>
+                    <p>{{ file.fileSize|wapinet_size }}{% if file.meta is not null %}{{ file.meta.has('duration') ? ', ' ~ file.meta.get('duration')|wapinet_length : '' }}{% endif %}</p>
                 {% elseif file.isJavaApp %}
                     {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_java_app_screenshot %}
                     {% if screenshot is not null %}

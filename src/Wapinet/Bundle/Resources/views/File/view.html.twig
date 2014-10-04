@@ -69,65 +69,39 @@
     <a data-role="button" data-icon="arrow-d" href="{{ vich_uploader_asset(file, 'file') }}" download="{{ file.originalFileName }}">Скачать</a>
 
     {% if file.isImage %}
-        {% set image_info = wapinet_image_info(file.file) %}
+        {% include 'WapinetBundle::image.html.twig' with {
+            'image': {
+            'id': file.id,
+            'alt': file.originalFileName,
+            'src': vich_uploader_asset(file, 'file'),
+            'preview': vich_uploader_asset(file, 'file')|imagine_filter('thumbnail')
+            }
+        } %}
 
-        {% if image_info is not null %}
-            {% include 'WapinetBundle::image.html.twig' with {
-                'image': {
-                    'id': file.id,
-                    'alt': file.originalFileName,
-                    'src': vich_uploader_asset(file, 'file'),
-                    'preview': vich_uploader_asset(file, 'file')|imagine_filter('thumbnail')
-                }
-            } %}
-            <p>{{ image_info.size.width }}x{{ image_info.size.height }}</p>
-
-            {% set image_info_metadata = image_info.metadata %}
-            {% if image_info_metadata.toArray() is not empty %}
-                <pre class="long-description">
-                {%- if image_info_metadata.offsetExists('exif.DateTimeOriginal') -%}
-                    Дата съемки: {{ image_info_metadata.offsetGet('exif.DateTimeOriginal') }}<br />
-                {%- elseif image_info_metadata.offsetExists('ifd0.DateTimeOriginal') -%}
-                    Дата съемки: {{ image_info_metadata.offsetGet('ifd0.DateTimeOriginal') }}<br />
-                {%- endif %}
-
-                {%- if image_info_metadata.offsetExists('exif.DateTime') -%}
-                    Дата изменения: {{ image_info_metadata.offsetGet('exif.DateTime') }}<br />
-                {%- elseif image_info_metadata.offsetExists('ifd0.DateTime') -%}
-                    Дата изменения: {{ image_info_metadata.offsetGet('ifd0.DateTime') }}<br />
-                {%- endif %}
-
-                {%- if image_info_metadata.offsetExists('exif.Make') -%}
-                    Производитель фотокамеры: {{ image_info_metadata.offsetGet('exif.Make') }}<br />
-                {%- elseif image_info_metadata.offsetExists('ifd0.Make') -%}
-                    Производитель фотокамеры: {{ image_info_metadata.offsetGet('ifd0.Make') }}<br />
-                {%- endif %}
-
-                {%- if image_info_metadata.offsetExists('exif.Model') -%}
-                    Модель фотокамеры: {{ image_info_metadata.offsetGet('exif.Model') }}<br />
-                {%- elseif image_info_metadata.offsetExists('ifd0.Model') -%}
-                    Модель фотокамеры: {{ image_info_metadata.offsetGet('ifd0.Model') }}<br />
-                {%- endif %}
-
-                {%- if image_info_metadata.offsetExists('exif.Software') -%}
-                    Редактировалось в {{ image_info_metadata.offsetGet('exif.Software') }}<br />
-                {%- elseif image_info_metadata.offsetExists('ifd0.Software') -%}
-                    Редактировалось в {{ image_info_metadata.offsetGet('ifd0.Software') }}<br />
-                {%- endif %}
-
-                {%- if image_info_metadata.offsetExists('exif.COMMENT') -%}
-                    Комментарий: {{ image_info_metadata.offsetGet('exif.COMMENT')|join("\r\n") }}<br />
-                {%- elseif image_info_metadata.offsetExists('exif.UserComment') -%}
-                    Комментарий: {{ image_info_metadata.offsetGet('exif.UserComment')|join("\r\n") }}<br />
-                {%- endif -%}
-                </pre>
-            {% endif %}
+        {% if file.meta is not null %}
+            <pre class="long-description">
+                Разрешение: {{ file.meta.get('width') }}x{{ file.meta.get('height') }}<br />
+                {% if file.meta.has('dateTimeOriginal') %}
+                    Дата съемки: {{ file.meta.get('dateTimeOriginal') }}<br />
+                {% endif %}
+                {% if file.meta.has('dateTime') %}
+                    Дата изменения: {{ file.meta.get('dateTime') }}<br />
+                {% endif %}
+                {% if file.meta.has('make') %}
+                    Производитель фотокамеры: {{ file.meta.get('make') }}<br />
+                {% endif %}
+                {% if file.meta.has('model') %}
+                    Модель фотокамеры: {{ file.meta.get('model') }}<br />
+                {% endif %}
+                {% if file.meta.has('software') %}
+                    Редактировалось в: {{ file.meta.get('software') }}<br />
+                {% endif %}
+                {% if file.meta.has('comment') %}
+                    Комментарий: {{ file.meta.get('comment') }}<br />
+                {% endif %}
+            </pre>
         {% endif %}
     {% elseif file.isVideo %}
-        {% set info = file_get_media_info(file.file) %}
-        {% set audio_info = info is not null ? info.audios.first : null %}
-        {% set video_info = info is not null ? info.videos.first : null %}
-
         {% if file.isPlayableVideo %}
             {% include '@Wapinet/video.html.twig' with {'file': file} %}
         {% else %}
@@ -136,53 +110,51 @@
             {% endif %}
         {% endif %}
 
-        {% if video_info is not null %}
-            <p>{{ video_info.dimensions.width }}x{{ video_info.dimensions.height }}{{ video_info.has('duration') ? ', ' ~ video_info.get('duration')|wapinet_length : '' }}</p>
+        {% if file.meta is not null %}
             <pre class="long-description">
-                {%- if video_info.has('codec_name') -%}
-                    Видео кодек: {{ video_info.get('codec_name') }}<br />
-                {%- endif -%}
-                {%- if video_info.has('bit_rate') -%}
-                    Видео битрейт: {{ (video_info.get('bit_rate') / 1000)|round }} кбит/сек<br />
-                {%- endif -%}
-            </pre>
-        {% endif %}
-        {% if audio_info is not null %}
-            <pre class="long-description">
-                {%- if audio_info.has('codec_name') -%}
-                    Аудио кодек: {{ audio_info.get('codec_name') }}<br />
-                {%- endif -%}
-                {%- if audio_info.has('bit_rate') -%}
-                    Аудио битрейт: {{ (audio_info.get('bit_rate') / 1000)|round }} кбит/сек<br />
-                {%- endif -%}
-                {%- if audio_info.has('sample_rate') -%}
-                    Частота дискретизации: {{ (audio_info.get('sample_rate') / 1000)|round(1) }} КГц<br />
-                {%- endif -%}
+                Разрешение: {{ file.meta.get('width') }}x{{ file.meta.get('height') }}<br />
+                {% if file.meta.has('duration') %}
+                    Время: {{ file.meta.get('duration')|wapinet_length }}<br />
+                {% endif %}
+                {% if file.meta.has('codecName') %}
+                    Видео кодек: {{ file.meta.get('codecName') }}<br />
+                {% endif %}
+                {% if file.meta.has('bitRate') %}
+                    Видео битрейт: {{ (file.meta.get('bitRate') / 1000)|round }} кбит/сек<br />
+                {% endif %}
+                {% if file.meta.has('audioCodecName') %}
+                    Аудио кодек: {{ file.meta.get('audioCodecName') }}<br />
+                {% endif %}
+                {% if file.meta.has('audioBitRate') %}
+                    Аудио битрейт: {{ (file.meta.get('audioBitRate') / 1000)|round }} кбит/сек<br />
+                {% endif %}
+                {% if file.meta.has('audioSampleRate') %}
+                    Частота дискретизации: {{ (file.meta.get('audioSampleRate') / 1000)|round(1) }} КГц<br />
+                {% endif %}
             </pre>
         {% endif %}
     {% elseif file.isAudio %}
-        {% set info = file_get_media_info(file.file) %}
-        {% set audio_info = info is not null ? info.audios.first : null %}
-
         {% if file.isPlayableAudio %}
             {% include '@Wapinet/audio.html.twig' with {'file': file} %}
         {% endif %}
 
-        {% if audio_info is not null %}
-            <p>{{ audio_info.has('duration') ? audio_info.get('duration')|wapinet_length : '' }}</p>
+        {% if file.meta is not null %}
             <pre class="long-description">
-                {%- if audio_info.has('codec_name') -%}
-                    Аудио кодек: {{ audio_info.get('codec_name') }}<br />
-                {%- endif -%}
-                {%- if audio_info.has('bit_rate') -%}
-                    Аудио битрейт: {{ (audio_info.get('bit_rate') / 1000)|round }} кбит/сек<br />
-                {%- endif -%}
-                {%- if audio_info.has('sample_rate') -%}
-                    Частота дискретизации: {{ (audio_info.get('sample_rate') / 1000)|round(1) }} КГц<br />
-                {%- endif -%}
+                {% if file.meta.has('duration') %}
+                    Время: {{ file.meta.get('duration')|wapinet_length }}<br />
+                {% endif %}
+                {% if file.meta.has('codecName') %}
+                    Кодек: {{ file.meta.get('codecName') }}<br />
+                {% endif %}
+                {% if file.meta.has('bitRate') %}
+                    Битрейт: {{ (file.meta.get('bitRate') / 1000)|round }} кбит/сек<br />
+                {% endif %}
+                {% if file.meta.has('sampleRate') %}
+                    Частота дискретизации: {{ (file.meta.get('sampleRate') / 1000)|round(1) }} КГц<br />
+                {% endif %}
             </pre>
         {% endif %}
-    {% elseif file.isArchive and false %} {# временно отключаем поддержку архивов #}
+    {% elseif file.isArchive and false %} {# @todo: временно отключаем поддержку архивов #}
         {% if file.isExtractableArchive %}
             {% include '@Wapinet/archive.html.twig' with {'file': file} %}
         {% endif %}
@@ -191,22 +163,31 @@
             {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
         {% endif %}
     {% elseif file.isAndroidApp %}
-        {% set android_app_info = file_get_android_app_info(file.file) %}
-
         {% if screenshot is defined and screenshot is not null %}
             {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
         {% endif %}
-            <pre class="long-description">Версия: {{ android_app_info.versionName }}<br />Внутреннее имя: {{ android_app_info.packageName }}<br />
-                {%- if android_app_info.minSdkLevel -%}
-                    Min {{ android_app_info.minSdk.__get('platform') }}<br />
-                {%- endif -%}
-                Доступы:<br />
-                {%- for permission in android_app_info.permissions -%}
-                    {%- if permission -%}
-                        &#187; {{ permission }}<br />
-                    {%- endif -%}
-                {%- endfor -%}
+
+        {% if file.meta is not null %}
+            <pre class="long-description">
+                {% if file.meta.has('versionName') %}
+                    Версия: {{ file.meta.get('versionName') }}<br />
+                {% endif %}
+                {% if file.meta.has('packageName') %}
+                    Внутреннее имя: {{ file.meta.get('packageName') }}<br />
+                {% endif %}
+                {% if file.meta.has('minSdkVersions') %}
+                    Версия Android: {{ file.meta.get('minSdkVersions')|join(',') }}<br />
+                {% endif %}
+                {% if file.meta.has('permissions') %}
+                    Требует доступ:<br />
+                    {% for premission in file.meta.get('permissions') %}
+                        {% if premission %}
+                            &#187; {{ premission }}<br />
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
             </pre>
+        {% endif %}
     {% endif %}
 
     <fieldset>{{ file.description|wapinet_bbcode_parse }}</fieldset>

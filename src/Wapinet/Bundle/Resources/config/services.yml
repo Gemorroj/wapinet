@@ -43,12 +43,6 @@ services:
         tags:
             - {name: twig.extension, alias: wapinet_android_app}
 
-    wapinet.image.twig_extension:
-        class: Wapinet\Bundle\Twig\Extension\Image
-        arguments: [@service_container]
-        tags:
-            - {name: twig.extension, alias: wapinet_image}
-
     wapinet.archive.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Archive
         arguments: [@service_container]
