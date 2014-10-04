@@ -1,13 +1,16 @@
 <li data-role="list-divider">
+    <span>
+        <a class="bar-button ui-btn-icon-right ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('fos_user_profile_show', {'username': event.variables.friend.username}) }}">&#10150;</a>
+    </span>
     {{ event.subject }}
-    <span class="ui-li-count">{{ event.createdAt|wapinet_datetime  }}</span>
+    <span class="ui-li-count">{{ event.createdAt|wapinet_datetime }}</span>
 </li>
 <li>
-    <a href="{{ path('fos_user_profile_show', {'username': event.variables.friend.username}) }}">
+    <div class="long-description">
         {% if event.variables.friend.isFemale %}
             Вас удалила из друзей {{ event.variables.friend }}.
         {% else %}
             Вас удалил из друзей {{ event.variables.friend }}.
         {% endif %}
-    </a>
+    </div>
 </li>

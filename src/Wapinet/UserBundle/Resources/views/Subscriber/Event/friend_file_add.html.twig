@@ -1,13 +1,16 @@
 <li data-role="list-divider">
+    <span>
+        <a class="bar-button ui-btn-icon-right ui-icon-camera ui-mini ui-btn-inline ui-btn" href="{{ path('file_view', {'id': event.variables.file.id}) }}">&#10150;</a>
+    </span>
     {{ event.subject }}
-    <span class="ui-li-count">{{ event.createdAt|wapinet_datetime  }}</span>
+    <span class="ui-li-count">{{ event.createdAt|wapinet_datetime }}</span>
 </li>
 <li>
-    <a href="{{ path('file_view', {'id': event.variables.file.id}) }}">
+    <div class="long-description">
         {% if event.variables.friend.isFemale %}
             Ваша подруга {{ event.variables.friend }} добавила новый файл {{ event.variables.file.originalFileName }} ({{ event.variables.file.fileSize|wapinet_size }}).
         {% else %}
             Ваш друг {{ event.variables.friend }} добавил новый файл {{ event.variables.file.originalFileName }} ({{ event.variables.file.fileSize|wapinet_size }}).
         {% endif %}
-    </a>
+    </div>
 </li>
