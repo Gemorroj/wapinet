@@ -2,8 +2,8 @@
 
 {% block content %}
     {% if friend.isFemale %}
-        Вас удалила из друзей <a href="{{ url('fos_user_profile_show', {'username': friend.username}) }}">{{ friend }}</a>.
+        Вас удалила из друзей <a href="{{ url('wapinet_user_profile', {'username': friend.username}) }}">{{ friend }}</a>.
     {% else %}
-        Вас удалил из друзей <a href="{{ url('fos_user_profile_show', {'username': friend.username}) }}">{{ friend }}</a>.
+        Вас удалил из друзей <a href="{{ url('wapinet_user_profile', {'username': friend.username}) }}">{{ friend }}</a>.
     {% endif %}
 {% endblock %}

@@ -2,9 +2,9 @@
 
 {% block content %}
     {% if friend.isFemale %}
-        Ваша подруга <a href="{{ url('fos_user_profile_show', {'username': friend.username}) }}">{{ friend }}</a> оставила комментарий:<br />
+        Ваша подруга <a href="{{ url('wapinet_user_profile', {'username': friend.username}) }}">{{ friend }}</a> оставила комментарий:<br />
     {% else %}
-        Ваш друг <a href="{{ url('fos_user_profile_show', {'username': friend.username}) }}">{{ friend }}</a> оставил комментарий:<br />
+        Ваш друг <a href="{{ url('wapinet_user_profile', {'username': friend.username}) }}">{{ friend }}</a> оставил комментарий:<br />
     {% endif %}
     <pre>{{ comment.body|wapinet_bbcode_parse }}</pre>
 
