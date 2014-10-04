@@ -215,8 +215,10 @@
         <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ file.fileSize|wapinet_size }}</div></div>
         <div class="ui-block-a"><div class="ui-bar ui-bar-a">Просмотров</div></div>
         <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ file.countViews|wapinet_count }}</div></div>
-        <div class="ui-block-a"><div class="ui-bar ui-bar-a">Последний</div></div>
-        <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ file.lastViewAt|wapinet_datetime }}</div></div>
+        {% if file.lastViewAt is not null %}
+            <div class="ui-block-a"><div class="ui-bar ui-bar-a">Последний</div></div>
+            <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ file.lastViewAt|wapinet_datetime }}</div></div>
+        {% endif %}
         {% if file.user is not null %}
             <div class="ui-block-a"><div class="ui-bar ui-bar-a">{{ file.user.isFemale ? 'Загрузила' : 'Загрузил' }}</div></div>
             <div class="ui-block-b"><div class="ui-bar ui-bar-a"><a data-role="none" href="{{ path('wapinet_user_profile', {'username': file.user.username}) }}">{{ file.user.username }}</a></div></div>
