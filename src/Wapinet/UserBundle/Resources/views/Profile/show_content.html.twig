@@ -10,63 +10,24 @@
             }
         } %}
     {% endif %}
-    <table data-role="table" id="profile-table" class="ui-responsive table-stroke">
-        <thead>
-        <tr>
-            <th data-priority="1"></th>
-            <th data-priority="2"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Логин</td>
-            <td>{{ user.username }}</td>
-        </tr>
-        <tr>
-            <td>Пол</td>
-            <td>
-                {% if user.isMale %}
-                    Мужской
-                {% elseif user.isFemale %}
-                    Женский
-                {% else %}
-                    Не указано
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <td>День рождения</td>
-            <td>
-                {% if user.country %}
-                    {{ user.birthday|wapinet_date }}
-                {% else %}
-                    Не указано
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <td>Страна</td>
-            <td>
-                {% if user.country %}
-                    {{ user.countryName }} <img src="{{ user.countryImage }}" alt="{{ user.countryName }}" />
-                {% else %}
-                    Не указано
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <td>Дата регистрации</td>
-            <td>{{ user.createdAt|wapinet_datetime }}</td>
-        </tr>
-        <tr>
-            <td>Последняя активность</td>
-            <td>{{ user.lastActivity is null ? 'Неизвестно' : user.lastActivity|wapinet_datetime }}</td>
-        </tr>
-        </tbody>
-    </table>
+
+    <div class="ui-grid-a ui-mini ui-corner-all">
+        <div class="ui-block-a"><div class="ui-bar ui-bar-a">Логин</div></div>
+        <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ user.username }}</div></div>
+        <div class="ui-block-a"><div class="ui-bar ui-bar-a">Пол</div></div>
+        <div class="ui-block-b"><div class="ui-bar ui-bar-a">{% if user.isMale %}Мужской{% elseif user.isFemale %}Женский{% else %}Не указано{% endif %}</div></div>
+        <div class="ui-block-a"><div class="ui-bar ui-bar-a">День рождения</div></div>
+        <div class="ui-block-b"><div class="ui-bar ui-bar-a">{% if user.birthday %}{{ user.birthday|wapinet_date }}{% else %}Не указано{% endif %}</div></div>
+        <div class="ui-block-a"><div class="ui-bar ui-bar-a">Страна</div></div>
+        <div class="ui-block-b"><div class="ui-bar ui-bar-a">{% if user.country %}{{ user.countryName }} <img src="{{ user.countryImage }}" alt="{{ user.countryName }}" />{% else %}Не указано{% endif %}</div></div>
+        <div class="ui-block-a"><div class="ui-bar ui-bar-a">Дата регистрации</div></div>
+        <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ user.createdAt|wapinet_datetime }}</div></div>
+        <div class="ui-block-a"><div class="ui-bar ui-bar-a">Активность</div></div>
+        <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ user.lastActivity is null ? 'Неизвестно' : user.lastActivity|wapinet_datetime }}</div></div>
+    </div>
 
     {% if user.info is not null %}
-        <fieldset>{{ user.info|wapinet_bbcode_parse }}</fieldset>
+        <div class="ui-body ui-body-a ui-corner-all">{{ user.info|wapinet_bbcode_parse }}</div>
     {% endif %}
 </div>
 
