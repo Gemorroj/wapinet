@@ -203,63 +203,39 @@
         </fieldset>
     {% endif %}
 
-    <table data-role="table" class="ui-responsive table-stroke">
-        <thead>
-        <tr>
-            <th></th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Загружено:</td>
-            <td>{{ file.createdAt|wapinet_datetime }}</td>
-        </tr>
+
+    <div class="ui-grid-a ui-mini">
+        <div class="ui-block-a"><div class="ui-bar ui-bar-a">Загружено</div></div>
+        <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ file.createdAt|wapinet_datetime }}</div></div>
         {% if file.updatedAt is not null %}
-            <tr>
-                <td>Обновлено:</td>
-                <td>{{ file.updatedAt|wapinet_datetime }}</td>
-            </tr>
+            <div class="ui-block-a"><div class="ui-bar ui-bar-a">Обновлено</div></div>
+            <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ file.updatedAt|wapinet_datetime }}</div></div>
         {% endif %}
-        <tr>
-            <td>Размер:</td>
-            <td>{{ file.fileSize|wapinet_size }}</td>
-        </tr>
-        <tr>
-            <td>Всего просмотров:</td>
-            <td>{{ file.countViews|wapinet_count }}</td>
-        </tr>
-        <tr>
-            <td>Последний просмотр:</td>
-            <td>{{ file.lastViewAt|wapinet_datetime }}</td>
-        </tr>
+        <div class="ui-block-a"><div class="ui-bar ui-bar-a">Размер</div></div>
+        <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ file.fileSize|wapinet_size }}</div></div>
+        <div class="ui-block-a"><div class="ui-bar ui-bar-a">Просмотров</div></div>
+        <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ file.countViews|wapinet_count }}</div></div>
+        <div class="ui-block-a"><div class="ui-bar ui-bar-a">Последний</div></div>
+        <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ file.lastViewAt|wapinet_datetime }}</div></div>
         {% if file.user is not null %}
-        <tr>
-            <td>Пользователь:</td>
-            <td><a href="{{ path('wapinet_user_profile', {'username': file.user.username}) }}">{{ file.user.username }}</a></td>
-        </tr>
+            <div class="ui-block-a"><div class="ui-bar ui-bar-a">{{ file.user.isFemale ? 'Загрузила' : 'Загрузил' }}</div></div>
+            <div class="ui-block-b"><div class="ui-bar ui-bar-a"><a data-role="none" href="{{ path('wapinet_user_profile', {'username': file.user.username}) }}">{{ file.user.username }}</a></div></div>
         {% endif %}
         {% if file.password is not null %}
-        <tr>
-            <td>Пароль:</td>
-            <td>&#x2713;</td>
-        </tr>
+            <div class="ui-block-a"><div class="ui-bar ui-bar-a">Пароль</div></div>
+            <div class="ui-block-b"><div class="ui-bar ui-bar-a">&#x2713;</div></div>
         {% endif %}
-        <tr>
-            <td><abbr title="Message Digest 5 — 128-битный алгоритм хеширования">MD5</abbr>:</td>
-            <td>{{ file.hash }}</td>
-        </tr>
-        {% if not file.tags.isEmpty %}
-            <tr>
-                <td colspan="2">
-                    {% for tag in file.tags %}
-                        <a data-role="button" data-inline="true" data-mini="true" href="{{ path('file_tag', {'tagName': tag}) }}">{{ tag }}</a>
-                    {% endfor %}
-                </td>
-            </tr>
-        {% endif %}
-        </tbody>
-    </table>
+        <div class="ui-block-a"><div class="ui-bar ui-bar-a"><abbr title="Message Digest 5 — 128-битный алгоритм хеширования">MD5</abbr></div></div>
+        <div class="ui-block-b"><div class="ui-bar ui-bar-a" style="overflow-x: auto">{{ file.hash }}</div></div>
+    </div>
+
+    {% if not file.tags.isEmpty %}
+        <fieldset>
+            {% for tag in file.tags %}
+                <a class="ui-btn ui-btn-inline ui-mini ui-corner-all ui-shadow" href="{{ path('file_tag', {'tagName': tag}) }}">{{ tag }}</a>
+            {% endfor %}
+        </fieldset>
+    {% endif %}
 
     <p id="share"></p>
 
