@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-<table data-role="table" class="ui-responsive table-stroke">
+<table class="ui-responsive table-stroke ui-table">
     <thead>
     <tr><td></td><td></td></tr>
     </thead>
@@ -36,7 +36,7 @@
         <h3>Все <abbr title="HyperText Transfer Protocol">HTTP</abbr> заголовки</h3>
     </div>
     <div class="ui-body ui-body-a">
-        <pre>{{ all }}</pre>
+        <pre style="overflow-x: auto">{{ all }}</pre>
     </div>
 </div>
 {% endblock %}
