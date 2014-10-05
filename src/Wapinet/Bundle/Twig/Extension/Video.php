@@ -50,10 +50,10 @@ class Video extends \Twig_Extension
             try {
                 $media = $ffmpeg->open($this->getWebDir() . $path);
 
-                $this->addLibMp3LameFilter($media);
+                //$this->addLibMp3LameFilter($media);
 
                 // 'libvo_aacenc', 'libfaac', 'libmp3lame'
-                $format = new X264('libmp3lame');
+                $format = new X264();
                 $this->setOptions($format, $media);
 
 
