@@ -3,6 +3,7 @@
 namespace Wapinet\Bundle\Twig\Extension;
 
 use FFMpeg\Filters\Audio\AudioResamplableFilter;
+use FFMpeg\Format\Video\DefaultVideo;
 use FFMpeg\Media\Audio as FFmpegAudio;
 use FFMpeg\Media\Video as FFmpegVideo;
 use FFMpeg\Format\Video\WebM;
@@ -49,10 +50,12 @@ class Video extends \Twig_Extension
             try {
                 $media = $ffmpeg->open($this->getWebDir() . $path);
 
-                $this->addLibMp3LameFilter($media);
+                //$this->addLibMp3LameFilter($media);
+
                 // 'libvo_aacenc', 'libfaac', 'libmp3lame'
                 $format = new X264('libmp3lame');
-                $format->setBFramesSupport(false);
+                $this->setOptions($format, $media);
+
 
                 $media->save($format, $this->getWebDir() . $mp4File);
 
@@ -82,6 +85,29 @@ class Video extends \Twig_Extension
             if ($stream->get('sample_rate') < 32000) {
                 $media->addFilter(new AudioResamplableFilter(32000));
             }
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * @param DefaultVideo $format
+     * @param FFmpegVideo $media
+     * @return Video
+     */
+    protected function setOptions(DefaultVideo $format, FFmpegVideo $media)
+    {
+        $streams = $media->getStreams();
+
+        $videoStream = $streams->videos()->first();
+        $audioStream = $streams->audios()->first();
+
+        if (null !== $videoStream) {
+            $format->setKiloBitrate($videoStream->get('bit_rate'));
+        }
+        if (null !== $audioStream) {
+            $format->setAudioKiloBitrate($audioStream->get('bit_rate'));
         }
 
         return $this;
