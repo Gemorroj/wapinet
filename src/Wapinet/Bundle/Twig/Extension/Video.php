@@ -101,14 +101,14 @@ class Video extends \Twig_Extension
         $streams = $media->getStreams();
 
         $videoStream = $streams->videos()->first();
-        $audioStream = $streams->audios()->first();
+        //$audioStream = $streams->audios()->first();
 
         if (null !== $videoStream) {
             $format->setKiloBitrate($videoStream->get('bit_rate'));
         }
-        if (null !== $audioStream) {
-            $format->setAudioKiloBitrate($audioStream->get('bit_rate'));
-        }
+        //if (null !== $audioStream) {
+        //    $format->setAudioKiloBitrate($audioStream->get('bit_rate'));
+        //}
 
         return $this;
     }
