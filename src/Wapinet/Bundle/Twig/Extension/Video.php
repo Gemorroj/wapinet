@@ -51,7 +51,10 @@ class Video extends \Twig_Extension
 
                 $this->addLibMp3LameFilter($media);
                 // 'libvo_aacenc', 'libfaac', 'libmp3lame'
-                $media->save(new X264('libmp3lame'), $this->getWebDir() . $mp4File);
+                $format = new X264('libmp3lame');
+                $format->setBFramesSupport(false);
+
+                $media->save($format, $this->getWebDir() . $mp4File);
 
                 if (false === file_exists($this->getWebDir() . $mp4File)) {
                     throw new \RuntimeException('Не удалось создать MP4 файл');
@@ -76,8 +79,8 @@ class Video extends \Twig_Extension
     {
         $stream = $media->getStreams()->audios()->first();
         if (null !== $stream) {
-            if ($stream->get('sample_rate') < 41000) {
-                $media->addFilter(new AudioResamplableFilter(41000));
+            if ($stream->get('sample_rate') < 32000) {
+                $media->addFilter(new AudioResamplableFilter(32000));
             }
         }
 
