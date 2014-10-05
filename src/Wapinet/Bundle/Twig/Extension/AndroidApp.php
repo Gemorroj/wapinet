@@ -78,6 +78,7 @@ class AndroidApp extends \Twig_Extension
             'main.png',
             'ic_launcher.png',
             'ic_app_launcher.png',
+            'logo.png',
         );
         $dirs = array(
             '',
@@ -87,6 +88,10 @@ class AndroidApp extends \Twig_Extension
             '/drawable-ldpi',
             '/drawable-mdpi',
             '/drawable',
+            '/drawable-hdpi-v4',
+            '/drawable-hdpi-v7',
+            '/drawable-hdpi-v11',
+            '/drawable-nodpi',
         );
 
         foreach ($dirs as $dir) {
