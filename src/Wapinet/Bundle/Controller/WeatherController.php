@@ -48,26 +48,12 @@ class WeatherController extends Controller
     public function cityAction(Request $request, $country)
     {
         $weather = $this->get('weather');
-        $form = $this->createForm(new CityType($weather->getCities($country)));
-
-        try {
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted()) {
-                if ($form->isValid()) {
-                    $data = $form->getData();
-                    $url = $this->get('router')->generate('weather_show', array('country' => $country, 'city' => $data['city']));
-                    return $this->redirect($url);
-                }
-            }
-        } catch (\Exception $e) {
-            $form->addError(new FormError($e->getMessage()));
-        }
+        $cities = $weather->getCities($country);
 
         return $this->render('WapinetBundle:Weather:city.html.twig', array(
             'countryName' => $weather->getCountries()[$country],
             'country' => $country,
-            'form' => $form->createView(),
+            'cities' => $cities,
         ));
     }
 

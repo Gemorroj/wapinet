@@ -24,6 +24,7 @@ class Weather
 
     /**
      * @return array
+     * @throws \RuntimeException
      */
     public function getCountries()
     {
@@ -32,17 +33,26 @@ class Weather
         if (false === is_file($file)) {
             $f = fopen($file, 'w');
 
-            $curl = $this->container->get('curl');
-            $curl->init('http://a956e985.services.gismeteo.ru/inform-service/588c42b53455e4d92511627521555fe4/countries/?lang=ru');
-            $curl->addCompression();
-            $curl->setOpt(CURLOPT_FILE, $f);
-            $curl->setOpt(CURLOPT_HEADER, false);
-            $response = $curl->exec();
-            $curl->close();
-            fclose($f);
+            try {
+                $curl = $this->container->get('curl');
+                $curl->init(
+                    'http://a956e985.services.gismeteo.ru/inform-service/588c42b53455e4d92511627521555fe4/countries/?lang=ru'
+                );
+                $curl->addCompression();
+                $curl->setOpt(CURLOPT_FILE, $f);
+                $curl->setOpt(CURLOPT_HEADER, false);
+                $response = $curl->exec();
+                $curl->close();
+                fclose($f);
 
-            if (!$response->isSuccessful()) {
-                throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+                if (!$response->isSuccessful()) {
+                    throw new \RuntimeException(
+                        'Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')'
+                    );
+                }
+            } catch (\Exception $e) {
+                @unlink($file);
+                throw $e;
             }
         }
 
@@ -59,6 +69,7 @@ class Weather
     /**
      * @param int $country
      * @return array
+     * @throws \RuntimeException
      */
     public function getCities($country)
     {
@@ -67,17 +78,26 @@ class Weather
         if (false === is_file($file)) {
             $f = fopen($file, 'w');
 
-            $curl = $this->container->get('curl');
-            $curl->init('http://a956e985.services.gismeteo.ru/inform-service/588c42b53455e4d92511627521555fe4/cities/?country=' . $country . '&lang=ru');
-            $curl->addCompression();
-            $curl->setOpt(CURLOPT_FILE, $f);
-            $curl->setOpt(CURLOPT_HEADER, false);
-            $response = $curl->exec();
-            $curl->close();
-            fclose($f);
+            try {
+                $curl = $this->container->get('curl');
+                $curl->init(
+                    'http://a956e985.services.gismeteo.ru/inform-service/588c42b53455e4d92511627521555fe4/cities/?country=' . $country . '&lang=ru'
+                );
+                $curl->addCompression();
+                $curl->setOpt(CURLOPT_FILE, $f);
+                $curl->setOpt(CURLOPT_HEADER, false);
+                $response = $curl->exec();
+                $curl->close();
+                fclose($f);
 
-            if (!$response->isSuccessful()) {
-                throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+                if (!$response->isSuccessful()) {
+                    throw new \RuntimeException(
+                        'Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')'
+                    );
+                }
+            } catch (\Exception $e) {
+                @unlink($file);
+                throw $e;
             }
         }
 

@@ -11,6 +11,9 @@ class CountryType extends AbstractType
 {
     protected $countries = array();
 
+    /**
+     * @param array $countries
+     */
     public function __construct(array $countries)
     {
         $this->countries = $countries;
@@ -24,7 +27,26 @@ class CountryType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('country', 'choice', array('label' => 'Страна', 'choices' => $this->countries));
+        $builder->add(
+            'search',
+            'search',
+            array(
+                'label' => 'Страна',
+            )
+        );
+
+        $builder->add(
+            'country',
+            'choice',
+            array(
+                'label' => false,
+                'choices' => $this->countries,
+                'attr' => array(
+                    'data-input' => '#'.$this->getName().'_search',
+                    'data-filter' => 'true',
+                )
+            )
+        );
 
         $builder->add('submit', 'submit', array('label' => 'Дальше'));
     }

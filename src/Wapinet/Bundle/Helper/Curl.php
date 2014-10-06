@@ -2,6 +2,7 @@
 namespace Wapinet\Bundle\Helper;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Wapinet\Bundle\Exception\RequestException;
 use Symfony\Component\HttpKernel\Exception\LengthRequiredHttpException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
