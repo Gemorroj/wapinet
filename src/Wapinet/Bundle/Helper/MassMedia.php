@@ -77,7 +77,7 @@ class MassMedia
     public function getInotv()
     {
         $curl = $this->container->get('curl');
-        $curl->init('http://inotv.rt.com/s/rss/main.rss');
+        $curl->init('http://russian.rt.com/inotv/s/rss/main.rss');
         $curl->addCompression();
 
         $response = $curl->exec();
