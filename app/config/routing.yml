@@ -16,6 +16,10 @@ wapinet_comment_api:
     prefix: /comment/api
     defaults: { _format: html }
 
+wapinet_sea_private_download:
+    path:  /sea_for_customers/a9267d90a1c9ebadccf3d2b582b82004
+    defaults: { _controller: WapinetBundle:Default:seaDownload }
+
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
     prefix: /admin
