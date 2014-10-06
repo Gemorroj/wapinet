@@ -45,12 +45,13 @@ class OnlineListener
         $online->setIp($request->getClientIp());
         $online->setDatetime(new \DateTime());
 
-        $result = $this->em->createQuery('SELECT o.id FROM Wapinet\Bundle\Entity\Online o WHERE o.ip = :ip AND o.browser = :browser')
+        $issetRow = $this->em->createQuery('SELECT o.id FROM Wapinet\Bundle\Entity\Online o WHERE o.ip = :ip AND o.browser = :browser')
             ->setParameter('ip', $online->getIp())
             ->setParameter('browser', $online->getBrowser())
             ->getOneOrNullResult();
-        if (null !== $result) {
-            $online->setId($result['id']);
+
+        if (null !== $issetRow) {
+            $online->setId($issetRow['id']);
             $this->em->merge($online);
         } else {
             $this->em->persist($online);
