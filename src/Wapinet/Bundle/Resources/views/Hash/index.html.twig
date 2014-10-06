@@ -1,0 +1,18 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Хэширование данных{% endblock %}
+{% block breadcrumbs %}
+    {{wapinet_breadcrumbs({
+    1: {'uri': path('utilities'), 'title': 'Утилиты'}
+    })}}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form, {'action': path('hash_index'), 'method': 'POST'}) }}
+        {% if result is not null %}
+            <label>Результат <input type="text" value="{{ result }}"/></label>
+        {% endif %}
+
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}
