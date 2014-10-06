@@ -24,16 +24,23 @@ class FriendRepository extends EntityRepository
 
     /**
      * @param User $user
+     * @param  \DateTime|null $lastActivity
      * @return int
      */
-    public function getFriendsCount(User $user)
+    public function getFriendsCount(User $user, \DateTime $lastActivity = null)
     {
-        $q = $this->createQueryBuilder('f')
+        $queryBuilder = $this->createQueryBuilder('f')
             ->select('COUNT(f.id)')
             ->where('f.user = :user')
             ->setParameter('user', $user)
-            ->innerJoin('f.friend', 'u', Join::WITH, 'u.enabled = 1 AND u.locked = 0 AND u.expired = 0')
-            ->getQuery();
+            ->innerJoin('f.friend', 'u', Join::WITH, 'u.enabled = 1 AND u.locked = 0 AND u.expired = 0');
+
+        if (null !== $lastActivity) {
+            $queryBuilder->andWhere('u.lastActivity > :lastActivity');
+            $queryBuilder->setParameter('lastActivity', $lastActivity);
+        }
+
+        $q = $queryBuilder->getQuery();
 
         return $q->getSingleScalarResult();
     }

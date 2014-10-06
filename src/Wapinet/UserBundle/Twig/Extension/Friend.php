@@ -3,7 +3,6 @@
 namespace Wapinet\UserBundle\Twig\Extension;
 
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\Security\Core\SecurityContext;
 use Wapinet\UserBundle\Entity\User;
 
 class Friend extends \Twig_Extension
@@ -13,6 +12,9 @@ class Friend extends \Twig_Extension
      */
     protected $em;
 
+    /**
+     * @param EntityManager $em
+     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
@@ -28,6 +30,7 @@ class Friend extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('wapinet_user_is_friends', array($this, 'isFriends')),
             new \Twig_SimpleFunction('wapinet_user_count_friends', array($this, 'countFriends')),
+            new \Twig_SimpleFunction('wapinet_user_count_online_friends', array($this, 'countOnlineFriends')),
         );
     }
 
@@ -53,9 +56,20 @@ class Friend extends \Twig_Extension
     public function countFriends(User $user)
     {
         $friendRepository = $this->em->getRepository('WapinetUserBundle:Friend');
+
         return $friendRepository->getFriendsCount($user);
     }
 
+    /**
+     * @param User $user
+     * @return int
+     */
+    public function countOnlineFriends(User $user)
+    {
+        $friendRepository = $this->em->getRepository('WapinetUserBundle:Friend');
+
+        return $friendRepository->getFriendsCount($user, new \DateTime('now -' . User::LIFETIME));
+    }
 
     /**
      * Returns the name of the extension.

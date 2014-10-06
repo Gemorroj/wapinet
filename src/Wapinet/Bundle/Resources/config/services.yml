@@ -98,7 +98,7 @@ services:
 
     online.listener:
         class: Wapinet\Bundle\Listener\OnlineListener
-        arguments: [@service_container, @doctrine.orm.entity_manager]
+        arguments: [@doctrine.orm.entity_manager]
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
 

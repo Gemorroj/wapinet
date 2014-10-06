@@ -1,24 +1,20 @@
 <?php
 namespace Wapinet\Bundle\Listener;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\HttpKernel\HttpKernel;
 use Wapinet\Bundle\Entity\Online;
+use Wapinet\UserBundle\Entity\User;
 
 class OnlineListener
 {
-    protected $container;
     protected $em;
 
     /**
-     * @param ContainerInterface $container
      * @param EntityManager $em
      */
-    public function __construct(ContainerInterface $container, EntityManager $em)
+    public function __construct(EntityManager $em)
     {
-        $this->container = $container;
         $this->em = $em;
     }
 
@@ -33,7 +29,7 @@ class OnlineListener
         }
 
         $this->em->createQuery('DELETE FROM Wapinet\Bundle\Entity\Online o WHERE o.datetime < :lifetime')
-            ->setParameter('lifetime', new \DateTime('-' . $this->container->getParameter('wapinet_lifetime') . ' seconds'))
+            ->setParameter('lifetime', new \DateTime('now -' . User::LIFETIME))
             ->execute();
 
 

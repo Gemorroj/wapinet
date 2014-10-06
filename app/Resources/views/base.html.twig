@@ -103,9 +103,12 @@
             <div data-role="panel" id="panel">
                 <ul data-role="listview" data-inset="true" data-divider-theme="b">
                     {% if is_granted('ROLE_USER') %}
+                        {% set fos_message_nb_unread = fos_message_nb_unread() %}
+                        {% set wapinet_user_count_online_friends = wapinet_user_count_online_friends(app.user) %}
+
                         <li data-icon="calendar"><a href="{{ path('wapinet_user_events') }}">События</a></li>
-                        <li data-icon="mail"><a href="{{ path('wapinet_message_inbox') }}">Сообщения{% if fos_message_nb_unread() > 0 %} <span class="ui-li-count">+{{ fos_message_nb_unread()|wapinet_count }}</span>{% endif %}</a></li>
-                        <li data-icon="user"><a href="{{ path('wapinet_user_friends', {'username': app.user.username}) }}">Друзья <span class="ui-li-count">{{ wapinet_user_count_friends(app.user)|wapinet_count }}</span></a></li>
+                        <li data-icon="mail"><a href="{{ path('wapinet_message_inbox') }}">Сообщения{% if fos_message_nb_unread > 0 %} <span class="ui-li-count">+{{ fos_message_nb_unread|wapinet_count }}</span>{% endif %}</a></li>
+                        <li data-icon="user"><a href="{{ path('wapinet_user_friends', {'username': app.user.username}) }}">Друзья{% if wapinet_user_count_online_friends > 0 %} <span class="ui-li-count">{{ wapinet_user_count_online_friends|wapinet_count }}</span>{% endif %}</a></li>
                     {% endif %}
                     <li data-role="list-divider">Закладки</li>
                     {% for item in wapinet_panel() %}
