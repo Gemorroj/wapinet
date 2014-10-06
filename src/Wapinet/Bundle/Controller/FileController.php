@@ -765,7 +765,12 @@ class FileController extends Controller
             // creating the ACL
             $aclProvider = $this->get('security.acl.provider');
             $objectIdentity = ObjectIdentity::fromDomainObject($file);
-            $acl = $aclProvider->createAcl($objectIdentity);
+
+            try {
+                $acl = $aclProvider->findAcl($objectIdentity);
+            } catch (\Symfony\Component\Security\Acl\Exception\AclNotFoundException $e) {
+                $acl = $aclProvider->createAcl($objectIdentity);
+            }
 
             // retrieving the security identity of the currently logged-in user
             $securityIdentity = UserSecurityIdentity::fromAccount($user);
