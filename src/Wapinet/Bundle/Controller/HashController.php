@@ -4,6 +4,7 @@ namespace Wapinet\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Exception\ValidatorException;
 use Wapinet\Bundle\Form\Type\Hash\HashType;
 use Symfony\Component\Form\FormError;
 
@@ -24,11 +25,7 @@ class HashController extends Controller
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-
-                    $algorithms = \hash_algos();
-                    $algorithm = $algorithms[$data['algorithm']];
-
-                    $hash = \hash($algorithm, $data['text']);
+                    $hash = $this->getHash($data);
                 }
             }
         } catch (\Exception $e) {
@@ -39,5 +36,26 @@ class HashController extends Controller
             'form' => $form->createView(),
             'result' => $hash
         ));
+    }
+
+
+    /**
+     * @param array $data
+     * @throws ValidatorException
+     * @return string
+     */
+    protected function getHash(array $data)
+    {
+        $algorithms = \hash_algos();
+        $algorithm = $algorithms[$data['algorithm']];
+
+        if (null !== $data['text']) {
+            return \hash($algorithm, $data['text']);
+        }
+        if (null !== $data['file']) {
+            return \hash_file($algorithm, $data['file']);
+        }
+
+        throw new ValidatorException('Не заполнено ни одного поля с хэшируемыми данными');
     }
 }

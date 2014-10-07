@@ -24,7 +24,12 @@ class HashType extends AbstractType
             'preferred_choices' => array(array_search('md5', $algorithms), array_search('sha512', $algorithms), array_search('crc32', $algorithms)),
         ));
 
-        $builder->add('text', 'textarea', array('label' => 'Текст'));
+        $builder->add('text', 'textarea', array('label' => 'Текст', 'required' => false));
+
+        $builder->add('file', 'file_url', array(
+            'label' => false,
+            'required' => false,
+        ));
 
         $builder->add('submit', 'submit', array('label' => 'Хэшировать'));
     }
