@@ -47,13 +47,10 @@ div.rest-url {
 code.html-validator strong {
     color: red;
 }
-p.long-description {
+p.long-description, h2.long-description {
     white-space: pre-wrap !important;
 }
-div.long-description {
-    white-space: normal !important;
-}
-pre.long-description {
+div.long-description, pre.long-description {
     white-space: normal !important;
 }
 a.captcha-reload {
