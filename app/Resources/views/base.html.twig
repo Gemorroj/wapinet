@@ -76,9 +76,11 @@
                 (document.getElementsByTagName('head')[0]).appendChild(fos_comment_script);
             });
         {% endautoescape %}</script>
-        <link rel="stylesheet" href="{{ asset('bundles/wapinetcomment/css/comments.css') }}" type="text/css" />
         {# <script async="async" type="text/javascript" src="{{ asset('bundles/wapinetcomment/js/comments.js') }}"></script> #}
     {% endif %}
+    {# css комментариев подключаем всегда, т.к. могут отображаться как на главной файлообменника #}
+    <link rel="stylesheet" href="{{ asset('bundles/wapinetcomment/css/comments.css') }}" type="text/css" />
+
 
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/wapinet/css/core.css') }}" />
     <script type="text/javascript" src="{{ asset('bundles/wapinet/js/core.js') }}"></script>

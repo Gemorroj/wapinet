@@ -38,7 +38,7 @@
     width: 100%;
 }
 
-.fos_comment_comment_avatar {
+.fos_comment_comment_avatar, .fos_comment_comment_authorname_only {
     float: left;
     margin-right: 0.5em;
 }

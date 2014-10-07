@@ -30,11 +30,21 @@
                 <li data-role="list-divider">
                     <span>
                         <a class="bar-button ui-btn-icon-right ui-icon-comment ui-mini ui-btn-inline ui-btn" href="{{ comment.permalink }}">&#10150;</a>
-                        <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': comment.username}) }}">{{ comment.username }}</a>
+
                     </span>
-                    <span class="ui-li-count">{{ comment.createdAt|wapinet_datetime }}</span>
+                    {{ comment.createdAt|wapinet_datetime }}
                 </li>
                 <li>
+                    {% block fos_comment_comment_metas_authorline %}
+                        <span class="fos_comment_comment_authorname_only">
+                            {% if comment.username %}
+                                <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': comment.username}) }}">{{ comment.username }}</a>
+                            {% else %}
+                                <a class="no-link bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="#">{{ comment.username }}</a>
+                            {% endif %}
+                        </span>
+                    {% endblock fos_comment_comment_metas_authorline %}
+
                     <div class="long-description">
                         {{ comment.body|wapinet_bbcode_parse }}
                     </div>

@@ -43,7 +43,7 @@ class FileRepository extends EntityRepository
      * @param int $maxComments
      * @return array
      */
-    public function getComments($maxComments = 10)
+    public function getComments($maxComments = 8)
     {
         $connection = $this->getEntityManager()->getConnection();
         $q = $connection->query('
@@ -53,8 +53,8 @@ class FileRepository extends EntityRepository
             LEFT JOIN user ON user.id = comment.author_id
             WHERE comment.thread_id LIKE "file-%"
             ORDER BY comment.id DESC
-            LIMIT ' . (int)$maxComments . '
-        ');
+            LIMIT ' . (int)$maxComments
+        );
 
         $result = array();
         foreach ($q->fetchAll() as $v) {
@@ -73,6 +73,7 @@ class FileRepository extends EntityRepository
     public function countAll()
     {
         $q = $this->getEntityManager()->createQuery('SELECT COUNT(f.id) FROM Wapinet\Bundle\Entity\File f WHERE f.password IS NULL');
+
         return $q->getSingleScalarResult();
     }
 
