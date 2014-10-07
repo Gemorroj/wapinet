@@ -2,10 +2,10 @@
     <span>
         <a class="bar-button ui-btn-icon-right ui-icon-mail ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_message_thread_view', {'threadId': event.variables.message.thread.id}) }}">&#10150;</a>
     </span>
-    {{ event.subject }}
-    <span class="ui-li-count">{{ event.variables.message.createdAt|wapinet_datetime }}</span>
+    {{ event.variables.message.createdAt|wapinet_datetime }}
 </li>
 <li>
+    <h2 class="long-description">{{ event.subject }}</h2>
     <div class="long-description">
         {{ event.variables.message.body|wapinet_bbcode_parse }}
     </div>

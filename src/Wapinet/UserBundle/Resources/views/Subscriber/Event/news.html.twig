@@ -2,8 +2,7 @@
     <span>
         <a class="bar-button ui-btn-icon-right ui-icon-alert ui-mini ui-btn-inline ui-btn" href="{{ path('news_show', {'id': event.variables.news.id}) }}">&#10150;</a>
     </span>
-    {{ event.subject }}
-    <span class="ui-li-count">{{ event.variables.news.createdAt|wapinet_datetime }}</span>
+    {{ event.variables.news.createdAt|wapinet_datetime }}
 </li>
 <li>
     <h2>{{ event.variables.news.subject }}</h2>
