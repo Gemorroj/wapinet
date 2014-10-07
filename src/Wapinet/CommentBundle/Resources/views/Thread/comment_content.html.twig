@@ -57,28 +57,26 @@
             {% if comment is fos_comment_in_state(constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_DELETED')) %}
                 {% trans from 'FOSCommentBundle' %}fos_comment_comment_deleted{% endtrans %}
             {% else %}
-                <div class="fos_comment_comment_avatar_author">
-                    <span class="fos_comment_comment_avatar">
-                        {% if comment.author and comment.author.hasAvatar %}
-                            <img src="{{ vich_uploader_asset(comment.author, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ comment.author }}" class="image-preview" />
+                <span class="fos_comment_comment_avatar">
+                    {% if comment.author and comment.author.hasAvatar %}
+                        <img src="{{ vich_uploader_asset(comment.author, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ comment.author }}" class="image-preview" />
+                    {% else %}
+                        <img src="{{ asset('static/noavatar.png') }}" alt="{{ comment.author }}" class="image-preview" />
+                    {% endif %}
+                    {% if comment.author and comment.author.isOnline %}
+                        <span class="avatar-online"></span>
+                    {% endif %}
+                </span>
+
+                {% block fos_comment_comment_metas_authorline %}
+                    <span class="fos_comment_comment_authorname">
+                        {% if comment.author %}
+                            <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': comment.authorName}) }}">{{ comment.authorName }}</a>
                         {% else %}
-                            <img src="{{ asset('static/noavatar.png') }}" alt="{{ comment.author }}" class="image-preview" />
-                        {% endif %}
-                        {% if comment.author and comment.author.isOnline %}
-                            <span class="avatar-online"></span>
+                            <a class="no-link bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="#">{{ comment.authorName }}</a>
                         {% endif %}
                     </span>
-
-                    {% block fos_comment_comment_metas_authorline %}
-                        <span class="fos_comment_comment_authorname">
-                            {% if comment.author %}
-                                <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': comment.authorName}) }}">{{ comment.authorName }}</a>
-                            {% else %}
-                                <a class="no-link bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="#">{{ comment.authorName }}</a>
-                            {% endif %}
-                        </span>
-                    {% endblock fos_comment_comment_metas_authorline %}
-                </div>
+                {% endblock fos_comment_comment_metas_authorline %}
 
                 <div class="fos_comment_comment_text long-description">
                     {%- if comment is fos_comment_raw -%}

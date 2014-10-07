@@ -38,20 +38,12 @@
     width: 100%;
 }
 
-.fos_comment_comment_avatar, .fos_comment_comment_authorname {
+.fos_comment_comment_avatar {
     float: left;
+    margin-right: 0.5em;
 }
-.fos_comment_comment_avatar_author {
-    display: inline-block;
-}
-.fos_comment_comment_avatar_author span.avatar-online {
-    margin-left: 28px;
-    margin-top: -16px;
-    z-index: 1;
-}
-.fos_comment_comment_avatar > img {
-    height: 35px !important;
-    width: auto !important;
+.fos_comment_comment_authorname {
+    margin-left: -0.3em;
 }
 .fos_comment_comment_text_online {
     float: left;
