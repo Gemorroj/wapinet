@@ -41,7 +41,7 @@ class Bbcode extends \Twig_Extension
     {
         // хост нужен для email
         $host = $this->container->get('request')->getHttpHost();
-        $xbbcode = new Xbbcode($host.'/bundles/wapinet/xbbcode');
+        $xbbcode = new Xbbcode('//'.$host.'/bundles/wapinet/xbbcode');
         $xbbcode->setTagHandler('spoiler', WapinetSpoiler::class);
         $xbbcode->parse($text);
 
