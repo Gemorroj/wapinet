@@ -78,7 +78,7 @@ class FileAdmin extends Admin
     /**
      * @param File $file
      */
-    public function postRemove($file)
+    public function preRemove($file)
     {
         $this->fileHelper->cleanupFile($file);
     }
