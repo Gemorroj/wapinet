@@ -4,6 +4,7 @@ namespace Wapinet\Bundle\Admin;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
@@ -80,7 +81,30 @@ class FileAdmin extends Admin
      */
     public function preRemove($file)
     {
+        if (!$file instanceof File) {
+            throw new \InvalidArgumentException('Некорректный тип данных');
+        }
+
         $this->fileHelper->cleanupFile($file);
+    }
+
+    /**
+     * Работает только для действий со множеством элементов
+     * {@inheritdoc}
+     * https://github.com/sonata-project/SonataAdminBundle/pull/1318
+     */
+    public function preBatchAction($actionName, ProxyQueryInterface $query, array & $idx, $allElements)
+    {
+        if (true === $allElements) {
+            throw new \InvalidArgumentException('Удаление всех файлов не поддерживается ');
+        }
+
+        if ('delete' === $actionName) {
+            foreach ($idx as $id) {
+                $file = $this->getObject($id);
+                $this->preRemove($file);
+            }
+        }
     }
 
     /**
