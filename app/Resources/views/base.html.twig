@@ -139,6 +139,7 @@
         </div>
 
         <div data-role="content">
+            {% block logo %}<div class="wapinet-logo"><img src="{{ asset('/bundles/wapinet/images/georg_lent_200.png') }}" alt=""/></div>{% endblock %}
             {% block breadcrumbs %}{% endblock %}
             {% block navbar %}{% endblock %}
             <fieldset>{% block content %}{% endblock %}</fieldset>
