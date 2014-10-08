@@ -34,10 +34,12 @@ class Breadcrumbs extends \Twig_Extension
      */
     public function getBreadcrumbs(array $options = array())
     {
-        $out = '';
+        if (!$options) {
+            return  '';
+        }
 
-        $out .= '<div data-role="controlgroup" data-mini="true" data-type="horizontal" class="breadcrumbs ui-field-contain ui-btn-left">';
-        $out .= '<a class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all" href="' . $this->container->get('router')->generate('index') . '">Главная</a>';
+        $out = '<div data-role="controlgroup" data-type="horizontal" class="breadcrumbs ui-mini ui-field-contain ui-btn-left">';
+        //$out .= '<a class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all" href="' . $this->container->get('router')->generate('index') . '">Главная</a>';
 
         ksort($options, SORT_NUMERIC);
         foreach ($options as $key => $value) {
