@@ -3,30 +3,37 @@
 {% block title %}{{ thread.subject }}{% endblock %}
 
 {% block fos_message_content %}
-    <ul data-role="listview" data-inset="true">
-    {% for message in pagerfanta %}
-        <li data-role="list-divider">
-            <span>
-                <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': message.sender.username}) }}">{{ message.sender.username }}</a>
-            </span>
-            <span class="ui-li-count">{{ message.createdAt|wapinet_datetime  }}</span>
-        </li>
-        <li data-icon="false">
-            {% if message.sender.hasAvatar %}
-                <img src="{{ vich_uploader_asset(message.sender, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ message.sender }}" class="image-preview" />
-            {% else %}
-                <img src="{{ asset('static/noavatar.png') }}" alt="{{ message.sender }}" class="image-preview" />
-            {% endif %}
-            {% if message.sender.isOnline %}
-                <span class="avatar-online avatar-online-list"></span>
-            {% endif %}
-            <div>
-                {{ message.body|wapinet_bbcode_parse }}
-            </div>
-        </li>
-    {% endfor %}
-    </ul>
+    <div class="fos_comment_thread">
+        <ul data-role="listview" data-inset="true">
+        {% for message in pagerfanta %}
+            <li data-role="list-divider">
+                {{ message.createdAt|wapinet_datetime  }}
+            </li>
+            <li data-icon="false">
+                <span class="fos_comment_comment_avatar">
+                    {% if message.sender.hasAvatar %}
+                        <img src="{{ vich_uploader_asset(message.sender, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ message.sender }}" class="image-preview" />
+                    {% else %}
+                        <img src="{{ asset('static/noavatar.png') }}" alt="{{ message.sender }}" class="image-preview" />
+                    {% endif %}
+                    {% if message.sender.isOnline %}
+                        <span class="avatar-online"></span>
+                    {% endif %}
+                </span>
 
+                {% block fos_comment_comment_metas_authorline %}
+                    <span class="fos_comment_comment_authorname">
+                        <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': message.sender.username}) }}">{{ message.sender.username }}</a>
+                    </span>
+                {% endblock fos_comment_comment_metas_authorline %}
+
+                <div class="long-description">
+                    {{ message.body|wapinet_bbcode_parse }}
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
     <div class="pagerfanta">
         {{ pagerfanta(pagerfanta) }}
     </div>

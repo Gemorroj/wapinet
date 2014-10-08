@@ -23,29 +23,39 @@
 {% endblock %}
 
 {% block content %}
-
+<div class="fos_comment_thread">
     <ul data-role="listview" data-inset="true">
-        <li class="ui-li-has-thumb gist-header">
-            {% if gist.user.hasAvatar %}
-                <img onclick="window.location.assign('{{ path('wapinet_user_profile', {'username': gist.user.username}) }}'); event.stopPropagation();" src="{{ vich_uploader_asset(gist.user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ gist.user }}" class="image-preview" />
-            {% else %}
-                <img onclick="window.location.assign('{{ path('wapinet_user_profile', {'username': gist.user.username}) }}');" src="{{ asset('static/noavatar.png') }}" alt="{{ gist.user }}" title="{{ gist.user }}" class="image-preview" />
-            {% endif %}
-            {% if gist.user.isOnline %}
-                <span class="avatar-online avatar-online-list"></span>
-            {% endif %}
-            <h2>{{ gist.subject }}</h2>
+        <li data-role="list-divider">
+            {{ gist.subject }}
+        </li>
+        <li data-icon="false">
+            <span class="fos_comment_comment_avatar">
+                {% if gist.user.hasAvatar %}
+                    <img src="{{ vich_uploader_asset(gist.user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ gist.user }}" class="image-preview" />
+                {% else %}
+                    <img src="{{ asset('static/noavatar.png') }}" alt="{{ gist.user }}" class="image-preview" />
+                {% endif %}
+                {% if gist.user.isOnline %}
+                    <span class="avatar-online"></span>
+                {% endif %}
+            </span>
+            {% block fos_comment_comment_metas_authorline %}
+                <span class="fos_comment_comment_authorname">
+                    <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': gist.user.username}) }}">{{ gist.user.username }}</a>
+                </span>
+            {% endblock fos_comment_comment_metas_authorline %}
+
+            <p>{{ gist.createdAt|wapinet_datetime  }}</p>
             {% if gist.updatedAt is not null %}
                 <p>Обновлено {{ gist.updatedAt|wapinet_datetime }}</p>
             {% endif %}
-            <span class="ui-li-count">{{ gist.createdAt|wapinet_datetime  }}</span>
-        </li>
-        <li data-icon="false">
+
             <div class="long-description">
                 {{ gist.body|wapinet_bbcode_parse }}
             </div>
         </li>
     </ul>
+</div>
 
     {% if app.user and (is_granted('EDIT', gist) or is_granted('DELETE', gist)) %}
         <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">

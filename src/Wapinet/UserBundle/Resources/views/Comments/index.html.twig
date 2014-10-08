@@ -15,12 +15,12 @@
             <li data-role="list-divider">
                 <span>
                     <a class="bar-button ui-btn-icon-right ui-icon-comment ui-mini ui-btn-inline ui-btn" href="{{ comment.thread.permalink }}">&#10150;</a>
-                    <a href="#" class="no-link bar-button ui-btn-icon-left ui-icon-heart ui-mini ui-btn-inline ui-btn">{{ comment.score }}</a>
+                    {# <a href="#" class="no-link bar-button ui-btn-icon-left ui-icon-heart ui-mini ui-btn-inline ui-btn">{{ comment.score }}</a> #}
                 </span>
-                <span class="ui-li-count">{{ comment.createdAt|wapinet_datetime  }}</span>
+                {{ comment.createdAt|wapinet_datetime  }}
             </li>
             <li>
-                <div>
+                <div class="long-description">
                     {{ comment.body|wapinet_bbcode_parse }}
                 </div>
             </li>

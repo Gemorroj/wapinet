@@ -2,9 +2,9 @@
     {% for item in pagerfanta %}
         <li class="ui-li-has-thumb gist-header">
             {% if item.user.hasAvatar %}
-                <img onclick="window.location.assign('{{ path('wapinet_user_profile', {'username': item.user.username}) }}'); event.stopPropagation();" src="{{ vich_uploader_asset(item.user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ item.user }}" title="{{ item.user }}" class="image-preview" />
+                <img src="{{ vich_uploader_asset(item.user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ item.user }}" title="{{ item.user }}" class="image-preview" />
             {% else %}
-                <img onclick="window.location.assign('{{ path('wapinet_user_profile', {'username': item.user.username}) }}');" src="{{ asset('static/noavatar.png') }}" alt="{{ item.user }}" title="{{ item.user }}" class="image-preview" />
+                <img src="{{ asset('static/noavatar.png') }}" alt="{{ item.user }}" title="{{ item.user }}" class="image-preview" />
             {% endif %}
             {% if item.user.isOnline %}
                 <span class="avatar-online avatar-online-list-gist"></span>

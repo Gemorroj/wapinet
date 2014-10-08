@@ -49,14 +49,14 @@
     float: left;
 }
 
-#fos_comment_thread {
+.fos_comment_thread {
     margin-left: -0.8em;
     margin-right: -0.8em;
 }
-#fos_comment_thread .ui-listview > .ui-li-static {
+.fos_comment_thread .ui-listview > .ui-li-static {
     padding: 0.2em;
 }
-#fos_comment_thread .ui-collapsible-content {
+.fos_comment_thread .ui-collapsible-content {
     padding-left: 0.2em;
     padding-right: 0.2em;
 }

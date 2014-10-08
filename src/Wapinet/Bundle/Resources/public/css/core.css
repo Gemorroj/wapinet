@@ -14,10 +14,12 @@ span.avatar-online {
 span.avatar-online-list {
     margin-left: -33px;
     margin-top: 56px;
+    z-index: 1;
 }
 span.avatar-online-list-gist {
     margin-left: 68px;
     margin-top: 68px;
+    z-index: 2;
 }
 p.footer {
     font-size: 0.8em;
@@ -86,22 +88,8 @@ a.bar-button {
 a.no-link {
     cursor: default;
 }
-li.directory a:first-child, li.gist-header {
-    background: 			#e9e9e9 /*{a-bar-background-color}*/ !important;
-    border-color:	 		#ddd /*{a-bar-border}*/ !important;
-    color: 					#333 /*{a-bar-color}*/ !important;
-    text-shadow: 0 /*{a-bar-shadow-x}*/ 1px /*{a-bar-shadow-y}*/ 0 /*{a-bar-shadow-radius}*/ 	#eee /*{a-bar-shadow-color}*/ !important;
-}
-li.gist-header {
-    padding-bottom: 0 !important;
-    min-height: 4.4em !important;
-}
-li.gist-header img {
-    cursor: pointer;
-}
-li.gist-header a {
-    margin-left: 80px !important;
-    padding-left: 1em !important;
+.gist-header img {
+    z-index: 1;
 }
 ul.file-comments {
     max-height: 18em;
