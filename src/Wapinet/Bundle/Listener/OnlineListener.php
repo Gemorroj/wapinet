@@ -53,6 +53,11 @@ class OnlineListener
             $this->em->persist($online);
         }
 
-        $this->em->flush();
+        try {
+            $this->em->flush();
+        } catch (\Exception $e) {
+            // могут быть конкурентные запросы, которые запишут в онлайн данные на уникальном индексе
+            // игнорируем, т.к. маловажно
+        }
     }
 }

@@ -48,7 +48,7 @@ mobile_code_panasonic:
 
 mobile_code_pantech:
     pattern: /pantech
-    defaults: { _controller: WapinetBundle:MobileCode:pantach }
+    defaults: { _controller: WapinetBundle:MobileCode:pantech }
 
 mobile_code_philips:
     pattern: /philips
