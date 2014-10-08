@@ -79,7 +79,7 @@ swiftmailer:
 
 
 sonata_admin:
-    title:      wapinet.ru
+    title:      "%wapinet_title%"
     templates:
         layout:  ::admin.html.twig
 
