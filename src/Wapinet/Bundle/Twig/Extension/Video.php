@@ -50,9 +50,6 @@ class Video extends \Twig_Extension
             try {
                 $media = $ffmpeg->open($this->getWebDir() . $path);
 
-                //$this->addLibMp3LameFilter($media);
-
-                // 'libvo_aacenc', 'libfaac', 'libmp3lame'
                 $format = new X264();
                 $this->setOptions($format, $media);
 
@@ -72,26 +69,6 @@ class Video extends \Twig_Extension
 
 
     /**
-     * libmp3lame не поддерживает sample_rate ниже 16000
-     * firefox не проигрывает файлы с sample_rate ниже 32000
-     *
-     * @param FFmpegAudio $media
-     * @return Video
-     */
-    protected function addLibMp3LameFilter(FFmpegAudio $media)
-    {
-        $stream = $media->getStreams()->audios()->first();
-        if (null !== $stream) {
-            if ($stream->get('sample_rate') < 32000) {
-                $media->addFilter(new AudioResamplableFilter(32000));
-            }
-        }
-
-        return $this;
-    }
-
-
-    /**
      * @param DefaultVideo $format
      * @param FFmpegVideo $media
      * @return Video
@@ -101,14 +78,27 @@ class Video extends \Twig_Extension
         $streams = $media->getStreams();
 
         $videoStream = $streams->videos()->first();
-        //$audioStream = $streams->audios()->first();
 
         if (null !== $videoStream) {
-            $format->setKiloBitrate($videoStream->get('bit_rate'));
+            // https://trac.ffmpeg.org/wiki/Encode/MPEG-4
+            // bitrate = file size / duration
+
+            $filesize = @filesize($media->getPathfile());
+            $duration = $videoStream->has('duration') ? $videoStream->get('duration') : 0;
+            if ($filesize && $duration) {
+                $bitrate = floor($filesize / $duration);
+
+                $audioStream = $streams->audios()->first();
+                if (null !== $audioStream) {
+                    $audioBitrate = $audioStream->has('bit_rate') ? $audioStream->get('bit_rate') : 8;
+                    $bitrate -= $audioBitrate;
+                }
+
+                if ($bitrate <= $format->getKiloBitrate()) {
+                    $format->setKiloBitrate($bitrate);
+                }
+            }
         }
-        //if (null !== $audioStream) {
-        //    $format->setAudioKiloBitrate($audioStream->get('bit_rate'));
-        //}
 
         return $this;
     }
