@@ -52,9 +52,13 @@
 {% endif %}
 
 {% if app.user.id == user.id %}
-    <fieldset data-role="controlgroup" data-type="horizontal">
-        <a data-role="button" data-icon="edit" href="{{ path('fos_user_profile_edit') }}">Редактировать профиль</a>
-        <a data-role="button" data-icon="edit" href="{{ path('wapinet_user_subscriber_edit') }}">Редактировать подписки</a>
-        <a data-role="button" data-icon="edit" href="{{ path('wapinet_user_panel_edit') }}">Редактировать меню</a>
-    </fieldset>
+    <a href="#popupMenu" data-rel="popup" data-transition="slideup" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-gear ui-btn-icon-left ui-btn-a">Редактировать...</a>
+    <div data-role="popup" id="popupMenu" data-theme="b">
+        <ul data-role="listview" data-inset="true">
+            <li data-role="list-divider">Что редактируем?</li>
+            <li><a href="{{ path('fos_user_profile_edit') }}">Профиль</a></li>
+            <li><a href="{{ path('wapinet_user_subscriber_edit') }}">Подписки</a></li>
+            <li><a href="{{ path('wapinet_user_panel_edit') }}">Меню</a></li>
+        </ul>
+    </div>
 {% endif %}
