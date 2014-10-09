@@ -1,6 +1,6 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
-{% block title %}Профиль - {{ user.username }}{% endblock %}
+{% block title %}{{ user.username }}{% endblock %}
 {% block breadcrumbs %}
     {{ wapinet_breadcrumbs({
     1: {'uri': path('wapinet_users'), 'title': 'Пользователи'}
