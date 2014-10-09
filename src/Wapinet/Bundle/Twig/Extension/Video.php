@@ -45,7 +45,7 @@ class Video extends \Twig_Extension
     {
         $mp4File = $path . '.mp4';
 
-        if (false === file_exists($this->getWebDir() . $mp4File)) {
+        if (false === \file_exists($this->getWebDir() . $mp4File)) {
             $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
             try {
                 $media = $ffmpeg->open($this->getWebDir() . $path);
@@ -53,10 +53,9 @@ class Video extends \Twig_Extension
                 $format = new X264();
                 $this->setOptions($format, $media);
 
-
                 $media->save($format, $this->getWebDir() . $mp4File);
 
-                if (false === file_exists($this->getWebDir() . $mp4File)) {
+                if (false === \file_exists($this->getWebDir() . $mp4File)) {
                     throw new \RuntimeException('Не удалось создать MP4 файл');
                 }
             } catch (\Exception $e) {
@@ -78,26 +77,35 @@ class Video extends \Twig_Extension
         $streams = $media->getStreams();
 
         $videoStream = $streams->videos()->first();
+        $audioStream = $streams->audios()->first();
 
         if (null !== $videoStream) {
             // https://trac.ffmpeg.org/wiki/Encode/MPEG-4
             // bitrate = file size / duration
 
-            $filesize = @filesize($media->getPathfile());
-            $filesize *= 1.5;
+            $filesize = @\filesize($media->getPathfile());
+            $filesize *= 3.3; // увеличиваем предположительный размер mp4 файла по сравнению с 3gp
+            $filesize /= 1024; // переводим байты в килобайты
             $duration = $videoStream->has('duration') ? $videoStream->get('duration') : 0;
             if ($filesize && $duration) {
-                $bitrate = floor($filesize / $duration);
+                $bitrate = $filesize / $duration;
 
-                $audioStream = $streams->audios()->first();
                 if (null !== $audioStream) {
-                    $audioBitrate = $audioStream->has('bit_rate') ? $audioStream->get('bit_rate') : 8;
+                    $audioBitrate = $audioStream->has('bit_rate') ? $audioStream->get('bit_rate') : 8000;
+                    $audioBitrate /= 1000;
                     $bitrate -= $audioBitrate;
                 }
+                $bitrate = \floor($bitrate);
 
                 if ($bitrate < $format->getKiloBitrate()) {
                     $format->setKiloBitrate($bitrate);
                 }
+            }
+        }
+
+        if (null !== $audioStream && 'libmp3lame' === $format->getAudioCodec()) {
+            if ($audioStream->get('sample_rate') < 32000) {
+                $media->addFilter(new AudioResamplableFilter(32000));
             }
         }
 
@@ -113,12 +121,12 @@ class Video extends \Twig_Extension
     {
         $webmFile = $path . '.webm';
 
-        if (false === file_exists($this->getWebDir() . $webmFile)) {
+        if (false === \file_exists($this->getWebDir() . $webmFile)) {
             $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
             try {
                 $media = $ffmpeg->open($this->getWebDir() . $path);
                 $media->save(new WebM(), $this->getWebDir() . $webmFile);
-                if (false === file_exists($this->getWebDir() . $webmFile)) {
+                if (false === \file_exists($this->getWebDir() . $webmFile)) {
                     throw new \RuntimeException('Не удалось создать WEBM файл');
                 }
             } catch (\Exception $e) {
@@ -137,7 +145,7 @@ class Video extends \Twig_Extension
     {
         $screenshot = $path . '.jpg';
 
-        if (false === file_exists($this->getWebDir() . $screenshot)) {
+        if (false === \file_exists($this->getWebDir() . $screenshot)) {
             $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
 
             try {
@@ -146,7 +154,7 @@ class Video extends \Twig_Extension
                     $second = $this->getScreenshotSecond($media);
                     $frame = $media->frame(TimeCode::fromSeconds($second));
                     $frame->save($this->getWebDir() . $screenshot);
-                    if (false === file_exists($this->getWebDir() . $screenshot)) {
+                    if (false === \file_exists($this->getWebDir() . $screenshot)) {
                         throw new \RuntimeException('Не удалось создать скриншот');
                     }
                 } else {
@@ -171,7 +179,7 @@ class Video extends \Twig_Extension
         $duration = $media->getStreams()->videos()->first()->get('duration');
 
         if ($duration && $duration < $second) {
-            $second = ceil($duration / 2);
+            $second = \ceil($duration / 2);
         }
 
         return (int)$second;
