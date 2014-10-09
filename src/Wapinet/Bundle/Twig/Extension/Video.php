@@ -84,6 +84,7 @@ class Video extends \Twig_Extension
             // bitrate = file size / duration
 
             $filesize = @filesize($media->getPathfile());
+            $filesize *= 1.5;
             $duration = $videoStream->has('duration') ? $videoStream->get('duration') : 0;
             if ($filesize && $duration) {
                 $bitrate = floor($filesize / $duration);
@@ -94,7 +95,7 @@ class Video extends \Twig_Extension
                     $bitrate -= $audioBitrate;
                 }
 
-                if ($bitrate <= $format->getKiloBitrate()) {
+                if ($bitrate < $format->getKiloBitrate()) {
                     $format->setKiloBitrate($bitrate);
                 }
             }
