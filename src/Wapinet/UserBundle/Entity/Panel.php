@@ -7,6 +7,7 @@ namespace Wapinet\UserBundle\Entity;
 class Panel extends \ArrayObject
 {
     const ROUTE_FORUM = 'forum_index';
+    const ROUTE_GUESTBOOK = 'guestbook_index';
     const ROUTE_GIST = 'gist_index';
     const ROUTE_FILE = 'file_index';
     const ROUTE_ARCHIVER = 'archiver_index';
@@ -17,6 +18,7 @@ class Panel extends \ArrayObject
 
     protected $id;
     protected $forum = true;
+    protected $guestbook = false;
     protected $gist = true;
     protected $file = true;
     protected $archiver = false;
@@ -66,6 +68,11 @@ class Panel extends \ArrayObject
                 'route' => self::ROUTE_FORUM,
                 'name' => 'Форум',
                 'enabled' => $this->getForum(),
+            ),
+            self::ROUTE_GUESTBOOK => array(
+                'route' => self::ROUTE_GUESTBOOK,
+                'name' => 'Гостевая',
+                'enabled' => $this->getGuestbook(),
             ),
             self::ROUTE_GIST => array(
                 'route' => self::ROUTE_GIST,
@@ -122,6 +129,25 @@ class Panel extends \ArrayObject
     public function getForum()
     {
         return $this->forum;
+    }
+
+    /**
+     * @param boolean $guestbook
+     * @return Panel
+     */
+    public function setGuestbook($guestbook)
+    {
+        $this->guestbook = (bool)$guestbook;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getGuestbook()
+    {
+        return $this->guestbook;
     }
 
     /**

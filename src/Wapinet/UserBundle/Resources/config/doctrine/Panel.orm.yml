@@ -10,6 +10,9 @@ Wapinet\UserBundle\Entity\Panel:
         forum:
             type: boolean
             nullable: false
+        guestbook:
+            type: boolean
+            nullable: false
         gist:
             type: boolean
             nullable: false

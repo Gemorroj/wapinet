@@ -19,6 +19,7 @@ class PanelType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder->add('forum', 'checkbox', array('required' => false, 'label' => 'Форум'));
+        $builder->add('guestbook', 'checkbox', array('required' => false, 'label' => 'Гостевая'));
         $builder->add('gist', 'checkbox', array('required' => false, 'label' => 'Блоги'));
         $builder->add('file', 'checkbox', array('required' => false, 'label' => 'Файлообменник'));
         $builder->add('archiver', 'checkbox', array('required' => false, 'label' => 'Архиватор'));
