@@ -41,6 +41,7 @@ class DefaultController extends Controller
             'log',
             '-l ' . $this->container->getParameter('wapinet_hg_log')
         ));
+        $processBuilder->setEnv('LC_ALL', 'ru_RU.utf8');
         $output = $processBuilder->getProcess()->mustRun()->getOutput();
         //$output = iconv('cp1251', 'utf-8', $output); // windows only
 
