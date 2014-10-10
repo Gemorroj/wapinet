@@ -35,6 +35,7 @@ twig:
     globals:
         wapinet_title: "%wapinet_title%"
         wapinet_contact_email: "%wapinet_contact_email%"
+        wapinet_hg_log: "%wapinet_hg_log%"
 
 # Assetic Configuration
 assetic:

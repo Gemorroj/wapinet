@@ -6,6 +6,10 @@ about:
     path:  /about
     defaults: { _controller: WapinetBundle:Default:about }
 
+log:
+    path:  /log
+    defaults: { _controller: WapinetBundle:Default:log }
+
 online:
     path:  /online
     defaults: { _controller: WapinetBundle:Default:online }
