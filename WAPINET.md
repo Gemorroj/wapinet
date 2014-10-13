@@ -41,5 +41,4 @@ http://www.alduccino.com/installing-ffmppeg-flvtool2-and-yamdi-on-centos-6
 
 TODO:
 В гостевой для анонимусов сделать отображение страны по geoip2
-Сделать лог изменений сайта (hg log -l 10)
-
+Сделать возможность в переводчике и обфускаторе загружать файлы
