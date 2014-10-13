@@ -7,10 +7,21 @@
     })}}
 {% endblock %}
 
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            FileLoader.saveAsHandler('#downloadTranslation', '#textTranslation', 'translation.txt');
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
     {{ form_start(form, {'action': path('translate_index'), 'method': 'POST'}) }}
         {% if result is not null %}
-            <label>Перевод <textarea>{{ result }}</textarea></label>
+            <label>
+                Перевод <a href="#" id="downloadTranslation" class="ui-btn-inline ui-btn ui-icon-arrow-d ui-btn-icon-notext ui-corner-all">Скачать</a>
+                <textarea id="textTranslation">{{ result }}</textarea>
+            </label>
         {% endif %}
 
         {{ form_widget(form) }}

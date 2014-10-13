@@ -7,11 +7,21 @@
     })}}
 {% endblock %}
 
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            FileLoader.saveAsHandler('#downloadObfuscation', '#textObfuscation', 'obfuscation.txt');
+        });
+    </script>
+{% endblock %}
 
 {% block content %}
     {{ form_start(form, {'action': path('php_obfuscator_index'), 'method': 'POST'}) }}
     {% if result is not null %}
-        <label>Результат <textarea>{{ result }}</textarea></label>
+        <label>
+            Результат <a href="#" id="downloadObfuscation" class="ui-btn-inline ui-btn ui-icon-arrow-d ui-btn-icon-notext ui-corner-all">Скачать</a>
+            <textarea id="textObfuscation">{{ result }}</textarea>
+        </label>
     {% endif %}
 
     {{ form_widget(form) }}
