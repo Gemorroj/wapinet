@@ -107,9 +107,33 @@ var Helper = {
     captchaReload: function (path, id) {
         var img = document.getElementById(id);
         img.src = path + '?n=' + (new Date()).getTime();
+    },
+    escape: function (str) {
+        return str.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 };
 
+var ImagePreview = {
+    loadComments: function () {
+        // превью картинок в комментариях и гостевой
+        $("div.long-description img.bb").each(function (i) {
+            var $image = $(this);
+
+            var src = Helper.escape($image.attr('src') || '');
+            var alt = Helper.escape($image.attr('alt') || '');
+
+            $image.replaceWith(
+                '<a href="#popup-' + i + '" data-rel="popup" data-position-to="window" data-transition="fade">' +
+                '<img src="' + $image.attr('src').replace() + '" alt="" class="image-preview" />' +
+                '</a>' +
+                '<div data-role="popup" id="popup-' + i + '" data-overlay-theme="b" data-theme="b" data-corners="false">' +
+                '<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Закрыть</a>' +
+                '<img src="' + $image.attr('src') + '" alt="' + $image.attr('alt') + '" style="width: 100%;" />' +
+                '</div>'
+            );
+        });
+    }
+};
 
 $(document).on("pagebeforeshow", "#page", function () {
     $.mobile.ajaxEnabled = false;
@@ -177,12 +201,16 @@ $(document).on("pagebeforeshow", "#page", function () {
         var $this = $(this);
         Helper.captchaReload($this.data('path'), $this.data('id'));
     });
+
+    ImagePreview.loadComments();
+    $("div.fos_comment_thread").enhanceWithin();
 });
 
 $(document).ajaxStart(function () {
     $.mobile.loading('show');
 }).ajaxSuccess(function () {
     $.mobile.loading('hide');
+    ImagePreview.loadComments();
     $("#page").enhanceWithin();
 }).ajaxError(function () {
     $.mobile.loading('hide');
