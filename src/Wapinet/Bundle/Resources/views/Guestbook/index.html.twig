@@ -5,6 +5,29 @@
     {{wapinet_breadcrumbs()}}
 {% endblock %}
 
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("div.long-description img.bb").each(function (i) {
+                var $image = $(this);
+
+                var data =
+                    '<a href="#popup-' + i + '" data-rel="popup" data-position-to="window" data-transition="fade">' +
+                        '<img src="' + $image.attr('src') + '" alt="" class="image-preview" />' +
+                    '</a>' +
+                    '<div data-role="popup" id="popup-' + i + '" data-overlay-theme="b" data-theme="b" data-corners="false">' +
+                        '<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Закрыть</a>' +
+                        '<img src="' + $image.attr('src') + '" alt="' + $image.attr('alt') + '" style="width: 100%;" />' +
+                    '</div>';
+
+                $image.replaceWith(data);
+            });
+
+            $("div.fos_comment_thread").enhanceWithin();
+        }, false);
+    </script>
+{% endblock %}
+
 {% block content %}
     {% for flashMessage in app.session.flashbag.get('notice') %}
         <div>
