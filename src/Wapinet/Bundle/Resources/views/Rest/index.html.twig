@@ -7,6 +7,16 @@
     })}}
 {% endblock %}
 
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            FileLoader.saveAsHandler('#downloadHeaders', '#textHeaders', 'headers-' + window.location.host + '.txt');
+            FileLoader.saveAsHandler('#downloadBody', '#textBody', 'body-' + window.location.host + '.txt');
+        });
+    </script>
+{% endblock %}
+
+
 {% block content %}
     {{ form_start(form, {'action': path('rest_index'), 'method': 'POST'}) }}
     {{ form_errors(form) }}
@@ -14,8 +24,18 @@
         <fieldset>
             <label for="rest-result">Результат</label>
             <div class="ui-grid-solo" id="rest-result">
-                <div class="ui-block-a"><label>Заголовки <textarea>{{ result.headers }}</textarea></label></div>
-                <div class="ui-block-a"><label>Тело <textarea>{{ result.content }}</textarea></label></div>
+                <div class="ui-block-a">
+                    <label>
+                        Заголовки <a href="#" id="downloadHeaders" class="ui-btn-inline ui-btn ui-icon-arrow-d ui-btn-icon-notext ui-corner-all">Скачать</a>
+                        <textarea id="textHeaders">{{ result.headers }}</textarea>
+                    </label>
+                </div>
+                <div class="ui-block-a">
+                    <label>
+                        Тело <a href="#" id="downloadBody" class="ui-btn-inline ui-btn ui-icon-arrow-d ui-btn-icon-notext ui-corner-all">Скачать</a>
+                        <textarea id="textBody">{{ result.content }}</textarea>
+                    </label>
+                </div>
             </div>
         </fieldset>
     {% endif %}

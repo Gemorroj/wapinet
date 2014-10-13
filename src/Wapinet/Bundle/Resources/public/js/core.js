@@ -79,6 +79,18 @@ var FileLoader = {
         xhr.send(formData);
 
         return false;
+    },
+    saveAsHandler: function (link, text, fileName) {
+        var $link = $(link);
+        $link.hide();
+        if (Blob) {
+            $link.show();
+            $link.click(function () {
+                var blob = new Blob([$(text).val()], { type: "text/plain;charset=utf-8" });
+                // не работает в опера 12. зависимость от Blob.js
+                saveAs(blob, fileName || "file.txt");
+            });
+        }
     }
 };
 var Helper = {
