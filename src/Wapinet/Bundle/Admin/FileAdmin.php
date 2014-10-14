@@ -25,6 +25,9 @@ class FileAdmin extends Admin
         '_sort_by' => 'id',
     );
 
+    /**
+     * @param FileHelper $fileHelper
+     */
     public function setFileHelper(FileHelper $fileHelper)
     {
         $this->fileHelper = $fileHelper;

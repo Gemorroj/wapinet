@@ -189,6 +189,9 @@ class GistController extends Controller
             throw new AccessDeniedException();
         }
 
+        // комментарии
+        $this->get('wapinet_comment.helper')->removeThread('gist-' . $gist->getId());
+
         // БД
         $em = $this->getDoctrine()->getManager();
         $em->remove($gist);

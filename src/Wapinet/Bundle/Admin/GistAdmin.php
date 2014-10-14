@@ -4,9 +4,12 @@ namespace Wapinet\Bundle\Admin;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Wapinet\Bundle\Entity\Gist;
+use Wapinet\CommentBundle\Helper\Manager;
 
 class GistAdmin extends Admin
 {
@@ -16,6 +19,10 @@ class GistAdmin extends Admin
         '_sort_order' => 'DESC',
         '_sort_by' => 'id',
     );
+    /**
+     * @var Manager
+     */
+    protected $commentHelper;
 
     /**
      * {@inheritdoc}
@@ -24,6 +31,48 @@ class GistAdmin extends Admin
     {
         $collection->remove('create');
     }
+
+
+    /**
+     * @param Manager $commentHelper
+     */
+    public function setCommentHelper(Manager $commentHelper)
+    {
+        $this->commentHelper = $commentHelper;
+    }
+
+
+    /**
+     * @param Gist $gist
+     */
+    public function preRemove($gist)
+    {
+        if (!$gist instanceof Gist) {
+            throw new \InvalidArgumentException('Некорректный тип данных');
+        }
+
+        $this->commentHelper->removeThread('gist-' . $gist->getId());
+    }
+
+    /**
+     * Работает только для действий со множеством элементов
+     * {@inheritdoc}
+     * https://github.com/sonata-project/SonataAdminBundle/pull/1318
+     */
+    public function preBatchAction($actionName, ProxyQueryInterface $query, array & $idx, $allElements)
+    {
+        if (true === $allElements) {
+            throw new \InvalidArgumentException('Удаление всех файлов не поддерживается ');
+        }
+
+        if ('delete' === $actionName) {
+            foreach ($idx as $id) {
+                $file = $this->getObject($id);
+                $this->preRemove($file);
+            }
+        }
+    }
+
 
     /**
      * Конфигурация отображения записи

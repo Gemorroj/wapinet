@@ -198,6 +198,8 @@ services:
     wapinet.admin.gist:
         class: Wapinet\Bundle\Admin\GistAdmin
         arguments: [null, Wapinet\Bundle\Entity\Gist, SonataAdminBundle:CRUD]
+        calls:
+            - [setCommentHelper, ["@wapinet_comment.helper"]]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Блоги, label: Блоги }
 
@@ -222,6 +224,7 @@ services:
         arguments: [~, Wapinet\Bundle\Entity\News, SonataAdminBundle:CRUD]
         calls:
             - [setContainer, ["@service_container"]]
+            - [setCommentHelper, ["@wapinet_comment.helper"]]
         tags:
             - {name: sonata.admin, manager_type: orm, group: Новости, label: Новости}
 

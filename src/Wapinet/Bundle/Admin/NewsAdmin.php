@@ -5,10 +5,12 @@ namespace Wapinet\Bundle\Admin;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Wapinet\Bundle\Entity\News;
+use Wapinet\CommentBundle\Helper\Manager;
 use Wapinet\UserBundle\Entity\Event as EntityEvent;
 
 class NewsAdmin extends Admin
@@ -24,6 +26,51 @@ class NewsAdmin extends Admin
         '_sort_order' => 'DESC',
         '_sort_by' => 'id',
     );
+    /**
+     * @var Manager
+     */
+    protected $commentHelper;
+
+    /**
+     * @param Manager $commentHelper
+     */
+    public function setCommentHelper(Manager $commentHelper)
+    {
+        $this->commentHelper = $commentHelper;
+    }
+
+
+    /**
+     * @param News $news
+     */
+    public function preRemove($news)
+    {
+        if (!$news instanceof News) {
+            throw new \InvalidArgumentException('Некорректный тип данных');
+        }
+
+        $this->commentHelper->removeThread('news-' . $news->getId());
+    }
+
+    /**
+     * Работает только для действий со множеством элементов
+     * {@inheritdoc}
+     * https://github.com/sonata-project/SonataAdminBundle/pull/1318
+     */
+    public function preBatchAction($actionName, ProxyQueryInterface $query, array & $idx, $allElements)
+    {
+        if (true === $allElements) {
+            throw new \InvalidArgumentException('Удаление всех файлов не поддерживается ');
+        }
+
+        if ('delete' === $actionName) {
+            foreach ($idx as $id) {
+                $file = $this->getObject($id);
+                $this->preRemove($file);
+            }
+        }
+    }
+
 
     /**
      * @param DatagridMapper $datagridMapper
