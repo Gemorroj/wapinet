@@ -2,22 +2,22 @@
 
 namespace Wapinet\Bundle\Twig\Extension;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Routing\RequestContext;
 use Xbbcode\Xbbcode;
 
 class Bbcode extends \Twig_Extension
 {
     /**
-     * @var ContainerInterface
+     * @var RequestContext
      */
-    protected $container;
+    protected $requestContext;
 
     /**
-     * @param ContainerInterface $container
+     * @param RequestContext $requestContext
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(RequestContext $requestContext)
     {
-        $this->container = $container;
+        $this->requestContext = $requestContext;
     }
 
     /**
@@ -40,7 +40,7 @@ class Bbcode extends \Twig_Extension
     public function bbcodeParse($text)
     {
         // хост нужен для email
-        $host = $this->container->get('request')->getHttpHost();
+        $host = $this->requestContext->getHost();
         $xbbcode = new Xbbcode('//'.$host.'/bundles/wapinet/xbbcode');
         $xbbcode->setTagHandler('spoiler', WapinetSpoiler::class);
         $xbbcode->parse($text);

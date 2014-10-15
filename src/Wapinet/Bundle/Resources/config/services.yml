@@ -6,7 +6,7 @@ services:
 
     wapinet.bbcode.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Bbcode
-        arguments: [@service_container]
+        arguments: [@router.request_context]
         tags:
             - {name: twig.extension, alias: wapinet_bbcode}
 
