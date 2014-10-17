@@ -344,13 +344,13 @@ class Siza
             $scriptArr = $v->getElementsByTagName('script');
             $this->removeNodeList($scriptArr);
 
-            $divArr = $v->getElementsByTagName('div');
+            /*$divArr = $v->getElementsByTagName('div');
             $this->removeNodeList($divArr, function (\DOMElement $div) {
                 // реклама
-                if ($div->hasAttribute('class') === false && $div->getElementsByTagName('img')->length === 0) {
+                if ($div->hasAttribute('class') === false && $div->getElementsByTagName('img')->length === 0 && $div->parentNode->getAttribute('class') !== 'block') {
                     $div->parentNode->removeChild($div);
                 }
-            });
+            });*/
 
             $aArr = $v->getElementsByTagName('a');
             /** @var \DOMElement $a */
@@ -466,13 +466,13 @@ class Siza
      * @param \DOMNodeList $nodeList
      * @param \Closure|null $callback
      */
-    protected function removeNodeList(\DOMNodeList $nodeList, \Closure $callback = null)
+    private function removeNodeList(\DOMNodeList $nodeList, \Closure $callback = null)
     {
         $removeArr = array();
         foreach ($nodeList as $domElement) {
             $removeArr[] = $domElement;
         }
-        foreach($removeArr as $domElement) {
+        foreach ($removeArr as $domElement) {
             if (null !== $callback) {
                 $callback($domElement);
             } else {
