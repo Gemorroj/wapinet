@@ -162,7 +162,11 @@ class Siza
                 $img = $a->previousSibling;
                 if ($img->nodeName === 'img') {
                     $tmpImg = $img->cloneNode();
-                    $tmpName = new \DOMElement('h2', $a->firstChild->nodeValue);
+
+                    // fix: DOMElement::__construct(): unterminated entity reference
+                    $value = htmlentities($a->firstChild->nodeValue, ENT_NOQUOTES | ENT_HTML5);
+
+                    $tmpName = new \DOMElement('h2', $value);
                     $a->replaceChild($tmpImg, $a->firstChild);
                     $a->appendChild($tmpName);
                     $img->parentNode->removeChild($img);
