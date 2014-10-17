@@ -8,6 +8,14 @@
         }
     </style>
 {% endblock %}
-
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // скрываем левую панель, затем удаляем кнопку открытия
+            $("[data-toggle='offcanvas']").click().remove();
+        });
+    </script>
+{% endblock %}
 
 {% block sonata_left_side %}{% endblock sonata_left_side %}
