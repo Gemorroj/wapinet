@@ -214,8 +214,6 @@ services:
     wapinet.admin.tag:
         class: Wapinet\Bundle\Admin\TagAdmin
         arguments: [null, Wapinet\Bundle\Entity\Tag, SonataAdminBundle:CRUD]
-        calls:
-            - [setFileHelper, ["@file"]]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Файлы, label: Тэги }
 

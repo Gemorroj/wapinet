@@ -4,6 +4,7 @@ namespace Wapinet\Bundle\Helper;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Wapinet\Bundle\Entity\File as DataFile;
+use Wapinet\Bundle\Entity\Tag;
 
 /**
  * File хэлпер
@@ -59,9 +60,8 @@ class File
      */
     public function cleanupFile(DataFile $file)
     {
-        // сам файл, скриншоты и сконвертированные видео
+        // скриншоты и сконвертированные видео
         $realPath = $file->getFile()->getRealPath();
-
         $this->container->get('filesystem')->remove(
             array(
                 // $realPath, // сам файл удаляется entity менеджером
@@ -77,10 +77,8 @@ class File
         );
 
         // кэш картинок
-        $cache = $this->container->get('liip_imagine.cache.manager');
-        $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
-        $path = $helper->asset($file, 'file');
-        $cache->remove(
+        $path = $this->container->get('vich_uploader.templating.helper.uploader_helper')->asset($file, 'file');
+        $this->container->get('liip_imagine.cache.manager')->remove(
             array(
                 $path,
                 $path . '.png',
@@ -97,6 +95,24 @@ class File
 
         // комментарии
         $this->container->get('wapinet_comment.helper')->removeThread('file-' . $file->getId());
+
+        // тэги
+        $entityManager = $this->container->get('doctrine.orm.entity_manager');
+        /** @var Tag $tag */
+        foreach ($file->getTags() as $tag) {
+            // уменьшаем кол-во использований тэга
+            if (null !== $file->getPassword()) {
+                $tag->setCountPassword($tag->getCountPassword() - 1);
+            } else {
+                $tag->setCount($tag->getCount() - 1);
+            }
+
+            // если привязанных к тэгу файлов меньше 1, то удаляем тэг
+            if (($tag->getCount() + $tag->getCountPassword()) < 1) {
+                $entityManager->remove($tag);
+            }
+        }
+        // $entityManager->flush();
     }
 
     /**

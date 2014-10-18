@@ -7,26 +7,15 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
-use Wapinet\Bundle\Helper\File as FileHelper;
 
 class TagAdmin extends Admin
 {
-    /**
-     * @var FileHelper
-     */
-    protected $fileHelper;
-
     protected $baseRouteName = 'sonata_tag';
     protected $baseRoutePattern = 'tag';
     protected $datagridValues = array(
         '_sort_order' => 'DESC',
         '_sort_by' => 'id',
     );
-
-    public function setFileHelper(FileHelper $fileHelper)
-    {
-        $this->fileHelper = $fileHelper;
-    }
 
     /**
      * {@inheritdoc}

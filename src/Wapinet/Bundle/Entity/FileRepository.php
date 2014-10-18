@@ -324,7 +324,7 @@ class FileRepository extends EntityRepository
             return array();
         }
 
-        $names = array_unique($names);
+        $names = \array_unique($names);
 
         $builder = $this->getEntityManager()->createQueryBuilder();
 
@@ -354,7 +354,7 @@ class FileRepository extends EntityRepository
             $loadedNames[] = $loadedTag->getName();
         }
 
-        $missingNames = array_udiff($names, $loadedNames, 'strcasecmp');
+        $missingNames = \array_udiff($names, $loadedNames, 'strcasecmp');
         if ($missingNames) {
             foreach ($missingNames as $name) {
                 $tag = new Tag();
