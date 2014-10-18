@@ -8,19 +8,18 @@
     })}}
 {% endblock %}
 
+{% block javascripts %}
+    <script type="text/javascript">{% autoescape 'js' %}
+        $(document).on("pagebeforeshow", "#page", function () {
+            Autocomplete.link('{{ path('weather_show', {'country': country}) }}/', '{{ path('weather_city_search', {'country': country}) }}');
+        });
+        {% endautoescape %}</script>
+{% endblock %}
 
 {% block content %}
     <form>
-        <label for="pre-rendered-city-input">Город</label>
-        <div class="ui-input-search ui-body-inherit ui-corner-all ui-shadow-inset ui-input-has-clear">
-            <input data-type="search" data-enhanced="true" data-inset="false" id="pre-rendered-city-input" placeholder="Поиск..." />
-        </div>
-        <div data-role="controlgroup" data-enhanced="true" data-filter="true" data-filter-reveal="true" data-input="#pre-rendered-city-input" class="ui-controlgroup ui-controlgroup-vertical ui-corner-all">
-            <div class="ui-controlgroup-controls">
-                {% for cityKey, cityValue in cities %}
-                    <a class="ui-btn ui-corner-all ui-shadow ui-shadow ui-screen-hidden" href="{{ path('weather_show', {'country': country, 'city': cityKey}) }}">{{ cityValue }}</a>
-                {% endfor %}
-            </div>
-        </div>
+        <label for="autocomplete">Город:</label>
+        <input type="search" id="autocomplete" placeholder="Поиск..." />
+        <ul id="suggestions" data-role="listview" data-inset="true"></ul>
     </form>
 {% endblock %}

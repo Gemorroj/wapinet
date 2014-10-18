@@ -2,15 +2,25 @@ weather_country:
     pattern: /
     defaults: { _controller: WapinetBundle:Weather:country }
 
+weather_country_search:
+    pattern: /country_search
+    defaults: { _controller: WapinetBundle:Weather:countrySearch }
+
 weather_city:
     pattern: /{country}
-    defaults: { _controller: WapinetBundle:Weather:city }
+    defaults: { _controller: WapinetBundle:Weather:city, country: null }
+    requirements:
+        country: \d+
+
+weather_city_search:
+    pattern: /{country}/city_search
+    defaults: { _controller: WapinetBundle:Weather:citySearch }
     requirements:
         country: \d+
 
 weather_show:
     pattern: /{country}/{city}
-    defaults: { _controller: WapinetBundle:Weather:show }
+    defaults: { _controller: WapinetBundle:Weather:show, city: null }
     requirements:
         country: \d+
         city: \d+

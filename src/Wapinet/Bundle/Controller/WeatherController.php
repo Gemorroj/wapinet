@@ -3,68 +3,106 @@
 namespace Wapinet\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Wapinet\Bundle\Form\Type\Weather\CityType;
-use Wapinet\Bundle\Form\Type\Weather\CountryType;
+use Wapinet\Bundle\Entity\Autocomplete;
 
 
 class WeatherController extends Controller
 {
     /**
-     * @param Request $request
-     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function countryAction(Request $request)
+    public function countryAction()
     {
-        $form = $this->createForm(new CountryType($this->get('weather')->getCountries()));
+        return $this->render('WapinetBundle:Weather:country.html.twig');
+    }
 
-        try {
-            $form->handleRequest($request);
 
-            if ($form->isSubmitted()) {
-                if ($form->isValid()) {
-                    $data = $form->getData();
-                    $url = $this->get('router')->generate('weather_city', array('country' => $data['country']));
-                    return $this->redirect($url);
-                }
-            }
-        } catch (\Exception $e) {
-            $form->addError(new FormError($e->getMessage()));
+    /**
+     * @param array $data
+     * @param string $term
+     * @return Autocomplete[]
+     */
+    private function searchArray(array $data, $term)
+    {
+        $termLower = \mb_strtolower($term);
+
+        $tmp = \array_filter($data, function ($value) use ($termLower) {
+            return (false !== \mb_strpos(\mb_strtolower($value), $termLower));
+        });
+
+        $result = array();
+        foreach ($tmp as $key => $value) {
+            $result[] = new Autocomplete($key, $value);
         }
 
-        return $this->render('WapinetBundle:Weather:country.html.twig', array(
-            'form' => $form->createView(),
-        ));
+        unset($tmp);
+
+        return $result;
     }
 
 
     /**
      * @param Request $request
-     * @param int $country
-     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return JsonResponse
      */
-    public function cityAction(Request $request, $country)
+    public function countrySearchAction(Request $request)
+    {
+        $term = trim($request->get('term'));
+        if ('' === $term) {
+            return new JsonResponse(array());
+        }
+
+        $countries = $this->searchArray(
+            $this->get('weather')->getCountries(),
+            $term
+        );
+
+        return new JsonResponse($countries);
+    }
+
+    /**
+     * @param Request $request
+     * @param int $country
+     * @return JsonResponse
+     */
+    public function citySearchAction(Request $request, $country)
+    {
+        $term = trim($request->get('term'));
+        if ('' === $term) {
+            return new JsonResponse(array());
+        }
+
+        $cities = $this->searchArray(
+            $this->get('weather')->getCities($country),
+            $term
+        );
+
+        return new JsonResponse($cities);
+    }
+
+    /**
+     * @param int $country
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function cityAction($country)
     {
         $weather = $this->get('weather');
-        $cities = $weather->getCities($country);
 
         return $this->render('WapinetBundle:Weather:city.html.twig', array(
             'countryName' => $weather->getCountries()[$country],
             'country' => $country,
-            'cities' => $cities,
         ));
     }
 
 
     /**
-     * @param Request $request
      * @param int $country
      * @param int $city
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction(Request $request, $country, $city)
+    public function showAction($country, $city)
     {
         $weather = $this->get('weather');
         return $this->render('WapinetBundle:Weather:show.html.twig', array(

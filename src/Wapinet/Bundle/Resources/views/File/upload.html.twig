@@ -15,7 +15,7 @@
                 return FileLoader.uploadFile(this);
             });
 
-            Autocomplete.init('{{ path('file_tags_search') }}', '#', '#file_upload_form_tags_string');
+            Autocomplete.text('{{ path('file_tags_search') }}', '#file_upload_form_tags_string');
         });
     {% endautoescape %}</script>
 {% endblock %}

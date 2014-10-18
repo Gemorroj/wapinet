@@ -137,30 +137,41 @@ var ImagePreview = {
 };
 
 var Autocomplete = {
-    init: function (source, link, input, suggestions) {
+    text: function (source, input, suggestions) {
+        input = input || '#autocomplete';
+        suggestions = suggestions || '#suggestions';
+        $(input).autocomplete({
+            link: '#',
+            target: $(suggestions),
+            source: source,
+            loadingHtml: '',
+            icon: 'tag',
+            callback: function (e) {
+                var $input = $(input);
+
+                var arrText = $input.val().split(',');
+
+                arrText.pop();
+                arrText.push($(e.currentTarget).text());
+
+                var text = arrText.join(',');
+
+                $input.val(text);
+                $input.autocomplete('clear');
+            },
+            minLength: 2,
+            interval: 1
+        });
+    },
+    link: function (link, source, input, suggestions) {
         input = input || '#autocomplete';
         suggestions = suggestions || '#suggestions';
         $(input).autocomplete({
             link: link,
             target: $(suggestions),
             source: source,
-            loadingHtml: '', // <li data-icon="none"><a href="#">Поиск...</a></li>
-            callback: function (e) {
-                var $input = $(input);
-
-                var text = $input.val();
-
-                var arrText = text.split(',');
-
-                arrText.pop();
-                arrText.push($(e.currentTarget).text());
-
-                text = arrText.join(',');
-
-                $input.val(text);
-                $input.autocomplete('clear');
-            },
-            minLength: 1,
+            loadingHtml: '<li data-icon="none"><a href="#">Поиск...</a></li>',
+            minLength: 2,
             interval: 1
         });
     }

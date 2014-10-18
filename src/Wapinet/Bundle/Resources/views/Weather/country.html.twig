@@ -7,9 +7,18 @@
     })}}
 {% endblock %}
 
+{% block javascripts %}
+    <script type="text/javascript">{% autoescape 'js' %}
+        $(document).on("pagebeforeshow", "#page", function () {
+            Autocomplete.link('{{ path('weather_city') }}/', '{{ path('weather_country_search') }}');
+        });
+        {% endautoescape %}</script>
+{% endblock %}
 
 {% block content %}
-    {{ form_start(form, {'action': path('weather_country'), 'method': 'POST'}) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    <form>
+        <label for="autocomplete">Страна:</label>
+        <input type="search" id="autocomplete" placeholder="Поиск..." />
+        <ul id="suggestions" data-role="listview" data-inset="true"></ul>
+    </form>
 {% endblock %}
