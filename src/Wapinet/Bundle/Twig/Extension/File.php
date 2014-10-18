@@ -57,7 +57,7 @@ class File extends \Twig_Extension
     }
 
     /**
-     * @return int
+     * @return number
      */
     public function getCountAll()
     {
@@ -65,7 +65,7 @@ class File extends \Twig_Extension
     }
 
     /**
-     * @return int
+     * @return number
      */
     public function getCountToday()
     {
@@ -75,7 +75,7 @@ class File extends \Twig_Extension
     }
 
     /**
-     * @return int
+     * @return number
      */
     public function getCountYesterday()
     {
@@ -87,7 +87,7 @@ class File extends \Twig_Extension
 
     /**
      * @param string $category
-     * @return int
+     * @return number
      */
     public function getCountCategory($category)
     {
@@ -96,7 +96,7 @@ class File extends \Twig_Extension
 
     /**
      * @param User $user
-     * @return int
+     * @return number
      */
     public function getCountUser(User $user)
     {

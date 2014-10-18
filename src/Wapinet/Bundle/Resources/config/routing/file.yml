@@ -43,6 +43,10 @@ file_tag:
     requirements:
         tagName: ".+"
 
+file_tags_search:
+    pattern: /tags_search
+    defaults: { _controller: WapinetBundle:File:tagsSearch, _format: json }
+
 file_user:
     pattern: /users/{username}
     defaults: { _controller: WapinetBundle:File:user }

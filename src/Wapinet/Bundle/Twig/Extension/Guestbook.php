@@ -12,6 +12,9 @@ class Guestbook extends \Twig_Extension
      */
     protected $guestbookRepository;
 
+    /**
+     * @param EntityManager $em
+     */
     public function __construct(EntityManager $em)
     {
         $this->guestbookRepository = $em->getRepository('Wapinet\Bundle\Entity\Guestbook');
@@ -29,6 +32,9 @@ class Guestbook extends \Twig_Extension
         );
     }
 
+    /**
+     * @return number
+     */
     public function getCountAll()
     {
         return $this->guestbookRepository->countAll();

@@ -6,17 +6,18 @@ use Wapinet\UserBundle\Entity\User;
 
 class GistRepository extends EntityRepository
 {
-
+    /**
+     * @return number
+     */
     public function countAll()
     {
-        $q = $this->getEntityManager()->createQuery('SELECT COUNT(g.id) FROM Wapinet\Bundle\Entity\Gist g');
-        return $q->getSingleScalarResult();
+        return $this->getEntityManager()->createQuery('SELECT COUNT(g.id) FROM Wapinet\Bundle\Entity\Gist g')->getSingleScalarResult();
     }
 
     /**
      * @param User $user
      *
-     * @return int
+     * @return number
      */
     public function count(User $user = null)
     {
@@ -33,7 +34,7 @@ class GistRepository extends EntityRepository
     /**
      * @param int $id
      *
-     * @return int
+     * @return number
      */
     public function countComments($id)
     {

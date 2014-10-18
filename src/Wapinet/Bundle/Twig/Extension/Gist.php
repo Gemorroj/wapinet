@@ -32,6 +32,9 @@ class Gist extends \Twig_Extension
         );
     }
 
+    /**
+     * @return number
+     */
     public function getCountAll()
     {
         return $this->gistRepository->countAll();
@@ -40,7 +43,7 @@ class Gist extends \Twig_Extension
     /**
      * @param User $user
      *
-     * @return int
+     * @return number
      */
     public function getCount(User $user = null)
     {
@@ -51,7 +54,7 @@ class Gist extends \Twig_Extension
     /**
      * @param int $id
      *
-     * @return int
+     * @return number
      */
     public function getCommentsCount($id)
     {

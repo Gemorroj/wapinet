@@ -1,4 +1,5 @@
 Wapinet\Bundle\Entity\Tag:
+    repositoryClass: Wapinet\Bundle\Entity\TagRepository
     type:  entity
     table: tag
     id:

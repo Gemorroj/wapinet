@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Tag
- * @todo удалять не привязанные ни к одному файлу тэги
  */
 class Tag
 {
@@ -41,6 +40,9 @@ class Tag
     protected $updatedAt;
 
 
+    /**
+     * Констркутор
+     */
     public function __construct()
     {
         $this->files = new ArrayCollection();

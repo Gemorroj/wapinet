@@ -14,6 +14,8 @@
             $('#file_upload').submit(function () {
                 return FileLoader.uploadFile(this);
             });
+
+            Autocomplete.init('{{ path('file_tags_search') }}', '#', '#file_upload_form_tags_string');
         });
     {% endautoescape %}</script>
 {% endblock %}
@@ -25,8 +27,10 @@
         {{ form_row(form.file) }}
         {{ form_row(form.description) }}
         {{ form_row(form.tags_string) }}
+        <ul id="suggestions" data-role="listview" data-inset="true"></ul>
 
-        <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+
+    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
             <input type="checkbox" id="upload-password" onchange="$('#upload-password-row').slideToggle();" />
             <label for="upload-password" title="Включите, если файл нужно защитить паролем">Пароль</label>
         </fieldset>

@@ -88,6 +88,7 @@ var FileLoader = {
             $link.click(function () {
                 var blob = new Blob([$(text).val()], { type: "text/plain;charset=utf-8" });
                 // не работает в опера 12. зависимость от Blob.js
+                // saveAs реализована в FileSaver
                 saveAs(blob, fileName || "file.txt");
             });
         }
@@ -134,6 +135,37 @@ var ImagePreview = {
         });
     }
 };
+
+var Autocomplete = {
+    init: function (source, link, input, suggestions) {
+        input = input || '#autocomplete';
+        suggestions = suggestions || '#suggestions';
+        $(input).autocomplete({
+            link: link,
+            target: $(suggestions),
+            source: source,
+            loadingHtml: '', // <li data-icon="none"><a href="#">Поиск...</a></li>
+            callback: function (e) {
+                var $input = $(input);
+
+                var text = $input.val();
+
+                var arrText = text.split(',');
+
+                arrText.pop();
+                arrText.push($(e.currentTarget).text());
+
+                text = arrText.join(',');
+
+                $input.val(text);
+                $input.autocomplete('clear');
+            },
+            minLength: 1,
+            interval: 1
+        });
+    }
+};
+
 
 $(document).on("pagebeforeshow", "#page", function () {
     $.mobile.ajaxEnabled = false;
@@ -202,6 +234,7 @@ $(document).on("pagebeforeshow", "#page", function () {
         Helper.captchaReload($this.data('path'), $this.data('id'));
     });
 
+    // превью картинок в комментариях
     ImagePreview.loadComments();
     $("div.fos_comment_thread").enhanceWithin();
 });

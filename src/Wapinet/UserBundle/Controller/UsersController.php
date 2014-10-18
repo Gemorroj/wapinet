@@ -49,7 +49,6 @@ class UsersController extends Controller
                 if ($key === $search['key']) {
                     $form->setData($search['data']);
                     $pagerfanta = $this->searchSphinx($search['data'], $page);
-                    //$pagerfanta = $this->search($search['data'], $page);
                 }
             } else {
                 $pagerfanta = $this->online($page);
@@ -99,18 +98,5 @@ class UsersController extends Controller
         }
 
         return $client->getPagerfanta($result, 'Wapinet\UserBundle\Entity\User');
-    }
-
-    /**
-     * @param array $data
-     * @param int $page
-     * @return Pagerfanta
-     */
-    protected function search (array $data, $page = 1)
-    {
-        $userRepository = $this->getDoctrine()->getRepository('WapinetUserBundle:User');
-        $query = $userRepository->getSearchUsersQuery($data['search'], true);
-
-        return $this->get('paginate')->paginate($query, $page);
     }
 }

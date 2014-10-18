@@ -95,7 +95,6 @@ class FileController extends Controller
                 if ($key === $search['key']) {
                     $form->setData($search['data']);
                     $pagerfanta = $this->searchSphinx($search['data'], $page);
-                    //$pagerfanta = $this->search($search['data'], $page);
                 }
             }
         } catch (\Exception $e) {
@@ -107,20 +106,6 @@ class FileController extends Controller
             'pagerfanta' => $pagerfanta,
             'key' => $key,
         ));
-    }
-
-    /**
-     * @param array $data
-     * @param int $page
-     * @return Pagerfanta
-     */
-    protected function search(array $data, $page = 1)
-    {
-        $query = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->getSearchQuery(
-            $data['search']
-        );
-
-        return $this->get('paginate')->paginate($query, $page);
     }
 
 
@@ -829,5 +814,33 @@ class FileController extends Controller
         );
 
         return $data;
+    }
+
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function tagsSearchAction(Request $request)
+    {
+        $term = trim($request->get('term', ''));
+        if ('' === $term) {
+            return new JsonResponse(array());
+        }
+
+        $exTerm = \explode(',', $term);
+        $term = ltrim(end($exTerm));
+        if ('' === $term) {
+            return new JsonResponse(array());
+        }
+
+        $tags = $this->getDoctrine()->getRepository('WapinetBundle:Tag')->findLikeName($term);
+
+        $result = array();
+        foreach ($tags as $tag) {
+            $result[] = $tag->getName();
+        }
+
+        return new JsonResponse($result);
     }
 }

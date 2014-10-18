@@ -68,19 +68,17 @@ class FileRepository extends EntityRepository
 
 
     /**
-     * @return int
+     * @return number
      */
     public function countAll()
     {
-        $q = $this->getEntityManager()->createQuery('SELECT COUNT(f.id) FROM Wapinet\Bundle\Entity\File f WHERE f.password IS NULL');
-
-        return $q->getSingleScalarResult();
+        return $this->getEntityManager()->createQuery('SELECT COUNT(f.id) FROM Wapinet\Bundle\Entity\File f WHERE f.password IS NULL')->getSingleScalarResult();
     }
 
     /**
      * @param \DateTime $datetimeStart
      * @param \DateTime $datetimeEnd
-     * @return int
+     * @return number
      */
     public function countDate(\DateTime $datetimeStart, \DateTime $datetimeEnd = null)
     {
@@ -103,7 +101,7 @@ class FileRepository extends EntityRepository
 
     /**
      * @param string $category
-     * @return int
+     * @return number
      */
     public function countCategory($category)
     {
@@ -119,7 +117,7 @@ class FileRepository extends EntityRepository
 
     /**
      * @param User $user
-     * @return int
+     * @return number
      */
     public function countUser(User $user)
     {
@@ -206,27 +204,6 @@ class FileRepository extends EntityRepository
                 $q->setParameter('mime_type', 'application/java-archive');
                 break;
         }
-    }
-
-
-    /**
-     * @param string|null $search
-     * @return \Doctrine\ORM\Query
-     */
-    public function getSearchQuery($search = null)
-    {
-        $q = $this->createQueryBuilder('f');
-
-        $search = '%' . addcslashes($search, '%_') . '%';
-
-        $q->where('f.originalFileName LIKE :search');
-        $q->orWhere('f.description LIKE :search');
-        $q->setParameter('search', $search);
-
-        $q->andWhere('f.password IS NULL');
-        $q->orderBy('f.id', 'DESC');
-
-        return $q->getQuery();
     }
 
 
