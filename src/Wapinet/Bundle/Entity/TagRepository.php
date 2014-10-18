@@ -21,6 +21,8 @@ class TagRepository extends EntityRepository
         $qb->setParameter('search', $search);
 
         $qb->orderBy('t.count', 'DESC');
+        $qb->addOrderBy('t.name', 'ASC');
+
         $qb->setMaxResults($limit);
 
         return $qb->getQuery()->execute();
@@ -33,6 +35,7 @@ class TagRepository extends EntityRepository
     {
         return $this->createQueryBuilder('t')
             ->orderBy('t.count', 'DESC')
+            ->addOrderBy('t.name', 'ASC')
             ->getQuery();
     }
 
