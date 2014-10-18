@@ -61,6 +61,10 @@ p.long-description, h2.long-description {
 div.long-description, pre.long-description {
     white-space: normal !important;
 }
+/* ббкоды (цитирование) */
+div.long-description blockquote, pre.long-description blockquote {
+    display: inline-block;
+}
 a.captcha-reload {
     vertical-align: baseline;
 }
