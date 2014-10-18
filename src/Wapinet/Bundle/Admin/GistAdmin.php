@@ -62,7 +62,7 @@ class GistAdmin extends Admin
     public function preBatchAction($actionName, ProxyQueryInterface $query, array & $idx, $allElements)
     {
         if (true === $allElements) {
-            throw new \InvalidArgumentException('Удаление всех файлов не поддерживается ');
+            throw new \InvalidArgumentException('Удаление всех блогов не поддерживается ');
         }
 
         if ('delete' === $actionName) {
