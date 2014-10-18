@@ -39,26 +39,26 @@ class Bash
             throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
         }
 
-        $content = mb_convert_encoding($response->getContent(), 'UTF-8', 'Windows-1251');
-        $content = str_replace(array("\n", "\r", "\t", '<br>'), array('', '', '', "\r\n"), $content);
+        $content = \mb_convert_encoding($response->getContent(), 'UTF-8', 'Windows-1251');
+        $content = \str_replace(array("\n", "\r", "\t", '<br>'), array('', '', '', "\r\n"), $content);
 
         // количество цитат на странице
         $maxPerPage = 50;
 
         // получаем общее количество страниц
-        preg_match('/alert\("Нужно указать номер страницы от 1 до (\d+)"\);/u', $content, $matchPage);
+        \preg_match('/alert\("Нужно указать номер страницы от 1 до (\d+)"\);/u', $content, $matchPage);
         $allPages = $matchPage[1];
 
         // текущая страница
         $currentPage = null === $page ? $allPages : $page;
 
         // вырезаем цитаты
-        preg_match_all('/(?:<div class="text">+)(.*?)(?:<\/div>+)/is', $content, $matchItems, PREG_SET_ORDER);
+        \preg_match_all('/(?:<div class="text">+)(.*?)(?:<\/div>+)/is', $content, $matchItems, PREG_SET_ORDER);
 
         // заносим цитаты в массив
         $items = array();
         foreach($matchItems as $v) {
-            $items[] = strip_tags($v[1]);
+            $items[] = \strip_tags($v[1]);
         }
 
         // создаем фиксированный пагинатор

@@ -52,7 +52,7 @@ class SyntaxController extends Controller
      */
     protected function detectEncoding($source)
     {
-        return mb_detect_encoding($source, array('UTF-8', 'Windows-1251', 'KOI8-R', 'CP866', 'ISO-8859-1', 'US-ASCII'), true);
+        return \mb_detect_encoding($source, array('UTF-8', 'Windows-1251', 'KOI8-R', 'CP866', 'ISO-8859-1', 'US-ASCII'), true);
     }
 
     /**
@@ -64,7 +64,7 @@ class SyntaxController extends Controller
     protected function toUtf8Encoding($source, $encoding)
     {
         if ('UTF-8' !== $encoding) {
-            return mb_convert_encoding($source, 'UTF-8', $encoding);
+            return \mb_convert_encoding($source, 'UTF-8', $encoding);
         }
 
         return $source;
@@ -77,13 +77,13 @@ class SyntaxController extends Controller
      */
     protected function codeSize($source)
     {
-        $size = strlen($source);
+        $size = \strlen($source);
 
         if ($size < 1024) {
             return $size . ' b';
         }
 
-        return round($size / 1024, 2) . ' kb';
+        return \round($size / 1024, 2) . ' kb';
     }
 
     /**
@@ -94,14 +94,14 @@ class SyntaxController extends Controller
      */
     protected function highlightCode($source, $line = 0)
     {
-        $array = array_slice(explode("\n", $this->xhtmlCode($source)), 1, -2);
-        $all = sizeof($array);
-        $len = strlen($all);
+        $array = \array_slice(\explode("\n", $this->xhtmlCode($source)), 1, -2);
+        $all = \sizeof($array);
+        $len = \strlen($all);
         $page = '';
         for ($i = 0; $i < $all; ++$i) {
             $next = $i + 1;
-            $l = strlen($next);
-            $page .= '<span class="' . ($line == $next ? 'fail_code' : 'true_code') . '">' . ($l < $len ? str_repeat('&#160;', $len - $l) : '') . $next . '</span> ' . $array[$i] . "\n";
+            $l = \strlen($next);
+            $page .= '<span class="' . ($line == $next ? 'fail_code' : 'true_code') . '">' . ($l < $len ? \str_repeat('&#160;', $len - $l) : '') . $next . '</span> ' . $array[$i] . "\n";
         }
 
         return '<div class="code"><pre><code>' . $page . '</code></pre></div>';
@@ -114,6 +114,6 @@ class SyntaxController extends Controller
      */
     protected function xhtmlCode($source)
     {
-        return str_replace(array('&nbsp;', '<code>', '</code>', '<br />'), array(' ', '', '', "\n"), preg_replace('#color="(.*?)"#', 'style="color: $1"', str_replace(array('<font ', '</font>'), array('<span ', '</span>'), highlight_string($source, true))));
+        return \str_replace(array('&nbsp;', '<code>', '</code>', '<br />'), array(' ', '', '', "\n"), \preg_replace('#color="(.*?)"#', 'style="color: $1"', \str_replace(array('<font ', '</font>'), array('<span ', '</span>'), \highlight_string($source, true))));
     }
 }

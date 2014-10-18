@@ -43,7 +43,6 @@ class DefaultController extends Controller
         ));
         $processBuilder->setEnv('LC_ALL', 'ru_RU.utf8');
         $output = $processBuilder->getProcess()->mustRun()->getOutput();
-        //$output = iconv('cp1251', 'utf-8', $output); // windows only
 
         return $this->render('WapinetBundle:Default:log.html.twig', array('log' => $this->formatLog($output)));
     }
