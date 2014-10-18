@@ -90,10 +90,14 @@ class File implements \Serializable
     protected $tags;
 
 
+    /**
+     * Конструктор
+     */
     public function __construct()
     {
         $this->tags = new ArrayCollection();
     }
+
 
     /**
      * @return string

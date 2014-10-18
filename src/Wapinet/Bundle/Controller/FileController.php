@@ -19,7 +19,6 @@ use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wapinet\Bundle\Entity\File;
-use Wapinet\Bundle\Entity\FileRepository;
 use Wapinet\Bundle\Event\FileEvent;
 use Wapinet\Bundle\Exception\FileDuplicatedException;
 use Wapinet\Bundle\Form\Type\File\EditType;
@@ -605,7 +604,7 @@ class FileController extends Controller
         /** @var UploadedFile|null $file */
         $file = $newData->getFile();
         if (null !== $file) {
-            $hash = md5_file($file->getPathname());
+            $hash = \md5_file($file->getPathname());
 
             $existingFile = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->findOneBy(array('hash' => $hash));
             if (null !== $existingFile) {
@@ -625,21 +624,32 @@ class FileController extends Controller
             $data->setBrowser($request->headers->get('User-Agent', ''));
         }
 
+        $data->setUpdatedAtValue();
+        $data->setTags(new ArrayCollection());
+
         if (null !== $newData->getPassword()) {
             $this->get('file')->setPassword($data, $newData->getPassword());
         } else {
             $this->get('file')->removePassword($data);
+
+            // тэги только у незапароленых файлов
+            $this->saveTags($data, $tagsString);
         }
 
-        $data->setUpdatedAtValue();
-        $data->setTags(new ArrayCollection());
-        $this->saveTags($data, $tagsString);
-        $this->mergeFile($data);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->merge($data);
 
         if (null !== $file) {
             // файл и кэш
             $this->get('file')->cleanupFile($oldData);
+        } else {
+            // если файлу задали пароль, чистим старые тэги
+            if (null !== $newData->getPassword()) {
+                $this->get('file')->cleanupFileTags($oldData);
+            }
         }
+
+        $entityManager->flush();
 
         return $data;
     }
@@ -699,29 +709,6 @@ class FileController extends Controller
 
     /**
      * @param File $file
-     */
-    protected function mergeFile(File $file)
-    {
-        // сохраняем в БД
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->merge($file);
-        $entityManager->flush();
-    }
-
-    /**
-     * @param File $file
-     */
-    protected function saveFile(File $file)
-    {
-        // сохраняем в БД
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($file);
-        $entityManager->flush();
-    }
-
-
-    /**
-     * @param File $file
      * @param string $tagsString
      */
     protected function saveTags(File $file, $tagsString = null)
@@ -776,7 +763,7 @@ class FileController extends Controller
         /** @var UploadedFile $file */
         $file = $data->getFile();
 
-        $hash = md5_file($file->getPathname());
+        $hash = \md5_file($file->getPathname());
 
         $existingFile = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->findOneBy(array('hash' => $hash));
         if (null !== $existingFile) {
@@ -799,11 +786,17 @@ class FileController extends Controller
             $encoder = $this->get('security.encoder_factory')->getEncoder($data);
             $password = $encoder->encodePassword($data->getPassword(), $data->getSalt());
             $data->setPassword($password);
+        } else {
+            // тэги только у незапароленых файлов
+            $this->saveTags($data, $tagsString);
         }
 
-        $this->saveTags($data, $tagsString);
-        $this->saveFile($data);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($data);
+
         $this->saveFileAcl($data);
+
+        $entityManager->flush();
 
         $this->container->get('event_dispatcher')->dispatch(
             FileEvent::FILE_ADD,

@@ -63,8 +63,8 @@ class TagRepository extends EntityRepository
      */
     public function loadOrCreateTags(array $names, File $file)
     {
-        if (empty($names)) {
-            return array();
+        if (empty($names) || null !== $file->getPassword()) {
+            return new ArrayCollection();
         }
 
         $names = \array_unique($names);
@@ -83,12 +83,7 @@ class TagRepository extends EntityRepository
         foreach ($tags as $loadedTag) {
             if (false === $loadedTag->getFiles()->contains($file)) {
                 $loadedTag->getFiles()->add($file);
-
-                if (null === $file->getPassword()) {
-                    $loadedTag->setCount($loadedTag->getCount() + 1);
-                } else {
-                    $loadedTag->setCountPassword($loadedTag->getCountPassword() + 1);
-                }
+                $loadedTag->setCount($loadedTag->getCount() + 1);
             }
 
             $loadedNames[] = $loadedTag->getName();
@@ -100,11 +95,8 @@ class TagRepository extends EntityRepository
                 $tag = new Tag();
                 $tag->setName($name);
                 $tag->setFiles(new ArrayCollection(array($file)));
-                if (null === $file->getPassword()) {
-                    $tag->setCount(1);
-                } else {
-                    $tag->setCountPassword(1);
-                }
+                $tag->setCount(1);
+
                 $tags[] = $tag;
             }
         }

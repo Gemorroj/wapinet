@@ -27,10 +27,6 @@ class Tag
      */
     protected $count = 0;
     /**
-     * @var int
-     */
-    protected $countPassword = 0;
-    /**
      * @var \DateTime
      */
     protected $createdAt;
@@ -91,29 +87,6 @@ class Tag
     public function setCount($count)
     {
         $this->count = $count;
-
-        return $this;
-    }
-
-    /**
-     * Get count password
-     *
-     * @return integer
-     */
-    public function getCountPassword()
-    {
-        return $this->countPassword;
-    }
-
-    /**
-     * Set count password
-     *
-     * @param int $countPassword
-     * @return Tag
-     */
-    public function setCountPassword($countPassword)
-    {
-        $this->countPassword = $countPassword;
 
         return $this;
     }

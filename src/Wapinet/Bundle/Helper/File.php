@@ -97,18 +97,23 @@ class File
         $this->container->get('wapinet_comment.helper')->removeThread('file-' . $file->getId());
 
         // тэги
+        $this->cleanupFileTags($file);
+    }
+
+    /**
+     * @param DataFile $file
+     */
+    public function cleanupFileTags(DataFile $file)
+    {
+        // тэги
         $entityManager = $this->container->get('doctrine.orm.entity_manager');
         /** @var Tag $tag */
         foreach ($file->getTags() as $tag) {
             // уменьшаем кол-во использований тэга
-            if (null !== $file->getPassword()) {
-                $tag->setCountPassword($tag->getCountPassword() - 1);
-            } else {
-                $tag->setCount($tag->getCount() - 1);
-            }
+            $tag->setCount($tag->getCount() - 1);
 
             // если привязанных к тэгу файлов меньше 1, то удаляем тэг
-            if (($tag->getCount() + $tag->getCountPassword()) < 1) {
+            if ($tag->getCount() < 1) {
                 $entityManager->remove($tag);
             }
         }
