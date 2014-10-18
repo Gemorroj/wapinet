@@ -57,21 +57,21 @@ class DefaultController extends Controller
     private function formatLog($output)
     {
         $result = array();
-        $output = rtrim($output);
-        $changes = explode("\n\n", $output);
+        $output = \rtrim($output);
+        $changes = \explode("\n\n", $output);
         $timezone = $this->get('timezone')->getTimezone();
 
         foreach ($changes as $change) {
-            $items = explode("\n", $change);
+            $items = \explode("\n", $change);
 
             $tmpResult = array();
             foreach ($items as $item) {
-                list($key, $value) = explode(':', $item, 2);
+                list($key, $value) = \explode(':', $item, 2);
 
                 if ('date' === $key) {
-                    $tmpResult[$key] = new \DateTime(ltrim($value), $timezone);
+                    $tmpResult[$key] = new \DateTime(\ltrim($value), $timezone);
                 } else {
-                    $tmpResult[$key] = ltrim($value);
+                    $tmpResult[$key] = \ltrim($value);
                 }
             }
 

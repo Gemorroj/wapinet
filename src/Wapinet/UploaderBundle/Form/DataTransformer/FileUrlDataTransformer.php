@@ -45,12 +45,12 @@ class FileUrlDataTransformer implements DataTransformerInterface
     {
         if ($fileDataFromDb instanceof File) {
             return array(
-                'web_path' => str_replace('\\', '//', mb_substr($fileDataFromDb->getPathName(), mb_strlen($this->container->get('kernel')->getWebDir()))),
+                'web_path' => \str_replace('\\', '//', \mb_substr($fileDataFromDb->getPathName(), \mb_strlen($this->container->get('kernel')->getWebDir()))),
                 'file_url' => $fileDataFromDb
             );
         } elseif ($fileDataFromDb instanceof FileContent) {
             return array(
-                'web_path' => 'data:' . $fileDataFromDb->getMimeType() . ';base64,' . base64_encode($fileDataFromDb->getContent()),
+                'web_path' => 'data:' . $fileDataFromDb->getMimeType() . ';base64,' . \base64_encode($fileDataFromDb->getContent()),
                 'file_url' => $fileDataFromDb
             );
         }
@@ -109,11 +109,11 @@ class FileUrlDataTransformer implements DataTransformerInterface
                 throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $responseHead->getStatusCode() . ')');
             }
 
-            $temp = tempnam($this->container->get('kernel')->getTmpDir(), 'file_url');
+            $temp = \tempnam($this->container->get('kernel')->getTmpDir(), 'file_url');
             if (false === $temp) {
                 throw new TransformationFailedException('Не удалось создать временный файл');
             }
-            $f = fopen($temp, 'w');
+            $f = \fopen($temp, 'w');
             if (false === $f) {
                 throw new TransformationFailedException('Не удалось открыть временный файл на запись');
             }
@@ -123,7 +123,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
 
             $responseBody = $curl->exec();
             $curl->close();
-            fclose($f);
+            \fclose($f);
 
             if (!$responseBody->isSuccessful()) {
                 throw new TransformationFailedException('Не удалось скачать файл по ссылке (HTTP код: ' . $responseBody->getStatusCode() . ')');
@@ -131,12 +131,12 @@ class FileUrlDataTransformer implements DataTransformerInterface
 
 
             $contentType = $responseHead->headers->get('Content-Type');
-            if (is_array($contentType)) {
-                $contentType = end($contentType);
+            if (\is_array($contentType)) {
+                $contentType = \end($contentType);
             }
             $contentLength = $responseHead->headers->get('Content-Length');
-            if (is_array($contentLength)) {
-                $contentLength = end($contentLength);
+            if (\is_array($contentLength)) {
+                $contentLength = \end($contentLength);
             }
 
             $uploadedFile = new FileUrl(
@@ -159,8 +159,8 @@ class FileUrlDataTransformer implements DataTransformerInterface
     protected function getOriginalName(ResponseHeaderBag $headers, $url)
     {
         $contentDisposition = $headers->get('Content-Disposition');
-        if (is_array($contentDisposition)) {
-            $contentDisposition = end($contentDisposition);
+        if (\is_array($contentDisposition)) {
+            $contentDisposition = \end($contentDisposition);
         }
         if ($contentDisposition) {
             $tmpName = $this->parseContentDisposition($contentDisposition);
@@ -170,14 +170,14 @@ class FileUrlDataTransformer implements DataTransformerInterface
         }
 
         $location = $headers->get('Location');
-        if (is_array($location)) {
-            $location = end($location);
+        if (\is_array($location)) {
+            $location = \end($location);
         }
         if ($location) {
-            return parse_url($location, PHP_URL_PATH);
+            return \parse_url($location, PHP_URL_PATH);
         }
 
-        return parse_url($url, PHP_URL_PATH);
+        return \parse_url($url, PHP_URL_PATH);
     }
 
 
@@ -187,25 +187,25 @@ class FileUrlDataTransformer implements DataTransformerInterface
      */
     private function parseContentDisposition($contentDisposition)
     {
-        $tmpName = explode('=', $contentDisposition, 2);
+        $tmpName = \explode('=', $contentDisposition, 2);
         if ($tmpName[1]) {
-            $tmpName = trim($tmpName[1], '";\'');
+            $tmpName = \trim($tmpName[1], '";\'');
 
             $utf8Prefix = 'utf-8\'\''; // utf-8\'\'' . rawurlencode($var)
             $utf8BPrefix = '=?UTF-8?B?'; // =?UTF-8?B?' . base64_encode($var) . '?=
             $utf8BPostfix = '?='; // =?UTF-8?B?' . base64_encode($var) . '?=
 
-            if (0 === stripos($tmpName, $utf8Prefix)) {
-                $tmpName = substr($tmpName, strlen($utf8Prefix));
-                $tmpName = rawurldecode($tmpName);
+            if (0 === \stripos($tmpName, $utf8Prefix)) {
+                $tmpName = \substr($tmpName, \strlen($utf8Prefix));
+                $tmpName = \rawurldecode($tmpName);
 
                 return $tmpName;
             }
 
-            if (0 === stripos($tmpName, $utf8BPrefix)) {
-                $tmpName = substr($tmpName, strlen($utf8BPrefix));
-                $tmpName = substr($tmpName, 0, -strlen($utf8BPostfix));
-                $tmpName = base64_decode($tmpName);
+            if (0 === \stripos($tmpName, $utf8BPrefix)) {
+                $tmpName = \substr($tmpName, \strlen($utf8BPrefix));
+                $tmpName = \substr($tmpName, 0, -\strlen($utf8BPostfix));
+                $tmpName = \base64_decode($tmpName);
 
                 return $tmpName;
             }

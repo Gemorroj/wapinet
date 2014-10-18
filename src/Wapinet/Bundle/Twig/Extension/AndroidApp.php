@@ -37,7 +37,7 @@ class AndroidApp extends \Twig_Extension
     {
         $screenshot = $path . '.png';
 
-        if (false === file_exists($this->getWebDir() . $screenshot)) {
+        if (false === \file_exists($this->getWebDir() . $screenshot)) {
             $issetIcon = $this->findIcon($path, $screenshot);
 
             if (true !== $issetIcon) {

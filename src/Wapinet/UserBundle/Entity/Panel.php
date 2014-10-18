@@ -295,6 +295,6 @@ class Panel extends \ArrayObject
             }
         }
 
-        return rtrim($result, ', ');
+        return \rtrim($result, ', ');
     }
 }

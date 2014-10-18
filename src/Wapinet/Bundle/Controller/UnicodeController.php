@@ -64,10 +64,10 @@ class UnicodeController extends Controller
             $out = $this->getLatin($out);
         }
 
-        $out = json_encode($out);
+        $out = \json_encode($out);
 
         $that = $this;
-        $out = preg_replace_callback('/\\\u([0-9a-z]{4})/', function (array $matches) use ($that, $data) {
+        $out = \preg_replace_callback('/\\\u([0-9a-z]{4})/', function (array $matches) use ($that, $data) {
             $key = $matches[1];
             if ($data['zerofill']) {
                 $key = $that->getZeroFill($key);
@@ -76,9 +76,9 @@ class UnicodeController extends Controller
         }, $out);
 
 
-        $out = substr($out, 1); // удаляем вначале "
-        $out = substr($out, 0, -1); // удаляем в конце "
-        $out = str_replace(array('\"', '\\\\'), array('"', '\\'), $out);
+        $out = \substr($out, 1); // удаляем вначале "
+        $out = \substr($out, 0, -1); // удаляем в конце "
+        $out = \str_replace(array('\"', '\\\\'), array('"', '\\'), $out);
 
         return $out;
     }
@@ -90,7 +90,7 @@ class UnicodeController extends Controller
      */
     protected function getLatin($str)
     {
-        return strtr($str, array(
+        return \strtr($str, array(
             'А' => 'A', 'В' => 'B', 'Е' => 'E', 'К' => 'K', 'М' => 'M',
             'Н' => 'H', 'О' => 'O', 'Р' => 'Р', 'С' => 'C', 'Т' => 'T',
             'Х' => 'X', 'а' => 'a', 'е' => 'e', 'о' => 'o', 'р' => 'p',
@@ -104,7 +104,7 @@ class UnicodeController extends Controller
      */
     protected function getHtmlSpecialChars($str)
     {
-        return htmlspecialchars($str, ENT_QUOTES);
+        return \htmlspecialchars($str, ENT_QUOTES);
     }
 
     /**
@@ -113,7 +113,6 @@ class UnicodeController extends Controller
      */
     protected function getZeroFill($str)
     {
-        return ltrim($str, 0);
+        return \ltrim($str, 0);
     }
-
 }

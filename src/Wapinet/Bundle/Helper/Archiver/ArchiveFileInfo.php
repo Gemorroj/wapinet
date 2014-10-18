@@ -25,9 +25,9 @@ class ArchiveFileInfo extends \SplFileInfo
      */
     public function getArchiveName()
     {
-        $explodePath = explode(self::$archiveDirectory, $this->getPathname(), 2);
-        $path = ltrim($explodePath[1], DIRECTORY_SEPARATOR);
-        $path = str_replace('\\', '/', $path);
+        $explodePath = \explode(self::$archiveDirectory, $this->getPathname(), 2);
+        $path = \ltrim($explodePath[1], \DIRECTORY_SEPARATOR);
+        $path = \str_replace('\\', '/', $path);
 
         return $path;
     }

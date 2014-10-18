@@ -27,12 +27,12 @@ class FileUrl extends UploadedFile
     {
         $target = $this->getTargetFile($directory, $name);
 
-        if (!@rename($this->getPathname(), $target)) {
+        if (!@\rename($this->getPathname(), $target)) {
             $error = error_get_last();
-            throw new FileException(sprintf('Could not move the file "%s" to "%s" (%s)', $this->getPathname(), $target, strip_tags($error['message'])));
+            throw new FileException(\sprintf('Could not move the file "%s" to "%s" (%s)', $this->getPathname(), $target, \strip_tags($error['message'])));
         }
 
-        @chmod($target, 0666 & ~umask());
+        @\chmod($target, 0666 & ~\umask());
 
         return $target;
     }
@@ -42,6 +42,6 @@ class FileUrl extends UploadedFile
      */
     public function isValid()
     {
-        return file_exists($this->getPathname());
+        return \file_exists($this->getPathname());
     }
 }

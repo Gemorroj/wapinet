@@ -172,6 +172,6 @@ class Subscriber extends \ArrayObject
             }
         }
 
-        return rtrim($result, ', ');
+        return \rtrim($result, ', ');
     }
 }

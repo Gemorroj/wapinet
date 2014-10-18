@@ -76,7 +76,7 @@ class Siza
      */
     public function init($contentDirectory, $query, $page = null, $scr = null)
     {
-        $this->link = 'http://load.siza.ru/' . ltrim($query, '/') . '?page=' . $page . '&scr=' . $scr;
+        $this->link = 'http://load.siza.ru/' . \ltrim($query, '/') . '?page=' . $page . '&scr=' . $scr;
         $this->contentDirectory = $contentDirectory;
         $this->dom = new \DOMDocument('1.0', 'UTF-8');
         @$this->dom->loadHTML($this->getLink()->getContent());
@@ -136,7 +136,7 @@ class Siza
             $this->removeNodeList($imgArr, function (\DOMElement $img) {
                 $src = (string)$img->getAttribute('src');
 
-                if (0 === strpos($src, '/pics/')) {
+                if (0 === \strpos($src, '/pics/')) {
                     $img->parentNode->removeChild($img);
                 } else {
                     $img->setAttribute('src', '?screen=yes&q=' . $src);
@@ -173,18 +173,18 @@ class Siza
                 }
             }
 
-            $out .= str_replace(array('<div class="outer">', '<div class="outer" style="border:none;">', '</div>'), array('<li>', '<li>', '</li>'), $v->ownerDocument->saveXML($v));
+            $out .= \str_replace(array('<div class="outer">', '<div class="outer" style="border:none;">', '</div>'), array('<li>', '<li>', '</li>'), $v->ownerDocument->saveXML($v));
         }
 
         if ('' === $out) {
             return '';
         }
 
-        $out = str_replace('&#13;', '', $out);
-        $out = rtrim($out, '</li>') . '</div>'; // fix
-        $out = str_replace('<br.../>', '...', $out);
-        $out = str_replace(array('</a>', '</li>'), array('<p>', '</p></a></li>'), $out);
-        return '<ul data-role="listview" data-inset="true">' . str_replace(array('<div id="contentList">', '</div>'), array('', ''), $out) . '</ul>';
+        $out = \str_replace('&#13;', '', $out);
+        $out = \rtrim($out, '</li>') . '</div>'; // fix
+        $out = \str_replace('<br.../>', '...', $out);
+        $out = \str_replace(array('</a>', '</li>'), array('<p>', '</p></a></li>'), $out);
+        return '<ul data-role="listview" data-inset="true">' . \str_replace(array('<div id="contentList">', '</div>'), array('', ''), $out) . '</ul>';
     }
 
 
@@ -215,7 +215,7 @@ class Siza
             return '';
         }
 
-        $out = str_replace(array('<div id="foldersList">', '</div>'), array('', ''), $out);
+        $out = \str_replace(array('<div id="foldersList">', '</div>'), array('', ''), $out);
         return $out;
     }
 
@@ -237,11 +237,11 @@ class Siza
             $aArr = $v->getElementsByTagName('a');
             $this->removeNodeList($aArr, function (\DOMElement $a) use($that) {
                 $href = (string)$a->getAttribute('href');
-                $href = str_replace('http://load.siza.ru', '', $href);
+                $href = \str_replace('http://load.siza.ru', '', $href);
 
                 if ($href === '/orders/') {
                     $a->parentNode->removeChild($a);
-                } else if (0 === strpos($href, 'http://')) {
+                } else if (0 === \strpos($href, 'http://')) {
                     $that->ignoreNode = true;
                 } else {
                     $a->setAttribute('href', '?q=' . $href);
@@ -268,7 +268,7 @@ class Siza
 
 
             if ($that->ignoreNode === false) {
-                $out .= str_replace(array('<div class="outer">', '<div class="outer" style="border:none;">', '</div>'), array('<li>', '<li>', '</li>'), $v->ownerDocument->saveXML($v));
+                $out .= \str_replace(array('<div class="outer">', '<div class="outer" style="border:none;">', '</div>'), array('<li>', '<li>', '</li>'), $v->ownerDocument->saveXML($v));
             }
         }
 
@@ -296,7 +296,7 @@ class Siza
             /** @var \DOMElement $a */
             foreach ($aArr as $a) {
                 $href = (string)$a->getAttribute('href');
-                $href = str_replace('?', '&', $href);
+                $href = \str_replace('?', '&', $href);
                 $a->setAttribute('href', '?q=' . $href);
                 $a->setAttribute('data-role', 'button');
                 $a->removeAttribute('class');
@@ -309,15 +309,15 @@ class Siza
             return '';
         }
 
-        $out = str_replace(array("\t", "\r", "\n", '<br/>', '<span>|</span>', '<div id="listingNagivation">', '</div>'), array('', '', '', '', '', '', ''), $out);
-        $out = str_replace(array('<span>', '</span>'), array('<a href="#" class="ui-disabled" data-role="button">', '</a>'), $out);
+        $out = \str_replace(array("\t", "\r", "\n", '<br/>', '<span>|</span>', '<div id="listingNagivation">', '</div>'), array('', '', '', '', '', '', ''), $out);
+        $out = \str_replace(array('<span>', '</span>'), array('<a href="#" class="ui-disabled" data-role="button">', '</a>'), $out);
 
-        $out = preg_replace('/<\/a>(\d+) /', '</a><a href="#" class="ui-disabled" data-role="button">$1</a> ', $out);
-        $out = preg_replace('/<\/a>\.\.\.<a/', '</a><a href="#" class="ui-disabled" data-role="button">...</a><a', $out);
+        $out = \preg_replace('/<\/a>(\d+) /', '</a><a href="#" class="ui-disabled" data-role="button">$1</a> ', $out);
+        $out = \preg_replace('/<\/a>\.\.\.<a/', '</a><a href="#" class="ui-disabled" data-role="button">...</a><a', $out);
 
-        preg_match('/(<a [^>]+>Далее<\/a>)/u', $out, $matches);
+        \preg_match('/(<a [^>]+>Далее<\/a>)/u', $out, $matches);
         $next = $matches[1];
-        $out = str_replace($next, '', $out);
+        $out = \str_replace($next, '', $out);
         $out .= $next;
 
         return '<nav data-role="controlgroup" data-type="horizontal">' . $out . '</nav>';
@@ -358,30 +358,30 @@ class Siza
                 $href = (string)$a->getAttribute('href');
 
                 // http://dwloadfiles.ru/api.php?a=104275&u=http%3A%2F%2Ff.siza.ru%2F65%2F6504%2F650435%2F19th_Club_Party_Night_Nok_128x128.jar%3Fr%3D75875388&n=19th Club Party Night&d=3&mt=1&s=1&ic=2501&im=2508&f=19th_Club_Party_Night_Nok_128x128.jar?r=75875388
-                if (0 === strpos($href, 'http://dwloadfiles.ru/api.php?')) {
+                if (0 === \strpos($href, 'http://dwloadfiles.ru/api.php?')) {
                     // какой-то хак сайта
-                    $parsedHref = parse_url($href, PHP_URL_QUERY);
-                    parse_str($parsedHref, $parsedHrefQuery);
+                    $parsedHref = \parse_url($href, PHP_URL_QUERY);
+                    \parse_str($parsedHref, $parsedHrefQuery);
                     $href = $parsedHrefQuery['u'];
                     // какой-то хак сайта
                 }
 
-                if (0 === strpos($href, 'http://') && 0 !== strpos($href, 'http://f.siza.ru')) {
+                if (0 === \strpos($href, 'http://') && 0 !== \strpos($href, 'http://f.siza.ru')) {
                     $end = true;
                 }
 
-                if (0 === strpos($href, 'http://f.siza.ru')) {
+                if (0 === \strpos($href, 'http://f.siza.ru')) {
 
                     $prevNode = $a->previousSibling;
                     if ($prevNode->nodeType === \XML_TEXT_NODE && $prevNode->nodeValue === ' / ') {
                         $prevNode->parentNode->removeChild($prevNode);
                     }
 
-                    $a->setAttribute('href', '?download=yes&q=' . str_replace('http://f.siza.ru', '', $href));
+                    $a->setAttribute('href', '?download=yes&q=' . \str_replace('http://f.siza.ru', '', $href));
                     $a->setAttribute('data-role', 'button');
                     $a->setAttribute('data-inline', 'true');
                     $a->setAttribute('data-icon', 'arrow-d');
-                } else if (0 === strpos($href, '/Image/') || 0 === strpos($href, '/Screenshot/')) {
+                } else if (0 === \strpos($href, '/Image/') || 0 === \strpos($href, '/Screenshot/')) {
 
                     $prevNode = $a->previousSibling;
                     if ($prevNode->nodeType === \XML_TEXT_NODE && $prevNode->nodeValue === ' / ') {
@@ -393,7 +393,7 @@ class Siza
                     $a->setAttribute('data-inline', 'true');
                     $a->setAttribute('data-icon', 'arrow-d');
                 } else {
-                    $href = str_replace('?scr=', '&scr=', $href);
+                    $href = \str_replace('?scr=', '&scr=', $href);
                     $a->setAttribute('href', '?q=' . $href);
                 }
             }
@@ -410,7 +410,7 @@ class Siza
             foreach ($objectArr as $object) {
                 $data = (string)$object->getAttribute('data');
 
-                if (0 === strpos($data, '/swf/dewplayer-rect.swf')) {
+                if (0 === \strpos($data, '/swf/dewplayer-rect.swf')) {
                     $object->setAttribute('data', $this->contentDirectory . '/' . $data);
                 }
             }
@@ -422,7 +422,7 @@ class Siza
             }
         }
 
-        $out = str_replace(array('<span/>', '<b/>'), '', $out);
+        $out = \str_replace(array('<span/>', '<b/>'), '', $out);
         return $out;
     }
 
@@ -453,7 +453,7 @@ class Siza
                     }
                 }
 
-                $out[] = array('query' => null, 'name' => ltrim(trim($v->lastChild->nodeValue), '» '));
+                $out[] = array('query' => null, 'name' => \ltrim(\trim($v->lastChild->nodeValue), '» '));
                 break;
             }
         }

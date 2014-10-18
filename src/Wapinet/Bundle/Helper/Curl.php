@@ -52,7 +52,7 @@ class Curl
      */
     public function init($url = null)
     {
-        $this->curl = curl_init();
+        $this->curl = \curl_init();
 
         $this->setOpt(CURLOPT_SSL_VERIFYPEER, false);
         $this->setOpt(CURLOPT_SSL_VERIFYHOST, false);
@@ -71,7 +71,7 @@ class Curl
      */
     public function close()
     {
-        curl_close($this->curl);
+        \curl_close($this->curl);
     }
 
     /**
@@ -83,7 +83,7 @@ class Curl
      */
     public function setOpt($key, $value)
     {
-        curl_setopt($this->curl, $key, $value);
+        \curl_setopt($this->curl, $key, $value);
 
         return $this;
     }
@@ -97,7 +97,7 @@ class Curl
      */
     public function setUrl($value)
     {
-        curl_setopt($this->curl, CURLOPT_URL, $value);
+        \curl_setopt($this->curl, CURLOPT_URL, $value);
 
         return $this;
     }
@@ -111,9 +111,9 @@ class Curl
      */
     public function acceptRedirects($maxRedirects = null)
     {
-        curl_setopt($this->curl, CURLOPT_FOLLOWLOCATION, true);
+        \curl_setopt($this->curl, CURLOPT_FOLLOWLOCATION, true);
         if (null !== $maxRedirects) {
-            curl_setopt($this->curl, CURLOPT_MAXREDIRS, $maxRedirects);
+            \curl_setopt($this->curl, CURLOPT_MAXREDIRS, $maxRedirects);
         }
 
         return $this;
@@ -135,8 +135,8 @@ class Curl
         if (null === $length && true === $strict) {
             throw new LengthRequiredHttpException('Не удалось определить размер файла');
         }
-        if (is_array($length)) {
-            $length = end($length);
+        if (\is_array($length)) {
+            $length = \end($length);
         }
 
         $maxLength = $this->container->getParameter('wapinet_max_download_filesize');
@@ -158,28 +158,28 @@ class Curl
      */
     protected function parseHeaders($rawHeaders)
     {
-        if (!function_exists('http_parse_headers')) {
+        if (!\function_exists('http_parse_headers')) {
             $headers = array();
             $key = '';
 
-            foreach (explode("\n", $rawHeaders) as $h) {
-                $h = explode(':', $h, 2);
+            foreach (\explode("\n", $rawHeaders) as $h) {
+                $h = \explode(':', $h, 2);
 
                 if (isset($h[1])) {
                     if (!isset($headers[$h[0]])) {
-                        $headers[$h[0]] = trim($h[1]);
-                    } elseif (is_array($headers[$h[0]])) {
-                        $headers[$h[0]] = array_merge($headers[$h[0]], array(trim($h[1])));
+                        $headers[$h[0]] = \trim($h[1]);
+                    } elseif (\is_array($headers[$h[0]])) {
+                        $headers[$h[0]] = \array_merge($headers[$h[0]], array(\trim($h[1])));
                     } else {
-                        $headers[$h[0]] = array_merge(array($headers[$h[0]]), array(trim($h[1])));
+                        $headers[$h[0]] = \array_merge(array($headers[$h[0]]), array(\trim($h[1])));
                     }
 
                     $key = $h[0];
                 } else {
-                    if (substr($h[0], 0, 1) == "\t") {
-                        $headers[$key] .= "\r\n\t".trim($h[0]);
+                    if (\substr($h[0], 0, 1) == "\t") {
+                        $headers[$key] .= "\r\n\t".\trim($h[0]);
                     } elseif (!$key) {
-                        $headers[0] = trim($h[0]);
+                        $headers[0] = \trim($h[0]);
                     }
                 }
             }
@@ -187,7 +187,7 @@ class Curl
             return $headers;
         }
 
-        return http_parse_headers($rawHeaders);
+        return \http_parse_headers($rawHeaders);
     }
 
 
@@ -248,17 +248,17 @@ class Curl
             $this->sendPostData();
         }
 
-        $out = curl_exec($this->curl);
+        $out = \curl_exec($this->curl);
         if (false === $out) {
-            throw new RequestException(curl_error($this->curl), curl_errno($this->curl));
+            throw new RequestException(\curl_error($this->curl), \curl_errno($this->curl));
         }
-        $size = curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
-        $status = curl_getinfo($this->curl, CURLINFO_HTTP_CODE);
+        $size = \curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
+        $status = \curl_getinfo($this->curl, CURLINFO_HTTP_CODE);
 
         // заголовки
-        $headers = $this->parseHeaders(rtrim(substr($out, 0, $size)));
+        $headers = $this->parseHeaders(\rtrim(\substr($out, 0, $size)));
         // тело
-        $content = substr($out, $size);
+        $content = \substr($out, $size);
         $content = (false === $content ? null : $content);
 
         return new Response($content, $status, $headers);
@@ -273,9 +273,9 @@ class Curl
         $this->setOpt(CURLOPT_POST, true);
         $post = '';
         foreach ($this->postData as $key => $value) {
-            $post .= rawurlencode($key) . '=' . rawurlencode($value) . '&';
+            $post .= \rawurlencode($key) . '=' . \rawurlencode($value) . '&';
         }
-        $post = rtrim($post, '&');
+        $post = \rtrim($post, '&');
         $this->setOpt(CURLOPT_POSTFIELDS, $post);
 
         return $this;
@@ -319,7 +319,7 @@ class Curl
      */
     public function addBrowserHeaders()
     {
-        $this->headers = array_merge($this->headers, $this->browserHeaders);
+        $this->headers = \array_merge($this->headers, $this->browserHeaders);
 
         return $this;
     }

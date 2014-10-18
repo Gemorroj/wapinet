@@ -48,8 +48,8 @@ class Mime
             'shtml' => 'text/html',
             'm4a' => 'audio/x-m4a',
         );
-        foreach (explode("\n", $response->getContent()) as $x) {
-            if (isset($x[0]) && $x[0] !== '#' && preg_match_all('#([^\s]+)#', $x, $out) && isset($out[1]) && ($c = count($out[1])) > 1) {
+        foreach (\explode("\n", $response->getContent()) as $x) {
+            if (isset($x[0]) && $x[0] !== '#' && \preg_match_all('#([^\s]+)#', $x, $out) && isset($out[1]) && ($c = \count($out[1])) > 1) {
                 for ($i = 1; $i < $c; $i++) {
                     $mime[$out[1][$i]] = $out[1][0];
                 }
@@ -67,14 +67,14 @@ class Mime
     private function getMimeArray()
     {
         $cacheDir = $this->container->get('kernel')->getCacheDir();
-        $mimeFileName = $cacheDir . DIRECTORY_SEPARATOR . 'mime.types.php';
+        $mimeFileName = $cacheDir . \DIRECTORY_SEPARATOR . 'mime.types.php';
 
-        if (true === file_exists($mimeFileName)) {
+        if (true === \file_exists($mimeFileName)) {
             return include $mimeFileName;
         }
 
         $mimeArray = $this->generateMime();
-        $result = file_put_contents($mimeFileName, '<?php return ' . var_export($mimeArray, true) . ';' . "\n");
+        $result = \file_put_contents($mimeFileName, '<?php return ' . \var_export($mimeArray, true) . ';' . "\n");
         if (false === $result) {
             throw new \RuntimeException('Не удалось записать MIME типы');
         }
@@ -89,7 +89,7 @@ class Mime
      */
     public function getMimeType($path)
     {
-        $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+        $extension = \strtolower(\pathinfo($path, PATHINFO_EXTENSION));
         $mimeArray = $this->getMimeArray();
 
         if (true === isset($mimeArray[$extension])) {

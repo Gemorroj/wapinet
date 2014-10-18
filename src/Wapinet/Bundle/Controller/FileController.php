@@ -154,8 +154,7 @@ class FileController extends Controller
     public function tagsAction(Request $request)
     {
         $page = $request->get('page', 1);
-        /** @var FileRepository $tagManager */
-        $tagManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File');
+        $tagManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Tag');
         $query = $tagManager->getTagsQuery();
 
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
@@ -175,15 +174,15 @@ class FileController extends Controller
     public function tagAction(Request $request, $tagName)
     {
         $page = $request->get('page', 1);
-        /** @var FileRepository $tagManager */
-        $tagManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File');
+        $tagManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Tag');
 
         $tag = $tagManager->getTagByName($tagName);
         if (null === $tag) {
             throw $this->createNotFoundException('Тэг не найден');
         }
 
-        $query = $tagManager->getTagFilesQuery($tag);
+        $fileManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File');
+        $query = $fileManager->getTagFilesQuery($tag);
 
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
@@ -210,7 +209,6 @@ class FileController extends Controller
             throw $this->createNotFoundException('Пользователь не найден');
         }
 
-        /** @var FileRepository $tagManager */
         $tagManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File');
 
         $query = $tagManager->getUserFilesQuery($user);
@@ -482,9 +480,9 @@ class FileController extends Controller
         $path = $request->get('path');
         $tmpDir = $this->get('kernel')->getTmpFileDir();
 
-        $entry = $tmpDir . DIRECTORY_SEPARATOR . str_replace('\\', '/', $path);
+        $entry = $tmpDir . \DIRECTORY_SEPARATOR . \str_replace('\\', '/', $path);
 
-        if (true !== file_exists($entry)) {
+        if (true !== \file_exists($entry)) {
             $file = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->find($id);
             $archive = $this->get('archive_7z');
 
@@ -729,8 +727,7 @@ class FileController extends Controller
     protected function saveTags(File $file, $tagsString = null)
     {
         if (null !== $tagsString) {
-            /** @var FileRepository $tagManager */
-            $tagManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File');
+            $tagManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Tag');
             $fileHelper = $this->get('file');
             $tagsArray = $fileHelper->splitTagNames($tagsString);
             $tagsObjectArray = $tagManager->loadOrCreateTags($tagsArray, $file);
@@ -823,13 +820,13 @@ class FileController extends Controller
      */
     public function tagsSearchAction(Request $request)
     {
-        $term = trim($request->get('term', ''));
+        $term = \trim($request->get('term', ''));
         if ('' === $term) {
             return new JsonResponse(array());
         }
 
         $exTerm = \explode(',', $term);
-        $term = ltrim(end($exTerm));
+        $term = \ltrim(\end($exTerm));
         if ('' === $term) {
             return new JsonResponse(array());
         }

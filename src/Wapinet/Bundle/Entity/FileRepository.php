@@ -208,50 +208,13 @@ class FileRepository extends EntityRepository
 
 
     /**
-     * @return \Doctrine\ORM\Query
-     */
-    public function getTagsQuery()
-    {
-        return $this->getEntityManager()->createQueryBuilder()
-            ->select('t')
-            ->from('Wapinet\Bundle\Entity\Tag', 't')
-            ->where('t.count > 0')
-            ->orderBy('t.count', 'DESC')
-            ->getQuery()
-            ;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return Tag|null
-     */
-    public function getTagByName($name)
-    {
-        return $this->getEntityManager()->createQueryBuilder()
-
-            ->select('t')
-            ->from('Wapinet\Bundle\Entity\Tag', 't')
-
-            ->where('t.name = :name')
-            ->setParameter('name', $name)
-            ->andWhere('t.count > 0')
-
-            ->getQuery()
-            ->getOneOrNullResult()
-            ;
-    }
-
-    /**
      * @param User $user
      *
      * @return \Doctrine\ORM\Query
      */
     public function getUserFilesQuery(User $user)
     {
-        $q = $this->getEntityManager()->createQueryBuilder()
-            ->select('f')
-            ->from('Wapinet\Bundle\Entity\File', 'f')
+        $q = $this->createQueryBuilder('f')
             ->innerJoin('f.user', 'u')
 
             ->where('u = :user')
@@ -272,9 +235,7 @@ class FileRepository extends EntityRepository
      */
     public function getTagFilesQuery(Tag $tag)
     {
-        $q = $this->getEntityManager()->createQueryBuilder()
-            ->select('f')
-            ->from('Wapinet\Bundle\Entity\File', 'f')
+        $q = $this->createQueryBuilder('f')
             ->innerJoin('f.tags', 't')
 
             ->where('t = :tag')
@@ -286,66 +247,5 @@ class FileRepository extends EntityRepository
             ->getQuery()
             ;
         return $q;
-    }
-
-    /**
-     * Loads or creates multiples tags from a list of tag names
-     *
-     * @param array  $names   Array of tag names
-     * @param File $file
-     * @return ArrayCollection
-     */
-    public function loadOrCreateTags(array $names, File $file)
-    {
-        if (empty($names)) {
-            return array();
-        }
-
-        $names = \array_unique($names);
-
-        $builder = $this->getEntityManager()->createQueryBuilder();
-
-        $tags = $builder
-            ->select('t')
-            ->from('Wapinet\Bundle\Entity\Tag', 't')
-
-            ->where($builder->expr()->in('t.name', $names))
-
-            ->getQuery()
-            ->getResult()
-        ;
-
-        $loadedNames = array();
-        /** @var Tag $loadedTag */
-        foreach ($tags as $loadedTag) {
-            if (false === $loadedTag->getFiles()->contains($file)) {
-                $loadedTag->getFiles()->add($file);
-
-                if (null === $file->getPassword()) {
-                    $loadedTag->setCount($loadedTag->getCount() + 1);
-                } else {
-                    $loadedTag->setCountPassword($loadedTag->getCountPassword() + 1);
-                }
-            }
-
-            $loadedNames[] = $loadedTag->getName();
-        }
-
-        $missingNames = \array_udiff($names, $loadedNames, 'strcasecmp');
-        if ($missingNames) {
-            foreach ($missingNames as $name) {
-                $tag = new Tag();
-                $tag->setName($name);
-                $tag->setFiles(new ArrayCollection(array($file)));
-                if (null === $file->getPassword()) {
-                    $tag->setCount(1);
-                } else {
-                    $tag->setCountPassword(1);
-                }
-                $tags[] = $tag;
-            }
-        }
-
-        return new ArrayCollection($tags);
     }
 }

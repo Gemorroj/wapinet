@@ -38,7 +38,7 @@ class JavaApp extends \Twig_Extension
     {
         $screenshot = $path . '.png';
 
-        if (false === file_exists($this->getWebDir() . $screenshot)) {
+        if (false === \file_exists($this->getWebDir() . $screenshot)) {
             $manifestContent = $this->getManifestContent($path);
 
             $issetIcon = false;
@@ -66,13 +66,13 @@ class JavaApp extends \Twig_Extension
     {
         $issetIcon = false;
 
-        preg_match('/MIDlet\-Icon:[\s*](.*)/iux', $manifestContent, $arr);
+        \preg_match('/MIDlet\-Icon:[\s*](.*)/iux', $manifestContent, $arr);
         if (true === isset($arr[1])) {
             $issetIcon = $this->extractManifestIcon($arr[1], $path, $screenshot);
         }
 
         if (false === $issetIcon) {
-            preg_match('/MIDlet\-1:[\s*](.*)/iux', $manifestContent, $arr);
+            \preg_match('/MIDlet\-1:[\s*](.*)/iux', $manifestContent, $arr);
             if (true === isset($arr[1])) {
                 $issetIcon = $this->extractManifestIcon($arr[1], $path, $screenshot);
             }
@@ -128,9 +128,9 @@ class JavaApp extends \Twig_Extension
      */
     protected function extractManifestIcon($content, $path, $screenshot)
     {
-        foreach (explode(',', $content) as $v) {
-            $v = trim(trim($v), '/');
-            if ('png' === strtolower(pathinfo($v, PATHINFO_EXTENSION))) {
+        foreach (\explode(',', $content) as $v) {
+            $v = \trim(\trim($v), '/');
+            if ('png' === \strtolower(\pathinfo($v, PATHINFO_EXTENSION))) {
                 try {
                     $this->container->get('archive_zip')->extractEntry(
                         new BaseFile($this->getWebDir() . $path, false),

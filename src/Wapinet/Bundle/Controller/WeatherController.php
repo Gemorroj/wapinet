@@ -49,7 +49,7 @@ class WeatherController extends Controller
      */
     public function countrySearchAction(Request $request)
     {
-        $term = trim($request->get('term'));
+        $term = \trim($request->get('term'));
         if ('' === $term) {
             return new JsonResponse(array());
         }
@@ -69,7 +69,7 @@ class WeatherController extends Controller
      */
     public function citySearchAction(Request $request, $country)
     {
-        $term = trim($request->get('term'));
+        $term = \trim($request->get('term'));
         if ('' === $term) {
             return new JsonResponse(array());
         }

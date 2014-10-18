@@ -34,9 +34,9 @@ class File
      */
     public function splitTagNames($names, $separator = ',')
     {
-        $tags = explode($separator, $names);
-        $tags = array_map('trim', $tags);
-        $tags = array_filter($tags, function ($value) {
+        $tags = \explode($separator, $names);
+        $tags = \array_map('trim', $tags);
+        $tags = \array_filter($tags, function ($value) {
             return !empty($value);
         });
 
@@ -52,7 +52,7 @@ class File
      */
     public function joinTagNames(Collection $tags, $separator = ', ')
     {
-        return implode($separator, $tags->toArray());
+        return \implode($separator, $tags->toArray());
     }
 
     /**

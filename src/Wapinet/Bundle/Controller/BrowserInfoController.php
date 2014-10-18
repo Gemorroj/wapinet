@@ -64,10 +64,10 @@ class BrowserInfoController extends Controller
         $proxy = $this->getProxy($request);
         if (null !== $proxy) {
             $proxyHost = array();
-            foreach(explode(',', $proxy) as $v) {
-                $proxyHost[] = gethostbyaddr(trim($v));
+            foreach(\explode(',', $proxy) as $v) {
+                $proxyHost[] = \gethostbyaddr(\trim($v));
             }
-            return implode(',', $proxyHost);
+            return \implode(',', $proxyHost);
         }
 
         return null;
@@ -98,7 +98,7 @@ class BrowserInfoController extends Controller
             'user_agent' => $request->server->get('HTTP_USER_AGENT'),
             'phone_number' => $this->getPhoneNumber($request),
             'ip' => $request->server->get('REMOTE_ADDR'),
-            'ip_host' => gethostbyaddr($request->server->get('REMOTE_ADDR')),
+            'ip_host' => \gethostbyaddr($request->server->get('REMOTE_ADDR')),
             'local' => $this->getProxy($request),
             'local_host' => $this->getProxyHost($request),
             'port' => $request->server->get('REMOTE_PORT'),
