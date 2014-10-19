@@ -65,6 +65,25 @@ class Siza
         $this->container = $container;
     }
 
+    /**
+     * @param string $query
+     * @return bool|int
+     */
+    public function getSearchId($query)
+    {
+        $this->link = 'http://load.siza.ru/search?place=everywhere&query=' . $query;
+        $response = $this->getLink(true);
+
+        if (false !== \strpos($response->getContent(), 'ничего не нашли')) {
+            return false;
+        }
+
+        $location = $response->headers->get('Location');
+        $query = parse_url($location, PHP_URL_QUERY);
+        list(, $searchId) = explode('=', $query);
+
+        return $searchId;
+    }
 
     /**
      * Инициализируем работу с DOM моделью
@@ -73,10 +92,11 @@ class Siza
      * @param string $query
      * @param int|null $page
      * @param int|null $scr
+     * @param int|null $searchId
      */
-    public function init($contentDirectory, $query, $page = null, $scr = null)
+    public function init($contentDirectory, $query, $page = null, $scr = null, $searchId = null)
     {
-        $this->link = 'http://load.siza.ru/' . \ltrim($query, '/') . '?page=' . $page . '&scr=' . $scr;
+        $this->link = 'http://load.siza.ru/' . \ltrim($query, '/') . '?page=' . $page . '&scr=' . $scr . '&searchId=' . $searchId;
         $this->contentDirectory = $contentDirectory;
         $this->dom = new \DOMDocument('1.0', 'UTF-8');
         @$this->dom->loadHTML($this->getLink()->getContent());
@@ -89,18 +109,21 @@ class Siza
         $this->contentNodes = $this->xpath->query('//div[@class="block"]');
     }
 
-
     /**
      * Получаем контент по ссылке
      *
+     * @param bool $acceptRedirects
      * @return Response
      */
-    public function getLink ()
+    public function getLink ($acceptRedirects = false)
     {
         $curl = $this->container->get('curl');
         $curl->init($this->link);
         $curl->addBrowserHeaders();
         $curl->addCompression();
+        if ($acceptRedirects) {
+            $curl->acceptRedirects();
+        }
 
         $response = $curl->exec();
 
@@ -109,6 +132,23 @@ class Siza
         }
 
         return $response;
+    }
+
+
+    /**
+     * Получаем страницу со списком файлов
+     *
+     * @return string
+     */
+    public function getContentListSearch()
+    {
+        $out = $this->getContentList();
+
+        $out = str_replace(array('<dl><dt>', '<dl><dt style="border-bottom:none;">', '</dt>', '</dl>'), array('<li>', '<li>', '</p>', '</a></li>'), $out);
+        $out = str_replace('</d</ul>' , '</a></li></ul>', $out);
+
+
+        return $out;
     }
 
 
@@ -282,9 +322,10 @@ class Siza
     /**
      * Получаем страницу со пагинацией
      *
+     * @param array $extParam
      * @return string
      */
-    public function getListingNagivation()
+    public function getListingNagivation(array $extParam = null)
     {
         $out = '';
 
@@ -297,6 +338,11 @@ class Siza
             foreach ($aArr as $a) {
                 $href = (string)$a->getAttribute('href');
                 $href = \str_replace('?', '&', $href);
+                if ($extParam) {
+                    foreach ($extParam as $extParamKey => $extParamValue) {
+                        $href .= '&' . rawurlencode($extParamKey) . '=' . rawurlencode($extParamValue);
+                    }
+                }
                 $a->setAttribute('href', '?q=' . $href);
                 $a->setAttribute('data-role', 'button');
                 $a->removeAttribute('class');

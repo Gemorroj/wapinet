@@ -2,4 +2,13 @@ siza_index:
     pattern: /
     defaults: { _controller: WapinetBundle:Siza:index }
 
+siza_search:
+    pattern: /search
+    defaults: { _controller: WapinetBundle:Siza:search }
 
+
+siza_search_list:
+    pattern: /search/{searchId}
+    defaults: { _controller: WapinetBundle:Siza:searchList }
+    requirements:
+        searchId: \d+
