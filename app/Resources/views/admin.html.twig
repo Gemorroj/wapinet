@@ -12,8 +12,9 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function () {
-            // скрываем левую панель, затем удаляем кнопку открытия
-            $("[data-toggle='offcanvas']").click().remove();
+            // скрываем левую панель
+            $('.left-side').addClass("collapse-left");
+            $(".right-side").addClass("strech");
         });
     </script>
 {% endblock %}
