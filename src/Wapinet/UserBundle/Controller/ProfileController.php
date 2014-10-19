@@ -26,7 +26,7 @@ class ProfileController extends BaseController
     public function showUserAction($username = null)
     {
         $currentUser = $this->container->get('security.context')->getToken()->getUser();
-        if (!is_object($currentUser) || !$currentUser instanceof UserInterface) {
+        if (!\is_object($currentUser) || !$currentUser instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
         if (null !== $username) {
@@ -49,7 +49,7 @@ class ProfileController extends BaseController
     {
         /** @var User $user */
         $user = $this->container->get('security.context')->getToken()->getUser();
-        if (!is_object($user) || !$user instanceof UserInterface) {
+        if (!\is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 

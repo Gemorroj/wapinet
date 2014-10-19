@@ -118,8 +118,8 @@ class FileUrlDataTransformer implements DataTransformerInterface
                 throw new TransformationFailedException('Не удалось открыть временный файл на запись');
             }
 
-            $curl->setOpt(CURLOPT_HEADER, false);
-            $curl->setOpt(CURLOPT_FILE, $f);
+            $curl->setOpt(\CURLOPT_HEADER, false);
+            $curl->setOpt(\CURLOPT_FILE, $f);
 
             $responseBody = $curl->exec();
             $curl->close();

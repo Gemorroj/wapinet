@@ -51,19 +51,19 @@ class SizaController extends Controller
         $content = '';
         $pages = '';
 
-        if (0 === strpos($query, '/artists/')) {
+        if (0 === \strpos($query, '/artists/')) {
             $content .= $siza->getContent();
         } else {
             $content .= $siza->getContentList();
             $content .= $siza->getFoldersListDl();
             $content .= $siza->getFoldersList();
             $pages = $siza->getListingNagivation();
-            if ($content === '') {
+            if ('' === $content) {
                 $content .= $siza->getContent();
             }
         }
         $breadcrumbs = $siza->getContentNavigator();
-        $name = array_pop($breadcrumbs);
+        $name = \array_pop($breadcrumbs);
 
         return $this->render('WapinetBundle:Siza:show.html.twig', array(
             'content' => $content,

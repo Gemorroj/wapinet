@@ -244,7 +244,6 @@ class GistController extends Controller
                 if ($key === $search['key']) {
                     $form->setData($search['data']);
                     $pagerfanta = $this->searchSphinx($search['data'], $page);
-                    //$pagerfanta = $this->search($search['data'], $page);
                 }
             }
         } catch (\Exception $e) {

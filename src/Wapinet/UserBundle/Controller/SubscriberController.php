@@ -23,7 +23,7 @@ class SubscriberController extends Controller
     {
         /** @var User $user */
         $user = $this->container->get('security.context')->getToken()->getUser();
-        if (!is_object($user) || !$user instanceof User) {
+        if (!\is_object($user) || !$user instanceof User) {
             throw new AccessDeniedException('Вы должны быть авторизованы.');
         }
 

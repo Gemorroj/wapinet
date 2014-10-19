@@ -54,10 +54,10 @@ class Curl
     {
         $this->curl = \curl_init();
 
-        $this->setOpt(CURLOPT_SSL_VERIFYPEER, false);
-        $this->setOpt(CURLOPT_SSL_VERIFYHOST, false);
-        $this->setOpt(CURLOPT_RETURNTRANSFER, true);
-        $this->setOpt(CURLOPT_HEADER, true);
+        $this->setOpt(\CURLOPT_SSL_VERIFYPEER, false);
+        $this->setOpt(\CURLOPT_SSL_VERIFYHOST, false);
+        $this->setOpt(\CURLOPT_RETURNTRANSFER, true);
+        $this->setOpt(\CURLOPT_HEADER, true);
 
         if (null !== $url) {
             $this->setUrl($url);
@@ -97,7 +97,7 @@ class Curl
      */
     public function setUrl($value)
     {
-        \curl_setopt($this->curl, CURLOPT_URL, $value);
+        \curl_setopt($this->curl, \CURLOPT_URL, $value);
 
         return $this;
     }
@@ -111,9 +111,9 @@ class Curl
      */
     public function acceptRedirects($maxRedirects = null)
     {
-        \curl_setopt($this->curl, CURLOPT_FOLLOWLOCATION, true);
+        \curl_setopt($this->curl, \CURLOPT_FOLLOWLOCATION, true);
         if (null !== $maxRedirects) {
-            \curl_setopt($this->curl, CURLOPT_MAXREDIRS, $maxRedirects);
+            \curl_setopt($this->curl, \CURLOPT_MAXREDIRS, $maxRedirects);
         }
 
         return $this;
@@ -128,7 +128,7 @@ class Curl
      */
     public function checkFileSize($strict = true)
     {
-        $this->setOpt(CURLOPT_NOBODY, true);
+        $this->setOpt(\CURLOPT_NOBODY, true);
         $response = $this->exec();
 
         $length = $response->headers->get('Content-Length');
@@ -144,7 +144,7 @@ class Curl
             throw new \LengthException('Размер файла превышает максимально допустимый');
         }
 
-        $this->setOpt(CURLOPT_NOBODY, false);
+        $this->setOpt(\CURLOPT_NOBODY, false);
 
         return $response;
     }
@@ -242,7 +242,7 @@ class Curl
     public function exec()
     {
         if ($this->headers) {
-            $this->setOpt(CURLOPT_HTTPHEADER, $this->headers);
+            $this->setOpt(\CURLOPT_HTTPHEADER, $this->headers);
         }
         if ($this->postData) {
             $this->sendPostData();
@@ -252,8 +252,8 @@ class Curl
         if (false === $out) {
             throw new RequestException(\curl_error($this->curl), \curl_errno($this->curl));
         }
-        $size = \curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
-        $status = \curl_getinfo($this->curl, CURLINFO_HTTP_CODE);
+        $size = \curl_getinfo($this->curl, \CURLINFO_HEADER_SIZE);
+        $status = \curl_getinfo($this->curl, \CURLINFO_HTTP_CODE);
 
         // заголовки
         $headers = $this->parseHeaders(\rtrim(\substr($out, 0, $size)));
@@ -270,13 +270,13 @@ class Curl
     protected function sendPostData()
     {
         $this->addHeader('Content-Type', 'application/x-www-form-urlencoded');
-        $this->setOpt(CURLOPT_POST, true);
+        $this->setOpt(\CURLOPT_POST, true);
         $post = '';
         foreach ($this->postData as $key => $value) {
             $post .= \rawurlencode($key) . '=' . \rawurlencode($value) . '&';
         }
         $post = \rtrim($post, '&');
-        $this->setOpt(CURLOPT_POSTFIELDS, $post);
+        $this->setOpt(\CURLOPT_POSTFIELDS, $post);
 
         return $this;
     }
@@ -297,7 +297,7 @@ class Curl
      */
     public function addCompression()
     {
-        $this->setOpt(CURLOPT_ENCODING, '');
+        $this->setOpt(\CURLOPT_ENCODING, '');
 
         return $this;
     }

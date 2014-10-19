@@ -45,7 +45,7 @@ class PagerankController extends Controller
      */
     protected function getPagerank(array $data)
     {
-        $url = str_ireplace('http://', '', $data['url']);
+        $url = \str_ireplace('http://', '', $data['url']);
 
         return array(
             'url' => $url,
@@ -65,14 +65,14 @@ class PagerankController extends Controller
     {
         $curl = $this->get('curl');
         $curl->init('http://xmlsearch.yandex.ru/xmlsearch?user=gemorwapinet&key=' . $this->container->getParameter('wapinet_search_key'));
-        $curl->setOpt(CURLOPT_POST, true);
-        $curl->setOpt(CURLOPT_POSTFIELDS, '<?xml version="1.0" encoding="UTF-8"?><request><query>' . htmlspecialchars($url, ENT_XML1) . '</query><groupings><groupby groups-on-page="1"/></groupings></request>');
+        $curl->setOpt(\CURLOPT_POST, true);
+        $curl->setOpt(\CURLOPT_POSTFIELDS, '<?xml version="1.0" encoding="UTF-8"?><request><query>' . \htmlspecialchars($url, \ENT_XML1) . '</query><groupings><groupby groups-on-page="1"/></groupings></request>');
 
         $out = 'N/A';
         try {
             $response = $curl->exec();
 
-            if (preg_match('/<found priority="all">(.*)<\/found>/U', $response->getContent(), $match)) {
+            if (\preg_match('/<found priority="all">(.*)<\/found>/U', $response->getContent(), $match)) {
                 $out = $match[1];
             }
         } catch (\Exception $e) {}
@@ -95,7 +95,7 @@ class PagerankController extends Controller
         try {
             $response = $curl->exec();
 
-            if (preg_match("/value=\"(.\d*)\"/", $response, $match)) {
+            if (\preg_match("/value=\"(.\d*)\"/", $response, $match)) {
                 $out = $match[1];
             }
         } catch (\Exception $e) {}
@@ -111,7 +111,7 @@ class PagerankController extends Controller
     protected function getGooglePages($url)
     {
         $curl = $this->get('curl');
-        $curl->init('http://www.google.com/search?q=' . rawurlencode('site:' . $url));
+        $curl->init('http://www.google.com/search?q=' . \rawurlencode('site:' . $url));
         $curl->addCompression();
         $curl->addHeader('Accept-Language', 'en-US,en');
 
@@ -123,14 +123,14 @@ class PagerankController extends Controller
             <div id="resultStats">About 345,000 results</div>
              */
 
-            if (strpos($response->getContent(), 'did not match any documents')) {
+            if (\strpos($response->getContent(), 'did not match any documents')) {
                 $out = '0';
             } else {
-                preg_match('/<div class="sd" id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
+                \preg_match('/<div class="sd" id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
 
                 if (isset($match[1])) {
-                    $match[1] = str_replace('About ', '', $match[1]);
-                    $match[1] = str_replace(' results', '', $match[1]);
+                    $match[1] = \str_replace('About ', '', $match[1]);
+                    $match[1] = \str_replace(' results', '', $match[1]);
 
                     $out = $match[1];
                 }
@@ -149,7 +149,7 @@ class PagerankController extends Controller
     protected function getGoogleInurl($url)
     {
         $curl = $this->get('curl');
-        $curl->init('http://www.google.com/search?q=' . rawurlencode('"' . $url . '" -inurl:"' . $url . '"'));
+        $curl->init('http://www.google.com/search?q=' . \rawurlencode('"' . $url . '" -inurl:"' . $url . '"'));
         $curl->acceptRedirects(); // fix ipv4
         $curl->addCompression();
         $curl->addHeader('Accept-Language', 'en-US,en');
@@ -163,14 +163,14 @@ class PagerankController extends Controller
              */
 
 
-            if (strpos($response->getContent(), 'did not match any documents')) {
+            if (\strpos($response->getContent(), 'did not match any documents')) {
                 $out = '0';
             } else {
-                preg_match('/<div class="sd" id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
+                \preg_match('/<div class="sd" id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
 
                 if (isset($match[1])) {
-                    $match[1] = str_replace('About ', '', $match[1]);
-                    $match[1] = str_replace(' results', '', $match[1]);
+                    $match[1] = \str_replace('About ', '', $match[1]);
+                    $match[1] = \str_replace(' results', '', $match[1]);
 
                     $out = $match[1];
                 }
@@ -192,7 +192,7 @@ class PagerankController extends Controller
      * @version     $Revision: 2.1 $
      * @require     PHP 4.3.0 (file_get_contents)
      * @updated		06/10/11
-     * @see         https://github.com/phurix/pagerank/blob/master/pagerank2.php
+     * @see         https://github.com/stfast/pagerank
      */
     protected function getGooglePr($q, $host = 'toolbarqueries.google.com', $context = null)
     {

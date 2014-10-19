@@ -54,11 +54,11 @@ class WhoisController extends Controller
         $result = $whois->Lookup($data['query']);
 
         if (!empty($result['rawdata'])) {
-            $result['rawdata'] = str_replace('{query}', htmlspecialchars($data['query']), $result['rawdata']);
+            $result['rawdata'] = \str_replace('{query}', \htmlspecialchars($data['query']), $result['rawdata']);
             $utils = $phpwhois->getUtils();
             $resultHtml = $utils->showHTML($result);
 
-            $resultHtml = str_replace($_SERVER['PHP_SELF'], '', $resultHtml);
+            $resultHtml = \str_replace($_SERVER['PHP_SELF'], '', $resultHtml);
             return $resultHtml;
         }
 

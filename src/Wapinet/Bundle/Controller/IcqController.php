@@ -34,9 +34,9 @@ class IcqController extends Controller
             throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
         }
 
-        preg_match('/name="csrf"[\s+]value="(.+)"/U', $response->getContent(), $csrf);
-        preg_match('/name="gnm"[\s+]value="(.+)"/U', $response->getContent(), $gnm);
-        preg_match('/src="https:\/\/www\.icq\.com\/utils\/recaptcha\/gnm\/(.+)"/U', $response->getContent(), $img_gnm);
+        \preg_match('/name="csrf"[\s+]value="(.+)"/U', $response->getContent(), $csrf);
+        \preg_match('/name="gnm"[\s+]value="(.+)"/U', $response->getContent(), $gnm);
+        \preg_match('/src="https:\/\/www\.icq\.com\/utils\/recaptcha\/gnm\/(.+)"/U', $response->getContent(), $img_gnm);
 
         return array(
             'csrf' => $csrf[1],
@@ -59,7 +59,7 @@ class IcqController extends Controller
         $curl->addCompression();
         $curl->addHeader('Referer', 'http://www.icq.com/join/ru');
         $curl->addHeader('X-Requested-With', 'XMLHttpRequest');
-        $curl->addHeader('Cookie', 'is_ab_mim=0; rfd=; icq_tracking=' . mt_rand(99999, PHP_INT_MAX) . '; icq_lang=ru; csrf=' . $data['csrf']);
+        $curl->addHeader('Cookie', 'is_ab_mim=0; rfd=; icq_tracking=' . \mt_rand(99999, \PHP_INT_MAX) . '; icq_lang=ru; csrf=' . $data['csrf']);
 
         $curl->addPostData('reg_type', $data['reg_type']);
         $curl->addPostData('csrf', $data['csrf']);
@@ -133,22 +133,22 @@ class IcqController extends Controller
             throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
         }
 
-        $im = @imagecreatefromstring($response->getContent());
+        $im = @\imagecreatefromstring($response->getContent());
         if ($im === false) {
             return new Response('Error');
         }
 
-        $i = imagecreatetruecolor(120, 50);
-        imagecopyresampled($i, $im, 0, 0, 0, 0, 120, 50, 240, 100);
+        $i = \imagecreatetruecolor(120, 50);
+        \imagecopyresampled($i, $im, 0, 0, 0, 0, 120, 50, 240, 100);
 
-        //imageinterlace($im, 1); // Примочка
+        //\imageinterlace($im, 1); // Примочка
 
-        ob_start();
-        imagepng($i, null, 9);
-        $image = ob_get_contents();
-        ob_end_clean();
-        imagedestroy($i);
-        imagedestroy($im);
+        \ob_start();
+        \imagepng($i, null, 9);
+        $image = \ob_get_contents();
+        \ob_end_clean();
+        \imagedestroy($i);
+        \imagedestroy($im);
 
 
         $response = new Response($image);
@@ -282,18 +282,18 @@ class IcqController extends Controller
             throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
         }
 
-        $out = explode('<div class="form-col l">', $response->getContent());
+        $out = \explode('<div class="form-col l">', $response->getContent());
         if (!isset($out[1])) {
             return '';
         }
         $out = '<div><div><div class="form-col l">' . $out[1];
-        $out = explode('</div></div>', $out);
+        $out = \explode('</div></div>', $out);
         $out = $out[0];
 
-        $out = str_replace('<label for="" class="l">', '<label>', $out);
-        $out = str_replace('</label>', ':</label>', $out);
-        $out = str_replace('<div class="clearBoth"></div>', '', $out);
-        $out = str_replace('<hr />', '', $out);
+        $out = \str_replace('<label for="" class="l">', '<label>', $out);
+        $out = \str_replace('</label>', ':</label>', $out);
+        $out = \str_replace('<div class="clearBoth"></div>', '', $out);
+        $out = \str_replace('<hr />', '', $out);
 
         if (!$out) {
             throw new \RuntimeException('Пользователь не найден');

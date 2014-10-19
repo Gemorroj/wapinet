@@ -30,8 +30,8 @@ class Weather
     {
         $file = $this->container->get('kernel')->getCacheWeatherDir() . '/countries.xml';
 
-        if (false === is_file($file)) {
-            $f = fopen($file, 'w');
+        if (false === \is_file($file)) {
+            $f = \fopen($file, 'w');
 
             try {
                 $curl = $this->container->get('curl');
@@ -39,11 +39,11 @@ class Weather
                     'http://a956e985.services.gismeteo.ru/inform-service/588c42b53455e4d92511627521555fe4/countries/?lang=ru'
                 );
                 $curl->addCompression();
-                $curl->setOpt(CURLOPT_FILE, $f);
-                $curl->setOpt(CURLOPT_HEADER, false);
+                $curl->setOpt(\CURLOPT_FILE, $f);
+                $curl->setOpt(\CURLOPT_HEADER, false);
                 $response = $curl->exec();
                 $curl->close();
-                fclose($f);
+                \fclose($f);
 
                 if (!$response->isSuccessful()) {
                     throw new \RuntimeException(
@@ -51,12 +51,12 @@ class Weather
                     );
                 }
             } catch (\Exception $e) {
-                @unlink($file);
+                @\unlink($file);
                 throw $e;
             }
         }
 
-        $obj = simplexml_load_file($file);
+        $obj = \simplexml_load_file($file);
 
         $countries = array();
         foreach ($obj->item as $v) {
@@ -75,8 +75,8 @@ class Weather
     {
         $file = $this->container->get('kernel')->getCacheWeatherDir() . '/' . $country . '.xml';
 
-        if (false === is_file($file)) {
-            $f = fopen($file, 'w');
+        if (false === \is_file($file)) {
+            $f = \fopen($file, 'w');
 
             try {
                 $curl = $this->container->get('curl');
@@ -84,11 +84,11 @@ class Weather
                     'http://a956e985.services.gismeteo.ru/inform-service/588c42b53455e4d92511627521555fe4/cities/?country=' . $country . '&lang=ru'
                 );
                 $curl->addCompression();
-                $curl->setOpt(CURLOPT_FILE, $f);
-                $curl->setOpt(CURLOPT_HEADER, false);
+                $curl->setOpt(\CURLOPT_FILE, $f);
+                $curl->setOpt(\CURLOPT_HEADER, false);
                 $response = $curl->exec();
                 $curl->close();
-                fclose($f);
+                \fclose($f);
 
                 if (!$response->isSuccessful()) {
                     throw new \RuntimeException(
@@ -96,12 +96,12 @@ class Weather
                     );
                 }
             } catch (\Exception $e) {
-                @unlink($file);
+                @\unlink($file);
                 throw $e;
             }
         }
 
-        $obj = simplexml_load_file($file);
+        $obj = \simplexml_load_file($file);
 
         $cities = array();
         foreach ($obj->item as $v) {
@@ -127,7 +127,7 @@ class Weather
             throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
         }
 
-        $obj = simplexml_load_string($response->getContent());
+        $obj = \simplexml_load_string($response->getContent());
 
         $weather =  array(
             'now' => array(
@@ -172,7 +172,6 @@ class Weather
      */
     protected function getWindDirection ($w)
     {
-        $direction = array('штиль', 'северный', 'северо-восточный', 'восточный', 'юго-восточный', 'южный', 'юго-западный', 'западный', 'северо-западный');
-        return $direction[$w];
+        return array('штиль', 'северный', 'северо-восточный', 'восточный', 'юго-восточный', 'южный', 'юго-западный', 'западный', 'северо-западный')[$w];
     }
 }

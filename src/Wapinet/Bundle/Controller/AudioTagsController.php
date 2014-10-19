@@ -70,7 +70,7 @@ class AudioTagsController extends Controller
         /** @var $file UploadedFile */
         $file = $data['file'];
         $tempDirectory = $this->container->get('kernel')->getTmpDir();
-        $tempName = tempnam($tempDirectory, 'audio_file');
+        $tempName = \tempnam($tempDirectory, 'audio_file');
 
         return $file->move($tempDirectory, $tempName);
     }
@@ -216,7 +216,7 @@ class AudioTagsController extends Controller
         $picture = $data['picture'];
         if ($picture instanceof UploadedFile) {
 
-            $data = file_get_contents($picture->getPathname());
+            $data = \file_get_contents($picture->getPathname());
             if (false === $data) {
                 throw new IOException('Не удалось получить изображение.', 0, null, $picture->getPathname());
             }
@@ -304,6 +304,6 @@ class AudioTagsController extends Controller
      */
     protected function getFilePath($fileName)
     {
-        return $this->container->get('kernel')->getTmpDir() . DIRECTORY_SEPARATOR . $fileName;
+        return $this->container->get('kernel')->getTmpDir() . \DIRECTORY_SEPARATOR . $fileName;
     }
 }

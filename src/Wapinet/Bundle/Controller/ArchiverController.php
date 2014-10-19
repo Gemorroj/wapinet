@@ -150,17 +150,17 @@ class ArchiverController extends Controller
      */
     protected function checkFile($archiveDirectory, $path, $allowDirectory = false)
     {
-        if (strpos($path, '../') !== false || strpos($path, '..\\')) {
+        if (false !== \strpos($path, '../') || \strpos($path, '..\\')) {
             throw new AccessDeniedException($path);
         }
 
-        $file = realpath($archiveDirectory . DIRECTORY_SEPARATOR . $path);
+        $file = \realpath($archiveDirectory . \DIRECTORY_SEPARATOR . $path);
 
-        if (strpos($file, $archiveDirectory) !== 0) {
+        if (0 !== \strpos($file, $archiveDirectory)) {
             throw new AccessDeniedException($path);
         }
 
-        if (true !== $allowDirectory && true === is_dir($allowDirectory)) {
+        if (true !== $allowDirectory && true === \is_dir($allowDirectory)) {
             throw new AccessDeniedException($path);
         }
 
@@ -184,7 +184,7 @@ class ArchiverController extends Controller
 
                     $archiveDirectory = $this->extractArchive($data['file']);
 
-                    $archive = basename($archiveDirectory);
+                    $archive = \basename($archiveDirectory);
                     return $this->redirect($this->get('router')->generate('archiver_edit', array('archive' => $archive), Router::ABSOLUTE_URL));
                 }
             }
@@ -252,15 +252,15 @@ class ArchiverController extends Controller
      */
     protected function checkArchiveDirectory($archive)
     {
-        $directory = $this->getTmpDir() . DIRECTORY_SEPARATOR . $archive;
+        $directory = $this->getTmpDir() . \DIRECTORY_SEPARATOR . $archive;
 
-        if (false === is_dir($directory)) {
+        if (false === \is_dir($directory)) {
             throw new FileException('Не удалось найти временную директорию');
         }
-        if (false === is_readable($directory)) {
+        if (false === \is_readable($directory)) {
             throw new FileException('Нет доступа на чтение временной директории');
         }
-        if (false === is_writable($directory)) {
+        if (false === \is_writable($directory)) {
             throw new FileException('Нет доступа на запись во временную директорию');
         }
 
@@ -274,7 +274,7 @@ class ArchiverController extends Controller
      */
     protected function createArchiveDirectory()
     {
-        $directory = $this->getTmpDir() . DIRECTORY_SEPARATOR . $this->generateArchiveName();
+        $directory = $this->getTmpDir() . \DIRECTORY_SEPARATOR . $this->generateArchiveName();
         $this->get('filesystem')->mkdir($directory);
 
         return $directory;
