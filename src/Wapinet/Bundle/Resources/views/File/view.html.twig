@@ -69,14 +69,23 @@
     <a data-role="button" data-icon="arrow-d" href="{{ vich_uploader_asset(file, 'file') }}" download="{{ file.originalFileName }}">Скачать</a>
 
     {% if file.isImage %}
-        {% include 'WapinetBundle::image.html.twig' with {
-            'image': {
-            'id': file.id,
-            'alt': file.originalFileName,
-            'src': vich_uploader_asset(file, 'file'),
-            'preview': vich_uploader_asset(file, 'file')|imagine_filter('thumbnail')
-            }
-        } %}
+        <fieldset class="ui-grid-a">
+            <div class="ui-block-a">
+                {% include 'WapinetBundle::image.html.twig' with {
+                    'image': {
+                        'id': file.id,
+                        'alt': file.originalFileName,
+                        'src': vich_uploader_asset(file, 'file'),
+                        'preview': vich_uploader_asset(file, 'file')|imagine_filter('thumbnail')
+                    }
+                } %}
+            </div>
+            <div class="ui-block-b">
+                {% if file.getPassword is null %}
+                    <a href="{{ path('file_swiper', {'id': file.id}) }}" class="ui-btn ui-shadow ui-corner-all ui-icon-camera ui-btn-icon-left ui-btn-inline">На весь экран</a>
+                {% endif %}
+            </div>
+        </fieldset>
 
         {% if file.meta is not null %}
             <pre class="long-description">
