@@ -795,7 +795,6 @@ class FileController extends Controller
         $entityManager->persist($data);
 
         $this->saveFileAcl($data);
-
         $entityManager->flush();
 
         $this->container->get('event_dispatcher')->dispatch(
@@ -832,5 +831,46 @@ class FileController extends Controller
         }
 
         return new JsonResponse($result);
+    }
+
+
+    /**
+     * @param int $id
+     * @return Response
+     */
+    public function swiperAction($id)
+    {
+        $repository = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File');
+
+        /** @var File $file */
+        $file = $repository->find($id);
+        if (null === $file) {
+            throw $this->createNotFoundException('Файл не найден.');
+        }
+
+        if (!$file->isImage()) {
+            throw new \InvalidArgumentException('Просмотр возможен только для картинок.');
+        }
+
+        if (null !== $file->getPassword()) {
+            throw new \InvalidArgumentException('Просмотр запароленых файлов не поддерживается.');
+        }
+
+        $prevFile = $repository->getPrevFile($id, 'image');
+        $nextFile = $repository->getNextFile($id, 'image');
+
+        $response = $this->render('WapinetBundle:File:swiper.html.twig', array(
+            'file' => $file,
+            'prevFile' => $prevFile,
+            'nextFile' => $nextFile,
+        ));
+
+        $this->incrementViews($file);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($file);
+        $entityManager->flush();
+
+        return $response;
     }
 }

@@ -76,4 +76,9 @@ file_archive_download_file:
     requirements:
         id: \d+
 
+file_swiper:
+    pattern: /swiper/{id}
+    defaults: { _controller: WapinetBundle:File:swiper }
+    requirements:
+        id: \d+
 

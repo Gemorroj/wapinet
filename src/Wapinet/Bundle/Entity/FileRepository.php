@@ -18,14 +18,16 @@ class FileRepository extends EntityRepository
         $sizeFiles = $em->createQuery('SELECT SUM(f.fileSize) FROM Wapinet\Bundle\Entity\File f');
         $countViews = $em->createQuery('SELECT SUM(f.countViews) FROM Wapinet\Bundle\Entity\File f');
 
-        $users = $em->createQuery('
+        $users = $em->createQuery(
+            '
             SELECT u.username, COUNT(f.id) AS uploads
             FROM Wapinet\Bundle\Entity\File f
             INNER JOIN Wapinet\UserBundle\Entity\User u WITH f.user = u
             WHERE u.enabled = 1 AND u.locked = 0 AND u.expired = 0
             GROUP BY u.id
             ORDER BY uploads DESC
-        ');
+        '
+        );
         $users->setMaxResults($maxUsers);
 
         return array(
@@ -44,7 +46,8 @@ class FileRepository extends EntityRepository
     public function getComments($maxComments = 8)
     {
         $connection = $this->getEntityManager()->getConnection();
-        $q = $connection->query('
+        $q = $connection->query(
+            '
             SELECT comment.body, comment.created_at, user.username, comment_thread.permalink
             FROM comment
             INNER JOIN comment_thread ON comment_thread.id = comment.thread_id
@@ -70,7 +73,9 @@ class FileRepository extends EntityRepository
      */
     public function countAll()
     {
-        return $this->getEntityManager()->createQuery('SELECT COUNT(f.id) FROM Wapinet\Bundle\Entity\File f WHERE f.password IS NULL')->getSingleScalarResult();
+        return $this->getEntityManager()->createQuery(
+            'SELECT COUNT(f.id) FROM Wapinet\Bundle\Entity\File f WHERE f.password IS NULL'
+        )->getSingleScalarResult();
     }
 
     /**
@@ -153,6 +158,57 @@ class FileRepository extends EntityRepository
         $this->addCategoryMime($q, $category);
 
         return $q->getQuery();
+    }
+
+
+    /**
+     * @param int $id
+     * @param string|null $category
+     * @param bool $passwordIsNull
+     * @return File|null
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getPrevFile($id, $category = null, $passwordIsNull = true)
+    {
+        $q = $this->createQueryBuilder('f')
+            ->where('f.id > :id')
+            ->setParameter('id', $id)
+            ->orderBy('f.id', 'ASC')
+            ->setMaxResults(1);
+
+        if ($passwordIsNull) {
+            $q->andWhere('f.password IS NULL');
+        }
+
+        $this->addCategoryMime($q, $category);
+
+        return $q->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @param int $id
+     * @param string|null $category
+     * @param bool $passwordIsNull
+     * @return File|null
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getNextFile($id, $category = null, $passwordIsNull = true)
+    {
+        $q = $this->createQueryBuilder('f')
+            ->where('f.id < :id')
+            ->setParameter('id', $id)
+            ->orderBy('f.id', 'DESC')
+            ->setMaxResults(1);
+
+        if ($passwordIsNull) {
+            $q->andWhere('f.password IS NULL');
+        }
+
+        $this->addCategoryMime($q, $category);
+
+        return $q->getQuery()->getOneOrNullResult();
     }
 
 

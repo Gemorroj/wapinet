@@ -1,0 +1,32 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ file.originalFileName }}{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('/bundles/wapinet/js/swiper.js') }}"></script>
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/wapinet/css/swiper.css') }}" />
+{% endblock %}
+
+{% block body %}
+    <div data-role="page" class="swiper-page" data-title="{{ file.originalFileName }}" data-dom-cache="true" data-theme="b" style="background-image: url('{{ vich_uploader_asset(file, 'file') }}');">
+        <div id="header" data-role="header" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
+            <h1>{{ file.originalFileName }}</h1>
+            <a href="{{ path('file_index') }}" data-direction="reverse" data-icon="delete" data-iconpos="notext" data-shadow="false" data-icon-shadow="false">Назад</a>
+            <a href="{{ vich_uploader_asset(file, 'file') }}" data-icon="arrow-d" data-iconpos="notext" data-shadow="false" data-icon-shadow="false">Скачать</a>
+        </div><!-- /header -->
+
+        <div role="main" class="ui-content">
+        </div><!-- /content -->
+
+        <div id="footer" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
+            <div data-role="controlgroup" class="control ui-btn-left" data-type="horizontal" data-mini="true">
+                <a href="{{ prevFile ? path('file_swiper', {'id': prevFile.id}) : '#' }}" class="{% if prevFile is null %}ui-state-disabled {% endif %}ui-btn ui-btn-icon-notext ui-icon-carat-l" id="swiper-prev">Пред.</a>
+                <a href="{{ nextFile ? path('file_swiper', {'id': nextFile.id}) : '#' }}" class="{% if nextFile is null %}ui-state-disabled {% endif %}ui-btn ui-btn-icon-notext ui-icon-carat-r" id="swiper-next">След.</a>
+            </div>
+
+            <a href="{{ path('file_view', {'id': file.id}) }}" class="file-btn ui-btn ui-btn-right ui-btn-icon-left ui-icon-info ui-mini ui-corner-all">Файл</a>
+        </div><!-- /footer -->
+    </div><!-- /page -->
+{% endblock %}
