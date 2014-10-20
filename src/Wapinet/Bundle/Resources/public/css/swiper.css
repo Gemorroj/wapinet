@@ -8,7 +8,7 @@
     border: none;
     bottom: 0;
 }
-.control.ui-btn-left, .file-btn.ui-btn-right {
+.control.ui-btn-left {
     top: auto;
     bottom: 7px;
     margin: 0;
