@@ -794,8 +794,8 @@ class FileController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($data);
 
-        $this->saveFileAcl($data);
         $entityManager->flush();
+        $this->saveFileAcl($data);
 
         $this->container->get('event_dispatcher')->dispatch(
             FileEvent::FILE_ADD,
