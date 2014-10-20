@@ -1,5 +1,5 @@
 .swiper-page {
-    background-size: cover;
+    background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;
 }
@@ -8,7 +8,7 @@
     border: none;
     bottom: 0;
 }
-.control.ui-btn-left {
+.control.ui-btn-left, .image-size-btn.ui-btn-right {
     top: auto;
     bottom: 7px;
     margin: 0;

@@ -28,5 +28,9 @@ $(document).one("pagecreate", ".swiper-page", function () {
         .on("swiperight", ".swiper-page", swiperPrev)
         .on("click", "#swiper-next", swiperNext)
         .on("click", "#swiper-prev", swiperPrev)
+        .on("click", ".image-size-btn", function () {
+            var $page = $(this).closest(".swiper-page");
+            $page.css("background-size", ($page.css("background-size") === 'cover' ? 'contain' : 'cover'));
+        })
     ;
 });
