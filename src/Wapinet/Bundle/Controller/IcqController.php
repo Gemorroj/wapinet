@@ -75,7 +75,7 @@ class IcqController extends Controller
             throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
         }
 
-        $json = json_decode($response->getContent());
+        $json = \json_decode($response->getContent());
 
         if (200 !== $json->status) {
             throw new \RuntimeException('Проверьте правильность данных и попробуйте еще раз. Возможно, указанный E-mail уже был зарегистрирован.');

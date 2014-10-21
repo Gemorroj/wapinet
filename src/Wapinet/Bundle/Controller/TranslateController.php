@@ -48,8 +48,8 @@ class TranslateController extends Controller
         $curl->init(
             'https://translate.yandex.net/api/v1.5/tr.json/translate?key=' .
             $this->container->getParameter('wapinet_translate_key') .
-            '&lang=' . $data['lang'] .
-            '&text=' . urlencode($data['text'])
+            '&lang=' . $data['lang_from'] . '-' . $data['lang_to'] .
+            '&text=' . \urlencode($data['text'])
         );
 
         $response = $curl->exec();
@@ -57,8 +57,8 @@ class TranslateController extends Controller
             throw new HttpException($response->getStatusCode());
         }
 
-        $json = json_decode($response->getContent());
+        $json = \json_decode($response->getContent());
 
-        return implode('', $json->text);
+        return \implode('', $json->text);
     }
 }

@@ -17,6 +17,7 @@
 
 {% block content %}
     {{ form_start(form, {'action': path('translate_index'), 'method': 'POST'}) }}
+        {{ form_errors(form) }}
         {% if result is not null %}
             <label>
                 Перевод <a href="#" id="downloadTranslation" class="ui-btn-inline ui-btn ui-icon-arrow-d ui-btn-icon-notext ui-corner-all">Скачать</a>
@@ -24,6 +25,13 @@
             </label>
         {% endif %}
 
-        {{ form_widget(form) }}
+        {{ form_row(form.text) }}
+
+        <div class="ui-grid-a">
+            <div class="ui-block-a">{{ form_row(form.lang_from) }}</div>
+            <div class="ui-block-b">{{ form_row(form.lang_to) }}</div>
+        </div>
+
+        {{ form_rest(form) }}
     {{ form_end(form) }}
 {% endblock %}
