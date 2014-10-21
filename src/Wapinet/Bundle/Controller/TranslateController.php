@@ -8,12 +8,16 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Wapinet\Bundle\Form\Type\Translate\TranslateType;
 use Symfony\Component\Form\FormError;
 
-// TODO: https://github.com/nkt/yandex-translate
 class TranslateController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function indexAction(Request $request)
     {
         $result = null;
+        $detectLangName = null;
         $form = $this->createForm(new TranslateType());
 
         try {
@@ -22,7 +26,15 @@ class TranslateController extends Controller
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    $result = $this->getTranslate($data);
+
+                    if ('auto' === $data['lang_from']) {
+                        $langFrom = $this->detectLang($data['lang_from']);
+                        $detectLangName = $this->getLangName($langFrom);
+                    } else {
+                        $langFrom = $data['lang_from'];
+                    }
+
+                    $result = $this->translate($langFrom, $data['lang_to'], $data['text']);
                 }
             }
         } catch (\Exception $e) {
@@ -32,24 +44,27 @@ class TranslateController extends Controller
         return $this->render('WapinetBundle:Translate:index.html.twig', array(
             'form' => $form->createView(),
             'result' => $result,
+            'detectLangName' => $detectLangName,
         ));
     }
 
 
     /**
-     * @param array $data
+     * @param string $langFrom
+     * @param string $langTo
+     * @param string $text
      *
      * @return string
      * @throws HttpException
      */
-    protected function getTranslate(array $data)
+    private function translate($langFrom, $langTo, $text)
     {
         $curl = $this->get('curl');
         $curl->init(
             'https://translate.yandex.net/api/v1.5/tr.json/translate?key=' .
             $this->container->getParameter('wapinet_translate_key') .
-            '&lang=' . $data['lang_from'] . '-' . $data['lang_to'] .
-            '&text=' . \urlencode($data['text'])
+            '&lang=' . $langFrom . '-' . $langTo .
+            '&text=' . \urlencode($text)
         );
 
         $response = $curl->exec();
@@ -60,5 +75,82 @@ class TranslateController extends Controller
         $json = \json_decode($response->getContent());
 
         return \implode('', $json->text);
+    }
+
+
+    /**
+     * @param string $text
+     *
+     * @return string
+     * @throws HttpException
+     */
+    private function detectLang($text)
+    {
+        $curl = $this->get('curl');
+        $curl->init(
+            'https://translate.yandex.net/api/v1.5/tr.json/detect?key=' .
+            $this->container->getParameter('wapinet_translate_key') .
+            '&text=' . \urlencode($text)
+        );
+
+        $response = $curl->exec();
+        if (!$response->isSuccessful()) {
+            throw new HttpException($response->getStatusCode());
+        }
+
+        $json = \json_decode($response->getContent());
+
+        return $json->lang;
+    }
+
+
+    /**
+     * @param string $code
+     * @return string
+     */
+    private function getLangName($code)
+    {
+        $json = $this->getLangs();
+
+        return (string)$json->langs->$code;
+    }
+
+
+    /**
+     * @return \stdClass
+     * @throws \RuntimeException
+     */
+    private function getLangs()
+    {
+        $cacheDir = $this->container->get('kernel')->getCacheDir();
+        $langsFileName = $cacheDir . \DIRECTORY_SEPARATOR . 'yandex-langs.json';
+
+        if (false === \file_exists($langsFileName)) {
+            $curl = $this->get('curl');
+            $curl->init(
+                'https://translate.yandex.net/api/v1.5/tr.json/getLangs?key=' .
+                $this->container->getParameter('wapinet_translate_key') .
+                '&ui=ru'
+            );
+
+            $response = $curl->exec();
+            if (!$response->isSuccessful()) {
+                throw new HttpException($response->getStatusCode());
+            }
+
+            $langs = $response->getContent();
+
+            $result = \file_put_contents($langsFileName, $langs);
+            if (false === $result) {
+                throw new \RuntimeException('Не удалось записать языки перевода');
+            }
+        } else {
+            $langs = \file_get_contents($langsFileName);
+            if (false === $langs) {
+                throw new \RuntimeException('Не удалось прочитать языки перевода');
+            }
+        }
+
+        return \json_decode($langs);
     }
 }

@@ -25,7 +25,7 @@
             </label>
         {% endif %}
 
-        {{ form_row(form.text) }}
+        {{ form_row(form.text, {'label': form.text.vars.label ~ ' (' ~ detectLangName ~ ')'}) }}
 
         <div class="ui-grid-a">
             <div class="ui-block-a">{{ form_row(form.lang_from) }}</div>

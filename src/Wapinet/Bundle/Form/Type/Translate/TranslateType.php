@@ -23,6 +23,7 @@ class TranslateType extends AbstractType
         $builder->add('lang_from', 'choice', array(
             'label' => false,
             'choices'   => array(
+                'auto' => 'Автоматически',
                 'en' => 'С английского',
                 'ru' => 'С русского',
                 'uk' => 'С украинского',
