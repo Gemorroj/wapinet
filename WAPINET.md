@@ -81,3 +81,4 @@
 - Актуализировать мобильные коды. Найти новые для разных андроидов.
 - http://api.yandex.ru/speller/
 - заменить апи сфинкса https://github.com/FoolCode/SphinxQL-Query-Builder
+- добавить сервис проверки кода через php_codesniffer
