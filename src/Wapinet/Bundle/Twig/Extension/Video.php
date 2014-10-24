@@ -82,6 +82,7 @@ class Video extends \Twig_Extension
                     throw new \RuntimeException('Не удалось создать MP4 файл');
                 }
             } catch (\Exception $e) {
+                $this->container->get('logger')->warning('Ошибка при конвертировании видео в MP4.', array($e));
                 return null;
             }
         }
@@ -152,6 +153,7 @@ class Video extends \Twig_Extension
                     throw new \RuntimeException('Не удалось создать WEBM файл');
                 }
             } catch (\Exception $e) {
+                $this->container->get('logger')->warning('Ошибка при конвертировании видео в Webm.', array($e));
                 return null;
             }
         }
@@ -183,6 +185,7 @@ class Video extends \Twig_Extension
                     throw new \RuntimeException('Не найден видео поток');
                 }
             } catch (\Exception $e) {
+                $this->container->get('logger')->warning('Ошибка при создании скриншота видео.', array($e));
                 return null;
             }
         }

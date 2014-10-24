@@ -351,7 +351,7 @@ class File implements \Serializable
      */
     public function setSaltValue()
     {
-        $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->salt = \base_convert(\sha1(\uniqid(\mt_rand(), true)), 16, 36);
 
         return $this;
     }
@@ -459,7 +459,7 @@ class File implements \Serializable
      */
     public function getOriginalFileNameWithoutExtension()
     {
-        return pathinfo($this->getOriginalFileName(), PATHINFO_FILENAME);
+        return \pathinfo($this->getOriginalFileName(), \PATHINFO_FILENAME);
     }
 
     /**
@@ -529,7 +529,7 @@ class File implements \Serializable
      */
     public function isImage()
     {
-        return (0 === strpos($this->getMimeType(), 'image/') || 'application/postscript' === $this->getMimeType() || 'application/illustrator' === $this->getMimeType());
+        return (0 === \strpos($this->getMimeType(), 'image/') || 'application/postscript' === $this->getMimeType() || 'application/illustrator' === $this->getMimeType());
     }
 
     /**
@@ -537,7 +537,7 @@ class File implements \Serializable
      */
     public function isVideo()
     {
-        return (0 === strpos($this->getMimeType(), 'video/') || 'application/vnd.rn-realmedia' === $this->getMimeType());
+        return (0 === \strpos($this->getMimeType(), 'video/') || 'application/vnd.rn-realmedia' === $this->getMimeType());
     }
 
     /**
@@ -545,7 +545,7 @@ class File implements \Serializable
      */
     public function isAudio()
     {
-        return (0 === strpos($this->getMimeType(), 'audio/'));
+        return (0 === \strpos($this->getMimeType(), 'audio/'));
     }
 
     /**
@@ -553,7 +553,7 @@ class File implements \Serializable
      */
     public function isText()
     {
-        return (0 === strpos($this->getMimeType(), 'text/'));
+        return (0 === \strpos($this->getMimeType(), 'text/'));
     }
 
     /**
@@ -561,7 +561,7 @@ class File implements \Serializable
      */
     public function isXml()
     {
-        return ('application/xml' === $this->getMimeType() || false !== strpos($this->getMimeType(), '+xml'));
+        return ('application/xml' === $this->getMimeType() || false !== \strpos($this->getMimeType(), '+xml'));
     }
 
     /**
@@ -569,7 +569,7 @@ class File implements \Serializable
      */
     public function isArchive()
     {
-        return in_array($this->getMimeType(), array(
+        return \in_array($this->getMimeType(), array(
             'application/zip', // zip
             'application/x-rar-compressed', // rar
             'application/x-bzip', // bz
