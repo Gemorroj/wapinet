@@ -201,10 +201,14 @@ class Video extends \Twig_Extension
     protected function getScreenshotSecond(FFmpegVideo $media)
     {
         $second = $this->container->getParameter('wapinet_video_screenshot_second');
-        $duration = $media->getStreams()->videos()->first()->get('duration');
+        $video = $media->getStreams()->videos()->first();
 
-        if ($duration && $duration < $second) {
-            $second = \ceil($duration / 2);
+        if ($video && $video->has('duration')) {
+            $duration = $video->get('duration');
+
+            if ($duration && $duration < $second) {
+                $second = \ceil($duration / 2);
+            }
         }
 
         return (int)$second;

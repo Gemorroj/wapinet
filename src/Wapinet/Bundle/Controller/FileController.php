@@ -339,7 +339,9 @@ class FileController extends Controller
                 $info = $ffprobe->streams($file->getFile()->getPathname())->audios()->first();
 
                 if (null !== $info) {
-                    $meta->set('duration', $info->get('duration'));
+                    if ($info->has('duration')) {
+                        $meta->set('duration', $info->get('duration'));
+                    }
                     if ($info->has('codec_name')) {
                         $meta->set('codecName', $info->get('codec_name'));
                     }
