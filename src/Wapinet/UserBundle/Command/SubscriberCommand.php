@@ -35,13 +35,15 @@ class SubscriberCommand extends ContainerAwareCommand
 
         $rows = $repository->findNeedEmail();
 
+        $em->beginTransaction();
+        // не используем persist для того, чтобы не обновлялась связанная сущность пользователя
+        $q = $em->createQuery('UPDATE Wapinet\UserBundle\Entity\Event e SET e.needEmail = 0 WHERE e.id = :id');
         foreach ($rows as $v) {
             if (true === $this->sendEmail($v)) {
-                $v->setNeedEmail(false);
-                $em->merge($v);
+                $q->execute(array('id' => $v->getId()));
             }
         }
-        $em->flush();
+        $em->commit();
 
         $output->writeln('All Emails sended.');
     }
