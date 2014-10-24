@@ -4,7 +4,6 @@ namespace Wapinet\Bundle\Twig\Extension;
 
 use FFMpeg\Filters\Audio\AudioResamplableFilter;
 use FFMpeg\Format\Video\DefaultVideo;
-use FFMpeg\Media\Audio as FFmpegAudio;
 use FFMpeg\Media\Video as FFmpegVideo;
 use FFMpeg\Format\Video\WebM;
 use FFMpeg\Format\Video\X264;
@@ -18,6 +17,9 @@ class Video extends \Twig_Extension
      */
     protected $container;
 
+    /**
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -33,6 +35,7 @@ class Video extends \Twig_Extension
         return array(
             new \Twig_SimpleFilter('wapinet_video_screenshot', array($this, 'getScreenshot')),
             new \Twig_SimpleFilter('wapinet_video_3gp_to_mp4', array($this, 'convert3gpToMp4')),
+            new \Twig_SimpleFilter('wapinet_video_wmv_to_mp4', array($this, 'convertWmvToMp4')),
             new \Twig_SimpleFilter('wapinet_video_avi_to_webm', array($this, 'convertAviToWebm')),
         );
     }
@@ -42,6 +45,26 @@ class Video extends \Twig_Extension
      * @return string|null
      */
     public function convert3gpToMp4 ($path)
+    {
+        return $this->convertToMp4($path);
+    }
+
+
+    /**
+     * @param string $path
+     * @return string|null
+     */
+    public function convertWmvToMp4 ($path)
+    {
+        return $this->convertToMp4($path);
+    }
+
+
+    /**
+     * @param string $path
+     * @return string|null
+     */
+    private function convertToMp4 ($path)
     {
         $mp4File = $path . '.mp4';
 
@@ -66,7 +89,6 @@ class Video extends \Twig_Extension
         return $mp4File;
     }
 
-
     /**
      * @param DefaultVideo $format
      * @param FFmpegVideo $media
@@ -84,7 +106,7 @@ class Video extends \Twig_Extension
             // bitrate = file size / duration
 
             $filesize = @\filesize($media->getPathfile());
-            $filesize *= 3.3; // увеличиваем предположительный размер mp4 файла по сравнению с 3gp
+            $filesize *= 3.3; // увеличиваем предположительный размер mp4 файла по сравнению с оригиналом
             $filesize /= 1024; // переводим байты в килобайты
             $duration = $videoStream->has('duration') ? $videoStream->get('duration') : 0;
             if ($filesize && $duration) {

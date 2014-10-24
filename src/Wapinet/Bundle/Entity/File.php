@@ -667,6 +667,14 @@ class File implements \Serializable
     /**
      * @return bool
      */
+    public function isWmv()
+    {
+        return ('video/x-ms-wmv' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
     public function isMp3()
     {
         return ('audio/mpeg' === $this->getMimeType());
@@ -685,7 +693,7 @@ class File implements \Serializable
      */
     public function isM4v()
     {
-        return ('video/mp4' === $this->getMimeType()|| 'video/x-m4v' === $this->getMimeType());
+        return ('video/mp4' === $this->getMimeType() || 'video/x-m4v' === $this->getMimeType());
     }
 
     /**
@@ -763,7 +771,8 @@ class File implements \Serializable
             $this->isWebmv() ||
             $this->isFlv() ||
             $this->is3gp() ||
-            $this->isAvi()
+            $this->isAvi() ||
+            $this->isWmv()
         );
     }
 
