@@ -5,10 +5,10 @@ namespace Wapinet\Bundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Exception\ValidatorException;
-use Wapinet\Bundle\Form\Type\Hash\HashType;
+use Wapinet\Bundle\Form\Type\Code\CodeType;
 use Symfony\Component\Form\FormError;
 
-class HashController extends Controller
+class CodeController extends Controller
 {
     /**
      * @param Request $request
@@ -17,7 +17,7 @@ class HashController extends Controller
     public function indexAction(Request $request)
     {
         $hash = null;
-        $form = $this->createForm(new HashType($this->get('hash')->getAlgorithms()));
+        $form = $this->createForm(new CodeType($this->get('code')->getAlgorithms()));
 
         try {
             $form->handleRequest($request);
@@ -25,14 +25,14 @@ class HashController extends Controller
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    $hash = $this->getHash($data);
+                    $hash = $this->getCode($data);
                 }
             }
         } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:Hash:index.html.twig', array(
+        return $this->render('WapinetBundle:Code:index.html.twig', array(
             'form' => $form->createView(),
             'result' => $hash
         ));
@@ -44,19 +44,17 @@ class HashController extends Controller
      * @throws ValidatorException
      * @return string
      */
-    protected function getHash(array $data)
+    protected function getCode(array $data)
     {
-        $hash = $this->get('hash');
-        $algorithms = $hash->getAlgorithms();
-        $algorithm = $algorithms[$data['algorithm']];
+        $hash = $this->get('code');
 
         if (null !== $data['text']) {
-            return $hash->hashString($algorithm, $data['text']);
+            return $hash->convertString($data['algorithm'], $data['text']);
         }
-        if (null !== $data['file']) {
-            return $hash->hashFile($algorithm, $data['file']);
-        }
+        //if (null !== $data['file']) {
+        //    return $hash->convertFile($algorithm, $data['file']);
+        //}
 
-        throw new ValidatorException('Не заполнено ни одного поля с хэшируемыми данными');
+        throw new ValidatorException('Не заполнено ни одного поля с конвертируемыми данными');
     }
 }

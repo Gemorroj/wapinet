@@ -1,13 +1,13 @@
 <?php
-namespace Wapinet\Bundle\Form\Type\Hash;
+namespace Wapinet\Bundle\Form\Type\Code;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
 /**
- * Hash
+ * Code
  */
-class HashType extends AbstractType
+class CodeType extends AbstractType
 {
     protected $algorithms = array();
 
@@ -30,21 +30,16 @@ class HashType extends AbstractType
         $builder->add('algorithm', 'choice', array(
             'choices' => $this->algorithms,
             'label' => 'Алгоритм',
-            'preferred_choices' => array(
-                array_search('md5', $this->algorithms),
-                array_search('sha512', $this->algorithms),
-                array_search('crc32', $this->algorithms)
-            ),
         ));
 
         $builder->add('text', 'textarea', array('label' => 'Текст', 'required' => false));
 
-        $builder->add('file', 'file_url', array(
-            'label' => false,
-            'required' => false,
-        ));
+        //$builder->add('file', 'file_url', array(
+        //    'label' => false,
+        //    'required' => false,
+        //));
 
-        $builder->add('submit', 'submit', array('label' => 'Хэшировать'));
+        $builder->add('submit', 'submit', array('label' => 'Конвертировать'));
     }
 
     /**
@@ -54,6 +49,6 @@ class HashType extends AbstractType
      */
     public function getName()
     {
-        return 'hash_form';
+        return 'code_form';
     }
 }

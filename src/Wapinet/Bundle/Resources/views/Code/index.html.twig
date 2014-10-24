@@ -1,0 +1,24 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Конвертирование данных{% endblock %}
+{% block breadcrumbs %}
+    {{wapinet_breadcrumbs({
+    1: {'uri': path('utilities'), 'title': 'Утилиты'}
+    })}}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form, {'action': path('code_index'), 'method': 'POST'}) }}
+    {% if result is not null %}
+        <label>Результат <textarea>{{ result }}</textarea></label>
+    {% endif %}
+
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    <div class="ui-corner-all custom-corners">
+        <div class="ui-body ui-body-a">
+            <p>Сервис позволяет конвертировать данные выбранным алгоритмом.</p>
+        </div>
+    </div>
+{% endblock %}

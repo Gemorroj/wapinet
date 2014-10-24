@@ -132,6 +132,12 @@ services:
     getid3:
         class: Wapinet\Bundle\Helper\Getid3
 
+    hash:
+        class: Wapinet\Bundle\Helper\Hash
+
+    code:
+        class: Wapinet\Bundle\Helper\Code
+
     phpwhois:
         class: Wapinet\Bundle\Helper\Phpwhois
 

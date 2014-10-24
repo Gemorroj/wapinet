@@ -68,6 +68,10 @@ hash:
     resource: "@WapinetBundle/Resources/config/routing/hash.yml"
     prefix:   /hash
 
+code:
+    resource: "@WapinetBundle/Resources/config/routing/code.yml"
+    prefix:   /code
+
 email:
     resource: "@WapinetBundle/Resources/config/routing/email.yml"
     prefix:   /email
