@@ -1,13 +1,14 @@
 <ul data-role="listview" data-inset="true" id="list-threads">
     {% if pagerfanta and pagerfanta.count > 0 %}
         {% for thread in pagerfanta %}
+            {# @var thread \FOS\MessageBundle\Model\ThreadInterface #}
             <li data-role="list-divider">{{ thread.lastMessage.createdAt|wapinet_datetime }} <span class="ui-li-count">{{ thread.messages|length|wapinet_count }}</span></li>
             <li>
                 <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}">
                     <h2>
                         {{ thread.subject }}
                     </h2>
-                    {% if not fos_message_is_read(thread.lastMessage) %}
+                    {% if not thread.readByParticipant(app.user) %}
                         <p class="ui-li-aside p-new">Новое!</p>
                     {% endif %}
                     <p>{% trans with {'%sender%': thread.lastMessage.sender|e } from 'FOSMessageBundle' %}by{% endtrans %}</p>
