@@ -1,8 +1,8 @@
-{% set title %}{% block title %}{% endblock %}{% endset %}
+{% set title %}{% block title %}{{ wapinet_title }}{% endblock %}{% endset %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ wapinet_title }} - {{ title }}</title>
+    <title>{{ title == wapinet_title ? title : wapinet_title ~ ' - ' ~ title }}</title>
 
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -105,7 +105,7 @@
 </head>
 <body>
 {% block body %}
-<div data-role="page" id="page" data-title="{% if (is_granted('ROLE_USER') and fos_message_nb_unread() > 0) %}+{{ fos_message_nb_unread()|wapinet_count }} {% endif %}{% if title == 'Главная' %}{{ wapinet_title }}{% else %}{{ title }}{% endif %}">
+<div data-role="page" id="page" data-title="{% if (is_granted('ROLE_USER') and fos_message_nb_unread() > 0) %}+{{ fos_message_nb_unread()|wapinet_count }} {% endif %}{{ title }}">
     {% block page %}
         {% block panel %}
             <div data-role="panel" id="panel">
