@@ -1,5 +1,6 @@
 <ul data-role="listview" data-inset="true" id="list-threads">
     {% if pagerfanta and pagerfanta.count > 0 %}
+        {% set route = app.request.attributes.get('_route') %}
         {% for thread in pagerfanta %}
             {# @var thread \FOS\MessageBundle\Model\ThreadInterface #}
             <li data-role="list-divider">{{ thread.lastMessage.createdAt|wapinet_datetime }} <span class="ui-li-count">{{ thread.messages|length|wapinet_count }}</span></li>
@@ -8,8 +9,15 @@
                     <h2>
                         {{ thread.subject }}
                     </h2>
-                    {% if not thread.readByParticipant(app.user) %}
-                        <p class="ui-li-aside p-new">Новое!</p>
+                    {% if route == 'wapinet_message_inbox' %}
+                        {% if not thread.readByParticipant(app.user) %}
+                            <p class="ui-li-aside p-new">Новое!</p>
+                        {% endif %}
+                    {% elseif route == 'wapinet_message_sent'%}
+                        {# берем первого собеседника #}
+                        {% if not thread.readByParticipant(thread.otherParticipants(app.user)[0]) %}
+                            <p class="ui-li-aside p-noread">Не прочитано</p>
+                        {% endif %}
                     {% endif %}
                     <p>{% trans with {'%sender%': thread.lastMessage.sender|e } from 'FOSMessageBundle' %}by{% endtrans %}</p>
                 </a>

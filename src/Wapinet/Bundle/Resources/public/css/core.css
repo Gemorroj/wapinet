@@ -71,6 +71,9 @@ a.captcha-reload {
 p.p-new {
     color: #0a0;
 }
+p.p-noread {
+    color: #08c;
+}
 div.image-popup img {
     display: block;
 }
