@@ -26,6 +26,12 @@ services:
         tags:
             - {name: twig.extension, alias: wapinet_count}
 
+    wapinet.geoip2.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\Geoip2
+        arguments: [@geoip2]
+        tags:
+            - {name: twig.extension, alias: wapinet_geoip2}
+
     wapinet.video.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Video
         arguments: [@service_container]
@@ -131,6 +137,10 @@ services:
 
     getid3:
         class: Wapinet\Bundle\Helper\Getid3
+
+    geoip2:
+        class: Wapinet\Bundle\Helper\Geoip2
+        arguments: [@service_container]
 
     hash:
         class: Wapinet\Bundle\Helper\Hash
