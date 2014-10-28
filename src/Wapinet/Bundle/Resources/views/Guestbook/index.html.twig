@@ -57,10 +57,10 @@
                         {% if item.user %}
                             <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': item.user.username}) }}">{{ item.user.username }}</a>
                         {% else %}
-                            {% set country = wapinet_geoip2_country(item.ip) %}
+                            {% set geoip2 = wapinet_geoip2_country(item.ip) %}
                             <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn no-link" data-rel="popup" data-transition="turn" href="#popup-{{ item.id }}">Anonymous</a>
                             <div data-role="popup" id="popup-{{ item.id }}">
-                                <p>{{ item.ip }}{% if country %} <img src="{{ asset('bundles/wapinet/images/countries/' ~ country.country.isoCode|lower ~ '.png') }}" alt="{{ country.country.names['ru'] }}" />{% endif %}<br />{{ item.browser }}</p>
+                                <p>{{ item.ip }}{% if geoip2 and geoip2.country.isoCode%} <img src="{{ asset('bundles/wapinet/images/countries/' ~ geoip2.country.isoCode|lower ~ '.png') }}" alt="{{ geoip2.country.names['ru'] }}" />{% endif %}<br />{{ item.browser }}</p>
                             </div>
                         {% endif %}
                         </span>
