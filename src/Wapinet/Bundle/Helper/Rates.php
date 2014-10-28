@@ -58,8 +58,8 @@ class Rates
      */
     public function getRates($country)
     {
-        $method = 'get' . ucfirst($country);
-        if (method_exists($this, $method)) {
+        $method = 'get' . \ucfirst($country);
+        if (\method_exists($this, $method)) {
             return $this->$method();
         }
         throw new \RuntimeException('Указанная страна не поддерживается');
@@ -81,7 +81,7 @@ class Rates
             throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
         }
 
-        $obj = simplexml_load_string($response->getContent());
+        $obj = \simplexml_load_string($response->getContent());
         $rates = array();
         foreach ($obj->Valute as $v) {
             $rates[] = array(
@@ -112,7 +112,7 @@ class Rates
             throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
         }
 
-        $obj = simplexml_load_string($response->getContent());
+        $obj = \simplexml_load_string($response->getContent());
         $rates = array();
         foreach ($obj->Currency as $v) {
             $rates[] = array(
@@ -143,7 +143,7 @@ class Rates
             throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
         }
 
-        $obj = simplexml_load_string($response->getContent());
+        $obj = \simplexml_load_string($response->getContent());
         $rates = array();
         foreach ($obj->item as $v) {
             $rates[] = array(
@@ -174,11 +174,11 @@ class Rates
             throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
         }
 
-        $obj = simplexml_load_string($response->getContent());
+        $obj = \simplexml_load_string($response->getContent());
         $rates = array();
         foreach ($obj->channel->item as $v) {
             $rates[] = array(
-                'name' => null,
+                'name' => $this->getKzRateName((string)$v->title),
                 'code' => (string)$v->title,
                 'rate' => (string)$v->description,
             );
@@ -188,5 +188,33 @@ class Rates
             'date' => new \DateTime((string)$obj->channel->item[0]->pubDate),
             'rates' => $rates,
         );
+    }
+
+
+    /**
+     * @param string $code
+     * @return string|null
+     */
+    private function getKzRateName($code)
+    {
+        static $ruRates = null;
+        $ruRates = $ruRates ?: $this->getRu()['rates'];
+
+        foreach ($ruRates as $ruRate) {
+            if ($ruRate['code'] === $code) {
+                return $ruRate['name'];
+            }
+        }
+
+        static $byRates = null;
+        $byRates = $byRates ?: $this->getBy()['rates'];
+
+        foreach ($byRates as $byRate) {
+            if ($byRate['code'] === $code) {
+                return $byRate['name'];
+            }
+        }
+
+        return null;
     }
 }
