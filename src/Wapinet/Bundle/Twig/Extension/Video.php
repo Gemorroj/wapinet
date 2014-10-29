@@ -104,12 +104,6 @@ class Video extends \Twig_Extension
             }
         }
 
-        if (null !== $audioStream && 'libmp3lame' === $format->getAudioCodec()) {
-            if ($audioStream->get('sample_rate') < 32000) {
-                $media->addFilter(new AudioResamplableFilter(32000));
-            }
-        }
-
         return $this;
     }
 

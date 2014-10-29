@@ -733,7 +733,15 @@ class File implements \Serializable
      */
     public function isWav()
     {
-        return ('audio/wav' === $this->getMimeType());
+        return ('audio/x-wav' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAmr()
+    {
+        return ('audio/3gpp' === $this->getMimeType());
     }
 
     /**
@@ -788,7 +796,8 @@ class File implements \Serializable
             $this->isWebma() ||
             $this->isWav() ||
             $this->isFla() ||
-            $this->isFlac()
+            $this->isFlac() ||
+            $this->isAmr()
         );
     }
 

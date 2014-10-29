@@ -70,6 +70,7 @@ class File
                 $realPath . '.mp4',
                 $realPath . '.mp4.jpg',
                 $realPath . '.mp4.png',
+                $realPath . '.mp3',
             )
         );
 
@@ -83,6 +84,7 @@ class File
                 $path . '.mp4',
                 $path . '.mp4.jpg',
                 $path . '.mp4.png',
+                $path . '.mp3',
             ),
             'thumbnail'
         );

@@ -1,5 +1,5 @@
 {% set format %}{% spaceless %}
-    {% if file.isMp3 %}
+    {% if file.isMp3 or file.isAmr %}
         mp3
     {% elseif file.isM4a %}
         m4a
@@ -16,26 +16,37 @@
     {% endif %}
 {% endspaceless %}{% endset %}
 
+{% set audio %}{% spaceless %}
+    {% if file.isAmr %}
+        {{ vich_uploader_asset(file, 'file')|wapinet_audio_to_mp3 }}
+    {% else %}
+        {{ vich_uploader_asset(file, 'file') }}
+    {% endif %}
+{% endspaceless %}{% endset %}
+
 $(document).ready(function () {
-    // (Default width: "420px")
+    {% if audio %}
+        // (Default width: "420px")
 
-    var width = $(window).width();
-    var space = 30;
-    var defaultWidth = 420;
-    width = (width > (defaultWidth + space)) ? defaultWidth : (width - space);
+        var width = $(window).width();
+        var space = 30;
+        var defaultWidth = 420;
+        width = (width > (defaultWidth + space)) ? defaultWidth : (width - space);
 
-
-    $("#jquery_jplayer_1").jPlayer({
-        "ready": function () {
-            $("#jp_container_1").width(width + "px");
-            $(".jp-controls").width(width - 40 + "px");
-            $(".jp-progress, .jp-time-holder").css({width: width - 120 + "px", maxWidth: "186px"});
-            $(this).jPlayer("setMedia", {
-                "{{ format }}": "{{ vich_uploader_asset(file, 'file') }}"
-            });
-        },
-        "supplied": "{{ format }}",
-        "size": {"width": width + "px"},
-        "swfPath": Jplayer.swfPath
-    });
+        $("#jquery_jplayer_1").jPlayer({
+            "ready": function () {
+                $("#jp_container_1").width(width + "px");
+                $(".jp-controls").width(width - 40 + "px");
+                $(".jp-progress, .jp-time-holder").css({width: width - 120 + "px", maxWidth: "186px"});
+                $(this).jPlayer("setMedia", {
+                    "{{ format }}": "{{ audio }}"
+                });
+            },
+            "supplied": "{{ format }}",
+            "size": {"width": width + "px"},
+            "swfPath": Jplayer.swfPath
+        });
+    {% else %}
+        $("#jp_container_1").hide();
+    {% endif %}
 });

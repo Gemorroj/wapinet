@@ -41,7 +41,7 @@ class Mime
         $mime = array(
             'mod' => 'audio/mod',
             'it' => 'audio/it',
-            'amr' => 'audio/amr',
+            'amr' => 'audio/3gpp',
             'ini' => 'text/plain',
             'php' => 'text/html',
             'phtml' => 'text/html',
