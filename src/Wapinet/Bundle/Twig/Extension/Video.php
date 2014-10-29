@@ -5,7 +5,6 @@ namespace Wapinet\Bundle\Twig\Extension;
 use FFMpeg\Filters\Audio\AudioResamplableFilter;
 use FFMpeg\Format\Video\DefaultVideo;
 use FFMpeg\Media\Video as FFmpegVideo;
-use FFMpeg\Format\Video\WebM;
 use FFMpeg\Format\Video\X264;
 use FFMpeg\Coordinate\TimeCode;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -34,37 +33,16 @@ class Video extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFilter('wapinet_video_screenshot', array($this, 'getScreenshot')),
-            new \Twig_SimpleFilter('wapinet_video_3gp_to_mp4', array($this, 'convert3gpToMp4')),
-            new \Twig_SimpleFilter('wapinet_video_wmv_to_mp4', array($this, 'convertWmvToMp4')),
-            new \Twig_SimpleFilter('wapinet_video_avi_to_webm', array($this, 'convertAviToWebm')),
+            new \Twig_SimpleFilter('wapinet_video_to_mp4', array($this, 'convertToMp4')),
         );
     }
 
-    /**
-     * @param string $path
-     * @return string|null
-     */
-    public function convert3gpToMp4 ($path)
-    {
-        return $this->convertToMp4($path);
-    }
-
 
     /**
      * @param string $path
      * @return string|null
      */
-    public function convertWmvToMp4 ($path)
-    {
-        return $this->convertToMp4($path);
-    }
-
-
-    /**
-     * @param string $path
-     * @return string|null
-     */
-    private function convertToMp4 ($path)
+    public function convertToMp4 ($path)
     {
         $mp4File = $path . '.mp4';
 
@@ -135,31 +113,6 @@ class Video extends \Twig_Extension
         return $this;
     }
 
-
-    /**
-     * @param string $path
-     * @return string|null
-     */
-    public function convertAviToWebm ($path)
-    {
-        $webmFile = $path . '.webm';
-
-        if (false === \file_exists($this->getWebDir() . $webmFile)) {
-            $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
-            try {
-                $media = $ffmpeg->open($this->getWebDir() . $path);
-                $media->save(new WebM(), $this->getWebDir() . $webmFile);
-                if (false === \file_exists($this->getWebDir() . $webmFile)) {
-                    throw new \RuntimeException('Не удалось создать WEBM файл');
-                }
-            } catch (\Exception $e) {
-                $this->container->get('logger')->warning('Ошибка при конвертировании видео в Webm.', array($e));
-                return null;
-            }
-        }
-
-        return $webmFile;
-    }
 
     /**
      * @param string $path

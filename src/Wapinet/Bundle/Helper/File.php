@@ -68,11 +68,8 @@ class File
                 $realPath . '.png',
                 $realPath . '.jpg',
                 $realPath . '.mp4',
-                $realPath . '.webm',
                 $realPath . '.mp4.jpg',
-                $realPath . '.webm.jpg',
                 $realPath . '.mp4.png',
-                $realPath . '.webm.png',
             )
         );
 
@@ -84,11 +81,8 @@ class File
                 $path . '.png',
                 $path . '.jpg',
                 $path . '.mp4',
-                $path . '.webm',
                 $path . '.mp4.jpg',
-                $path . '.webm.jpg',
                 $path . '.mp4.png',
-                $path . '.webm.png',
             ),
             'thumbnail'
         );

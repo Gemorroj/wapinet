@@ -1,9 +1,9 @@
 {% set format %}{% spaceless %}
-    {% if file.isM4v or file.is3gp or file.isWmv %}
+    {% if file.isM4v or file.is3gp or file.isWmv or file.isAvi %}
         m4v
     {% elseif file.isOgv %}
         ogv
-    {% elseif file.isWebmv or file.isAvi %}
+    {% elseif file.isWebmv %}
         webmv
     {% elseif file.isFlv %}
         flv
@@ -11,12 +11,8 @@
 {% endspaceless %}{% endset %}
 
 {% set video %}{% spaceless %}
-    {% if file.is3gp %}
-        {{ vich_uploader_asset(file, 'file')|wapinet_video_3gp_to_mp4 }}
-    {% elseif file.isAvi %}
-        {{ vich_uploader_asset(file, 'file')|wapinet_video_avi_to_webm }}
-    {% elseif file.isWmv %}
-        {{ vich_uploader_asset(file, 'file')|wapinet_video_wmv_to_mp4 }}
+    {% if file.is3gp or file.isAvi or file.isWmv %}
+        {{ vich_uploader_asset(file, 'file')|wapinet_video_to_mp4 }}
     {% else %}
         {{ vich_uploader_asset(file, 'file') }}
     {% endif %}
