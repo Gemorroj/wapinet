@@ -80,3 +80,4 @@
 - http://api.yandex.ru/speller/
 - заменить апи сфинкса https://github.com/FoolCode/SphinxQL-Query-Builder
 - добавить сервис проверки кода через php_codesniffer
+- в правах доступа к apk файлам показывать только danger, а все остальные только по запросу (ракскрывающйся список)
