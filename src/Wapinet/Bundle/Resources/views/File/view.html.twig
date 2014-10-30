@@ -191,7 +191,7 @@
                     Требует доступ:<br />
                     {% for premission in file.meta.get('permissions') %}
                         {% if premission %}
-                            &#187; {{ premission }}<br />
+                            &#187; {{ premission.description }}<br />
                         {% endif %}
                     {% endfor %}
                 {% endif %}
