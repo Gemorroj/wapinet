@@ -79,6 +79,12 @@ class AndroidApp extends \Twig_Extension
             'ic_launcher.png',
             'ic_app_launcher.png',
             'logo.png',
+            'icn.png',
+            'ic.png',
+            'i.png',
+            'ic_logo.png',
+            'root.png',
+            'apk.png',
         );
         $dirs = array(
             '',
