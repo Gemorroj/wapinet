@@ -11,7 +11,7 @@ class Template extends DefaultTemplate
         'next_message'       => 'След.',
         'css_disabled_class' => '',
         'css_dots_class'     => '',
-        'css_current_class'  => '',
+        'css_current_class'  => 'page-current',
         'dots_text'          => '...',
         'container_template' => '<nav data-role="controlgroup" data-type="horizontal">%pages%</nav>',
         'page_template'      => '<a href="%href%" data-role="button">%text%</a>',

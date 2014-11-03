@@ -23,7 +23,7 @@ $(document).one("pagecreate", "#page", function () {
     };
 
     $(document).on("click", "nav", function (e) {
-        var $current = $(this).find("a[href='#']");
+        var $current = $(this).find("a.page-current");
         var $click = $(e.target);
 
         if (!$click.attr("href")) {
