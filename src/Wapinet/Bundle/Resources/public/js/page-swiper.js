@@ -40,8 +40,9 @@ $(document).one("pagecreate", "#page", function () {
     });
 
     if (isTouchDevice) {
-        $(document).on("swipeleft", "nav", function () {
+        $(document).on("swipeleft", "#page", function () {
             var $next = $(this)
+                .find("nav")
                 .find("a")
                 .contents()
                 .filter(function () {
@@ -51,8 +52,9 @@ $(document).one("pagecreate", "#page", function () {
             swipeNext($next);
         });
 
-        $(document).on("swiperight", "nav", function () {
+        $(document).on("swiperight", "#page", function () {
             var $prev = $(this)
+                .find("nav")
                 .find("a")
                 .contents()
                 .filter(function () {
