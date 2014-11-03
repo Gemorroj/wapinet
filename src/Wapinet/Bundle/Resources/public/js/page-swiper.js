@@ -1,4 +1,4 @@
-var isTouchDevice = ('ontouchstart' in document.documentElement);
+var isTouchDevice = ('ontouchstart' in window);
 
 $(document).one("pagecreate", "#page", function () {
     var $pageContainer = $(":mobile-pagecontainer");
