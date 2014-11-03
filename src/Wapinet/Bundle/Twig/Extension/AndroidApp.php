@@ -83,6 +83,9 @@ class AndroidApp extends \Twig_Extension
             'ic.png',
             'i.png',
             'ic_logo.png',
+            'icon.PNG',
+            'app_icon.PNG',
+            'logo.PNG',
             'root.png',
             'apk.png',
         );
