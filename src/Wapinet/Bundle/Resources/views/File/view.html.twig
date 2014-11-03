@@ -177,6 +177,26 @@
         {% endif %}
 
         {% if file.meta is not null %}
+            {% if file.meta.has('permissions') %}
+                <div>
+                    <a href="#popupPermissions" data-rel="popup" data-transition="pop" class="ui-mini ui-btn ui-shadow ui-corner-all ui-btn-inline ui-icon-alert ui-btn-icon-left">Права доступа</a>
+                    <div data-role="popup" id="popupPermissions">
+                        <ul>
+                            {% for premission in file.meta.get('permissions') %}
+                                {% if premission and premission.description %}
+                                    {% if premission.flags.danger %}
+                                        <li><span class="danger">!!!</span> {{ premission.description }}</li>
+                                    {% elseif premission.flags.warning %}
+                                        <li><span class="warning">!</span> {{ premission.description }}</li>
+                                    {% else %}
+                                        <li>{{ premission.description }}</li>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
             <pre class="long-description">
                 {% if file.meta.has('versionName') %}
                     Версия: {{ file.meta.get('versionName') }}<br />
@@ -186,14 +206,6 @@
                 {% endif %}
                 {% if file.meta.has('minSdkVersions') %}
                     Версия Android: {{ file.meta.get('minSdkVersions')|join(',') }}<br />
-                {% endif %}
-                {% if file.meta.has('permissions') %}
-                    Требует доступ:<br />
-                    {% for premission in file.meta.get('permissions') %}
-                        {% if premission %}
-                            &#187; {{ premission.description }}<br />
-                        {% endif %}
-                    {% endfor %}
                 {% endif %}
             </pre>
         {% endif %}

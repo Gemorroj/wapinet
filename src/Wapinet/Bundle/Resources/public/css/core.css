@@ -103,3 +103,9 @@ input.block-input {
     margin-top: 0.22em !important;
     margin-bottom: 0.22em !important;
 }
+.danger {
+    color: #b00;
+}
+.warning {
+    color: #bb0;
+}
