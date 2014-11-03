@@ -30,7 +30,7 @@ $(document).one("pagecreate", "#page", function () {
             return;
         }
 
-        if ($current.text() === "Пред.1" || $click.attr("href").split("=").splice(-1) > $current.text()) {
+        if ($current.text() === "Пред.1" || Number($click.attr("href").split("=").splice(-1)) > Number($current.text())) {
             swipeNext($click);
         } else {
             swipePrev($click);
