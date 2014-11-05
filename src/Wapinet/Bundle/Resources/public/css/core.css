@@ -80,12 +80,6 @@ div.image-popup img {
 a.friends-button {
     margin-left: 0;
 }
-div.breadcrumbs {
-    margin: -0.5em -0.7em 0.2em -1.5em;
-}
-div.breadcrumbs > div.ui-controlgroup-controls {
-    width: 100%;
-}
 a.bar-button {
     margin: 0;
 }

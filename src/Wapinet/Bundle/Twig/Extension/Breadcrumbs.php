@@ -38,15 +38,13 @@ class Breadcrumbs extends \Twig_Extension
             return  '';
         }
 
-        $out = '<div data-role="controlgroup" data-type="horizontal" class="breadcrumbs ui-mini ui-field-contain ui-btn-left">';
-        //$out .= '<a class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all" href="' . $this->container->get('router')->generate('index') . '">Главная</a>';
-
         ksort($options, SORT_NUMERIC);
-        foreach ($options as $key => $value) {
-            $out .= '<a class="ui-btn ui-icon-arrow-l ui-btn-icon-left ui-corner-all" href="' . htmlspecialchars($value['uri']) . '">' . htmlspecialchars($value['title'], ENT_NOQUOTES) . '</a>';
-        }
 
-        $out .= '</div>';
+        $out = '<div data-role="navbar" data-iconpos="left"><ul>';
+        foreach ($options as $key => $value) {
+            $out .= '<li><a class="ui-corner-all" data-icon="arrow-l" href="' . htmlspecialchars($value['uri']) . '">' . htmlspecialchars($value['title'], ENT_NOQUOTES) . '</a></li>';
+        }
+        $out .= '</ul></div>';
 
         return $out;
     }
