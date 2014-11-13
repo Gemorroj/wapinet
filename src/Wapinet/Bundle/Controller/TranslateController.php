@@ -28,7 +28,7 @@ class TranslateController extends Controller
                     $data = $form->getData();
 
                     if ('auto' === $data['lang_from']) {
-                        $langFrom = $this->detectLang($data['lang_from']);
+                        $langFrom = $this->detectLang($data['text']);
                         $detectLangName = $this->getLangName($langFrom);
                     } else {
                         $langFrom = $data['lang_from'];
