@@ -7,8 +7,9 @@
 
 {% block javascripts %}
     <script type="text/javascript">{% autoescape 'js' %}
-        $(document).ready(function () {
-            var $textarea = $("#message_form_message");
+        $(document).on("pagecreate", "#page", function () {
+            var $pageContainer = $(this);
+            var $textarea = $pageContainer.find("#message_form_message");
             var quote = function () {
                 $textarea.focus();
 
@@ -17,8 +18,10 @@
                 var author = $liComment.find('span.fos_comment_comment_authorname>a').text();
                 $textarea.val('[quote=' + author + ']' + text + '[/quote]');
                 $textarea.keyup();
+
+                return false;
             };
-            $("a.item-quote").click(quote);
+            $pageContainer.find("a.item-quote").click(quote);
         });
     {% endautoescape %}</script>
 {% endblock %}
