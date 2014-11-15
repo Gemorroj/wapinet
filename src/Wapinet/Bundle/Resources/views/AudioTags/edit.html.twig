@@ -11,14 +11,15 @@
     {% if info.audio is not defined %}
         <div>Неподдерживаемый тип данных</div>
     {% else %}
-        <p>
+        <div>
             <a data-role="button" title="{{ originalFileName }}" href="{{ path('audio_tags_download', {'fileName': fileName, 'originalFileName': originalFileName}) }}">Скачать файл</a>
-            Формат: {{ info.audio.dataformat }}<br />
-            Битрейт: {{ info.audio.bitrate }} ({{ info.audio.bitrate_mode }})<br />
-            Частота дискретизации: {{ info.audio.sample_rate }}<br />
-            Размер: {{ info.filesize|wapinet_size }}<br />
-            Каналы: {{ info.audio.channelmode }}<br />
-        </p>
+<pre>Формат: {{ info.audio.dataformat }}
+Битрейт: {{ info.audio.bitrate }} ({{ info.audio.bitrate_mode }})
+Частота дискретизации: {{ info.audio.sample_rate }}
+Размер: {{ info.filesize|wapinet_size }}
+Каналы: {{ info.audio.channelmode }}
+Формат тэгов: {{ info.tags|keys|join(', ') }}</pre>
+        </div>
         {{ form_start(form, {'action': path('audio_tags_edit', {'fileName': fileName, 'originalFileName': originalFileName}), 'method': 'POST'}) }}
             {{ form_widget(form) }}
         {{ form_end(form) }}

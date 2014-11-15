@@ -106,6 +106,10 @@ class AudioTagsController extends Controller
                     $this->setFormData($form, $comments);
                 }
             }
+        } catch (AudioException $e) {
+            foreach ($e->getMessages() as $message) {
+                $form->addError(new FormError($message));
+            }
         } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
@@ -203,7 +207,6 @@ class AudioTagsController extends Controller
             //'picture' => null,
         );
 
-
         $requestForm = $this->get('request')->get($form->getName());
 
         if (isset($info['comments']['picture'][0]) && (!isset($requestForm['picture']['file_url_delete']) || !$requestForm['picture']['file_url_delete'])) {
@@ -245,7 +248,7 @@ class AudioTagsController extends Controller
             case 'mp2':
             case 'mp1':
             case 'riff': // maybe not officially, but people do it anyway
-                return array(/*'id3v1', 'id3v2.2',*/ 'id3v2.3', 'id3v2.4'/*, 'ape', 'lyrics3'*/);
+                return array('id3v1', /*'id3v2.2', */'id3v2.3', 'id3v2.4', /*'ape', 'lyrics3'*/);
                 break;
 
             case 'mpc':
