@@ -14,8 +14,8 @@
         <div>
             <a data-role="button" title="{{ originalFileName }}" href="{{ path('audio_tags_download', {'fileName': fileName, 'originalFileName': originalFileName}) }}">Скачать файл</a>
 <pre>Формат: {{ info.audio.dataformat }}
-Битрейт: {{ info.audio.bitrate }} ({{ info.audio.bitrate_mode }})
-Частота дискретизации: {{ info.audio.sample_rate }}
+Битрейт: {{ (info.audio.bitrate / 1000)|round }} кбит/сек ({{ info.audio.bitrate_mode }})
+Частота дискретизации: {{ (info.audio.sample_rate/ 1000)|round(1) }} КГц
 Размер: {{ info.filesize|wapinet_size }}
 Каналы: {{ info.audio.channelmode }}
 Формат тэгов: {{ info.tags|keys|join(', ') }}</pre>
