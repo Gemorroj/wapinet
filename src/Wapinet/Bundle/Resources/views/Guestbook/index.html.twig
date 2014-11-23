@@ -21,6 +21,14 @@
 
                 return false;
             };
+            var popup = function () {
+                var $link = $(this);
+                $($link.attr('href')).popup("open", {"transition": "turn", "positionTo": $link});
+
+                return false;
+            };
+
+            $pageContainer.find('a[href^="#popup-"]').click(popup);
             $pageContainer.find("a.item-quote").click(quote);
         });
     {% endautoescape %}</script>
@@ -61,7 +69,7 @@
                             <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': item.user.username}) }}">{{ item.user.username }}</a>
                         {% else %}
                             {% set geoip2 = wapinet_geoip2_country(item.ip) %}
-                            <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn no-link" data-rel="popup" data-transition="turn" href="#popup-{{ item.id }}">Anonymous</a>
+                            <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn no-link" href="#popup-{{ item.id }}">Anonymous</a>
                             <div data-role="popup" id="popup-{{ item.id }}">
                                 <p>{{ item.ip }}{% if geoip2 and geoip2.country.isoCode%} <img src="{{ asset('bundles/wapinet/images/countries/' ~ geoip2.country.isoCode|lower ~ '.png') }}" alt="{{ geoip2.country.names['ru'] }}" />{% endif %}<br />{{ item.browser }}</p>
                             </div>
