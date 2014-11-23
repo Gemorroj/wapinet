@@ -112,7 +112,7 @@ class NewsAdmin extends Admin
     {
         $formMapper
             ->add('subject', null, array('label' => 'Заголовок'))
-            ->add('body', null, array('label' => 'Новость'))
+            ->add('body', 'textarea', array('label' => 'Новость'))
         ;
     }
 

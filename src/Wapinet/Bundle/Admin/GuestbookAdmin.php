@@ -37,7 +37,7 @@ class GuestbookAdmin extends Admin
             ->add('createdAt', null, array('label' => 'Дата и время создания'))
             ->add('updatedAt', null, array('label' => 'Дата и время обновления'))
             ->add('user', null, array('label' => 'Пользователь'))
-            ->add('description', null, array('label' => 'Сообщение'))
+            ->add('message', null, array('label' => 'Сообщение'))
             ->add('ip', null, array('label' => 'IP'))
             ->add('browser', null, array('label' => 'Браузер'))
         ;
@@ -50,7 +50,7 @@ class GuestbookAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('message', null, array('label' => 'Сообщение'))
+            ->add('message', 'textarea', array('label' => 'Сообщение'))
         ;
     }
 

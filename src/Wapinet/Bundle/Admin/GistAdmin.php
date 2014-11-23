@@ -101,7 +101,7 @@ class GistAdmin extends Admin
     {
         $formMapper
             ->add('subject', null, array('label' => 'Тема'))
-            ->add('body', null, array('label' => 'Сообщение'))
+            ->add('body', 'textarea', array('label' => 'Сообщение'))
         ;
     }
 

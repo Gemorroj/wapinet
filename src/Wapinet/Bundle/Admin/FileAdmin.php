@@ -73,8 +73,8 @@ class FileAdmin extends Admin
         $formMapper
             ->add('originalFileName', null, array('label' => 'Имя'))
             ->add('mimeType', null, array('label' => 'MIME тип'))
-            ->add('description', null, array('label' => 'Описание'))
-            ->add('countViews', null, array('label' => 'Просмотров'))
+            ->add('description', 'textarea', array('label' => 'Описание'))
+            ->add('countViews', 'integer', array('label' => 'Просмотров'))
         ;
     }
 

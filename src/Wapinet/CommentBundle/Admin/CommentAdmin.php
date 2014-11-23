@@ -50,9 +50,9 @@ class CommentAdmin extends Admin
     {
         $formMapper
             ->add('author', null, array('label' => 'Автор'))
-            ->add('body', null, array('label' => 'Комментарий'))
+            ->add('body', 'textarea', array('label' => 'Комментарий'))
             ->add('createdAt', null, array('label' => 'Дата и время'))
-            ->add('score', null, array('label' => 'Понравилось'))
+            ->add('score', 'integer', array('label' => 'Понравилось'))
         ;
     }
 

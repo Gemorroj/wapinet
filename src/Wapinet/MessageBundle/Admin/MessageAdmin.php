@@ -47,7 +47,7 @@ class MessageAdmin extends Admin
     {
         $formMapper
             ->add('sender', null, array('label' => 'Автор'))
-            ->add('body', null, array('label' => 'Сообщение'))
+            ->add('body', 'textarea', array('label' => 'Сообщение'))
             ->add('createdAt', null, array('label' => 'Дата и время'))
         ;
     }
