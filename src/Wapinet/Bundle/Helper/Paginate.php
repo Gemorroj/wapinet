@@ -53,8 +53,26 @@ class Paginate
 
         $pagerfanta = new Pagerfanta($adapter);
         $pagerfanta->setMaxPerPage(null === $maxPerPage ? $this->container->getParameter('wapinet_paginate_maxperpage') : $maxPerPage);
-        $pagerfanta->setCurrentPage($page);
+        $pagerfanta->setCurrentPage(
+            $this->normalizePage($pagerfanta, $page)
+        );
 
         return $pagerfanta;
+    }
+
+
+    /**
+     * @param Pagerfanta $pagerfanta
+     * @param int $page
+     * @return int
+     */
+    protected function normalizePage(Pagerfanta $pagerfanta, $page)
+    {
+        $maxPage = $pagerfanta->getNbPages();
+        $minPage = 1;
+        $currentPage = $page < $minPage ? $minPage : $page;
+        $currentPage = $currentPage > $maxPage ? $maxPage : $currentPage;
+
+        return $currentPage;
     }
 }
