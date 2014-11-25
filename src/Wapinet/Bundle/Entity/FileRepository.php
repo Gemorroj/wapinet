@@ -53,6 +53,7 @@ class FileRepository extends EntityRepository
             INNER JOIN comment_thread ON comment_thread.id = comment.thread_id
             LEFT JOIN user ON user.id = comment.author_id
             WHERE comment.thread_id LIKE "file-%"
+            AND comment.state = 0
             ORDER BY comment.id DESC
             LIMIT ' . (int)$maxComments
         );
