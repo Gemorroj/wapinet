@@ -106,3 +106,6 @@ input.block-input {
 div.file-metadata div.ui-body {
     overflow-x: auto;
 }
+span.bot-checker {
+    display: none;
+}

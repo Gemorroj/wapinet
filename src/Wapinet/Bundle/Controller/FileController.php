@@ -559,6 +559,8 @@ class FileController extends Controller
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
+                    $this->get('bot_checker')->checkForm($form);
+
                     $data = $form->getData();
                     $tagsString = $form['tags_string']->getData();
                     $file = $this->saveFileData($request, $data, $tagsString);

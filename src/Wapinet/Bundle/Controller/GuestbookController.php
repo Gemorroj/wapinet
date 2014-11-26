@@ -44,9 +44,9 @@ class GuestbookController extends Controller
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
-                    $data = $form->getData();
+                    $this->get('bot_checker')->checkForm($form);
 
-                    $this->checkMessage($data['message']);
+                    $data = $form->getData();
 
                     $guestbook = new Guestbook();
                     $guestbook->setMessage($data['message']);
@@ -67,17 +67,5 @@ class GuestbookController extends Controller
         }
 
         return $this->redirect($this->get('router')->generate('guestbook_index', array(), Router::ABSOLUTE_URL));
-    }
-
-
-    /**
-     * @param string $message
-     * @throws \Exception
-     */
-    protected function checkMessage($message)
-    {
-        if (\mb_substr_count($message, '[url') > 2) {
-            throw new \Exception('Слишком много ссылок в сообщении.');
-        }
     }
 }

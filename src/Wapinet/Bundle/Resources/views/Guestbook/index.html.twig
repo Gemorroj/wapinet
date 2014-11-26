@@ -42,6 +42,7 @@
     {% endfor %}
 
     {{ form_start(form, {'action': path('guestbook_add'), 'method': 'POST'}) }}
+        {% include '@Wapinet/bot-checker.html.twig' %}
         {{ form_widget(form) }}
     {{ form_end(form) }}
 

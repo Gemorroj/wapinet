@@ -152,6 +152,9 @@ services:
         class: Wapinet\Bundle\Helper\Geoip2
         arguments: [@service_container]
 
+    bot_checker:
+        class: Wapinet\Bundle\Helper\BotChecker
+
     hash:
         class: Wapinet\Bundle\Helper\Hash
 

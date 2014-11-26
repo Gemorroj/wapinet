@@ -27,6 +27,7 @@
 
 {% block content %}
     {{ form_start(form, {'action': path('file_upload'), 'method': 'POST', 'attr': {'id': 'file_upload'}}) }}
+        {% include '@Wapinet/bot-checker.html.twig' %}
         {{ form_errors(form) }}
 
         {{ form_row(form.file) }}
