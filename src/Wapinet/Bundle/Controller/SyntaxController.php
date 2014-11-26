@@ -18,14 +18,13 @@ class SyntaxController extends Controller
      * @param Request $request
      *
      * @return Response
-     * @throws \RuntimeException
      */
     public function indexAction(Request $request)
     {
         $code = $request->get('f');
 
         if (null === $code) {
-            throw new \RuntimeException('Не передан PHP код');
+            return new Response('<div class="red">Не передан PHP код</div>');
         }
 
         $this->data = $this->get('php_validator')->validateFragment($code);
