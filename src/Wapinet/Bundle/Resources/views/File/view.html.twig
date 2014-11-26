@@ -69,46 +69,8 @@
     <a data-role="button" data-icon="arrow-d" href="{{ vich_uploader_asset(file, 'file') }}" download="{{ file.originalFileName }}">Скачать</a>
 
     {% if file.isImage %}
-        <fieldset class="ui-grid-a">
-            <div class="ui-block-a">
-                {% include 'WapinetBundle::image.html.twig' with {
-                    'image': {
-                        'id': file.id,
-                        'alt': file.originalFileName,
-                        'src': vich_uploader_asset(file, 'file'),
-                        'preview': vich_uploader_asset(file, 'file')|imagine_filter('thumbnail')
-                    }
-                } %}
-            </div>
-            <div class="ui-block-b">
-                {% if file.getPassword is null %}
-                    <a href="{{ path('file_swiper', {'id': file.id}) }}" class="ui-btn ui-shadow ui-corner-all ui-icon-camera ui-btn-icon-left ui-btn-inline">Слайд</a>
-                {% endif %}
-            </div>
-        </fieldset>
-
-        {% if file.meta is not null %}
-            <pre class="long-description">
-                Разрешение: {{ file.meta.get('width') }}x{{ file.meta.get('height') }}<br />
-                {% if file.meta.has('dateTimeOriginal') %}
-                    Дата съемки: {{ file.meta.get('dateTimeOriginal') }}<br />
-                {% endif %}
-                {% if file.meta.has('dateTime') %}
-                    Дата изменения: {{ file.meta.get('dateTime') }}<br />
-                {% endif %}
-                {% if file.meta.has('make') %}
-                    Производитель фотокамеры: {{ file.meta.get('make') }}<br />
-                {% endif %}
-                {% if file.meta.has('model') %}
-                    Модель фотокамеры: {{ file.meta.get('model') }}<br />
-                {% endif %}
-                {% if file.meta.has('software') %}
-                    Редактировалось в: {{ file.meta.get('software') }}<br />
-                {% endif %}
-                {% if file.meta.has('comment') %}
-                    Комментарий: {{ file.meta.get('comment') }}<br />
-                {% endif %}
-            </pre>
+        {% if screenshot is defined and screenshot is not null %}
+            {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
         {% endif %}
     {% elseif file.isVideo %}
         {% if file.isPlayableVideo %}
@@ -118,50 +80,9 @@
                 {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
             {% endif %}
         {% endif %}
-
-        {% if file.meta is not null %}
-            <pre class="long-description">
-                Разрешение: {{ file.meta.get('width') }}x{{ file.meta.get('height') }}<br />
-                {% if file.meta.has('duration') %}
-                    Время: {{ file.meta.get('duration')|wapinet_length }}<br />
-                {% endif %}
-                {% if file.meta.has('codecName') %}
-                    Видео кодек: {{ file.meta.get('codecName') }}<br />
-                {% endif %}
-                {% if file.meta.has('bitRate') %}
-                    Видео битрейт: {{ (file.meta.get('bitRate') / 1000)|round }} кбит/сек<br />
-                {% endif %}
-                {% if file.meta.has('audioCodecName') %}
-                    Аудио кодек: {{ file.meta.get('audioCodecName') }}<br />
-                {% endif %}
-                {% if file.meta.has('audioBitRate') %}
-                    Аудио битрейт: {{ (file.meta.get('audioBitRate') / 1000)|round }} кбит/сек<br />
-                {% endif %}
-                {% if file.meta.has('audioSampleRate') %}
-                    Частота дискретизации: {{ (file.meta.get('audioSampleRate') / 1000)|round(1) }} КГц<br />
-                {% endif %}
-            </pre>
-        {% endif %}
     {% elseif file.isAudio %}
         {% if file.isPlayableAudio %}
             {% include '@Wapinet/audio.html.twig' with {'file': file} %}
-        {% endif %}
-
-        {% if file.meta is not null %}
-            <pre class="long-description">
-                {% if file.meta.has('duration') %}
-                    Время: {{ file.meta.get('duration')|wapinet_length }}<br />
-                {% endif %}
-                {% if file.meta.has('codecName') %}
-                    Кодек: {{ file.meta.get('codecName') }}<br />
-                {% endif %}
-                {% if file.meta.has('bitRate') %}
-                    Битрейт: {{ (file.meta.get('bitRate') / 1000)|round }} кбит/сек<br />
-                {% endif %}
-                {% if file.meta.has('sampleRate') %}
-                    Частота дискретизации: {{ (file.meta.get('sampleRate') / 1000)|round(1) }} КГц<br />
-                {% endif %}
-            </pre>
         {% endif %}
     {% elseif file.isArchive and false %} {# @todo: временно отключаем поддержку архивов #}
         {% if file.isExtractableArchive %}
@@ -175,41 +96,9 @@
         {% if screenshot is defined and screenshot is not null %}
             {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
         {% endif %}
-
-        {% if file.meta is not null %}
-            {% if file.meta.has('permissions') %}
-                <div>
-                    <a href="#popupPermissions" data-rel="popup" data-transition="pop" class="ui-mini ui-btn ui-shadow ui-corner-all ui-btn-inline ui-icon-alert ui-btn-icon-left">Права доступа</a>
-                    <div data-role="popup" id="popupPermissions">
-                        <ul>
-                            {% for premission in file.meta.get('permissions') %}
-                                {% if premission and premission.description %}
-                                    {% if premission.flags.danger %}
-                                        <li><span class="danger">!!!</span> {{ premission.description }}</li>
-                                    {% elseif premission.flags.warning %}
-                                        <li><span class="warning">!</span> {{ premission.description }}</li>
-                                    {% else %}
-                                        <li>{{ premission.description }}</li>
-                                    {% endif %}
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            {% endif %}
-            <pre class="long-description">
-                {% if file.meta.has('versionName') %}
-                    Версия: {{ file.meta.get('versionName') }}<br />
-                {% endif %}
-                {% if file.meta.has('packageName') %}
-                    Внутреннее имя: {{ file.meta.get('packageName') }}<br />
-                {% endif %}
-                {% if file.meta.has('minSdkVersions') %}
-                    Версия Android: {{ file.meta.get('minSdkVersions')|join(',') }}<br />
-                {% endif %}
-            </pre>
-        {% endif %}
     {% endif %}
+
+    {% include '@Wapinet/File/meta.html.twig' %}
 
     <fieldset>{{ file.description|wapinet_bbcode_parse }}</fieldset>
 
@@ -223,34 +112,6 @@
             {% endif %}
         </fieldset>
     {% endif %}
-
-
-    <div class="ui-grid-a ui-mini ui-corner-all">
-        <div class="ui-block-a"><div class="ui-bar ui-bar-a">Загружено</div></div>
-        <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ file.createdAt|wapinet_datetime }}</div></div>
-        {% if file.updatedAt is not null %}
-            <div class="ui-block-a"><div class="ui-bar ui-bar-a">Обновлено</div></div>
-            <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ file.updatedAt|wapinet_datetime }}</div></div>
-        {% endif %}
-        <div class="ui-block-a"><div class="ui-bar ui-bar-a">Размер</div></div>
-        <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ file.fileSize|wapinet_size }}</div></div>
-        <div class="ui-block-a"><div class="ui-bar ui-bar-a">Просмотров</div></div>
-        <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ file.countViews|wapinet_count }}</div></div>
-        {% if file.lastViewAt is not null %}
-            <div class="ui-block-a"><div class="ui-bar ui-bar-a">Последний</div></div>
-            <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ file.lastViewAt|wapinet_datetime }}</div></div>
-        {% endif %}
-        {% if file.user is not null %}
-            <div class="ui-block-a"><div class="ui-bar ui-bar-a">{{ file.user.isFemale ? 'Загрузила' : 'Загрузил' }}</div></div>
-            <div class="ui-block-b"><div class="ui-bar ui-bar-a"><a data-role="none" href="{{ path('wapinet_user_profile', {'username': file.user.username}) }}">{{ file.user.username }}</a></div></div>
-        {% endif %}
-        {% if file.password is not null %}
-            <div class="ui-block-a"><div class="ui-bar ui-bar-a">Пароль</div></div>
-            <div class="ui-block-b"><div class="ui-bar ui-bar-a">&#x2713;</div></div>
-        {% endif %}
-        <div class="ui-block-a"><div class="ui-bar ui-bar-a"><abbr title="Message Digest 5 — 128-битный алгоритм хеширования">MD5</abbr></div></div>
-        <div class="ui-block-b"><div class="ui-bar ui-bar-a" style="overflow-x: auto">{{ file.hash }}</div></div>
-    </div>
 
     {% if not file.tags.isEmpty %}
         <fieldset>

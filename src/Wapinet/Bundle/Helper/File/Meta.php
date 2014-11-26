@@ -208,9 +208,15 @@ class Meta
         }
 
         if ($infoMetadata->offsetExists('exif.COMMENT')) {
-            $this->fileMeta->set('comment', $infoMetadata->offsetGet('exif.COMMENT'));
+            $commentTrimed = \trim($infoMetadata->offsetGet('exif.COMMENT'));
+            if ('' !== $commentTrimed) {
+                $this->fileMeta->set('comment', $infoMetadata->offsetGet('exif.COMMENT'));
+            }
         } elseif ($infoMetadata->offsetExists('exif.UserComment')) {
-            $this->fileMeta->set('comment', $infoMetadata->offsetGet('exif.UserComment'));
+            $commentTrimed = \trim($infoMetadata->offsetGet('exif.UserComment'));
+            if ('' !== $commentTrimed) {
+                $this->fileMeta->set('comment', $infoMetadata->offsetGet('exif.UserComment'));
+            }
         }
 
         return $this;

@@ -1,0 +1,166 @@
+<div data-role="controlgroup" data-type="horizontal">
+
+    <a href="#popupMeta" data-rel="popup" data-transition="pop" data-position-to="window" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-icon-info ui-btn-icon-left">Информация</a>
+    <div data-role="popup" id="popupMeta" class="file-metadata ui-content">
+        <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Закрыть</a>
+
+        <div class="ui-grid-a">
+            <div class="ui-block-a"><div class="ui-body">Загружено</div></div>
+            <div class="ui-block-b"><div class="ui-body">{{ file.createdAt|wapinet_datetime }}</div></div>
+            {% if file.updatedAt is not null %}
+                <div class="ui-block-a"><div class="ui-body">Обновлено</div></div>
+                <div class="ui-block-b"><div class="ui-body">{{ file.updatedAt|wapinet_datetime }}</div></div>
+            {% endif %}
+            <div class="ui-block-a"><div class="ui-body">Размер</div></div>
+            <div class="ui-block-b"><div class="ui-body">{{ file.fileSize|wapinet_size }}</div></div>
+            <div class="ui-block-a"><div class="ui-body">Просмотров</div></div>
+            <div class="ui-block-b"><div class="ui-body">{{ file.countViews|wapinet_count }}</div></div>
+            {#
+            {% if file.lastViewAt is not null %}
+                <div class="ui-block-a"><div class="ui-body">Последний</div></div>
+                <div class="ui-block-b"><div class="ui-body">{{ file.lastViewAt|wapinet_datetime }}</div></div>
+            {% endif %}
+            #}
+            {% if file.user is not null %}
+                <div class="ui-block-a"><div class="ui-body">{{ file.user.isFemale ? 'Загрузила' : 'Загрузил' }}</div></div>
+                <div class="ui-block-b"><div class="ui-body"><a data-role="none" href="{{ path('wapinet_user_profile', {'username': file.user.username}) }}">{{ file.user.username }}</a></div></div>
+            {% endif %}
+            {% if file.password is not null %}
+                <div class="ui-block-a"><div class="ui-body">Пароль</div></div>
+                <div class="ui-block-b"><div class="ui-body">&#x2713;</div></div>
+            {% endif %}
+
+            {% if file.meta is not null %}
+                {% if file.isImage %}
+                    <div class="ui-block-a"><div class="ui-body">Разрешение</div></div>
+                    <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('width') }}x{{ file.meta.get('height') }}</div></div>
+
+                    {% if file.meta.has('dateTimeOriginal') %}
+                        <div class="ui-block-a"><div class="ui-body">Дата съемки</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('dateTimeOriginal') }}</div></div>
+                    {% endif %}
+
+                    {% if file.meta.has('dateTime') %}
+                        <div class="ui-block-a"><div class="ui-body">Дата изменения</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('dateTime') }}</div></div>
+                    {% endif %}
+
+                    {% if file.meta.has('make') %}
+                        <div class="ui-block-a"><div class="ui-body">Производитель фотокамеры</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('make') }}</div></div>
+                    {% endif %}
+
+                    {% if file.meta.has('model') %}
+                        <div class="ui-block-a"><div class="ui-body">Модель фотокамеры</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('model') }}</div></div>
+                    {% endif %}
+
+                    {% if file.meta.has('software') %}
+                        <div class="ui-block-a"><div class="ui-body">Редактировалось в</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('software') }}</div></div>
+                    {% endif %}
+
+                    {% if file.meta.has('comment') %}
+                        <div class="ui-block-a"><div class="ui-body">Комментарий</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('comment') }}</div></div>
+                    {% endif %}
+                {% elseif file.isVideo %}
+                    <div class="ui-block-a"><div class="ui-body">Разрешение</div></div>
+                    <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('width') }}x{{ file.meta.get('height') }}</div></div>
+
+                    {% if file.meta.has('duration') %}
+                        <div class="ui-block-a"><div class="ui-body">Время</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('duration')|wapinet_length }}</div></div>
+                    {% endif %}
+
+                    {% if file.meta.has('codecName') %}
+                        <div class="ui-block-a"><div class="ui-body">Видео кодек</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('codecName') }}</div></div>
+                    {% endif %}
+
+                    {% if file.meta.has('bitRate') %}
+                        <div class="ui-block-a"><div class="ui-body">Видео битрейт</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ (file.meta.get('bitRate') / 1000)|round }} кбит/сек</div></div>
+                    {% endif %}
+
+                    {% if file.meta.has('audioCodecName') %}
+                        <div class="ui-block-a"><div class="ui-body">Аудио кодек</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('audioCodecName') }}</div></div>
+                    {% endif %}
+
+                    {% if file.meta.has('audioBitRate') %}
+                        <div class="ui-block-a"><div class="ui-body">Аудио битрейт</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ (file.meta.get('audioBitRate') / 1000)|round }} кбит/сек</div></div>
+                    {% endif %}
+
+                    {% if file.meta.has('audioSampleRate') %}
+                        <div class="ui-block-a"><div class="ui-body">Частота дискретизации</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ (file.meta.get('audioSampleRate') / 1000)|round(1) }} КГц</div></div>
+                    {% endif %}
+                {% elseif file.isAudio %}
+                    {% if file.meta.has('duration') %}
+                        <div class="ui-block-a"><div class="ui-body">Время</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('duration')|wapinet_length }}</div></div>
+                    {% endif %}
+
+                    {% if file.meta.has('codecName') %}
+                        <div class="ui-block-a"><div class="ui-body">Кодек</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('codecName') }}</div></div>
+                    {% endif %}
+
+                    {% if file.meta.has('bitRate') %}
+                        <div class="ui-block-a"><div class="ui-body">Битрейт</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ (file.meta.get('bitRate') / 1000)|round }} кбит/сек</div></div>
+                    {% endif %}
+
+                    {% if file.meta.has('sampleRate') %}
+                        <div class="ui-block-a"><div class="ui-body">Частота дискретизации</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ (file.meta.get('sampleRate') / 1000)|round(1) }} КГц</div></div>
+                    {% endif %}
+                {% elseif file.isAndroidApp %}
+                    {% if file.meta.has('versionName') %}
+                        <div class="ui-block-a"><div class="ui-body">Версия</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('versionName') }}</div></div>
+                    {% endif %}
+                    {% if file.meta.has('packageName') %}
+                        <div class="ui-block-a"><div class="ui-body">Внутреннее имя</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('packageName') }}</div></div>
+                    {% endif %}
+                    {% if file.meta.has('minSdkVersions') %}
+                        <div class="ui-block-a"><div class="ui-body">Версия Android</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('minSdkVersions')|join(',') }}</div></div>
+                    {% endif %}
+                {% endif %}
+
+            {% endif %}
+
+            <div class="ui-block-a"><div class="ui-body"><abbr title="Message Digest 5 — 128-битный алгоритм хеширования">MD5</abbr></div></div>
+            <div class="ui-block-b"><div class="ui-body">{{ file.hash }}</div></div>
+        </div>
+    </div>
+
+    {% if file.isAndroidApp and file.meta is not null %}
+        {% if file.meta.has('permissions') %}
+            <a href="#popupPermissions" data-rel="popup" data-transition="pop" data-position-to="window" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-icon-alert ui-btn-icon-left">Права доступа</a>
+            <div data-role="popup" id="popupPermissions">
+                <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Закрыть</a>
+
+                <ul>
+                    {% for premission in file.meta.get('permissions') %}
+                        {% if premission and premission.description %}
+                            {% if premission.flags.danger %}
+                                <li><span class="danger">!!!</span> {{ premission.description }}</li>
+                            {% elseif premission.flags.warning %}
+                                <li><span class="warning">!</span> {{ premission.description }}</li>
+                            {% else %}
+                                <li>{{ premission.description }}</li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% elseif file.isImage and file.getPassword is null %}
+        <a href="{{ path('file_swiper', {'id': file.id}) }}" class="ui-btn ui-shadow ui-corner-all ui-icon-camera ui-btn-icon-left ui-btn-inline">Слайд</a>
+    {% endif %}
+</div>

@@ -103,3 +103,6 @@ input.block-input {
 .warning {
     color: #bb0;
 }
+div.file-metadata div.ui-body {
+    overflow-x: auto;
+}
