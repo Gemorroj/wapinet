@@ -9,7 +9,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Wapinet\Bundle\Entity\File;
-use Wapinet\Bundle\Helper\File as FileHelper;
+use Wapinet\Bundle\Helper\File\File as FileHelper;
 
 class FileAdmin extends Admin
 {

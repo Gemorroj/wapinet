@@ -127,7 +127,11 @@ services:
         arguments: [@security.context]
 
     file:
-        class: Wapinet\Bundle\Helper\File
+        class: Wapinet\Bundle\Helper\File\File
+        arguments: [@service_container]
+
+    file_meta:
+        class: Wapinet\Bundle\Helper\File\Meta
         arguments: [@service_container]
 
     curl:

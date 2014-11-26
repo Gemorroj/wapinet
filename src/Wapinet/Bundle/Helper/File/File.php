@@ -1,5 +1,5 @@
 <?php
-namespace Wapinet\Bundle\Helper;
+namespace Wapinet\Bundle\Helper\File;
 
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\DependencyInjection\ContainerInterface;
