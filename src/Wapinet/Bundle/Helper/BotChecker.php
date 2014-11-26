@@ -1,7 +1,7 @@
 <?php
 namespace Wapinet\Bundle\Helper;
 
-use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * BotChecker хэлпер
@@ -9,14 +9,12 @@ use Symfony\Component\Form\Form;
 class BotChecker
 {
     /**
-     * @param Form $form
+     * @param Request $request
      * @throws \Exception
      */
-    public function checkForm(Form $form)
+    public function checkRequest(Request $request)
     {
-        $data = $form->getData();
-
-        if (isset($data['bot-checker'])) {
+        if ('' !== $request->get('bot-checker')) {
             throw new \Exception('Кажется, вы - спам-бот.');
         }
     }

@@ -44,7 +44,7 @@ class GuestbookController extends Controller
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
-                    $this->get('bot_checker')->checkForm($form);
+                    $this->get('bot_checker')->checkRequest($request);
 
                     $data = $form->getData();
 
