@@ -13,8 +13,8 @@
     <div data-role="page" class="swiper-page" data-title="{{ file.originalFileName }}" data-dom-cache="true" data-theme="b" style="background-image: url('{{ vich_uploader_asset(file, 'file') }}');">
         <div id="header" data-role="header" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
             <h1>{{ file.originalFileName }}</h1>
-            <a href="{{ path('file_view', {'id': file.id}) }}" data-direction="reverse" data-icon="delete" data-iconpos="notext" data-shadow="false" data-icon-shadow="false">Закрыть</a>
-            <a href="{{ vich_uploader_asset(file, 'file') }}" data-icon="arrow-d" data-iconpos="notext" data-shadow="false" data-icon-shadow="false">Скачать</a>
+            <a data-ajax="false" href="{{ path('file_view', {'id': file.id}) }}" data-direction="reverse" data-icon="delete" data-iconpos="notext" data-shadow="false" data-icon-shadow="false">Закрыть</a>
+            <a data-ajax="false" href="{{ vich_uploader_asset(file, 'file') }}" data-icon="arrow-d" data-iconpos="notext" data-shadow="false" data-icon-shadow="false">Скачать</a>
         </div><!-- /header -->
 
         <div role="main" class="ui-content">
