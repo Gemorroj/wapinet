@@ -3,7 +3,7 @@ namespace Wapinet\Bundle\Form\Type\Gist;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Add
@@ -18,11 +18,20 @@ class AddType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('subject', 'text', array('attr' => array('placeholder' => 'Тема', 'maxlength' => 5000), 'required' => true, 'label' => false, 'constraints' => new NotBlank()));
-        $builder->add('body', 'textarea', array('attr' => array('placeholder' => 'Сообщение'), 'required' => true, 'label' => false, 'constraints' => new NotBlank()));
+        $builder->add('subject', 'text', array('attr' => array('placeholder' => 'Тема'), 'required' => true, 'label' => false));
+        $builder->add('body', 'textarea', array('attr' => array('placeholder' => 'Сообщение'), 'required' => true, 'label' => false));
         $builder->add('submit', 'submit', array('label' => 'Добавить'));
     }
 
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'Wapinet\Bundle\Entity\Gist',
+        ));
+    }
 
     /**
      * Уникальное имя формы

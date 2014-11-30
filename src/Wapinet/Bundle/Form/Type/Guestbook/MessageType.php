@@ -3,7 +3,7 @@ namespace Wapinet\Bundle\Form\Type\Guestbook;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Message
@@ -18,8 +18,19 @@ class MessageType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('message', 'textarea', array('attr' => array('placeholder' => 'Сообщение', 'maxlength' => 5000), 'required' => true, 'label' => false, 'constraints' => new NotBlank()));
+        $builder->add('message', 'textarea', array('attr' => array('placeholder' => 'Сообщение'), 'required' => true, 'label' => false));
         $builder->add('submit', 'submit', array('label' => 'Написать'));
+    }
+
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'Wapinet\Bundle\Entity\Guestbook',
+        ));
     }
 
 

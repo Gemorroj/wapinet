@@ -86,6 +86,7 @@ class GistController extends Controller
         }
 
         $form = $this->createForm(new AddType());
+        $flashBag = $this->get('session')->getFlashBag();
 
         try {
             $form->handleRequest($request);
@@ -94,11 +95,7 @@ class GistController extends Controller
                 if ($form->isValid()) {
                     $this->get('bot_checker')->checkRequest($request);
 
-                    $data = $form->getData();
-
-                    $gist = new Gist();
-                    $gist->setBody($data['body']);
-                    $gist->setSubject($data['subject']);
+                    $gist = $form->getData();
 
                     $gist->setUser($user);
                     $gist->setIp($request->getClientIp());
@@ -114,11 +111,15 @@ class GistController extends Controller
                         GistEvent::GIST_ADD,
                         new GistEvent($this->getUser(), $gist)
                     );
-                    $this->get('session')->getFlashBag()->add('notice', 'Сообщение успешно добавлено');
+                    $flashBag->add('notice', 'Сообщение успешно добавлено');
+                } else {
+                    foreach ($form->getErrors(true) as $formError) {
+                        $flashBag->add('notice', $formError->getMessage());
+                    }
                 }
             }
         } catch (\Exception $e) {
-            $this->get('session')->getFlashBag()->add('notice', $e->getMessage());
+            $flashBag->add('notice', $e->getMessage());
         }
 
         return $this->redirect($this->get('router')->generate('gist_index', array(), Router::ABSOLUTE_URL));
@@ -319,13 +320,13 @@ class GistController extends Controller
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
-                    $data = $form->getData();
-                    $this->editGistData($request, $gist, $data);
+                    $newGist = $form->getData();
+                    $this->editGistData($request, $gist, $newGist);
 
                     $router = $this->container->get('router');
                     $url = $router->generate('gist_view', array('id' => $gist->getId()), Router::ABSOLUTE_URL);
 
-                    if (true === $request->isXmlHttpRequest()) {
+                    if ($request->isXmlHttpRequest()) {
                         return new JsonResponse(array('url' => $url));
                     }
 
@@ -346,13 +347,13 @@ class GistController extends Controller
     /**
      * @param Request $request
      * @param Gist    $data
-     * @param array   $newData
+     * @param Gist   $newData
      * @return Gist
      */
-    protected function editGistData(Request $request, Gist $data, array $newData)
+    protected function editGistData(Request $request, Gist $data, Gist $newData)
     {
-        $data->setSubject($newData['subject']);
-        $data->setBody($newData['body']);
+        $data->setSubject($newData->getSubject());
+        $data->setBody($newData->getBody());
 
         // обновляем ip и браузер только если сообщение редактирует владелец
         if ($data->getUser()->getId() === $this->getUser()->getId()) {

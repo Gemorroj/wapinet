@@ -419,7 +419,7 @@ class FileController extends Controller
             return new JsonResponse(array('url' => $url));
         }
 
-        return new RedirectResponse($url);
+        return $this->redirect($url);
     }
 
 
@@ -462,15 +462,23 @@ class FileController extends Controller
                     $router = $this->container->get('router');
                     $url = $router->generate('file_view', array('id' => $file->getId()), Router::ABSOLUTE_URL);
 
-                    if (true === $request->isXmlHttpRequest()) {
+                    // загрузка через ajax
+                    if ($request->isXmlHttpRequest()) {
                         return new JsonResponse(array('url' => $url));
                     }
 
-                    return new RedirectResponse($url);
+                    return $this->redirect($url);
                 }
             }
         } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
+        }
+
+        // загрузка через ajax
+        if ($request->isXmlHttpRequest() /*&& $form->isSubmitted()*/ && !$form->isValid()) {
+            return new JsonResponse(array(
+                'errors' => $this->get('error')->makeErrors($form),
+            ), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         return $this->render('WapinetBundle:File:edit.html.twig', array(
@@ -572,7 +580,7 @@ class FileController extends Controller
                     );
 
                     // загрузка через ajax
-                    if (true === $request->isXmlHttpRequest()) {
+                    if ($request->isXmlHttpRequest()) {
                         return new JsonResponse(array(
                             'id' => $file->getId(),
                             'url' => $url

@@ -38,6 +38,7 @@ class GuestbookController extends Controller
     public function addAction(Request $request)
     {
         $form = $this->createForm(new MessageType());
+        $flashBag = $this->get('session')->getFlashBag();
 
         try {
             $form->handleRequest($request);
@@ -46,10 +47,8 @@ class GuestbookController extends Controller
                 if ($form->isValid()) {
                     $this->get('bot_checker')->checkRequest($request);
 
-                    $data = $form->getData();
-
-                    $guestbook = new Guestbook();
-                    $guestbook->setMessage($data['message']);
+                    /** @var Guestbook $data */
+                    $guestbook = $form->getData();
 
                     $guestbook->setUser($this->getUser());
                     $guestbook->setIp($request->getClientIp());
@@ -59,11 +58,15 @@ class GuestbookController extends Controller
                     $entityManager->persist($guestbook);
                     $entityManager->flush();
 
-                    $this->get('session')->getFlashBag()->add('notice', 'Сообщение успешно добавлено');
+                    $flashBag->add('notice', 'Сообщение успешно добавлено');
+                } else {
+                    foreach ($form->getErrors(true) as $formError) {
+                        $flashBag->add('notice', $formError->getMessage());
+                    }
                 }
             }
         } catch (\Exception $e) {
-            $this->get('session')->getFlashBag()->add('notice', $e->getMessage());
+            $flashBag->add('notice', $e->getMessage());
         }
 
         return $this->redirect($this->get('router')->generate('guestbook_index', array(), Router::ABSOLUTE_URL));

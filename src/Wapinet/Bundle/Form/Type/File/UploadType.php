@@ -20,7 +20,7 @@ class UploadType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder->add('file', 'file_url', array('required' => true, 'label' => false));
-        $builder->add('description', 'textarea', array('attr' => array('maxlength' => 5000), 'required' => true, 'label' => 'Описание', 'constraints' => new NotBlank()));
+        $builder->add('description', 'textarea', array('required' => true, 'label' => 'Описание'));
 
         // http://view.jquerymobile.com/1.3.2/dist/demos/widgets/autocomplete/autocomplete-remote.html
         // тэги

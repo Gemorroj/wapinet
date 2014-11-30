@@ -4,7 +4,6 @@ namespace Wapinet\Bundle\Form\Type\File;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Edit
@@ -33,7 +32,7 @@ class EditType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder->add('file', 'file_url', array('required' => false, 'label' => false));
-        $builder->add('description', 'textarea', array('attr' => array('maxlength' => 5000), 'required' => true, 'label' => 'Описание', 'constraints' => new NotBlank()));
+        $builder->add('description', 'textarea', array('required' => true, 'label' => 'Описание'));
 
         // http://view.jquerymobile.com/1.3.2/dist/demos/widgets/autocomplete/autocomplete-remote.html
         // тэги
