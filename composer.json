@@ -41,7 +41,7 @@
         "gemorroj/cssvalidator": "dev-master"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.3",
+        "phpunit/phpunit": "~4.4",
         "sensio/generator-bundle": "~2.3"
     },
     "scripts": {
