@@ -79,3 +79,8 @@
 - Актуализировать мобильные коды. Найти новые для разных андроидов.
 - заменить апи сфинкса https://github.com/FoolCode/SphinxQL-Query-Builder
 - добавить сервис проверки кода через php_codesniffer
+
+### BUG:
+[2014-12-03 23:32:45] request.INFO: Matched route "icq_registration_pic" (parameters: "_controller": "Wapinet\Bundle\Controller\IcqController::registrationPicAction", "_format": "png", "gnm_img": "74AA504ABC19FF0318CFCE2DADDB0965CC79F51CDB17EA621D38573F559D3F130693D136627761CFBEABD4832F6B8BEAB", "_route": "icq_registration_pic") [] []
+[2014-12-03 23:32:45] security.INFO: Populated SecurityContext with an anonymous Token [] []
+[2014-12-03 23:32:45] request.CRITICAL: Uncaught PHP Exception RuntimeException: "Не удалось получить данные (HTTP код: 410)" at /var/www/wapinet.ru/src/Wapinet/Bundle/Controller/IcqController.php line 133 {"exception":"[object] (RuntimeException: Не удалось получить данные (HTTP код: 410) at /var/www/wapinet.ru/src/Wapinet/Bundle/Controller/IcqController.php:133)"} []
