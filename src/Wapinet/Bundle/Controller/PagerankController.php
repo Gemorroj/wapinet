@@ -111,7 +111,7 @@ class PagerankController extends Controller
     protected function getGooglePages($url)
     {
         $curl = $this->get('curl');
-        $curl->init('http://www.google.com/search?q=' . \rawurlencode('site:' . $url));
+        $curl->init('http://www.google.com/search?hl=en&q=' . \rawurlencode('site:' . $url));
         $curl->addCompression();
         $curl->addHeader('Accept-Language', 'en-US,en');
 
@@ -149,7 +149,7 @@ class PagerankController extends Controller
     protected function getGoogleInurl($url)
     {
         $curl = $this->get('curl');
-        $curl->init('http://www.google.com/search?q=' . \rawurlencode('"' . $url . '" -inurl:"' . $url . '"'));
+        $curl->init('http://www.google.com/search?hl=en&q=' . \rawurlencode('"' . $url . '" -inurl:"' . $url . '"'));
         $curl->acceptRedirects(); // fix ipv4
         $curl->addCompression();
         $curl->addHeader('Accept-Language', 'en-US,en');
