@@ -22,9 +22,9 @@ class SubscriberController extends Controller
     public function editAction(Request $request)
     {
         /** @var User $user */
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
         if (!\is_object($user) || !$user instanceof User) {
-            throw new AccessDeniedException('Вы должны быть авторизованы.');
+            $this->createAccessDeniedException('Вы должны быть авторизованы');
         }
 
         $form = $this->createForm(new SubscriberType());
@@ -42,9 +42,9 @@ class SubscriberController extends Controller
                     $em->persist($data);
                     $em->flush();
 
-                    $this->get('session')->getFlashBag()->add('success', 'Подписки успешно обновлены');
-                    $url = $this->container->get('router')->generate('fos_user_profile_show');
-                    return new RedirectResponse($url);
+                    $this->addFlash('success', 'Подписки успешно обновлены');
+
+                    return $this->redirectToRoute('fos_user_profile_show');
                 }
             }
         } catch (\Exception $e) {

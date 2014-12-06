@@ -2,7 +2,6 @@
 
 namespace Wapinet\CommentBundle\Twig\Extension;
 
-use Symfony\Component\Security\Core\SecurityContext;
 use Wapinet\CommentBundle\Entity\CommentManager;
 use Wapinet\UserBundle\Entity\User;
 
@@ -13,6 +12,9 @@ class Comment extends \Twig_Extension
      */
     protected $commentManager;
 
+    /**
+     * @param CommentManager $commentManager
+     */
     public function __construct(CommentManager $commentManager)
     {
         $this->commentManager = $commentManager;

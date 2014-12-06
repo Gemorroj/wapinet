@@ -3,7 +3,6 @@ namespace Wapinet\UserBundle\Controller;
 
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,9 +38,7 @@ class UsersController extends Controller
                     ));
                 }
 
-                return $this->redirect(
-                    $this->get('router')->generate('wapinet_users', array('key' => $key), Router::ABSOLUTE_URL)
-                );
+                return $this->redirectToRoute('wapinet_users', array('key' => $key));
             }
 
             if (null !== $key && true === $session->has('users_search')) {

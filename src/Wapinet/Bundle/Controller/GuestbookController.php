@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Wapinet\Bundle\Entity\Guestbook;
 use Wapinet\Bundle\Form\Type\Guestbook\MessageType;
-use Symfony\Component\Routing\Router;
 
 class GuestbookController extends Controller
 {
@@ -69,6 +68,6 @@ class GuestbookController extends Controller
             $flashBag->add('notice', $e->getMessage());
         }
 
-        return $this->redirect($this->get('router')->generate('guestbook_index', array(), Router::ABSOLUTE_URL));
+        return $this->redirectToRoute('guestbook_index');
     }
 }

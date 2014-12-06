@@ -95,7 +95,7 @@ class Provider extends BaseProvider
         $parerfanta = $this->container->get('paginate')->paginate($thread->getMessages(), $page);
 
         /** @var User $currentUser */
-        $currentUser = $this->container->get('security.context')->getToken()->getUser();
+        $currentUser = $this->container->get('security.token_storage')->getToken()->getUser();
 
 
         /** @var MessageInterface $message */

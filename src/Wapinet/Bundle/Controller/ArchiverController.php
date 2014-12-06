@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Router;
 use Wapinet\Bundle\Exception\ArchiverException;
 use Wapinet\Bundle\Form\Type\Archiver\AddType;
 
@@ -46,7 +45,8 @@ class ArchiverController extends Controller
                     $this->addFile($archiveDirectory, $data['file']);
 
                     $archive = basename($archiveDirectory);
-                    return $this->redirect($this->get('router')->generate('archiver_edit', array('archive' => $archive), Router::ABSOLUTE_URL));
+
+                    return $this->redirectToRoute('archiver_edit', array('archive' => $archive));
                 }
             }
         } catch (\Exception $e) {
@@ -137,7 +137,7 @@ class ArchiverController extends Controller
 
         $this->get('filesystem')->remove($file);
 
-        return $this->redirect($this->get('router')->generate('archiver_edit', array('archive' => $archive), Router::ABSOLUTE_URL));
+        return $this->redirectToRoute('archiver_edit', array('archive' => $archive));
     }
 
 
@@ -151,17 +151,17 @@ class ArchiverController extends Controller
     protected function checkFile($archiveDirectory, $path, $allowDirectory = false)
     {
         if (false !== \strpos($path, '../') || \strpos($path, '..\\')) {
-            throw new AccessDeniedException($path);
+            $this->createAccessDeniedException($path);
         }
 
         $file = \realpath($archiveDirectory . \DIRECTORY_SEPARATOR . $path);
 
         if (0 !== \strpos($file, $archiveDirectory)) {
-            throw new AccessDeniedException($path);
+            $this->createAccessDeniedException($path);
         }
 
         if (true !== $allowDirectory && true === \is_dir($allowDirectory)) {
-            throw new AccessDeniedException($path);
+            $this->createAccessDeniedException($path);
         }
 
         return $file;
@@ -185,7 +185,8 @@ class ArchiverController extends Controller
                     $archiveDirectory = $this->extractArchive($data['file']);
 
                     $archive = \basename($archiveDirectory);
-                    return $this->redirect($this->get('router')->generate('archiver_edit', array('archive' => $archive), Router::ABSOLUTE_URL));
+
+                    return $this->redirectToRoute('archiver_edit', array('archive' => $archive));
                 }
             }
         } catch (\Exception $e) {

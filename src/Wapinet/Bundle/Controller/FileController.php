@@ -84,9 +84,7 @@ class FileController extends Controller
                     ));
                 }
 
-                return $this->redirect(
-                    $this->get('router')->generate('file_search', array('key' => $key), Router::ABSOLUTE_URL)
-                );
+                return $this->redirectToRoute('file_search', array('key' => $key));
             }
 
             if (null !== $key && true === $session->has('file_search')) {
@@ -343,7 +341,7 @@ class FileController extends Controller
                 if ($form->isValid()) {
                     $data = $form->getData();
                     if (true !== $encoder->isPasswordValid($file->getPassword(), $data['password'], $file->getSalt())) {
-                        throw new AccessDeniedException('Неверный пароль');
+                        $this->createAccessDeniedException('Неверный пароль');
                     }
 
                     return $this->viewFile($file);
@@ -396,10 +394,7 @@ class FileController extends Controller
             throw $this->createNotFoundException('Файл не найден.');
         }
 
-        $securityContext = $this->get('security.context');
-        if (false === $securityContext->isGranted('DELETE', $file)) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('DELETE', $file);
 
         // БД
         $em = $this->getDoctrine()->getManager();
@@ -412,8 +407,7 @@ class FileController extends Controller
         $em->flush();
 
         // переадресация на главную
-        $router = $this->container->get('router');
-        $url = $router->generate('file_index', array(), Router::ABSOLUTE_URL);
+        $url = $this->generateUrl('file_index', array(), Router::ABSOLUTE_URL);
 
         if (true === $request->isXmlHttpRequest()) {
             return new JsonResponse(array('url' => $url));
@@ -438,10 +432,7 @@ class FileController extends Controller
             throw $this->createNotFoundException('Файл не найден.');
         }
 
-        $securityContext = $this->get('security.context');
-        if (false === $securityContext->isGranted('EDIT', $file)) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('EDIT', $file);
 
 
         $fileHelper = $this->get('file');
@@ -459,8 +450,7 @@ class FileController extends Controller
                     $tagsString = $form['tags_string']->getData();
                     $this->editFileData($request, $file, $newFile, $tagsString);
 
-                    $router = $this->container->get('router');
-                    $url = $router->generate('file_view', array('id' => $file->getId()), Router::ABSOLUTE_URL);
+                    $url = $this->generateUrl('file_view', array('id' => $file->getId()), Router::ABSOLUTE_URL);
 
                     // загрузка через ajax
                     if ($request->isXmlHttpRequest()) {
@@ -573,8 +563,7 @@ class FileController extends Controller
                     $tagsString = $form['tags_string']->getData();
                     $file = $this->saveFileData($request, $data, $tagsString);
 
-                    $router = $this->container->get('router');
-                    $url = $router->generate('file_view', array(
+                    $url = $this->generateUrl('file_view', array(
                             'id' => $file->getId()
                         ), Router::ABSOLUTE_URL
                     );

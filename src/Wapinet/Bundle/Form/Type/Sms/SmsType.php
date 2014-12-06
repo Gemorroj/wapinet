@@ -37,7 +37,7 @@ class SmsType extends AbstractType
          * @see http://www.en2ru.com/mobile.php
          */
         $builder->add('gateway', 'choice', array(
-            'empty_value' => 'Выберите оператора',
+            'placeholder' => 'Выберите оператора',
             'label' => 'Оператор',
             'choices' => array(
                 'Азербайджан' => array(
@@ -143,7 +143,7 @@ class SmsType extends AbstractType
             ),
         ));
 
-        if (false === $this->container->get('security.context')->isGranted($this->container->getParameter('wapinet_role_nocaptcha'))) {
+        if (false === $this->container->get('security.authorization_checker')->isGranted($this->container->getParameter('wapinet_role_nocaptcha'))) {
             $builder->add('captcha', 'captcha', array('required' => true, 'label' => 'Код'));
         }
 

@@ -40,15 +40,11 @@ class AudioTagsController extends Controller
                     $data = $form->getData();
 
                     $file = $this->saveFile($data);
-                    $router = $this->container->get('router');
 
-                    return $this->redirect(
-                        $router->generate('audio_tags_edit', array(
-                                'fileName' => $file->getFilename(),
-                                'originalFileName' => $data['file']->getClientOriginalName()
-                            ), Router::ABSOLUTE_URL
-                        )
-                    );
+                    return $this->redirectToRoute('audio_tags_edit', array(
+                        'fileName' => $file->getFilename(),
+                        'originalFileName' => $data['file']->getClientOriginalName()
+                    ));
                 }
             }
         } catch (\Exception $e) {

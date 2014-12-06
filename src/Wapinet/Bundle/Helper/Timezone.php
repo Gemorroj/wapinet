@@ -1,7 +1,7 @@
 <?php
 namespace Wapinet\Bundle\Helper;
 
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Wapinet\UserBundle\Entity\User;
 
 /**
@@ -10,16 +10,16 @@ use Wapinet\UserBundle\Entity\User;
 class Timezone
 {
     /**
-     * @var SecurityContext
+     * @var TokenStorageInterface
      */
-    protected $securityContext;
+    protected $tokenStorage;
 
     /**
-     * @param SecurityContext $securityContext
+     * @param TokenStorageInterface $tokenStorage
      */
-    public function __construct (SecurityContext $securityContext)
+    public function __construct (TokenStorageInterface $tokenStorage)
     {
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -27,7 +27,7 @@ class Timezone
      */
     public function getTimezone()
     {
-        $token = $this->securityContext->getToken();
+        $token = $this->tokenStorage->getToken();
         $user = (null !== $token ? $token->getUser() : null);
 
         if ($user instanceof User && null !== $user->getTimezone()) {

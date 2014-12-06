@@ -36,7 +36,7 @@ class EmailType extends AbstractType
         $builder->add('message', 'textarea', array('label' => 'Сообщение'));
         $builder->add('file', 'file_url', array('required' => false, 'label' => false));
 
-        if (false === $this->container->get('security.context')->isGranted($this->container->getParameter('wapinet_role_nocaptcha'))) {
+        if (false === $this->container->get('security.authorization_checker')->isGranted($this->container->getParameter('wapinet_role_nocaptcha'))) {
             $builder->add('captcha', 'captcha', array('required' => true, 'label' => 'Код'));
         }
 

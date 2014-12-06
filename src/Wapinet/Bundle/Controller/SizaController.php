@@ -7,7 +7,6 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Wapinet\Bundle\Form\Type\Siza\SearchType;
 
 
@@ -62,15 +61,10 @@ class SizaController extends Controller
                         throw new \Exception('По Вашему запросу ничего не найдено.');
                     }
 
-                    $link = $this->get('router')->generate(
-                        'siza_search_list',
-                        array(
-                            'searchId' => $searchId,
-                            'searchQuery' => $data['search'],
-                        ),
-                        UrlGeneratorInterface::ABSOLUTE_URL
-                    );
-                    return $this->redirect($link);
+                    return $this->redirectToRoute('siza_search_list', array(
+                        'searchId' => $searchId,
+                        'searchQuery' => $data['search'],
+                    ));
                 }
             }
         } catch (\Exception $e) {

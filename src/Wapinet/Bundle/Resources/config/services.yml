@@ -124,7 +124,7 @@ services:
 
     timezone:
         class: Wapinet\Bundle\Helper\Timezone
-        arguments: [@security.context]
+        arguments: [@security.token_storage]
 
     file:
         class: Wapinet\Bundle\Helper\File\File

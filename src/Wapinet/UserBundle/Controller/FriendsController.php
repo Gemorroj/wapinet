@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wapinet\UserBundle\Entity\Friend;
 use Wapinet\UserBundle\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Wapinet\UserBundle\Event\FriendEvent;
 
 
@@ -51,7 +50,7 @@ class FriendsController extends Controller
         /** @var User $user */
         $user = $this->getUser();
         if (null === $user) {
-            throw new AccessDeniedException('Вы не авторизованы.');
+            $this->createAccessDeniedException('Вы не авторизованы');
         }
 
         $userManager = $this->get('fos_user.user_manager');
@@ -80,10 +79,7 @@ class FriendsController extends Controller
             new FriendEvent($user, $friend)
         );
 
-        $router = $this->get('router');
-        $url = $router->generate('wapinet_user_profile', array('username' => $friend->getUsername()), Router::ABSOLUTE_URL);
-
-        return new RedirectResponse($url);
+        return $this->redirectToRoute('wapinet_user_profile', array('username' => $friend->getUsername()));
     }
 
 
@@ -99,7 +95,7 @@ class FriendsController extends Controller
         /** @var User $user */
         $user = $this->getUser();
         if (null === $user) {
-            throw new AccessDeniedException('Вы не авторизованы.');
+            $this->createAccessDeniedException('Вы не авторизованы');
         }
 
         $userManager = $this->get('fos_user.user_manager');
@@ -124,9 +120,6 @@ class FriendsController extends Controller
             new FriendEvent($user, $friend)
         );
 
-        $router = $this->get('router');
-        $url = $router->generate('wapinet_user_profile', array('username' => $friend->getUsername()), Router::ABSOLUTE_URL);
-
-        return new RedirectResponse($url);
+        return $this->redirectToRoute('wapinet_user_profile', array('username' => $friend->getUsername()));
     }
 }

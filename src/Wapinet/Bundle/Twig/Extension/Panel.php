@@ -36,7 +36,7 @@ class Panel extends \Twig_Extension
      */
     public function getPanel(array $options = array())
     {
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
         if (\is_object($user) && $user instanceof User) {
             $panel = $user->getPanel();
         } else {

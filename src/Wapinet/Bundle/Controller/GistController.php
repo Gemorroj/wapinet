@@ -82,7 +82,7 @@ class GistController extends Controller
     {
         $user = $this->getUser();
         if (null === $user) {
-            throw new AccessDeniedException('Вы должны быть авторизованы для добавления сообщения');
+            $this->createAccessDeniedException('Вы должны быть авторизованы для добавления сообщения');
         }
 
         $form = $this->createForm(new AddType());
@@ -122,7 +122,7 @@ class GistController extends Controller
             $flashBag->add('notice', $e->getMessage());
         }
 
-        return $this->redirect($this->get('router')->generate('gist_index', array(), Router::ABSOLUTE_URL));
+        return $this->redirectToRoute('gist_index');
     }
 
 
@@ -187,10 +187,7 @@ class GistController extends Controller
             throw $this->createNotFoundException('Сообщение не найдено.');
         }
 
-        $securityContext = $this->get('security.context');
-        if (false === $securityContext->isGranted('DELETE', $gist)) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('DELETE', $gist);
 
         // комментарии
         $this->get('wapinet_comment.helper')->removeThread('gist-' . $gist->getId());
@@ -201,14 +198,13 @@ class GistController extends Controller
         $em->flush();
 
         // переадресация на главную
-        $router = $this->container->get('router');
-        $url = $router->generate('gist_index', array(), Router::ABSOLUTE_URL);
+        $url = $$this->generateUrl('gist_index', array(), Router::ABSOLUTE_URL);
 
         if (true === $request->isXmlHttpRequest()) {
             return new JsonResponse(array('url' => $url));
         }
 
-        return new RedirectResponse($url);
+        return $this->redirect($url);
     }
 
 
@@ -237,9 +233,7 @@ class GistController extends Controller
                     ));
                 }
 
-                return $this->redirect(
-                    $this->get('router')->generate('gist_search', array('key' => $key), Router::ABSOLUTE_URL)
-                );
+                return $this->redirectToRoute('gist_search', array('key' => $key));
             }
 
             if (null !== $key && true === $session->has('gist_search')) {
@@ -305,10 +299,7 @@ class GistController extends Controller
             throw $this->createNotFoundException('Сообщение не найдено.');
         }
 
-        $securityContext = $this->get('security.context');
-        if (false === $securityContext->isGranted('EDIT', $gist)) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('EDIT', $gist);
 
 
         $form = $this->createForm(new EditType());
@@ -323,14 +314,13 @@ class GistController extends Controller
                     $newGist = $form->getData();
                     $this->editGistData($request, $gist, $newGist);
 
-                    $router = $this->container->get('router');
-                    $url = $router->generate('gist_view', array('id' => $gist->getId()), Router::ABSOLUTE_URL);
+                    $url = $this->generateUrl('gist_view', array('id' => $gist->getId()), Router::ABSOLUTE_URL);
 
                     if ($request->isXmlHttpRequest()) {
                         return new JsonResponse(array('url' => $url));
                     }
 
-                    return new RedirectResponse($url);
+                    return $this->redirect($url);
                 }
             }
         } catch (\Exception $e) {

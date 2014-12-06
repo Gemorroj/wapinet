@@ -33,7 +33,7 @@ class ListenerLastActivity
         }
 
         // We are checking a token authentification is available before using the User
-        $token = $this->container->get('security.context')->getToken();
+        $token = $this->container->get('security.token_storage')->getToken();
         if (null !== $token) {
             /** @var User $user */
             $user = $token->getUser();
