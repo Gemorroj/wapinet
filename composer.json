@@ -26,7 +26,7 @@
         "friendsofsymfony/message-bundle": "dev-master",
         "white-october/pagerfanta-bundle": "*",
         "james-heinrich/getid3": "dev-master",
-        "vich/uploader-bundle": "~0.13",
+        "vich/uploader-bundle": "~0.14",
         "liip/imagine-bundle": "~1.2",
         "gregwar/captcha-bundle": "~1.0",
         "pulse00/ffmpeg-bundle": "~0.5",
