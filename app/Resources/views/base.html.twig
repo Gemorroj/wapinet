@@ -90,7 +90,7 @@
 <div data-role="page" id="page" data-title="{% if (is_granted('ROLE_USER') and fos_message_nb_unread() > 0) %}+{{ fos_message_nb_unread()|wapinet_count }} {% endif %}{{ title }}">
     {% block page %}
         {% block panel %}
-            <div data-role="panel" id="panel">
+            <div data-role="panel" data-display="overlay" id="panel">
                 <ul data-role="listview" data-inset="true" data-divider-theme="b">
                     {% if is_granted('ROLE_USER') %}
                         {% set fos_message_nb_unread = fos_message_nb_unread() %}
@@ -126,7 +126,7 @@
             {% endblock %}
         </div>
 
-        <div data-role="content">
+        <div data-role="content" class="center-container">
             {% block logo %}<div class="wapinet-logo"><a href="{{ path('index') }}"><img src="{{ asset('/bundles/wapinet/images/georg_lent_200.png') }}" alt=""/></a></div>{% endblock %}
             {% block breadcrumbs %}{% endblock %}
             {% block navbar %}{% endblock %}

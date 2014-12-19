@@ -109,3 +109,7 @@ div.file-metadata div.ui-body {
 span.bot-checker {
     display: none;
 }
+div.center-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
