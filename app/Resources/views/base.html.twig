@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/wapinet/xbbcode/resources/style.css') }}" />
 
     {# jquery #}
-    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.3.min.js"></script>
 
     {# jquery mobile #}
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
@@ -28,11 +28,11 @@
 
     {# jplayer #}
     {% if file is defined and (file.isPlayableVideo or file.isPlayableAudio) %}
-        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jplayer/2.7.1/skin/blue.monday/jplayer.blue.monday.css" />
-        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jplayer/2.7.1/jquery.jplayer/jquery.jplayer.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/skin/blue.monday/css/jplayer.blue.monday.min.css" />
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.min.js"></script>
         <script type="text/javascript">{% autoescape 'js' %}
             var Jplayer = {
-                'swfPath': "//cdnjs.cloudflare.com/ajax/libs/jplayer/2.7.1/jquery.jplayer/Jplayer.swf"
+                'swfPath': "//cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.swf"
             };
         {% endautoescape %}</script>
     {% endif %}
