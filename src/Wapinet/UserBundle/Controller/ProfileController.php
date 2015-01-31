@@ -26,8 +26,9 @@ class ProfileController extends BaseController
     {
         $currentUser = $this->container->get('security.token_storage')->getToken()->getUser();
         if (!\is_object($currentUser) || !$currentUser instanceof UserInterface) {
-            $this->createAccessDeniedException('Вы должны быть авторизованы');
+            throw $this->createAccessDeniedException('Вы должны быть авторизованы');
         }
+
         if (null !== $username) {
             $userManager = $this->container->get('fos_user.user_manager');
             $user = $userManager->findUserByUsername($username);
@@ -49,7 +50,7 @@ class ProfileController extends BaseController
         /** @var User $user */
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
         if (!\is_object($user) || !$user instanceof UserInterface) {
-            $this->createAccessDeniedException('Вы должны быть авторизованы');
+            throw $this->createAccessDeniedException('Вы должны быть авторизованы');
         }
 
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */

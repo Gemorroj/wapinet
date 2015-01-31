@@ -19,7 +19,7 @@ class EventsController extends Controller
         $page = $request->get('page', 1);
         $user = $this->getUser();
         if (null === $user) {
-            $this->createAccessDeniedException('Пользователь не найден');
+            throw $this->createAccessDeniedException('Пользователь не найден');
         }
 
         $repository = $this->getDoctrine()->getRepository('WapinetUserBundle:Event');

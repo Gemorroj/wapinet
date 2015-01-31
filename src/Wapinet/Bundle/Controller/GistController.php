@@ -57,7 +57,7 @@ class GistController extends Controller
         $userManager = $this->get('fos_user.user_manager');
         $user = $userManager->findUserByUsername($username);
         if (null === $user) {
-            $this->createNotFoundException('Пользователь не найден');
+            throw $this->createNotFoundException('Пользователь не найден');
         }
 
         $gistManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Gist');
@@ -82,7 +82,7 @@ class GistController extends Controller
     {
         $user = $this->getUser();
         if (null === $user) {
-            $this->createAccessDeniedException('Вы должны быть авторизованы для добавления сообщения');
+            throw $this->createAccessDeniedException('Вы должны быть авторизованы для добавления сообщения');
         }
 
         $form = $this->createForm(new AddType());
@@ -163,7 +163,7 @@ class GistController extends Controller
         $gistManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Gist');
         $gist = $gistManager->find($id);
         if (null === $gist) {
-            $this->createNotFoundException('Сообщение не найдено.');
+            throw $this->createNotFoundException('Сообщение не найдено.');
         }
 
         return $this->render('WapinetBundle:Gist:view.html.twig', array(

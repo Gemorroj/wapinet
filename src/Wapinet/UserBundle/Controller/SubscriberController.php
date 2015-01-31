@@ -24,7 +24,7 @@ class SubscriberController extends Controller
         /** @var User $user */
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
         if (!\is_object($user) || !$user instanceof User) {
-            $this->createAccessDeniedException('Вы должны быть авторизованы');
+            throw $this->createAccessDeniedException('Вы должны быть авторизованы');
         }
 
         $form = $this->createForm(new SubscriberType());

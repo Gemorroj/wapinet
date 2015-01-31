@@ -19,7 +19,7 @@ class CommentsController extends Controller
         $userManager = $this->get('fos_user.user_manager');
         $user = $userManager->findUserByUsername($username);
         if (null === $user) {
-            $this->createNotFoundException('Пользователь не найден');
+            throw $this->createNotFoundException('Пользователь не найден');
         }
 
         $commentManager = $this->get('wapinet_comment.manager.comment');

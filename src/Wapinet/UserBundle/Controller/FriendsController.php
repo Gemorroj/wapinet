@@ -24,7 +24,7 @@ class FriendsController extends Controller
         $userManager = $this->get('fos_user.user_manager');
         $user = $userManager->findUserByUsername($username);
         if (null === $user) {
-            $this->createNotFoundException('Пользователь не найден');
+            throw $this->createNotFoundException('Пользователь не найден');
         }
 
         $friendRepository = $this->getDoctrine()->getRepository('Wapinet\UserBundle\Entity\Friend');
@@ -50,13 +50,13 @@ class FriendsController extends Controller
         /** @var User $user */
         $user = $this->getUser();
         if (null === $user) {
-            $this->createAccessDeniedException('Вы не авторизованы');
+            throw $this->createAccessDeniedException('Вы не авторизованы');
         }
 
         $userManager = $this->get('fos_user.user_manager');
         $friend = $userManager->findUserByUsername($username);
         if (null === $friend) {
-            $this->createNotFoundException('Пользователь не найден.');
+            throw $this->createNotFoundException('Пользователь не найден.');
         }
 
         $friendRepository = $this->getDoctrine()->getRepository('WapinetUserBundle:Friend');
@@ -95,13 +95,13 @@ class FriendsController extends Controller
         /** @var User $user */
         $user = $this->getUser();
         if (null === $user) {
-            $this->createAccessDeniedException('Вы не авторизованы');
+            throw $this->createAccessDeniedException('Вы не авторизованы');
         }
 
         $userManager = $this->get('fos_user.user_manager');
         $friend = $userManager->findUserByUsername($username);
         if (null === $friend) {
-            $this->createNotFoundException('Пользователь не найден.');
+            throw $this->createNotFoundException('Пользователь не найден.');
         }
 
         $friendRepository = $this->getDoctrine()->getRepository('WapinetUserBundle:Friend');

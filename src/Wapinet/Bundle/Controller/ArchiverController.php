@@ -151,17 +151,17 @@ class ArchiverController extends Controller
     protected function checkFile($archiveDirectory, $path, $allowDirectory = false)
     {
         if (false !== \strpos($path, '../') || \strpos($path, '..\\')) {
-            $this->createAccessDeniedException($path);
+            throw $this->createAccessDeniedException($path);
         }
 
         $file = \realpath($archiveDirectory . \DIRECTORY_SEPARATOR . $path);
 
         if (0 !== \strpos($file, $archiveDirectory)) {
-            $this->createAccessDeniedException($path);
+            throw $this->createAccessDeniedException($path);
         }
 
         if (true !== $allowDirectory && true === \is_dir($allowDirectory)) {
-            $this->createAccessDeniedException($path);
+            throw $this->createAccessDeniedException($path);
         }
 
         return $file;

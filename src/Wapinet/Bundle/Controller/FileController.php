@@ -341,7 +341,7 @@ class FileController extends Controller
                 if ($form->isValid()) {
                     $data = $form->getData();
                     if (true !== $encoder->isPasswordValid($file->getPassword(), $data['password'], $file->getSalt())) {
-                        $this->createAccessDeniedException('Неверный пароль');
+                        throw $this->createAccessDeniedException('Неверный пароль');
                     }
 
                     return $this->viewFile($file);
