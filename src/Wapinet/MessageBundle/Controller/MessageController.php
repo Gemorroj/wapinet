@@ -18,7 +18,7 @@ class MessageController extends BaseController
      */
     public function inboxAction()
     {
-        $request = $this->container->get('request');
+        $request = $this->container->get('request_stack')->getCurrentRequest();
         $page = $request->get('page', 1);
         $pagerfanta = $this->getProvider()->getInboxThreads($page);
 
@@ -34,7 +34,7 @@ class MessageController extends BaseController
      */
     public function sentAction()
     {
-        $request = $this->container->get('request');
+        $request = $this->container->get('request_stack')->getCurrentRequest();
         $page = $request->get('page', 1);
         $pagerfanta = $this->getProvider()->getSentThreads($page);
 
@@ -50,7 +50,7 @@ class MessageController extends BaseController
      */
     public function deletedAction()
     {
-        $request = $this->container->get('request');
+        $request = $this->container->get('request_stack')->getCurrentRequest();
         $page = $request->get('page', 1);
         $pagerfanta = $this->getProvider()->getDeletedThreads($page);
 
@@ -68,7 +68,7 @@ class MessageController extends BaseController
      */
     public function threadAction($threadId)
     {
-        $request = $this->container->get('request');
+        $request = $this->container->get('request_stack')->getCurrentRequest();
         $page = $request->get('page', 1);
         /** @var array('thread'=>\Wapinet\MessageBundle\Entity\Thread, 'messages'=>Pagerfanta) $threadMessages */
         $threadMessages = $this->getProvider()->getThreadMessages($threadId, $page);
@@ -139,7 +139,7 @@ class MessageController extends BaseController
 
         $url = $this->container->get('router')->generate('wapinet_message_inbox');
 
-        if (true === $this->container->get('request')->isXmlHttpRequest()) {
+        if ($this->container->get('request_stack')->getCurrentRequest()->isXmlHttpRequest()) {
             return new JsonResponse(array('url' => $url));
         }
 
@@ -161,7 +161,7 @@ class MessageController extends BaseController
 
         $url = $this->container->get('router')->generate('wapinet_message_inbox');
 
-        if (true === $this->container->get('request')->isXmlHttpRequest()) {
+        if ($this->container->get('request_stack')->getCurrentRequest()->isXmlHttpRequest()) {
             return new JsonResponse(array('url' => $url));
         }
 

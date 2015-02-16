@@ -156,7 +156,7 @@ class CommentManager extends BaseCommentManager
      */
     protected function doSaveComment(CommentInterface $comment)
     {
-        $request = $this->container->get('request');
+        $request = $this->container->get('request_stack')->getCurrentRequest();
         $comment->setIp($request->getClientIp());
         $comment->setBrowser($request->headers->get('User-Agent', ''));
 

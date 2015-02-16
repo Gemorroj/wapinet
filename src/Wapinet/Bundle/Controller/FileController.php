@@ -332,7 +332,7 @@ class FileController extends Controller
     {
         $encoder = $this->get('security.encoder_factory')->getEncoder($file);
         $form = $this->createForm(new PasswordType());
-        $request = $this->get('request');
+        $request = $this->get('request_stack')->getCurrentRequest();
 
         try {
             $form->handleRequest($request);

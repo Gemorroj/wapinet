@@ -203,7 +203,7 @@ class AudioTagsController extends Controller
             //'picture' => null,
         );
 
-        $requestForm = $this->get('request')->get($form->getName());
+        $requestForm = $this->get('request_stack')->getCurrentRequest()->get($form->getName());
 
         if (isset($info['comments']['picture'][0]) && (!isset($requestForm['picture']['file_url_delete']) || !$requestForm['picture']['file_url_delete'])) {
             $writer->tag_data['attached_picture'][0]['data']          = $info['comments']['picture'][0]['data'];
