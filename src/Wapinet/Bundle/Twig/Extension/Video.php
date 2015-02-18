@@ -78,7 +78,6 @@ class Video extends \Twig_Extension
         $streams = $media->getStreams();
 
         $videoStream = $streams->videos()->first();
-        $audioStream = $streams->audios()->first();
 
         if (null !== $videoStream) {
             // https://trac.ffmpeg.org/wiki/Encode/MPEG-4
@@ -91,11 +90,12 @@ class Video extends \Twig_Extension
             if ($filesize && $duration) {
                 $bitrate = $filesize / $duration;
 
+                /*$audioStream = $streams->audios()->first();
                 if (null !== $audioStream) {
                     $audioBitrate = $audioStream->has('bit_rate') ? $audioStream->get('bit_rate') : 8000;
                     $audioBitrate /= 1000;
                     $bitrate -= $audioBitrate;
-                }
+                }*/
                 $bitrate = \floor($bitrate);
 
                 if ($bitrate < $format->getKiloBitrate()) {
