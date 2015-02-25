@@ -113,3 +113,6 @@ div.center-container {
     max-width: 800px;
     margin: 0 auto;
 }
+div.file-md5-hash {
+    margin-top: -0.9em;
+}
