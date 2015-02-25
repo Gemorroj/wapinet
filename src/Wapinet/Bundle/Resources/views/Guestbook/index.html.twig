@@ -10,6 +10,10 @@
         $(document).on("pagecreate", "#page", function () {
             var $pageContainer = $(this);
             var $textarea = $pageContainer.find("#message_form_message");
+            var $form = $pageContainer.find("form[name='message_form']");
+            $form.submit(function () {
+                $form.find("#message_form_submit").attr('disabled', 'disabled');
+            });
             var quote = function () {
                 $textarea.focus();
 
