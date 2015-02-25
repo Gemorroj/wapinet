@@ -9,10 +9,10 @@
     <script type="text/javascript">{% autoescape 'js' %}
         $(document).on("pagecreate", "#page", function () {
             var $pageContainer = $(this);
-            var $textarea = $pageContainer.find("#message_form_message");
-            var $form = $pageContainer.find("form[name='message_form']");
+            var $textarea = $pageContainer.find("#{{ form.children.message.vars.id }}");
+            var $form = $pageContainer.find("form[name='{{ form.vars.full_name }}']");
             $form.submit(function () {
-                $form.find("#message_form_submit").attr('disabled', 'disabled');
+                $form.find("#{{ form.children.submit.vars.id }}").attr('disabled', 'disabled');
             });
             var quote = function () {
                 $textarea.focus();
