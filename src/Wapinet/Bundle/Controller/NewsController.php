@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Wapinet\Bundle\Entity\News;
 
 /**
  * News controller.
@@ -35,23 +36,14 @@ class NewsController extends Controller
     /**
      * Finds and displays a News entity.
      *
-     * @param int $id
-     * @throws NotFoundHttpException
+     * @param News $news
      * @return Response
      */
-    public function showAction($id)
+    public function showAction(News $news)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('WapinetBundle:News')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find News entity.');
-        }
-
         return $this->render('WapinetBundle:News:show.html.twig', array(
-            'entity' => $entity,
-            'comments_id' => 'news-' . $id
+            'entity' => $news,
+            'comments_id' => 'news-' . $news->getId(),
         ));
     }
 }

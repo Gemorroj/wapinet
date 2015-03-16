@@ -155,17 +155,11 @@ class GistController extends Controller
 
 
     /**
-     * @param int $id
+     * @param Gist $gist
      * @return Response
      */
-    public function viewAction($id)
+    public function viewAction(Gist $gist)
     {
-        $gistManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Gist');
-        $gist = $gistManager->find($id);
-        if (null === $gist) {
-            throw $this->createNotFoundException('Сообщение не найдено.');
-        }
-
         return $this->render('WapinetBundle:Gist:view.html.twig', array(
             'comments_id' => 'gist-' . $gist->getId(),
             'gist' => $gist,
@@ -175,18 +169,13 @@ class GistController extends Controller
 
     /**
      * @param Request $request
-     * @param int $id
+     * @param Gist $gist
      *
      * @throws AccessDeniedException|NotFoundHttpException
      * @return RedirectResponse|JsonResponse
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, Gist $gist)
     {
-        $gist = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Gist')->find($id);
-        if (null === $gist) {
-            throw $this->createNotFoundException('Сообщение не найдено.');
-        }
-
         $this->denyAccessUnlessGranted('DELETE', $gist);
 
         // комментарии
@@ -286,19 +275,13 @@ class GistController extends Controller
 
     /**
      * @param Request $request
-     * @param int $id
+     * @param Gist $gist
      *
      * @throws AccessDeniedException|NotFoundHttpException
      * @return RedirectResponse|JsonResponse|Response
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, Gist $gist)
     {
-        $repository = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Gist');
-        $gist = $repository->find($id);
-        if (null === $gist) {
-            throw $this->createNotFoundException('Сообщение не найдено.');
-        }
-
         $this->denyAccessUnlessGranted('EDIT', $gist);
 
 

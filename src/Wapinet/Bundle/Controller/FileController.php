@@ -258,17 +258,11 @@ class FileController extends Controller
     }
 
     /**
-     * @param int $id
-     * @throws NotFoundHttpException
+     * @param File $file
      * @return Response
      */
-    public function viewAction($id)
+    public function viewAction(File $file)
     {
-        $file = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->find($id);
-        if (null === $file) {
-            throw $this->createNotFoundException('Файл не найден.');
-        }
-
         if (null !== $file->getPassword() && (!($this->getUser() instanceof User) || !($file->getUser() instanceof User) || $file->getUser()->getId() !== $this->getUser()->getId())) {
             return $this->passwordAction($file);
         }
@@ -382,18 +376,13 @@ class FileController extends Controller
 
     /**
      * @param Request $request
-     * @param int $id
+     * @param File $file
      *
      * @throws AccessDeniedException|NotFoundHttpException
      * @return RedirectResponse|JsonResponse
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, File $file)
     {
-        $file = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->find($id);
-        if (null === $file) {
-            throw $this->createNotFoundException('Файл не найден.');
-        }
-
         $this->denyAccessUnlessGranted('DELETE', $file);
 
         // БД
@@ -419,19 +408,13 @@ class FileController extends Controller
 
     /**
      * @param Request $request
-     * @param int $id
+     * @param File $file
      *
      * @throws AccessDeniedException|NotFoundHttpException
      * @return RedirectResponse|JsonResponse|Response
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, File $file)
     {
-        $repository = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File');
-        $file = $repository->find($id);
-        if (null === $file) {
-            throw $this->createNotFoundException('Файл не найден.');
-        }
-
         $this->denyAccessUnlessGranted('EDIT', $file);
 
 
@@ -725,18 +708,12 @@ class FileController extends Controller
 
 
     /**
-     * @param int $id
+     * @param File $file
      * @return Response
      */
-    public function swiperAction($id)
+    public function swiperAction(File $file)
     {
         $repository = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File');
-
-        /** @var File $file */
-        $file = $repository->find($id);
-        if (null === $file) {
-            throw $this->createNotFoundException('Файл не найден.');
-        }
 
         if (!$file->isImage()) {
             throw new \InvalidArgumentException('Просмотр возможен только для картинок.');
@@ -746,8 +723,8 @@ class FileController extends Controller
             throw new \InvalidArgumentException('Просмотр запароленых файлов не поддерживается.');
         }
 
-        $prevFile = $repository->getPrevFile($id, 'image');
-        $nextFile = $repository->getNextFile($id, 'image');
+        $prevFile = $repository->getPrevFile($file->getId(), 'image');
+        $nextFile = $repository->getNextFile($file->getId(), 'image');
 
         $response = $this->render('WapinetBundle:File:swiper.html.twig', array(
             'file' => $file,
