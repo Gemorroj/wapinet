@@ -84,7 +84,7 @@
         {% if file.isPlayableAudio %}
             {% include '@Wapinet/audio.html.twig' with {'file': file} %}
         {% endif %}
-    {% elseif file.isArchive and false %} {# @todo: временно отключаем поддержку архивов #}
+    {% elseif file.isArchive %}
         {% if file.isExtractableArchive %}
             {% include '@Wapinet/archive.html.twig' with {'file': file} %}
         {% endif %}

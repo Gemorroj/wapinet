@@ -81,7 +81,7 @@ class ArchiverController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        $files = $this->get('archive_zip')->getFiles($archiveDirectory);
+        $files = $this->get('archive_7z')->getFiles($archiveDirectory);
 
         return $this->render('WapinetBundle:Archiver:edit.html.twig', array(
             'archive' => $archive,
@@ -203,7 +203,6 @@ class ArchiverController extends Controller
      * @param File $file
      * @throws ArchiverException
      * @return string
-     * @todo сейчас поддерживаем только ZIP
      */
     protected function extractArchive(File $file)
     {
@@ -219,12 +218,12 @@ class ArchiverController extends Controller
         //    $archiveRar->extract($archiveDirectory, $file);
         //    return $archiveDirectory;
         //}
-        //$archive7z = $this->get('archive_7z');
-        //if (true === $archive7z->isValid($file)) {
-        //    $archiveDirectory = $this->createArchiveDirectory();
-        //    $archive7z->extract($archiveDirectory, $file);
-        //    return $archiveDirectory;
-        //}
+        $archive7z = $this->get('archive_7z');
+        if (true === $archive7z->isValid($file)) {
+            $archiveDirectory = $this->createArchiveDirectory();
+            $archive7z->extract($archiveDirectory, $file);
+            return $archiveDirectory;
+        }
 
         throw new ArchiverException('Неподдерживаемый тип архива');
     }
