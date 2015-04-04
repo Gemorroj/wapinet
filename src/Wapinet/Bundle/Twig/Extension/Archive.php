@@ -42,6 +42,7 @@ class Archive extends \Twig_Extension
         try {
             $entries = $archive->getEntries($file);
         } catch (\Exception $e) {
+            $this->container->get('logger')->warning($e->getMessage());
             $entries = null;
         }
 
