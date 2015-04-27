@@ -4,6 +4,7 @@ namespace Wapinet\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\VarDumper\VarDumper;
 use Wapinet\Bundle\Form\Type\Pagerank\PagerankType;
 use Symfony\Component\Form\FormError;
 
@@ -126,11 +127,12 @@ class PagerankController extends Controller
             if (\strpos($response->getContent(), 'did not match any documents')) {
                 $out = '0';
             } else {
-                \preg_match('/<div class="sd" id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
-
+                \preg_match('/<div id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
                 if (isset($match[1])) {
                     $match[1] = \str_replace('About ', '', $match[1]);
                     $match[1] = \str_replace(' results', '', $match[1]);
+
+                    $match[1] = \preg_replace('/<nobr>(?:.*)<\/nobr>/', '', $match[1]);
 
                     $out = $match[1];
                 }
@@ -150,7 +152,7 @@ class PagerankController extends Controller
     {
         $curl = $this->get('curl');
         $curl->init('http://www.google.com/search?hl=en&q=' . \rawurlencode('"' . $url . '" -inurl:"' . $url . '"'));
-        $curl->acceptRedirects(); // fix ipv4
+        //$curl->acceptRedirects(); // fix ipv4
         $curl->addCompression();
         $curl->addHeader('Accept-Language', 'en-US,en');
 
@@ -166,11 +168,12 @@ class PagerankController extends Controller
             if (\strpos($response->getContent(), 'did not match any documents')) {
                 $out = '0';
             } else {
-                \preg_match('/<div class="sd" id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
-
+                \preg_match('/<div id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
                 if (isset($match[1])) {
                     $match[1] = \str_replace('About ', '', $match[1]);
                     $match[1] = \str_replace(' results', '', $match[1]);
+
+                    $match[1] = \preg_replace('/<nobr>(?:.*)<\/nobr>/', '', $match[1]);
 
                     $out = $match[1];
                 }
