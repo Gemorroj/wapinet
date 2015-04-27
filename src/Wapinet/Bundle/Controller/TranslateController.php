@@ -112,7 +112,7 @@ class TranslateController extends Controller
     {
         $json = $this->getLangs();
 
-        return (string)$json->langs->$code;
+        return (string)$json->langs->{$code};
     }
 
 

@@ -60,7 +60,7 @@ class Rates
     {
         $method = 'get' . \ucfirst($country);
         if (\method_exists($this, $method)) {
-            return $this->$method();
+            return $this->{$method}();
         }
         throw new \RuntimeException('Указанная страна не поддерживается');
     }
