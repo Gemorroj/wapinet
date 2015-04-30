@@ -87,7 +87,7 @@ class FileController extends Controller
                 return $this->redirectToRoute('file_search', array('key' => $key));
             }
 
-            if (null !== $key && true === $session->has('file_search')) {
+            if (null !== $key && $session->has('file_search')) {
                 $search = $session->get('file_search');
                 if ($key === $search['key']) {
                     $form->setData($search['data']);
@@ -364,8 +364,12 @@ class FileController extends Controller
 
         $entry = $tmpDir . \DIRECTORY_SEPARATOR . \str_replace('\\', '/', $path);
 
-        if (true !== \file_exists($entry)) {
+        if (!\file_exists($entry)) {
             $file = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->find($id);
+            if (null !== $file) {
+                $this->createNotFoundException('Файл не найден.');
+            }
+
             $archive = $this->get('archive_7z');
 
             $archive->extractEntry($file->getFile(), $path, $tmpDir);
@@ -398,7 +402,7 @@ class FileController extends Controller
         // переадресация на главную
         $url = $this->generateUrl('file_index', array(), Router::ABSOLUTE_URL);
 
-        if (true === $request->isXmlHttpRequest()) {
+        if ($request->isXmlHttpRequest()) {
             return new JsonResponse(array('url' => $url));
         }
 
