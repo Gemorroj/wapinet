@@ -22,7 +22,7 @@ security:
             pattern: ^/
             form_login:
                 provider: fos_userbundle
-                csrf_provider: form.csrf_provider
+                csrf_provider: security.csrf.token_manager
                 remember_me: true
             remember_me:
                 lifetime: 2592000 #30 дней
