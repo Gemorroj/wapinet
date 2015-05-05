@@ -75,6 +75,7 @@
 
 
 ### TODO:
+- Добавить парсер torrent файлов: https://github.com/christeredvartsen/php-bittorrent
 - Сделать возможность в переводчике и обфускаторе загружать файлы
 - Актуализировать мобильные коды. Найти новые для разных андроидов.
 - заменить апи сфинкса https://github.com/FoolCode/SphinxQL-Query-Builder
