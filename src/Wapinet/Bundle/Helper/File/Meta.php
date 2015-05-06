@@ -234,9 +234,16 @@ class Meta
 
         $data = $torrent->decodeFile($this->file->getFile());
 
-        $size = 0;
-        foreach ($data['info']['files'] as $entry) {
-            $size += $entry['length'];
+
+        if (isset($data['info']['length'])) {
+            $size = $data['info']['length'];
+        } else {
+            $size = 0;
+            if (isset($data['info']['files'])) {
+                foreach ($data['info']['files'] as $entry) {
+                    $size += $entry['length'];
+                }
+            }
         }
 
         if ($size) {

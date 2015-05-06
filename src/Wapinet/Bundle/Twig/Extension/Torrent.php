@@ -42,15 +42,22 @@ class Torrent extends \Twig_Extension
         try {
             $data = $torrent->decodeFile($file);
         } catch (\Exception $e) {
-            $this->container->get('logger')->warning($e->getMessage());
+            $this->container->get('logger')->warning($e->getMessage(), array($e));
             return null;
         }
 
         $list = array();
-        foreach ($data['info']['files'] as $entry) {
+        if (isset($data['info']['files'])) {
+            foreach ($data['info']['files'] as $entry) {
+                $list[] = array(
+                    'path' => \implode('/', $entry['path']),
+                    'size' => $entry['length'],
+                );
+            }
+        } else if (isset($data['info']['name']) && isset($data['info']['length'])) {
             $list[] = array(
-                'path' => \implode('/', $entry['path']),
-                'size' => $entry['length'],
+                'path' => $data['info']['name'],
+                'size' => $data['info']['length'],
             );
         }
 
