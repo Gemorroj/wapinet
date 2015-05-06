@@ -2,7 +2,7 @@
 namespace Wapinet\Bundle\Helper\File;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Wapinet\Bundle\Entity\File;
+use Wapinet\Bundle\Entity\File as EntityFile;
 use Wapinet\Bundle\Entity\File\Meta as FileMeta;
 
 
@@ -22,7 +22,7 @@ class Meta
     protected $container;
 
     /**
-     * @var File|null
+     * @var EntityFile|null
      */
     protected $file;
 
@@ -36,10 +36,10 @@ class Meta
     }
 
     /**
-     * @param File $file
+     * @param EntityFile $file
      * @return Meta
      */
-    public function setFile(File $file)
+    public function setFile(EntityFile $file)
     {
         $this->file = $file;
 
@@ -66,6 +66,8 @@ class Meta
             $this->setVideoMeta();
         } elseif ($this->file->isImage()) {
             $this->setImageMeta();
+        } elseif ($this->file->isTorrent()) {
+            $this->setTorrentMeta();
         }
 
         return $this->fileMeta;
@@ -217,6 +219,37 @@ class Meta
             if ('' !== $commentTrimed) {
                 $this->fileMeta->set('comment', $infoMetadata->offsetGet('exif.UserComment'));
             }
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * @return Meta
+     */
+    protected function setTorrentMeta()
+    {
+        $torrent = $this->container->get('torrent');
+
+        $data = $torrent->decodeFile($this->file->getFile());
+
+        $size = 0;
+        foreach ($data['info']['files'] as $entry) {
+            $size += $entry['length'];
+        }
+
+        if ($size) {
+            $this->fileMeta->set('size', $size);
+        }
+        if (isset($data['info']['name'])) {
+            $this->fileMeta->set('name', $data['info']['name']);
+        }
+        if (isset($data['creation date'])) {
+            $this->fileMeta->set('datetime', new \DateTime('@' . $data['creation date']));
+        }
+        if (isset($data['comment'])) {
+            $this->fileMeta->set('comment', $data['comment']);
         }
 
         return $this;

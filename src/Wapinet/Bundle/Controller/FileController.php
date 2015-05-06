@@ -77,7 +77,7 @@ class FileController extends Controller
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    $key = uniqid();
+                    $key = \uniqid();
                     $session->set('file_search', array(
                         'key' => $key,
                         'data' => $data

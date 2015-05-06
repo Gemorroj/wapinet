@@ -215,7 +215,7 @@ class GistController extends Controller
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    $key = uniqid();
+                    $key = \uniqid();
                     $session->set('gist_search', array(
                         'key' => $key,
                         'data' => $data

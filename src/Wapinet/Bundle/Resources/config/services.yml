@@ -62,6 +62,12 @@ services:
         tags:
             - {name: twig.extension, alias: wapinet_archive}
 
+    wapinet.torrent.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\Torrent
+        arguments: [@service_container]
+        tags:
+            - {name: twig.extension, alias: wapinet_torrent}
+
     wapinet.online.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Online
         arguments: [@doctrine.orm.entity_manager]
@@ -216,6 +222,10 @@ services:
 
     archive_7z:
         class: Wapinet\Bundle\Helper\Archiver\Archive7z
+        arguments: [@service_container]
+
+    torrent:
+        class: Wapinet\Bundle\Helper\Torrent
         arguments: [@service_container]
 
     wapinet.admin.guestbook:

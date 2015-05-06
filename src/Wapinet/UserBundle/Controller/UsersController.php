@@ -31,7 +31,7 @@ class UsersController extends Controller
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    $key = uniqid();
+                    $key = \uniqid();
                     $session->set('users_search', array(
                         'key' => $key,
                         'data' => $data

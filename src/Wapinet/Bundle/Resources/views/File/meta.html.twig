@@ -130,6 +130,23 @@
                         <div class="ui-block-a"><div class="ui-body">Версия Android</div></div>
                         <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('minSdkVersions')|join(',') }}</div></div>
                     {% endif %}
+                {% elseif file.isTorrent %}
+                    {% if file.meta.has('size') %}
+                        <div class="ui-block-a"><div class="ui-body">Размер данных</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('size')|wapinet_size }}</div></div>
+                    {% endif %}
+                    {% if file.meta.has('name') %}
+                        <div class="ui-block-a"><div class="ui-body">Внутреннее имя</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('name') }}</div></div>
+                    {% endif %}
+                    {% if file.meta.has('datetime') %}
+                        <div class="ui-block-a"><div class="ui-body">Дата создания</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('datetime')|wapinet_datetime }}</div></div>
+                    {% endif %}
+                    {% if file.meta.has('comment') %}
+                        <div class="ui-block-a"><div class="ui-body">Комментарий</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('comment') }}</div></div>
+                    {% endif %}
                 {% endif %}
 
             {% endif %}

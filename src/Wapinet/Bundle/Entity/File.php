@@ -771,6 +771,14 @@ class File implements \Serializable
     /**
      * @return bool
      */
+    public function isTorrent()
+    {
+        return ('application/x-bittorrent' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
     public function isPlayableVideo()
     {
         return $this->isVideo() && (

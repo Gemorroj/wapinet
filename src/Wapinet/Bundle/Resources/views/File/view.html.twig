@@ -96,6 +96,8 @@
         {% if screenshot is defined and screenshot is not null %}
             {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
         {% endif %}
+    {% elseif file.isTorrent %}
+        {% include '@Wapinet/torrent.html.twig' with {'file': file} %}
     {% endif %}
 
     {% include '@Wapinet/File/meta.html.twig' %}
