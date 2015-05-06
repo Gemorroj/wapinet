@@ -545,7 +545,7 @@ class File implements \Serializable
      */
     public function isAudio()
     {
-        return (0 === \strpos($this->getMimeType(), 'audio/'));
+        return (0 === \strpos($this->getMimeType(), 'audio/') && 'audio/x-mpegurl' !== $this->getMimeType());
     }
 
     /**
