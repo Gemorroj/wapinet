@@ -3,11 +3,7 @@
     <ul data-role="listview" data-inset="true">
         {% for entry in wapinet_playlist_list(file.file) %}
             <li class="directory" data-icon="false">
-                <a href="#" class="no-link">{{ entry.name ? entry.name : entry.path }}
-                    {% if entry.length and entry.length > 0 %}
-                        <span class="ui-li-count">{{ entry.length|wapinet_length }}</span>
-                    {% endif %}
-                </a>
+                <a href="#" class="no-link">{{ entry.name ? entry.name : entry.path }}</a>
             </li>
         {% else %}
             <li>
