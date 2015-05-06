@@ -40,7 +40,8 @@
         "gemorroj/xbbcode": "dev-master",
         "gemorroj/syntax": "dev-master",
         "gemorroj/htmlvalidator": "dev-master",
-        "gemorroj/cssvalidator": "dev-master"
+        "gemorroj/cssvalidator": "dev-master",
+        "gemorroj/m3u-parser": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.5",

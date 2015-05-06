@@ -98,6 +98,8 @@
         {% endif %}
     {% elseif file.isTorrent %}
         {% include '@Wapinet/torrent.html.twig' with {'file': file} %}
+    {% elseif file.isPlaylist %}
+        {% include '@Wapinet/playlist.html.twig' with {'file': file} %}
     {% endif %}
 
     {% include '@Wapinet/File/meta.html.twig' %}

@@ -68,6 +68,12 @@ services:
         tags:
             - {name: twig.extension, alias: wapinet_torrent}
 
+    wapinet.playlist.twig_extension:
+        class: Wapinet\Bundle\Twig\Extension\Playlist
+        arguments: [@service_container]
+        tags:
+            - {name: twig.extension, alias: wapinet_playlist}
+
     wapinet.online.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Online
         arguments: [@doctrine.orm.entity_manager]
@@ -226,6 +232,10 @@ services:
 
     torrent:
         class: Wapinet\Bundle\Helper\Torrent
+        arguments: [@service_container]
+
+    playlist:
+        class: Wapinet\Bundle\Helper\Playlist
         arguments: [@service_container]
 
     wapinet.admin.guestbook:

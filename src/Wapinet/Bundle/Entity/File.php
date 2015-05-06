@@ -779,6 +779,14 @@ class File implements \Serializable
     /**
      * @return bool
      */
+    public function isPlaylist()
+    {
+        return ('audio/x-mpegurl' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
     public function isPlayableVideo()
     {
         return $this->isVideo() && (
