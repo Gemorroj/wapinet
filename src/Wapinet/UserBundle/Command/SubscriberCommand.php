@@ -36,11 +36,10 @@ class SubscriberCommand extends ContainerAwareCommand
         $rows = $repository->findNeedEmail();
 
         $em->beginTransaction();
+        $q = $em->createQuery('UPDATE Wapinet\UserBundle\Entity\Event e SET e.needEmail = 0 WHERE e.id = :id');
         foreach ($rows as $v) {
             if ($this->sendEmail($v)) {
-                // не используем persist для того, чтобы не обновлялась связанная сущность пользователя
-                $em->createQuery('UPDATE Wapinet\UserBundle\Entity\Event e SET e.needEmail = 0 WHERE e.id = :id')
-                    ->execute(array('id' => $v->getId()));
+                $q->execute(array('id' => $v->getId()));
             }
         }
         $em->commit();
@@ -66,10 +65,21 @@ class SubscriberCommand extends ContainerAwareCommand
 
         $body = $templating->render('WapinetUserBundle:Subscriber/Email:' . $event->getTemplate() . '.html.twig', $variables);
 
-        $message = \Swift_Message::newInstance($siteTitle . ' - ' . $event->getSubject(), $body, 'text/html', 'UTF-8');
-        $message->setFrom($robotEmail);
-        $message->setTo($event->getUser()->getEmail());
+        try {
+            $message = \Swift_Message::newInstance(
+                $siteTitle . ' - ' . $event->getSubject(),
+                $body,
+                'text/html',
+                'UTF-8'
+            );
+            $message->setFrom($robotEmail);
+            $message->setTo($event->getUser()->getEmail());
 
-        return ($mailer->send($message) > 0);
+            return ($mailer->send($message) > 0);
+        } catch (\Exception $e) {
+            $this->getContainer()->get('logger')->critical($e->getMessage(), array($e));
+        }
+
+        return true;
     }
 }
