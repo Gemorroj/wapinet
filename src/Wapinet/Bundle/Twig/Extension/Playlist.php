@@ -55,6 +55,6 @@ class Playlist extends \Twig_Extension
      */
     public function getName()
     {
-        return 'wapinet_torrent';
+        return 'wapinet_playlist';
     }
 }
