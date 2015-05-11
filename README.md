@@ -1,69 +1,87 @@
-Symfony Standard Edition
-========================
+# Сайт wapinet.ru
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony2
-application that you can use as the skeleton for your new applications.
+### Установка крон заданий:
+`php /var/www/wapinet.ru/app/console --env=prod wapinet:tmp:clear "1 day"`  
+`php /var/www/wapinet.ru/app/console --env=prod wapinet:user:subscriber`  
+`indexer --rotate --all`  
 
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
 
-What's inside?
---------------
+### Установка прав доступа на запись:
+`app/logs`  
+`app/tmp`  
+`app/cache`  
+`web/media/cache/resolve/thumbnail/static`  
+`web/media/cache/thumbnail/static/avatar`  
+`web/media/cache/thumbnail/static/file`  
+`web/static/avatar`  
+`web/static/file`  
 
-The Symfony Standard Edition is configured with the following defaults:
 
-  * An AppBundle you can use to start coding;
+### Установка FFmpeg:
+Делаем все как указано по ссылке [https://trac.ffmpeg.org/wiki/CompilationGuide/Centos](https://trac.ffmpeg.org/wiki/CompilationGuide/Centos), из дополнений ставим theora.  
+Отсюда [http://www.alduccino.com/installing-ffmppeg-flvtool2-and-yamdi-on-centos-6](http://www.alduccino.com/installing-ffmppeg-flvtool2-and-yamdi-on-centos-6) берем пример недостающих библиотек (libfaac, amr) не забываем указать в конфиге `--prefix="$HOME/ffmpeg_build" --with-ogg="$HOME/ffmpeg_build" --disable-shared`.  
+Конфиг ffmpeg:  
+`./configure --prefix="$HOME/ffmpeg_build" --extra-cflags="-I$HOME/ffmpeg_build/include" --extra-ldflags="-L$HOME/ffmpeg_build/lib" --bindir="$HOME/bin" --extra-libs=-ldl --enable-gpl --enable-nonfree --enable-libfdk_aac --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libfaac --enable-libvorbis --enable-libopencore-amrwb --enable-libopencore-amrnb  --enable-libtheora --enable-version3`
 
-  * Twig as the only configured template engine;
+В конце проверить что на всех директориях выше и самих бинарниках есть права на выполнение.
 
-  * Doctrine ORM/DBAL;
 
-  * Swiftmailer;
 
-  * Annotations enabled for everything.
+### Конфйиг nginx:
+    location ~ /\. {
+        deny all;
+    }
 
-It comes pre-configured with the following bundles:
+    charset utf-8;
+    listen 80;
 
-  * **FrameworkBundle** - The core Symfony framework bundle
+    server_name wapinet.ru www.wapinet.ru;
+    root /var/www/wapinet.ru/web;
 
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
+    error_log /var/log/nginx/wapinet.ru.error.log;
+    access_log /var/log/nginx/wapinet.ru.access.log;
 
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
+    # strip app.php/ prefix if it is present
+    rewrite ^/app\.php/?(.*)$ /$1 permanent;
 
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
+    location / {
+        index app.php;
+        try_files $uri @rewriteapp;
+    }
 
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
+    location @rewriteapp {
+        rewrite ^(.*)$ /app.php/$1 last;
+    }
 
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
+    # pass the PHP scripts to FastCGI server from upstream phpfcgi
+    location ~ ^/(app|app_dev|config)\.php(/|$) {
+        fastcgi_pass phpfcgi;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param  HTTPS off;
+    }
 
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
+    location /static/ {
+        add_header Content-Disposition "attachment";
+    }
 
-  * [**AsseticBundle**][12] - Adds support for Assetic, an asset processing
-    library
+    location /(bundles|media|static|favicon\.ico|robots\.txt|apple-touch-icon\.png) {
+        access_log off;
+        expires 30d;
 
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
+        try_files $uri @rewriteapp;
+    }
 
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
 
-  * [**SensioGeneratorBundle**][13] (in dev/test env) - Adds code generation
-    capabilities
+### TODO:
+- Сделать парсер плейлистов (m3u).
+- Сделать возможность в переводчике и обфускаторе загружать файлы
+- Актуализировать мобильные коды. Найти новые для разных андроидов.
+- заменить апи сфинкса https://github.com/FoolCode/SphinxQL-Query-Builder
+- добавить сервис проверки кода через php_codesniffer
 
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
-
-Enjoy!
-
-[1]:  http://symfony.com/doc/2.6/book/installation.html
-[6]:  http://symfony.com/doc/2.6/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  http://symfony.com/doc/2.6/book/doctrine.html
-[8]:  http://symfony.com/doc/2.6/book/templating.html
-[9]:  http://symfony.com/doc/2.6/book/security.html
-[10]: http://symfony.com/doc/2.6/cookbook/email.html
-[11]: http://symfony.com/doc/2.6/cookbook/logging/monolog.html
-[12]: http://symfony.com/doc/2.6/cookbook/assetic/asset_management.html
-[13]: http://symfony.com/doc/2.6/bundles/SensioGeneratorBundle/index.html
+### BUG:
+[2014-12-03 23:32:45] request.INFO: Matched route "icq_registration_pic" (parameters: "_controller": "Wapinet\Bundle\Controller\IcqController::registrationPicAction", "_format": "png", "gnm_img": "74AA504ABC19FF0318CFCE2DADDB0965CC79F51CDB17EA621D38573F559D3F130693D136627761CFBEABD4832F6B8BEAB", "_route": "icq_registration_pic") [] []
+[2014-12-03 23:32:45] security.INFO: Populated SecurityContext with an anonymous Token [] []
+[2014-12-03 23:32:45] request.CRITICAL: Uncaught PHP Exception RuntimeException: "Не удалось получить данные (HTTP код: 410)" at /var/www/wapinet.ru/src/Wapinet/Bundle/Controller/IcqController.php line 133 {"exception":"[object] (RuntimeException: Не удалось получить данные (HTTP код: 410) at /var/www/wapinet.ru/src/Wapinet/Bundle/Controller/IcqController.php:133)"} []
