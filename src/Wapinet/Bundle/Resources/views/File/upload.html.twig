@@ -26,6 +26,7 @@
 {% endblock %}
 
 {% block content %}
+    {#
     {{ form_start(form, {'action': path('file_upload'), 'method': 'POST', 'attr': {'id': 'file_upload'}}) }}
         {% include '@Wapinet/bot-checker.html.twig' %}
         {{ form_errors(form) }}
@@ -49,4 +50,9 @@
 
     {{ form_rest(form) }}
     {{ form_end(form) }}
+    #}
+    <div>
+        В связи с жалобами правоохранительных органов на размещенный на сайте противоправный контент (детская порнография), файлообменник прекращает свою деятельность.<br />
+        "Спасибо большое" вам, "уважаемые" пользователи нарушающие закон и нормы морали.
+    </div>
 {% endblock %}
