@@ -72,7 +72,12 @@ Wapinet\Bundle\Entity\File:
             type: object
             nullable: true
             column: meta
-
+        hidden:
+            type: boolean
+            nullable: false
+            column: hidden
+            options:
+                default: true
     lifecycleCallbacks:
         prePersist: [ setCreatedAtValue ]
         #preUpdate: [ setUpdatedAtValue ]

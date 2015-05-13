@@ -724,7 +724,11 @@ class FileController extends Controller
         }
 
         if (null !== $file->getPassword()) {
-            throw new \InvalidArgumentException('Просмотр запароленых файлов не поддерживается.');
+            throw new \InvalidArgumentException('Просмотр файлов защищенных паролем не поддерживается.');
+        }
+
+        if ($file->isHidden()) {
+            throw new \InvalidArgumentException('Файл скрыт и не доступен для просмотра.');
         }
 
         $prevFile = $repository->getPrevFile($file->getId(), 'image');

@@ -59,6 +59,7 @@ class FileAdmin extends Admin
             ->add('description', null, array('label' => 'Описание'))
             ->add('countViews', null, array('label' => 'Просмотров'))
             ->add('password', 'boolean', array('label' => 'Пароль'))
+            ->add('hidden', 'boolean', array('label' => 'Скрыт'))
             ->add('ip', null, array('label' => 'IP'))
             ->add('browser', null, array('label' => 'Браузер'))
         ;
@@ -75,6 +76,7 @@ class FileAdmin extends Admin
             ->add('mimeType', null, array('label' => 'MIME тип'))
             ->add('description', 'textarea', array('label' => 'Описание'))
             ->add('countViews', 'integer', array('label' => 'Просмотров'))
+            ->add('hidden', 'checkbox', array('label' => 'Скрыт', 'required' => false))
         ;
     }
 
@@ -139,6 +141,7 @@ class FileAdmin extends Admin
             ->add('description', null, array('label' => 'Описание'))
             ->add('countViews', null, array('label' => 'Просмотров'))
             ->add('password', 'boolean', array('label' => 'Пароль'))
+            ->add('hidden', 'boolean', array('label' => 'Скрыт'))
             ->add('_action', 'actions', array(
                     'label' => 'Операции',
                     'actions' => array(

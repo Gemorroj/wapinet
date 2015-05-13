@@ -88,7 +88,10 @@ class File implements \Serializable
      * @var ArrayCollection
      */
     protected $tags;
-
+    /**
+     * @var boolean
+     */
+    protected $hidden = true;
 
     /**
      * Конструктор
@@ -104,10 +107,10 @@ class File implements \Serializable
      */
     public function serialize()
     {
-        $vars = get_object_vars($this);
+        $vars = \get_object_vars($this);
         $vars['file'] = $this->getFile()->getPathname();
 
-        return serialize($vars);
+        return \serialize($vars);
     }
 
     /**
@@ -115,7 +118,7 @@ class File implements \Serializable
      */
     public function unserialize($serialized)
     {
-        $vars = unserialize($serialized);
+        $vars = \unserialize($serialized);
         $this->file = new BaseFile($vars['file'], false); //fix события (файлы могут быть удалены)
         unset($vars['file']);
 
@@ -123,6 +126,35 @@ class File implements \Serializable
             $this->{$key} = $value;
         }
     }
+
+
+    /**
+     * @return bool
+     */
+    public function isHidden()
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getHidden()
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * @param boolean $hidden
+     * @return File
+     */
+    public function setHidden($hidden)
+    {
+        $this->hidden = (bool)$hidden;
+
+        return $this;
+    }
+
 
     /**
      * Get id

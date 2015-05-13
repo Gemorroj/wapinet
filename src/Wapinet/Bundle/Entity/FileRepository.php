@@ -75,7 +75,7 @@ class FileRepository extends EntityRepository
     public function countAll()
     {
         return $this->getEntityManager()->createQuery(
-            'SELECT COUNT(f.id) FROM Wapinet\Bundle\Entity\File f WHERE f.password IS NULL'
+            'SELECT COUNT(f.id) FROM Wapinet\Bundle\Entity\File f WHERE f.password IS NULL AND f.hidden = 0'
         )->getSingleScalarResult();
     }
 
@@ -89,6 +89,7 @@ class FileRepository extends EntityRepository
         $queryBuilder = $this->createQueryBuilder('f')
             ->select('COUNT(f.id)')
             ->where('f.password IS NULL')
+            ->andWhere('f.hidden = 0')
             ->andWhere('f.createdAt > :date_start');
 
         $queryBuilder->setParameter('date_start', $datetimeStart);
@@ -111,7 +112,8 @@ class FileRepository extends EntityRepository
     {
         $q = $this->createQueryBuilder('f')
             ->select('COUNT(f.id)')
-            ->where('f.password IS NULL');
+            ->where('f.password IS NULL')
+            ->andWhere('f.hidden = 0');
 
         $this->addCategoryMime($q, $category);
         $q = $q->getQuery();
@@ -128,6 +130,7 @@ class FileRepository extends EntityRepository
         $q = $this->createQueryBuilder('f')
             ->select('COUNT(f.id)')
             ->where('f.password IS NULL')
+            ->andWhere('f.hidden = 0')
             ->andWhere('f.user = :user')
             ->setParameter('user', $user)
             ->getQuery();
@@ -145,6 +148,7 @@ class FileRepository extends EntityRepository
     {
         $q = $this->createQueryBuilder('f')
             ->where('f.password IS NULL')
+            ->andWhere('f.hidden = 0')
             ->orderBy('f.id', 'DESC');
 
         if (null !== $datetimeStart) {
@@ -165,22 +169,19 @@ class FileRepository extends EntityRepository
     /**
      * @param int $id
      * @param string|null $category
-     * @param bool $passwordIsNull
      * @return File|null
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getPrevFile($id, $category = null, $passwordIsNull = true)
+    public function getPrevFile($id, $category = null)
     {
         $q = $this->createQueryBuilder('f')
             ->where('f.id > :id')
+            ->andWhere('f.password IS NULL')
+            ->andWhere('f.hidden = 0')
             ->setParameter('id', $id)
             ->orderBy('f.id', 'ASC')
             ->setMaxResults(1);
-
-        if ($passwordIsNull) {
-            $q->andWhere('f.password IS NULL');
-        }
 
         $this->addCategoryMime($q, $category);
 
@@ -190,22 +191,19 @@ class FileRepository extends EntityRepository
     /**
      * @param int $id
      * @param string|null $category
-     * @param bool $passwordIsNull
      * @return File|null
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getNextFile($id, $category = null, $passwordIsNull = true)
+    public function getNextFile($id, $category = null)
     {
         $q = $this->createQueryBuilder('f')
             ->where('f.id < :id')
+            ->andWhere('f.password IS NULL')
+            ->andWhere('f.hidden = 0')
             ->setParameter('id', $id)
             ->orderBy('f.id', 'DESC')
             ->setMaxResults(1);
-
-        if ($passwordIsNull) {
-            $q->andWhere('f.password IS NULL');
-        }
 
         $this->addCategoryMime($q, $category);
 
@@ -275,6 +273,7 @@ class FileRepository extends EntityRepository
             ->where('u = :user')
             ->setParameter('user', $user)
             ->andWhere('f.password IS NULL')
+            ->andWhere('f.hidden = 0')
 
             ->orderBy('f.id', 'DESC')
 
@@ -296,6 +295,7 @@ class FileRepository extends EntityRepository
             ->where('t = :tag')
             ->setParameter('tag', $tag)
             ->andWhere('f.password IS NULL')
+            ->andWhere('f.hidden = 0')
 
             ->orderBy('f.id', 'DESC')
 
