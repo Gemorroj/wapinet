@@ -65,7 +65,7 @@ class PagerankController extends Controller
     protected function getYandexPages($url)
     {
         $curl = $this->get('curl');
-        $curl->init('https://xmlsearch.yandex.ru/xmlsearch?user=gemorwapinet&key=' . $this->container->getParameter('wapinet_search_key'));
+        $curl->init('https://yandex.ru/search/xml?user=gemorwapinet&key=' . $this->container->getParameter('wapinet_search_key'));
         $curl->setOpt(\CURLOPT_POST, true);
         $curl->setOpt(\CURLOPT_POSTFIELDS, '<?xml version="1.0" encoding="UTF-8"?><request><query>' . \htmlspecialchars($url, \ENT_XML1) . '</query><groupings><groupby groups-on-page="1"/></groupings></request>');
 
