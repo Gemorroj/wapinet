@@ -267,6 +267,15 @@ class FileController extends Controller
             return $this->passwordAction($file);
         }
 
+        if ($file->isHidden()) {
+            $isAdmin = ($this->getUser() instanceof User) && ($this->getUser()->hasRole('ROLE_ADMIN') || $this->getUser()->hasRole('ROLE_SUPER_ADMIN'));
+            $isFileUser = ($this->getUser() instanceof User) && ($file->getUser() instanceof User) && ($file->getUser()->getId() === $this->getUser()->getId());
+
+            if (!$isAdmin && !$isFileUser) {
+                throw $this->createNotFoundException('Файл скрыт и не доступен для просмотра');
+            }
+        }
+
         return $this->viewFile($file);
     }
 

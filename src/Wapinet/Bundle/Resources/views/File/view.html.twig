@@ -68,6 +68,10 @@
 {% block content %}
     <a data-role="button" data-icon="arrow-d" href="{{ vich_uploader_asset(file, 'file') }}" download="{{ file.originalFileName }}">Скачать</a>
 
+    {% if file.isHidden %}
+        <button class="ui-btn ui-icon-alert ui-btn-icon-left">Файл скрыт от общего просмотра. Дождитесь модерации.</button>
+    {% endif %}
+
     {% if file.isImage %}
         {% if screenshot is defined and screenshot is not null %}
             {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
