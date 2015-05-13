@@ -20,6 +20,12 @@ file_edit:
     requirements:
         id: \d+
 
+file_accept:
+    pattern: /accept/{id}
+    defaults: { _controller: WapinetBundle:File:accept }
+    requirements:
+        id: \d+
+
 file_delete:
     pattern: /delete/{id}
     defaults: { _controller: WapinetBundle:File:delete }

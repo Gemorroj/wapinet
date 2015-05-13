@@ -31,9 +31,9 @@
         </script>
     {% endif %}
 
-    {% if app.user and is_granted('DELETE', file) %}
+    {% if app.user and (is_granted('DELETE', file) or is_granted('ROLE_ADMIN')) %}
         <script type="text/javascript">{% autoescape 'js' %}
-            $(document).bind("pageinit", function () {
+            $(document).on("pageinit", function () {
                 $("#delete-popup-do").on("click", function () {
                     $.post('{{ path('file_delete', {'id': file.id}) }}', function () {
                         window.location.assign('{{ path('file_index') }}');
@@ -70,6 +70,12 @@
 
     {% if file.isHidden %}
         <button class="ui-btn ui-icon-alert ui-btn-icon-left">Файл скрыт от общего просмотра. Дождитесь модерации.</button>
+        {% if is_granted('ROLE_ADMIN') %}
+            <fieldset data-role="controlgroup" data-type="horizontal">
+                <a data-role="button" data-icon="check" href="{{ path('file_accept', {'id': file.id}) }}">Открыть доступ</a>
+                <a data-role="button" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete" href="#delete-popup">Удалить</a>
+            </fieldset>
+        {% endif %}
     {% endif %}
 
     {% if file.isImage %}

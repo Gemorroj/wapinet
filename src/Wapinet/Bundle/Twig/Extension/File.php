@@ -50,6 +50,7 @@ class File extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('file_count_all', array($this, 'getCountAll')),
             new \Twig_SimpleFunction('file_count_today', array($this, 'getCountToday')),
+            new \Twig_SimpleFunction('file_count_hidden', array($this, 'getCountHidden')),
             new \Twig_SimpleFunction('file_count_yesterday', array($this, 'getCountYesterday')),
             new \Twig_SimpleFunction('file_count_category', array($this, 'getCountCategory')),
             new \Twig_SimpleFunction('file_count_user', array($this, 'getCountUser')),
@@ -83,6 +84,14 @@ class File extends \Twig_Extension
             new \DateTime('yesterday', $this->container->get('timezone')->getTimezone()),
             new \DateTime('today', $this->container->get('timezone')->getTimezone())
         );
+    }
+
+    /**
+     * @return number
+     */
+    public function getCountHidden()
+    {
+        return $this->fileRepository->countHidden();
     }
 
     /**

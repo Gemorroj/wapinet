@@ -151,7 +151,20 @@ class FileController extends Controller
      */
     public function hiddenAction(Request $request)
     {
-        throw new \Exception('Не реализовано');
+        if (!$this->getUser()->hasRole('ROLE_ADMIN') && !$this->getUser()->hasRole('ROLE_SUPER_ADMIN')) {
+            throw $this->createAccessDeniedException('Доступ запрещен.');
+        }
+
+        $page = $request->get('page', 1);
+
+        $query = $this->getDoctrine()
+            ->getRepository('Wapinet\Bundle\Entity\File')
+            ->getHiddenQuery();
+        $pagerfanta = $this->get('paginate')->paginate($query, $page);
+
+        return $this->render('WapinetBundle:File:list.html.twig', array(
+            'pagerfanta' => $pagerfanta,
+        ));
     }
 
 
@@ -399,6 +412,38 @@ class FileController extends Controller
         return new BinaryFileResponse($entry);
     }
 
+
+    /**
+     * @param Request $request
+     * @param File $file
+     *
+     * @throws AccessDeniedException|NotFoundHttpException
+     * @return RedirectResponse|JsonResponse
+     */
+    public function acceptAction(Request $request, File $file)
+    {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException('Доступ запрещен.');
+        }
+
+        $file->setHidden(false);
+        // БД
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($file);
+        $em->flush();
+
+
+        // переадресация на файл
+        $url = $this->generateUrl('file_view', array('id' => $file->getId()), Router::ABSOLUTE_URL);
+
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(array('url' => $url));
+        }
+
+        return $this->redirect($url);
+    }
+
+
     /**
      * @param Request $request
      * @param File $file
@@ -408,7 +453,9 @@ class FileController extends Controller
      */
     public function deleteAction(Request $request, File $file)
     {
-        $this->denyAccessUnlessGranted('DELETE', $file);
+        if (!$this->isGranted('DELETE', $file) && !$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException('Доступ запрещен.');
+        }
 
         // БД
         $em = $this->getDoctrine()->getManager();
@@ -684,6 +731,9 @@ class FileController extends Controller
             $encoder = $this->get('security.encoder_factory')->getEncoder($data);
             $password = $encoder->encodePassword($data->getPassword(), $data->getSalt());
             $data->setPassword($password);
+
+            // Запароленные файлы не скрываем
+            $data->setHidden(false);
         } else {
             // тэги только у незапароленых файлов
             $this->saveTags($data, $tagsString);

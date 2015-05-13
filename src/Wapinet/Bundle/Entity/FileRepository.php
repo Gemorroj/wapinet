@@ -72,6 +72,17 @@ class FileRepository extends EntityRepository
     /**
      * @return number
      */
+    public function countHidden()
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT COUNT(f.id) FROM Wapinet\Bundle\Entity\File f WHERE f.password IS NULL AND f.hidden = 1'
+        )->getSingleScalarResult();
+    }
+
+
+    /**
+     * @return number
+     */
     public function countAll()
     {
         return $this->getEntityManager()->createQuery(
@@ -165,6 +176,18 @@ class FileRepository extends EntityRepository
         return $q->getQuery();
     }
 
+
+    /**
+     * @return \Doctrine\ORM\Query
+     */
+    public function getHiddenQuery()
+    {
+        $q = $this->createQueryBuilder('f')
+            ->andWhere('f.hidden = 1')
+            ->orderBy('f.id', 'DESC');
+
+        return $q->getQuery();
+    }
 
     /**
      * @param int $id

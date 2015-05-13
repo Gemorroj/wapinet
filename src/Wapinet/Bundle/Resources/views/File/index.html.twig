@@ -10,7 +10,7 @@
 {% block content %}
     {% if is_granted('ROLE_ADMIN') %}
         <ul data-role="listview" data-inset="true">
-            <li data-icon="info"><a href="{{ path('file_hidden') }}">Скрытые файлы</a></li>
+            <li data-icon="info"><a href="{{ path('file_hidden') }}">Скрытые файлы <span class="ui-li-count">{{ file_count_hidden()|wapinet_count }}</span></a></li>
         </ul>
     {% endif %}
 

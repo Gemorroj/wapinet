@@ -10,7 +10,7 @@
 
 {% block javascripts %}
     <script type="text/javascript">{% autoescape 'js' %}
-        $(document).bind("pageinit", function () {
+        $(document).on("pageinit", function () {
             var deletePath;
 
             $("#list-archive").find("a[href='#delete-popup']").on("click", function () {

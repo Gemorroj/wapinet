@@ -11,7 +11,7 @@
 {% block javascripts %}
         {% if app.user and is_granted('DELETE', gist) %}
             <script type="text/javascript">{% autoescape 'js' %}
-                $(document).bind("pageinit", function () {
+                $(document).on("pageinit", function () {
                     $("#delete-popup-do").on("click", function () {
                         $.post('{{ path('gist_delete', {'id': gist.id}) }}', function () {
                             window.location.assign('{{ path('gist_index') }}');
