@@ -29,7 +29,7 @@
         "james-heinrich/getid3": "dev-master",
         "vich/uploader-bundle": "~0.14",
         "liip/imagine-bundle": "~1.2",
-        "gregwar/captcha-bundle": "~1.0",
+        "gregwar/captcha-bundle": "~1.1",
         "pulse00/ffmpeg-bundle": "~0.5",
         "highco/sphinx-bundle": "~2.0",
         "tufanbarisyildirim/php-apk-parser": "dev-master",
