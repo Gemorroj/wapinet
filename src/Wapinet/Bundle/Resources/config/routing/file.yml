@@ -33,6 +33,10 @@ file_search:
     requirements:
         key: "[a-zA-Z0-9]+"
 
+file_hidden:
+    pattern: /hidden
+    defaults: { _controller: WapinetBundle:File:hidden }
+
 file_tags:
     pattern: /tags
     defaults: { _controller: WapinetBundle:File:tags }

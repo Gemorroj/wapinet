@@ -143,6 +143,18 @@ class FileController extends Controller
         return $this->render('WapinetBundle:File:categories.html.twig');
     }
 
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function hiddenAction(Request $request)
+    {
+        throw new \Exception('Не реализовано');
+    }
+
+
     /**
      * @param Request $request
      *
