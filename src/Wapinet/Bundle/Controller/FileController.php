@@ -537,7 +537,7 @@ class FileController extends Controller
      */
     public function uploadAction(Request $request)
     {
-        $form = $this->createForm(new UploadType());
+        $form = $this->createForm(new UploadType($this->container));
 
         try {
             $form->handleRequest($request);
