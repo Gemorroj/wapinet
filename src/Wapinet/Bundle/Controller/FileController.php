@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
@@ -409,7 +410,15 @@ class FileController extends Controller
             $archive->extractEntry($file->getFile(), $path, $tmpDir);
         }
 
-        return new BinaryFileResponse($entry);
+        $file = new BinaryFileResponse($entry);
+
+        $file->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $name,
+            $this->get('translit')->toAscii($name)
+        );
+
+        return $file;
     }
 
 

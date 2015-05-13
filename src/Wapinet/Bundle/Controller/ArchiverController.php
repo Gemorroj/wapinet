@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Wapinet\Bundle\Exception\ArchiverException;
 use Wapinet\Bundle\Form\Type\Archiver\AddType;
 
@@ -99,10 +100,18 @@ class ArchiverController extends Controller
     {
         $archiveDirectory = $this->checkArchiveDirectory($archive);
 
+        $name = $archive . '.zip';
         $archiveZip = $this->get('archive_zip');
-        $file = $archiveZip->create($archiveDirectory);
 
-        return new BinaryFileResponse($file);
+        $file = new BinaryFileResponse($archiveZip->create($archiveDirectory));
+
+        $file->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $name,
+            $this->get('translit')->toAscii($name)
+        );
+
+        return $file;
     }
 
     /**
@@ -117,9 +126,15 @@ class ArchiverController extends Controller
         $path = $request->get('path');
         $archiveDirectory = $this->checkArchiveDirectory($archive);
 
-        $file = $this->checkFile($archiveDirectory, $path, false);
+        $file = new BinaryFileResponse($this->checkFile($archiveDirectory, $path, false));
 
-        return new BinaryFileResponse($file);
+        $file->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $name,
+            $this->get('translit')->toAscii($name)
+        );
+
+        return $file;
     }
 
     /**
@@ -151,17 +166,17 @@ class ArchiverController extends Controller
     protected function checkFile($archiveDirectory, $path, $allowDirectory = false)
     {
         if (false !== \strpos($path, '../') || \strpos($path, '..\\')) {
-            throw $this->createAccessDeniedException($path);
+            throw $this->createAccessDeniedException('Запрещен доступ: "' . $path . '"".');
         }
 
         $file = \realpath($archiveDirectory . \DIRECTORY_SEPARATOR . $path);
 
-        if (0 !== \strpos($file, $archiveDirectory)) {
-            throw $this->createAccessDeniedException($path);
+        if (false === $file) {
+            throw $this->createNotFoundException('Файл не найден: "' . $path . '"".');
         }
 
         if (true !== $allowDirectory && true === \is_dir($allowDirectory)) {
-            throw $this->createAccessDeniedException($path);
+            throw $this->createAccessDeniedException('Запрещен доступ: "' . $path . '"".');
         }
 
         return $file;
