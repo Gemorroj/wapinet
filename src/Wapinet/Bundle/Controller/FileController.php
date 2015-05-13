@@ -618,10 +618,23 @@ class FileController extends Controller
                     $tagsString = $form['tags_string']->getData();
                     $file = $this->saveFileData($request, $data, $tagsString);
 
-                    $url = $this->generateUrl('file_view', array(
-                            'id' => $file->getId()
-                        ), Router::ABSOLUTE_URL
-                    );
+                    // просмотр файла авторизованными пользователями
+                    if ($this->isGranted('ROLE_USER')) {
+                        $url = $this->generateUrl(
+                            'file_view',
+                            array(
+                                'id' => $file->getId()
+                            ),
+                            Router::ABSOLUTE_URL
+                        );
+                    } else {
+                        // неавторизованных перенаправляем на главную обменника
+                        $url = $this->generateUrl(
+                            'file_index',
+                            array(),
+                            Router::ABSOLUTE_URL
+                        );
+                    }
 
                     // загрузка через ajax
                     if ($request->isXmlHttpRequest()) {
