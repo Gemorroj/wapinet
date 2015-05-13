@@ -53,10 +53,14 @@ class UserAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $roles = array();
-        foreach ($this->getConfigurationPool()->getContainer()->getParameter('security.role_hierarchy.roles') as $key => $value) {
+        $roles = array(
+            'ROLE_USER' => 'ROLE_USER',
+            'ROLE_ADMIN' => 'ROLE_ADMIN',
+            'ROLE_SUPER_ADMIN' => 'ROLE_SUPER_ADMIN',
+        );
+        /*foreach ($this->getConfigurationPool()->getContainer()->getParameter('security.role_hierarchy.roles') as $key => $value) {
             $roles[$key] = $key;
-        }
+        }*/
 
         $formMapper
             ->add('enabled', null, array('label' => 'Активен', 'required' => false))
