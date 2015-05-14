@@ -63,6 +63,7 @@ class UserAdmin extends Admin
         }*/
 
         $formMapper
+            ->with('Пользователь', array('class' => 'col-md-6'))
             ->add('enabled', null, array('label' => 'Активен', 'required' => false))
             ->add('locked', null, array('label' => 'Заблокирован', 'required' => false))
             ->add('plainPassword', 'text', array('label' => 'Пароль', 'required' => false))
@@ -74,10 +75,10 @@ class UserAdmin extends Admin
             ->add('timezone', 'timezone', array('label' => 'Временная зона', 'required' => false))
             ->add('info', 'textarea', array('label' => 'Дополнительная информация', 'required' => false))
             ->end()
-            ->with('Аватар')
+            ->with('Аватар', array('class' => 'col-md-6'))
             ->add('avatar', 'file_url', array('delete_button' => true, 'label' => false, 'required' => false, 'accept' => 'image/*'))
             ->end()
-            ->with('Подписки')
+            ->with('Подписки', array('class' => 'col-md-2'))
             ->add('subscriber', 'sonata_type_admin', array(
                 'label' => false,
                 'required' => true,
@@ -85,7 +86,7 @@ class UserAdmin extends Admin
                 'btn_add' => false,
             ))
             ->end()
-            ->with('Меню')
+            ->with('Меню', array('class' => 'col-md-2'))
             ->add('panel', 'sonata_type_admin', array(
                 'label' => false,
                 'required' => true,
