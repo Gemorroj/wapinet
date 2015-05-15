@@ -11,7 +11,7 @@ class HtmlValidatorControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/html_validator/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
 }

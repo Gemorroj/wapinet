@@ -11,6 +11,6 @@ class SyntaxControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/syntax?f=test');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Wapinet\Bundle\Twig\Extension;
 
-use FFMpeg\Filters\Audio\AudioResamplableFilter;
 use FFMpeg\Format\Video\DefaultVideo;
 use FFMpeg\Media\Video as FFmpegVideo;
 use FFMpeg\Format\Video\X264;

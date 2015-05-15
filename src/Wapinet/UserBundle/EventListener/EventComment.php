@@ -10,13 +10,22 @@ use Wapinet\UserBundle\Entity\User;
 
 class EventComment implements EventSubscriberInterface
 {
+    /**
+     * @var EntityManager
+     */
     private $em;
 
+    /**
+     * @param EntityManager $em
+     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getSubscribedEvents()
     {
         return array(
@@ -24,6 +33,10 @@ class EventComment implements EventSubscriberInterface
         );
     }
 
+
+    /**
+     * @param CommentEvent $event
+     */
     public function create(CommentEvent $event)
     {
         $comment = $event->getComment();

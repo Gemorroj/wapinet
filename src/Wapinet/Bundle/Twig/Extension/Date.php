@@ -55,13 +55,13 @@ class Date extends \Twig_Extension
 
             if ($date->format('Ymd') === $today->format('Ymd')) {
                 return 'Сегодня';
-            } elseif ($date->format('Ymd') == $yesterday->format('Ymd')) {
+            } elseif ($date->format('Ymd') === $yesterday->format('Ymd')) {
                 return 'Вчера';
-            } elseif ($date->format('Ymd') == $dayBeforeYesterday->format('Ymd')) {
+            } elseif ($date->format('Ymd') === $dayBeforeYesterday->format('Ymd')) {
                 return 'Позавчера';
-            } elseif ($date->format('Ymd') == $tomorrow->format('Ymd')) {
+            } elseif ($date->format('Ymd') === $tomorrow->format('Ymd')) {
                 return 'Завтра';
-            } elseif ($date->format('Ymd') == $dayAfterTomorrow->format('Ymd')) {
+            } elseif ($date->format('Ymd') === $dayAfterTomorrow->format('Ymd')) {
                 return 'Послезавтра';
             } else {
                 return $date->format('d.m.Y');
@@ -92,13 +92,13 @@ class Date extends \Twig_Extension
 
             if ($datetime->format('Ymd') === $today->format('Ymd')) {
                 return 'Сегодня в ' . $datetime->format('H:i');
-            } elseif ($datetime->format('Ymd') == $yesterday->format('Ymd')) {
+            } elseif ($datetime->format('Ymd') === $yesterday->format('Ymd')) {
                 return 'Вчера в ' . $datetime->format('H:i');
-            } elseif ($datetime->format('Ymd') == $dayBeforeYesterday->format('Ymd')) {
+            } elseif ($datetime->format('Ymd') === $dayBeforeYesterday->format('Ymd')) {
                 return 'Позавчера в ' . $datetime->format('H:i');
-            } elseif ($datetime->format('Ymd') == $tomorrow->format('Ymd')) {
+            } elseif ($datetime->format('Ymd') === $tomorrow->format('Ymd')) {
                 return 'Завтра в ' . $datetime->format('H:i');
-            } elseif ($datetime->format('Ymd') == $dayAfterTomorrow->format('Ymd')) {
+            } elseif ($datetime->format('Ymd') === $dayAfterTomorrow->format('Ymd')) {
                 return 'Послезавтра в ' . $datetime->format('H:i');
             } else {
                 //return $datetime->format('d.m.Y H:i:s');
@@ -138,7 +138,7 @@ class Date extends \Twig_Extension
     {
         $length = null;
         $d1 = new \DateTime();
-        $d2 = new \DateTime('- ' . intval($seconds) . ' seconds');
+        $d2 = new \DateTime('- ' . (int)$seconds . ' seconds');
 
         $iv = $d2->diff($d1);
 

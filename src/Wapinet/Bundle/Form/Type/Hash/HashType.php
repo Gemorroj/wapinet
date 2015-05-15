@@ -31,9 +31,9 @@ class HashType extends AbstractType
             'choices' => $this->algorithms,
             'label' => 'Алгоритм',
             'preferred_choices' => array(
-                array_search('md5', $this->algorithms),
-                array_search('sha512', $this->algorithms),
-                array_search('crc32', $this->algorithms)
+                array_search('md5', $this->algorithms, true),
+                array_search('sha512', $this->algorithms, true),
+                array_search('crc32', $this->algorithms, true)
             ),
         ));
 

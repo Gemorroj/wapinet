@@ -94,7 +94,7 @@ class SyntaxController extends Controller
     protected function highlightCode($source, $line = 0)
     {
         $array = \array_slice(\explode("\n", $this->xhtmlCode($source)), 1, -2);
-        $all = \sizeof($array);
+        $all = \count($array);
         $len = \strlen($all);
         $page = '';
         for ($i = 0; $i < $all; ++$i) {

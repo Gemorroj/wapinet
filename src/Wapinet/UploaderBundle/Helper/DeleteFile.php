@@ -53,8 +53,8 @@ class DeleteFile
             $filePropertyNameForm = $form->get($filePropertyName);
             $filePropertyNameFormName = $filePropertyNameForm->getName();
             if (isset($data[$filePropertyNameFormName]['file_url_delete']) && $data[$filePropertyNameFormName]['file_url_delete'] && null === $filePropertyNameForm->getData()) {
-                $entity->{'set' . ucfirst($filePropertyName)}(null);
-                $entity->{'set' . ucfirst($fileNamePropertyName)}(null);
+                $entity->{'set' . \ucfirst($filePropertyName)}(null);
+                $entity->{'set' . \ucfirst($fileNamePropertyName)}(null);
             }
         }
     }

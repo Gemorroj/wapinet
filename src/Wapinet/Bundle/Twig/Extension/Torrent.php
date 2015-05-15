@@ -54,7 +54,7 @@ class Torrent extends \Twig_Extension
                     'size' => $entry['length'],
                 );
             }
-        } else if (isset($data['info']['name']) && isset($data['info']['length'])) {
+        } else if (isset($data['info']['name'], $data['info']['length'])) {
             $list[] = array(
                 'path' => $data['info']['name'],
                 'size' => $data['info']['length'],

@@ -11,6 +11,6 @@ class GistControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/gist/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

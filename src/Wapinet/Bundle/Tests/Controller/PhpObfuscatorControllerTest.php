@@ -11,6 +11,6 @@ class PhpObfuscatorControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/php_obfuscator/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

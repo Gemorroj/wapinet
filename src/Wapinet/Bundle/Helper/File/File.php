@@ -40,7 +40,7 @@ class File
             return !empty($value);
         });
 
-        return array_values($tags);
+        return \array_values($tags);
     }
 
     /**

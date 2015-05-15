@@ -11,6 +11,6 @@ class PagerankControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/pagerank/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

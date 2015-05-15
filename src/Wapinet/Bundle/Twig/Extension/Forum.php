@@ -2,7 +2,6 @@
 
 namespace Wapinet\Bundle\Twig\Extension;
 
-use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\ORM\EntityManager;
 

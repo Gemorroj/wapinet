@@ -11,6 +11,6 @@ class MobileCodeControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/mobile_code/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

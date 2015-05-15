@@ -37,7 +37,7 @@ class Tag
 
 
     /**
-     * Констркутор
+     * Конструктор
      */
     public function __construct()
     {

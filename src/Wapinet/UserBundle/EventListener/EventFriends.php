@@ -19,12 +19,19 @@ class EventFriends implements EventSubscriberInterface
     private $em;
     private $router;
 
+    /**
+     * @param EntityManager $em
+     * @param Router $router
+     */
     public function __construct(EntityManager $em, Router $router)
     {
         $this->em = $em;
         $this->router = $router;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getSubscribedEvents()
     {
         return array(
@@ -36,6 +43,9 @@ class EventFriends implements EventSubscriberInterface
         );
     }
 
+    /**
+     * @param CommentEvent $event
+     */
     public function createComment(CommentEvent $event)
     {
         /** @var Comment $comment */
@@ -69,6 +79,9 @@ class EventFriends implements EventSubscriberInterface
     }
 
 
+    /**
+     * @param FriendEvent $event
+     */
     public function friendAdd(FriendEvent $event)
     {
         // Уведомление о добавлении  в друзья
@@ -109,6 +122,9 @@ class EventFriends implements EventSubscriberInterface
         $this->em->flush();
     }
 
+    /**
+     * @param FriendEvent $event
+     */
     public function friendDelete(FriendEvent $event)
     {
         // Уведомление об удалении из друзей
@@ -149,6 +165,9 @@ class EventFriends implements EventSubscriberInterface
     }
 
 
+    /**
+     * @param FileEvent $event
+     */
     public function fileAdd(FileEvent $event)
     {
         $user = $event->getUser();
@@ -178,6 +197,9 @@ class EventFriends implements EventSubscriberInterface
         $this->em->flush();
     }
 
+    /**
+     * @param GistEvent $event
+     */
     public function gistAdd(GistEvent $event)
     {
         $user = $event->getUser();

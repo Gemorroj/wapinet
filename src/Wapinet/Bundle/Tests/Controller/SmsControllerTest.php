@@ -11,6 +11,6 @@ class SmsControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/sms/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

@@ -79,8 +79,8 @@ class Siza
         }
 
         $location = $response->headers->get('Location');
-        $query = parse_url($location, PHP_URL_QUERY);
-        list(, $searchId) = explode('=', $query);
+        $query = \parse_url($location, PHP_URL_QUERY);
+        list(, $searchId) = \explode('=', $query);
 
         return $searchId;
     }
@@ -144,8 +144,8 @@ class Siza
     {
         $out = $this->getContentList();
 
-        $out = str_replace(array('<dl><dt>', '<dl><dt style="border-bottom:none;">', '</dt>', '</dl>'), array('<li>', '<li>', '</p>', '</a></li>'), $out);
-        $out = str_replace('</d</ul>' , '</a></li></ul>', $out);
+        $out = \str_replace(array('<dl><dt>', '<dl><dt style="border-bottom:none;">', '</dt>', '</dl>'), array('<li>', '<li>', '</p>', '</a></li>'), $out);
+        $out = \str_replace('</d</ul>' , '</a></li></ul>', $out);
 
 
         return $out;
@@ -204,7 +204,7 @@ class Siza
                     $tmpImg = $img->cloneNode();
 
                     // fix: DOMElement::__construct(): unterminated entity reference
-                    $value = htmlentities($a->firstChild->nodeValue, ENT_NOQUOTES | ENT_HTML5);
+                    $value = \htmlentities($a->firstChild->nodeValue, \ENT_NOQUOTES | \ENT_HTML5);
 
                     $tmpName = new \DOMElement('h2', $value);
                     $a->replaceChild($tmpImg, $a->firstChild);
@@ -340,7 +340,7 @@ class Siza
                 $href = \str_replace('?', '&', $href);
                 if ($extParam) {
                     foreach ($extParam as $extParamKey => $extParamValue) {
-                        $href .= '&' . rawurlencode($extParamKey) . '=' . rawurlencode($extParamValue);
+                        $href .= '&' . \rawurlencode($extParamKey) . '=' . \rawurlencode($extParamValue);
                     }
                 }
                 $a->setAttribute('href', '?q=' . $href);
@@ -406,7 +406,7 @@ class Siza
                 // http://dwloadfiles.ru/api.php?a=104275&u=http%3A%2F%2Ff.siza.ru%2F65%2F6504%2F650435%2F19th_Club_Party_Night_Nok_128x128.jar%3Fr%3D75875388&n=19th Club Party Night&d=3&mt=1&s=1&ic=2501&im=2508&f=19th_Club_Party_Night_Nok_128x128.jar?r=75875388
                 if (0 === \strpos($href, 'http://dwloadfiles.ru/api.php?')) {
                     // какой-то хак сайта
-                    $parsedHref = \parse_url($href, PHP_URL_QUERY);
+                    $parsedHref = \parse_url($href, \PHP_URL_QUERY);
                     \parse_str($parsedHref, $parsedHrefQuery);
                     $href = $parsedHrefQuery['u'];
                     // какой-то хак сайта

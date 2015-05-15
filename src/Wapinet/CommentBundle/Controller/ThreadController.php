@@ -17,8 +17,6 @@ use FOS\RestBundle\View\View;
 use Symfony\Bundle\FrameworkBundle\Templating\TemplateReference;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Wapinet\CommentBundle\Entity\CommentManager;
 
 /**
  * Restful controller for the Threads.

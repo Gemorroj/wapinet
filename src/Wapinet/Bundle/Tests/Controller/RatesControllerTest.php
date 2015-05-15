@@ -11,6 +11,6 @@ class RatesControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/rates/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

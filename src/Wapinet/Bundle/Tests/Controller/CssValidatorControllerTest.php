@@ -11,7 +11,7 @@ class CssValidatorControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/css_validator/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
 }

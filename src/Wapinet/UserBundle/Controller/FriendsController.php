@@ -39,13 +39,12 @@ class FriendsController extends Controller
 
 
     /**
-     * @param Request $request
      * @param string  $username
      *
      * @return RedirectResponse
      * @throws \LogicException|AccessDeniedException
      */
-    public function addAction(Request $request, $username)
+    public function addAction($username)
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -84,13 +83,12 @@ class FriendsController extends Controller
 
 
     /**
-     * @param Request $request
      * @param string  $username
      *
      * @return RedirectResponse
      * @throws \LogicException|AccessDeniedException
      */
-    public function deleteAction(Request $request, $username)
+    public function deleteAction($username)
     {
         /** @var User $user */
         $user = $this->getUser();

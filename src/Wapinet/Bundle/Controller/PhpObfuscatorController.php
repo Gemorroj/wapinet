@@ -72,13 +72,13 @@ class PhpObfuscatorController extends Controller
     protected function cleanCode($code)
     {
         // Верх
-        if (\mb_substr($code, 0, 5) == '<?php') {
+        if (\mb_substr($code, 0, 5) === '<?php') {
             $code = \mb_substr($code, 5, \mb_strlen($code));
-        } elseif (\mb_substr($code, 0, 2) == '<?') {
+        } elseif (\mb_substr($code, 0, 2) === '<?') {
             $code = \mb_substr($code, 2, \mb_strlen($code));
         }
         // Низ
-        if (\mb_substr($code, -2, 2) == '?>') {
+        if (\mb_substr($code, -2, 2) === '?>') {
             $code = \mb_substr($code, 0, \mb_strlen($code) - 2);
         }
 

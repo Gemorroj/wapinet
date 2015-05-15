@@ -11,7 +11,7 @@ class ProfileControllerTest extends WebTestCaseUser
         $client = static::createClientUser('admin');
 
         $crawler = $client->request('GET', '/profile/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
 }

@@ -104,7 +104,7 @@ class UnicodeController extends Controller
      */
     protected function getHtmlSpecialChars($str)
     {
-        return \htmlspecialchars($str, ENT_QUOTES);
+        return \htmlspecialchars($str, \ENT_QUOTES);
     }
 
     /**

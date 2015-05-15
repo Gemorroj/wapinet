@@ -25,7 +25,7 @@ class Error
         }
 
         foreach ($form->all() as $child) {
-            $errors = array_merge($errors, $this->makeErrors($child));
+            $errors = \array_merge($errors, $this->makeErrors($child));
         }
 
         return $errors;

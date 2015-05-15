@@ -4,7 +4,6 @@ namespace Wapinet\UserBundle\Form\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Wapinet\UserBundle\Entity\User;
 
 /**
  * Search

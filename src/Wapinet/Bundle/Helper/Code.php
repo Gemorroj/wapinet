@@ -41,7 +41,7 @@ class Code
 
         $result = @$algorithm($string);
 
-        if (\in_array($algorithm, array('json_decode', 'json_encode'))) {
+        if (\in_array($algorithm, array('json_decode', 'json_encode'), true)) {
             $this->checkJsonResult($result);
         } else {
             $this->checkResult($result);

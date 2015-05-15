@@ -2,7 +2,6 @@
 namespace Wapinet\Bundle\Helper;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Wapinet\Bundle\Exception\RequestException;
 use Symfony\Component\HttpKernel\Exception\LengthRequiredHttpException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -176,8 +175,8 @@ class Curl
 
                     $key = $h[0];
                 } else {
-                    if (\substr($h[0], 0, 1) == "\t") {
-                        $headers[$key] .= "\r\n\t".\trim($h[0]);
+                    if (\substr($h[0], 0, 1) === "\t") {
+                        $headers[$key] .= "\r\n\t" . \trim($h[0]);
                     } elseif (!$key) {
                         $headers[0] = \trim($h[0]);
                     }

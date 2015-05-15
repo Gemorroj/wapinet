@@ -2,7 +2,6 @@
 
 namespace Wapinet\MessageBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use FOS\MessageBundle\FormType\ReplyMessageFormType as BaseType;
 

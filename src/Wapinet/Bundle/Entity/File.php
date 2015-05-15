@@ -613,7 +613,7 @@ class File implements \Serializable
             'application/x-gzip', // gz
             'application/x-ace-compressed', // ace
             'application/x-lzh-compressed', // lzh
-        ));
+        ), true);
     }
 
     /**

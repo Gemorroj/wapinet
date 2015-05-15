@@ -11,6 +11,6 @@ class IcqControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/icq/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

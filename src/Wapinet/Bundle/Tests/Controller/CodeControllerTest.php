@@ -11,6 +11,6 @@ class CodeControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/code/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

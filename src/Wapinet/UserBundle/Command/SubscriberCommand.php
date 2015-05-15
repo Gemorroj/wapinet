@@ -15,7 +15,7 @@ use Wapinet\UserBundle\Entity\Event;
 class SubscriberCommand extends ContainerAwareCommand
 {
     /**
-     * @see Command
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -25,7 +25,7 @@ class SubscriberCommand extends ContainerAwareCommand
     }
 
     /**
-     * @see Command
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

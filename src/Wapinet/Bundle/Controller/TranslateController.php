@@ -100,7 +100,7 @@ class TranslateController extends Controller
 
         $json = \json_decode($response->getContent());
 
-        return ($json->lang ? $json->lang : 'en');
+        return ($json->lang ?: 'en');
     }
 
 

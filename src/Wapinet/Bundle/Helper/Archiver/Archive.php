@@ -61,7 +61,7 @@ abstract class Archive
         foreach ($objects as $name => $object) {
             $object->setInfoClass(ArchiveFileInfo::class);
 
-            if ('' === $object->getPathInfo()->getArchiveName() && false === $object->isDir()) {
+            if (false === $object->isDir() && '' === $object->getPathInfo()->getArchiveName()) {
                 $result[] = $object;
             } else {
                 $tmp[$name] = $object;

@@ -2,7 +2,6 @@
 
 namespace Wapinet\Bundle\Twig\Extension;
 
-use FFMpeg\Filters\Audio\AudioResamplableFilter;
 use FFMpeg\Format\Audio\DefaultAudio;
 use FFMpeg\Format\Audio\Mp3;
 use FFMpeg\Media\Audio as FFmpegAudio;

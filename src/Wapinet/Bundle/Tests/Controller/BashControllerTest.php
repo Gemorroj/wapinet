@@ -11,7 +11,7 @@ class BashControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/bash/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
 }

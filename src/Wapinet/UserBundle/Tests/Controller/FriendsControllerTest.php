@@ -11,7 +11,7 @@ class FriendsControllerTest extends WebTestCaseUser
         $client = static::createClientUser('admin');
 
         $crawler = $client->request('GET', '/friends/admin');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
 }

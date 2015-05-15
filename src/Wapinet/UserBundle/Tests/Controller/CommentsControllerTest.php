@@ -11,7 +11,7 @@ class CommentsControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/comments/admin');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
 }

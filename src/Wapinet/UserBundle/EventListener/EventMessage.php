@@ -16,6 +16,11 @@ class EventMessage implements EventSubscriberInterface
     private $em;
     private $router;
 
+    /**
+     * @param MessageManagerInterface $messageManager
+     * @param EntityManager $em
+     * @param Router $router
+     */
     public function __construct(MessageManagerInterface $messageManager, EntityManager $em, Router $router)
     {
         $this->messageManager = $messageManager;
@@ -23,6 +28,9 @@ class EventMessage implements EventSubscriberInterface
         $this->router = $router;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getSubscribedEvents()
     {
         return array(
@@ -30,6 +38,9 @@ class EventMessage implements EventSubscriberInterface
         );
     }
 
+    /**
+     * @param MessageEvent $event
+     */
     public function send(MessageEvent $event)
     {
         $message = $event->getMessage();

@@ -191,9 +191,9 @@ class FileUrlDataTransformer implements DataTransformerInterface
         if ($tmpName[1]) {
             $tmpName = \trim($tmpName[1], '";\'');
 
-            $utf8Prefix = 'utf-8\'\''; // utf-8\'\'' . rawurlencode($var)
-            $utf8BPrefix = '=?UTF-8?B?'; // =?UTF-8?B?' . base64_encode($var) . '?=
-            $utf8BPostfix = '?='; // =?UTF-8?B?' . base64_encode($var) . '?=
+            $utf8Prefix = 'utf-8\'\''; // utf-8\'\'' . \rawurlencode($var)
+            $utf8BPrefix = '=?UTF-8?B?'; // =?UTF-8?B?' . \base64_encode($var) . '?=
+            $utf8BPostfix = '?='; // =?UTF-8?B?' . \base64_encode($var) . '?=
 
             if (0 === \stripos($tmpName, $utf8Prefix)) {
                 $tmpName = \substr($tmpName, \strlen($utf8Prefix));

@@ -4,7 +4,6 @@ namespace Wapinet\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\VarDumper\VarDumper;
 use Wapinet\Bundle\Form\Type\Pagerank\PagerankType;
 use Symfony\Component\Form\FormError;
 
@@ -196,7 +195,7 @@ class PagerankController extends Controller
      * @version     $Revision: 2.1 $
      * @require     PHP 4.3.0 (file_get_contents)
      * @updated		06/10/11
-     * @see         https://github.com/stfast/pagerank
+     * @see         https://github.com/neatstudio/pagerank
      */
     protected function getGooglePr($q, $host = 'toolbarqueries.google.com', $context = null)
     {
