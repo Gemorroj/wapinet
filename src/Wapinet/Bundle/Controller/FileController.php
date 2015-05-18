@@ -401,7 +401,7 @@ class FileController extends Controller
 
         if (!\file_exists($entry)) {
             $file = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->find($id);
-            if (null !== $file) {
+            if (null === $file) {
                 $this->createNotFoundException('Файл не найден.');
             }
 
