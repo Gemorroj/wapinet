@@ -250,12 +250,13 @@ class FileRepository extends EntityRepository
                 $q->setParameter('mime_type', $mimeType);
                 break;
             case 'office':
-                $q->andWhere('f.mimeType IN(:pdf, :doc, :docx, :xls, :xlsx)');
+                $q->andWhere('f.mimeType IN(:pdf, :doc, :docx, :xls, :xlsx, :rtf)');
                 $q->setParameter('pdf', 'application/pdf');
                 $q->setParameter('doc', 'application/msword');
                 $q->setParameter('docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
                 $q->setParameter('xls', 'application/vnd.ms-excel');
                 $q->setParameter('xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                $q->setParameter('rtf', 'application/rtf');
                 break;
             case 'archive':
                 $q->andWhere('f.mimeType IN(:zip, :rar, :bz, :bz2, :p7z, :tar, :cab, :iso, :gz, :ace, :lzh)');
