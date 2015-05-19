@@ -675,6 +675,14 @@ class File implements \Serializable
     /**
      * @return bool
      */
+    public function isRtf()
+    {
+        return ('application/rtf' === $this->getMimeType());
+    }
+
+    /**
+     * @return bool
+     */
     public function isExcel()
     {
         return ('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' === $this->getMimeType() || 'application/vnd.ms-excel' === $this->getMimeType());
