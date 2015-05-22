@@ -188,7 +188,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
     private function parseContentDisposition($contentDisposition)
     {
         $tmpName = \explode('=', $contentDisposition, 2);
-        if ($tmpName[1]) {
+        if (isset($tmpName[1])) {
             $tmpName = \trim($tmpName[1], '";\'');
 
             $utf8Prefix = 'utf-8\'\''; // utf-8\'\'' . \rawurlencode($var)
