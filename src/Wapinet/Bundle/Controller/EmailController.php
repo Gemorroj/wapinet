@@ -72,6 +72,11 @@ class EmailController extends Controller
             $message->attach($attach);
         }
 
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $ip = \implode(', ', $request->getClientIps());
+
+        $message->getHeaders()->addTextHeader('Received', 'from user [' . $ip . ']');
+
         return $message;
     }
 }
