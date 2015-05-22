@@ -187,7 +187,7 @@ class GistController extends Controller
         $em->flush();
 
         // переадресация на главную
-        $url = $$this->generateUrl('gist_index', array(), Router::ABSOLUTE_URL);
+        $url = $this->generateUrl('gist_index', array(), Router::ABSOLUTE_URL);
 
         if (true === $request->isXmlHttpRequest()) {
             return new JsonResponse(array('url' => $url));
