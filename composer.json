@@ -44,7 +44,7 @@
         "gemorroj/m3u-parser": "dev-master"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.5",
+        "phpunit/phpunit": "~4.8",
         "sensio/generator-bundle": "~2.3"
     },
     "scripts": {
