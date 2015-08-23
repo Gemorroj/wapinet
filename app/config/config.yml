@@ -3,6 +3,12 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
 
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: ru
+
+
 framework:
     #esi:             ~
     translator:      { fallbacks: ["%locale%"] }
@@ -14,7 +20,8 @@ framework:
     csrf_protection: true
     validation:
         enabled: true
-        api: 2.5-bc
+        api: 2.5
+    #serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
         #assets_version: SomeVersionScheme
@@ -71,6 +78,7 @@ doctrine:
             enum: string
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
 
 # Swiftmailer Configuration

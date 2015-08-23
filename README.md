@@ -78,7 +78,10 @@
 - Сделать возможность в переводчике и обфускаторе загружать файлы
 - Актуализировать мобильные коды. Найти новые для разных андроидов.
 - заменить апи сфинкса https://github.com/FoolCode/SphinxQL-Query-Builder
-- добавить сервис проверки кода через php_codesniffer
+- Добавить в профиль ссылку на vk пользователя. Доп данные тут: https://vk.com/dev/users.get получить данные можено так https://api.vk.com/method/users.get?user_ids=gemorroj
+- Данные о видео https://github.com/essence/essence
+- Оболочка над nmap https://github.com/willdurand/nmap
+
 
 ### BUG:
 [2014-12-03 23:32:45] request.INFO: Matched route "icq_registration_pic" (parameters: "_controller": "Wapinet\Bundle\Controller\IcqController::registrationPicAction", "_format": "png", "gnm_img": "74AA504ABC19FF0318CFCE2DADDB0965CC79F51CDB17EA621D38573F559D3F130693D136627761CFBEABD4832F6B8BEAB", "_route": "icq_registration_pic") [] []
