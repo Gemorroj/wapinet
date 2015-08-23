@@ -18,12 +18,128 @@
 
 
 ### Установка FFmpeg:
-Делаем все как указано по ссылке [https://trac.ffmpeg.org/wiki/CompilationGuide/Centos](https://trac.ffmpeg.org/wiki/CompilationGuide/Centos), из дополнений ставим theora.  
-Отсюда [http://www.alduccino.com/installing-ffmppeg-flvtool2-and-yamdi-on-centos-6](http://www.alduccino.com/installing-ffmppeg-flvtool2-and-yamdi-on-centos-6) берем пример недостающих библиотек (libfaac, amr) не забываем указать в конфиге `--prefix="$HOME/ffmpeg_build" --with-ogg="$HOME/ffmpeg_build" --disable-shared`.  
-Конфиг ffmpeg:  
-`./configure --prefix="$HOME/ffmpeg_build" --extra-cflags="-I$HOME/ffmpeg_build/include" --extra-ldflags="-L$HOME/ffmpeg_build/lib" --bindir="$HOME/bin" --extra-libs=-ldl --enable-gpl --enable-nonfree --enable-libfdk_aac --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libfaac --enable-libvorbis --enable-libopencore-amrwb --enable-libopencore-amrnb  --enable-libtheora --enable-version3`
-
+Делаем все как указано по ссылке [https://trac.ffmpeg.org/wiki/CompilationGuide/Centos](https://trac.ffmpeg.org/wiki/CompilationGuide/Centos).  
+Дополнительно ставим `theora`, `libfaac`, `amr`. Не забываем указать в конфиге `--prefix="$build_directory"`, а для `theora` еще и `--with-ogg="$HOME/ffmpeg_build" --disable-shared`.  
 В конце проверить что на всех директориях выше и самих бинарниках есть права на выполнение.
+
+    build_directory="/root/ffmpeg_23_08_2015_build"
+    sources_directory="/root/ffmpeg_23_08_2015_sources"
+    
+    cd $sources_directory
+    git clone --depth 1 git://github.com/yasm/yasm.git
+    cd yasm
+    autoreconf -fiv
+    ./configure --prefix="$build_directory" --bindir="$build_directory/bin"
+    make
+    make install
+    make distclean
+    
+    cd $sources_directory
+    git clone --depth 1 git://git.videolan.org/x264
+    cd x264
+    ./configure --prefix="$build_directory" --bindir="$build_directory/bin" --enable-static
+    make
+    make install
+    make distclean
+    
+    cd $sources_directory
+    hg clone https://bitbucket.org/multicoreware/x265
+    cd x265/build/linux
+    cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$build_directory" -DENABLE_SHARED:bool=off ../../source
+    make
+    make install
+    
+    cd $sources_directory
+    git clone --depth 1 git://git.code.sf.net/p/opencore-amr/fdk-aac
+    cd fdk-aac
+    autoreconf -fiv
+    ./configure --prefix="$build_directory" --disable-shared
+    make
+    make install
+    make distclean
+    
+    cd $sources_directory
+    git clone --depth 1 git://github.com/rbrito/lame.git
+    cd lame
+    ./configure --prefix="$build_directory" --bindir="$build_directory/bin" --disable-shared --enable-nasm
+    make
+    make install
+    make distclean
+    
+    cd $sources_directory
+    git clone git://git.opus-codec.org/opus.git
+    cd opus
+    autoreconf -fiv
+    ./configure --prefix="$build_directory" --disable-shared
+    make
+    make install
+    make distclean
+    
+    cd $sources_directory
+    curl -O http://downloads.xiph.org/releases/ogg/libogg-1.3.2.tar.gz
+    tar xzvf libogg-1.3.2.tar.gz
+    cd libogg-1.3.2
+    ./configure --prefix="$build_directory" --disable-shared
+    make
+    make install
+    make distclean
+    
+    cd $sources_directory
+    curl -O http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.5.tar.gz
+    tar xzvf libvorbis-1.3.5.tar.gz
+    cd libvorbis-1.3.5
+    LDFLAGS="-L$build_directory/lib" CPPFLAGS="-I$build_directory/include" ./configure --prefix="$build_directory" --with-ogg="$build_directory" --disable-shared
+    make
+    make install
+    make distclean
+    
+    cd $sources_directory
+    curl -O http://downloads.xiph.org/releases/theora/libtheora-1.1.1.tar.gz
+    tar xzvf libtheora-1.1.1.tar.gz
+    cd libtheora-1.1.1
+    ./configure --prefix="$build_directory" --with-ogg="$build_directory" --disable-examples --disable-shared --disable-sdltest --disable-vorbistest
+    make
+    make install
+    make distclean
+    
+    cd $sources_directory
+    git clone --depth 1 https://chromium.googlesource.com/webm/libvpx.git
+    cd libvpx
+    ./configure --prefix="$build_directory" --disable-examples
+    make
+    make install
+    make clean
+    
+    cd $sources_directory
+    git clone --depth 1 git://github.com/Arcen/faac.git
+    cd faac
+    ./bootstrap
+    ./configure --prefix="$build_directory" --disable-shared
+    make
+    make install
+    ldconfig
+    make clean
+    make distclean
+    
+    cd $sources_directory
+    git clone --depth 1 git://github.com/BelledonneCommunications/opencore-amr.git
+    cd opencore-amr
+    autoreconf -fiv
+    ./configure --prefix="$build_directory" --disable-shared
+    make
+    make install
+    ldconfig
+    make clean
+    make distclean
+    
+    cd $sources_directory
+    git clone --depth 1 git://source.ffmpeg.org/ffmpeg
+    cd ffmpeg
+    PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure --prefix="$build_directory" --extra-cflags="-I$build_directory/include" --extra-ldflags="-L$build_directory/lib" --bindir="$build_directory/bin" --pkg-config-flags="--static" --enable-gpl --enable-nonfree --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-libfaac --enable-libopencore-amrwb --enable-libopencore-amrnb --enable-libtheora --enable-version3
+    make
+    make install
+    make distclean
+    hash -r
 
 
 

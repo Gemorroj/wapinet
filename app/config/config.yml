@@ -196,7 +196,8 @@ liip_imagine:
             filters:
                 thumbnail: { size: [null, 80], mode: inset }
 
-dubture_f_fmpeg:
+php_ffmpeg:
     ffmpeg_binary: %wapinet_ffmpeg_path%
     ffprobe_binary: %wapinet_ffprobe_path%
+    threads_count: %wapinet_ffmpeg_threads_count%
 

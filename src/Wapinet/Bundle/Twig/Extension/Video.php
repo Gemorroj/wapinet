@@ -46,7 +46,7 @@ class Video extends \Twig_Extension
         $mp4File = $path . '.mp4';
 
         if (false === \file_exists($this->getWebDir() . $mp4File)) {
-            $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
+            $ffmpeg = $this->container->get('php_ffmpeg.ffmpeg');
             try {
                 $media = $ffmpeg->open($this->getWebDir() . $path);
 
@@ -116,7 +116,7 @@ class Video extends \Twig_Extension
         $screenshot = $path . '.jpg';
 
         if (false === \file_exists($this->getWebDir() . $screenshot)) {
-            $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
+            $ffmpeg = $this->container->get('php_ffmpeg.ffmpeg');
 
             try {
                 $media = $ffmpeg->open($this->getWebDir() . $path);

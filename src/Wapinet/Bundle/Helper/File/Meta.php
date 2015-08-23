@@ -103,7 +103,7 @@ class Meta
      */
     protected function setAudioMeta()
     {
-        $ffprobe = $this->container->get('dubture_ffmpeg.ffprobe');
+        $ffprobe = $this->container->get('php_ffmpeg.ffprobe');
         $info = $ffprobe->streams($this->file->getFile()->getPathname())->audios()->first();
 
         if (null !== $info) {
@@ -130,7 +130,7 @@ class Meta
      */
     protected function setVideoMeta()
     {
-        $ffprobe = $this->container->get('dubture_ffmpeg.ffprobe');
+        $ffprobe = $this->container->get('php_ffmpeg.ffprobe');
         $streams = $ffprobe->streams($this->file->getFile()->getPathname());
         $videoInfo = $streams->videos()->first();
         $audioInfo = $streams->audios()->first();

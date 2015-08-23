@@ -121,7 +121,7 @@ class AppKernel extends Kernel
             new Vich\UploaderBundle\VichUploaderBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
             new Gregwar\CaptchaBundle\GregwarCaptchaBundle(),
-            new Dubture\FFmpegBundle\DubtureFFmpegBundle(),
+            new sujayjaju\FFmpegBundle\PhpFFmpegBundle,
             new Highco\SphinxBundle\HighcoSphinxBundle(),
 
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
