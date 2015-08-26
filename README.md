@@ -194,7 +194,7 @@
 - Сделать возможность в переводчике и обфускаторе загружать файлы
 - Актуализировать мобильные коды. Найти новые для разных андроидов.
 - заменить апи сфинкса https://github.com/FoolCode/SphinxQL-Query-Builder
-- Добавить в профиль ссылку на vk пользователя. Доп данные тут: https://vk.com/dev/users.get получить данные можно так https://api.vk.com/method/users.get?user_ids=gemorroj (готовый пакет для работы с апи vk https://github.com/SocialConnect/vk)
+- Добавить в профиль ссылку на vk пользователя. Доп данные тут: https://vk.com/dev/users.get сделать через js
 - Данные о видео https://github.com/essence/essence
 - Оболочка над nmap https://github.com/willdurand/nmap
 

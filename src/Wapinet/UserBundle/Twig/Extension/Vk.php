@@ -41,7 +41,7 @@ class Vk extends \Twig_Extension
     {
         try {
             $response = $this->curl->init(
-                'https://api.vk.com/method/users.get?user_ids=' . $user->getVk()
+                'https://api.vk.com/method/users.get?fields=online&user_ids=' . $user->getVk()
             )->addCompression()->exec()->getContent();
             $response = \json_decode($response);
         } catch (\Exception $e) {
