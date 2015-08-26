@@ -41,6 +41,9 @@ Wapinet\UserBundle\Entity\User:
         country:
             type: string
             nullable: true
+        vk:
+            type: string
+            nullable: true
 
     lifecycleCallbacks:
         prePersist: [ setCreatedAtValue ]

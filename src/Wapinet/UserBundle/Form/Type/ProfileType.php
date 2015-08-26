@@ -32,6 +32,7 @@ class ProfileType extends BaseType
             ->add('birthday', 'birthday', array('widget' => 'single_text', 'label' => 'Дата рождения', 'required' => false, 'attr' => array('placeholder' => 'ГГГГ-ММ-ДД')))
             ->add('timezone', 'timezone', array('label' => 'Временная зона', 'required' => false))
             ->add('country', 'country', array('label' => 'Страна', 'required' => false))
+            ->add('vk', 'text', array('label' => 'ID вконтакте', 'required' => false, 'attr' => array('placeholder' => 'id123456789')))
             ->add('info', 'textarea', array('label' => 'Дополнительная информация', 'required' => false, 'attr' => array('maxlength' => 5000)))
             ->add('avatar', 'file_url', array(
                 'accept' => 'image/*',

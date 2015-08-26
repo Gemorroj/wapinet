@@ -86,6 +86,11 @@ class User extends BaseUser implements ParticipantInterface
      */
     protected $country;
 
+    /**
+     * @var string|null
+     */
+    protected $vk;
+
 
     public function __construct()
     {
@@ -109,6 +114,25 @@ class User extends BaseUser implements ParticipantInterface
     public function getFriended()
     {
         return $this->friended;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getVk()
+    {
+        return $this->vk;
+    }
+
+    /**
+     * @param string|null $vk
+     * @return User
+     */
+    public function setVk($vk = null)
+    {
+        $this->vk = $vk;
+
+        return $this;
     }
 
 

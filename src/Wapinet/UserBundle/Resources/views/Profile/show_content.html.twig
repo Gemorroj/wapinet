@@ -24,6 +24,10 @@
         <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ user.createdAt|wapinet_datetime }}</div></div>
         <div class="ui-block-a"><div class="ui-bar ui-bar-a">Активность</div></div>
         <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ user.lastActivity is null ? 'Неизвестно' : user.lastActivity|wapinet_datetime }}</div></div>
+        {% if user.vk is not null %}
+            <div class="ui-block-a"><div class="ui-bar ui-bar-a">Вконтакте</div></div>
+            <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ dump(wapinet_user_get_vk_info(user)) }}</div></div>
+        {% endif %}
     </div>
 
     {% if user.info is not null %}
