@@ -26,13 +26,22 @@
         <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ user.lastActivity is null ? 'Неизвестно' : user.lastActivity|wapinet_datetime }}</div></div>
     </div>
 
-    {% if user.vk is not null %}
-        Вконтакте: <a id="user-vk" data-id="{{ user.vk }}" class="ui-btn ui-mini ui-btn-inline" rel="external" href="https://vk.com/{{ user.vk }}">{{ user.vk }}</a>
+    {% if user.vk is not null or user.info is not null %}
+        <div class="ui-body ui-body-a ui-corner-all">
+            {% if user.vk is not null %}
+                <div>
+                    Вконтакте:
+                    <a id="user-vk" data-id="{{ user.vk }}" class="ui-btn ui-mini ui-btn-inline ui-corner-all" rel="external" href="https://vk.com/{{ user.vk }}">{{ user.vk }}</a>
+                </div>
+            {% endif %}
+            {% if user.info is not null %}
+                <div>
+                    {{ user.info|wapinet_bbcode_parse }}
+                </div>
+            {% endif %}
+        </div>
     {% endif %}
 
-    {% if user.info is not null %}
-        <div class="ui-body ui-body-a ui-corner-all">{{ user.info|wapinet_bbcode_parse }}</div>
-    {% endif %}
 </div>
 
 <ul data-role="listview" data-inset="true">
