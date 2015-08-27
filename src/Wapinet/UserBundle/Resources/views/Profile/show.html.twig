@@ -6,6 +6,18 @@
     1: {'uri': path('wapinet_users'), 'title': 'Пользователи'}
     }) }}
 {% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var vkId = $("#user-vk").data("id");
+            $.getJSON("https://api.vk.com/method/users.get?fields=online&user_id=" + vkId, function (data) {
+                alert(data);
+                console.log(data);
+            });
+        });
+    </script>
+{% endblock %}
+
 
 {% block fos_user_content %}
 {% include "FOSUserBundle:Profile:show_content.html.twig" %}
