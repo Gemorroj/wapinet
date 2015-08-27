@@ -195,8 +195,8 @@
 - Актуализировать мобильные коды. Найти новые для разных андроидов.
 - заменить апи сфинкса https://github.com/FoolCode/SphinxQL-Query-Builder
 - Добавить в профиль ссылку на vk пользователя. Доп данные тут: https://vk.com/dev/users.get сделать через js
-- Данные о видео https://github.com/essence/essence
-- Оболочка над nmap https://github.com/willdurand/nmap
+- Данные о видео на youtube и др. https://github.com/essence/essence
+- Оболочка над nmap https://github.com/willdurand/nmap (работает медленно и выдает мало информации)
 
 
 ### BUG:
