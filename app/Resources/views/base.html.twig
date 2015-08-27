@@ -73,7 +73,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/wapinet/css/core.css') }}" />
     <script type="text/javascript" src="{{ asset('bundles/wapinet/js/core.js') }}"></script>
 
-    {% if app.user %}
+    {% if app.user and app.user.hasAvatar %}
         <style type="text/css">
             .ui-icon-wapinet-user:after {
                 background-image: url("{{ vich_uploader_asset(app.user, 'avatar')|imagine_filter('thumbnail') }}");
