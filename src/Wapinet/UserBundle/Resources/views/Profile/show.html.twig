@@ -6,19 +6,12 @@
     1: {'uri': path('wapinet_users'), 'title': 'Пользователи'}
     }) }}
 {% endblock %}
-{#
+
 {% block javascripts %}
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var vkId = $("#user-vk").data("id");
-            $.getJSON("https://api.vk.com/method/users.get?fields=online&user_id=" + vkId, function (data) {
-                alert(data);
-                console.log(data);
-            });
-        });
-    </script>
+    {% if user.vk is not null %}
+        <script type="text/javascript" src="{{ asset('/bundles/wapinet/js/vk.js') }}"></script>
+    {% endif %}
 {% endblock %}
-#}
 
 
 {% block fos_user_content %}

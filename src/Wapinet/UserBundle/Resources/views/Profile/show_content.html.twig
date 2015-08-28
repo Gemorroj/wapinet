@@ -31,7 +31,10 @@
             {% if user.vk is not null %}
                 <div>
                     Вконтакте:
-                    <a id="user-vk" data-id="{{ user.vk }}" class="ui-btn ui-mini ui-btn-inline ui-corner-all" rel="external" href="https://vk.com/{{ user.vk }}">{{ user.vk }}</a>
+                    <a id="user-vk" data-id="{{ user.vk }}" href="#popup-vk" class="ui-btn ui-mini ui-corner-all ui-shadow ui-btn-inline">{{ user.vk }}</a>
+                    <div data-role="popup" id="popup-vk">
+                        <p></p>
+                    </div>
                 </div>
             {% endif %}
             {% if user.info is not null %}

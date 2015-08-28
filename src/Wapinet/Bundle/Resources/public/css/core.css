@@ -97,6 +97,12 @@ input.block-input {
     margin-top: 0.22em !important;
     margin-bottom: 0.22em !important;
 }
+.green {
+    color: #0b0;
+}
+.gray {
+    color: #777;
+}
 .danger {
     color: #b00;
 }
