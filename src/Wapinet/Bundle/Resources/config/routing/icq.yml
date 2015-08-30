@@ -1,51 +1,51 @@
 icq_index:
-    pattern: /
+    path: /
     defaults: { _controller: WapinetBundle:Icq:index }
 
 icq_registration:
-    pattern: /registration
+    path: /registration
     defaults: { _controller: WapinetBundle:Icq:registration }
 
 icq_registration_pic:
-    pattern: /registration/{gnm_img}.png
+    path: /registration/{gnm_img}.png
     defaults: { _controller: WapinetBundle:Icq:registrationPic, _format: png }
 
 icq_about:
-    pattern: /about
+    path: /about
     defaults: { _controller: WapinetBundle:Icq:about }
 
 icq_invise:
-    pattern: /invise
+    path: /invise
     defaults: { _controller: WapinetBundle:Icq:invise }
 
 icq_secure:
-    pattern: /secure
+    path: /secure
     defaults: { _controller: WapinetBundle:Icq:secure }
 
 icq_servers:
-    pattern: /servers
+    path: /servers
     defaults: { _controller: WapinetBundle:Icq:servers }
 
 icq_clients:
-    pattern: /clients
+    path: /clients
     defaults: { _controller: WapinetBundle:Icq:clients }
 
 icq_services:
-    pattern: /services
+    path: /services
     defaults: { _controller: WapinetBundle:Icq:services }
 
 icq_disconnect:
-    pattern: /disconnect
+    path: /disconnect
     defaults: { _controller: WapinetBundle:Icq:disconnect }
 
 icq_errors:
-    pattern: /errors
+    path: /errors
     defaults: { _controller: WapinetBundle:Icq:errors }
 
 icq_search:
-    pattern: /search
+    path: /search
     defaults: { _controller: WapinetBundle:Icq:search }
 
 icq_user_info:
-    pattern: /user_info
+    path: /user_info
     defaults: { _controller: WapinetBundle:Icq:userInfo }

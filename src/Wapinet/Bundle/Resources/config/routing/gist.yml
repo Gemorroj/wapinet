@@ -1,39 +1,39 @@
 gist_index:
-    pattern: /
+    path: /
     defaults: { _controller: WapinetBundle:Gist:index }
 
 gist_user:
-    pattern: /users/{username}
+    path: /users/{username}
     defaults: { _controller: WapinetBundle:Gist:user }
     requirements:
         username: ".+"
 
 gist_view:
-    pattern: /view/{id}
+    path: /view/{id}
     defaults: { _controller: WapinetBundle:Gist:view }
     requirements:
         id: \d+
 
 gist_delete:
-    pattern: /delete/{id}
+    path: /delete/{id}
     defaults: { _controller: WapinetBundle:Gist:delete }
     methods: [POST]
     requirements:
         id: \d+
 
 gist_add:
-    pattern: /add
+    path: /add
     defaults: { _controller: WapinetBundle:Gist:add }
     methods: [POST]
 
 gist_edit:
-    pattern: /edit/{id}
+    path: /edit/{id}
     defaults: { _controller: WapinetBundle:Gist:edit }
     requirements:
         id: \d+
 
 gist_search:
-    pattern: /search/{key}
+    path: /search/{key}
     defaults: { _controller: WapinetBundle:Gist:search, key: null }
     requirements:
         key: "[a-zA-Z0-9]+"

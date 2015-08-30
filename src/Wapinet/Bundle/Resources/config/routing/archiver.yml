@@ -1,36 +1,36 @@
 archiver_index:
-    pattern: /
+    path: /
     defaults: { _controller: WapinetBundle:Archiver:index }
 
 archiver_create:
-    pattern: /create
+    path: /create
     defaults: { _controller: WapinetBundle:Archiver:create }
 
 archiver_extract:
-    pattern: /extract
+    path: /extract
     defaults: { _controller: WapinetBundle:Archiver:extract }
 
 archiver_edit:
-    pattern: /edit/{archive}
+    path: /edit/{archive}
     defaults: { _controller: WapinetBundle:Archiver:edit }
     requirements:
         archive: "archive[a-z0-9]+"
 
 archiver_delete_file:
-    pattern: /delete/{archive}/{name}
+    path: /delete/{archive}/{name}
     defaults: { _controller: WapinetBundle:Archiver:deleteFile }
     methods: [POST]
     requirements:
         archive: "archive[a-z0-9]+"
 
 archiver_download_file:
-    pattern: /download/{archive}/{name}
+    path: /download/{archive}/{name}
     defaults: { _controller: WapinetBundle:Archiver:downloadFile }
     requirements:
         archive: "archive[a-z0-9]+"
 
 archiver_download:
-    pattern: /download/{archive}.zip
+    path: /download/{archive}.zip
     defaults: { _controller: WapinetBundle:Archiver:download }
     requirements:
         archive: "archive[a-z0-9]+"

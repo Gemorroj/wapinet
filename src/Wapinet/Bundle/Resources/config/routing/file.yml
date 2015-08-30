@@ -1,93 +1,93 @@
 file_index:
-    pattern: /
+    path: /
     defaults: { _controller: WapinetBundle:File:index }
 
 file_information:
-    pattern: /information
+    path: /information
     defaults: { _controller: WapinetBundle:File:information }
 
 file_statistic:
-    pattern: /statistic
+    path: /statistic
     defaults: { _controller: WapinetBundle:File:statistic }
 
 file_upload:
-    pattern: /upload
+    path: /upload
     defaults: { _controller: WapinetBundle:File:upload }
 
 file_edit:
-    pattern: /edit/{id}
+    path: /edit/{id}
     defaults: { _controller: WapinetBundle:File:edit }
     requirements:
         id: \d+
 
 file_accept:
-    pattern: /accept/{id}
+    path: /accept/{id}
     defaults: { _controller: WapinetBundle:File:accept }
     requirements:
         id: \d+
 
 file_delete:
-    pattern: /delete/{id}
+    path: /delete/{id}
     defaults: { _controller: WapinetBundle:File:delete }
     methods: [POST]
     requirements:
         id: \d+
 
 file_search:
-    pattern: /search/{key}
+    path: /search/{key}
     defaults: { _controller: WapinetBundle:File:search, key: null }
     requirements:
         key: "[a-zA-Z0-9]+"
 
 file_hidden:
-    pattern: /hidden
+    path: /hidden
     defaults: { _controller: WapinetBundle:File:hidden }
 
 file_tags:
-    pattern: /tags
+    path: /tags
     defaults: { _controller: WapinetBundle:File:tags }
 
 file_tag:
-    pattern: /tags/{tagName}
+    path: /tags/{tagName}
     defaults: { _controller: WapinetBundle:File:tag }
     requirements:
         tagName: ".+"
 
 file_tags_search:
-    pattern: /tags_search
+    path: /tags_search
     defaults: { _controller: WapinetBundle:File:tagsSearch, _format: json }
 
 file_user:
-    pattern: /users/{username}
+    path: /users/{username}
     defaults: { _controller: WapinetBundle:File:user }
     requirements:
         username: ".+"
 
 file_categories:
-    pattern: /categories
+    path: /categories
     defaults: { _controller: WapinetBundle:File:categories }
 
 file_list:
-    pattern: /list/{date}/{category}
+    path: /list/{date}/{category}
     defaults: { _controller: WapinetBundle:File:list, date: all, category: null }
     requirements:
         date: (all|today|yesterday)
         category: (video|audio|image|text|office|archive|android|java)
 
 file_view:
-    pattern: /{id}
+    path: /{id}
     defaults: { _controller: WapinetBundle:File:view }
     requirements:
         id: \d+
 
 file_archive_download_file:
-    pattern: /{id}/download/{name}
+    path: /{id}/download/{name}
     defaults: { _controller: WapinetBundle:File:archiveDownloadFile }
     requirements:
         id: \d+
 
 file_swiper:
-    pattern: /swiper/{id}
+    path: /swiper/{id}
     defaults: { _controller: WapinetBundle:File:swiper }
     requirements:
         id: \d+

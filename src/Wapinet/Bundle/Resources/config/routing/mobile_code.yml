@@ -1,79 +1,79 @@
 mobile_code_index:
-    pattern: /
+    path: /
     defaults: { _controller: WapinetBundle:MobileCode:index }
 
 mobile_code_all_phones:
-    pattern: /all_phones
+    path: /all_phones
     defaults: { _controller: WapinetBundle:MobileCode:allPhones }
 
 mobile_code_android:
-    pattern: /android
+    path: /android
     defaults: { _controller: WapinetBundle:MobileCode:android }
 
 mobile_code_iphone:
-    pattern: /iphone
+    path: /iphone
     defaults: { _controller: WapinetBundle:MobileCode:iphone }
 
 mobile_code_alcatel:
-    pattern: /alcatel
+    path: /alcatel
     defaults: { _controller: WapinetBundle:MobileCode:alcatel }
 
 mobile_code_bosch:
-    pattern: /bosch
+    path: /bosch
     defaults: { _controller: WapinetBundle:MobileCode:bosch }
 
 mobile_code_ericsson:
-    pattern: /ericsson
+    path: /ericsson
     defaults: { _controller: WapinetBundle:MobileCode:ericsson }
 
 mobile_code_lg:
-    pattern: /lg
+    path: /lg
     defaults: { _controller: WapinetBundle:MobileCode:lg }
 
 mobile_code_maxon:
-    pattern: /maxon
+    path: /maxon
     defaults: { _controller: WapinetBundle:MobileCode:maxon }
 
 mobile_code_motorola:
-    pattern: /motorola
+    path: /motorola
     defaults: { _controller: WapinetBundle:MobileCode:motorola }
 
 mobile_code_nokia:
-    pattern: /nokia
+    path: /nokia
     defaults: { _controller: WapinetBundle:MobileCode:nokia }
 
 mobile_code_panasonic:
-    pattern: /panasonic
+    path: /panasonic
     defaults: { _controller: WapinetBundle:MobileCode:panasonic }
 
 mobile_code_pantech:
-    pattern: /pantech
+    path: /pantech
     defaults: { _controller: WapinetBundle:MobileCode:pantech }
 
 mobile_code_philips:
-    pattern: /philips
+    path: /philips
     defaults: { _controller: WapinetBundle:MobileCode:philips }
 
 mobile_code_sagem:
-    pattern: /sagem
+    path: /sagem
     defaults: { _controller: WapinetBundle:MobileCode:sagem }
 
 mobile_code_samsung:
-    pattern: /samsung
+    path: /samsung
     defaults: { _controller: WapinetBundle:MobileCode:samsung }
 
 mobile_code_siemens:
-    pattern: /siemens
+    path: /siemens
     defaults: { _controller: WapinetBundle:MobileCode:siemens }
 
 mobile_code_sim_card:
-    pattern: /sim_card
+    path: /sim_card
     defaults: { _controller: WapinetBundle:MobileCode:simCard }
 
 mobile_code_sony_ericsson:
-    pattern: /sony_ericsson
+    path: /sony_ericsson
     defaults: { _controller: WapinetBundle:MobileCode:sonyEricsson }
 
 mobile_code_mitsubishi_trium:
-    pattern: /mitsubishi_trium
+    path: /mitsubishi_trium
     defaults: { _controller: WapinetBundle:MobileCode:mitsubishiTrium }

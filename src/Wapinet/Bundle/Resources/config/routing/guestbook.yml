@@ -1,9 +1,9 @@
 guestbook_index:
-    pattern: /
+    path: /
     defaults: { _controller: WapinetBundle:Guestbook:index }
 
 guestbook_add:
-    pattern: /add
+    path: /add
     defaults: { _controller: WapinetBundle:Guestbook:add }
     methods: [POST]
 

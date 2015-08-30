@@ -1,14 +1,14 @@
 siza_index:
-    pattern: /
+    path: /
     defaults: { _controller: WapinetBundle:Siza:index }
 
 siza_search:
-    pattern: /search
+    path: /search
     defaults: { _controller: WapinetBundle:Siza:search }
 
 
 siza_search_list:
-    pattern: /search/{searchId}
+    path: /search/{searchId}
     defaults: { _controller: WapinetBundle:Siza:searchList }
     requirements:
         searchId: \d+
