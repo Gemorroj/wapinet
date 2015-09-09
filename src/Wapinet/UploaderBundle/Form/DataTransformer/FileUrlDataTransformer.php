@@ -45,7 +45,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
     {
         if ($fileDataFromDb instanceof File) {
             return array(
-                'web_path' => \str_replace('\\', '//', \mb_substr($fileDataFromDb->getPathName(), \mb_strlen($this->container->get('kernel')->getWebDir()))),
+                'web_path' => \str_replace('\\', '//', \mb_substr($fileDataFromDb->getPathname(), \mb_strlen($this->container->get('kernel')->getWebDir()))),
                 'file_url' => $fileDataFromDb
             );
         } elseif ($fileDataFromDb instanceof FileContent) {

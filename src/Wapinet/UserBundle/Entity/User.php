@@ -6,6 +6,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 use FOS\MessageBundle\Model\ParticipantInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Intl\Intl;
 
 /**
  * User
@@ -161,7 +162,7 @@ class User extends BaseUser implements ParticipantInterface
     public function getCountryName()
     {
         if (null !== $this->getCountry()) {
-            return \Symfony\Component\Intl\Intl::getRegionBundle()->getCountryName($this->getCountry());
+            return Intl::getRegionBundle()->getCountryName($this->getCountry());
         }
 
         return null;

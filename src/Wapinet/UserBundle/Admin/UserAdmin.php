@@ -98,7 +98,7 @@ class UserAdmin extends Admin
     }
 
     /**
-     * Перед обновлением
+     * {@inheritdoc}
      */
     public function preUpdate($user)
     {

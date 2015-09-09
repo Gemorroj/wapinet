@@ -27,6 +27,7 @@ use Wapinet\Bundle\Form\Type\File\PasswordType;
 use Wapinet\Bundle\Form\Type\File\SearchType;
 use Wapinet\Bundle\Form\Type\File\UploadType;
 use Wapinet\UserBundle\Entity\User;
+use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 
 /**
  * @see http://wap4file.org
@@ -78,7 +79,7 @@ class FileController extends Controller
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    $key = \uniqid();
+                    $key = \uniqid('', false);
                     $session->set('file_search', array(
                         'key' => $key,
                         'data' => $data
@@ -705,7 +706,7 @@ class FileController extends Controller
 
             try {
                 $acl = $aclProvider->findAcl($objectIdentity);
-            } catch (\Symfony\Component\Security\Acl\Exception\AclNotFoundException $e) {
+            } catch (AclNotFoundException $e) {
                 $acl = $aclProvider->createAcl($objectIdentity);
             }
 

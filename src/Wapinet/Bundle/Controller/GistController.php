@@ -21,6 +21,7 @@ use Wapinet\Bundle\Form\Type\Gist\AddType;
 use Wapinet\Bundle\Form\Type\Gist\EditType;
 use Wapinet\Bundle\Form\Type\Gist\SearchType;
 use Wapinet\UserBundle\Entity\User;
+use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 
 class GistController extends Controller
 {
@@ -141,7 +142,7 @@ class GistController extends Controller
 
         try {
             $acl = $aclProvider->findAcl($objectIdentity);
-        } catch (\Symfony\Component\Security\Acl\Exception\AclNotFoundException $e) {
+        } catch (AclNotFoundException $e) {
             $acl = $aclProvider->createAcl($objectIdentity);
         }
 
@@ -215,7 +216,7 @@ class GistController extends Controller
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    $key = \uniqid();
+                    $key = \uniqid('', false);
                     $session->set('gist_search', array(
                         'key' => $key,
                         'data' => $data

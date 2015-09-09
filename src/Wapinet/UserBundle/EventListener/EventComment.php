@@ -4,6 +4,7 @@ namespace Wapinet\UserBundle\EventListener;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use FOS\CommentBundle\Events as Event;
 use FOS\CommentBundle\Event\CommentEvent;
+use Wapinet\CommentBundle\Entity\Comment;
 use Wapinet\UserBundle\Entity\Event as EntityEvent;
 use Doctrine\Orm\EntityManager;
 use Wapinet\UserBundle\Entity\User;
@@ -39,7 +40,9 @@ class EventComment implements EventSubscriberInterface
      */
     public function create(CommentEvent $event)
     {
+        /** @var Comment $comment */
         $comment = $event->getComment();
+        /** @var Comment $parentComment */
         $parentComment = $comment->getParent();
         if (null === $parentComment) {
             return;

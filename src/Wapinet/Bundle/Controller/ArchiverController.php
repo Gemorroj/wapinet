@@ -249,7 +249,7 @@ class ArchiverController extends Controller
      */
     protected function generateArchiveName()
     {
-        return uniqid('archive');
+        return uniqid('archive', false);
     }
 
     /**

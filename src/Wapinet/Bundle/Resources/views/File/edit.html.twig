@@ -18,13 +18,14 @@
 
             Autocomplete.text('{{ path('file_tags_search') }}', '#{{ form.tags_string.vars.id }}');
 
-            $('#upload-password').change(function () {
+            var $uploadPassword = $('#upload-password');
+            $uploadPassword.change(function () {
                 $('#upload-password-row').slideToggle();
                 $('#{{ form.tags_string.vars.id }}').parent().parent().slideToggle();
             });
 
             {% if file.password is not null %}
-                $('#upload-password').click();
+            $uploadPassword.click();
             {% endif %}
         });
     {% endautoescape %}</script>
