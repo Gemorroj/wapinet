@@ -401,6 +401,10 @@ class FileController extends Controller
 
         $entry = $tmpDir . \DIRECTORY_SEPARATOR . \str_replace('\\', '/', $path);
 
+        if (null === $path) {
+            throw $this->createNotFoundException('Не указан файл для скачивания.');
+        }
+
         if (!\file_exists($entry)) {
             $file = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->find($id);
             if (null === $file) {
