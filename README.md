@@ -16,6 +16,15 @@
 `web/static/avatar`  
 `web/static/file`  
 
+### Установка p7zip:
+    cd /root/p7zip_15.09_sources
+    curl -L  http://downloads.sourceforge.net/project/p7zip/p7zip/15.09/p7zip_15.09_src_all.tar.bz2 > p7zip_15.09_src_all.tar.bz2
+    tar xjvf p7zip_15.09_src_all.tar.bz2
+    cd p7zip_15.09
+изменить в файле install.sh переменную DEST_HOME на /root/p7zip_15.09_build
+    make all3
+    ./install.sh
+
 
 ### Установка FFmpeg:
 Делаем все как указано по ссылке [https://trac.ffmpeg.org/wiki/CompilationGuide/Centos](https://trac.ffmpeg.org/wiki/CompilationGuide/Centos).  
