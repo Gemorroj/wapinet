@@ -28,7 +28,7 @@ class MassMedia
     public function getRt()
     {
         $curl = $this->container->get('curl');
-        $curl->init('http://russian.rt.com/rss/');
+        $curl->init('https://russian.rt.com/rss/');
         $curl->addCompression();
 
         $response = $curl->exec();
@@ -77,7 +77,7 @@ class MassMedia
     public function getInotv()
     {
         $curl = $this->container->get('curl');
-        $curl->init('http://russian.rt.com/inotv/s/rss/main.rss');
+        $curl->init('https://russian.rt.com/inotv/s/rss/main.rss');
         $curl->addCompression();
 
         $response = $curl->exec();
