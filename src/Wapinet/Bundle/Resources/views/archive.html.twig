@@ -9,6 +9,12 @@
             <li class="directory" data-icon="false">
                 <a href="#" class="no-link">{{ pathView }}</a>
             </li>
+        {% elseif entry.isEncrypted %}
+            <li data-icon="lock">
+                <a href="#">{{ pathView }}
+                    <span class="ui-li-count">{{ entry.size|wapinet_size }}</span>
+                </a>
+            </li>
         {% else %}
             <li>
                 <a href="{{ path('file_archive_download_file', {'id': file.id, 'name': entry.path|basename, 'path': entry.path}) }}">{{ pathView }}
@@ -17,7 +23,7 @@
             </li>
         {% endif %}
 
-        {% else %}
+    {% else %}
         <li>
             Не удается открыть архив.
         </li>
