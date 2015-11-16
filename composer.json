@@ -22,7 +22,7 @@
         "sonata-project/admin-bundle": "~2.3",
         "sonata-project/core-bundle": "~2.3",
         "sonata-project/doctrine-orm-admin-bundle": "~2.3",
-        "friendsofsymfony/comment-bundle": "dev-master",
+        "friendsofsymfony/comment-bundle": "~2.0@dev",
         "friendsofsymfony/message-bundle": "dev-master",
         "white-october/pagerfanta-bundle": "~1.0",
         "james-heinrich/getid3": "dev-master",
