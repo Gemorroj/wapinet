@@ -405,7 +405,9 @@ class FileController extends Controller
             throw $this->createNotFoundException('Не указан файл для скачивания.');
         }
 
-        if (!\file_exists($entry)) {
+        $filesystem = $this->get('filesystem');
+
+        if (!$filesystem->exists($entry)) {
             $file = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->find($id);
             if (null === $file) {
                 throw $this->createNotFoundException('Файл не найден.');
@@ -414,6 +416,7 @@ class FileController extends Controller
             $archive = $this->get('archive_7z');
 
             $archive->extractEntry($file->getFile(), $path, $tmpDir);
+            $filesystem->chmod($entry, 0644);
         }
 
         $file = new BinaryFileResponse($entry);
