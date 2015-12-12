@@ -34,7 +34,7 @@
         "tufanbarisyildirim/php-apk-parser": "dev-master",
         "geoip2/geoip2": "~2.3",
         "christeredvartsen/php-bittorrent": "~1.1",
-        "gemorroj/phpwhois": "dev-master",
+        "simple-updates/phpwhois": "dev-master",
         "gemorroj/archive7z": "dev-master",
         "gemorroj/xbbcode": "dev-master",
         "gemorroj/syntax": "dev-master",

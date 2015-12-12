@@ -1,6 +1,5 @@
 .idea/
 web/bundles/
-app/bootstrap*
 app/cache/*
 app/tmp/*
 app/logs/*
