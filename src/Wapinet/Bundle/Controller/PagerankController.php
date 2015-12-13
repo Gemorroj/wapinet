@@ -119,15 +119,17 @@ class PagerankController extends Controller
         $out = 'N/A';
         try {
             $response = $curl->exec();
+            file_put_contents('/pages.html', $response->getContent());
             /*
             <div id="resultStats">345,000 results</div>
             <div id="resultStats">About 345,000 results</div>
+            <div class="sd" id="resultStats">About 120,000 results</div>
              */
 
             if (\strpos($response->getContent(), 'did not match any documents')) {
                 $out = '0';
             } else {
-                \preg_match('/<div id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
+                \preg_match('/<div(?:.+)id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
                 if (isset($match[1])) {
                     $match[1] = \str_replace('About ', '', $match[1]);
                     $match[1] = \str_replace(' results', '', $match[1]);
@@ -159,16 +161,18 @@ class PagerankController extends Controller
         $out = 'N/A';
         try {
             $response = $curl->exec();
+            file_put_contents('/inurl.html', $response->getContent());
             /*
             <div id="resultStats">345,000 results</div>
             <div id="resultStats">About 345,000 results</div>
+            <div class="sd" id="resultStats">About 7,720 results</div>
              */
 
 
             if (\strpos($response->getContent(), 'did not match any documents')) {
                 $out = '0';
             } else {
-                \preg_match('/<div id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
+                \preg_match('/<div(?:.+)id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
                 if (isset($match[1])) {
                     $match[1] = \str_replace('About ', '', $match[1]);
                     $match[1] = \str_replace(' results', '', $match[1]);
