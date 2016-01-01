@@ -110,7 +110,7 @@ class GistController extends Controller
 
                     $this->container->get('event_dispatcher')->dispatch(
                         GistEvent::GIST_ADD,
-                        new GistEvent($this->getUser(), $gist)
+                        new GistEvent($user, $gist)
                     );
                     $flashBag->add('notice', 'Сообщение успешно добавлено');
                 } else {
