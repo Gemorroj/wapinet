@@ -133,7 +133,7 @@
             <fieldset>{% block content %}{% endblock %}</fieldset>
         </div>
 
-        <div data-theme="b" data-role="footer">
+        <div data-theme="b" data-role="footer" data-position="fixed">
             {% block footer %}
                 <p class="footer-right"><a href="{{ path('about') }}">О сайте</a></p>
                 <p class="footer"><a href="{{ path('online') }}">Онлайн: {{ wapinet_online() }}</a></p>

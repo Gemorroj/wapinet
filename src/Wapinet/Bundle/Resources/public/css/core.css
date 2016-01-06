@@ -1,3 +1,9 @@
+@media (min-width: 800px) {
+    div.wapinet-logo {
+        padding: 2%;
+    }
+}
+
 div.wapinet-logo {
     display: block;
     margin-left: auto;
