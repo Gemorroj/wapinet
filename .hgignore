@@ -11,6 +11,10 @@ syntax: glob
 !app/logs/.gitkeep
 !app/tmp/.gitkeep
 
+# Binaries
+bin/*
+!bin/.gitkeep
+
 # Parameters
 /app/config/parameters.yml
 
