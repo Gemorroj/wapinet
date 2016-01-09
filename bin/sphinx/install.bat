@@ -1,1 +1,0 @@
-s:\sphinx\bin\searchd --install --config s:\OpenServer\domains\wapinet-new.loc\app\config\sphinx.conf --servicename SphinxSearch
