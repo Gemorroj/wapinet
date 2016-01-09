@@ -1,8 +1,25 @@
+syntax: glob
+
+# PHPStorm
 .idea/
-web/bundles/
-app/cache/*
-app/tmp/*
-app/logs/*
-vendor/
-composer.lock
-composer.phar
+
+# Cache and logs (Symfony2)
+/app/cache/*
+/app/logs/*
+/app/tmp/*
+!app/cache/.gitkeep
+!app/logs/.gitkeep
+!app/tmp/.gitkeep
+
+# Parameters
+/app/config/parameters.yml
+
+# Managed by Composer
+/app/bootstrap.php.cache
+/vendor/
+
+# Assets
+/web/bundles/
+
+# Composer PHAR
+/composer.phar
