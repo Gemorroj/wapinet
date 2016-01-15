@@ -126,7 +126,9 @@ class ArchiverController extends Controller
         $path = $request->get('path');
         $archiveDirectory = $this->checkArchiveDirectory($archive);
 
-        $file = new BinaryFileResponse($this->checkFile($archiveDirectory, $path, false));
+        $file = new BinaryFileResponse(
+            $this->get('file')->checkFile($archiveDirectory, $path, false)
+        );
 
         $file->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
@@ -148,7 +150,7 @@ class ArchiverController extends Controller
         $path = $request->get('path');
         $archiveDirectory = $this->checkArchiveDirectory($archive);
 
-        $file = $this->checkFile($archiveDirectory, $path, true);
+        $file = $this->get('file')->checkFile($archiveDirectory, $path, true);
 
         $this->get('filesystem')->remove($file);
 

@@ -3,6 +3,8 @@ namespace Wapinet\Bundle\Helper\File;
 
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wapinet\Bundle\Entity\File as DataFile;
 use Wapinet\Bundle\Entity\Tag;
 
@@ -136,5 +138,33 @@ class File
     {
         $file->removeSalt();
         $file->setPassword(null);
+    }
+
+
+
+    /**
+     * @param string $directory
+     * @param string $path
+     * @param bool $allowDirectory
+     * @throws AccessDeniedException|NotFoundHttpException
+     * @return string
+     */
+    public function checkFile($directory, $path, $allowDirectory = false)
+    {
+        if (false !== \strpos($path, '../') || \strpos($path, '..\\')) {
+            throw new AccessDeniedException('Запрещен доступ: "' . $path . '"".');
+        }
+
+        $file = \realpath($directory . \DIRECTORY_SEPARATOR . $path);
+
+        if (false === $file) {
+            throw new NotFoundHttpException('Файл не найден: "' . $path . '"".');
+        }
+
+        if (true !== $allowDirectory && true === \is_dir($allowDirectory)) {
+            throw new AccessDeniedException('Запрещен доступ: "' . $path . '"".');
+        }
+
+        return $file;
     }
 }

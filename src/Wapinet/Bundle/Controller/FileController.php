@@ -400,11 +400,11 @@ class FileController extends Controller
         $path = $request->get('path');
         $tmpDir = $this->get('kernel')->getTmpFileDir();
 
-        $entry = $tmpDir . \DIRECTORY_SEPARATOR . \str_replace('\\', '/', $path);
-
         if (null === $path) {
             throw $this->createNotFoundException('Не указан файл для скачивания.');
         }
+
+        $entry = $tmpDir . \DIRECTORY_SEPARATOR . $path;
 
         $filesystem = $this->get('filesystem');
 
@@ -420,7 +420,9 @@ class FileController extends Controller
             $filesystem->chmod($entry, 0644);
         }
 
-        $file = new BinaryFileResponse($entry);
+        $file = new BinaryFileResponse(
+            $this->get('file')->checkFile($tmpDir, $path, true)
+        );
 
         $file->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
