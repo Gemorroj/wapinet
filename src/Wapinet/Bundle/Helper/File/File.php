@@ -151,7 +151,7 @@ class File
      */
     public function checkFile($directory, $path, $allowDirectory = false)
     {
-        if (false !== \strpos($path, '../') || \strpos($path, '..\\')) {
+        if (false !== \strpos($path, '../') || false !== \strpos($path, '..\\')) {
             throw new AccessDeniedException('Запрещен доступ: "' . $path . '"".');
         }
 
