@@ -31,8 +31,8 @@
 Дополнительно ставим `theora`, `libfaac`, `amr`. Не забываем указать в конфиге `--prefix="$build_directory"`, а для `theora` еще и `--with-ogg="$HOME/ffmpeg_build" --disable-shared`.  
 В конце проверить что на всех директориях выше и самих бинарниках есть права на выполнение.
 
-    build_directory="/root/ffmpeg_25_10_2015_build"
-    sources_directory="/root/ffmpeg_25_10_2015_sources"
+    build_directory="/root/ffmpeg_17_01_2016_build"
+    sources_directory="/root/ffmpeg_17_01_2016_sources"
     PATH="$build_directory/bin:$PATH"
     
     cd $sources_directory
@@ -57,7 +57,7 @@
     cd $sources_directory
     git clone --depth 1 git://git.videolan.org/x264
     cd x264
-    ./configure --prefix="$build_directory" --bindir="$build_directory/bin" --enable-static
+    PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure --prefix="$build_directory" --bindir="$build_directory/bin" --enable-static
     make
     make install
     make distclean
@@ -153,8 +153,8 @@
     make distclean
     
     cd $sources_directory
-    git clone --depth 1 -b release/2.8 git://source.ffmpeg.org/ffmpeg
-    cd ffmpeg
+    git clone --depth 1 -b release/2.8 https://github.com/FFmpeg/FFmpeg.git
+    cd FFmpeg
     PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure --prefix="$build_directory" --extra-cflags="-I$build_directory/include" --extra-ldflags="-L$build_directory/lib" --bindir="$build_directory/bin" --pkg-config-flags="--static" --enable-gpl --enable-nonfree --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-libfaac --enable-libopencore-amrwb --enable-libopencore-amrnb --enable-libtheora --enable-version3
     make
     make install

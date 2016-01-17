@@ -693,7 +693,7 @@ class File implements \Serializable
      */
     public function is3gp()
     {
-        return ('video/3gpp' === $this->getMimeType());
+        return ('video/3gpp' === $this->getMimeType() || 'video/3gpp2' === $this->getMimeType());
     }
 
     /**
