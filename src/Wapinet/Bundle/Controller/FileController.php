@@ -397,7 +397,7 @@ class FileController extends Controller
      */
     public function archiveDownloadFileAction(Request $request, $id, $name)
     {
-        $path = $request->get('path');
+        $path = \str_replace('\\', '/', $request->get('path'));
         $tmpDir = $this->get('kernel')->getTmpFileDir();
 
         if (null === $path) {

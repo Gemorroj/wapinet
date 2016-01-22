@@ -141,7 +141,6 @@ class File
     }
 
 
-
     /**
      * @param string $directory
      * @param string $path
@@ -151,7 +150,9 @@ class File
      */
     public function checkFile($directory, $path, $allowDirectory = false)
     {
-        if (false !== \strpos($path, '../') || false !== \strpos($path, '..\\')) {
+        $path = \str_replace('\\', '/', $path);
+
+        if (false !== \strpos($path, '../')) {
             throw new AccessDeniedException('Запрещен доступ: "' . $path . '"".');
         }
 
