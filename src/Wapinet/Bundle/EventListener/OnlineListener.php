@@ -1,5 +1,5 @@
 <?php
-namespace Wapinet\Bundle\Listener;
+namespace Wapinet\Bundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;

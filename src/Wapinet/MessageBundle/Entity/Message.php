@@ -43,4 +43,15 @@ class Message extends BaseMessage
      * @var MessageMetadata
      */
     protected $metadata;
+
+
+    /**
+     * Get the collection of MessageMetadata.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMetadata()
+    {
+        return $this->getAllMetadata();
+    }
 }

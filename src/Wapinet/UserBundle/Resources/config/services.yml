@@ -1,57 +1,42 @@
 services:
     wapinet_user.profile.form.type:
         class: Wapinet\UserBundle\Form\Type\ProfileType
-        arguments: [%fos_user.model.user.class%, @service_container]
+        arguments: ["%fos_user.model.user.class%", "@service_container"]
         tags:
             - { name: form.type, alias: wapinet_user_profile }
 
-    wapinet_user.admin.user:
-        class: Wapinet\UserBundle\Admin\UserAdmin
-        arguments: [null, Wapinet\UserBundle\Entity\User, SonataAdminBundle:CRUD]
-        calls:
-            - [setUserManager, ["@fos_user.user_manager"]]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Пользователи, label: Пользователи }
-
-    wapinet_user.admin.panel:
-        class: Wapinet\UserBundle\Admin\PanelAdmin
-        arguments: [null, Wapinet\UserBundle\Entity\Panel, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Пользователи, label: Меню }
-
-    wapinet_user.admin.subscriber:
-        class: Wapinet\UserBundle\Admin\SubscriberAdmin
-        arguments: [null, Wapinet\UserBundle\Entity\Subscriber, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Пользователи, label: Подписки }
-
     wapinet_user.event.message:
         class: Wapinet\UserBundle\EventListener\EventMessage
-        arguments: [@fos_message.message_manager, @doctrine.orm.entity_manager, @router]
+        arguments: ["@fos_message.message_manager", "@doctrine.orm.entity_manager", "@router"]
         tags:
             - { name: kernel.event_subscriber }
 
     wapinet_user.event.comment:
         class: Wapinet\UserBundle\EventListener\EventComment
-        arguments: [@doctrine.orm.entity_manager]
+        arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: kernel.event_subscriber }
 
     wapinet_user.listener.last_activity:
             class: Wapinet\UserBundle\EventListener\ListenerLastActivity
-            arguments: [@service_container, @doctrine.orm.entity_manager]
+            arguments: ["@service_container", "@doctrine.orm.entity_manager"]
             tags:
                 - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
 
     wapinet_user.friend.twig_extension:
         class: Wapinet\UserBundle\Twig\Extension\Friend
-        arguments: [@doctrine.orm.entity_manager]
+        arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - {name: twig.extension, alias: wapinet_user_friend}
 
     wapinet_user.event.friends:
         class: Wapinet\UserBundle\EventListener\EventFriends
-        arguments: [@doctrine.orm.entity_manager, @router]
+        arguments: ["@doctrine.orm.entity_manager", "@router"]
         tags:
             - { name: kernel.event_subscriber }
 
+    wapinet_user.event.easy_admin:
+        class: Wapinet\UserBundle\EventListener\EasyAdminSubscriber
+        arguments: ["@fos_user.user_manager"]
+        tags:
+            - { name: kernel.event_subscriber }

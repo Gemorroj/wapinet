@@ -1,12 +1,12 @@
 services:
     wapinet_message.new_thread.form.type:
         class: Wapinet\MessageBundle\Form\Type\NewThreadMessageFormType
-        arguments: [%fos_message.thread_class%]
+        arguments: ["%fos_message.thread_class%"]
         tags:
             - { name: form.type, alias: wapinet_message_new_thread }
     wapinet_message.reply.form.type:
         class: Wapinet\MessageBundle\Form\Type\ReplyMessageFormType
-        arguments: [%fos_message.thread_class%]
+        arguments: ["%fos_message.thread_class%"]
         tags:
             - { name: form.type, alias: wapinet_message_reply }
 
@@ -15,10 +15,4 @@ services:
         public: false
         calls:
             - [setContainer, ["@service_container"]]
-        arguments: [@fos_message.thread_manager, @fos_message.message_manager, @fos_message.thread_reader, @fos_message.authorizer, @fos_message.participant_provider]
-
-    wapinet_message.admin.message:
-        class: Wapinet\MessageBundle\Admin\MessageAdmin
-        arguments: [null, Wapinet\MessageBundle\Entity\Message, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Пользователи, label: Сообщения }
+        arguments: ["@fos_message.thread_manager", "@fos_message.message_manager", "@fos_message.thread_reader", "@fos_message.authorizer", "@fos_message.participant_provider"]

@@ -20,15 +20,6 @@ wapinet_sea_private_download:
     path:  /sea_for_customers/a9267d90a1c9ebadccf3d2b582b82004
     defaults: { _controller: WapinetBundle:Default:seaDownload }
 
-admin:
-    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
-    prefix: /admin
-
-_sonata_admin:
-    resource: .
-    type: sonata_admin
-    prefix: /admin
-
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
@@ -64,3 +55,9 @@ gregwar_captcha_routing:
 
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
+
+easy_admin_bundle:
+    resource: "@EasyAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /admin

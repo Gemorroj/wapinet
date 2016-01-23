@@ -45,6 +45,7 @@ class FileUrlType extends AbstractType
         $builder->add('file', 'file', array('attr' => $attrFile, 'label' => false, 'required' => false));
         $builder->add('url', 'url', array('attr' => array('placeholder' => 'Ссылка'), 'label' => false, 'required' => false));
 
+
         if ($options['delete_button']) {
             $builder->add('file_url_delete', 'checkbox', array(
                 'attr' => array('data-mini' => 'true'),

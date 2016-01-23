@@ -1,7 +1,7 @@
 services:
     wapinet_uploader.type.file_url:
         class: Wapinet\UploaderBundle\Form\Type\FileUrlType
-        arguments: [@service_container]
+        arguments: ["@service_container"]
         tags:
             - { name: form.type, alias: file_url }
 
@@ -17,4 +17,4 @@ services:
 
     wapinet_uploader.delete_file:
         class: Wapinet\UploaderBundle\Helper\DeleteFile
-        arguments: [@request_stack, @vich_uploader.property_mapping_factory]
+        arguments: ["@request_stack", "@vich_uploader.property_mapping_factory"]

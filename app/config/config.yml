@@ -11,7 +11,7 @@ parameters:
 
 framework:
     #esi:             ~
-    translator:      { fallbacks: ["%locale%"] }
+    translator:      { fallbacks: ["%locale%", "en"] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -89,23 +89,6 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
-
-
-sonata_admin:
-    title:      "%wapinet_title%"
-    templates:
-        layout:  ::admin.html.twig
-
-
-sonata_block:
-    default_contexts: [cms]
-    blocks:
-        sonata.admin.block.admin_list:
-            contexts:   [admin]
-
-        sonata.block.service.text:
-        sonata.block.service.rss:
-
 fos_user:
     db_driver: orm
     firewall_name: main
@@ -158,12 +141,6 @@ fos_message:
     reply_form:
         type: wapinet_message.reply.form.type
 
-knp_menu:
-    twig:  # use "twig: false" to disable the Twig extension and the TwigRenderer
-        template: knp_menu.html.twig
-    templating: false # if true, enables the helper for PHP templates
-    default_renderer: twig # The renderer to use, list is also available by default
-
 vich_uploader:
     db_driver: orm
     mappings:
@@ -201,3 +178,175 @@ php_ffmpeg:
     ffprobe_binary: %wapinet_ffprobe_path%
     threads_count: %wapinet_ffmpeg_threads_count%
 
+
+easy_admin:
+    site_name: "%wapinet_title%"
+    entities:
+        News:
+            label: 'Новости'
+            class: Wapinet\Bundle\Entity\News
+            list:
+                fields:
+                    - { property: 'subject', label: 'Заголовок' }
+                    - { property: 'createdAt', label: 'Дата создания' }
+                    - { property: 'updatedAt', label: 'Дата обновления' }
+            form:
+                fields:
+                    - { property: 'subject', label: 'Заголовок' }
+                    - { property: 'body', label: 'Содержание' }
+        Users:
+            disabled_actions: ['new']
+            label: 'Пользователи'
+            class: Wapinet\UserBundle\Entity\User
+            list:
+                fields:
+                    - { property: 'username', label: 'Логин' }
+                    - { property: 'avatarName', label: 'Аватар', type: 'image', template: 'avatar' }
+                    - { property: 'email', label: 'Email' }
+                    - { property: 'roles', label: 'Роли' }
+                    - { property: 'createdAt', label: 'Дата создания' }
+                    - { property: 'lastActivity', label: 'Дата последней активности' }
+            form:
+                fields:
+                    - { property: 'username', label: 'Логин' }
+                    - { property: 'enabled', label: 'Активен', type_options: {required: false} }
+                    - { property: 'locked', label: 'Заблокирован', type_options: {required: false} }
+                    - { property: 'email', label: 'Email', type: 'email' }
+                    - { property: 'roles', label: 'Роли', type: 'choice', type_options: { expanded: true, multiple: true, choices: {ROLE_SUPER_ADMIN: 'Админ', ROLE_ADMIN: 'Модератор', ROLE_USER: 'Пользователь'} } }
+                    - { property: 'sex', label: 'Пол', type: 'choice', type_options: {choices: {m: 'Мужской', f: 'Женский'}, required: false} }
+                    - { property: 'birthday', label: 'День рождения', type: 'birthday', type_options: {required: false} }
+                    - { property: 'timezone', label: 'Временная зона', type: 'timezone', type_options: {required: false} }
+                    - { property: 'info', label: 'Дополнительная информация', type: 'textarea', type_options: {required: false} }
+                    - { property: 'avatar', label: 'Аватар', type: 'file_url', type_options: {delete_button: true, label: false, required: false, accept: 'image/*'} }
+        Subscribers:
+            disabled_actions: ['new']
+            label: 'Подписки'
+            class: Wapinet\UserBundle\Entity\Subscriber
+            list:
+                fields:
+                    - { property: 'user', label: 'Пользователь' }
+                    - { property: 'emailComments', label: 'Комментарии'}
+                    - { property: 'emailMessages', label: 'Сообщения' }
+                    - { property: 'emailNews', label: 'Новости' }
+                    - { property: 'emailFriends', label: 'События друзей' }
+            form:
+                fields:
+                    - { property: 'emailComments', label: 'Комментарии'}
+                    - { property: 'emailMessages', label: 'Сообщения' }
+                    - { property: 'emailNews', label: 'Новости' }
+                    - { property: 'emailFriends', label: 'События друзей' }
+        Panel:
+            disabled_actions: ['new']
+            label: 'Панель'
+            class: Wapinet\UserBundle\Entity\Panel
+            list:
+                fields:
+                    - { property: 'user', label: 'Пользователь' }
+                    - { property: 'forum', label: 'Форум'}
+                    - { property: 'guestbook', label: 'Гостевая' }
+                    - { property: 'gist', label: 'Блоги' }
+                    - { property: 'file', label: 'Файлообменник' }
+                    - { property: 'archiver', label: 'Архиватор' }
+                    - { property: 'proxy', label: 'Анонимайзер' }
+                    - { property: 'downloads', label: 'Развлечения' }
+                    - { property: 'utilities', label: 'Утилиты' }
+                    - { property: 'programming', label: 'WEB мастерская' }
+            form:
+                fields:
+                    - { property: 'forum', label: 'Форум'}
+                    - { property: 'guestbook', label: 'Гостевая' }
+                    - { property: 'gist', label: 'Блоги' }
+                    - { property: 'file', label: 'Файлообменник' }
+                    - { property: 'archiver', label: 'Архиватор' }
+                    - { property: 'proxy', label: 'Анонимайзер' }
+                    - { property: 'downloads', label: 'Развлечения' }
+                    - { property: 'utilities', label: 'Утилиты' }
+                    - { property: 'programming', label: 'WEB мастерская' }
+        Messages:
+            disabled_actions: ['new']
+            label: 'Сообщения'
+            class: Wapinet\MessageBundle\Entity\Message
+            list:
+                fields:
+                    - { property: 'sender', label: 'Пользователь' }
+                    - { property: 'createdAt', label: 'Дата создания' }
+                    - { property: 'body', label: 'Сообщение' }
+            form:
+                fields:
+                    - { property: 'body', label: 'Сообщение', type: 'textarea', type_options: {required: true} }
+        Comments:
+            disabled_actions: ['new']
+            label: 'Комментарии'
+            class: Wapinet\CommentBundle\Entity\Comment
+            list:
+                fields:
+                    - { property: 'author', label: 'Пользователь' }
+                    - { property: 'createdAt', label: 'Дата создания' }
+                    - { property: 'body', label: 'Комментарий' }
+                    - { property: 'score', label: 'Понравилось' }
+            form:
+                fields:
+                    - { property: 'body', label: 'Комментарий', type: 'textarea', type_options: {required: true} }
+                    - { property: 'score', label: 'Понравилось' }
+        Files:
+            disabled_actions: ['new']
+            label: 'Файлы'
+            class: Wapinet\Bundle\Entity\File
+            list:
+                fields:
+                    - { property: 'originalFileName', label: 'Имя файла' }
+                    - { property: 'createdAt', label: 'Дата создания' }
+                    - { property: 'user', label: 'Пользователь' }
+                    - { property: 'mimeType', label: 'MIME тип' }
+                    - { property: 'fileSize', label: 'Размер' }
+                    - { property: 'description', label: 'Описание' }
+                    - { property: 'countViews', label: 'Просмотров' }
+                    - { property: 'password', label: 'Пароль', type: 'boolean' }
+                    - { property: 'hidden', label: 'Скрыт' }
+            form:
+                fields:
+                    - { property: 'originalFileName', label: 'Имя файла' }
+                    - { property: 'mimeType', label: 'MIME тип' }
+                    - { property: 'description', label: 'Описание', type: 'textarea' }
+                    #- { property: 'meta', label: 'Данные', type_options: { read_only: true, required: false } }
+                    - { property: 'tags', label: 'Тэги', type_options: { required: false } }
+                    - { property: 'countViews', label: 'Просмотров' }
+                    - { property: 'hidden', label: 'Скрыт', type_options: {required: false} }
+        Tags:
+            disabled_actions: ['new']
+            label: 'Тэги'
+            class: Wapinet\Bundle\Entity\Tag
+            list:
+                fields:
+                    - { property: 'name', label: 'Имя' }
+                    - { property: 'createdAt', label: 'Дата создания' }
+                    - { property: 'count', label: 'Использовано раз' }
+            form:
+                fields:
+                    - { property: 'name', label: 'Имя' }
+                    - { property: 'count', label: 'Использовано раз' }
+        Gists:
+            disabled_actions: ['new']
+            label: 'Блоги'
+            class: Wapinet\Bundle\Entity\Gist
+            list:
+                fields:
+                    - { property: 'user', label: 'Пользователь' }
+                    - { property: 'createdAt', label: 'Дата создания' }
+                    - { property: 'subject', label: 'Тема' }
+            form:
+                fields:
+                    - { property: 'subject', label: 'Тема' }
+                    - { property: 'body', label: 'Сообщение' }
+        Guestbook:
+            disabled_actions: ['new']
+            label: 'Гостевая'
+            class: Wapinet\Bundle\Entity\Guestbook
+            list:
+                fields:
+                    - { property: 'user', label: 'Пользователь' }
+                    - { property: 'createdAt', label: 'Дата создания' }
+                    - { property: 'message', label: 'Сообщение' }
+            form:
+                fields:
+                    - { property: 'message', label: 'Сообщение', type: 'textarea' }

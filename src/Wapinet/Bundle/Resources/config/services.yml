@@ -6,13 +6,13 @@ services:
 
     wapinet.bbcode.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Bbcode
-        arguments: [@router.request_context]
+        arguments: ["@router.request_context"]
         tags:
             - {name: twig.extension, alias: wapinet_bbcode}
 
     wapinet.date.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Date
-        arguments: [@timezone]
+        arguments: ["@timezone"]
         tags:
             - {name: twig.extension, alias: wapinet_date}
 
@@ -28,85 +28,85 @@ services:
 
     wapinet.geoip2.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Geoip2
-        arguments: [@geoip2]
+        arguments: ["@geoip2"]
         tags:
             - {name: twig.extension, alias: wapinet_geoip2}
 
     wapinet.video.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Video
-        arguments: [@service_container]
+        arguments: ["@service_container"]
         tags:
             - {name: twig.extension, alias: wapinet_video}
 
     wapinet.audio.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Audio
-        arguments: [@service_container]
+        arguments: ["@service_container"]
         tags:
             - {name: twig.extension, alias: wapinet_audio}
 
     wapinet.java_app.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\JavaApp
-        arguments: [@service_container]
+        arguments: ["@service_container"]
         tags:
             - {name: twig.extension, alias: wapinet_java_app}
 
     wapinet.android_app.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\AndroidApp
-        arguments: [@service_container]
+        arguments: ["@service_container"]
         tags:
             - {name: twig.extension, alias: wapinet_android_app}
 
     wapinet.archive.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Archive
-        arguments: [@service_container]
+        arguments: ["@service_container"]
         tags:
             - {name: twig.extension, alias: wapinet_archive}
 
     wapinet.torrent.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Torrent
-        arguments: [@service_container]
+        arguments: ["@service_container"]
         tags:
             - {name: twig.extension, alias: wapinet_torrent}
 
     wapinet.playlist.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Playlist
-        arguments: [@service_container]
+        arguments: ["@service_container"]
         tags:
             - {name: twig.extension, alias: wapinet_playlist}
 
     wapinet.online.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Online
-        arguments: [@doctrine.orm.entity_manager]
+        arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - {name: twig.extension, alias: wapinet_online}
 
     wapinet.breadcrumbs.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Breadcrumbs
-        arguments: [@service_container]
+        arguments: ["@service_container"]
         tags:
             - {name: twig.extension, alias: wapinet_breadcrumbs}
 
     wapinet.panel.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Panel
-        arguments: [@service_container]
+        arguments: ["@service_container"]
         tags:
             - {name: twig.extension, alias: wapinet_panel}
 
     wapinet.file.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\File
-        arguments: [@service_container, @doctrine.orm.entity_manager]
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
         tags:
             - {name: twig.extension, alias: wapinet_file}
 
     wapinet.guestbook.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Guestbook
-        arguments: [@doctrine.orm.entity_manager]
+        arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - {name: twig.extension, alias: wapinet_guestbook}
 
     wapinet.gist.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Gist
-        arguments: [@doctrine.orm.entity_manager]
+        arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - {name: twig.extension, alias: wapinet_gist}
 
@@ -117,13 +117,13 @@ services:
 
     wapinet.forum.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\Forum
-        arguments: [@service_container, @doctrine.orm.entity_manager]
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
         tags:
             - {name: twig.extension, alias: wapinet_forum}
 
     online.listener:
-        class: Wapinet\Bundle\Listener\OnlineListener
-        arguments: [@doctrine.orm.entity_manager]
+        class: Wapinet\Bundle\EventListener\OnlineListener
+        arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
 
@@ -132,37 +132,37 @@ services:
 
     mime:
         class: Wapinet\Bundle\Helper\Mime
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     timezone:
         class: Wapinet\Bundle\Helper\Timezone
-        arguments: [@security.token_storage]
+        arguments: ["@security.token_storage"]
 
     file:
         class: Wapinet\Bundle\Helper\File\File
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     file_meta:
         class: Wapinet\Bundle\Helper\File\Meta
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     curl:
         class: Wapinet\Bundle\Helper\Curl
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     translit:
         class: Wapinet\Bundle\Helper\Translit
 
     paginate:
         class: Wapinet\Bundle\Helper\Paginate
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     getid3:
         class: Wapinet\Bundle\Helper\Getid3
 
     geoip2:
         class: Wapinet\Bundle\Helper\Geoip2
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     bot_checker:
         class: Wapinet\Bundle\Helper\BotChecker
@@ -184,100 +184,68 @@ services:
 
     php_validator:
         class: Wapinet\Bundle\Helper\PhpValidator
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     apk:
         class: Wapinet\Bundle\Helper\Apk
 
     weather:
         class: Wapinet\Bundle\Helper\Weather
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     rates:
         class: Wapinet\Bundle\Helper\Rates
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     horoscope:
         class: Wapinet\Bundle\Helper\Horoscope
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     mass_media:
         class: Wapinet\Bundle\Helper\MassMedia
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     bash:
         class: Wapinet\Bundle\Helper\Bash
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     siza:
         class: Wapinet\Bundle\Helper\Siza
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     sphinx:
         class: Wapinet\Bundle\Helper\Sphinx
-        arguments: [@service_container]
+        arguments: ["@service_container"]
         scope: prototype
 
     archive_zip:
         class: Wapinet\Bundle\Helper\Archiver\ArchiveZip
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     archive_rar:
         class: Wapinet\Bundle\Helper\Archiver\ArchiveRar
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     archive_7z:
         class: Wapinet\Bundle\Helper\Archiver\Archive7z
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     torrent:
         class: Wapinet\Bundle\Helper\Torrent
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     playlist:
         class: Wapinet\Bundle\Helper\Playlist
-        arguments: [@service_container]
-
-    wapinet.admin.guestbook:
-        class: Wapinet\Bundle\Admin\GuestbookAdmin
-        arguments: [null, Wapinet\Bundle\Entity\Guestbook, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Гостевая, label: Гостевая }
-
-    wapinet.admin.gist:
-        class: Wapinet\Bundle\Admin\GistAdmin
-        arguments: [null, Wapinet\Bundle\Entity\Gist, SonataAdminBundle:CRUD]
-        calls:
-            - [setCommentHelper, ["@wapinet_comment.helper"]]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Блоги, label: Блоги }
-
-    wapinet.admin.file:
-        class: Wapinet\Bundle\Admin\FileAdmin
-        arguments: [null, Wapinet\Bundle\Entity\File, SonataAdminBundle:CRUD]
-        calls:
-            - [setFileHelper, ["@file"]]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Файлы, label: Файлы }
-
-    wapinet.admin.tag:
-        class: Wapinet\Bundle\Admin\TagAdmin
-        arguments: [null, Wapinet\Bundle\Entity\Tag, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Файлы, label: Тэги }
-
-    wapinet.admin.news:
-        class: Wapinet\Bundle\Admin\NewsAdmin
-        arguments: [~, Wapinet\Bundle\Entity\News, SonataAdminBundle:CRUD]
-        calls:
-            - [setContainer, ["@service_container"]]
-            - [setCommentHelper, ["@wapinet_comment.helper"]]
-        tags:
-            - {name: sonata.admin, manager_type: orm, group: Новости, label: Новости}
+        arguments: ["@service_container"]
 
     wapinet.twig_extension:
         class: Wapinet\Bundle\Twig\Extension\News
-        arguments: [@service_container, @doctrine.orm.entity_manager]
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
         tags:
             - {name: twig.extension, alias: news}
 
+    wapinet.event.easy_admin:
+        class: Wapinet\Bundle\EventListener\EasyAdminSubscriber
+        arguments: ["@service_container"]
+        tags:
+            - { name: kernel.event_subscriber }

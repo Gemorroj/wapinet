@@ -43,4 +43,13 @@ class Thread extends BaseThread
      * @var ThreadMetadata[]|\Doctrine\Common\Collections\Collection
      */
     protected $metadata;
+
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getSubject();
+    }
 }

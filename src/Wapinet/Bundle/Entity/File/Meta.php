@@ -44,4 +44,18 @@ class Meta
 
         return $this;
     }
+
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        $out = '';
+        foreach ($this->meta as $key => $value) {
+            $out .= $key . ': ' . $value . "\n";
+        }
+
+        return $out;
+    }
 }

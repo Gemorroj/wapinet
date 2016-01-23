@@ -35,4 +35,13 @@ class MessageMetadata extends BaseMessageMetadata
      * @var ParticipantInterface
      */
     protected $participant;
+
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getMessage()->getBody();
+    }
 }

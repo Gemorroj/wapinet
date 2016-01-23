@@ -1,0 +1,5 @@
+{% if item.hasAvatar %}
+    <img src="{{ vich_uploader_asset(item, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ item }}" class="image-preview" />
+{% else %}
+    <img src="{{ asset('static/noavatar.png') }}" alt="{{ item }}" class="image-preview" />
+{% endif %}

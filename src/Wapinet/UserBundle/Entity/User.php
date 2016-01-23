@@ -436,6 +436,21 @@ class User extends BaseUser implements ParticipantInterface
         return $this->lastActivity;
     }
 
+    /**
+     * @return \DateTime|null
+     */
+    public function getExpiresAt()
+    {
+        return $this->expiresAt;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getCredentialsExpireAt()
+    {
+        return $this->credentialsExpireAt;
+    }
 
     /**
      * return bool
