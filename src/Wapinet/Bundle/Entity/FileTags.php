@@ -93,12 +93,35 @@ class FileTags
         return $this;
     }
 
-
     /**
      * @return string
      */
     public function __toString()
     {
         return $this->getTag()->getName();
+    }
+
+    public function setPrePersistValue()
+    {
+        $tag = $this->getTag();
+        $tag->setCount($tag->getCount() + 1);
+
+        return $this;
+    }
+
+    public function setPreUpdateValue()
+    {
+        $tag = $this->getTag();
+        $tag->setCount($tag->getCount() + 1);
+
+        return $this;
+    }
+
+    public function setPreRemoveValue()
+    {
+        $tag = $this->getTag();
+        $tag->setCount($tag->getCount() - 1);
+
+        return $this;
     }
 }

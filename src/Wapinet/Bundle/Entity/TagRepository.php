@@ -74,7 +74,6 @@ class TagRepository extends EntityRepository
         $loadedNames = array();
         /** @var Tag $loadedTag */
         foreach ($tags as $loadedTag) {
-            $loadedTag->setCount($loadedTag->getCount() + 1);
             $loadedNames[] = $loadedTag->getName();
         }
 
@@ -83,7 +82,6 @@ class TagRepository extends EntityRepository
             foreach ($missingNames as $name) {
                 $tag = new Tag();
                 $tag->setName($name);
-                $tag->setCount(1);
 
                 $tags[] = $tag;
             }

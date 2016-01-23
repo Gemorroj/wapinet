@@ -6,6 +6,10 @@ Wapinet\Bundle\Entity\FileTags:
             type: integer
             generator:
                 strategy: AUTO
+    lifecycleCallbacks:
+        prePersist: [ setPrePersistValue ]
+        preUpdate: [ setPreUpdateValue ]
+        preRemove: [ setPreRemoveValue ]
     manyToOne:
         file:
             targetEntity: Wapinet\Bundle\Entity\File
@@ -15,12 +19,10 @@ Wapinet\Bundle\Entity\FileTags:
                 name: file_id
                 referencedColumnName: id
                 nullable: false
-    oneToOne:
         tag:
             targetEntity: Wapinet\Bundle\Entity\Tag
-            cascade: ["persist", "remove"]
+            cascade: ["persist"]
             joinColumn:
                 name: tag_id
                 referencedColumnName: id
-                onDelete: CASCADE
                 nullable: false

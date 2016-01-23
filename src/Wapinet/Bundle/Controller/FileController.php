@@ -589,8 +589,6 @@ class FileController extends Controller
         if (null !== $data->getPlainPassword()) {
             $this->get('file')->setPassword($data, $data->getPlainPassword());
             $data->setTags(new ArrayCollection());
-            // чистим старые тэги
-            $this->get('file')->cleanupFileTags($oldData);
         } else {
             $this->get('file')->removePassword($data);
         }
@@ -761,7 +759,7 @@ class FileController extends Controller
 
 
     /**
-     * TODO: отрефакторить. перенести подсчет в события FileTags (prePersist, preRemove, preUpdate)
+     * TODO: отрефакторить.
      * @param File $file
      */
     private function makeEditFileTags(File $file)
@@ -779,16 +777,6 @@ class FileController extends Controller
         });
 
         foreach ($removedFileTagsCollection as $removedFileTags) {
-            $removedTag = $removedFileTags->getTag();
-            $count = $removedTag->getCount();
-            if ($count <= 1) {
-                $manager->remove($removedTag);
-            } else {
-                $removedTag->setCount($removedTag->getCount() - 1);
-            }
-            $manager->merge($removedTag);
-
-            $removedFileTags->getTag()->setCount($removedFileTags->getTag()->getCount() - 1);
             $file->getFileTags()->removeElement($removedFileTags);
             $manager->remove($removedFileTags);
         }

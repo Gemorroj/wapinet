@@ -65,31 +65,6 @@ class File
 
         // комментарии
         $this->container->get('wapinet_comment.helper')->removeThread('file-' . $file->getId());
-
-        // тэги
-        $this->cleanupFileTags($file);
-    }
-
-    /**
-     * @param DataFile $file
-     */
-    public function cleanupFileTags(DataFile $file)
-    {
-        // тэги
-        $entityManager = $this->container->get('doctrine.orm.entity_manager');
-        /** @var FileTags $fileTags */
-        foreach ($file->getFileTags() as $fileTags) {
-            $tag = $fileTags->getTag();
-            // уменьшаем кол-во использований тэга
-            $tag->setCount($tag->getCount() - 1);
-
-            // если привязанных к тэгу файлов меньше 1, то удаляем тэг
-            if ($tag->getCount() < 1) {
-                $entityManager->remove($fileTags);
-                $entityManager->remove($tag);
-            }
-        }
-        // $entityManager->flush();
     }
 
 
