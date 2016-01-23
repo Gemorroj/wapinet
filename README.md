@@ -2,6 +2,7 @@
 
 ### Установка крон заданий:
 `php /var/www/wapinet.ru/app/console --env=prod wapinet:tmp:clear "1 day"`  
+`php /var/www/wapinet.ru/app/console --env=prod wapinet:tags:clear`  
 `php /var/www/wapinet.ru/app/console --env=prod wapinet:user:subscriber`  
 `indexer --rotate --all`  
 

@@ -32,7 +32,16 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // TODO: удалять из БД тэги с нулевым count
-        throw new \Exception('Not implemented');
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $repository = $em->getRepository('WapinetBundle:Tag');
+
+        $rows = $repository->findEmptyTags();
+        foreach ($rows as $tag) {
+            $em->remove($tag);
+        }
+
+        $em->flush();
+
+        $output->writeln('Deleted ' . \count($rows) . ' tags.');
     }
 }

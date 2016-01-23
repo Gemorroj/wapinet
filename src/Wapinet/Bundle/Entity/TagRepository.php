@@ -89,4 +89,16 @@ class TagRepository extends EntityRepository
 
         return new ArrayCollection($tags);
     }
+
+
+    /**
+     * @return Tag[]
+     */
+    public function findEmptyTags()
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.count = 0')
+            ->getQuery()
+            ->getResult();
+    }
 }
