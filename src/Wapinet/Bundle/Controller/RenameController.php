@@ -19,7 +19,7 @@ class RenameController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $form = $this->createForm(new RenameType());
+        $form = $this->createForm(RenameType::class);
 
         try {
             $form->handleRequest($request);

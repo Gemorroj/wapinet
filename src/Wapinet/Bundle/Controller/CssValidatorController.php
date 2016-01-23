@@ -17,7 +17,7 @@ class CssValidatorController extends Controller
     public function indexAction(Request $request)
     {
         $result = null;
-        $form = $this->createForm(new CssValidatorType());
+        $form = $this->createForm(CssValidatorType::class);
 
         try {
             $form->handleRequest($request);

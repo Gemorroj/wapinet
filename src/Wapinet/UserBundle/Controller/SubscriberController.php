@@ -27,7 +27,7 @@ class SubscriberController extends Controller
             throw $this->createAccessDeniedException('Вы должны быть авторизованы');
         }
 
-        $form = $this->createForm(new SubscriberType());
+        $form = $this->createForm(SubscriberType::class);
         $form->setData($user->getSubscriber());
 
         try {

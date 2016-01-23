@@ -90,11 +90,13 @@ Wapinet\Bundle\Entity\File:
                 referencedColumnName: id
                 onDelete: CASCADE
                 nullable: true
-
-    manyToMany:
-        tags:
-            targetEntity: Wapinet\Bundle\Entity\Tag
-            cascade: ["persist"]
-            orphanRemoval: true
-            orderBy:
-                count: DESC
+    oneToMany:
+        fileTags:
+            targetEntity: Wapinet\Bundle\Entity\FileTags
+            cascade: ["persist", "remove"]
+            mappedBy: file
+            joinColumn:
+                name: file_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false

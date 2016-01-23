@@ -34,7 +34,7 @@ class ArchiverController extends Controller
      */
     public function createAction(Request $request)
     {
-        $form = $this->createForm(new AddType());
+        $form = $this->createForm(AddType::class);
 
         try {
             $form->handleRequest($request);
@@ -67,7 +67,7 @@ class ArchiverController extends Controller
      */
     public function editAction(Request $request, $archive)
     {
-        $form = $this->createForm(new AddType());
+        $form = $this->createForm(AddType::class);
         $archiveDirectory = $this->checkArchiveDirectory($archive);
 
         try {
@@ -190,7 +190,7 @@ class ArchiverController extends Controller
      */
     public function extractAction(Request $request)
     {
-        $form = $this->createForm(new AddType());
+        $form = $this->createForm(AddType::class);
 
         try {
             $form->handleRequest($request);

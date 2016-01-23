@@ -17,7 +17,7 @@ class UnicodeController extends Controller
     public function indexAction(Request $request)
     {
         $result = null;
-        $form = $this->createForm(new UnicodeType());
+        $form = $this->createForm(UnicodeType::class);
 
         try {
             $form->handleRequest($request);

@@ -92,7 +92,7 @@ class IcqController extends Controller
         $result = null;
         $variables = null;
 
-        $form = $this->createForm(new RegistrationType());
+        $form = $this->createForm(RegistrationType::class);
         try {
             $form->handleRequest($request);
 
@@ -238,7 +238,7 @@ class IcqController extends Controller
     {
         $result = null;
 
-        $form = $this->createForm(new UserInfoType());
+        $form = $this->createForm(UserInfoType::class);
 
         try {
             $form->handleRequest($request);

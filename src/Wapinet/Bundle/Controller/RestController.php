@@ -13,7 +13,7 @@ class RestController extends Controller
     public function indexAction(Request $request)
     {
         $result = null;
-        $form = $this->createForm(new RestType());
+        $form = $this->createForm(RestType::class);
         try {
             $form->handleRequest($request);
 

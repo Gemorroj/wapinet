@@ -11,19 +11,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class EditType extends AbstractType
 {
     /**
-     * @var string
-     */
-    protected $tagsString;
-
-    /**
-     * @param string $tagsString
-     */
-    public function __construct($tagsString)
-    {
-        $this->tagsString = $tagsString;
-    }
-
-    /**
      * @var FormBuilderInterface $builder
      * @var array                $options
      */
@@ -36,10 +23,10 @@ class EditType extends AbstractType
 
         // http://view.jquerymobile.com/1.3.2/dist/demos/widgets/autocomplete/autocomplete-remote.html
         // тэги
-        $builder->add('tags_string', 'text', array('data' => $this->tagsString, 'required' => false, 'label' => 'Тэги через запятую', 'mapped' => false));
+        $builder->add('tags', 'tags', array('required' => false, 'label' => 'Тэги через запятую'));
 
 
-        $builder->add('password', 'password', array('required' => false, 'label' => 'Пароль', 'attr' => array('autocomplete' => 'off')));
+        $builder->add('plainPassword', 'password', array('required' => false, 'label' => 'Пароль', 'attr' => array('autocomplete' => 'off')));
 
         $builder->add('submit', 'submit', array('label' => 'Загрузить'));
     }

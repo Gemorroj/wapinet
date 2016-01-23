@@ -20,6 +20,8 @@ use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wapinet\Bundle\Entity\File;
+use Wapinet\Bundle\Entity\FileTags;
+use Wapinet\Bundle\Entity\Tag;
 use Wapinet\Bundle\Event\FileEvent;
 use Wapinet\Bundle\Exception\FileDuplicatedException;
 use Wapinet\Bundle\Form\Type\File\EditType;
@@ -69,7 +71,7 @@ class FileController extends Controller
     public function searchAction(Request $request, $key = null)
     {
         $page = $request->get('page', 1);
-        $form = $this->createForm(new SearchType());
+        $form = $this->createForm(SearchType::class);
         $pagerfanta = null;
         $session = $this->get('session');
 
@@ -363,7 +365,7 @@ class FileController extends Controller
     public function passwordAction(File $file)
     {
         $encoder = $this->get('security.encoder_factory')->getEncoder($file);
-        $form = $this->createForm(new PasswordType());
+        $form = $this->createForm(PasswordType::class);
         $request = $this->get('request_stack')->getCurrentRequest();
 
         try {
@@ -510,21 +512,17 @@ class FileController extends Controller
     {
         $this->denyAccessUnlessGranted('EDIT', $file);
 
+        $this->get('file')->copyFileTagsToTags($file);
 
-        $fileHelper = $this->get('file');
-        $tagsString = $fileHelper->joinTagNames($file->getTags());
-
-        $form = $this->createForm(new EditType($tagsString));
-        $form->setData($file);
+        $oldFile = clone $file;
+        $form = $this->createForm(EditType::class, $file);
 
         try {
             $form->handleRequest($request);
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
-                    $newFile = $form->getData();
-                    $tagsString = $form['tags_string']->getData();
-                    $this->editFileData($request, $file, $newFile, $tagsString);
+                    $this->editFileData($request, $form->getData(), $oldFile);
 
                     $url = $this->generateUrl('file_view', array('id' => $file->getId()), Router::ABSOLUTE_URL);
 
@@ -557,17 +555,14 @@ class FileController extends Controller
     /**
      * @param Request $request
      * @param File    $data
-     * @param File    $newData
-     * @param string $tagsString
+     * @param File    $oldData
      * @throws FileDuplicatedException
      * @return File
      */
-    protected function editFileData(Request $request, File $data, File $newData, $tagsString = null)
+    protected function editFileData(Request $request, File $data, File $oldData)
     {
-        $oldData = clone $data;
-
         /** @var UploadedFile|null $file */
-        $file = $newData->getFile();
+        $file = $data->getFile();
         if (null !== $file) {
             $hash = \md5_file($file->getPathname());
 
@@ -590,28 +585,24 @@ class FileController extends Controller
         }
 
         $data->setUpdatedAtValue();
-        $data->setTags(new ArrayCollection());
 
-        if (null !== $newData->getPassword()) {
-            $this->get('file')->setPassword($data, $newData->getPassword());
+        if (null !== $data->getPlainPassword()) {
+            $this->get('file')->setPassword($data, $data->getPlainPassword());
+            $data->setTags(new ArrayCollection());
+            // чистим старые тэги
+            $this->get('file')->cleanupFileTags($oldData);
         } else {
             $this->get('file')->removePassword($data);
-
-            // тэги только у незапароленых файлов
-            $this->saveTags($data, $tagsString);
         }
+        $this->makeEditFileTags($data);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->merge($data);
 
+        // если заменен файл
         if (null !== $file) {
-            // файл и кэш
+            // чистим старый файл и кэш
             $this->get('file')->cleanupFile($oldData);
-        } else {
-            // если файлу задали пароль, чистим старые тэги
-            if (null !== $newData->getPassword()) {
-                $this->get('file')->cleanupFileTags($oldData);
-            }
         }
 
         $entityManager->flush();
@@ -626,7 +617,7 @@ class FileController extends Controller
      */
     public function uploadAction(Request $request)
     {
-        $form = $this->createForm(new UploadType($this->container));
+        $form = $this->createForm(UploadType::class);
 
         try {
             $form->handleRequest($request);
@@ -635,9 +626,7 @@ class FileController extends Controller
                 if ($form->isValid()) {
                     $this->get('bot_checker')->checkRequest($request);
 
-                    $data = $form->getData();
-                    $tagsString = $form['tags_string']->getData();
-                    $file = $this->saveFileData($request, $data, $tagsString);
+                    $file = $this->saveFileData($request, $form->getData());
 
                     // просмотр файла авторизованными пользователями
                     if ($this->isGranted('ROLE_USER')) {
@@ -688,22 +677,6 @@ class FileController extends Controller
 
     /**
      * @param File $file
-     * @param string $tagsString
-     */
-    protected function saveTags(File $file, $tagsString = null)
-    {
-        if (null !== $tagsString) {
-            $tagManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Tag');
-            $fileHelper = $this->get('file');
-            $tagsArray = $fileHelper->splitTagNames($tagsString);
-            $tagsObjectArray = $tagManager->loadOrCreateTags($tagsArray, $file);
-            $file->setTags($tagsObjectArray);
-        }
-    }
-
-
-    /**
-     * @param File $file
      * @see http://symfony.com/doc/current/cookbook/security/acl.html
      */
     protected function saveFileAcl(File $file)
@@ -733,11 +706,10 @@ class FileController extends Controller
     /**
      * @param Request $request
      * @param File    $data
-     * @param string $tagsString
      * @throws FileDuplicatedException
      * @return File
      */
-    protected function saveFileData(Request $request, File $data, $tagsString = null)
+    protected function saveFileData(Request $request, File $data)
     {
         /** @var UploadedFile $file */
         $file = $data->getFile();
@@ -759,19 +731,19 @@ class FileController extends Controller
         $data->setIp($request->getClientIp());
         $data->setBrowser($request->headers->get('User-Agent', ''));
 
-        if (null !== $data->getPassword()) {
+        if (null !== $data->getPlainPassword()) {
+            $data->setFileTags(new ArrayCollection()); // не задаем тэги для запароленых файлов
             $data->setSaltValue();
 
             $encoder = $this->get('security.encoder_factory')->getEncoder($data);
-            $password = $encoder->encodePassword($data->getPassword(), $data->getSalt());
+            $password = $encoder->encodePassword($data->getPlainPassword(), $data->getSalt());
             $data->setPassword($password);
 
             // Запароленные файлы не скрываем
             $data->setHidden(false);
-        } else {
-            // тэги только у незапароленых файлов
-            $this->saveTags($data, $tagsString);
         }
+
+        $this->makeFileTags($data);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($data);
@@ -785,6 +757,76 @@ class FileController extends Controller
         );
 
         return $data;
+    }
+
+
+    /**
+     * TODO: отрефакторить. перенести подсчет в события FileTags (prePersist, preRemove, preUpdate)
+     * @param File $file
+     */
+    private function makeEditFileTags(File $file)
+    {
+        $manager = $this->getDoctrine()->getManager();
+
+        // удаляем из коллекции устаревшие тэги
+        $removedFileTagsCollection = $file->getFileTags()->filter(function (FileTags $oldFileTags) use ($file) {
+            foreach ($file->getTags() as $newTag) {
+                if ($newTag == $oldFileTags->getTag()) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        foreach ($removedFileTagsCollection as $removedFileTags) {
+            $removedTag = $removedFileTags->getTag();
+            $count = $removedTag->getCount();
+            if ($count <= 1) {
+                $manager->remove($removedTag);
+            } else {
+                $removedTag->setCount($removedTag->getCount() - 1);
+            }
+            $manager->merge($removedTag);
+
+            $removedFileTags->getTag()->setCount($removedFileTags->getTag()->getCount() - 1);
+            $file->getFileTags()->removeElement($removedFileTags);
+            $manager->remove($removedFileTags);
+        }
+
+        // Находим добавленные тэги, которых не было в коллекции
+        $newTagsCollection = $file->getTags()->filter(function (Tag $newTag) use ($file) {
+            foreach ($file->getFileTags() as $fileTags) {
+                if ($newTag == $fileTags->getTag()) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        foreach ($newTagsCollection as $newTag) {
+            $file->getFileTags()->add(
+                (new FileTags())->setTag($newTag)->setFile($file)
+            );
+        }
+    }
+
+
+    /**
+     * @param File $file
+     */
+    private function makeFileTags(File $file)
+    {
+        $tags = $file->getTags();
+
+        $fileTags = new ArrayCollection();
+        /** @var Tag $tag */
+        foreach ($tags as $tag) {
+            $fileTags->add(
+                (new FileTags())->setTag($tag)->setFile($file)
+            );
+        }
+
+        $file->setFileTags($fileTags);
     }
 
 

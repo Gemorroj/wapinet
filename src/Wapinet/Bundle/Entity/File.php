@@ -53,6 +53,10 @@ class File implements \Serializable
      */
     protected $password;
     /**
+     * @var string|null
+     */
+    protected $plainPassword;
+    /**
      * @var string
      */
     protected $mimeType;
@@ -87,6 +91,10 @@ class File implements \Serializable
     /**
      * @var ArrayCollection
      */
+    protected $fileTags;
+    /**
+     * @var ArrayCollection
+     */
     protected $tags;
     /**
      * @var boolean
@@ -98,6 +106,7 @@ class File implements \Serializable
      */
     public function __construct()
     {
+        $this->fileTags = new ArrayCollection();
         $this->tags = new ArrayCollection();
     }
 
@@ -203,22 +212,47 @@ class File implements \Serializable
     }
 
     /**
-     * Get tags
+     * Get fileTags
+     *
+     * @return ArrayCollection
+     */
+    public function getFileTags()
+    {
+        return $this->fileTags ?: new ArrayCollection();
+    }
+
+    /**
+     * Set fileTags
+     *
+     * @param ArrayCollection $fileTags
+     * @return File
+     */
+    public function setFileTags(ArrayCollection $fileTags)
+    {
+        $this->fileTags = $fileTags;
+
+        return $this;
+    }
+
+    /**
+     * Get Tags
+     * Использовать только для отображения. В БД этого поля нет.
      *
      * @return ArrayCollection
      */
     public function getTags()
     {
-        return $this->tags;
+        return $this->tags ?: new ArrayCollection();
     }
 
     /**
-     * Set tags
+     * Set Tags
+     * Использовать только для отображения. В БД этого поля нет.
      *
      * @param ArrayCollection $tags
      * @return File
      */
-    public function setTags(ArrayCollection $tags)
+    public function setTags(ArrayCollection $tags = null)
     {
         $this->tags = $tags;
 
@@ -384,6 +418,25 @@ class File implements \Serializable
     public function setSaltValue()
     {
         $this->salt = \base_convert(\sha1(\uniqid(\mt_rand(), true)), 16, 36);
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string|null $plainPassword
+     * @return File
+     */
+    public function setPlainPassword($plainPassword = null)
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }

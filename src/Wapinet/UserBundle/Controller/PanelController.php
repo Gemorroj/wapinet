@@ -27,7 +27,7 @@ class PanelController extends Controller
             throw $this->createAccessDeniedException('Вы должны быть авторизованы');
         }
 
-        $form = $this->createForm(new PanelType());
+        $form = $this->createForm(PanelType::class);
         $form->setData($user->getPanel());
 
         try {

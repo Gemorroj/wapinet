@@ -46,7 +46,7 @@ class SizaController extends Controller
      */
     public function searchAction(Request $request)
     {
-        $form = $this->createForm(new SearchType());
+        $form = $this->createForm(SearchType::class);
 
         try {
             $form->handleRequest($request);

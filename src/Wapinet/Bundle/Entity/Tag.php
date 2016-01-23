@@ -19,10 +19,6 @@ class Tag
      */
     protected $name;
     /**
-     * @var ArrayCollection
-     */
-    protected $files;
-    /**
      * @var int
      */
     protected $count = 0;
@@ -34,15 +30,6 @@ class Tag
      * @var \DateTime|null
      */
     protected $updatedAt;
-
-
-    /**
-     * Конструктор
-     */
-    public function __construct()
-    {
-        $this->files = new ArrayCollection();
-    }
 
 
     /**
@@ -110,29 +97,6 @@ class Tag
     public function setName($name)
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get file
-     *
-     * @return ArrayCollection
-     */
-    public function getFiles()
-    {
-        return $this->files;
-    }
-
-    /**
-     * Set file
-     *
-     * @param ArrayCollection $files
-     * @return Tag
-     */
-    public function setFiles(ArrayCollection $files)
-    {
-        $this->files = $files;
 
         return $this;
     }

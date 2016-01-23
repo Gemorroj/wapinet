@@ -58,37 +58,23 @@ class TagRepository extends EntityRepository
 
 
     /**
-     * Loads or creates multiples tags from a list of tag names
-     *
      * @param array  $names   Array of tag names
-     * @param File $file
      * @return ArrayCollection
      */
-    public function loadOrCreateTags(array $names, File $file)
+    public function makeTags(array $names)
     {
-        if (empty($names) || null !== $file->getPassword()) {
-            return new ArrayCollection();
+        if (empty($names)) {
+            return null;
         }
 
         $names = \array_unique($names);
 
-        $builder = $this->createQueryBuilder('t');
-
-        $tags = $builder
-            ->where($builder->expr()->in('t.name', $names))
-
-            ->getQuery()
-            ->getResult()
-        ;
+        $tags = $this->findBy(array('name' => $names));
 
         $loadedNames = array();
         /** @var Tag $loadedTag */
         foreach ($tags as $loadedTag) {
-            if (false === $loadedTag->getFiles()->contains($file)) {
-                $loadedTag->getFiles()->add($file);
-                $loadedTag->setCount($loadedTag->getCount() + 1);
-            }
-
+            $loadedTag->setCount($loadedTag->getCount() + 1);
             $loadedNames[] = $loadedTag->getName();
         }
 
@@ -97,7 +83,6 @@ class TagRepository extends EntityRepository
             foreach ($missingNames as $name) {
                 $tag = new Tag();
                 $tag->setName($name);
-                $tag->setFiles(new ArrayCollection(array($file)));
                 $tag->setCount(1);
 
                 $tags[] = $tag;

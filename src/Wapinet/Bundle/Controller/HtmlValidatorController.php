@@ -17,7 +17,7 @@ class HtmlValidatorController extends Controller
     public function indexAction(Request $request)
     {
         $result = null;
-        $form = $this->createForm(new HtmlValidatorType());
+        $form = $this->createForm(HtmlValidatorType::class);
 
         try {
             $form->handleRequest($request);

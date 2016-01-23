@@ -18,7 +18,7 @@ class TranslateController extends Controller
     {
         $result = null;
         $detectLangName = null;
-        $form = $this->createForm(new TranslateType());
+        $form = $this->createForm(TranslateType::class);
 
         try {
             $form->handleRequest($request);

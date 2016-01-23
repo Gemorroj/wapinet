@@ -17,7 +17,7 @@ class PagerankController extends Controller
     public function indexAction(Request $request)
     {
         $result = null;
-        $form = $this->createForm(new PagerankType());
+        $form = $this->createForm(PagerankType::class);
 
         try {
             $form->handleRequest($request);

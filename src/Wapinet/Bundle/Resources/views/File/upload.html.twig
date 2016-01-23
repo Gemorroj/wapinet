@@ -15,11 +15,11 @@
                 return FileLoader.uploadFile(this);
             });
 
-            Autocomplete.text('{{ path('file_tags_search') }}', '#{{ form.tags_string.vars.id }}');
+            Autocomplete.text('{{ path('file_tags_search') }}', '#{{ form.tags.vars.id }}');
 
             $('#upload-password').change(function () {
                 $('#upload-password-row').slideToggle();
-                $('#{{ form.tags_string.vars.id }}').parent().parent().slideToggle();
+                $('#{{ form.tags.vars.id }}').parent().parent().slideToggle();
             });
         });
     {% endautoescape %}</script>
@@ -33,7 +33,7 @@
 
         {{ form_row(form.file) }}
         {{ form_row(form.description) }}
-        {{ form_row(form.tags_string) }}
+        {{ form_row(form.tags) }}
         <ul id="suggestions" data-role="listview" data-inset="true"></ul>
 
 
@@ -44,7 +44,7 @@
 
 
     <div id="upload-password-row" style="display: none;">
-        {{ form_widget(form.password) }}
+        {{ form_widget(form.plainPassword) }}
     </div>
     <br />
 

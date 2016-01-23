@@ -76,7 +76,7 @@ class FileUrlType extends AbstractType
      */
     public function getParent()
     {
-        return 'form';
+        return \Symfony\Component\Form\Extension\Core\Type\FormType::class;
     }
 
     /**

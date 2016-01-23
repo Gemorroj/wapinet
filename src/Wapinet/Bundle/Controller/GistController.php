@@ -31,7 +31,7 @@ class GistController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $form = $this->createForm(new AddType());
+        $form = $this->createForm(AddType::class);
         $page = $request->get('page', 1);
 
         $gistManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Gist');
@@ -52,7 +52,7 @@ class GistController extends Controller
      */
     public function userAction(Request $request, $username)
     {
-        $form = $this->createForm(new AddType());
+        $form = $this->createForm(AddType::class);
         $page = $request->get('page', 1);
 
         $userManager = $this->get('fos_user.user_manager');
@@ -86,7 +86,7 @@ class GistController extends Controller
             throw $this->createAccessDeniedException('Вы должны быть авторизованы для добавления сообщения');
         }
 
-        $form = $this->createForm(new AddType());
+        $form = $this->createForm(AddType::class);
         $flashBag = $this->get('session')->getFlashBag();
 
         try {
@@ -206,7 +206,7 @@ class GistController extends Controller
     public function searchAction(Request $request, $key = null)
     {
         $page = $request->get('page', 1);
-        $form = $this->createForm(new SearchType());
+        $form = $this->createForm(SearchType::class);
         $pagerfanta = null;
         $session = $this->get('session');
 
@@ -285,8 +285,7 @@ class GistController extends Controller
     {
         $this->denyAccessUnlessGranted('EDIT', $gist);
 
-
-        $form = $this->createForm(new EditType());
+        $form = $this->createForm(EditType::class);
         $form['body']->setData($gist->getBody());
         $form['subject']->setData($gist->getSubject());
 

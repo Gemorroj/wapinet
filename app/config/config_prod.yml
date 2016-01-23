@@ -3,7 +3,9 @@ imports:
 
 #framework:
 #    validation:
-#        cache: apc
+#        cache: validator.mapping.cache.apc
+#    serializer:
+#        cache: serializer.mapping.cache.apc
 
 #doctrine:
 #    orm:
@@ -17,8 +19,6 @@ monolog:
             type:         fingers_crossed
             action_level: error
             handler:      nested
-            excluded_404s:
-                - ^/
         nested:
             type:  stream
             path:  "%kernel.logs_dir%/%kernel.environment%.log"

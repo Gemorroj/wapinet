@@ -31,8 +31,3 @@ Wapinet\Bundle\Entity\Tag:
     lifecycleCallbacks:
         prePersist: [ setCreatedAtValue ]
         preUpdate: [ setUpdatedAtValue ]
-
-    manyToMany:
-        files:
-            targetEntity: Wapinet\Bundle\Entity\File
-

@@ -29,7 +29,7 @@ class AudioTagsController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $form = $this->createForm(new AudioTagsType());
+        $form = $this->createForm(AudioTagsType::class);
 
         try {
             $form->handleRequest($request);
@@ -79,7 +79,7 @@ class AudioTagsController extends Controller
      */
     public function editAction(Request $request, $fileName, $originalFileName)
     {
-        $form = $this->createForm(new AudioTagsEditType());
+        $form = $this->createForm(AudioTagsEditType::class);
 
         $info = $this->getInfo($fileName);
         $comments = isset($info['comments']) ? $info['comments'] : array();

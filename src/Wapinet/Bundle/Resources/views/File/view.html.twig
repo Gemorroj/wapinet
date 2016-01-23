@@ -127,10 +127,10 @@
         </fieldset>
     {% endif %}
 
-    {% if not file.tags.isEmpty %}
+    {% if not file.fileTags.isEmpty %}
         <fieldset>
-            {% for tag in file.tags %}
-                <a class="ui-btn ui-btn-inline ui-mini ui-corner-all ui-shadow" href="{{ path('file_tag', {'tagName': tag}) }}">{{ tag }}</a>
+            {% for fileTags in file.fileTags %}
+                <a class="ui-btn ui-btn-inline ui-mini ui-corner-all ui-shadow" href="{{ path('file_tag', {'tagName': fileTags.tag}) }}">{{ fileTags.tag }}</a>
             {% endfor %}
         </fieldset>
     {% endif %}

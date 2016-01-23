@@ -17,7 +17,7 @@ class PhpValidatorController extends Controller
     public function indexAction(Request $request)
     {
         $result = null;
-        $form = $this->createForm(new PhpValidatorType());
+        $form = $this->createForm(PhpValidatorType::class);
 
         try {
             $form->handleRequest($request);

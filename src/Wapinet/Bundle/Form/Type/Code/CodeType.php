@@ -3,20 +3,22 @@ namespace Wapinet\Bundle\Form\Type\Code;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Wapinet\Bundle\Helper\Code;
 
 /**
  * Code
  */
 class CodeType extends AbstractType
 {
-    protected $algorithms = array();
+    private $code;
 
     /**
-     * @param array $algorithms
+     * CodeType constructor.
+     * @param Code $code
      */
-    public function __construct(array $algorithms)
+    public function __construct(Code $code)
     {
-        $this->algorithms = $algorithms;
+        $this->code = $code;
     }
 
     /**
@@ -28,7 +30,7 @@ class CodeType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder->add('algorithm', 'choice', array(
-            'choices' => $this->algorithms,
+            'choices' => $this->code->getAlgorithms(),
             'label' => 'Алгоритм',
         ));
 

@@ -314,9 +314,9 @@ class FileRepository extends EntityRepository
     public function getTagFilesQuery(Tag $tag)
     {
         $q = $this->createQueryBuilder('f')
-            ->innerJoin('f.tags', 't')
+            ->innerJoin('f.fileTags', 'ft')
 
-            ->where('t = :tag')
+            ->where('ft.tag = :tag')
             ->setParameter('tag', $tag)
             ->andWhere('f.password IS NULL')
             ->andWhere('f.hidden = 0')

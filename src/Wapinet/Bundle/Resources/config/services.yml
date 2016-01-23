@@ -1,4 +1,10 @@
 services:
+    wapinet.type.tags:
+        class: Wapinet\Bundle\Form\Type\TagsType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: tags }
+
     pagerfanta.view.default:
         class: Wapinet\Bundle\Pagerfanta\View
         public: false
@@ -249,3 +255,33 @@ services:
         arguments: ["@service_container"]
         tags:
             - { name: kernel.event_subscriber }
+
+    wapinet.form.file.upload:
+        class: Wapinet\Bundle\Form\Type\File\UploadType
+        arguments: ["@service_container"]
+        tags:
+            - { name: form.type }
+
+    wapinet.form.email.email:
+        class: Wapinet\Bundle\Form\Type\Email\EmailType
+        arguments: ["@service_container"]
+        tags:
+            - { name: form.type }
+
+    wapinet.form.sms.sms:
+        class: Wapinet\Bundle\Form\Type\Sms\SmsType
+        arguments: ["@service_container"]
+        tags:
+            - { name: form.type }
+
+    wapinet.form.code.code:
+        class: Wapinet\Bundle\Form\Type\Code\CodeType
+        arguments: ["@code"]
+        tags:
+            - { name: form.type }
+
+    wapinet.form.hash.hash:
+        class: Wapinet\Bundle\Form\Type\Hash\HashType
+        arguments: ["@hash"]
+        tags:
+            - { name: form.type }

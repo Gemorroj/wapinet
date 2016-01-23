@@ -16,7 +16,7 @@ class GuestbookController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $form = $this->createForm(new MessageType());
+        $form = $this->createForm(MessageType::class);
 
         $page = $request->get('page', 1);
         $guestbookManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Guestbook');
@@ -36,7 +36,7 @@ class GuestbookController extends Controller
      */
     public function addAction(Request $request)
     {
-        $form = $this->createForm(new MessageType());
+        $form = $this->createForm(MessageType::class);
         $flashBag = $this->get('session')->getFlashBag();
 
         try {

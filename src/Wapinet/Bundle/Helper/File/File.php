@@ -1,11 +1,13 @@
 <?php
 namespace Wapinet\Bundle\Helper\File;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wapinet\Bundle\Entity\File as DataFile;
+use Wapinet\Bundle\Entity\FileTags;
 use Wapinet\Bundle\Entity\Tag;
 
 /**
@@ -26,36 +28,6 @@ class File
         $this->container = $container;
     }
 
-
-    /**
-     * Splits an string into an array of valid tag names
-     *
-     * @param string    $names      String of tag names
-     * @param string    $separator  Tag name separator
-     * @return array
-     */
-    public function splitTagNames($names, $separator = ',')
-    {
-        $tags = \explode($separator, $names);
-        $tags = \array_map('trim', $tags);
-        $tags = \array_filter($tags, function ($value) {
-            return !empty($value);
-        });
-
-        return \array_values($tags);
-    }
-
-    /**
-     * Splits an string into an array of valid tag names
-     *
-     * @param Collection    $tags      ArrayCollection of tags
-     * @param string   $separator  Tag name separator
-     * @return string
-     */
-    public function joinTagNames(Collection $tags, $separator = ', ')
-    {
-        return \implode($separator, $tags->toArray());
-    }
 
     /**
      * @param DataFile $file
@@ -105,18 +77,36 @@ class File
     {
         // тэги
         $entityManager = $this->container->get('doctrine.orm.entity_manager');
-        /** @var Tag $tag */
-        foreach ($file->getTags() as $tag) {
+        /** @var FileTags $fileTags */
+        foreach ($file->getFileTags() as $fileTags) {
+            $tag = $fileTags->getTag();
             // уменьшаем кол-во использований тэга
             $tag->setCount($tag->getCount() - 1);
 
             // если привязанных к тэгу файлов меньше 1, то удаляем тэг
             if ($tag->getCount() < 1) {
+                $entityManager->remove($fileTags);
                 $entityManager->remove($tag);
             }
         }
         // $entityManager->flush();
     }
+
+
+    /**
+     * @param DataFile $file
+     */
+    public function copyFileTagsToTags(DataFile $file)
+    {
+        $tagsCollection = new ArrayCollection();
+
+        foreach ($file->getFileTags() as $fileTags) {
+            $tagsCollection->add($fileTags->getTag());
+        }
+
+        $file->setTags($tagsCollection);
+    }
+
 
     /**
      * @param DataFile $file
@@ -138,6 +128,7 @@ class File
     {
         $file->removeSalt();
         $file->setPassword(null);
+        $file->setPlainPassword(null);
     }
 
 

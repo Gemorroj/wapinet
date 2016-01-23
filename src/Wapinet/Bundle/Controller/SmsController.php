@@ -16,7 +16,7 @@ class SmsController extends Controller
     public function indexAction(Request $request)
     {
         $result = null;
-        $form = $this->createForm(new SmsType($this->container));
+        $form = $this->createForm(SmsType::class);
 
         try {
             $form->handleRequest($request);

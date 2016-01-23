@@ -16,7 +16,7 @@ class PhpObfuscatorController extends Controller
     public function indexAction(Request $request)
     {
         $result = null;
-        $form = $this->createForm(new ObfuscatorType());
+        $form = $this->createForm(ObfuscatorType::class);
 
         try {
             $form->handleRequest($request);

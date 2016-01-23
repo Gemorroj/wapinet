@@ -17,7 +17,7 @@ class EmailController extends Controller
     public function indexAction(Request $request)
     {
         $result = null;
-        $form = $this->createForm(new EmailType($this->container));
+        $form = $this->createForm(EmailType::class);
 
         try {
             $form->handleRequest($request);

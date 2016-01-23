@@ -17,7 +17,7 @@ class CodeController extends Controller
     public function indexAction(Request $request)
     {
         $hash = null;
-        $form = $this->createForm(new CodeType($this->get('code')->getAlgorithms()));
+        $form = $this->createForm(CodeType::class);
 
         try {
             $form->handleRequest($request);

@@ -17,7 +17,7 @@ class HashController extends Controller
     public function indexAction(Request $request)
     {
         $hash = null;
-        $form = $this->createForm(new HashType($this->get('hash')->getAlgorithms()));
+        $form = $this->createForm(HashType::class);
 
         try {
             $form->handleRequest($request);

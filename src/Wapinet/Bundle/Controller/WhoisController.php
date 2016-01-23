@@ -13,7 +13,7 @@ class WhoisController extends Controller
     public function indexAction(Request $request)
     {
         $resultHtml = null;
-        $form = $this->createForm(new WhoisType());
+        $form = $this->createForm(WhoisType::class);
 
         try {
             $form->handleRequest($request);

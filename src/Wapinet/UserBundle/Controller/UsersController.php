@@ -21,7 +21,7 @@ class UsersController extends Controller
     public function indexAction(Request $request, $key = null)
     {
         $page = $request->get('page', 1);
-        $form = $this->createForm(new SearchType());
+        $form = $this->createForm(SearchType::class);
         $pagerfanta = null;
         $session = $this->get('session');
 
