@@ -90,14 +90,6 @@ class FileUrlType extends AbstractType
     {
         return 'file_url';
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'file_url';
-    }
 }
 
 

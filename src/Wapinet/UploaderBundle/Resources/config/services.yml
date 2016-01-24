@@ -3,7 +3,7 @@ services:
         class: Wapinet\UploaderBundle\Form\Type\FileUrlType
         arguments: ["@service_container"]
         tags:
-            - { name: form.type, alias: file_url }
+            - { name: form.type }
 
     wapinet_uploader.avatar_directory_namer:
         class: Wapinet\UploaderBundle\Naming\AvatarDirectoryNamer

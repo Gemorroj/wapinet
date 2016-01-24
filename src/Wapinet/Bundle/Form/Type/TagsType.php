@@ -4,6 +4,7 @@ namespace Wapinet\Bundle\Form\Type;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Wapinet\Bundle\Form\DataTransformer\TagsDataTransformer;
 
@@ -39,21 +40,13 @@ class TagsType extends AbstractType
      */
     public function getParent()
     {
-        return \Symfony\Component\Form\Extension\Core\Type\TextType::class;
+        return TextType::class;
     }
 
     /**
      * {@inheritdoc}
      */
     public function getBlockPrefix()
-    {
-        return 'tags';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
     {
         return 'tags';
     }

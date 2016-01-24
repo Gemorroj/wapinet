@@ -3,7 +3,7 @@ services:
         class: Wapinet\Bundle\Form\Type\TagsType
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
-            - { name: form.type, alias: tags }
+            - { name: form.type }
 
     pagerfanta.view.default:
         class: Wapinet\Bundle\Pagerfanta\View
@@ -222,7 +222,6 @@ services:
     sphinx:
         class: Wapinet\Bundle\Helper\Sphinx
         arguments: ["@service_container"]
-        scope: prototype
 
     archive_zip:
         class: Wapinet\Bundle\Helper\Archiver\ArchiveZip
