@@ -15,7 +15,7 @@ class Gist extends \Twig_Extension
 
     public function __construct(EntityManager $em)
     {
-        $this->gistRepository = $em->getRepository('Wapinet\Bundle\Entity\Gist');
+        $this->gistRepository = $em->getRepository('WapinetBundle:Gist');
     }
 
     /**

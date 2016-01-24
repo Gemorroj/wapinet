@@ -25,7 +25,7 @@ class File extends \Twig_Extension
     public function __construct(ContainerInterface $container, EntityManager $em)
     {
         $this->container = $container;
-        $this->fileRepository = $em->getRepository('Wapinet\Bundle\Entity\File');
+        $this->fileRepository = $em->getRepository('WapinetBundle:File');
     }
 
     /**

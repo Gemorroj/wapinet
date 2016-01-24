@@ -94,6 +94,6 @@ class UsersController extends Controller
             throw new \RuntimeException($client->GetLastError());
         }
 
-        return $client->getPagerfanta($result, 'Wapinet\UserBundle\Entity\User');
+        return $client->getPagerfanta($result, User::class);
     }
 }

@@ -48,7 +48,7 @@ class TagsDataTransformer implements DataTransformerInterface
 
         $tags = \array_values($tags);
 
-        $tagManager = $this->entityManager->getRepository('Wapinet\Bundle\Entity\Tag');
+        $tagManager = $this->entityManager->getRepository('WapinetBundle:Tag');
 
         return $tagManager->makeTags($tags);
     }

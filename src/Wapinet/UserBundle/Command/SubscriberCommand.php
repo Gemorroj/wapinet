@@ -31,7 +31,7 @@ class SubscriberCommand extends ContainerAwareCommand
     {
         /** @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $repository = $em->getRepository('Wapinet\UserBundle\Entity\Event');
+        $repository = $em->getRepository('WapinetUserBundle:Event');
 
         $rows = $repository->findNeedEmail();
 

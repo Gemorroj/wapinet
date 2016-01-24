@@ -41,7 +41,7 @@ class FileController extends Controller
      */
     public function indexAction()
     {
-        $comments = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->getComments();
+        $comments = $this->getDoctrine()->getRepository('WapinetBundle:File')->getComments();
         return $this->render('WapinetBundle:File:index.html.twig', array('comments' => $comments));
     }
 
@@ -58,7 +58,7 @@ class FileController extends Controller
      */
     public function statisticAction()
     {
-        $statistic = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->getStatistic();
+        $statistic = $this->getDoctrine()->getRepository('WapinetBundle:File')->getStatistic();
 
         return $this->render('WapinetBundle:File:statistic.html.twig', array('statistic' => $statistic));
     }
@@ -135,7 +135,7 @@ class FileController extends Controller
             throw new \RuntimeException($client->GetLastError());
         }
 
-        return $client->getPagerfanta($result, 'Wapinet\Bundle\Entity\File');
+        return $client->getPagerfanta($result, File::class);
     }
 
 
@@ -163,7 +163,7 @@ class FileController extends Controller
         $page = $request->get('page', 1);
 
         $query = $this->getDoctrine()
-            ->getRepository('Wapinet\Bundle\Entity\File')
+            ->getRepository('WapinetBundle:File')
             ->getHiddenQuery();
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
@@ -181,7 +181,7 @@ class FileController extends Controller
     public function tagsAction(Request $request)
     {
         $page = $request->get('page', 1);
-        $tagManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Tag');
+        $tagManager = $this->getDoctrine()->getRepository('WapinetBundle:Tag');
         $query = $tagManager->getTagsQuery();
 
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
@@ -201,14 +201,14 @@ class FileController extends Controller
     public function tagAction(Request $request, $tagName)
     {
         $page = $request->get('page', 1);
-        $tagManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Tag');
+        $tagManager = $this->getDoctrine()->getRepository('WapinetBundle:Tag');
 
         $tag = $tagManager->getTagByName($tagName);
         if (null === $tag) {
             throw $this->createNotFoundException('Тэг не найден');
         }
 
-        $fileManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File');
+        $fileManager = $this->getDoctrine()->getRepository('WapinetBundle:File');
         $query = $fileManager->getTagFilesQuery($tag);
 
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
@@ -236,7 +236,7 @@ class FileController extends Controller
             throw $this->createNotFoundException('Пользователь не найден');
         }
 
-        $tagManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File');
+        $tagManager = $this->getDoctrine()->getRepository('WapinetBundle:File');
 
         $query = $tagManager->getUserFilesQuery($user);
 
@@ -272,7 +272,7 @@ class FileController extends Controller
         }
 
         $query = $this->getDoctrine()
-            ->getRepository('Wapinet\Bundle\Entity\File')
+            ->getRepository('WapinetBundle:File')
             ->getListQuery(
                 $datetimeStart,
                 $datetimeEnd,
@@ -411,7 +411,7 @@ class FileController extends Controller
         $filesystem = $this->get('filesystem');
 
         if (!$filesystem->exists($entry)) {
-            $file = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->find($id);
+            $file = $this->getDoctrine()->getRepository('WapinetBundle:File')->find($id);
             if (null === $file) {
                 throw $this->createNotFoundException('Файл не найден.');
             }
@@ -566,7 +566,7 @@ class FileController extends Controller
         if (null !== $file) {
             $hash = \md5_file($file->getPathname());
 
-            $existingFile = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->findOneBy(array('hash' => $hash));
+            $existingFile = $this->getDoctrine()->getRepository('WapinetBundle:File')->findOneBy(array('hash' => $hash));
             if (null !== $existingFile) {
                 throw new FileDuplicatedException($existingFile, $this->container);
             }
@@ -714,7 +714,7 @@ class FileController extends Controller
 
         $hash = \md5_file($file->getPathname());
 
-        $existingFile = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File')->findOneBy(array('hash' => $hash));
+        $existingFile = $this->getDoctrine()->getRepository('WapinetBundle:File')->findOneBy(array('hash' => $hash));
         if (null !== $existingFile) {
             throw new FileDuplicatedException($existingFile, $this->container);
         }
@@ -852,7 +852,7 @@ class FileController extends Controller
      */
     public function swiperAction(File $file)
     {
-        $repository = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\File');
+        $repository = $this->getDoctrine()->getRepository('WapinetBundle:File');
 
         if (!$file->isImage()) {
             throw new \InvalidArgumentException('Просмотр возможен только для картинок.');

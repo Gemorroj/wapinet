@@ -34,7 +34,7 @@ class GistController extends Controller
         $form = $this->createForm(AddType::class);
         $page = $request->get('page', 1);
 
-        $gistManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Gist');
+        $gistManager = $this->getDoctrine()->getRepository('WapinetBundle:Gist');
         $query = $gistManager->getListQuery();
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
@@ -61,7 +61,7 @@ class GistController extends Controller
             throw $this->createNotFoundException('Пользователь не найден');
         }
 
-        $gistManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Gist');
+        $gistManager = $this->getDoctrine()->getRepository('WapinetBundle:Gist');
         $query = $gistManager->getListQuery($user);
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
@@ -270,7 +270,7 @@ class GistController extends Controller
             throw new \RuntimeException($client->GetLastError());
         }
 
-        return $client->getPagerfanta($result, 'Wapinet\Bundle\Entity\Gist');
+        return $client->getPagerfanta($result, Gist::class);
     }
 
 

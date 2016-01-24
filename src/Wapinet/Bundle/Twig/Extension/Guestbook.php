@@ -17,7 +17,7 @@ class Guestbook extends \Twig_Extension
      */
     public function __construct(EntityManager $em)
     {
-        $this->guestbookRepository = $em->getRepository('Wapinet\Bundle\Entity\Guestbook');
+        $this->guestbookRepository = $em->getRepository('WapinetBundle:Guestbook');
     }
 
     /**

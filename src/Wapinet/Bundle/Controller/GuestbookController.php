@@ -19,7 +19,7 @@ class GuestbookController extends Controller
         $form = $this->createForm(MessageType::class);
 
         $page = $request->get('page', 1);
-        $guestbookManager = $this->getDoctrine()->getRepository('Wapinet\Bundle\Entity\Guestbook');
+        $guestbookManager = $this->getDoctrine()->getRepository('WapinetBundle:Guestbook');
         $query = $guestbookManager->getListQuery();
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 

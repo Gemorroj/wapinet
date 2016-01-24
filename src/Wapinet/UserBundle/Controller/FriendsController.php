@@ -27,7 +27,7 @@ class FriendsController extends Controller
             throw $this->createNotFoundException('Пользователь не найден');
         }
 
-        $friendRepository = $this->getDoctrine()->getRepository('Wapinet\UserBundle\Entity\Friend');
+        $friendRepository = $this->getDoctrine()->getRepository('WapinetUserBundle:Friend');
         $friends = $friendRepository->getFriendsQuery($user);
         $pagerfanta = $this->get('paginate')->paginate($friends, $page);
 
