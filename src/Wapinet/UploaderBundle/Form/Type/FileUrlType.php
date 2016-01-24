@@ -3,6 +3,7 @@
 namespace Wapinet\UploaderBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -50,7 +51,7 @@ class FileUrlType extends AbstractType
 
 
         if ($options['delete_button']) {
-            $builder->add('file_url_delete', 'checkbox', array(
+            $builder->add('file_url_delete', CheckboxType::class, array(
                 'attr' => array('data-mini' => 'true'),
                 'required' => false,
                 'label' => 'Удалить'

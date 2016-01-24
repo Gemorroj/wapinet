@@ -1,9 +1,12 @@
 <?php
 namespace Wapinet\UserBundle\Form\Type;
 
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Wapinet\UserBundle\Entity\Panel;
 
 /**
  * Panel
@@ -18,17 +21,17 @@ class PanelType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('forum', 'checkbox', array('required' => false, 'label' => 'Форум'));
-        $builder->add('guestbook', 'checkbox', array('required' => false, 'label' => 'Гостевая'));
-        $builder->add('gist', 'checkbox', array('required' => false, 'label' => 'Блоги'));
-        $builder->add('file', 'checkbox', array('required' => false, 'label' => 'Файлообменник'));
-        $builder->add('archiver', 'checkbox', array('required' => false, 'label' => 'Архиватор'));
-        $builder->add('proxy', 'checkbox', array('required' => false, 'label' => 'Анонимайзер'));
-        $builder->add('downloads', 'checkbox', array('required' => false, 'label' => 'Развлечения'));
-        $builder->add('utilities', 'checkbox', array('required' => false, 'label' => 'Утилиты'));
-        $builder->add('programming', 'checkbox', array('required' => false, 'label' => 'WEB мастерская'));
+        $builder->add('forum', CheckboxType::class, array('required' => false, 'label' => 'Форум'));
+        $builder->add('guestbook', CheckboxType::class, array('required' => false, 'label' => 'Гостевая'));
+        $builder->add('gist', CheckboxType::class, array('required' => false, 'label' => 'Блоги'));
+        $builder->add('file', CheckboxType::class, array('required' => false, 'label' => 'Файлообменник'));
+        $builder->add('archiver', CheckboxType::class, array('required' => false, 'label' => 'Архиватор'));
+        $builder->add('proxy', CheckboxType::class, array('required' => false, 'label' => 'Анонимайзер'));
+        $builder->add('downloads', CheckboxType::class, array('required' => false, 'label' => 'Развлечения'));
+        $builder->add('utilities', CheckboxType::class, array('required' => false, 'label' => 'Утилиты'));
+        $builder->add('programming', CheckboxType::class, array('required' => false, 'label' => 'WEB мастерская'));
 
-        $builder->add('submit', 'submit', array('label' => 'Изменить'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Изменить'));
     }
 
     /**
@@ -37,7 +40,7 @@ class PanelType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => \Wapinet\UserBundle\Entity\Panel::class,
+            'data_class' => Panel::class,
         ));
     }
 

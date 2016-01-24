@@ -2,9 +2,12 @@
 
 namespace Wapinet\UserBundle\Form\Type;
 
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Wapinet\UserBundle\Entity\Subscriber;
 
 class SubscriberType extends AbstractType
 {
@@ -17,19 +20,19 @@ class SubscriberType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('emailComments', 'checkbox', array('label' => 'Присылать E-mail о новых комментариях', 'required' => false))
-            ->add('emailMessages', 'checkbox', array('label' => 'Присылать E-mail о новых сообщениях', 'required' => false))
-            ->add('emailNews', 'checkbox', array('label' => 'Присылать E-mail о новостях сайта', 'required' => false))
-            ->add('emailFriends', 'checkbox', array('label' => 'Присылать E-mail о действиях друзей', 'required' => false))
+            ->add('emailComments', CheckboxType::class, array('label' => 'Присылать E-mail о новых комментариях', 'required' => false))
+            ->add('emailMessages', CheckboxType::class, array('label' => 'Присылать E-mail о новых сообщениях', 'required' => false))
+            ->add('emailNews', CheckboxType::class, array('label' => 'Присылать E-mail о новостях сайта', 'required' => false))
+            ->add('emailFriends', CheckboxType::class, array('label' => 'Присылать E-mail о действиях друзей', 'required' => false))
         ;
 
-        $builder->add('submit', 'submit', array('label' => 'Изменить'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Изменить'));
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => \Wapinet\UserBundle\Entity\Subscriber::class,
+            'data_class' => Subscriber::class,
         ));
     }
 

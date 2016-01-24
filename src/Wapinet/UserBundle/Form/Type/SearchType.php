@@ -1,9 +1,11 @@
 <?php
 namespace Wapinet\UserBundle\Form\Type;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\SearchType as CoreSearchType;
 
 /**
  * Search
@@ -18,19 +20,16 @@ class SearchType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add(
-            'search',
-            'search',
-            array('attr' => array(
+        $builder->add('search', CoreSearchType::class, array('attr' => array(
                 'maxlength' => 5000,
-                'title' => 'Слова разделенные пробелами. Работает модификатор *, кавычки и др.'),
-                'required' => true,
-                'label' => false,
-                'constraints' => new NotBlank()
-            )
-        );
+                'title' => 'Слова разделенные пробелами. Работает модификатор *, кавычки и др.'
+            ),
+            'required' => true,
+            'label' => false,
+            'constraints' => new NotBlank()
+        ));
 
-        $builder->add('submit', 'submit', array('label' => 'Искать'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Искать'));
     }
 
     /**
