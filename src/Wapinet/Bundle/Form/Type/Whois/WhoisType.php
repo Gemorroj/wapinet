@@ -1,6 +1,8 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\Whois;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
@@ -17,9 +19,9 @@ class WhoisType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('query', 'text', array('label' => 'Домен или IP'));
+        $builder->add('query', TextType::class, array('label' => 'Домен или IP'));
 
-        $builder->add('submit', 'submit', array('label' => 'Смотреть'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Смотреть'));
     }
 
     /**
