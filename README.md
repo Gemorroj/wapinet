@@ -212,9 +212,9 @@
 
 
 ### TODO:
+- Заменить апи сфинкса https://github.com/FoolCode/SphinxQL-Query-Builder
 - Сделать возможность в переводчике и обфускаторе загружать файлы
 - Актуализировать мобильные коды. Найти новые для разных андроидов.
-- заменить апи сфинкса https://github.com/FoolCode/SphinxQL-Query-Builder
 - Данные о видео на youtube и др. https://github.com/essence/essence
 - Оболочка над nmap https://github.com/willdurand/nmap (работает медленно и выдает мало информации)
 - Сделать лайки или дизлайки в файлообменнике. По аналогии с комментариями.
