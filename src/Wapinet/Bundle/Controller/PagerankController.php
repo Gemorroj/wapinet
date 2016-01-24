@@ -119,7 +119,6 @@ class PagerankController extends Controller
         $out = 'N/A';
         try {
             $response = $curl->exec();
-            file_put_contents('/pages.html', $response->getContent());
             /*
             <div id="resultStats">345,000 results</div>
             <div id="resultStats">About 345,000 results</div>
@@ -161,7 +160,6 @@ class PagerankController extends Controller
         $out = 'N/A';
         try {
             $response = $curl->exec();
-            file_put_contents('/inurl.html', $response->getContent());
             /*
             <div id="resultStats">345,000 results</div>
             <div id="resultStats">About 345,000 results</div>
