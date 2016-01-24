@@ -9,6 +9,7 @@
 >
     <php>
         <ini name="error_reporting" value="-1" />
+        <server name="KERNEL_DIR" value="/OpenServer/domains/wapinet.loc/app/" />
     </php>
 
     <testsuites>
@@ -18,12 +19,6 @@
             <directory>../src/*Bundle/Tests</directory>
         </testsuite>
     </testsuites>
-
-
-    <php>
-        <server name="KERNEL_DIR" value="/OpenServer/domains/wapinet.loc/app/" />
-    </php>
-
 
     <filter>
         <whitelist>
