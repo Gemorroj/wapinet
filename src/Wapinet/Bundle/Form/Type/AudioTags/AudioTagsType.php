@@ -1,8 +1,10 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\AudioTags;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Wapinet\UploaderBundle\Form\Type\FileUrlType;
 
 /**
  * Audio Tags
@@ -17,9 +19,9 @@ class AudioTagsType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('file', 'file_url', array('accept' => 'audio/*', 'required' => true, 'label' => false));
+        $builder->add('file', FileUrlType::class, array('accept' => 'audio/*', 'required' => true, 'label' => false));
 
-        $builder->add('submit', 'submit', array('label' => 'Редактировать'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Редактировать'));
     }
 
     /**
@@ -27,7 +29,7 @@ class AudioTagsType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'audio_tags';
     }

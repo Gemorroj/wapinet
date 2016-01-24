@@ -1,8 +1,12 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\CssValidator;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Wapinet\UploaderBundle\Form\Type\FileUrlType;
 
 /**
  * CssValidator
@@ -17,15 +21,15 @@ class CssValidatorType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('css', 'textarea', array(
+        $builder->add('css', TextareaType::class, array(
             'label' => 'CSS код',
             'required' => false,
         ));
-        $builder->add('file', 'file_url', array(
+        $builder->add('file', FileUrlType::class, array(
             'label' => false,
             'required' => false,
         ));
-        $builder->add('profile', 'choice', array(
+        $builder->add('profile', ChoiceType::class, array(
             'label' => 'Профиль',
             'choices' => array(
                 'css3' => 'CSS3',
@@ -41,7 +45,7 @@ class CssValidatorType extends AbstractType
                 'none' => 'Без специальных настроек',
             ),
         ));
-        $builder->add('warning', 'choice', array(
+        $builder->add('warning', ChoiceType::class, array(
             'label' => 'Предупреждения',
             'choices' => array(
                 '1' => 'Обычный отчет',
@@ -50,7 +54,7 @@ class CssValidatorType extends AbstractType
                 'no' => 'Без предупреждений',
             ),
         ));
-        $builder->add('usermedium', 'choice', array(
+        $builder->add('usermedium', ChoiceType::class, array(
             'label' => 'Среда',
             'choices' => array(
                 'all' => 'Все',
@@ -67,7 +71,7 @@ class CssValidatorType extends AbstractType
             ),
         ));
 
-        $builder->add('submit', 'submit', array('label' => 'Проверить'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Проверить'));
     }
 
     /**
@@ -75,7 +79,7 @@ class CssValidatorType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'css_validator';
     }

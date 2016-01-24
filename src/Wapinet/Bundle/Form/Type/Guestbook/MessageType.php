@@ -1,9 +1,12 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\Guestbook;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Wapinet\Bundle\Entity\Guestbook;
 
 /**
  * Message
@@ -18,8 +21,8 @@ class MessageType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('message', 'textarea', array('attr' => array('placeholder' => 'Сообщение'), 'required' => true, 'label' => false));
-        $builder->add('submit', 'submit', array('label' => 'Написать'));
+        $builder->add('message', TextareaType::class, array('attr' => array('placeholder' => 'Сообщение'), 'required' => true, 'label' => false));
+        $builder->add('submit', SubmitType::class, array('label' => 'Написать'));
     }
 
 
@@ -29,7 +32,7 @@ class MessageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Wapinet\Bundle\Entity\Guestbook',
+            'data_class' => Guestbook::class,
         ));
     }
 
@@ -39,7 +42,7 @@ class MessageType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'message_form';
     }

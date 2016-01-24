@@ -43,7 +43,7 @@ class ProfileType extends BaseType
         ;
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'wapinet_user_profile';
     }

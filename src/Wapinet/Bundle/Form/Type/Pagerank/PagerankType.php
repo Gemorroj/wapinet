@@ -1,6 +1,8 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\Pagerank;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
@@ -17,9 +19,9 @@ class PagerankType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('url', 'url', array('label' => 'Сайт', 'data' => 'http://'));
+        $builder->add('url', UrlType::class, array('label' => 'Сайт', 'data' => 'http://'));
 
-        $builder->add('submit', 'submit', array('label' => 'Анализировать'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Анализировать'));
     }
 
     /**
@@ -27,7 +29,7 @@ class PagerankType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'pagerank';
     }

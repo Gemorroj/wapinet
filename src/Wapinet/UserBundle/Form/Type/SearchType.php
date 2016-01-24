@@ -38,7 +38,7 @@ class SearchType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'users_search_form';
     }

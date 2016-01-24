@@ -1,9 +1,13 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\Gist;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Wapinet\Bundle\Entity\Gist;
 
 /**
  * Add
@@ -18,9 +22,9 @@ class AddType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('subject', 'text', array('attr' => array('placeholder' => 'Тема'), 'required' => true, 'label' => false));
-        $builder->add('body', 'textarea', array('attr' => array('placeholder' => 'Сообщение'), 'required' => true, 'label' => false));
-        $builder->add('submit', 'submit', array('label' => 'Добавить'));
+        $builder->add('subject', TextType::class, array('attr' => array('placeholder' => 'Тема'), 'required' => true, 'label' => false));
+        $builder->add('body', TextareaType::class, array('attr' => array('placeholder' => 'Сообщение'), 'required' => true, 'label' => false));
+        $builder->add('submit', SubmitType::class, array('label' => 'Добавить'));
     }
 
     /**
@@ -29,7 +33,7 @@ class AddType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Wapinet\Bundle\Entity\Gist',
+            'data_class' => Gist::class,
         ));
     }
 
@@ -38,7 +42,7 @@ class AddType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'gist_add_form';
     }

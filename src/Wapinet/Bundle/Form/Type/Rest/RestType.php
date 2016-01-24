@@ -1,6 +1,10 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\Rest;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
@@ -17,7 +21,7 @@ class RestType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('type', 'choice', array(
+        $builder->add('type', ChoiceType::class, array(
             'choices' => array(
                 'GET' => 'GET',
                 'POST' => 'POST',
@@ -29,20 +33,20 @@ class RestType extends AbstractType
             ),
             'label' => 'Тип',
         ));
-        $builder->add('url', 'url', array(
+        $builder->add('url', UrlType::class, array(
             'label' => 'Путь'
         ));
-        $builder->add('header', 'textarea', array(
+        $builder->add('header', TextareaType::class, array(
             'data' => 'Accept: */*' . "\r\n" . 'Cache-Control: no-cache' . "\r\n" . 'User-Agent: Wapinet REST Client',
             'required' => false,
             'label' => 'Заголовки'
         ));
-        $builder->add('body', 'textarea', array(
+        $builder->add('body', TextareaType::class, array(
             'required' => false,
             'label' => 'Тело'
         ));
 
-        $builder->add('submit', 'submit', array('label' => 'Выполнить'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Выполнить'));
     }
 
     /**
@@ -50,7 +54,7 @@ class RestType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'rest';
     }

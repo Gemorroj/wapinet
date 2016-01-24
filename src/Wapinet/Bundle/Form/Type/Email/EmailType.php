@@ -1,9 +1,15 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\Email;
 
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Wapinet\UploaderBundle\Form\Type\FileUrlType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType as CoreEmailType;
 
 /**
  * Email
@@ -30,17 +36,17 @@ class EmailType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('to', 'email', array('label' => 'Кому', 'data' => '@'));
-        $builder->add('from', 'email', array('label' => 'От кого', 'data' => '@'));
-        $builder->add('subject', 'text', array('label' => 'Тема'));
-        $builder->add('message', 'textarea', array('label' => 'Сообщение'));
-        $builder->add('file', 'file_url', array('required' => false, 'label' => false));
+        $builder->add('to', CoreEmailType::class, array('label' => 'Кому', 'data' => '@'));
+        $builder->add('from', CoreEmailType::class, array('label' => 'От кого', 'data' => '@'));
+        $builder->add('subject', TextType::class, array('label' => 'Тема'));
+        $builder->add('message', TextareaType::class, array('label' => 'Сообщение'));
+        $builder->add('file', FileUrlType::class, array('required' => false, 'label' => false));
 
         if (false === $this->container->get('security.authorization_checker')->isGranted($this->container->getParameter('wapinet_role_nocaptcha'))) {
-            $builder->add('captcha', 'captcha', array('required' => true, 'label' => 'Код'));
+            $builder->add('captcha', CaptchaType::class, array('required' => true, 'label' => 'Код'));
         }
 
-        $builder->add('submit', 'submit', array('label' => 'Отправить'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Отправить'));
     }
 
     /**
@@ -48,7 +54,7 @@ class EmailType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'email_form';
     }

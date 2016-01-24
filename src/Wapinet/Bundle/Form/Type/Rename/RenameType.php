@@ -1,8 +1,11 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\Rename;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Wapinet\UploaderBundle\Form\Type\FileUrlType;
 
 /**
  * Rename
@@ -17,10 +20,10 @@ class RenameType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('file', 'file_url', array('required' => true, 'label' => false));
-        $builder->add('name', 'text', array('label' => 'Новое название'));
+        $builder->add('file', FileUrlType::class, array('required' => true, 'label' => false));
+        $builder->add('name', TextType::class, array('label' => 'Новое название'));
 
-        $builder->add('submit', 'submit', array('label' => 'Переименовать'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Переименовать'));
     }
 
     /**
@@ -28,7 +31,7 @@ class RenameType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'rename';
     }

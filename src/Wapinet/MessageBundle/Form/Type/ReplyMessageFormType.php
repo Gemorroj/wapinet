@@ -2,6 +2,7 @@
 
 namespace Wapinet\MessageBundle\Form\Type;
 
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use FOS\MessageBundle\FormType\ReplyMessageFormType as BaseType;
 
@@ -16,11 +17,11 @@ class ReplyMessageFormType extends BaseType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('body', 'textarea', array('label' => false, 'attr' => array('placeholder' => 'Сообщение')))
+            ->add('body', TextareaType::class, array('label' => false, 'attr' => array('placeholder' => 'Сообщение')))
         ;
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'wapinet_message_reply_message';
     }

@@ -1,7 +1,12 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\Sms;
 
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
@@ -30,13 +35,13 @@ class SmsType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('message', 'textarea', array('attr' => array('maxlength' => 160), 'label' => 'Сообщение'));
-        $builder->add('number', 'text', array('attr' => array('pattern' => '^\+?[0-9]+$'), 'label' => 'Номер'));
+        $builder->add('message', TextareaType::class, array('attr' => array('maxlength' => 160), 'label' => 'Сообщение'));
+        $builder->add('number', TextType::class, array('attr' => array('pattern' => '^\+?[0-9]+$'), 'label' => 'Номер'));
 
         /**
          * @see http://www.en2ru.com/mobile.php
          */
-        $builder->add('gateway', 'choice', array(
+        $builder->add('gateway', ChoiceType::class, array(
             'placeholder' => 'Выберите оператора',
             'label' => 'Оператор',
             'choices' => array(
@@ -144,10 +149,10 @@ class SmsType extends AbstractType
         ));
 
         if (false === $this->container->get('security.authorization_checker')->isGranted($this->container->getParameter('wapinet_role_nocaptcha'))) {
-            $builder->add('captcha', 'captcha', array('required' => true, 'label' => 'Код'));
+            $builder->add('captcha', CaptchaType::class, array('required' => true, 'label' => 'Код'));
         }
 
-        $builder->add('submit', 'submit', array('label' => 'Отправить'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Отправить'));
     }
 
     /**
@@ -155,7 +160,7 @@ class SmsType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'rename';
     }

@@ -1,9 +1,13 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\Hash;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Wapinet\Bundle\Helper\Hash;
+use Wapinet\UploaderBundle\Form\Type\FileUrlType;
 
 /**
  * Hash
@@ -30,7 +34,7 @@ class HashType extends AbstractType
         parent::buildForm($builder, $options);
 
         $algorithms = $this->hash->getAlgorithms();
-        $builder->add('algorithm', 'choice', array(
+        $builder->add('algorithm', ChoiceType::class, array(
             'choices' => $algorithms,
             'label' => 'Алгоритм',
             'preferred_choices' => array(
@@ -40,14 +44,14 @@ class HashType extends AbstractType
             ),
         ));
 
-        $builder->add('text', 'textarea', array('label' => 'Текст', 'required' => false));
+        $builder->add('text', TextareaType::class, array('label' => 'Текст', 'required' => false));
 
-        $builder->add('file', 'file_url', array(
+        $builder->add('file', FileUrlType::class, array(
             'label' => false,
             'required' => false,
         ));
 
-        $builder->add('submit', 'submit', array('label' => 'Хэшировать'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Хэшировать'));
     }
 
     /**
@@ -55,7 +59,7 @@ class HashType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'hash_form';
     }

@@ -1,6 +1,9 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\Obfuscator;
 
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
@@ -17,11 +20,11 @@ class ObfuscatorType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('code', 'textarea', array('trim' => true, 'label' => 'Ваш PHP код'));
-        $builder->add('remove_comments', 'checkbox', array('data' => true, 'required' => false, 'label' => 'Удалить комментарии'));
-        $builder->add('remove_spaces', 'checkbox', array('data' => true, 'required' => false, 'label' => 'Удалять лишние пробелы'));
+        $builder->add('code', TextareaType::class, array('trim' => true, 'label' => 'Ваш PHP код'));
+        $builder->add('remove_comments', CheckboxType::class, array('data' => true, 'required' => false, 'label' => 'Удалить комментарии'));
+        $builder->add('remove_spaces', CheckboxType::class, array('data' => true, 'required' => false, 'label' => 'Удалять лишние пробелы'));
 
-        $builder->add('submit', 'submit', array('label' => 'Обфусцировать'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Обфусцировать'));
     }
 
     /**
@@ -29,7 +32,7 @@ class ObfuscatorType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'obfuscator';
     }

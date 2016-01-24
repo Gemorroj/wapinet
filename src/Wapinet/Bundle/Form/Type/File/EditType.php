@@ -1,9 +1,15 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\File;
 
+use Symfony\Component\Form\Extension\Core\Type\PasswordType as CorePasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Wapinet\Bundle\Entity\File;
+use Wapinet\Bundle\Form\Type\TagsType;
+use Wapinet\UploaderBundle\Form\Type\FileUrlType;
 
 /**
  * Edit
@@ -18,17 +24,17 @@ class EditType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('file', 'file_url', array('required' => false, 'label' => false));
-        $builder->add('description', 'textarea', array('required' => true, 'label' => 'Описание'));
+        $builder->add('file', FileUrlType::class, array('required' => false, 'label' => false));
+        $builder->add('description', TextareaType::class, array('required' => true, 'label' => 'Описание'));
 
         // http://view.jquerymobile.com/1.3.2/dist/demos/widgets/autocomplete/autocomplete-remote.html
         // тэги
-        $builder->add('tags', 'tags', array('required' => false, 'label' => 'Тэги через запятую'));
+        $builder->add('tags', TagsType::class, array('required' => false, 'label' => 'Тэги через запятую'));
 
 
-        $builder->add('plainPassword', 'password', array('required' => false, 'label' => 'Пароль', 'attr' => array('autocomplete' => 'off')));
+        $builder->add('plainPassword', CorePasswordType::class, array('required' => false, 'label' => 'Пароль', 'attr' => array('autocomplete' => 'off')));
 
-        $builder->add('submit', 'submit', array('label' => 'Загрузить'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Загрузить'));
     }
 
     /**
@@ -37,7 +43,7 @@ class EditType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Wapinet\Bundle\Entity\File',
+            'data_class' => File::class,
         ));
     }
 
@@ -46,7 +52,7 @@ class EditType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'file_edit_form';
     }

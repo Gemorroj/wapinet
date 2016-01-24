@@ -45,6 +45,14 @@ class TagsType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    public function getBlockPrefix()
+    {
+        return 'tags';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'tags';

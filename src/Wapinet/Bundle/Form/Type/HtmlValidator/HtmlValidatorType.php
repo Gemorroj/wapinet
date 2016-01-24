@@ -1,8 +1,11 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\HtmlValidator;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Wapinet\UploaderBundle\Form\Type\FileUrlType;
 
 /**
  * HtmlValidator
@@ -17,16 +20,16 @@ class HtmlValidatorType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('html', 'textarea', array(
+        $builder->add('html', TextareaType::class, array(
             'label' => 'HTML код',
             'required' => false,
         ));
-        $builder->add('file', 'file_url', array(
+        $builder->add('file', FileUrlType::class, array(
             'label' => false,
             'required' => false,
         ));
 
-        $builder->add('submit', 'submit', array('label' => 'Проверить'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Проверить'));
     }
 
     /**
@@ -34,7 +37,7 @@ class HtmlValidatorType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'html_validator';
     }

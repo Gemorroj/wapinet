@@ -37,7 +37,7 @@ class PanelType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Wapinet\UserBundle\Entity\Panel',
+            'data_class' => \Wapinet\UserBundle\Entity\Panel::class,
         ));
     }
 
@@ -46,7 +46,7 @@ class PanelType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'wapinet_user_panel';
     }

@@ -1,6 +1,7 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\Siza;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Validator\Constraints\Length;
@@ -19,7 +20,7 @@ class SearchType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('search', 'search', array(
+        $builder->add('search', SearchType::class, array(
             'constraints' => array(
                 new NotBlank(),
                 new Length(array('min' => 3)),
@@ -28,7 +29,7 @@ class SearchType extends AbstractType
             'label' => 'Поиск',
         ));
 
-        $builder->add('submit', 'submit', array('label' => 'Искать'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Искать'));
     }
 
     /**
@@ -36,7 +37,7 @@ class SearchType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'siza_search_form';
     }

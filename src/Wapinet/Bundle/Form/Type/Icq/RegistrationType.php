@@ -1,8 +1,14 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\Icq;
 
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Wapinet\Bundle\Form\Type\Email\EmailType;
+use Wapinet\Bundle\Form\Type\File\PasswordType;
 
 /**
  * Icq registration
@@ -17,17 +23,16 @@ class RegistrationType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
+        $builder->add('reg_type', HiddenType::class);
+        $builder->add('csrf', HiddenType::class);
+        $builder->add('gnm', HiddenType::class);
+        $builder->add('first_name', TextType::class, array('label' => 'Имя (1-20 символов)', 'attr' => array('maxlength' => 20)));
+        $builder->add('last_name', TextType::class, array('label' => 'Фамилия (1-20 символов)', 'attr' => array('maxlength' => 20)));
+        $builder->add('email', EmailType::class, array('label' => 'E-mail'));
+        $builder->add('password', PasswordType::class, array('label' => 'Пароль (6-8 символов, латиница, цифры)', 'attr' => array('pattern' => '[a-zA-Z0-9]{6,8}', 'maxlength' => 20)));
+        $builder->add('captcha', NumberType::class, array('label' => 'Код с картинки', 'attr' => array('maxlength' => 6)));
 
-        $builder->add('reg_type', 'hidden');
-        $builder->add('csrf', 'hidden');
-        $builder->add('gnm', 'hidden');
-        $builder->add('first_name', 'text', array('label' => 'Имя (1-20 символов)', 'attr' => array('maxlength' => 20)));
-        $builder->add('last_name', 'text', array('label' => 'Фамилия (1-20 символов)', 'attr' => array('maxlength' => 20)));
-        $builder->add('email', 'email', array('label' => 'E-mail'));
-        $builder->add('password', 'password', array('label' => 'Пароль (6-8 символов, латиница, цифры)', 'attr' => array('pattern' => '[a-zA-Z0-9]{6,8}', 'maxlength' => 20)));
-        $builder->add('captcha', 'number', array('label' => 'Код с картинки', 'attr' => array('maxlength' => 6)));
-
-        $builder->add('submit', 'submit', array('label' => 'Зарегистрироваться'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Зарегистрироваться'));
     }
 
     /**
@@ -35,7 +40,7 @@ class RegistrationType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'icq_user_info';
     }

@@ -57,7 +57,7 @@ class SubscriberCommand extends ContainerAwareCommand
         $siteTitle = $this->getContainer()->getParameter('wapinet_title');
         $robotEmail = $this->getContainer()->getParameter('wapinet_robot_email');
         $mailer = $this->getContainer()->get('mailer');
-        /** @var \Symfony\Bundle\TwigBundle\TwigEngine $templating */
+
         $templating = $this->getContainer()->get('templating');
 
         $variables = $event->getVariables();

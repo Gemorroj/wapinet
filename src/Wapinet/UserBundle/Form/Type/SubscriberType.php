@@ -29,11 +29,11 @@ class SubscriberType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Wapinet\UserBundle\Entity\Subscriber',
+            'data_class' => \Wapinet\UserBundle\Entity\Subscriber::class,
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'wapinet_user_subscriber';
     }

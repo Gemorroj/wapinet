@@ -1,8 +1,10 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\Archiver;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Wapinet\UploaderBundle\Form\Type\FileUrlType;
 
 /**
  * Archiver Add
@@ -17,9 +19,9 @@ class AddType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('file', 'file_url', array('required' => true, 'label' => false));
+        $builder->add('file', FileUrlType::class, array('required' => true, 'label' => false));
 
-        $builder->add('submit', 'submit', array('label' => 'Добавить'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Добавить'));
     }
 
     /**
@@ -27,7 +29,7 @@ class AddType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'archiver_add';
     }

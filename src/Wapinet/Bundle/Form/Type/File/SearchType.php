@@ -1,9 +1,12 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\File;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\SearchType as CoreSearchType;
 
 /**
  * Search
@@ -18,14 +21,14 @@ class SearchType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('search', 'search', array(
+        $builder->add('search', CoreSearchType::class, array(
             'attr' => array('maxlength' => 5000, 'title' => 'Слова разделенные пробелами. Работает модификатор *, кавычки и др.'),
             'required' => true,
             'label' => false,
             'constraints' => new NotBlank()
         ));
 
-        $builder->add('sort', 'choice', array(
+        $builder->add('sort', ChoiceType::class, array(
             'choices' => array(
                 'relevance' => 'релевантности',
                 'date' => 'дате',
@@ -37,7 +40,7 @@ class SearchType extends AbstractType
         ));
 
 
-        $builder->add('submit', 'submit', array('label' => 'Искать'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Искать'));
     }
 
     /**
@@ -45,7 +48,7 @@ class SearchType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'file_search_form';
     }

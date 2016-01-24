@@ -1,6 +1,8 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\Icq;
 
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
@@ -17,8 +19,8 @@ class UserInfoType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('uin', 'number', array('label' => 'UIN', 'required' => true));
-        $builder->add('submit', 'submit', array('label' => 'Смотреть'));
+        $builder->add('uin', NumberType::class, array('label' => 'UIN', 'required' => true));
+        $builder->add('submit', SubmitType::class, array('label' => 'Смотреть'));
     }
 
     /**
@@ -26,7 +28,7 @@ class UserInfoType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'icq_user_info';
     }

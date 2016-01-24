@@ -1,6 +1,9 @@
 <?php
 namespace Wapinet\Bundle\Form\Type\Translate;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
@@ -19,10 +22,10 @@ class TranslateType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('text', 'textarea', array('label' => 'Ваш текст'));
-        $builder->add('lang_from', 'choice', array(
+        $builder->add('text', TextareaType::class, array('label' => 'Ваш текст'));
+        $builder->add('lang_from', ChoiceType::class, array(
             'label' => false,
-            'choices'   => array(
+            'choices' => array(
                 'auto' => 'Автоматически',
                 'en' => 'С английского',
                 'ru' => 'С русского',
@@ -41,9 +44,9 @@ class TranslateType extends AbstractType
                 'zh' => 'С китайского',
             )
         ));
-        $builder->add('lang_to', 'choice', array(
+        $builder->add('lang_to', ChoiceType::class, array(
             'label' => false,
-            'choices'   => array(
+            'choices' => array(
                 'ru' => 'На русский',
                 'en' => 'На английский',
                 'uk' => 'На украинский',
@@ -62,7 +65,7 @@ class TranslateType extends AbstractType
             )
         ));
 
-        $builder->add('submit', 'submit', array('label' => 'Перевести'));
+        $builder->add('submit', SubmitType::class, array('label' => 'Перевести'));
     }
 
     /**
@@ -70,7 +73,7 @@ class TranslateType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'translate';
     }
