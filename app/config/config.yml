@@ -296,7 +296,7 @@ easy_admin:
                     - { property: 'mimeType', label: 'MIME тип' }
                     - { property: 'description', label: 'Описание', type: 'textarea' }
                     #- { property: 'meta', label: 'Данные', type_options: { read_only: true, required: false } }
-                    - { property: 'tags', label: 'Тэги', type_options: { required: false } }
+                    - { property: 'fileTags', label: 'Тэги', type_options: { required: false } }
                     - { property: 'countViews', label: 'Просмотров' }
                     - { property: 'hidden', label: 'Скрыт', type_options: {required: false} }
         Tags:
