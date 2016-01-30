@@ -6,8 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\Process\ProcessBuilder;
 use Wapinet\Bundle\Entity\Sea;
+use GitElephant\Repository;
+use GitElephant\GitBinary;
 
 class DefaultController extends Controller
 {
@@ -27,57 +28,22 @@ class DefaultController extends Controller
         return $this->render('WapinetBundle:Default:about.html.twig');
     }
 
-
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function logAction()
     {
-        $processBuilder = new ProcessBuilder();
-        $processBuilder->setPrefix(
-            $this->container->getParameter('wapinet_hg_path')
+        $git = new GitBinary($this->container->getParameter('wapinet_git_path'));
+
+        $repo = new Repository(__DIR__, $git, 'wapinet');
+
+        $log = $repo->getLog(
+            'HEAD',
+            null,
+            $this->container->getParameter('wapinet_git_log')
         );
-        $processBuilder->setArguments(array(
-            'log',
-            '-l ' . $this->container->getParameter('wapinet_hg_log')
-        ));
-        $processBuilder->setEnv('LC_ALL', 'ru_RU.utf8');
-        $output = $processBuilder->getProcess()->mustRun()->getOutput();
 
-        return $this->render('WapinetBundle:Default:log.html.twig', array('log' => $this->formatLog($output)));
-    }
-
-    /**
-     * Преобразовываем строковый вывод консоли в массив
-     *
-     * @param string $output
-     * @return array
-     */
-    private function formatLog($output)
-    {
-        $result = array();
-        $output = \rtrim($output);
-        $changes = \explode("\n\n", $output);
-        $timezone = $this->get('timezone')->getTimezone();
-
-        foreach ($changes as $change) {
-            $items = \explode("\n", $change);
-
-            $tmpResult = array();
-            foreach ($items as $item) {
-                list($key, $value) = \explode(':', $item, 2);
-
-                if ('date' === $key) {
-                    $tmpResult[$key] = new \DateTime(\ltrim($value), $timezone);
-                } else {
-                    $tmpResult[$key] = \ltrim($value);
-                }
-            }
-
-            $result[] = $tmpResult;
-        }
-
-        return $result;
+        return $this->render('WapinetBundle:Default:log.html.twig', array('log' => $log));
     }
 
     /**

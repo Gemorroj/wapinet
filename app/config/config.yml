@@ -43,7 +43,7 @@ twig:
     globals:
         wapinet_title: "%wapinet_title%"
         wapinet_contact_email: "%wapinet_contact_email%"
-        wapinet_hg_log: "%wapinet_hg_log%"
+        wapinet_git_log: "%wapinet_git_log%"
 
 # Doctrine Configuration
 doctrine:
