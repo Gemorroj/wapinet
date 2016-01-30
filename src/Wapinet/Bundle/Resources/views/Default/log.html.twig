@@ -9,7 +9,6 @@
     <p>Последние {{ wapinet_git_log }} комитов в репозиторий сайта.</p>
     <div class="ui-corner-all">
         {% for item in log %}
-            {{ dump(item) }}
             <div class="ui-bar ui-bar-a">
                 <h3>{{ item.datetimeAuthor|wapinet_datetime }}</h3>
             </div>
