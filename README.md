@@ -12,8 +12,7 @@
 `app/tmp`  
 `app/cache`  
 `web/media/cache/resolve/thumbnail/static`  
-`web/media/cache/thumbnail/static/avatar`  
-`web/media/cache/thumbnail/static/file`  
+`web/media/cache/thumbnail/static`  
 `web/static/avatar`  
 `web/static/file`  
 
