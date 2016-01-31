@@ -210,6 +210,9 @@
     }
 
 
+### BUG:
+ - Поломался граббер siza (http://wapinet.ru/siza/)
+
 ### TODO:
 - Заменить апи сфинкса https://github.com/FoolCode/SphinxQL-Query-Builder
 - Сделать возможность в переводчике и обфускаторе загружать файлы
