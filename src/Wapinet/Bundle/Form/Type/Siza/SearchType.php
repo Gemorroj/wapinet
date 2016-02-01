@@ -6,6 +6,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\SearchType as CoreSearchType;
 
 /**
  * Search
@@ -20,7 +21,7 @@ class SearchType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('search', SearchType::class, array(
+        $builder->add('search', CoreSearchType::class, array(
             'constraints' => array(
                 new NotBlank(),
                 new Length(array('min' => 3)),

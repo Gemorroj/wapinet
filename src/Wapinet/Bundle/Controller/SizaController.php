@@ -85,8 +85,8 @@ class SizaController extends Controller
      */
     public function searchListAction(Request $request, $searchId)
     {
-        $q = $request->get('q', '/search/');
-        if ('/search/' !== $q) {
+        $q = $request->get('q', '/load/search/');
+        if ('/load/search/' !== $q) {
             return $this->indexAction($request);
         }
 
@@ -164,6 +164,6 @@ class SizaController extends Controller
      */
     protected function screen($query)
     {
-        return $this->redirect('http://load.siza.ru' . $query, 301);
+        return $this->redirect('http://siza.ru' . $query, 301);
     }
 }

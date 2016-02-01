@@ -71,7 +71,7 @@ class Siza
      */
     public function getSearchId($query)
     {
-        $this->link = 'http://load.siza.ru/search?place=everywhere&query=' . $query;
+        $this->link = 'http://siza.ru/load/search?place=everywhere&query=' . $query;
         $response = $this->getLink(true);
 
         if (false !== \strpos($response->getContent(), 'ничего не нашли')) {
@@ -96,10 +96,12 @@ class Siza
      */
     public function init($contentDirectory, $query, $page = null, $scr = null, $searchId = null)
     {
-        $this->link = 'http://load.siza.ru/' . \ltrim($query, '/') . '?page=' . $page . '&scr=' . $scr . '&searchId=' . $searchId;
+        $this->link = 'http://siza.ru/' . \ltrim($query, '/') . '?page=' . $page . '&scr=' . $scr . '&searchId=' . $searchId;
         $this->contentDirectory = $contentDirectory;
         $this->dom = new \DOMDocument('1.0', 'UTF-8');
-        @$this->dom->loadHTML($this->getLink()->getContent());
+
+        $content = $this->getLink()->getContent();
+        @$this->dom->loadHTML($content);
 
         $this->xpath = new \DOMXpath($this->dom);
         $this->foldersListChildNodes = $this->xpath->query('//div[@id="foldersList"]/div');
@@ -176,7 +178,7 @@ class Siza
             $this->removeNodeList($imgArr, function (\DOMElement $img) {
                 $src = (string)$img->getAttribute('src');
 
-                if (0 === \strpos($src, '/pics/')) {
+                if (0 === \strpos($src, '/load/pics/')) {
                     $img->parentNode->removeChild($img);
                 } else {
                     $img->setAttribute('src', '?screen=yes&q=' . $src);
@@ -277,7 +279,7 @@ class Siza
             $aArr = $v->getElementsByTagName('a');
             $this->removeNodeList($aArr, function (\DOMElement $a) use($that) {
                 $href = (string)$a->getAttribute('href');
-                $href = \str_replace('http://load.siza.ru', '', $href);
+                $href = \str_replace('http://siza.ru/load/', '', $href);
 
                 if ($href === '/orders/') {
                     $a->parentNode->removeChild($a);
@@ -291,7 +293,7 @@ class Siza
             $imgArr = $v->getElementsByTagName('img');
             $this->removeNodeList($imgArr, function (\DOMElement $img) use($that) {
                 $src = (string)$img->getAttribute('src');
-                if ($src !== '/pics/dir.gif') {
+                if ($src !== '/load/pics/dir.gif') {
                     $that->ignoreNode = true;
                 } else {
                     $img->parentNode->removeChild($img);
@@ -427,7 +429,7 @@ class Siza
                     $a->setAttribute('data-role', 'button');
                     $a->setAttribute('data-inline', 'true');
                     $a->setAttribute('data-icon', 'arrow-d');
-                } else if (0 === \strpos($href, '/Image/') || 0 === \strpos($href, '/Screenshot/')) {
+                } else if (0 === \strpos($href, '/load/Image/') || 0 === \strpos($href, '/load/Screenshot/')) {
 
                     $prevNode = $a->previousSibling;
                     if ($prevNode->nodeType === \XML_TEXT_NODE && $prevNode->nodeValue === ' / ') {
@@ -456,7 +458,7 @@ class Siza
             foreach ($objectArr as $object) {
                 $data = (string)$object->getAttribute('data');
 
-                if (0 === \strpos($data, '/swf/dewplayer-rect.swf')) {
+                if (0 === \strpos($data, '/load/swf/dewplayer-rect.swf')) {
                     $object->setAttribute('data', $this->contentDirectory . '/' . $data);
                 }
             }
