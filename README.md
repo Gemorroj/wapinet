@@ -211,7 +211,7 @@
 
 
 ### BUG:
- - Поломался граббер siza (http://wapinet.ru/siza/)
+ - ...
 
 ### TODO:
 - Заменить апи сфинкса https://github.com/FoolCode/SphinxQL-Query-Builder
