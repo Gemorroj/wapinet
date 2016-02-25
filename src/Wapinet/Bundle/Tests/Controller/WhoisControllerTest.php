@@ -2,9 +2,9 @@
 
 namespace Wapinet\Bundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Wapinet\Bundle\Tests\WebTestCaseWapinet;
 
-class WhoisControllerTest extends WebTestCase
+class WhoisControllerTest extends WebTestCaseWapinet
 {
     public function testIndex()
     {

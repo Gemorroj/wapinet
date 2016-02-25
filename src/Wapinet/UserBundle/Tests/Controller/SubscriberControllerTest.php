@@ -2,9 +2,9 @@
 
 namespace Wapinet\UserBundle\Tests\Controller;
 
-use Wapinet\UserBundle\Tests\WebTestCaseUser;
+use Wapinet\UserBundle\Tests\WebTestCaseWapinetUser;
 
-class SubscriberControllerTest extends WebTestCaseUser
+class SubscriberControllerTestWapinet extends WebTestCaseWapinetUser
 {
     public function testIndex()
     {

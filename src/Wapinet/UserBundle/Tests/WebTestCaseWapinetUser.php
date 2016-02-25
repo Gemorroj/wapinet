@@ -5,7 +5,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Bundle\FrameworkBundle\Client;
 
-class WebTestCaseUser extends WebTestCase
+abstract class WebTestCaseWapinetUser extends WebTestCase
 {
     /**
      * @param string $username
