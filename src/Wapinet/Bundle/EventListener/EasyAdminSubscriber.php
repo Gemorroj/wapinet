@@ -32,29 +32,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         return array(
             EasyAdminEvents::POST_PERSIST => array('setPersistSubscriber'),
             EasyAdminEvents::PRE_REMOVE => array('setRemoveSubscriber'),
-            EasyAdminEvents::PRE_UPDATE => array('setUpdateSubscriber'),
         );
-    }
-
-
-    /**
-     * @param GenericEvent $event
-     */
-    public function setUpdateSubscriber(GenericEvent $event)
-    {
-        $entity = $event->getSubject();
-
-        if ($entity instanceof User) {
-
-            $request = $this->container->get('request_stack')->getMasterRequest();
-            $userRequestData = $request->get('users');
-            if (isset($userRequestData['avatar']['file_url_delete']) && $userRequestData['avatar']['file_url_delete']) {
-                $entity->setAvatar(null);
-                $entity->setAvatarName(null);
-            }
-
-            $event['entity'] = $entity;
-        }
     }
 
 

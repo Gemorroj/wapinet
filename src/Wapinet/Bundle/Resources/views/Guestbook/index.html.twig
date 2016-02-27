@@ -59,10 +59,10 @@
                 </li>
                 <li data-icon="false">
                     <span class="fos_comment_comment_avatar">
-                        {% if item.user and item.user.hasAvatar %}
-                            <img src="{{ vich_uploader_asset(item.user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ item.user }}" class="image-preview" />
+                        {% if item.user %}
+                            <img src="{{ wapinet_user_get_avatar_url(item.user) }}" alt="{{ item.user }}" class="image-preview" />
                         {% else %}
-                            <img src="{{ asset('static/noavatar.png') }}" alt="Anonymous" class="image-preview" />
+                            <img src="{{ wapinet_user_get_avatar_url() }}" alt="Anonymous" class="image-preview" />
                         {% endif %}
                         {% if item.user and item.user.isOnline %}
                             <span class="avatar-online"></span>

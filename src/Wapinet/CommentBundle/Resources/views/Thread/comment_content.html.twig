@@ -58,10 +58,10 @@
                 {% trans from 'FOSCommentBundle' %}fos_comment_comment_deleted{% endtrans %}
             {% else %}
                 <span class="fos_comment_comment_avatar">
-                    {% if comment.author and comment.author.hasAvatar %}
-                        <img src="{{ vich_uploader_asset(comment.author, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ comment.author }}" class="image-preview" />
+                    {% if comment.author %}
+                        <img src="{{ wapinet_user_get_avatar_url(comment.author) }}" alt="{{ comment.author }}" class="image-preview" />
                     {% else %}
-                        <img src="{{ asset('static/noavatar.png') }}" alt="{{ comment.author }}" class="image-preview" />
+                        <img src="{{ wapinet_user_get_avatar_url() }}" alt="Anonymous" class="image-preview" />
                     {% endif %}
                     {% if comment.author and comment.author.isOnline %}
                         <span class="avatar-online"></span>

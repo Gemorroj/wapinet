@@ -41,12 +41,7 @@ class ProfileType extends BaseType
             ->add('country', CountryType::class, array('label' => 'Страна', 'required' => false))
             ->add('vk', TextType::class, array('label' => 'ID вконтакте', 'required' => false, 'attr' => array('pattern' => '[a-z0-9_]{0,255}', 'placeholder' => 'id123456789')))
             ->add('info', TextareaType::class, array('label' => 'Дополнительная информация', 'required' => false, 'attr' => array('maxlength' => 5000)))
-            ->add('avatar', FileUrlType::class, array(
-                'accept' => 'image/*',
-                'label' => 'Аватар',
-                'required' => false,
-                'delete_button' => true,
-            ));
+            ;
         ;
     }
 

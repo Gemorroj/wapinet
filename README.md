@@ -13,7 +13,6 @@
 `app/cache`  
 `web/media/cache/resolve/thumbnail/static`  
 `web/media/cache/thumbnail/static`  
-`web/static/avatar`  
 `web/static/file`  
 
 ### Установка p7zip:
@@ -220,4 +219,3 @@
 - Данные о видео на youtube и др. https://github.com/essence/essence
 - Оболочка над nmap https://github.com/willdurand/nmap (работает медленно и выдает мало информации)
 - Сделать лайки или дизлайки в файлообменнике. По аналогии с комментариями.
-- Заменить аватарки на gravatar

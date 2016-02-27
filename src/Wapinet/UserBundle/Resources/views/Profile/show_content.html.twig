@@ -1,15 +1,13 @@
 <div class="fos_user_user_show">
-    {% if user.hasAvatar %}
-        {% include 'WapinetBundle::image.html.twig' with {
-            'image': {
-                'badge': user.isOnline ? 'avatar-online' : null,
-                'id': user.id,
-                'alt': user,
-                'src': vich_uploader_asset(user, 'avatar'),
-                'preview': vich_uploader_asset(user, 'avatar')|imagine_filter('thumbnail')
-            }
-        } %}
-    {% endif %}
+    {% include 'WapinetBundle::image.html.twig' with {
+        'image': {
+            'badge': user.isOnline ? 'avatar-online' : null,
+            'id': user.id,
+            'alt': user,
+            'src': wapinet_user_get_avatar_url(user, null),
+            'preview': wapinet_user_get_avatar_url(user)
+        }
+    } %}
 
     <div class="ui-grid-a ui-mini ui-corner-all">
         <div class="ui-block-a"><div class="ui-bar ui-bar-a">Логин</div></div>

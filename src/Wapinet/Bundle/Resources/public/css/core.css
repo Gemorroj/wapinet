@@ -33,6 +33,10 @@ span.avatar-online-list-gist {
     margin-top: 68px;
     z-index: 2;
 }
+span.avatar-online-list-easyadmin {
+    margin-left: 84px;
+    margin-top: -12px;
+}
 p.footer {
     font-size: 0.8em;
     margin-left: 10px;

@@ -8,10 +8,6 @@ Wapinet\UserBundle\Entity\User:
             generator:
                 strategy: AUTO
     fields:
-        avatarName:
-            type: string
-            nullable: true
-            column: avatar_name
         createdAt:
             type: datetime
             nullable: false

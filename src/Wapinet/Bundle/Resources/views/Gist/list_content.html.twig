@@ -1,11 +1,7 @@
 <ul data-role="listview" data-inset="true">
     {% for item in pagerfanta %}
         <li class="ui-li-has-thumb gist-header">
-            {% if item.user.hasAvatar %}
-                <img src="{{ vich_uploader_asset(item.user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ item.user }}" title="{{ item.user }}" class="image-preview" />
-            {% else %}
-                <img src="{{ asset('static/noavatar.png') }}" alt="{{ item.user }}" title="{{ item.user }}" class="image-preview" />
-            {% endif %}
+            <img src="{{ wapinet_user_get_avatar_url(item.user) }}" alt="{{ item.user }}" title="{{ item.user }}" class="image-preview" />
             {% if item.user.isOnline %}
                 <span class="avatar-online avatar-online-list-gist"></span>
             {% endif %}

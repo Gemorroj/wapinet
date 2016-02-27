@@ -17,11 +17,7 @@
         {% for user in pagerfanta %}
             <li>
                 <a href="{{ path('wapinet_user_profile', {'username': user}) }}">
-                    {% if user.hasAvatar %}
-                        <img src="{{ vich_uploader_asset(user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ user }}" class="image-preview" />
-                    {% else %}
-                        <img src="{{ asset('static/noavatar.png') }}" alt="{{ user }}" class="image-preview" />
-                    {% endif %}
+                    <img src="{{ wapinet_user_get_avatar_url(user) }}" alt="{{ user }}" class="image-preview" />
                     {% if user.isOnline %}
                         <span class="avatar-online avatar-online-list"></span>
                     {% endif %}

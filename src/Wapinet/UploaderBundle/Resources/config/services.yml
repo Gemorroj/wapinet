@@ -5,16 +5,7 @@ services:
         tags:
             - { name: form.type }
 
-    wapinet_uploader.avatar_directory_namer:
-        class: Wapinet\UploaderBundle\Naming\AvatarDirectoryNamer
-        tags:
-            - { name: avatar_directory_namer }
-
     wapinet_uploader.file_directory_namer:
         class: Wapinet\UploaderBundle\Naming\FileDirectoryNamer
         tags:
             - { name: file_directory_namer }
-
-    wapinet_uploader.delete_file:
-        class: Wapinet\UploaderBundle\Helper\DeleteFile
-        arguments: ["@request_stack", "@vich_uploader.property_mapping_factory"]

@@ -11,11 +11,7 @@
             </li>
             <li data-icon="false">
                 <span class="fos_comment_comment_avatar">
-                    {% if message.sender.hasAvatar %}
-                        <img src="{{ vich_uploader_asset(message.sender, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ message.sender }}" class="image-preview" />
-                    {% else %}
-                        <img src="{{ asset('static/noavatar.png') }}" alt="{{ message.sender }}" class="image-preview" />
-                    {% endif %}
+                    <img src="{{ wapinet_user_get_avatar_url(message.sender) }}" alt="{{ message.sender }}" class="image-preview" />
                     {% if message.sender.isOnline %}
                         <span class="avatar-online"></span>
                     {% endif %}

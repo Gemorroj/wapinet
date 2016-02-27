@@ -73,10 +73,10 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/wapinet/css/core.css') }}" />
     <script type="text/javascript" src="{{ asset('bundles/wapinet/js/core.js') }}"></script>
 
-    {% if app.user and app.user.hasAvatar %}
+    {% if app.user %}
         <style type="text/css">
             .ui-icon-wapinet-user:after {
-                background-image: url("{{ vich_uploader_asset(app.user, 'avatar')|imagine_filter('thumbnail') }}");
+                background-image: url("{{ wapinet_user_get_avatar_url(app.user, 18) }}");
                 background-size: 18px 18px;
             }
         </style>
@@ -116,11 +116,7 @@
                 <a href="#panel" class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext">Меню</a>
                 <h2>{{ title }}</h2>
                 {% if app.user %}
-                    {% if app.user.hasAvatar %}
-                        <a href="{{ path('fos_user_profile_show') }}" class="ui-btn ui-shadow ui-corner-all ui-icon-wapinet-user ui-btn-icon-notext">{{ app.user.username }}</a>
-                    {% else %}
-                        <a href="{{ path('fos_user_profile_show') }}" class="ui-btn ui-shadow ui-corner-all ui-icon-user ui-btn-icon-notext">{{ app.user.username }}</a>
-                    {% endif %}
+                    <a href="{{ path('fos_user_profile_show') }}" class="ui-btn ui-shadow ui-corner-all ui-icon-wapinet-user ui-btn-icon-notext">{{ app.user.username }}</a>
                 {% else %}
                     <a href="{{ path('fos_user_security_login') }}" class="ui-btn ui-shadow ui-corner-all ui-icon-lock ui-btn-icon-notext">Вход</a>
                 {% endif %}

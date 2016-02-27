@@ -131,14 +131,6 @@ fos_message:
 vich_uploader:
     db_driver: orm
     mappings:
-        avatar:
-            namer: vich_uploader.namer_uniqid
-            directory_namer: wapinet_uploader.avatar_directory_namer
-            delete_on_update: true # Set to true if the file should be deleted from the filesystem when the file is replaced by an other one
-            delete_on_remove: true # determines whether to delete file upon removal of entity
-            inject_on_load: true # determines whether to inject a File instance upon load
-            uri_prefix: /static/avatar
-            upload_destination: %kernel.web_dir%/static/avatar
         file:
             namer: vich_uploader.namer_uniqid
             directory_namer: wapinet_uploader.file_directory_namer
@@ -167,6 +159,10 @@ php_ffmpeg:
 
 
 easy_admin:
+    design:
+        assets:
+            css:
+                - 'bundles/wapinet/css/core.css'
     site_name: "%wapinet_title%"
     entities:
         News:
@@ -188,7 +184,7 @@ easy_admin:
             list:
                 fields:
                     - { property: 'username', label: 'Логин' }
-                    - { property: 'avatarName', label: 'Аватар', type: 'image', template: 'avatar' }
+                    - { property: 'emailCanonical', label: 'Аватар', type: 'image', template: 'avatar' }
                     - { property: 'email', label: 'Email' }
                     - { property: 'roles', label: 'Роли' }
                     - { property: 'createdAt', label: 'Дата создания' }

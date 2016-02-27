@@ -1,4 +1,0 @@
-Wapinet\UserBundle\Entity\User:
-    avatar:
-        mapping:           avatar
-        filename_property: avatarName

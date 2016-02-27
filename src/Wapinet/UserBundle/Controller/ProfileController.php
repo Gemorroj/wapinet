@@ -74,8 +74,6 @@ class ProfileController extends BaseController
         if ($form->isSubmitted()) {
 
             if ($form->isValid()) {
-                $this->container->get('wapinet_uploader.delete_file')->delete($form, $user);
-
                 /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
                 $userManager = $this->container->get('fos_user.user_manager');
 

@@ -30,11 +30,7 @@
         </li>
         <li data-icon="false">
             <span class="fos_comment_comment_avatar">
-                {% if gist.user.hasAvatar %}
-                    <img src="{{ vich_uploader_asset(gist.user, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ gist.user }}" class="image-preview" />
-                {% else %}
-                    <img src="{{ asset('static/noavatar.png') }}" alt="{{ gist.user }}" class="image-preview" />
-                {% endif %}
+                <img src="{{ wapinet_user_get_avatar_url(gist.user) }}" alt="{{ gist.user }}" class="image-preview" />
                 {% if gist.user.isOnline %}
                     <span class="avatar-online"></span>
                 {% endif %}

@@ -18,16 +18,6 @@ class User extends BaseUser implements ParticipantInterface
     const SEX_FEMALE = 'f';
 
     /**
-     * @var File|null
-     */
-    protected $avatar;
-
-    /**
-     * @var string|null
-     */
-    protected $avatarName;
-
-    /**
      * @var \DateTime
      */
     protected $createdAt;
@@ -332,54 +322,6 @@ class User extends BaseUser implements ParticipantInterface
 
 
     /**
-     * @return null|File
-     */
-    public function getAvatar()
-    {
-        return $this->avatar;
-    }
-
-    /**
-     * @param File|null $avatar
-     *
-     * @return User
-     */
-    public function setAvatar($avatar = null)
-    {
-        $tmp = $this->avatar;
-
-        $this->avatar = $avatar;
-
-        if ($this->avatar !== $tmp) {
-            $this->setUpdatedAtValue();
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * @return null|string
-     */
-    public function getAvatarName()
-    {
-        return $this->avatarName;
-    }
-
-    /**
-     * @param string|null $avatarName
-     *
-     * @return User
-     */
-    public function setAvatarName($avatarName)
-    {
-        $this->avatarName = $avatarName;
-
-        return $this;
-    }
-
-
-    /**
      * @return \DateTime
      */
     public function getCreatedAt()
@@ -450,18 +392,6 @@ class User extends BaseUser implements ParticipantInterface
     public function getCredentialsExpireAt()
     {
         return $this->credentialsExpireAt;
-    }
-
-    /**
-     * return bool
-     */
-    public function hasAvatar()
-    {
-        if ($this->avatar instanceof UploadedFile) {
-            return false;
-        }
-
-        return (null !== $this->avatar && '' !== $this->avatar->getPath());
     }
 
     /**

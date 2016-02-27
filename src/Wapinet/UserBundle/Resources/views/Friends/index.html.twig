@@ -14,11 +14,7 @@
         {% for friend in pagerfanta %}
             <li>
                 <a href="{{ path('wapinet_user_profile', {'username': friend}) }}">
-                    {% if friend.friend.hasAvatar %}
-                        <img src="{{ vich_uploader_asset(friend.friend, 'avatar')|imagine_filter('thumbnail') }}" alt="{{ friend }}" class="image-preview" />
-                    {% else %}
-                        <img src="{{ asset('static/noavatar.png') }}" alt="{{ friend }}" class="image-preview" />
-                    {% endif %}
+                    <img src="{{ wapinet_user_get_avatar_url(friend.friend) }}" alt="{{ friend }}" class="image-preview" />
                     {% if friend.friend.isOnline %}
                         <span class="avatar-online avatar-online-list"></span>
                     {% endif %}
