@@ -28,10 +28,10 @@ class OnlineListener
             return;
         }
 
-        $this->em->createQuery('DELETE FROM Wapinet\Bundle\Entity\Online o WHERE o.datetime < :lifetime')
-            ->setParameter('lifetime', new \DateTime('now -' . User::LIFETIME))
-            ->execute();
-
+        // чистим случайным образом, чтобы разгрузить БД
+        if (\mt_rand(1, 10) === 1) {
+            $this->cleanupOnline();
+        }
 
         $request = $event->getRequest();
 
@@ -59,5 +59,16 @@ class OnlineListener
             // могут быть конкурентные запросы, которые запишут в онлайн данные на уникальном индексе
             // игнорируем, т.к. маловажно
         }
+    }
+
+
+    /**
+     * Cleanup online
+     */
+    private function cleanupOnline()
+    {
+        $this->em->createQuery('DELETE FROM Wapinet\Bundle\Entity\Online o WHERE o.datetime < :lifetime')
+            ->setParameter('lifetime', new \DateTime('now -' . User::LIFETIME))
+            ->execute();
     }
 }
