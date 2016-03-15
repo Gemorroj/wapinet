@@ -35,23 +35,21 @@ class OnlineListener
 
         $request = $event->getRequest();
 
-        $online = new Online();
-        $online->setPath($request->getPathInfo());
-        $online->setBrowser($request->headers->get('User-Agent', ''));
-        $online->setIp($request->getClientIp());
-        $online->setDatetime(new \DateTime());
+        $requestIp = $request->getClientIp();
+        $requestBrowser = $request->headers->get('User-Agent', '');
 
-        $issetRow = $this->em->createQuery('SELECT o.id FROM Wapinet\Bundle\Entity\Online o WHERE o.ip = :ip AND o.browser = :browser')
-            ->setParameter('ip', $online->getIp())
-            ->setParameter('browser', $online->getBrowser())
-            ->getOneOrNullResult();
+        /** @var Online|null $online */
+        $online = $this->em->getRepository('WapinetBundle:Online')->findOneBy(array('ip' => $requestIp, 'browser' => $requestBrowser));
 
-        if (null !== $issetRow) {
-            $online->setId($issetRow['id']);
-            $this->em->merge($online);
-        } else {
-            $this->em->persist($online);
+        if (null === $online) {
+            $online = new Online();
+            $online->setBrowser($requestBrowser);
+            $online->setIp($requestIp);
         }
+        $online->setDatetime(new \DateTime());
+        $online->setPath($request->getPathInfo());
+
+        $this->em->persist($online);
 
         try {
             $this->em->flush();
