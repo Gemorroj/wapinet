@@ -180,7 +180,6 @@ var Autocomplete = {
 
 $(document).on("pagebeforeshow", "#page", function () {
     $.mobile.ajaxEnabled = false;
-    $.mobile.ajaxFormsEnabled = false;
 
     // подгрузка картинок в попапах
     $("a[href^='#image-']").on("click", function () {
