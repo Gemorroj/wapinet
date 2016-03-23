@@ -10,7 +10,7 @@ class FriendsControllerTestWapinet extends WebTestCaseWapinetUser
     {
         $client = static::createClientUser('admin');
 
-        $crawler = $client->request('GET', '/friends/admin');
+        $crawler = $client->request('GET', '/friends/list/admin');
         self::assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
