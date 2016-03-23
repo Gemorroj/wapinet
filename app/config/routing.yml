@@ -56,8 +56,8 @@ gregwar_captcha_routing:
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
 
-
 easy_admin_bundle:
-    resource: "@EasyAdminBundle/Controller/"
+    #resource: "@EasyAdminBundle/Controller/"
+    resource: "@WapinetBundle/Controller/AdminController.php"
     type:     annotation
     prefix:   /admin

@@ -249,12 +249,6 @@ services:
         tags:
             - {name: twig.extension, alias: news}
 
-    wapinet.event.easy_admin:
-        class: Wapinet\Bundle\EventListener\EasyAdminSubscriber
-        arguments: ["@service_container"]
-        tags:
-            - { name: kernel.event_subscriber }
-
     wapinet.form.file.upload:
         class: Wapinet\Bundle\Form\Type\File\UploadType
         arguments: ["@service_container"]

@@ -200,7 +200,6 @@ easy_admin:
                     - { property: 'birthday', label: 'День рождения', type: 'birthday', type_options: {required: false} }
                     - { property: 'timezone', label: 'Временная зона', type: 'timezone', type_options: {required: false} }
                     - { property: 'info', label: 'Дополнительная информация', type: 'textarea', type_options: {required: false} }
-                    - { property: 'avatar', label: 'Аватар', type: 'Wapinet\UploaderBundle\Form\Type\FileUrlType', type_options: {delete_button: true, label: false, required: false, accept: 'image/*'} }
         Subscribers:
             disabled_actions: ['new']
             label: 'Подписки'

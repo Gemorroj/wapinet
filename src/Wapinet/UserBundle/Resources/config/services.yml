@@ -39,9 +39,3 @@ services:
         arguments: ["@doctrine.orm.entity_manager", "@router"]
         tags:
             - { name: kernel.event_subscriber }
-
-    wapinet_user.event.easy_admin:
-        class: Wapinet\UserBundle\EventListener\EasyAdminSubscriber
-        arguments: ["@fos_user.user_manager"]
-        tags:
-            - { name: kernel.event_subscriber }
