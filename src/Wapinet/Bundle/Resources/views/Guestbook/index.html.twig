@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript">{% autoescape 'js' %}
+    <script>{% autoescape 'js' %}
         $(document).on("pagecreate", "#page", function () {
             var $pageContainer = $(this);
             var $textarea = $pageContainer.find("#{{ form.children.message.vars.id }}");

@@ -14,23 +14,23 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/wapinet/xbbcode/resources/style.css') }}" />
 
     {# jquery #}
-    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 
     {# jquery mobile #}
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-    <script type="text/javascript" src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
     {# FileSaver #}
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2014-11-29/FileSaver.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2014-11-29/FileSaver.min.js"></script>
     {# jqm.autoComplete #}
-    <script type="text/javascript" src="//cdn.rawgit.com/commadelimited/autoComplete.js/master/jqm.autoComplete-1.5.2-min.js"></script>
+    <script src="//cdn.rawgit.com/commadelimited/autoComplete.js/master/jqm.autoComplete-1.5.2-min.js"></script>
 
 
     {# jplayer #}
     {% if file is defined and (file.isPlayableVideo or file.isPlayableAudio) %}
         <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/skin/blue.monday/css/jplayer.blue.monday.min.css" />
-        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.min.js"></script>
-        <script type="text/javascript">{% autoescape 'js' %}
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.min.js"></script>
+        <script>{% autoescape 'js' %}
             var Jplayer = {
                 'swfPath': "//cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.swf"
             };
@@ -38,7 +38,7 @@
     {% endif %}
 
     <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">{% autoescape 'js' %}
+    <script>{% autoescape 'js' %}
         (function (d, w, c) {
             (w[c] = w[c] || []).push(function() {
                 try {
@@ -68,12 +68,12 @@
     {# pagerfanta #}
     {# <link rel="stylesheet" href="{{ asset('bundles/whiteoctoberpagerfanta/css/pagerfantaDefault.css') }}" type="text/css" /> #}
     {% if pagerfanta is defined and pagerfanta is not null and pagerfanta.count > 0 and (pagerfanta.hasPreviousPage or pagerfanta.hasNextPage) %}
-        <script type="text/javascript" src="{{ asset('bundles/wapinet/js/page-swiper.js') }}"></script>
+        <script src="{{ asset('bundles/wapinet/js/page-swiper.js') }}"></script>
     {% endif %}
 
     {# comments #}
     {% if comments_id is defined %}
-        <script type="text/javascript">{% autoescape 'js' %}
+        <script>{% autoescape 'js' %}
             // thread id
             var fos_comment_thread_id = '{{ comments_id }}';
 
@@ -90,14 +90,14 @@
                 (document.getElementsByTagName('head')[0]).appendChild(fos_comment_script);
             });
         {% endautoescape %}</script>
-        {# <script async="async" type="text/javascript" src="{{ asset('bundles/wapinetcomment/js/comments.js') }}"></script> #}
+        {# <script async="async" src="{{ asset('bundles/wapinetcomment/js/comments.js') }}"></script> #}
     {% endif %}
     {# css комментариев подключаем всегда, т.к. могут отображаться как на главной файлообменника #}
     <link rel="stylesheet" href="{{ asset('bundles/wapinetcomment/css/comments.css') }}" type="text/css" />
 
 
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/wapinet/css/core.css') }}" />
-    <script type="text/javascript" src="{{ asset('bundles/wapinet/js/core.js') }}"></script>
+    <script src="{{ asset('bundles/wapinet/js/core.js') }}"></script>
 
     {% if app.user %}
         <style type="text/css">

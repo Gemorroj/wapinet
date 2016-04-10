@@ -22,17 +22,17 @@
 
 {% block javascripts %}
     {% if file.isPlayableVideo %}
-        <script type="text/javascript">
+        <script>
             {% include '@Wapinet/video.js.twig' with {'file': file} %}
         </script>
     {% elseif file.isPlayableAudio %}
-        <script type="text/javascript">
+        <script>
             {% include '@Wapinet/audio.js.twig' with {'file': file} %}
         </script>
     {% endif %}
 
     {% if app.user and (is_granted('DELETE', file) or is_granted('ROLE_ADMIN')) %}
-        <script type="text/javascript">{% autoescape 'js' %}
+        <script>{% autoescape 'js' %}
             $(document).on("pageinit", function () {
                 $("#delete-popup-do").on("click", function () {
                     $.post('{{ path('file_delete', {'id': file.id}) }}', function () {
@@ -43,26 +43,7 @@
         {% endautoescape %}</script>
     {% endif %}
 
-    <script type="text/javascript" src="//yastatic.net/share/share.js"></script>
-    <script type="text/javascript">{% autoescape 'js' %}
-        $(document).ready(function () {
-            new Ya.share({
-                theme: 'counter',
-                element: 'share',
-                title: '{{ file.originalFileName }}',
-                description: '{{ file.description|wapinet_bbcode_parse|escape }}',
-
-                {% if screenshot is defined and screenshot is not null %}
-                    image: '{{ app.request.schemeAndHttpHost ~ screenshot }}',
-                {% endif %}
-
-                elementStyle: {
-                    'type': 'none',
-                    'quickServices': ['vkontakte', 'facebook', 'twitter', 'odnoklassniki', 'moimir']
-                }
-            });
-        });
-    {% endautoescape %}</script>
+    <script src="//yastatic.net/share2/share.js" async="async"></script>
 {% endblock %}
 
 {% block content %}
@@ -135,7 +116,8 @@
         </fieldset>
     {% endif %}
 
-    <p id="share"></p>
+
+    <p class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,twitter" data-title="{{ file.originalFileName|e('html_attr') }}" data-description="{{ file.description|wapinet_bbcode_parse|escape|e('html_attr') }}" {% if screenshot is defined and screenshot is not null %}data-image="{{ (app.request.schemeAndHttpHost ~ screenshot)|e('html_attr') }}"{% endif %}></p>
 
     {% include 'WapinetCommentBundle::comments_block.html.twig' %}
 {% endblock %}

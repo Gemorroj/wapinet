@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript">{% autoescape 'js' %}
+    <script>{% autoescape 'js' %}
         $(document).on("pagebeforeshow", "#page", function () {
             Autocomplete.link('{{ path('weather_show', {'country': country}) }}/', '{{ path('weather_city_search', {'country': country}) }}');
         });

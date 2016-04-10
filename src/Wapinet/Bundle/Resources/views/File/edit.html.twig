@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript">{% autoescape 'js' %}
+    <script>{% autoescape 'js' %}
         $(document).on("pagebeforeshow", "#page", function () {
             $('#file_upload').submit(function () {
                 return FileLoader.uploadFile(this);
