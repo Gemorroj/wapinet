@@ -117,7 +117,7 @@
     {% endif %}
 
 
-    <p class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,twitter" data-title="{{ file.originalFileName|e('html_attr') }}" data-description="{{ file.description|wapinet_bbcode_parse|escape|e('html_attr') }}" {% if screenshot is defined and screenshot is not null %}data-image="{{ (app.request.schemeAndHttpHost ~ screenshot)|e('html_attr') }}"{% endif %}></p>
+    <p class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,twitter" data-title="{{ file.originalFileName|e('html_attr') }}" data-description="{{ file.description|wapinet_bbcode_parse|striptags|e('html_attr') }}" {% if screenshot is defined and screenshot is not null %}data-image="{{ (app.request.schemeAndHttpHost ~ screenshot)|e('html_attr') }}"{% endif %}></p>
 
     {% include 'WapinetCommentBundle::comments_block.html.twig' %}
 {% endblock %}
