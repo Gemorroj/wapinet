@@ -6,7 +6,6 @@
 `php /var/www/wapinet.ru/app/console --env=prod wapinet:user:subscriber`  
 `indexer --rotate --all`  
 
-
 ### Установка прав доступа на запись:
 `app/logs`  
 `app/tmp`  
@@ -16,14 +15,16 @@
 `web/static/file`  
 
 ### Установка p7zip:
+    yum install p7zip
+
+#### Если версия в репозитории слишком старая, то ставим из исходников
     cd /root/p7zip_15.14_sources
     curl -L  http://downloads.sourceforge.net/project/p7zip/p7zip/15.14/p7zip_15.14_src_all.tar.bz2 > p7zip_15.14_src_all.tar.bz2
     tar xjvf p7zip_15.14_src_all.tar.bz2
     cd p7zip_15.14
-изменить в файле install.sh переменную DEST_HOME на /root/p7zip_15.14_build
+    # изменить в файле install.sh переменную DEST_HOME на /root/p7zip_15.14_build
     make all3
     ./install.sh
-
 
 ### Установка FFmpeg:
 Делаем все как указано по ссылке [https://trac.ffmpeg.org/wiki/CompilationGuide/Centos](https://trac.ffmpeg.org/wiki/CompilationGuide/Centos).  
@@ -159,8 +160,6 @@
     make install
     make distclean
     hash -r
-
-
 
 ### Конфйиг nginx:
     location ~ /\. {
