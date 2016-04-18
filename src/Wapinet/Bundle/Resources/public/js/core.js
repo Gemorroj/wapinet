@@ -111,33 +111,34 @@ var Helper = {
         var img = document.getElementById(id);
         img.src = path + '?n=' + (new Date()).getTime();
     },
-    escape: function (str) {
-        return str.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    escapeHtml: function (str) {
+        return str.toString().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    },
+    escapeUrl: function (str) {
+        return window.encodeURI(str.toString());
     }
 };
-
 var ImagePreview = {
     loadComments: function () {
         // превью картинок в комментариях и гостевой
         $("div.long-description img.bb").each(function (i) {
             var $image = $(this);
 
-            var src = Helper.escape($image.attr('src') || '');
-            var alt = Helper.escape($image.attr('alt') || '');
+            var src = Helper.escapeHtml(Helper.escapeUrl($image.attr('src') || ''));
+            var alt = Helper.escapeHtml($image.attr('alt') || '');
 
             $image.replaceWith(
                 '<a href="#popup-' + i + '" data-rel="popup" data-position-to="window" data-transition="fade">' +
-                '<img src="' + $image.attr('src').replace() + '" alt="" class="image-preview" />' +
+                '<img src="' + src + '" alt="" class="image-preview" />' +
                 '</a>' +
                 '<div data-role="popup" id="popup-' + i + '" data-overlay-theme="b" data-theme="b" data-corners="false">' +
                 '<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Закрыть</a>' +
-                '<img src="' + $image.attr('src') + '" alt="' + $image.attr('alt') + '" style="width: 100%;" />' +
+                '<img src="' + src + '" alt="' + alt + '" style="width: 100%;" />' +
                 '</div>'
             );
         });
     }
 };
-
 var Autocomplete = {
     text: function (source, input, suggestions) {
         input = input || '#autocomplete';
