@@ -1,3 +1,5 @@
+"use strict";
+
 $(document).one("pagecreate", ".swiper-page", function () {
     var $pageContainer = $(":mobile-pagecontainer");
 

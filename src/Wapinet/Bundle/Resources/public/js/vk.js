@@ -1,3 +1,5 @@
+"use strict";
+
 var Vk = {
     data: null,
     show: function (data) {
@@ -38,7 +40,6 @@ $(document).one("pagecreate", "#page", function () {
     var vkId = $("#user-vk").data("id");
 
     var script = document.createElement('script');
-    script.type = "text/javascript";
     script.src = 'https://api.vk.com/method/users.get?callback=Vk.show&fields=online,photo_200_orig&user_ids=' + vkId;
 
     document.getElementsByTagName("head")[0].appendChild(script);

@@ -1,3 +1,5 @@
+"use strict";
+
 var FileLoader = {
     readFile: function (file, callback) {
         if (window.FileReader) {

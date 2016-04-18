@@ -1,3 +1,5 @@
+"use strict";
+
 var isTouchDevice = ('ontouchstart' in window);
 
 $(document).one("pagecreate", "#page", function () {
