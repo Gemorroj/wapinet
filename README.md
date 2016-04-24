@@ -28,7 +28,7 @@
 
 ### Установка FFmpeg:
 Делаем все как указано по ссылке [https://trac.ffmpeg.org/wiki/CompilationGuide/Centos](https://trac.ffmpeg.org/wiki/CompilationGuide/Centos).  
-Дополнительно ставим `theora`, `libfaac`, `amr`. Не забываем указать в конфиге `--prefix="$build_directory"`, а для `theora` еще и `--with-ogg="$HOME/ffmpeg_build" --disable-shared`.  
+Дополнительно ставим `theora`, `amr`. Не забываем указать в конфиге `--prefix="$build_directory"`, а для `theora` еще и `--with-ogg="$HOME/ffmpeg_build" --disable-shared`.
 В конце проверить что на всех директориях выше и самих бинарниках есть права на выполнение.
 
     build_directory="/root/ffmpeg_17_01_2016_build"
@@ -36,9 +36,9 @@
     PATH="$build_directory/bin:$PATH"
     
     cd $sources_directory
-    curl -O http://www.nasm.us/pub/nasm/releasebuilds/2.11.08/nasm-2.11.08.tar.gz
-    tar xzvf nasm-2.11.08.tar.gz
-    cd nasm-2.11.08
+    curl -O http://www.nasm.us/pub/nasm/releasebuilds/2.12.01/nasm-2.12.01.tar.gz
+    tar xzvf nasm-2.12.01.tar.gz
+    cd nasm-2.12.01
     autoreconf -fiv
     ./configure --prefix="$build_directory" --bindir="$build_directory/bin"
     make
@@ -63,19 +63,21 @@
     make distclean
     
     cd $sources_directory
-    hg clone https://bitbucket.org/multicoreware/x265
+    hg clone https://bitbucket.org/multicoreware/x265 -r stable
     cd x265/build/linux
-    cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$build_directory" -DENABLE_SHARED:bool=off ../../source
+    cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$build_directory" -DENABLE_SHARED=OFF ../../source
     make
     make install
-    
+    make clean
+
     cd $sources_directory
-    git clone --depth 1 git://git.code.sf.net/p/opencore-amr/fdk-aac
+    git clone --depth 1 git://github.com/mstorsjo/fdk-aac.git
     cd fdk-aac
-    autoreconf -fiv
+    ./autogen.sh
     ./configure --prefix="$build_directory" --disable-shared
     make
     make install
+    ldconfig
     make distclean
     
     cd $sources_directory
@@ -131,17 +133,6 @@
     make clean
     
     cd $sources_directory
-    git clone --depth 1 git://github.com/Arcen/faac.git
-    cd faac
-    ./bootstrap
-    ./configure --prefix="$build_directory" --disable-shared
-    make
-    make install
-    ldconfig
-    make clean
-    make distclean
-    
-    cd $sources_directory
     git clone --depth 1 git://github.com/BelledonneCommunications/opencore-amr.git
     cd opencore-amr
     autoreconf -fiv
@@ -153,9 +144,9 @@
     make distclean
     
     cd $sources_directory
-    git clone --depth 1 -b release/2.8 https://github.com/FFmpeg/FFmpeg.git
+    git clone --depth 1 -b release/3.0 https://github.com/FFmpeg/FFmpeg.git
     cd FFmpeg
-    PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure --prefix="$build_directory" --extra-cflags="-I$build_directory/include" --extra-ldflags="-L$build_directory/lib" --bindir="$build_directory/bin" --pkg-config-flags="--static" --enable-gpl --enable-nonfree --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-libfaac --enable-libopencore-amrwb --enable-libopencore-amrnb --enable-libtheora --enable-version3
+    PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure --prefix="$build_directory" --extra-cflags="-I$build_directory/include" --extra-ldflags="-L$build_directory/lib" --bindir="$build_directory/bin" --pkg-config-flags="--static" --enable-gpl --enable-nonfree --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-libopencore-amrwb --enable-libopencore-amrnb --enable-libtheora --enable-version3
     make
     make install
     make distclean

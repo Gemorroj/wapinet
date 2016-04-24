@@ -50,7 +50,7 @@ class Video extends \Twig_Extension
             try {
                 $media = $ffmpeg->open($this->getWebDir() . $path);
 
-                $format = new X264();
+                $format = new X264('libfdk_aac');
                 $this->setOptions($format, $media);
 
                 $media->save($format, $this->getWebDir() . $mp4File);
