@@ -418,14 +418,21 @@ class Siza
                     $end = true;
                 }
 
-                if (0 === \strpos($href, 'http://f.siza.ru')) {
+                $isNativeLink = (0 === \strpos($href, 'http://f.siza.ru'));
+                $isScriptLink = (false !== \strpos($href, 'download=' . \rawurlencode('http://f.siza.ru')));
+                if ($isNativeLink || $isScriptLink) {
 
                     $prevNode = $a->previousSibling;
                     if ($prevNode->nodeType === \XML_TEXT_NODE && $prevNode->nodeValue === ' / ') {
                         $prevNode->parentNode->removeChild($prevNode);
                     }
 
-                    $a->setAttribute('href', '?download=yes&q=' . \str_replace('http://f.siza.ru', '', $href));
+                    if ($isNativeLink) {
+                        $a->setAttribute('href', '?download=yes&q=' . \rawurlencode(\str_replace('http://f.siza.ru', '', $href)));
+                    } else { // $isScriptLink
+                        \parse_str(\str_replace('?', '&', \rawurldecode($href)), $parsedHrefDownloadQuery);
+                        $a->setAttribute('href', '?download=yes&q=' . \rawurlencode(\str_replace('http://f.siza.ru', '', $parsedHrefDownloadQuery['download'])));
+                    }
                     $a->setAttribute('data-role', 'button');
                     $a->setAttribute('data-inline', 'true');
                     $a->setAttribute('data-icon', 'arrow-d');
