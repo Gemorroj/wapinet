@@ -21,7 +21,7 @@
         "sensio/distribution-bundle": "~5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
-        "javiereguiluz/easyadmin-bundle": "^1.12",
+        "javiereguiluz/easyadmin-bundle": "^1.13",
         "friendsofsymfony/user-bundle": "^2.0@dev",
         "friendsofsymfony/comment-bundle": "^2.0@dev",
         "friendsofsymfony/message-bundle": "dev-master",

@@ -11,16 +11,26 @@ use Wapinet\UserBundle\Entity\User;
 
 class AdminController extends BaseAdminController
 {
+    /**
+     * @return \FOS\UserBundle\Model\UserInterface
+     */
     public function createNewUserEntity()
     {
         return $this->get('fos_user.user_manager')->createUser();
     }
 
+    /**
+     * @param User $user
+     */
     public function prePersistUserEntity(User $user)
     {
         $this->get('fos_user.user_manager')->updateUser($user, false);
     }
 
+
+    /**
+     * @param News $news
+     */
     public function prePersistNewsEntity(News $news)
     {
         $news->setCreatedBy($this->get('security.token_storage')->getToken()->getUser());
@@ -61,6 +71,9 @@ class AdminController extends BaseAdminController
     }
 
 
+    /**
+     * @param object $entity
+     */
     protected function preRemoveEntity($entity)
     {
         switch (true) {

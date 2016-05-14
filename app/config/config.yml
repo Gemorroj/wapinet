@@ -184,7 +184,7 @@ easy_admin:
             list:
                 fields:
                     - { property: 'username', label: 'Логин' }
-                    - { property: 'emailCanonical', label: 'Аватар', type: 'image', template: 'avatar' }
+                    - { property: 'emailCanonical', label: 'Аватар', type: 'image', template: 'avatar.html.twig' }
                     - { property: 'email', label: 'Email' }
                     - { property: 'roles', label: 'Роли' }
                     - { property: 'createdAt', label: 'Дата создания' }
