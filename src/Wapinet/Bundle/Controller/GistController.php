@@ -11,9 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Router;
-use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
-use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
-use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wapinet\Bundle\Entity\Gist;
 use Wapinet\Bundle\Event\GistEvent;
@@ -21,7 +18,6 @@ use Wapinet\Bundle\Form\Type\Gist\AddType;
 use Wapinet\Bundle\Form\Type\Gist\EditType;
 use Wapinet\Bundle\Form\Type\Gist\SearchType;
 use Wapinet\UserBundle\Entity\User;
-use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 
 class GistController extends Controller
 {
@@ -106,8 +102,6 @@ class GistController extends Controller
                     $entityManager->persist($gist);
                     $entityManager->flush();
 
-                    $this->saveAcl($user, $gist);
-
                     $this->container->get('event_dispatcher')->dispatch(
                         GistEvent::GIST_ADD,
                         new GistEvent($user, $gist)
@@ -124,34 +118,6 @@ class GistController extends Controller
         }
 
         return $this->redirectToRoute('gist_index');
-    }
-
-
-    /**
-     * @param User $user
-     * @param Gist $gist
-     * @throws \Exception
-     * @throws \Symfony\Component\Security\Acl\Exception\AclAlreadyExistsException
-     * @throws \Symfony\Component\Security\Acl\Exception\InvalidDomainObjectException
-     */
-    protected function saveAcl(User $user, Gist $gist)
-    {
-        // creating the ACL
-        $aclProvider = $this->get('security.acl.provider');
-        $objectIdentity = ObjectIdentity::fromDomainObject($gist);
-
-        try {
-            $acl = $aclProvider->findAcl($objectIdentity);
-        } catch (AclNotFoundException $e) {
-            $acl = $aclProvider->createAcl($objectIdentity);
-        }
-
-        // retrieving the security identity of the currently logged-in user
-        $securityIdentity = UserSecurityIdentity::fromAccount($user);
-
-        // grant owner access
-        $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
-        $aclProvider->updateAcl($acl);
     }
 
 

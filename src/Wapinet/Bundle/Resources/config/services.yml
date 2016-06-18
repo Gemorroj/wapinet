@@ -278,3 +278,17 @@ services:
         arguments: ["@hash"]
         tags:
             - { name: form.type }
+
+    wapinet.file_voter:
+        class: Wapinet\Bundle\Security\FileVoter
+        arguments: ['@security.access.decision_manager']
+        public: false
+        tags:
+            - { name: security.voter }
+
+    wapinet.gist_voter:
+        class: Wapinet\Bundle\Security\GistVoter
+        arguments: ['@security.access.decision_manager']
+        public: false
+        tags:
+            - { name: security.voter }

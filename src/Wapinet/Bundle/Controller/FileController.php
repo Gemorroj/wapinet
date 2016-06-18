@@ -15,9 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Router;
-use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
-use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
-use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wapinet\Bundle\Entity\File;
 use Wapinet\Bundle\Entity\FileTags;
@@ -29,7 +26,6 @@ use Wapinet\Bundle\Form\Type\File\PasswordType;
 use Wapinet\Bundle\Form\Type\File\SearchType;
 use Wapinet\Bundle\Form\Type\File\UploadType;
 use Wapinet\UserBundle\Entity\User;
-use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 
 /**
  * @see http://wap4file.org
@@ -674,34 +670,6 @@ class FileController extends Controller
 
 
     /**
-     * @param File $file
-     * @see http://symfony.com/doc/current/cookbook/security/acl.html
-     */
-    protected function saveFileAcl(File $file)
-    {
-        $user = $this->getUser();
-        if (null !== $user) {
-            // creating the ACL
-            $aclProvider = $this->get('security.acl.provider');
-            $objectIdentity = ObjectIdentity::fromDomainObject($file);
-
-            try {
-                $acl = $aclProvider->findAcl($objectIdentity);
-            } catch (AclNotFoundException $e) {
-                $acl = $aclProvider->createAcl($objectIdentity);
-            }
-
-            // retrieving the security identity of the currently logged-in user
-            $securityIdentity = UserSecurityIdentity::fromAccount($user);
-
-            // grant owner access
-            $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
-            $aclProvider->updateAcl($acl);
-        }
-    }
-
-
-    /**
      * @param Request $request
      * @param File    $data
      * @throws FileDuplicatedException
@@ -747,7 +715,6 @@ class FileController extends Controller
         $entityManager->persist($data);
 
         $entityManager->flush();
-        $this->saveFileAcl($data);
 
         $this->container->get('event_dispatcher')->dispatch(
             FileEvent::FILE_ADD,
