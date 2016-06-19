@@ -108,7 +108,7 @@ class Siza
         $this->foldersListDl = $this->xpath->query('//div[@id="foldersList"]/dl/..');
         $this->listingNagivation = $this->xpath->query('//div[@id="listingNagivation"]');
         $this->contentList = $this->xpath->query('//div[@id="contentList"]');
-        $this->contentNodes = $this->xpath->query('//div[@class="block"]');
+        $this->contentNodes = $this->xpath->query('//div[contains(@class, "block")]');
     }
 
     /**
@@ -384,9 +384,9 @@ class Siza
 
         /** @var \DOMElement $v */
         foreach ($this->contentNodes as $v) {
-            $tmp = $v->childNodes->item(4);
-            if ($tmp && $tmp->nodeName === 'table') {
-                continue; // пропускаем оценки
+            $tables = $v->getElementsByTagName('table');
+            if ($tables->length) {
+                continue; // пропускаем блок с оценками
             }
 
             $scriptArr = $v->getElementsByTagName('script');
@@ -406,32 +406,36 @@ class Siza
                 $href = (string)$a->getAttribute('href');
 
                 // http://dwloadfiles.ru/api.php?a=104275&u=http%3A%2F%2Ff.siza.ru%2F65%2F6504%2F650435%2F19th_Club_Party_Night_Nok_128x128.jar%3Fr%3D75875388&n=19th Club Party Night&d=3&mt=1&s=1&ic=2501&im=2508&f=19th_Club_Party_Night_Nok_128x128.jar?r=75875388
-                if (0 === \strpos($href, 'http://dwloadfiles.ru/api.php?')) {
+                /*if (0 === \strpos($href, 'http://dwloadfiles.ru/api.php?')) {
                     // какой-то хак сайта
                     $parsedHref = \parse_url($href, \PHP_URL_QUERY);
                     \parse_str($parsedHref, $parsedHrefQuery);
                     $href = $parsedHrefQuery['u'];
                     // какой-то хак сайта
-                }
+                } */
 
                 if (0 === \strpos($href, 'http://') && 0 !== \strpos($href, 'http://f.siza.ru')) {
                     $end = true;
                 }
 
-                $isNativeLink = (0 === \strpos($href, 'http://f.siza.ru'));
-                $isScriptLink = (false !== \strpos($href, 'download=' . \rawurlencode('http://f.siza.ru')));
-                if ($isNativeLink || $isScriptLink) {
+                $isNativeLinkF = (0 === \strpos($href, 'http://f.siza.ru'));
+                $isScriptLinkF = (false !== \strpos($href, 'download=' . \rawurlencode('http://f.siza.ru')));
+                $isScriptLink = (false !== \strpos($href, 'download=' . \rawurlencode('http://siza.ru')));
+                if ($isNativeLinkF || $isScriptLinkF || $isScriptLink) {
 
                     $prevNode = $a->previousSibling;
                     if ($prevNode->nodeType === \XML_TEXT_NODE && $prevNode->nodeValue === ' / ') {
                         $prevNode->parentNode->removeChild($prevNode);
                     }
 
-                    if ($isNativeLink) {
+                    if ($isNativeLinkF) {
                         $a->setAttribute('href', '?download=yes&q=' . \rawurlencode(\str_replace('http://f.siza.ru', '', $href)));
-                    } else { // $isScriptLink
+                    } else if ($isScriptLinkF) {
                         \parse_str(\str_replace('?', '&', \rawurldecode($href)), $parsedHrefDownloadQuery);
                         $a->setAttribute('href', '?download=yes&q=' . \rawurlencode(\str_replace('http://f.siza.ru', '', $parsedHrefDownloadQuery['download'])));
+                    } else { // $isScriptLink
+                        \parse_str(\str_replace('?', '&', \rawurldecode($href)), $parsedHrefDownloadQuery);
+                        $a->setAttribute('href', '?screen=yes&q=' . \rawurlencode(\str_replace('http://siza.ru', '', $parsedHrefDownloadQuery['download'])));
                     }
                     $a->setAttribute('data-role', 'button');
                     $a->setAttribute('data-inline', 'true');
@@ -447,6 +451,8 @@ class Siza
                     $a->setAttribute('data-role', 'button');
                     $a->setAttribute('data-inline', 'true');
                     $a->setAttribute('data-icon', 'arrow-d');
+                } else if (0 === \strpos($href, '/load/artists/')) {
+                    $a->setAttribute('href', '#');
                 } else {
                     $href = \str_replace('?scr=', '&scr=', $href);
                     $a->setAttribute('href', '?q=' . $href);
@@ -467,6 +473,14 @@ class Siza
 
                 if (0 === \strpos($data, '/load/swf/dewplayer-rect.swf')) {
                     $object->setAttribute('data', $this->contentDirectory . '/' . $data);
+                    $object->removeAttribute('style');
+
+                    $lastChild = $object->parentNode->lastChild; //DOMText
+                    $div = $lastChild->previousSibling; //div
+
+                    if ($div->getAttribute('id') === 'audioplayer') {
+                        $object->parentNode->removeChild($div);
+                    }
                 }
             }
 
