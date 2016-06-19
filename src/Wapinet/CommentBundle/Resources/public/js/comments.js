@@ -47,15 +47,13 @@
          *
          * @param string identifier Unique identifier url for the thread comments.
          * @param string url Optional url for the thread. Defaults to current location.
-         * @param integer page
          */
-        getThreadComments: function(identifier, permalink, page) {
+        getThreadComments: function(identifier, permalink) {
             var event = jQuery.Event('fos_comment_before_load_thread');
 
             event.identifier = identifier;
             event.params = {
-                permalink: encodeURIComponent(permalink || window.location.href),
-                page: encodeURIComponent(page || 1)
+                permalink: encodeURIComponent(permalink || window.location.href)
             };
 
             FOS_COMMENT.thread_container.trigger(event);
@@ -298,18 +296,6 @@
                             );
                         }
                     );
-                }
-            );
-
-            // Pagerfanta listener
-            FOS_COMMENT.thread_container.on('click',
-                '.pagerfanta a',
-                function(e) {
-                    //e.stopPropagation();
-                    e.preventDefault();
-                    var page = this.href.split('page=')[1].split('&')[0];
-
-                    FOS_COMMENT.getThreadComments(window.fos_comment_thread_id, undefined, page);
                 }
             );
         },

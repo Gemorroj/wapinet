@@ -3,22 +3,16 @@ services:
         class: Wapinet\CommentBundle\Helper\Manager
         arguments: ["@doctrine"]
 
-    wapinet_comment.manager.comment:
-        class: Wapinet\CommentBundle\Entity\CommentManager
-        arguments: ["@event_dispatcher", "@fos_comment.sorting_factory", "@fos_comment.entity_manager", "%fos_comment.model.comment.class%"]
-        calls:
-            - [setContainer, ["@service_container"]]
-
-    # fix для acl
     fos_comment.manager.comment.default:
         class: Wapinet\CommentBundle\Entity\CommentManager
         arguments: ["@event_dispatcher", "@fos_comment.sorting_factory", "@fos_comment.entity_manager", "%fos_comment.model.comment.class%"]
         calls:
-            - [setContainer, ["@service_container"]]
+            - [setPaginate, ["@paginate"]]
+            - [setRequestStack, ["@request_stack"]]
 
     wapinet_comment.twig_extension:
         class: Wapinet\CommentBundle\Twig\Extension\Comment
-        arguments: ["@wapinet_comment.manager.comment"]
+        arguments: ["@fos_comment.manager.comment"]
         tags:
             - {name: twig.extension, alias: wapinet_comment}
 

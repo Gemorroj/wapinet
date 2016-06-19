@@ -17,7 +17,7 @@
     <div data-role="collapsible" data-collapsed="false">
         <h4>Комментарии <span class="div-h4-count">{{ count|wapinet_count }}</span></h4>
 
-        {% if fos_comment_can_edit_thread(thread) %}
+        {% if fos_comment_can_edit_thread(thread) or is_granted('ROLE_ADMIN') %}
             <div class="fos_comment_thread_commentable">
                 <a href="#" data-role="button" data-mini="true" data-inline="true" data-url="{{ url('fos_comment_edit_thread_commentable', {'id': thread.id, 'value': not thread.commentable}) }}" class="fos_comment_thread_commentable_action">
                     {{ (thread.commentable ? 'fos_comment_thread_close' : 'fos_comment_thread_open') | trans({}, 'FOSCommentBundle') }}
@@ -38,10 +38,4 @@
 
 {% if depth == 0 %}
     </div>
-    {#
-    <div class="pagerfanta">
-        {{ pagerfanta(pagerfanta) }}
-    </div>
-    #}
 {% endif %}
-

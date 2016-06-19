@@ -91,22 +91,6 @@ fos_comment:
             comment: Wapinet\CommentBundle\Entity\Comment
             thread: Wapinet\CommentBundle\Entity\Thread
             vote: Wapinet\CommentBundle\Entity\Vote
-    acl_roles:
-        comment:
-            create: ROLE_USER
-            view: IS_AUTHENTICATED_ANONYMOUSLY
-            edit: ROLE_ADMIN
-            delete: ROLE_ADMIN
-        thread:
-            create: ROLE_USER
-            view: IS_AUTHENTICATED_ANONYMOUSLY
-            edit: ROLE_ADMIN
-            delete: ROLE_ADMIN
-        vote:
-            create: ROLE_USER
-            view: IS_AUTHENTICATED_ANONYMOUSLY
-            edit: ROLE_ADMIN
-            delete: ROLE_ADMIN
 
 fos_message:
     db_driver: orm
