@@ -2,8 +2,8 @@
 
 var FileLoader = {
     readFile: function (file, callback) {
-        if (window.FileReader) {
-            var fileReader = new window.FileReader();
+        if (FileReader) {
+            var fileReader = new FileReader();
             fileReader.onload = callback;
             fileReader.readAsDataURL(file);
             return fileReader;
@@ -37,17 +37,17 @@ var FileLoader = {
             textVisible: true
         });
 
-        if (window.FormData === undefined || window.XMLHttpRequest === undefined) {
+        if (FormData === undefined || XMLHttpRequest === undefined) {
             return true;
         }
 
-        var xhr = new window.XMLHttpRequest();
+        var xhr = new XMLHttpRequest();
         if (xhr.upload === undefined) {
             xhr.close();
             return true;
         }
 
-        var formData = new window.FormData(form);
+        var formData = new FormData(form);
         $uploadLoader.appendTo('div.ui-loader h1');
 
         xhr.upload.addEventListener("progress", function (e) {
@@ -88,8 +88,10 @@ var FileLoader = {
         if (Blob) {
             $link.show();
             $link.click(function () {
-                var blob = new Blob([$(text).val()], { type: "text/plain;charset=utf-8" });
-                // не работает в опера 12. зависимость от Blob.js
+                var blob = new Blob(
+                    [$(text).val()],
+                    {"type": "text/plain;charset=utf-8"}
+                );
                 // saveAs реализована в FileSaver
                 saveAs(blob, fileName || "file.txt");
             });
