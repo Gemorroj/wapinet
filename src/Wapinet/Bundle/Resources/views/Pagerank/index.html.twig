@@ -11,26 +11,61 @@
     {% if result is not null %}
         <ul data-role="listview" data-inset="true">
             <li>
-                Google PageRank <span class="ui-li-count">{{ result.google_pr }}</span>
+                Google
             </li>
             <li>
-                <a href="http://www.google.com/search?q=site%3A{{ result.url }}">
-                    Проиндексировано страниц <span class="ui-li-count">{{ result.google_pages }}</span>
+                <a rel="external" href="https://www.google.com/search?q=site%3A{{ result.domain }}">
+                    Проиндексировано страниц <span class="ui-li-count">{{ result.google.pages }}</span>
                 </a>
             </li>
             <li>
-                <a href="http://www.google.com/search?q=%22{{ result.url }}%22%20-inurl%3A%22{{ result.url }}%22">
-                    Обратных ссылок <span class="ui-li-count">{{ result.google_inurl }}</span>
+                <a rel="external" href="https://www.google.com/search?q=%22{{ result.domain }}%22%20-inurl%3A%22{{ result.domain }}%22">
+                    Обратных ссылок <span class="ui-li-count">{{ result.google.inurl }}</span>
                 </a>
             </li>
         </ul>
         <ul data-role="listview" data-inset="true">
             <li>
-                Яндекс ТИЦ <span class="ui-li-count">{{ result.yandex_tcy }}</span>
+                Яндекс
             </li>
             <li>
-                <a href="http://yandex.ru/yandsearch?text={{ result.url }}">
-                    Проиндексировано страниц <span class="ui-li-count">{{ result.yandex_pages }}</span>
+                <a rel="external" href="https://www.yandex.ru/cycounter?{{ result.domain }}">
+                    Яндекс ТИЦ <span class="ui-li-count">{{ result.yandex.tcy }}</span>
+                </a>
+            </li>
+            <li>
+                <a rel="external" href="https://yandex.ru/yandsearch?text={{ result.domain }}">
+                    Проиндексировано страниц <span class="ui-li-count">{{ result.yandex.pages }}</span>
+                </a>
+            </li>
+        </ul>
+        <ul data-role="listview" data-inset="true">
+            <li>
+                Facebook
+            </li>
+            <li>
+                <a rel="external" href="#">
+                    Ссылок <span class="ui-li-count">{{ result.facebook.share_count }}</span>
+                </a>
+            </li>
+            <li>
+                <a rel="external" href="#">
+                    Комментариев <span class="ui-li-count">{{ result.facebook.comment_count }}</span>
+                </a>
+            </li>
+            <li>
+                <a rel="external" href="#">
+                    Лайков <span class="ui-li-count">{{ result.facebook.like_count }}</span>
+                </a>
+            </li>
+        </ul>
+        <ul data-role="listview" data-inset="true">
+            <li>
+                Вконтакте
+            </li>
+            <li>
+                <a rel="external" href="https://vk.com">
+                    Ссылок <span class="ui-li-count">{{ result.vk }}</span>
                 </a>
             </li>
         </ul>
@@ -42,13 +77,6 @@
 
     <div class="ui-corner-all custom-corners">
         <div class="ui-body ui-body-a">
-            <p>
-                <em>Google PageRank</em> (от Larry Page Rank) (иногда просто PR) — алгоритм расчёта авторитетности страницы, используемый поисковой системой Google.<br/>
-                PageRank — это числовая величина, характеризующая "важность" страницы в Google. Чем больше ссылок на страницу, тем она становится "важнее".<br/>
-                Шкала PageRank может изменяться от 0 до 10.
-                Можно придерживаться примерно такой градации: PageRank от 4 до 5 — наиболее типичный для большинства сайтов средней "раскрученности". 6 — очень хорошо "раскрученный" сайт. 7 — величина, практически недостижимая для множества сайтов, но иногда встречается. Значения 8, 9, 10 имеют исключительно популярные и значимые проекты.
-                Следует отметить, что PageRank — это параметр относящийся к каждой отдельной странице, но не всему сайту в целом. На одном сайте могут находиться страницы с разным PageRank.
-            </p>
             <p>
                 <em>Тематический индекс цитирования</em> (тИЦ) — технология поисковой машины "Яндекс", заключающаяся в определении "авторитетности" интернет-ресурсов с учётом качественной характеристики — ссылок на них с других сайтов. тИЦ рассчитывается по специально разработанному алгоритму, в котором особое значение придаётся тематической близости ресурса и ссылающихся на него сайтов. Данный показатель в первую очередь используется для определения порядка расположения ресурсов в рубриках каталога "Яндекса".
             </p>
