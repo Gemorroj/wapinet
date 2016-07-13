@@ -190,6 +190,8 @@ server {
     location /media/ {
         access_log off;
         expires 30d;
+
+        try_files $uri /app.php$is_args$args;
     }
     location /bundles/ {
         access_log off;
