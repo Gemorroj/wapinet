@@ -7,9 +7,10 @@
 `indexer --rotate --all`  
 
 ### Установка прав доступа на запись:
-`app/logs`  
-`app/tmp`  
-`app/cache`  
+`var/logs`  
+`var/sessions`  
+`var/tmp`  
+`var/cache`  
 `web/media/cache/resolve/thumbnail/static`  
 `web/media/cache/thumbnail/static`  
 `web/static/file`  
