@@ -46,7 +46,7 @@ class EmailController extends Controller
      */
     protected function getEmailFooter()
     {
-        return "\r\n\r\n---\r\n" . $this->container->getParameter('wapinet_email_footer');
+        return "\r\n\r\n---\r\n" . $this->getParameter('wapinet_email_footer');
     }
 
 
@@ -72,7 +72,7 @@ class EmailController extends Controller
             $message->attach($attach);
         }
 
-        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $request = $this->get('request_stack')->getCurrentRequest();
         $ip = \implode(', ', $request->getClientIps());
 
         $message->getHeaders()->addTextHeader('Received', 'from user [' . $ip . ']');

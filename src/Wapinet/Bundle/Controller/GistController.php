@@ -102,7 +102,7 @@ class GistController extends Controller
                     $entityManager->persist($gist);
                     $entityManager->flush();
 
-                    $this->container->get('event_dispatcher')->dispatch(
+                    $this->get('event_dispatcher')->dispatch(
                         GistEvent::GIST_ADD,
                         new GistEvent($user, $gist)
                     );
@@ -220,7 +220,7 @@ class GistController extends Controller
      */
     protected function searchSphinx(array $data, $page = 1)
     {
-        $client = $this->container->get('sphinx');
+        $client = $this->get('sphinx');
         $client->setPage($page);
 
         if ('date' === $data['sort']) {

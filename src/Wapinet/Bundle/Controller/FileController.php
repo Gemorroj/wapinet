@@ -115,7 +115,7 @@ class FileController extends Controller
      */
     protected function searchSphinx(array $data, $page = 1)
     {
-        $client = $this->container->get('sphinx');
+        $client = $this->get('sphinx');
         $client->setPage($page);
 
         if ('date' === $data['sort']) {
@@ -716,7 +716,7 @@ class FileController extends Controller
 
         $entityManager->flush();
 
-        $this->container->get('event_dispatcher')->dispatch(
+        $this->get('event_dispatcher')->dispatch(
             FileEvent::FILE_ADD,
             new FileEvent($data->getUser(), $data)
         );

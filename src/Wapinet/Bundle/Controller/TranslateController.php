@@ -62,7 +62,7 @@ class TranslateController extends Controller
         $curl = $this->get('curl');
         $curl->init(
             'https://translate.yandex.net/api/v1.5/tr.json/translate?key=' .
-            $this->container->getParameter('wapinet_translate_key') .
+            $this->getParameter('wapinet_translate_key') .
             '&lang=' . $langFrom . '-' . $langTo .
             '&text=' . \urlencode($text)
         );
@@ -89,7 +89,7 @@ class TranslateController extends Controller
         $curl = $this->get('curl');
         $curl->init(
             'https://translate.yandex.net/api/v1.5/tr.json/detect?key=' .
-            $this->container->getParameter('wapinet_translate_key') .
+            $this->getParameter('wapinet_translate_key') .
             '&text=' . \urlencode($text)
         );
 
@@ -122,14 +122,14 @@ class TranslateController extends Controller
      */
     private function getLangs()
     {
-        $cacheDir = $this->container->get('kernel')->getCacheDir();
+        $cacheDir = $this->get('kernel')->getCacheDir();
         $langsFileName = $cacheDir . \DIRECTORY_SEPARATOR . 'yandex-langs.json';
 
         if (false === \file_exists($langsFileName)) {
             $curl = $this->get('curl');
             $curl->init(
                 'https://translate.yandex.net/api/v1.5/tr.json/getLangs?key=' .
-                $this->container->getParameter('wapinet_translate_key') .
+                $this->getParameter('wapinet_translate_key') .
                 '&ui=ru'
             );
 

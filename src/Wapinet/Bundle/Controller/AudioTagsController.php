@@ -64,7 +64,7 @@ class AudioTagsController extends Controller
     {
         /** @var $file UploadedFile */
         $file = $data['file'];
-        $tempDirectory = $this->container->get('kernel')->getTmpDir();
+        $tempDirectory = $this->get('kernel')->getTmpDir();
         $tempName = \tempnam($tempDirectory, 'audio_file');
 
         return $file->move($tempDirectory, $tempName);
@@ -302,6 +302,6 @@ class AudioTagsController extends Controller
      */
     protected function getFilePath($fileName)
     {
-        return $this->container->get('kernel')->getTmpDir() . \DIRECTORY_SEPARATOR . $fileName;
+        return $this->get('kernel')->getTmpDir() . \DIRECTORY_SEPARATOR . $fileName;
     }
 }

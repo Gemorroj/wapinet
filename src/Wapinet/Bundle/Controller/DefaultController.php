@@ -33,14 +33,14 @@ class DefaultController extends Controller
      */
     public function logAction()
     {
-        $git = new GitBinary($this->container->getParameter('wapinet_git_path'));
+        $git = new GitBinary($this->getParameter('wapinet_git_path'));
 
         $repo = new Repository(__DIR__, $git, 'wapinet');
 
         $log = $repo->getLog(
             'HEAD',
             null,
-            $this->container->getParameter('wapinet_git_log')
+            $this->getParameter('wapinet_git_log')
         );
 
         return $this->render('WapinetBundle:Default:log.html.twig', array('log' => $log));
@@ -131,7 +131,7 @@ class DefaultController extends Controller
         $em->persist($seaCustomer);
         $em->flush();
 
-        $file = $this->container->getParameter('wapinet_sea_file');
+        $file = $this->getParameter('wapinet_sea_file');
 
         $response = new BinaryFileResponse($file);
         $response->setPrivate();
