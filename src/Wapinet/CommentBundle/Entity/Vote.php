@@ -1,25 +1,25 @@
 <?php
 
-namespace Wapinet\CommentBundle\Entity;
+//namespace Wapinet\CommentBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use FOS\CommentBundle\Entity\Vote as BaseVote;
-use FOS\CommentBundle\Model\SignedVoteInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+//use Doctrine\ORM\Mapping as ORM;
+//use FOS\CommentBundle\Entity\Vote as BaseVote;
+//use FOS\CommentBundle\Model\SignedVoteInterface;
+//use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  * @ORM\Table("comment_vote")
  */
-class Vote extends BaseVote implements SignedVoteInterface
-{
+//class Vote extends BaseVote implements SignedVoteInterface
+//{
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+//    protected $id;
 
     /**
      * Comment of this vote
@@ -27,7 +27,7 @@ class Vote extends BaseVote implements SignedVoteInterface
      * @var Comment
      * @ORM\ManyToOne(targetEntity="Wapinet\CommentBundle\Entity\Comment")
      */
-    protected $comment;
+//    protected $comment;
 
     /**
      * Author of the vote
@@ -36,25 +36,25 @@ class Vote extends BaseVote implements SignedVoteInterface
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @var UserInterface
      */
-    protected $voter;
+//    protected $voter;
 
     /**
      * Sets the owner of the vote
      *
      * @param UserInterface $voter
      */
-    public function setVoter(UserInterface $voter)
-    {
-        $this->voter = $voter;
-    }
+//    public function setVoter(UserInterface $voter)
+//    {
+//        $this->voter = $voter;
+//    }
 
     /**
      * Gets the owner of the vote
      *
      * @return UserInterface
      */
-    public function getVoter()
-    {
-        return $this->voter;
-    }
-}
+//    public function getVoter()
+//    {
+//        return $this->voter;
+//    }
+//}
