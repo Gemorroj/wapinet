@@ -12,7 +12,7 @@ use FOS\CommentBundle\Model\VotableCommentInterface;
  * @ORM\Entity
  * @ORM\Table("comment")
  */
-class Comment extends BaseComment implements SignedCommentInterface, VotableCommentInterface
+class Comment extends BaseComment implements SignedCommentInterface/*, VotableCommentInterface*/
 {
     /**
      * @ORM\Id
