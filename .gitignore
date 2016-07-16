@@ -1,27 +1,37 @@
 # PHPStorm
 .idea/
 
-# Cache and logs (Symfony2)
-/app/cache/*
-/app/logs/*
-/app/tmp/*
-!app/cache/.gitkeep
-!app/logs/.gitkeep
-!app/tmp/.gitkeep
+# Cache and logs (Symfony3)
+/var/*
+!/var/cache
+/var/cache/*
+!var/cache/.gitkeep
+!/var/logs
+/var/logs/*
+!var/logs/.gitkeep
+!/var/sessions
+/var/sessions/*
+!var/sessions/.gitkeep
+!/var/tmp
+/var/tmp/*
+!var/tmp/.gitkeep
+!var/SymfonyRequirements.php
 
-# Binaries
-bin/*
-!bin/.gitkeep
 
 # Parameters
 /app/config/parameters.yml
 
 # Managed by Composer
-/app/bootstrap.php.cache
 /vendor/
 
 # Assets
 /web/bundles/
+/web/static/file/*
+!web/static/file/index.html
+/web/media/cache/resolve/thumbnail/static/*
+!web/media/cache/resolve/thumbnail/static/index.html
+/web/media/cache/thumbnail/static/*
+!web/media/cache/thumbnail/static/index.html
 
 # Composer PHAR
 /composer.phar

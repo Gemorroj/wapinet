@@ -1,15 +1,4 @@
 services:
-    wapinet_message.new_thread.form.type:
-        class: Wapinet\MessageBundle\Form\Type\NewThreadMessageFormType
-        arguments: ["%fos_message.thread_class%"]
-        tags:
-            - { name: form.type, alias: wapinet_message_new_thread }
-    wapinet_message.reply.form.type:
-        class: Wapinet\MessageBundle\Form\Type\ReplyMessageFormType
-        arguments: ["%fos_message.thread_class%"]
-        tags:
-            - { name: form.type, alias: wapinet_message_reply }
-
     wapinet_message.provider:
         class: Wapinet\MessageBundle\Provider\Provider
         public: false

@@ -11,27 +11,39 @@
             "app/AppCache.php"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/ownede/FOSMessageBundle.git"
+        }
+    ],
     "require": {
+        "friendsofsymfony/message-bundle": "dev-symfony3",
         "php": ">=5.6",
-        "symfony/symfony": "2.8.*",
-        "doctrine/orm": "^2.4.8",
-        "doctrine/doctrine-bundle": "~1.4",
-        "symfony/swiftmailer-bundle": "~2.3",
-        "symfony/monolog-bundle": "~2.4",
-        "sensio/distribution-bundle": "~5.0",
+        "symfony/symfony": "3.1.*",
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/doctrine-cache-bundle": "^1.2",
+        "symfony/swiftmailer-bundle": "^2.3",
+        "symfony/monolog-bundle": "^2.8",
+        "symfony/polyfill-apcu": "^1.0",
+        "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0",
-        "javiereguiluz/easyadmin-bundle": "^1.13",
+        "incenteev/composer-parameter-handler": "^2.0",
+        "javiereguiluz/easyadmin-bundle": "^1.15",
         "friendsofsymfony/user-bundle": "^2.0@dev",
         "friendsofsymfony/comment-bundle": "^2.0@dev",
-        "friendsofsymfony/message-bundle": "dev-master",
         "white-october/pagerfanta-bundle": "^1.0",
         "james-heinrich/getid3": "dev-master",
-        "vich/uploader-bundle": "^1.1",
+        "vich/uploader-bundle": "^1.2",
         "liip/imagine-bundle": "^1.5",
-        "gregwar/captcha-bundle": "^1.1",
-        "sujayjaju/ffmpeg-bundle": "dev-master",
-        "highco/sphinx-bundle": "^2.0",
+        "gregwar/captcha-bundle": "^2.0",
+        "pulse00/ffmpeg-bundle": "dev-master",
         "tufanbarisyildirim/php-apk-parser": "dev-master",
         "geoip2/geoip2": "^2.3",
         "christeredvartsen/php-bittorrent": "^1.1",
@@ -43,12 +55,13 @@
         "gemorroj/syntax": "dev-master",
         "gemorroj/htmlvalidator": "dev-master",
         "gemorroj/cssvalidator": "dev-master",
-        "gemorroj/m3u-parser": "dev-master"
+        "gemorroj/m3u-parser": "dev-master",
+        "gemorroj/sphinx-bundle": "dev-master"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~3.0",
-        "symfony/phpunit-bridge": "~2.7",
-        "phpunit/phpunit": "^4.8"
+        "sensio/generator-bundle": "^3.0",
+        "symfony/phpunit-bridge": "^3.0",
+        "phpunit/phpunit": "^5.4"
     },
     "scripts": {
         "post-install-cmd": [
@@ -68,12 +81,12 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ]
     },
-    "config": {
-        "bin-dir": "bin"
-    },
     "extra": {
         "symfony-app-dir": "app",
+        "symfony-bin-dir": "bin",
+        "symfony-var-dir": "var",
         "symfony-web-dir": "web",
+        "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"

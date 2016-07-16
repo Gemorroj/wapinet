@@ -40,6 +40,21 @@ class AppKernel extends Kernel
     }
 
 
+    public function getRootDir()
+    {
+        return __DIR__;
+    }
+
+    public function getCacheDir()
+    {
+        return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
+    }
+
+    public function getLogDir()
+    {
+        return dirname(__DIR__).'/var/logs';
+    }
+
     /**
      * @return string
      */
@@ -72,7 +87,7 @@ class AppKernel extends Kernel
      */
     public function getTmpDir()
     {
-        return $this->getRootDir() . DIRECTORY_SEPARATOR . 'tmp';
+        return dirname(__DIR__).'/var/tmp';
     }
 
     /**
@@ -82,7 +97,7 @@ class AppKernel extends Kernel
      */
     public function getWebDir()
     {
-        return realpath($this->getRootDir() . '/../web');
+        return dirname(__DIR__).'/web';
     }
 
 
@@ -106,7 +121,7 @@ class AppKernel extends Kernel
      */
     public function registerBundles()
     {
-        $bundles = array(
+        $bundles = [
             new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
@@ -117,7 +132,7 @@ class AppKernel extends Kernel
             new Vich\UploaderBundle\VichUploaderBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
             new Gregwar\CaptchaBundle\GregwarCaptchaBundle(),
-            new sujayjaju\FFmpegBundle\PhpFFmpegBundle,
+            new Dubture\FFmpegBundle\DubtureFFmpegBundle(),
             new Highco\SphinxBundle\HighcoSphinxBundle(),
 
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
@@ -133,9 +148,9 @@ class AppKernel extends Kernel
             new Wapinet\MessageBundle\WapinetMessageBundle(),
             new Wapinet\CommentBundle\WapinetCommentBundle(),
             new Wapinet\UploaderBundle\WapinetUploaderBundle(),
-        );
+        ];
 
-        if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
+        if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();

@@ -44,7 +44,7 @@ class Audio extends \Twig_Extension
         $mp3File = $path . '.mp3';
 
         if (false === \file_exists($this->getWebDir() . $mp3File)) {
-            $ffmpeg = $this->container->get('php_ffmpeg.ffmpeg');
+            $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
             try {
                 $media = $ffmpeg->open($this->getWebDir() . $path);
 

@@ -20,21 +20,20 @@ framework:
     csrf_protection: true
     validation:
         enabled: true
-        api: 2.5
     #serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
-        #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
     trusted_hosts:   ~
     trusted_proxies: ~
     session:
         name: wapinet
         cookie_httponly: true
-        # handler_id set to null will use default session handler from php.ini
-        handler_id:  ~
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
     fragments:       ~
     http_method_override: true
+    assets: ~
 
 # Twig Configuration
 twig:
@@ -98,9 +97,9 @@ fos_message:
     message_class: Wapinet\MessageBundle\Entity\Message
     provider: wapinet_message.provider
     new_thread_form:
-        type: wapinet_message.new_thread.form.type
+        class: Wapinet\MessageBundle\Form\Type\NewThreadMessageFormType
     reply_form:
-        type: wapinet_message.reply.form.type
+        class: Wapinet\MessageBundle\Form\Type\ReplyMessageFormType
 
 vich_uploader:
     db_driver: orm
@@ -126,7 +125,7 @@ liip_imagine:
             filters:
                 thumbnail: { size: [null, 80], mode: inset }
 
-php_ffmpeg:
+dubture_f_fmpeg:
     ffmpeg_binary: %wapinet_ffmpeg_path%
     ffprobe_binary: %wapinet_ffprobe_path%
     threads_count: %wapinet_ffmpeg_threads_count%
