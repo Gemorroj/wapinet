@@ -15,6 +15,11 @@
 `web/media/cache/thumbnail/static`  
 `web/static/file`  
 
+### Установка cron:
+```bash
+    yum install cronie
+```
+
 ### Установка sendmail:
 ```bash
     yum install sendmail
