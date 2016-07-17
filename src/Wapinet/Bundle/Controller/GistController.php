@@ -227,7 +227,9 @@ class GistController extends Controller
         ;
 
         if ('date' === $data['sort']) {
-            $sphinxQl->orderBy('created_at_ts');
+            $sphinxQl->orderBy('created_at_ts', 'desc');
+        } else {
+            $sphinxQl->orderBy('WEIGHT()', 'desc');
         }
 
         return $client->getPagerfanta($sphinxQl, Gist::class);

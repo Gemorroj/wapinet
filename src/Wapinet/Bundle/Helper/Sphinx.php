@@ -1,7 +1,6 @@
 <?php
 namespace Wapinet\Bundle\Helper;
 
-use Foolz\SphinxQL\Drivers\ResultSetInterface;
 use Foolz\SphinxQL\SphinxQL;
 use Foolz\SphinxQL\Drivers\Pdo\Connection;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -70,11 +69,13 @@ class Sphinx
      */
     public function getPagerfanta(SphinxQL $sphinxQl, $entityClass)
     {
+
         $bridge = new Bridge($this->container);
         $bridge->setRepositoryClass($entityClass);
         $bridge->setPkColumn('id');
 
         $result = $sphinxQl->execute();
+        //$sphinxQl->reset();
         $meta = $sphinxQl->query('SHOW META')->execute();
 
         $bridge->setSphinxResult($result, $meta);

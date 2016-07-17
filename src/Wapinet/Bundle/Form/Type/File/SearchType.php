@@ -30,8 +30,8 @@ class SearchType extends AbstractType
 
         $builder->add('sort', ChoiceType::class, array(
             'choices' => array(
-                'relevance' => 'релевантности',
-                'date' => 'дате',
+                'релевантности' => 'relevance',
+                'дате' => 'date',
             ),
             'expanded' => true,
             'required' => true,

@@ -119,11 +119,13 @@ class FileController extends Controller
         $client = $this->get('sphinx');
         $sphinxQl = $client->select($page)
             ->from('files')
-            ->match(array('description', 'original_file_name', 'tag_name'), $data['search'])
+            ->match(array('original_file_name', 'description', 'tag_name'), $data['search'])
         ;
 
         if ('date' === $data['sort']) {
-            $sphinxQl->orderBy('created_at_ts');
+            $sphinxQl->orderBy('created_at_ts', 'desc');
+        } else {
+            $sphinxQl->orderBy('WEIGHT()', 'desc');
         }
 
         return $client->getPagerfanta($sphinxQl, File::class);
