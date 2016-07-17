@@ -175,13 +175,6 @@ proxy_index:
         path: %wapinet_proxy_url%
         permanent: true
 
-ftp_index:
-    path: /ftp/
-    defaults:
-        _controller: FrameworkBundle:Redirect:urlRedirect
-        path: %wapinet_ftp_url%
-        permanent: true
-
 forum_index:
     path: /forum/
     defaults:
