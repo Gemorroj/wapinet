@@ -27,19 +27,20 @@
 
 ### Установка p7zip:
 ```bash
-    yum install p7zip
+    yum install p7zip p7zip-plugins
 ```
 
-#### Если версия в репозитории слишком старая, то ставим из исходников
+#### Если версия в репозитории слишком старая, или нет поддержки rar (RHEL) то ставим из исходников
 ```bash
-cd /root/p7zip_15.14_sources
-curl -L  http://downloads.sourceforge.net/project/p7zip/p7zip/15.14/p7zip_15.14_src_all.tar.bz2 > p7zip_15.14_src_all.tar.bz2
-tar xjvf p7zip_15.14_src_all.tar.bz2
-cd p7zip_15.14
-# изменить в файле install.sh переменную DEST_HOME на /root/p7zip_15.14_build
+cd /root/p7zip_16.02_sources
+curl -L  http://downloads.sourceforge.net/project/p7zip/p7zip/16.02/p7zip_16.02_src_all.tar.bz2 > p7zip_16.02_src_all.tar.bz2
+tar xjvf p7zip_16.02_src_all.tar.bz2
+cd p7zip_16.02
+# изменить в файле install.sh переменную DEST_HOME на /root/p7zip_16.02_build
 make all3
 ./install.sh
 ```
+Проверить список поддерживаемых форматов можно так `7z i` или `7za i` 
 
 ### Установка FFmpeg:
 Делаем все как указано по ссылке [https://trac.ffmpeg.org/wiki/CompilationGuide/Centos](https://trac.ffmpeg.org/wiki/CompilationGuide/Centos).  
@@ -150,6 +151,8 @@ make install
 make distclean
 hash -r
 ```
+Проверить что все директории к исполняемым файлам имеют права на выполнение.
+
 
 ### Конфйиг nginx:
 ```nginx
