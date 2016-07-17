@@ -49,14 +49,14 @@
         "christeredvartsen/php-bittorrent": "^1.1",
         "cypresslab/gitelephant": "^1.1",
         "seostats/seostats": "^2.5@dev",
+        "foolz/sphinxql-query-builder": "^1.0",
         "simple-updates/phpwhois": "dev-master",
         "gemorroj/archive7z": "dev-master",
         "gemorroj/xbbcode": "dev-master",
         "gemorroj/syntax": "dev-master",
         "gemorroj/htmlvalidator": "dev-master",
         "gemorroj/cssvalidator": "dev-master",
-        "gemorroj/m3u-parser": "dev-master",
-        "gemorroj/sphinx-bundle": "dev-master"
+        "gemorroj/m3u-parser": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

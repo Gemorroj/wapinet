@@ -15,6 +15,16 @@
 `web/media/cache/thumbnail/static`  
 `web/static/file`  
 
+### Установка sendmail:
+```bash
+    yum install sendmail
+```
+
+### Установка sphinx:
+```bash
+    yum install sphinx
+```
+
 ### Установка p7zip:
 ```bash
     yum install p7zip
@@ -228,7 +238,6 @@ server {
  - ...
 
 ### TODO:
-- Заменить апи сфинкса https://github.com/FoolCode/SphinxQL-Query-Builder
 - Сделать возможность в переводчике и обфускаторе загружать файлы
 - Актуализировать мобильные коды. Найти новые для разных андроидов.
 - Данные о видео на youtube и др. https://github.com/essence/essence

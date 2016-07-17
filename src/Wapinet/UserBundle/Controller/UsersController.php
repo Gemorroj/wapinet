@@ -83,17 +83,13 @@ class UsersController extends Controller
      */
     protected function searchSphinx(array $data, $page = 1)
     {
-        $client = $this->container->get('sphinx');
-        $client->setPage($page);
+        $client = $this->get('sphinx');
+        $sphinxQl = $client->select($page)
+            ->from('users')
+            ->match(array('username', 'email', 'info'), $data['search'])
+        ;
 
-        // поиск
-        $client->AddQuery($data['search'], 'users');
-
-        $result = $client->RunQueries();
-        if (false === $result) {
-            throw new \RuntimeException($client->GetLastError());
-        }
-
+        $result = $sphinxQl->execute();
         return $client->getPagerfanta($result, User::class);
     }
 }

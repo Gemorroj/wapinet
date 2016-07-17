@@ -87,6 +87,7 @@ class FileController extends Controller
                 return $this->redirectToRoute('file_search', array('key' => $key));
             }
 
+
             if (null !== $key && $session->has('file_search')) {
                 $search = $session->get('file_search');
                 if ($key === $search['key']) {
@@ -116,21 +117,15 @@ class FileController extends Controller
     protected function searchSphinx(array $data, $page = 1)
     {
         $client = $this->get('sphinx');
-        $client->setPage($page);
+        $sphinxQl = $client->select($page)
+            ->from('files')
+            ->match(array('description', 'original_file_name', 'tag_name'), $data['search'])
+        ;
 
         if ('date' === $data['sort']) {
-            $client->SetSortMode(SPH_SORT_ATTR_DESC, 'created_at_ts');
-        } else {
-            $client->SetSortMode(SPH_SORT_RELEVANCE);
+            $sphinxQl->orderBy('created_at_ts');
         }
-
-        $client->AddQuery($data['search'], 'files');
-
-        $result = $client->RunQueries();
-        if (false === $result) {
-            throw new \RuntimeException($client->GetLastError());
-        }
-
+        $result = $sphinxQl->execute();
         return $client->getPagerfanta($result, File::class);
     }
 
