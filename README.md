@@ -1,9 +1,9 @@
 # Сайт wapinet.ru
 
 ### Установка крон заданий:
-`php /var/www/wapinet.ru/app/console --env=prod wapinet:tmp:clear "1 day"`  
-`php /var/www/wapinet.ru/app/console --env=prod wapinet:tags:clear`  
-`php /var/www/wapinet.ru/app/console --env=prod wapinet:user:subscriber`  
+`php /var/www/wapinet.ru/bin/console --env=prod wapinet:tmp:clear "1 day"`  
+`php /var/www/wapinet.ru/bin/console --env=prod wapinet:tags:clear`  
+`php /var/www/wapinet.ru/bin/console --env=prod wapinet:user:subscriber`  
 `indexer --rotate --all`  
 
 ### Установка прав доступа на запись:
