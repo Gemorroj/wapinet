@@ -229,8 +229,8 @@ class GistController extends Controller
         if ('date' === $data['sort']) {
             $sphinxQl->orderBy('created_at_ts');
         }
-        $result = $sphinxQl->execute();
-        return $client->getPagerfanta($result, Gist::class);
+
+        return $client->getPagerfanta($sphinxQl, Gist::class);
     }
 
 

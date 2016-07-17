@@ -125,8 +125,8 @@ class FileController extends Controller
         if ('date' === $data['sort']) {
             $sphinxQl->orderBy('created_at_ts');
         }
-        $result = $sphinxQl->execute();
-        return $client->getPagerfanta($result, File::class);
+
+        return $client->getPagerfanta($sphinxQl, File::class);
     }
 
 

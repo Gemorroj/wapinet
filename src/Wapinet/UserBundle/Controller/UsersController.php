@@ -89,7 +89,6 @@ class UsersController extends Controller
             ->match(array('username', 'email', 'info'), $data['search'])
         ;
 
-        $result = $sphinxQl->execute();
-        return $client->getPagerfanta($result, User::class);
+        return $client->getPagerfanta($sphinxQl, User::class);
     }
 }

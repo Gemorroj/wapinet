@@ -53,7 +53,9 @@ class Sphinx
      */
     public function select($page = 1)
     {
-        $offset = ($page - 1) * $this->maxPerPage;
+        $this->page = $page;
+
+        $offset = ($this->page - 1) * $this->maxPerPage;
         $limit = $this->maxPerPage;
 
         return SphinxQL::create($this->connection)->select()->limit($offset, $limit);
@@ -61,18 +63,21 @@ class Sphinx
 
 
     /**
-     * @param ResultSetInterface $result
+     * @param SphinxQL $sphinxQl
      * @param string $entityClass
      *
      * @return \Pagerfanta\Pagerfanta
      */
-    public function getPagerfanta(ResultSetInterface $result, $entityClass)
+    public function getPagerfanta(SphinxQL $sphinxQl, $entityClass)
     {
         $bridge = new Bridge($this->container);
         $bridge->setRepositoryClass($entityClass);
         $bridge->setPkColumn('id');
 
-        $bridge->setSphinxResult($result);
+        $result = $sphinxQl->execute();
+        $meta = $sphinxQl->query('SHOW META')->execute();
+
+        $bridge->setSphinxResult($result, $meta);
 
         $pager = $bridge->getPager();
         $pager->setMaxPerPage($this->maxPerPage);

@@ -214,28 +214,34 @@ class Bridge
      * setSphinxResults
      *
      * @param ResultSetInterface $result
+     * @param ResultSetInterface $resultMeta
      *
      * @return Bridge
      */
-    public function setSphinxResult($result)
+    public function setSphinxResult(ResultSetInterface $result, ResultSetInterface $resultMeta)
     {
         $this->results = array(
-            'matches'       => array(),
-            'total_found'   => 0,
+            'matches' => $result->fetchAllAssoc(),
+            'meta' => $this->parseMeta($resultMeta),
         );
 
-        $totalFound = $result->count();
+        return $this;
+    }
 
-        $this->results['total_found'] += $totalFound;
 
-        if ($totalFound > 0) {
-            $this->results['matches'] = array_merge(
-                $this->results['matches'],
-                $result->fetchAllAssoc()
-            );
+    /**
+     * @param ResultSetInterface $resultMeta
+     * @return array
+     */
+    private function parseMeta(ResultSetInterface $resultMeta)
+    {
+        $data = array();
+
+        foreach ($resultMeta as $value) {
+            $data[$value['Variable_name']] = $value['Value'];
         }
 
-        return $this;
+        return $data;
     }
 
     /**
@@ -260,7 +266,7 @@ class Bridge
 
         $adapter = new Adapter($results);
 
-        $adapter->setNbResults(isset($this->results['total_found']) ? $this->results['total_found'] : 0);
+        $adapter->setNbResults(isset($this->results['meta']['total_found']) ? $this->results['meta']['total_found'] : 0);
 
         return new Pagerfanta($adapter);
     }
