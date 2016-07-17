@@ -36,30 +36,13 @@ make all3
 Дополнительно ставим `theora`, `amr`. Не забываем указать в конфиге `--prefix="$build_directory"`, а для `theora` еще и `--with-ogg="$HOME/ffmpeg_build" --disable-shared`.
 В конце проверить что на всех директориях выше и самих бинарниках есть права на выполнение.
 ```bash
-build_directory="/root/ffmpeg_17_01_2016_build"
-sources_directory="/root/ffmpeg_17_01_2016_sources"
+yum install autoconf automake cmake freetype-devel gcc gcc-c++ git mercurial libtool make nasm yasm pkgconfig zlib-devel
+
+build_directory="/root/ffmpeg_17_07_2016_build"
+source_directory="/root/ffmpeg_17_07_2016_source"
 PATH="$build_directory/bin:$PATH"
 
-cd $sources_directory
-curl -O http://www.nasm.us/pub/nasm/releasebuilds/2.12.01/nasm-2.12.01.tar.gz
-tar xzvf nasm-2.12.01.tar.gz
-cd nasm-2.12.01
-autoreconf -fiv
-./configure --prefix="$build_directory" --bindir="$build_directory/bin"
-make
-make install
-make distclean
-
-cd $sources_directory
-git clone --depth 1 git://github.com/yasm/yasm.git
-cd yasm
-autoreconf -fiv
-./configure --prefix="$build_directory" --bindir="$build_directory/bin"
-make
-make install
-make distclean
-
-cd $sources_directory
+cd $source_directory
 git clone --depth 1 git://git.videolan.org/x264
 cd x264
 PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure --prefix="$build_directory" --bindir="$build_directory/bin" --enable-static
@@ -67,7 +50,7 @@ make
 make install
 make distclean
 
-cd $sources_directory
+cd $source_directory
 hg clone https://bitbucket.org/multicoreware/x265 -r stable
 cd x265/build/linux
 cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$build_directory" -DENABLE_SHARED=OFF ../../source
@@ -75,7 +58,7 @@ make
 make install
 make clean
 
-cd $sources_directory
+cd $source_directory
 git clone --depth 1 git://github.com/mstorsjo/fdk-aac.git
 cd fdk-aac
 ./autogen.sh
@@ -85,7 +68,7 @@ make install
 ldconfig
 make distclean
 
-cd $sources_directory
+cd $source_directory
 git clone --depth 1 git://github.com/rbrito/lame.git
 cd lame
 ./configure --prefix="$build_directory" --bindir="$build_directory/bin" --disable-shared --enable-nasm
@@ -93,7 +76,7 @@ make
 make install
 make distclean
 
-cd $sources_directory
+cd $source_directory
 git clone git://git.opus-codec.org/opus.git
 cd opus
 autoreconf -fiv
@@ -102,7 +85,7 @@ make
 make install
 make distclean
 
-cd $sources_directory
+cd $source_directory
 curl -O http://downloads.xiph.org/releases/ogg/libogg-1.3.2.tar.gz
 tar xzvf libogg-1.3.2.tar.gz
 cd libogg-1.3.2
@@ -111,7 +94,7 @@ make
 make install
 make distclean
 
-cd $sources_directory
+cd $source_directory
 curl -O http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.5.tar.gz
 tar xzvf libvorbis-1.3.5.tar.gz
 cd libvorbis-1.3.5
@@ -120,7 +103,7 @@ make
 make install
 make distclean
 
-cd $sources_directory
+cd $source_directory
 curl -O http://downloads.xiph.org/releases/theora/libtheora-1.1.1.tar.gz
 tar xzvf libtheora-1.1.1.tar.gz
 cd libtheora-1.1.1
@@ -129,15 +112,15 @@ make
 make install
 make distclean
 
-cd $sources_directory
+cd $source_directory
 git clone --depth 1 https://chromium.googlesource.com/webm/libvpx.git
 cd libvpx
-./configure --prefix="$build_directory" --disable-examples
+./configure --prefix="$build_directory" --disable-examples --as=yasm
 make
 make install
 make clean
 
-cd $sources_directory
+cd $source_directory
 git clone --depth 1 git://github.com/BelledonneCommunications/opencore-amr.git
 cd opencore-amr
 autoreconf -fiv
@@ -148,8 +131,8 @@ ldconfig
 make clean
 make distclean
 
-cd $sources_directory
-git clone --depth 1 -b release/3.0 https://github.com/FFmpeg/FFmpeg.git
+cd $source_directory
+git clone --depth 1 -b release/3.1 https://github.com/FFmpeg/FFmpeg.git
 cd FFmpeg
 PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure --prefix="$build_directory" --extra-cflags="-I$build_directory/include" --extra-ldflags="-L$build_directory/lib" --bindir="$build_directory/bin" --pkg-config-flags="--static" --enable-gpl --enable-nonfree --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-libopencore-amrwb --enable-libopencore-amrnb --enable-libtheora --enable-version3
 make
