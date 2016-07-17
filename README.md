@@ -199,7 +199,7 @@ server {
         access_log off;
         expires 30d;
     }
-    location /static/ {
+    location ~ ^/static/ {
         # Скачивание всех файлов (в т.ч. и txt, html и проч. в обменнике), чтобы потенциальный html/js код не выполнился в браузере
         add_header Content-Disposition "attachment";
         access_log off;
