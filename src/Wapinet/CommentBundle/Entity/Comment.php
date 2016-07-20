@@ -3,16 +3,13 @@
 namespace Wapinet\CommentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use FOS\CommentBundle\Entity\Comment as BaseComment;
-use FOS\CommentBundle\Model\SignedCommentInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use FOS\CommentBundle\Model\VotableCommentInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table("comment")
  */
-class Comment extends BaseComment implements SignedCommentInterface/*, VotableCommentInterface*/
+class Comment
 {
     /**
      * @ORM\Id

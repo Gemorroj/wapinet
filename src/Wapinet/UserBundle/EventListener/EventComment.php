@@ -2,8 +2,7 @@
 namespace Wapinet\UserBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use FOS\CommentBundle\Events as Event;
-use FOS\CommentBundle\Event\CommentEvent;
+use Wapinet\CommentBundle\Event\CommentEvent;
 use Wapinet\CommentBundle\Entity\Comment;
 use Wapinet\UserBundle\Entity\Event as EntityEvent;
 use Doctrine\Orm\EntityManager;
@@ -30,7 +29,7 @@ class EventComment implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            Event::COMMENT_POST_PERSIST => 'create',
+            CommentEvent::COMMENT_ADD => 'create',
         );
     }
 

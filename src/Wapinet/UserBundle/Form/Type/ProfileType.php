@@ -2,7 +2,6 @@
 
 namespace Wapinet\UserBundle\Form\Type;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
@@ -11,31 +10,15 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Form\FormBuilderInterface;
 use FOS\UserBundle\Form\Type\ProfileFormType as BaseType;
-use Wapinet\UploaderBundle\Form\Type\FileUrlType;
 use Wapinet\UserBundle\Entity\User;
 
 class ProfileType extends BaseType
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    /**
-     * @param string $user
-     * @param ContainerInterface $container
-     */
-    public function __construct($user, ContainerInterface $container)
-    {
-        parent::__construct($user);
-        $this->container = $container;
-    }
-
     public function buildUserForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildUserForm($builder, $options);
         $builder
-            ->add('sex', ChoiceType::class, array('label' => 'Пол', 'required' => false, 'choices' => User::getSexChoices()))
+            ->add('sex', ChoiceType::class, array('label' => 'Пол', 'required' => false, 'choices' => \array_flip(User::getSexChoices())))
             ->add('birthday', BirthdayType::class, array('widget' => 'single_text', 'label' => 'Дата рождения', 'required' => false, 'attr' => array('placeholder' => 'ГГГГ-ММ-ДД')))
             ->add('timezone', TimezoneType::class, array('label' => 'Временная зона', 'required' => false))
             ->add('country', CountryType::class, array('label' => 'Страна', 'required' => false))

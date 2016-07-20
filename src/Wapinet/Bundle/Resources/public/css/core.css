@@ -132,3 +132,10 @@ div.center-container {
 div.file-md5-hash {
     margin-top: -0.9em;
 }
+.comment-authorname {
+    margin-left: -0.3em;
+}
+.comment-avatar {
+    float: left;
+    margin-right: 0.5em;
+}

@@ -3,32 +3,6 @@
 {% block breadcrumbs %}
     {{wapinet_breadcrumbs()}}
 {% endblock %}
-{% block javascripts %}
-    <script>{% autoescape 'js' %}
-        $(document).on("pageinit", function () {
-            var deletePath, restorePath;
-
-            var listThreads = $("#list-threads");
-            listThreads.find("a[href='#delete-popup']").on("click", function () {
-                deletePath = $(this).data('path');
-            });
-            listThreads.find("a[href='#restore-popup']").on("click", function () {
-                restorePath = $(this).data('path');
-            });
-
-            $("#delete-popup-do").on("click", function () {
-                $.post(deletePath, function () {
-                    window.location.assign(window.location.href);
-                });
-            });
-            $("#restore-popup-do").on("click", function () {
-                $.post(restorePath, function () {
-                    window.location.assign(window.location.href);
-                });
-            });
-        });
-    {% endautoescape %}</script>
-{% endblock %}
 
 {% block navbar %}
     {% set active_page = app.request.attributes.get('_route') %}
@@ -45,29 +19,4 @@
 {% block content %}
     {% block fos_message_content %}{% endblock %}
     {% block fos_user_content %}{% endblock %}
-{% endblock %}
-
-{% block popup %}
-    <div data-role="popup" id="restore-popup" data-overlay-theme="a" data-dismissible="false" class="ui-corner-all">
-        <div data-role="header" class="ui-corner-top" data-theme="b">
-            <h1>Восстановление</h1>
-        </div>
-        <div data-role="content" class="ui-corner-bottom ui-content">
-            <h3 class="ui-title">Вы уверенны что хотите восстановить цепочку сообщений?</h3>
-            <p></p>
-            <a href="#" data-role="button" data-inline="true" data-rel="back">Отмена</a>
-            <a href="#" id="restore-popup-do" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Восстановить</a>
-        </div>
-    </div>
-    <div data-role="popup" id="delete-popup" data-overlay-theme="a" data-dismissible="false" class="ui-corner-all">
-        <div data-role="header" class="ui-corner-top" data-theme="b">
-            <h1>Удаление</h1>
-        </div>
-        <div data-role="content" class="ui-corner-bottom ui-content">
-            <h3 class="ui-title">Вы уверенны что хотите удалить цепочку сообщений?</h3>
-            <p>Цепочка сообщений попадет в корзину.</p>
-            <a href="#" data-role="button" data-inline="true" data-rel="back">Отмена</a>
-            <a href="#" id="delete-popup-do" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Удалить</a>
-        </div>
-    </div>
 {% endblock %}

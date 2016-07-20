@@ -124,10 +124,8 @@ class AppKernel extends Kernel
         $bundles = [
             new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
             new FOS\UserBundle\FOSUserBundle(),
-            new FOS\RestBundle\FOSRestBundle(),
-            new FOS\CommentBundle\FOSCommentBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle($this),
             new FOS\MessageBundle\FOSMessageBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),

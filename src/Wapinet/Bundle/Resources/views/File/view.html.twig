@@ -33,13 +33,13 @@
 
     {% if app.user and (is_granted('DELETE', file) or is_granted('ROLE_ADMIN')) %}
         <script>{% autoescape 'js' %}
-            $(document).on("pageinit", function () {
-                $("#delete-popup-do").on("click", function () {
-                    $.post('{{ path('file_delete', {'id': file.id}) }}', function () {
-                        window.location.assign('{{ path('file_index') }}');
-                    });
+
+            $(":mobile-pagecontainer").on("click", "#delete-popup-do", function () {
+                $.post('{{ path('file_delete', {'id': file.id}) }}', function () {
+                    window.location.assign('{{ path('file_index') }}');
                 });
             });
+
         {% endautoescape %}</script>
     {% endif %}
 

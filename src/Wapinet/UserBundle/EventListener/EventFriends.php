@@ -3,11 +3,10 @@ namespace Wapinet\UserBundle\EventListener;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use FOS\CommentBundle\Events as Event;
-use FOS\CommentBundle\Event\CommentEvent;
 use Wapinet\Bundle\Event\FileEvent;
 use Wapinet\Bundle\Event\GistEvent;
 use Wapinet\CommentBundle\Entity\Comment;
+use Wapinet\CommentBundle\Event\CommentEvent;
 use Wapinet\UserBundle\Entity\Friend;
 use Wapinet\UserBundle\Entity\Event as EntityEvent;
 use Doctrine\Orm\EntityManager;
@@ -35,7 +34,7 @@ class EventFriends implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            Event::COMMENT_POST_PERSIST => 'createComment',
+            CommentEvent::COMMENT_ADD => 'createComment',
             FriendEvent::FRIEND_ADD => 'friendAdd',
             FriendEvent::FRIEND_DELETE => 'friendDelete',
             FileEvent::FILE_ADD => 'fileAdd',

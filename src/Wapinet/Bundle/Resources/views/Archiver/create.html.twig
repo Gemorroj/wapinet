@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-    {{ form_start(form, {'action': path('archiver_create'), 'method': 'POST'}) }}
+    {{ form_start(form, {'action': path('archiver_create'), 'method': 'POST', 'attr': {'data-ajax': 'false'}}) }}
         {{ form_widget(form) }}
     {{ form_end(form) }}
 

@@ -24,7 +24,7 @@
     {% endif %}
 {% endspaceless %}{% endset %}
 
-$(document).ready(function () {
+$(document).on("pageshow", "#page", function () {
     {% if audio %}
         // (Default width: "420px")
 
@@ -33,11 +33,11 @@ $(document).ready(function () {
         var defaultWidth = 420;
         width = (width > (defaultWidth + space)) ? defaultWidth : (width - space);
 
-        $("#jquery_jplayer_1").jPlayer({
+        $(":mobile-pagecontainer").find("#jquery_jplayer_1").jPlayer({
             "ready": function () {
-                $("#jp_container_1").width(width + "px");
-                $(".jp-controls").width(width - 40 + "px");
-                $(".jp-progress, .jp-time-holder").css({width: width - 120 + "px", maxWidth: "186px"});
+                $(":mobile-pagecontainer").find("#jp_container_1").width(width + "px");
+                $(":mobile-pagecontainer").find(".jp-controls").width(width - 40 + "px");
+                $(":mobile-pagecontainer").find(".jp-progress, .jp-time-holder").css({width: width - 120 + "px", maxWidth: "186px"});
                 $(this).jPlayer("setMedia", {
                     "{{ format }}": "{{ audio }}"
                 });
@@ -47,6 +47,6 @@ $(document).ready(function () {
             "swfPath": Jplayer.swfPath
         });
     {% else %}
-        $("#jp_container_1").hide();
+        $(":mobile-pagecontainer").find("#jp_container_1").hide();
     {% endif %}
 });

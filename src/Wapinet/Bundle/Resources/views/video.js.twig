@@ -20,7 +20,8 @@
 
 {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_video_screenshot %}
 
-$(document).ready(function () {
+
+$(document).on("pageshow", "#page", function () {
     {% if video %}
         // (Default width: "480px")
         // (Default height: "270px")
@@ -30,11 +31,11 @@ $(document).ready(function () {
         var defaultWidth = 480;
         width = (width > (defaultWidth + space)) ? defaultWidth : (width - space);
 
-        $("#jquery_jplayer_1").jPlayer({
+        $(":mobile-pagecontainer").find("#jquery_jplayer_1").jPlayer({
             "ready": function () {
-                $(".jp-controls-holder").width(width - 40 + "px");
-                $(".jp-controls").css({"margin-left": width - 250 + "px"});
-                $("#jp_container_1").width(width + "px");
+                $(":mobile-pagecontainer").find(".jp-controls-holder").width(width - 40 + "px");
+                $(":mobile-pagecontainer").find(".jp-controls").css({"margin-left": width - 250 + "px"});
+                $(":mobile-pagecontainer").find("#jp_container_1").width(width + "px");
                 $(this).jPlayer("setMedia", {
                     {% if screenshot is not null %}
                         "poster": "{{ screenshot }}",
@@ -47,7 +48,6 @@ $(document).ready(function () {
             "swfPath": Jplayer.swfPath
         });
     {% else %}
-        $("#jp_container_1").hide();
+        $(":mobile-pagecontainer").find("#jp_container_1").hide();
     {% endif %}
 });
-

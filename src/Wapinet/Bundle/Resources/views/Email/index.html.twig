@@ -19,7 +19,7 @@
     {% endif %}
 
     {% form_theme form 'WapinetBundle::captcha.html.twig' %}
-    {{ form_start(form, {'action': path('email_index'), 'method': 'POST'}) }}
+    {{ form_start(form, {'action': path('email_index'), 'method': 'POST', 'attr': {'data-ajax': 'false'}}) }}
         {{ form_widget(form) }}
     {{ form_end(form) }}
 {% endblock %}

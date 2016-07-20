@@ -1,8 +1,9 @@
 {% set title %}{% block title %}{{ wapinet_title }}{% endblock %}{% endset %}
+{% set pageId %}{{ app.request.attributes.get('_route') }}{% endset %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ title == wapinet_title ? title : wapinet_title ~ ' - ' ~ title }}</title>
+    <title>{% if (is_granted('ROLE_USER') and fos_message_nb_unread() > 0) %}+{{ fos_message_nb_unread()|wapinet_count }} {% endif %}{{ title == wapinet_title ? title : wapinet_title ~ ' - ' ~ title }}</title>
 
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -27,18 +28,35 @@
 
 
     {# jplayer #}
-    {% if file is defined and (file.isPlayableVideo or file.isPlayableAudio) %}
-        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/skin/blue.monday/css/jplayer.blue.monday.min.css" />
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.min.js"></script>
-        <script>{% autoescape 'js' %}
-            var Jplayer = {
-                'swfPath': "//cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.swf"
-            };
-        {% endautoescape %}</script>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/skin/blue.monday/css/jplayer.blue.monday.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.min.js"></script>
+
+
+    {# fos js routing #}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/wapinet/css/core.css') }}" />
+    <script src="{{ asset('bundles/wapinet/js/core.js') }}"></script>
+    <script src="{{ asset('bundles/wapinet/js/module/archiver.js') }}"></script>
+    <script src="{{ asset('bundles/wapinet/js/module/message.js') }}"></script>
+
+    {% if app.user %}
+        <style type="text/css">
+            .ui-icon-wapinet-user:after {
+                background-image: url("{{ wapinet_user_get_avatar_url(app.user, 18) }}");
+                background-size: 18px 18px;
+            }
+        </style>
     {% endif %}
 
-    <!-- Yandex.Metrika counter -->
+
+
+
     <script>{% autoescape 'js' %}
+        "use strict";
+
+        {# яндекс метрика #}
         (function (d, w, c) {
             (w[c] = w[c] || []).push(function() {
                 try {
@@ -62,50 +80,178 @@
                 d.addEventListener("DOMContentLoaded", f, false);
             } else { f(); }
         })(document, window, "yandex_metrika_callbacks");
-    {% endautoescape %}</script>
-    <!-- /Yandex.Metrika counter -->
 
-    {# pagerfanta #}
-    {# <link rel="stylesheet" href="{{ asset('bundles/whiteoctoberpagerfanta/css/pagerfantaDefault.css') }}" type="text/css" /> #}
-    {% if pagerfanta is defined and pagerfanta is not null and pagerfanta.count > 0 and (pagerfanta.hasPreviousPage or pagerfanta.hasNextPage) %}
-        <script src="{{ asset('bundles/wapinet/js/page-swiper.js') }}"></script>
-    {% endif %}
+        {# jplayer #}
+        window.Jplayer = {
+            'swfPath': "//cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.swf"
+        };
 
-    {# comments #}
-    {% if comments_id is defined %}
-        <script>{% autoescape 'js' %}
-            // thread id
-            var fos_comment_thread_id = '{{ comments_id }}';
 
-            // api base url to use for initial requests
-            var fos_comment_thread_api_base_url = '{{ path('fos_comment_get_threads') }}';
 
-            // Snippet for asynchronously loading the comments
-            $(document).on("pagebeforeshow", "#page", function () {
-                var fos_comment_script = document.createElement('script');
-                {# fos_comment_script.async = 'async'; #}
-                fos_comment_script.src = '{{ asset('bundles/wapinetcomment/js/comments.js') }}';
 
-                (document.getElementsByTagName('head')[0]).appendChild(fos_comment_script);
+        var $document = $(document);
+
+        $document.on("pagecreate", "#archiver_edit", function () {
+            Archiver.setContainer($(this)).pageCreate();
+        });
+
+        $document.on("pagecreate", "#wapinet_message_inbox", function () {
+            alert('page create inbox');
+            Message.setContainer($(this)).pageCreate();
+        }).on("pagecreate", "#wapinet_message_sent", function () {
+            alert('page create sent');
+            Message.setContainer($(this)).pageCreate();
+        }).on("pagecreate", "#wapinet_message_deleted", function () {
+            alert('page create deleted');
+            Message.setContainer($(this)).pageCreate();
+        });
+
+        $document.on("pageshow", "#page", function () {
+
+            {# комментарии #}
+        {#
+            <script src="{{ asset('bundles/wapinetcomment/js/comments.js') }}"></script>
+            <link rel="stylesheet" href="{{ asset('bundles/wapinetcomment/css/comments.css') }}" type="text/css" />
+
+            window.fos.Comment.base_url = '{{ path('fos_comment_get_threads') }}';
+            window.fos.Comment.thread_container = $(":mobile-pagecontainer").find('#fos_comment_thread');
+            window.fos.Comment.thread_container.on("fos_comment_load_thread", function () {
+                window.fos.Comment.thread_container.enhanceWithin();
             });
-        {% endautoescape %}</script>
-        {# <script async="async" src="{{ asset('bundles/wapinetcomment/js/comments.js') }}"></script> #}
-    {% endif %}
-    {# css комментариев подключаем всегда, т.к. могут отображаться как на главной файлообменника #}
-    <link rel="stylesheet" href="{{ asset('bundles/wapinetcomment/css/comments.css') }}" type="text/css" />
 
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/wapinet/css/core.css') }}" />
-    <script src="{{ asset('bundles/wapinet/js/core.js') }}"></script>
-
-    {% if app.user %}
-        <style type="text/css">
-            .ui-icon-wapinet-user:after {
-                background-image: url("{{ wapinet_user_get_avatar_url(app.user, 18) }}");
-                background-size: 18px 18px;
+            var pathParams = window.location.pathname.slice(1).split('/');
+            if ((pathParams[0] === "file" || pathParams[0] === "gist" || pathParams[0] === "news") && pathParams[1].search('^[0-9]+$') !== -1) {
+                window.fos.Comment.getThreadComments(pathParams[0] + '-' + pathParams[1]);
             }
-        </style>
-    {% endif %}
+            #}
+
+
+
+            {# превью картинок в гостевой #}
+            {#
+            $(":mobile-pagecontainer").find("div.long-description img.bb").each(function (i) {
+                var $image = $(this);
+
+                var src = Helper.escapeHtml(Helper.escapeUrl($image.attr('src') || ''));
+                var alt = Helper.escapeHtml($image.attr('alt') || '');
+
+                $image.replaceWith(
+                    '<a href="#popup-' + i + '" data-rel="popup" data-position-to="window" data-transition="fade">' +
+                    '<img src="' + src + '" alt="" class="image-preview" />' +
+                    '</a>' +
+                    '<div data-role="popup" id="popup-' + i + '" data-overlay-theme="b" data-theme="b" data-corners="false">' +
+                    '<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Закрыть</a>' +
+                    '<img src="' + src + '" alt="' + alt + '" style="width: 100%;" />' +
+                    '</div>'
+                );
+            });
+            #}
+
+
+
+            {# vk #}
+            {#
+            var vkId = $(":mobile-pagecontainer").find("#user-vk").data("id");
+
+            if (vkId) {
+                var script = document.createElement('script');
+                script.src = 'https://api.vk.com/method/users.get?callback=Vk.show&fields=online,photo_200_orig&user_ids=' + vkId;
+                document.getElementsByTagName("head")[0].appendChild(script);
+            }
+            #}
+        });
+
+
+        // подгрузка картинок в попапах
+        $document.on("click", "a[href^='#image-']", function () {
+            $.mobile.loading("show");
+
+            var popup = $(this.getAttribute('href'));
+            var img = popup.find("img");
+
+            var src = img.attr('src');
+            var srcData = img.data('src');
+
+            if (src === srcData) {
+                popup.popup("open");
+                $.mobile.loading("hide");
+            } else {
+                img.load(function () {
+                    popup.popup("open");
+                    $.mobile.loading("hide");
+                });
+
+                img.attr('src', srcData);
+            }
+
+            return false;
+        });
+
+
+
+        // предпросмотр картинок в загружаемых файлах
+        $document.on("change", 'input[type="file"]', function (e) {
+            var fileElement = e.target;
+            // только если поддерживается
+            if (fileElement.files) {
+                var file = fileElement.files[0];
+                FileLoader.previewCleaner(fileElement);
+                FileLoader.readFile(file, function (e) {
+                    FileLoader.preview(e, file, fileElement);
+                });
+
+            }
+        });
+
+
+        // обновление капчи
+        $document.on("click", 'a.captcha-reload', function () {
+            var $this = $(this);
+
+            var img = $(":mobile-pagecontainer").find('#' + $this.data('id'))[0];
+            img.src = $this.data('path') + '?n=' + (new Date()).getTime();
+        });
+
+
+        // выключение взаимозаменяющих полей в url_file
+        $document.on("change", "fieldset.file-url input[type='file']", function (e) {
+            var state = 'enable';
+            if (e.target.value) {
+                state = 'disable';
+            }
+            $(":mobile-pagecontainer").find('fieldset.file-url input[type="url"]').textinput(state);
+        }).on("change", "fieldset.file-url input[type='url']", function (e) {
+            var state = 'enable';
+            if (e.target.value) {
+                state = 'disable';
+            }
+            $(":mobile-pagecontainer").find('fieldset.file-url input[type="file"]').textinput(state);
+        });
+
+
+        // лоадер на ajax запросах
+        $document.ajaxError(function () {
+            $.mobile.loading("show", {
+                html: '<h1 class="red">Ошибка</h1>',
+                textVisible: true,
+                textonly: true
+            });
+            setTimeout(function () {
+                $.mobile.loading('hide');
+            }, 5000);
+        }).ajaxStart(function () {
+            $.mobile.loading('show');
+        }).ajaxSuccess(function (data) {
+            // заголовок
+            var $title = $(data).find('title');
+            if ($title.length) {
+                Templating.setTitle($title.html()).render();
+            }
+
+            $.mobile.loading('hide');
+        });
+    {% endautoescape %}</script>
+
 
     {% block javascripts %}{% endblock %}
     {% block stylesheets %}{% endblock %}
@@ -113,7 +259,7 @@
 <body>
 <!-- Yandex.Metrika counter --><noscript><div><img src="https://mc.yandex.ru/watch/26376855" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
 {% block body %}
-<div data-role="page" id="page" data-title="{% if (is_granted('ROLE_USER') and fos_message_nb_unread() > 0) %}+{{ fos_message_nb_unread()|wapinet_count }} {% endif %}{{ title }}">
+<div data-role="page" id="{{ pageId }}">
     {% block page %}
         {% block panel %}
             <div data-role="panel" data-display="overlay" id="panel">
@@ -139,7 +285,7 @@
         <div data-theme="b" data-role="header" data-position="fixed">
             {% block header %}
                 <a href="#panel" class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext">Меню</a>
-                <h2>{{ title }}</h2>
+                <h2 id="header-title">{{ title }}</h2>
                 {% if app.user %}
                     <a href="{{ path('fos_user_profile_show') }}" class="ui-btn ui-shadow ui-corner-all ui-icon-wapinet-user ui-btn-icon-notext">{{ app.user.username }}</a>
                 {% else %}

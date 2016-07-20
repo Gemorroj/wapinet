@@ -8,34 +8,16 @@
     })}}
 {% endblock %}
 
-{% block javascripts %}
-    <script>{% autoescape 'js' %}
-        $(document).on("pageinit", function () {
-            var deletePath;
-
-            $("#list-archive").find("a[href='#delete-popup']").on("click", function () {
-                deletePath = $(this).data('path');
-            });
-
-            $("#delete-popup-do").on("click", function () {
-                $.post('{{ path('archiver_delete_file', {'archive': archive, 'name': 'file'}) }}?path=' + deletePath, function () {
-                    window.location.assign(window.location.href);
-                });
-            });
-        });
-    {% endautoescape %}</script>
-{% endblock %}
-
 {% block content %}
-    {{ form_start(form, {'action': path('archiver_edit', {'archive': archive}), 'method': 'POST'}) }}
+    {{ form_start(form, {'action': path('archiver_edit', {'archive': archive}), 'method': 'POST', 'attr': {'data-ajax': 'false'}}) }}
         {{ form_widget(form) }}
     {{ form_end(form) }}
 
     <p>
-        <a data-inline="true" data-role="button" data-icon="check" href="{{ path('archiver_download', {'archive': archive}) }}">Скачать ZIP архив</a>
+        <a data-ajax="false" data-inline="true" data-role="button" data-icon="check" href="{{ path('archiver_download', {'archive': archive}) }}">Скачать ZIP архив</a>
     </p>
 
-    <ul id="list-archive" data-role="listview" data-inset="true">
+    <ul id="list-archive" data-role="listview" data-inset="true" data-name="{{ archive }}">
     {% for file in files %}
         {% set pathView = (file.pathInfo.archiveName ? file.pathInfo.archiveName ~ ' / ' : '') ~ file.filename %}
         {% set path = (file.pathInfo.archiveName ? file.pathInfo.archiveName ~ '/' : '') ~ file.filename %}
@@ -47,7 +29,7 @@
             </li>
         {% else %}
             <li>
-                <a href="{{ path('archiver_download_file', {'archive': archive, 'name': file.filename, 'path': path }) }}">{{ pathView }}
+                <a data-ajax="false" href="{{ path('archiver_download_file', {'archive': archive, 'name': file.filename, 'path': path }) }}">{{ pathView }}
                     <span class="ui-li-count">{{ file.size|wapinet_size }}</span>
                 </a>
                 <a data-path="{{ path|url_encode }}" href="#delete-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>

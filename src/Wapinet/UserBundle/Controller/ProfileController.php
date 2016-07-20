@@ -24,13 +24,13 @@ class ProfileController extends BaseController
      */
     public function showUserAction($username = null)
     {
-        $currentUser = $this->container->get('security.token_storage')->getToken()->getUser();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
         if (!\is_object($currentUser) || !$currentUser instanceof UserInterface) {
             throw $this->createAccessDeniedException('Вы должны быть авторизованы');
         }
 
         if (null !== $username) {
-            $userManager = $this->container->get('fos_user.user_manager');
+            $userManager = $this->get('fos_user.user_manager');
             $user = $userManager->findUserByUsername($username);
             if (!$user instanceof UserInterface) {
                 throw new UsernameNotFoundException('Пользователь не найден.');
@@ -39,7 +39,7 @@ class ProfileController extends BaseController
             $user = $currentUser;
         }
 
-        return $this->container->get('templating')->renderResponse('FOSUserBundle:Profile:show.html.twig', array('user' => $user));
+        return $this->get('templating')->renderResponse('FOSUserBundle:Profile:show.html.twig', array('user' => $user));
     }
 
     /**
@@ -48,13 +48,13 @@ class ProfileController extends BaseController
     public function editAction(Request $request)
     {
         /** @var User $user */
-        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         if (!\is_object($user) || !$user instanceof UserInterface) {
             throw $this->createAccessDeniedException('Вы должны быть авторизованы');
         }
 
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
-        $dispatcher = $this->container->get('event_dispatcher');
+        $dispatcher = $this->get('event_dispatcher');
 
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_INITIALIZE, $event);
@@ -64,7 +64,7 @@ class ProfileController extends BaseController
         }
 
         /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
-        $formFactory = $this->container->get('fos_user.profile.form.factory');
+        $formFactory = $this->get('fos_user.profile.form.factory');
 
         $form = $formFactory->createForm();
         $form->setData($user);
@@ -75,7 +75,7 @@ class ProfileController extends BaseController
 
             if ($form->isValid()) {
                 /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
-                $userManager = $this->container->get('fos_user.user_manager');
+                $userManager = $this->get('fos_user.user_manager');
 
                 $event = new FormEvent($form, $request);
                 $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_SUCCESS, $event);
@@ -92,7 +92,7 @@ class ProfileController extends BaseController
             }
         }
 
-        return $this->container->get('templating')->renderResponse(
+        return $this->get('templating')->renderResponse(
             'FOSUserBundle:Profile:edit.html.twig',
             array('form' => $form->createView())
         );

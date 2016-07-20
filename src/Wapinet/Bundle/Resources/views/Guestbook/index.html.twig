@@ -19,7 +19,7 @@
 
                 var $liComment = $(this).parent().next();
                 var text = $liComment.children('div').text();
-                var author = $liComment.find('span.fos_comment_comment_authorname>a').text();
+                var author = $liComment.find('span.comment-authorname>a').text();
                 $textarea.val('[quote=' + author + ']' + text + '[/quote]');
                 $textarea.keyup();
 
@@ -50,45 +50,42 @@
         {{ form_widget(form) }}
     {{ form_end(form) }}
 
-    <div class="fos_comment_thread">
-        <ul data-role="listview" data-inset="true">
-            {% for item in pagerfanta %}
-                <li data-role="list-divider">
-                    <a href="#{{ form.message.vars.id }}" class="item-quote">#</a>
-                    {{ item.createdAt|wapinet_datetime }}
-                </li>
-                <li data-icon="false">
-                    <span class="fos_comment_comment_avatar">
-                        {% if item.user %}
-                            <img src="{{ wapinet_user_get_avatar_url(item.user) }}" alt="{{ item.user }}" class="image-preview" />
-                        {% else %}
-                            <img src="{{ wapinet_user_get_avatar_url() }}" alt="Anonymous" class="image-preview" />
-                        {% endif %}
-                        {% if item.user and item.user.isOnline %}
-                            <span class="avatar-online"></span>
-                        {% endif %}
-                    </span>
-                    {% block fos_comment_comment_metas_authorline %}
-                        <span class="fos_comment_comment_authorname">
-                        {% if item.user %}
-                            <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': item.user.username}) }}">{{ item.user.username }}</a>
-                        {% else %}
-                            {% set geoip2 = wapinet_geoip2_country(item.ip) %}
-                            <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn no-link" href="#popup-{{ item.id }}">Anonymous</a>
-                            <div data-role="popup" id="popup-{{ item.id }}">
-                                <p>{{ item.ip }}{% if geoip2 and geoip2.country.isoCode%} <img src="{{ asset('bundles/wapinet/images/countries/' ~ geoip2.country.isoCode|lower ~ '.png') }}" alt="{{ geoip2.country.names['ru'] }}" />{% endif %}<br />{{ item.browser }}</p>
-                            </div>
-                        {% endif %}
-                        </span>
-                    {% endblock fos_comment_comment_metas_authorline %}
+    <ul data-role="listview" data-inset="true">
+        {% for item in pagerfanta %}
+            <li data-role="list-divider">
+                <a href="#{{ form.message.vars.id }}" class="item-quote">#</a>
+                {{ item.createdAt|wapinet_datetime }}
+            </li>
+            <li data-icon="false">
+                <span class="comment-avatar">
+                    {% if item.user %}
+                        <img src="{{ wapinet_user_get_avatar_url(item.user) }}" alt="{{ item.user }}" class="image-preview" />
+                    {% else %}
+                        <img src="{{ wapinet_user_get_avatar_url() }}" alt="Anonymous" class="image-preview" />
+                    {% endif %}
+                    {% if item.user and item.user.isOnline %}
+                        <span class="avatar-online"></span>
+                    {% endif %}
+                </span>
 
-                    <div class="long-description">{{ item.message|wapinet_bbcode_parse }}</div>
-                </li>
-            {% else %}
-                <li>Сообщений нет.</li>
-            {% endfor %}
-        </ul>
-    </div>
+                <span class="comment-authorname">
+                    {% if item.user %}
+                        <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': item.user.username}) }}">{{ item.user.username }}</a>
+                    {% else %}
+                        {% set geoip2 = wapinet_geoip2_country(item.ip) %}
+                        <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn no-link" href="#popup-{{ item.id }}">Anonymous</a>
+                        <div data-role="popup" id="popup-{{ item.id }}">
+                            <p>{{ item.ip }}{% if geoip2 and geoip2.country.isoCode%} <img src="{{ asset('bundles/wapinet/images/countries/' ~ geoip2.country.isoCode|lower ~ '.png') }}" alt="{{ geoip2.country.names['ru'] }}" />{% endif %}<br />{{ item.browser }}</p>
+                        </div>
+                    {% endif %}
+                </span>
+
+                <div class="long-description">{{ item.message|wapinet_bbcode_parse }}</div>
+            </li>
+        {% else %}
+            <li>Сообщений нет.</li>
+        {% endfor %}
+    </ul>
 
     <div class="pagerfanta">
         {{ pagerfanta(pagerfanta) }}

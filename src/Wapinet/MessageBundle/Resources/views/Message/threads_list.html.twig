@@ -13,7 +13,7 @@
                         {% if not thread.readByParticipant(app.user) %}
                             <p class="ui-li-aside p-new">Новое!</p>
                         {% endif %}
-                    {% elseif route == 'wapinet_message_sent'%}
+                    {% elseif route == 'wapinet_message_sent' %}
                         {# берем первого собеседника #}
                         {% if not thread.readByParticipant(thread.otherParticipants(app.user)[0]) %}
                             <p class="ui-li-aside p-noread">Не прочитано</p>
@@ -22,11 +22,29 @@
                     <p>{% trans with {'%sender%': thread.lastMessage.sender|e } from 'FOSMessageBundle' %}by{% endtrans %}</p>
                 </a>
 
-                {% if fos_message_can_delete_thread(thread) %}
-                    {% if fos_message_deleted_by_participant(thread) %}
-                        <a data-path="{{ url('wapinet_message_thread_undelete', {'threadId': thread.id}) }}" href="#restore-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="back">Восстановить</a>
-                    {% else %}
-                        <a data-path="{{ url('wapinet_message_thread_delete', {'threadId': thread.id}) }}" href="#delete-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
+                {% if route == 'wapinet_message_inbox' %}
+                    {% if fos_message_can_delete_thread(thread) %}
+                        {% if fos_message_deleted_by_participant(thread) %}
+                            <a data-id="{{ thread.id }}" href="#restore-popup-inbox" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="back">Восстановить</a>
+                        {% else %}
+                            <a data-id="{{ thread.id }}" href="#delete-popup-inbox" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
+                        {% endif %}
+                    {% endif %}
+                {% elseif route == 'wapinet_message_sent' %}
+                    {% if fos_message_can_delete_thread(thread) %}
+                        {% if fos_message_deleted_by_participant(thread) %}
+                            <a data-id="{{ thread.id }}" href="#restore-popup-sent" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="back">Восстановить</a>
+                        {% else %}
+                            <a data-id="{{ thread.id }}" href="#delete-popup-sent" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
+                        {% endif %}
+                    {% endif %}
+                {% elseif route == 'wapinet_message_deleted' %}
+                    {% if fos_message_can_delete_thread(thread) %}
+                        {% if fos_message_deleted_by_participant(thread) %}
+                            <a data-id="{{ thread.id }}" href="#restore-popup-deleted" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="back">Восстановить</a>
+                        {% else %}
+                            <a data-id="{{ thread.id }}" href="#delete-popup-deleted" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
+                        {% endif %}
                     {% endif %}
                 {% endif %}
 

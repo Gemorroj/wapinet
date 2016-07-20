@@ -81,15 +81,7 @@ fos_user:
     user_class: Wapinet\UserBundle\Entity\User
     profile:
         form:
-            type: wapinet_user_profile
-
-fos_comment:
-    db_driver: orm
-    class:
-        model:
-            comment: Wapinet\CommentBundle\Entity\Comment
-            thread: Wapinet\CommentBundle\Entity\Thread
-            #vote: Wapinet\CommentBundle\Entity\Vote
+            type: Wapinet\UserBundle\Form\Type\ProfileType
 
 fos_message:
     db_driver: orm

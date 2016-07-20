@@ -37,7 +37,7 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "javiereguiluz/easyadmin-bundle": "^1.15",
         "friendsofsymfony/user-bundle": "^2.0@dev",
-        "friendsofsymfony/comment-bundle": "^2.0@dev",
+        "friendsofsymfony/jsrouting-bundle": "^2.0@dev",
         "white-october/pagerfanta-bundle": "^1.0",
         "james-heinrich/getid3": "dev-master",
         "vich/uploader-bundle": "^1.2",

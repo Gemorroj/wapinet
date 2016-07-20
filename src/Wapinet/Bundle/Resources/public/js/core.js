@@ -1,6 +1,6 @@
 "use strict";
 
-var FileLoader = {
+const FileLoader = {
     readFile: function (file, callback) {
         if (FileReader) {
             var fileReader = new FileReader();
@@ -98,7 +98,8 @@ var FileLoader = {
         }
     }
 };
-var Helper = {
+
+const Helper = {
     sizeFormat: function (fileSizeInBytes) {
         var i = -1;
         var byteUnits = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
@@ -109,10 +110,6 @@ var Helper = {
 
         return Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
     },
-    captchaReload: function (path, id) {
-        var img = document.getElementById(id);
-        img.src = path + '?n=' + (new Date()).getTime();
-    },
     escapeHtml: function (str) {
         return str.toString().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     },
@@ -120,28 +117,9 @@ var Helper = {
         return window.encodeURI(str.toString());
     }
 };
-var ImagePreview = {
-    loadComments: function () {
-        // превью картинок в комментариях и гостевой
-        $("div.long-description img.bb").each(function (i) {
-            var $image = $(this);
 
-            var src = Helper.escapeHtml(Helper.escapeUrl($image.attr('src') || ''));
-            var alt = Helper.escapeHtml($image.attr('alt') || '');
 
-            $image.replaceWith(
-                '<a href="#popup-' + i + '" data-rel="popup" data-position-to="window" data-transition="fade">' +
-                '<img src="' + src + '" alt="" class="image-preview" />' +
-                '</a>' +
-                '<div data-role="popup" id="popup-' + i + '" data-overlay-theme="b" data-theme="b" data-corners="false">' +
-                '<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Закрыть</a>' +
-                '<img src="' + src + '" alt="' + alt + '" style="width: 100%;" />' +
-                '</div>'
-            );
-        });
-    }
-};
-var Autocomplete = {
+const Autocomplete = {
     text: function (source, input, suggestions) {
         input = input || '#autocomplete';
         suggestions = suggestions || '#suggestions';
@@ -182,93 +160,66 @@ var Autocomplete = {
     }
 };
 
+const Templating = {
+    /**
+     * @private
+     */
+    _title: null,
+    /**
+     * @param {String} title
+     * @returns {Templating}
+     */
+    setTitle: function (title) {
+        Templating._title = title;
+        return this;
+    },
+    /**
+     * @returns {null|String}
+     */
+    getTitle: function () {
+        return Templating._title;
+    },
+    render: function () {
+        var title = Templating.getTitle();
 
-$(document).on("pagebeforeshow", "#page", function () {
-    $.mobile.ajaxEnabled = false;
-
-    // подгрузка картинок в попапах
-    $("a[href^='#image-']").on("click", function () {
-        $.mobile.loading("show");
-
-        var popup = $(this.getAttribute('href'));
-        var img = popup.find("img");
-
-        var src = img.attr('src');
-        var srcData = img.data('src');
-
-        if (src === srcData) {
-            popup.popup("open");
-            $.mobile.loading("hide");
-        } else {
-            img.load(function () {
-                popup.popup("open");
-                $.mobile.loading("hide");
-            });
-
-            img.attr('src', srcData);
+        if (title !== null) {
+            $(":mobile-pagecontainer").find('#header-title').text(title);
         }
+    }
+};
+
+const Vk = {
+    data: null,
+    show: function (data) {
+        if (data && (data.response || data.error)) {
+            Vk.data = data;
+            $(":mobile-pagecontainer").find("#user-vk").click(Vk.popup);
+        }
+    },
+    popup: function () {
+        var $link = $(this);
+        var $popup = $($link.attr("href"));
+        var content = Vk._makeContent();
+
+        $popup.find('p').html(content);
+        $popup.popup("open", {"transition": "pop", "positionTo": $link});
 
         return false;
-    });
-
-
-    // предпросмотр картинок в загружаемых файлах
-    $('input[type="file"]').change(function (e) {
-        var fileElement = e.target;
-        // только если поддерживается
-        if (fileElement.files) {
-            var file = fileElement.files[0];
-            FileLoader.previewCleaner(fileElement);
-            FileLoader.readFile(file, function (e) {
-                FileLoader.preview(e, file, fileElement);
-            });
-
+    },
+    _makeContent: function () {
+        if (!Vk.data) {
+            return 'Error';
         }
-    });
 
-    // выключение взаимозаменяющих полей в url_file
-    var fileUrl = $('fieldset.file-url');
-    fileUrl.find('input[type="file"]').change(function (e) {
-        var state = 'enable';
-        if (e.target.value) {
-            state = 'disable';
+        if (Vk.data.error && Vk.data.error.error_code) {
+            return Vk.data.error.error_msg;
         }
-        fileUrl.find('input[type="url"]').textinput(state);
-    });
-    fileUrl.find('input[type="url"]').change(function (e) {
-        var state = 'enable';
-        if (e.target.value) {
-            state = 'disable';
+
+        if (Vk.data.response && Vk.data.response[0]) {
+            var user = Vk.data.response[0];
+            return '<a rel="external" href="https://vk.com/id' + user.uid + '"><img src="' + user.photo_200_orig + '" /></a><br/><span>' + user.first_name + ' ' + user.last_name + '</span><br/>' + (user.online ? '<span class="green">Онлайн</span>' : '<span class="gray">Офлайн</span>');
         }
-        fileUrl.find('input[type="file"]').textinput(state);
-    });
 
-    // обновление капчи
-    $('a.captcha-reload').click(function () {
-        var $this = $(this);
-        Helper.captchaReload($this.data('path'), $this.data('id'));
-    });
-
-    // превью картинок в комментариях
-    ImagePreview.loadComments();
-    $("div.fos_comment_thread").enhanceWithin();
-});
-
-$(document).ajaxStart(function () {
-    $.mobile.loading('show');
-}).ajaxSuccess(function () {
-    $.mobile.loading('hide');
-    ImagePreview.loadComments();
-    $("#page").enhanceWithin();
-}).ajaxError(function () {
-    $.mobile.loading('hide');
-    $.mobile.loading("show", {
-        text: "Ошибка",
-        textVisible: true,
-        textonly: true
-    });
-    setTimeout(function () {
-        $.mobile.loading("hide");
-    }, 10000);
-    $("#page").enhanceWithin();
-});
+        return 'No data';
+    }
+};

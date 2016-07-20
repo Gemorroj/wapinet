@@ -11,10 +11,7 @@
 
 namespace Wapinet\CommentBundle\Entity;
 
-use FOS\CommentBundle\Entity\CommentManager as BaseCommentManager;
-use FOS\CommentBundle\Model\CommentInterface;
 use Pagerfanta\Pagerfanta;
-use Doctrine\ORM\Query\Expr;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Wapinet\Bundle\Helper\Paginate;
 use Wapinet\UserBundle\Entity\User;
@@ -24,7 +21,7 @@ use Wapinet\UserBundle\Entity\User;
  *
  * @author Tim Nagel <tim@nagel.com.au>
  */
-class CommentManager extends BaseCommentManager
+class CommentManager
 {
     /**
      * @var Paginate
@@ -42,6 +39,7 @@ class CommentManager extends BaseCommentManager
      */
     public function countUserComments(User $user)
     {
+        return 0;
         $q = $this->repository->createQueryBuilder('c')
             ->select('COUNT(c.id)')
             ->where('c.author = :user')

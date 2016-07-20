@@ -34,7 +34,7 @@ class CodeType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder->add('algorithm', ChoiceType::class, array(
-            'choices' => $this->code->getAlgorithms(),
+            'choices' => \array_flip($this->code->getAlgorithms()),
             'label' => 'Алгоритм',
         ));
 

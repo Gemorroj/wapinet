@@ -22,7 +22,7 @@ class CommentsController extends Controller
             throw $this->createNotFoundException('Пользователь не найден');
         }
 
-        $commentManager = $this->get('fos_comment.manager.comment');
+        $commentManager = $this->get('wapinet_comment.manager.comment');
         $pagerfanta = $commentManager->findCommentsByUser($user, null, $page);
 
         return $this->render('WapinetUserBundle:Comments:index.html.twig', array(

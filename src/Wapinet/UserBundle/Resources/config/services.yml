@@ -1,7 +1,7 @@
 services:
     wapinet_user.profile.form.type:
         class: Wapinet\UserBundle\Form\Type\ProfileType
-        arguments: ["%fos_user.model.user.class%", "@service_container"]
+        arguments: ["%fos_user.model.user.class%"]
         tags:
             - { name: form.type, alias: wapinet_user_profile }
 

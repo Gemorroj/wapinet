@@ -22,6 +22,8 @@ archiver_delete_file:
     methods: [POST]
     requirements:
         archive: "archive[a-z0-9]+"
+    options:
+        expose: true
 
 archiver_download_file:
     path: /download/{archive}/{name}

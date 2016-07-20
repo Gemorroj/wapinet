@@ -41,15 +41,13 @@
                     {{ comment.createdAt|wapinet_datetime }}
                 </li>
                 <li>
-                    {% block fos_comment_comment_metas_authorline %}
-                        <span class="fos_comment_comment_authorname_only">
-                            {% if comment.username %}
-                                <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': comment.username}) }}">{{ comment.username }}</a>
-                            {% else %}
-                                <a class="no-link bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="#">{{ comment.username }}</a>
-                            {% endif %}
-                        </span>
-                    {% endblock fos_comment_comment_metas_authorline %}
+                    <span class="comment-authorname">
+                        {% if comment.username %}
+                            <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': comment.username}) }}">{{ comment.username }}</a>
+                        {% else %}
+                            <a class="no-link bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="#">{{ comment.username }}</a>
+                        {% endif %}
+                    </span>
 
                     <div class="long-description">
                         {{ comment.body|wapinet_bbcode_parse }}

@@ -26,9 +26,13 @@ wapinet_message_thread_delete:
     path: /{threadId}/delete
     methods: [POST, DELETE]
     defaults: {_controller: WapinetMessageBundle:Message:delete }
+    options:
+        expose: true
 
 wapinet_message_thread_undelete:
     path: /{threadId}/undelete
     methods: [POST]
     defaults: {_controller: WapinetMessageBundle:Message:undelete }
+    options:
+        expose: true
 
