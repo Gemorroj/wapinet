@@ -261,12 +261,6 @@ services:
         tags:
             - { name: form.type }
 
-    wapinet.form.sms.sms:
-        class: Wapinet\Bundle\Form\Type\Sms\SmsType
-        arguments: ["@service_container"]
-        tags:
-            - { name: form.type }
-
     wapinet.form.code.code:
         class: Wapinet\Bundle\Form\Type\Code\CodeType
         arguments: ["@code"]

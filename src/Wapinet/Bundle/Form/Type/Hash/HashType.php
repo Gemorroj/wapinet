@@ -35,7 +35,7 @@ class HashType extends AbstractType
 
         $algorithms = $this->hash->getAlgorithms();
         $builder->add('algorithm', ChoiceType::class, array(
-            'choices' => $algorithms,
+            'choices' => \array_flip($algorithms),
             'label' => 'Алгоритм',
             'preferred_choices' => array(
                 array_search('md5', $algorithms, true),

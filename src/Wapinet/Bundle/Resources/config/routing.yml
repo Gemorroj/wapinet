@@ -92,10 +92,6 @@ rename:
     resource: "@WapinetBundle/Resources/config/routing/rename.yml"
     prefix:   /rename
 
-sms:
-    resource: "@WapinetBundle/Resources/config/routing/sms.yml"
-    prefix:   /sms
-
 audio_tags:
     resource: "@WapinetBundle/Resources/config/routing/audio_tags.yml"
     prefix:   /audio_tags
