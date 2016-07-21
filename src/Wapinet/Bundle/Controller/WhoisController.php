@@ -58,6 +58,9 @@ class WhoisController extends Controller
             $resultHtml = $utils->showHTML($result);
 
             $resultHtml = \str_replace($_SERVER['PHP_SELF'], '', $resultHtml);
+
+            $resultHtml = \str_replace('<a href=', '<a rel="external" href=', $resultHtml);
+
             return $resultHtml;
         }
 
