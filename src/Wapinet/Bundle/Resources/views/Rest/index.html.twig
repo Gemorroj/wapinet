@@ -7,15 +7,6 @@
     })}}
 {% endblock %}
 
-{% block javascripts %}
-    <script>
-        $(document).ready(function() {
-            FileLoader.saveAsHandler('#downloadHeaders', '#textHeaders', 'headers-' + window.location.host + '.txt');
-            FileLoader.saveAsHandler('#downloadBody', '#textBody', 'body-' + window.location.host + '.txt');
-        });
-    </script>
-{% endblock %}
-
 
 {% block content %}
     {{ form_start(form, {'action': path('rest_index'), 'method': 'POST'}) }}

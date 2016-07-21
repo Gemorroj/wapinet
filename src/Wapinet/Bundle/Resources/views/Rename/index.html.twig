@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-    {{ form_start(form, {'action': path('rename_index'), 'method': 'POST'}) }}
+    {{ form_start(form, {'action': path('rename_index'), 'method': 'POST', 'attr': {'data-ajax': 'false'}}) }}
         {{ form_widget(form) }}
     {{ form_end(form) }}
 

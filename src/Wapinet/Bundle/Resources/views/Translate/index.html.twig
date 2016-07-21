@@ -7,14 +7,6 @@
     })}}
 {% endblock %}
 
-{% block javascripts %}
-    <script>
-        $(document).ready(function() {
-            FileLoader.saveAsHandler('#downloadTranslation', '#textTranslation', 'translation.txt');
-        });
-    </script>
-{% endblock %}
-
 {% block content %}
     {{ form_start(form, {'action': path('translate_index'), 'method': 'POST'}) }}
         {{ form_errors(form) }}

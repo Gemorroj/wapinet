@@ -28,7 +28,7 @@ class MassMedia
     public function getRt()
     {
         $curl = $this->container->get('curl');
-        $curl->init('https://russian.rt.com/rss/');
+        $curl->init('https://russian.rt.com/rss');
         $curl->addCompression();
 
         $response = $curl->exec();
@@ -37,7 +37,7 @@ class MassMedia
             throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
         }
 
-        $obj = simplexml_load_string($response->getContent());
+        $obj = \simplexml_load_string($response->getContent());
 
         $news = array();
         foreach ($obj->channel->item as $v) {
@@ -86,7 +86,7 @@ class MassMedia
             throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
         }
 
-        $obj = simplexml_load_string($response->getContent());
+        $obj = \simplexml_load_string($response->getContent());
 
         $news = array();
         foreach ($obj->channel->item as $v) {
@@ -125,6 +125,6 @@ class MassMedia
      */
     protected function stripLink($str)
     {
-        return preg_replace('/<a\s+.+<\s*\/\s*a>/i', '', $str);
+        return \rtrim(trim(\preg_replace('/<a\s+.+<\s*\/\s*a>/i', '', $str)), '<br/>');
     }
 }

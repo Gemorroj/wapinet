@@ -9,31 +9,29 @@
 
 
 {% block content %}
-    {{ form_start(form, {'action': path('html_validator_index'), 'method': 'POST'}) }}
-    {% if result is not null %}
-        {% if result.validity %}
-            <strong>Документ прошел валидацию</strong><br />
-        {% endif %}
+    {{ form_start(form, {'action': path('html_validator_index'), 'method': 'POST', 'attr': {'data-ajax': 'false'}}) }}
+        {% if result is not null %}
+            {% if result.validity %}
+                <strong>Документ прошел валидацию</strong><br />
+            {% endif %}
 
-        {% if result.errors %}
-            <strong>Ошибки</strong>
-            <ul>
-                {% for error in result.errors %}
-                    <li>Строка {{ error.line }}, колонка {{ error.col }}: {{ error.message }}<br /><code class="html-validator">{{ error.source|raw }}</code></li>
-                {% endfor %}
-            </ul>
+            {% if result.errors %}
+                <strong>Ошибки</strong>
+                <ul>
+                    {% for error in result.errors %}
+                        <li>Строка {{ error.line }}, колонка {{ error.col }}: {{ error.message }}<br /><code class="html-validator">{{ error.source|raw }}</code></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if result.warnings %}
+                <strong>Предупреждения</strong>
+                <ul>
+                    {% for warning in result.warnings %}
+                        <li>Строка {{ warning.line }}, колонка {{ warning.col }}: {{ warning.message }}<br /><code class="html-validator">{{ warning.source|raw }}</code></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         {% endif %}
-        {% if result.warnings %}
-            <strong>Предупреждения</strong>
-            <ul>
-                {% for warning in result.warnings %}
-                    <li>Строка {{ warning.line }}, колонка {{ warning.col }}: {{ warning.message }}<br /><code class="html-validator">{{ warning.source|raw }}</code></li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-
-
-    {% endif %}
     {{ form_widget(form) }}
     {{ form_end(form) }}
 

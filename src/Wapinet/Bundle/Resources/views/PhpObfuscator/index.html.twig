@@ -7,14 +7,6 @@
     })}}
 {% endblock %}
 
-{% block javascripts %}
-    <script>
-        $(document).ready(function() {
-            FileLoader.saveAsHandler('#downloadObfuscation', '#textObfuscation', 'obfuscation.txt');
-        });
-    </script>
-{% endblock %}
-
 {% block content %}
     {{ form_start(form, {'action': path('php_obfuscator_index'), 'method': 'POST'}) }}
     {% if result is not null %}

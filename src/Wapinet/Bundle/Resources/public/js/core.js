@@ -81,21 +81,6 @@ const FileLoader = {
         xhr.send(formData);
 
         return false;
-    },
-    saveAsHandler: function (link, text, fileName) {
-        var $link = $(link);
-        $link.hide();
-        if (Blob) {
-            $link.show();
-            $link.click(function () {
-                var blob = new Blob(
-                    [$(text).val()],
-                    {"type": "text/plain;charset=utf-8"}
-                );
-                // saveAs реализована в FileSaver
-                saveAs(blob, fileName || "file.txt");
-            });
-        }
     }
 };
 
@@ -115,6 +100,14 @@ const Helper = {
     },
     escapeUrl: function (str) {
         return window.encodeURI(str.toString());
+    },
+    downloadText: function (text, fileName) {
+        var blob = new Blob(
+            [text],
+            {"type": "text/plain;charset=utf-8"}
+        );
+        // saveAs реализована в FileSaver
+        saveAs(blob, fileName || "file.txt");
     }
 };
 

@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-    {{ form_start(form, {'action': path('hash_index'), 'method': 'POST'}) }}
+    {{ form_start(form, {'action': path('hash_index'), 'method': 'POST', 'attr': {'data-ajax': 'false'}}) }}
         {% if result is not null %}
             <label>Результат <input type="text" value="{{ result }}"/></label>
         {% endif %}

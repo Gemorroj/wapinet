@@ -9,7 +9,7 @@
 
 
 {% block content %}
-    {{ form_start(form, {'action': path('php_validator_index'), 'method': 'POST'}) }}
+    {{ form_start(form, {'action': path('php_validator_index'), 'method': 'POST', 'attr': {'data-ajax': 'false'}}) }}
     {% if result is not null %}
         {% if result.validity %}
             <strong>Документ прошел валидацию</strong><br />

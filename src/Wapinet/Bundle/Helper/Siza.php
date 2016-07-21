@@ -66,37 +66,16 @@ class Siza
     }
 
     /**
-     * @param string $query
-     * @return bool|int
-     */
-    public function getSearchId($query)
-    {
-        $this->link = 'http://siza.ru/load/search?place=everywhere&query=' . $query;
-        $response = $this->getLink(true);
-
-        if (false !== \strpos($response->getContent(), 'ничего не нашли')) {
-            return false;
-        }
-
-        $location = $response->headers->get('Location');
-        $query = \parse_url($location, PHP_URL_QUERY);
-        list(, $searchId) = \explode('=', $query);
-
-        return $searchId;
-    }
-
-    /**
      * Инициализируем работу с DOM моделью
      *
      * @param string $contentDirectory
      * @param string $query
      * @param int|null $page
      * @param int|null $scr
-     * @param int|null $searchId
      */
-    public function init($contentDirectory, $query, $page = null, $scr = null, $searchId = null)
+    public function init($contentDirectory, $query, $page = null, $scr = null)
     {
-        $this->link = 'http://siza.ru/' . \ltrim($query, '/') . '?page=' . $page . '&scr=' . $scr . '&searchId=' . $searchId;
+        $this->link = 'http://siza.ru/' . \ltrim($query, '/') . '?page=' . $page . '&scr=' . $scr;
         $this->contentDirectory = $contentDirectory;
         $this->dom = new \DOMDocument('1.0', 'UTF-8');
 
@@ -134,23 +113,6 @@ class Siza
         }
 
         return $response;
-    }
-
-
-    /**
-     * Получаем страницу со списком файлов
-     *
-     * @return string
-     */
-    public function getContentListSearch()
-    {
-        $out = $this->getContentList();
-
-        $out = \str_replace(array('<dl><dt>', '<dl><dt style="border-bottom:none;">', '</dt>', '</dl>'), array('<li>', '<li>', '</p>', '</a></li>'), $out);
-        $out = \str_replace('</d</ul>' , '</a></li></ul>', $out);
-
-
-        return $out;
     }
 
 
@@ -440,6 +402,8 @@ class Siza
                     $a->setAttribute('data-role', 'button');
                     $a->setAttribute('data-inline', 'true');
                     $a->setAttribute('data-icon', 'arrow-d');
+                    $a->setAttribute('data-ajax', 'false');
+
                 } else if (0 === \strpos($href, '/load/Image/') || 0 === \strpos($href, '/load/Screenshot/')) {
 
                     $prevNode = $a->previousSibling;
@@ -451,6 +415,8 @@ class Siza
                     $a->setAttribute('data-role', 'button');
                     $a->setAttribute('data-inline', 'true');
                     $a->setAttribute('data-icon', 'arrow-d');
+                    $a->setAttribute('data-ajax', 'false');
+
                 } else if (0 === \strpos($href, '/load/artists/')) {
                     $a->setAttribute('href', '#');
                 } else {

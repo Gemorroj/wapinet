@@ -3,11 +3,7 @@
 namespace Wapinet\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Wapinet\Bundle\Form\Type\Icq\UserInfoType;
-use Wapinet\Bundle\Form\Type\Icq\RegistrationType;
-use Symfony\Component\Form\FormError;
 
 
 class IcqController extends Controller

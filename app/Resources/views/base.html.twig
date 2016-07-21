@@ -40,6 +40,9 @@
     <script src="{{ asset('bundles/wapinet/js/core.js') }}"></script>
     <script src="{{ asset('bundles/wapinet/js/module/archiver.js') }}"></script>
     <script src="{{ asset('bundles/wapinet/js/module/message.js') }}"></script>
+    <script src="{{ asset('bundles/wapinet/js/module/php_obfuscator.js') }}"></script>
+    <script src="{{ asset('bundles/wapinet/js/module/translate.js') }}"></script>
+    <script src="{{ asset('bundles/wapinet/js/module/rest.js') }}"></script>
 
     {% if app.user %}
         <style type="text/css">
@@ -93,6 +96,18 @@
 
         $document.on("pagecreate", "#archiver_edit", function () {
             Archiver.setContainer($(this)).pageCreate();
+        });
+
+        $document.on("pagecreate", "#php_obfuscator_index", function () {
+            PhpObfuscator.setContainer($(this)).pageCreate();
+        });
+
+        $document.on("pagecreate", "#translate_index", function () {
+            Translate.setContainer($(this)).pageCreate();
+        });
+
+        $document.on("pagecreate", "#rest_index", function () {
+            Rest.setContainer($(this)).pageCreate();
         });
 
         $document.on("pagecreate", "#wapinet_message_inbox", function () {
