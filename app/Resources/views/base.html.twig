@@ -44,6 +44,7 @@
     <script src="{{ asset('bundles/wapinet/js/module/translate.js') }}"></script>
     <script src="{{ asset('bundles/wapinet/js/module/rest.js') }}"></script>
     <script src="{{ asset('bundles/wapinet/js/module/guestbook.js') }}"></script>
+    <script src="{{ asset('bundles/wapinet/js/module/gist.js') }}"></script>
 
     {% if app.user %}
         <style type="text/css">
@@ -113,6 +114,10 @@
 
         $document.on("pagecreate", "#guestbook_index", function () {
             Guestbook.setContainer($(this)).pageCreate();
+        });
+
+        $document.on("pagecreate", "#gist_view", function () {
+            Gist.setContainer($(this)).pageCreate();
         });
 
         $document.on("pagecreate", "#wapinet_message_inbox", function () {

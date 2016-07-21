@@ -156,10 +156,6 @@ class GistController extends Controller
         // переадресация на главную
         $url = $this->generateUrl('gist_index', array(), Router::ABSOLUTE_URL);
 
-        if (true === $request->isXmlHttpRequest()) {
-            return new JsonResponse(array('url' => $url));
-        }
-
         return $this->redirect($url);
     }
 
@@ -260,10 +256,6 @@ class GistController extends Controller
                     $this->editGistData($request, $gist, $newGist);
 
                     $url = $this->generateUrl('gist_view', array('id' => $gist->getId()), Router::ABSOLUTE_URL);
-
-                    if ($request->isXmlHttpRequest()) {
-                        return new JsonResponse(array('url' => $url));
-                    }
 
                     return $this->redirect($url);
                 }

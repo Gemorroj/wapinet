@@ -252,3 +252,4 @@ server {
 - Оболочка над nmap https://github.com/willdurand/nmap (работает медленно и выдает мало информации)
 - Сделать лайки или дизлайки в файлообменнике.
 - Заменить комменатрии. Возможно использовать для GUI https://github.com/Viima/jquery-comments
+- Доделать файлообменник под jquery mobile

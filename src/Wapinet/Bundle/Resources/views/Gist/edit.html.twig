@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-    {{ form_start(form, {'action': path('gist_edit', {'id': gist.id}), 'method': 'POST'}) }}
+    {{ form_start(form, {'action': path('gist_edit', {'id': gist.id}), 'method': 'POST', 'attr': {'data-ajax': 'false'}}) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
 {% endblock %}

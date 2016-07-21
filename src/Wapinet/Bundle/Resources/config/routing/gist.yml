@@ -1,6 +1,8 @@
 gist_index:
     path: /
     defaults: { _controller: WapinetBundle:Gist:index }
+    options:
+        expose: true
 
 gist_user:
     path: /users/{username}
@@ -20,6 +22,8 @@ gist_delete:
     methods: [POST]
     requirements:
         id: \d+
+    options:
+        expose: true
 
 gist_add:
     path: /add

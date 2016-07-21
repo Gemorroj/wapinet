@@ -8,20 +8,6 @@
     })}}
 {% endblock %}
 
-{% block javascripts %}
-        {% if app.user and is_granted('DELETE', gist) %}
-            <script>{% autoescape 'js' %}
-                $(document).on("pageinit", function () {
-                    $("#delete-popup-do").on("click", function () {
-                        $.post('{{ path('gist_delete', {'id': gist.id}) }}', function () {
-                            window.location.assign('{{ path('gist_index') }}');
-                        });
-                    });
-                });
-            {% endautoescape %}</script>
-        {% endif %}
-{% endblock %}
-
 {% block content %}
     <ul data-role="listview" data-inset="true">
         <li data-role="list-divider">
@@ -55,7 +41,7 @@
                 <a data-role="button" data-icon="edit" href="{{ path('gist_edit', {'id': gist.id}) }}">Редактировать</a>
             {% endif %}
             {% if is_granted('DELETE', gist) %}
-                <a data-role="button" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete" href="#delete-popup">Удалить</a>
+                <a data-role="button" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete" href="#delete-popup" data-id="{{ gist.id }}">Удалить</a>
             {% endif %}
         </fieldset>
     {% endif %}
