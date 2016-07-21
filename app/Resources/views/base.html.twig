@@ -43,6 +43,7 @@
     <script src="{{ asset('bundles/wapinet/js/module/php_obfuscator.js') }}"></script>
     <script src="{{ asset('bundles/wapinet/js/module/translate.js') }}"></script>
     <script src="{{ asset('bundles/wapinet/js/module/rest.js') }}"></script>
+    <script src="{{ asset('bundles/wapinet/js/module/guestbook.js') }}"></script>
 
     {% if app.user %}
         <style type="text/css">
@@ -108,6 +109,10 @@
 
         $document.on("pagecreate", "#rest_index", function () {
             Rest.setContainer($(this)).pageCreate();
+        });
+
+        $document.on("pagecreate", "#guestbook_index", function () {
+            Guestbook.setContainer($(this)).pageCreate();
         });
 
         $document.on("pagecreate", "#wapinet_message_inbox", function () {

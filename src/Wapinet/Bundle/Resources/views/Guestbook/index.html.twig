@@ -5,39 +5,6 @@
     {{wapinet_breadcrumbs()}}
 {% endblock %}
 
-{% block javascripts %}
-    <script>{% autoescape 'js' %}
-        $(document).on("pagecreate", "#page", function () {
-            var $pageContainer = $(this);
-            var $textarea = $pageContainer.find("#{{ form.children.message.vars.id }}");
-            var $form = $pageContainer.find("form[name='{{ form.vars.full_name }}']");
-            $form.submit(function () {
-                $form.find("#{{ form.children.submit.vars.id }}").attr('disabled', 'disabled');
-            });
-            var quote = function () {
-                $textarea.focus();
-
-                var $liComment = $(this).parent().next();
-                var text = $liComment.children('div').text();
-                var author = $liComment.find('span.comment-authorname>a').text();
-                $textarea.val('[quote=' + author + ']' + text + '[/quote]');
-                $textarea.keyup();
-
-                return false;
-            };
-            var popup = function () {
-                var $link = $(this);
-                $($link.attr('href')).popup("open", {"transition": "turn", "positionTo": $link});
-
-                return false;
-            };
-
-            $pageContainer.find('a[href^="#popup-"]').click(popup);
-            $pageContainer.find("a.item-quote").click(quote);
-        });
-    {% endautoescape %}</script>
-{% endblock %}
-
 {% block content %}
     {% for flashMessage in app.session.flashbag.get('notice') %}
         <div>
