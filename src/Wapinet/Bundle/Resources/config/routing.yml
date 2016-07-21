@@ -120,10 +120,6 @@ php_validator:
     resource: "@WapinetBundle/Resources/config/routing/php_validator.yml"
     prefix:   /php_validator
 
-weather:
-    resource: "@WapinetBundle/Resources/config/routing/weather.yml"
-    prefix:   /weather
-
 rates:
     resource: "@WapinetBundle/Resources/config/routing/rates.yml"
     prefix:   /rates

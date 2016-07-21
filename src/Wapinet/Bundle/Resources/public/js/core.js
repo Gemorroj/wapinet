@@ -138,18 +138,6 @@ const Autocomplete = {
             minLength: 2,
             interval: 1
         });
-    },
-    link: function (link, source, input, suggestions) {
-        input = input || '#autocomplete';
-        suggestions = suggestions || '#suggestions';
-        $(input).autocomplete({
-            link: link,
-            target: $(suggestions),
-            source: source,
-            loadingHtml: '<li data-icon="none"><a href="#">Поиск...</a></li>',
-            minLength: 2,
-            interval: 1
-        });
     }
 };
 
