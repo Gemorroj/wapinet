@@ -186,6 +186,58 @@
         });
 
 
+        // свайпер в пагинации
+        $document.on("click", ".pagerfanta a", function () {
+            var $pageContainer = $(":mobile-pagecontainer");
+            var that = this;
+            var $this = $(that);
+
+            var swiperNext = function () {
+                $pageContainer.pagecontainer("change", $this.attr('href'), {
+                    "transition": "slide"
+                });
+                return false;
+            };
+            var swiperPrev = function () {
+                $pageContainer.pagecontainer("change", $this.attr('href'), {
+                    "transition": "slide",
+                    "reverse": true
+                });
+                return false;
+            };
+
+
+            if ($this.hasClass("ui-first-child")) {
+                return swiperPrev();
+            }
+            if ($this.hasClass("ui-last-child")) {
+                return swiperNext();
+            }
+
+            var Page = {
+                "all": 0,
+                "current": 0,
+                "click": 0
+            };
+            $this.closest("div").find("a").not(".ui-first-child, .ui-last-child").each(function () {
+                Page.all++;
+
+                if (that === this) {
+                    Page.click = Page.all;
+                }
+                if ($(this).hasClass("page-current")) {
+                    Page.current = Page.all;
+                }
+            });
+
+            if (Page.click > Page.current) {
+                return swiperNext();
+            }
+            if (Page.click < Page.current) {
+                return swiperPrev();
+            }
+        });
+
 
         // предпросмотр картинок в загружаемых файлах
         $document.on("change", 'input[type="file"]', function (e) {
