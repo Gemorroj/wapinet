@@ -1,6 +1,6 @@
 "use strict";
 
-const FileLoader = {
+const Loader = {
     readFile: function (file, callback) {
         if (FileReader) {
             var fileReader = new FileReader();
@@ -28,59 +28,6 @@ const FileLoader = {
     },
     previewCleaner: function (previewElement) {
         $(previewElement).parent().find('p.container-preview').remove();
-    },
-    uploadFile: function (form) {
-        var $uploadLoader = $('<span></span>');
-
-        $.mobile.loading("show", {
-            text: "Загрузка файла... ",
-            textVisible: true
-        });
-
-        if (FormData === undefined || XMLHttpRequest === undefined) {
-            return true;
-        }
-
-        var xhr = new XMLHttpRequest();
-        if (xhr.upload === undefined) {
-            xhr.close();
-            return true;
-        }
-
-        var formData = new FormData(form);
-        $uploadLoader.appendTo('div.ui-loader h1');
-
-        xhr.upload.addEventListener("progress", function (e) {
-            if (e.lengthComputable) {
-                var percentComplete = Math.round(e.loaded * 100 / e.total);
-                $uploadLoader.text(percentComplete.toString() + '%');
-            } else {
-                $uploadLoader.text('Неизвестно.');
-            }
-        }, false);
-        xhr.addEventListener("load", function (e) {
-            var responseJson = JSON.parse(e.target.responseText);
-            if (e.target.status === 200) {
-                window.location.assign(responseJson.url);
-            } else {
-                $uploadLoader.text('Ошибка: ' + responseJson.errors.join(". "));
-                setTimeout(function () {
-                    $.mobile.loading("hide");
-                }, 10000);
-            }
-        }, false);
-        xhr.addEventListener("error", function () {
-            $uploadLoader.text('Загрузка прервана.');
-        }, false);
-        xhr.addEventListener("abort", function () {
-            $uploadLoader.text('Загрузка остановлена.');
-        }, false);
-
-        xhr.open(form.getAttribute('method'), form.getAttribute('action'));
-        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-        xhr.send(formData);
-
-        return false;
     }
 };
 
@@ -113,18 +60,14 @@ const Helper = {
 
 
 const Autocomplete = {
-    text: function (source, input, suggestions) {
-        input = input || '#autocomplete';
-        suggestions = suggestions || '#suggestions';
-        $(input).autocomplete({
+    text: function (source, $input, $suggestions) {
+        $input.autocomplete({
             link: '#',
-            target: $(suggestions),
+            target: $suggestions,
             source: source,
             loadingHtml: '',
             icon: 'tag',
             callback: function (e) {
-                var $input = $(input);
-
                 var arrText = $input.val().split(',');
 
                 arrText.pop();

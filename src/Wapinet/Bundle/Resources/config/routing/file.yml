@@ -56,6 +56,8 @@ file_tag:
 file_tags_search:
     path: /tags_search
     defaults: { _controller: WapinetBundle:File:tagsSearch, _format: json }
+    options:
+        expose: true
 
 file_user:
     path: /users/{username}

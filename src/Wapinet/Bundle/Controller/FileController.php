@@ -499,7 +499,7 @@ class FileController extends Controller
      * @param File $file
      *
      * @throws AccessDeniedException|NotFoundHttpException
-     * @return RedirectResponse|JsonResponse|Response
+     * @return RedirectResponse|Response
      */
     public function editAction(Request $request, File $file)
     {
@@ -519,23 +519,11 @@ class FileController extends Controller
 
                     $url = $this->generateUrl('file_view', array('id' => $file->getId()), Router::ABSOLUTE_URL);
 
-                    // загрузка через ajax
-                    if ($request->isXmlHttpRequest()) {
-                        return new JsonResponse(array('url' => $url));
-                    }
-
                     return $this->redirect($url);
                 }
             }
         } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
-        }
-
-        // загрузка через ajax
-        if ($request->isXmlHttpRequest() /*&& $form->isSubmitted()*/ && !$form->isValid()) {
-            return new JsonResponse(array(
-                'errors' => $this->get('error')->makeErrors($form),
-            ), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         return $this->render('WapinetBundle:File:edit.html.twig', array(
@@ -604,7 +592,7 @@ class FileController extends Controller
     /**
      * @param Request $request
      *
-     * @return RedirectResponse|JsonResponse|Response
+     * @return RedirectResponse|Response
      */
     public function uploadAction(Request $request)
     {
@@ -637,27 +625,11 @@ class FileController extends Controller
                         );
                     }
 
-                    // загрузка через ajax
-                    if ($request->isXmlHttpRequest()) {
-                        return new JsonResponse(array(
-                            'id' => $file->getId(),
-                            'url' => $url
-                        ));
-                    }
-
-                    // обычная загрузка
                     return $this->redirect($url);
                 }
             }
         } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
-        }
-
-        // загрузка через ajax
-        if ($request->isXmlHttpRequest() /*&& $form->isSubmitted()*/ && !$form->isValid()) {
-            return new JsonResponse(array(
-                'errors' => $this->get('error')->makeErrors($form),
-            ), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         return $this->render('WapinetBundle:File:upload.html.twig', array(

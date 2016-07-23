@@ -45,6 +45,8 @@
     <script src="{{ asset('bundles/wapinet/js/module/rest.js') }}"></script>
     <script src="{{ asset('bundles/wapinet/js/module/guestbook.js') }}"></script>
     <script src="{{ asset('bundles/wapinet/js/module/gist.js') }}"></script>
+    <script src="{{ asset('bundles/wapinet/js/module/file/upload.js') }}"></script>
+    <script src="{{ asset('bundles/wapinet/js/module/file/edit.js') }}"></script>
 
     {% if app.user %}
         <style type="text/css">
@@ -95,6 +97,14 @@
 
 
         var $document = $(document);
+
+        $document.on("pagecreate", "#file_upload", function () {
+            FileUpload.setContainer($(this)).pageCreate();
+        });
+        $document.on("pagecreate", "#file_edit", function () {
+            FileEdit.setContainer($(this)).pageCreate();
+        });
+
 
         $document.on("pagecreate", "#archiver_edit", function () {
             Archiver.setContainer($(this)).pageCreate();
@@ -220,9 +230,9 @@
             // только если поддерживается
             if (fileElement.files) {
                 var file = fileElement.files[0];
-                FileLoader.previewCleaner(fileElement);
-                FileLoader.readFile(file, function (e) {
-                    FileLoader.preview(e, file, fileElement);
+                Loader.previewCleaner(fileElement);
+                Loader.readFile(file, function (e) {
+                    Loader.preview(e, file, fileElement);
                 });
 
             }
