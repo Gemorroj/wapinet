@@ -1,7 +1,8 @@
 <div data-role="controlgroup" data-type="horizontal">
 
-    <a href="#popupMeta" data-rel="popup" data-transition="pop" data-position-to="window" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-icon-info ui-btn-icon-left">Информация</a>
-    <div data-role="popup" id="popupMeta" class="file-metadata ui-content">
+    <a href="#" id="meta-button" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-icon-info ui-btn-icon-left">Информация</a>
+
+    <div data-role="popup" id="meta-popup" class="file-metadata ui-content">
         <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Закрыть</a>
 
         <div class="ui-grid-a">
@@ -158,8 +159,8 @@
 
     {% if file.isAndroidApp and file.meta is not null %}
         {% if file.meta.has('permissions') %}
-            <a href="#popupPermissions" data-rel="popup" data-transition="pop" data-position-to="window" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-icon-alert ui-btn-icon-left">Права доступа</a>
-            <div data-role="popup" id="popupPermissions">
+            <a href="#" id="permissions-button" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-icon-alert ui-btn-icon-left">Права доступа</a>
+            <div data-role="popup" id="permissions-popup">
                 <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Закрыть</a>
 
                 <ul>

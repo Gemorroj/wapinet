@@ -1,7 +1,7 @@
 {% if file.is3gp or file.isAvi or file.isWmv %}
     {% set videoMp4 = vich_uploader_asset(file, 'file')|wapinet_video_to_mp4 %}
     {% if videoMp4 is not null %}
-        <a data-inline="true" data-role="button" href="{{ videoMp4 }}" download="{{ file.originalFileName }}.mp4">Скачать MP4</a>
+        <a data-ajax="false" data-inline="true" data-role="button" href="{{ videoMp4 }}" download="{{ file.originalFileName }}.mp4">Скачать MP4</a>
     {% endif %}
 {% endif %}
 

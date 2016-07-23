@@ -47,8 +47,11 @@
     <script src="{{ asset('bundles/wapinet/js/module/gist.js') }}"></script>
     <script src="{{ asset('bundles/wapinet/js/module/file/upload.js') }}"></script>
     <script src="{{ asset('bundles/wapinet/js/module/file/edit.js') }}"></script>
+    <script src="{{ asset('bundles/wapinet/js/module/file/view.js') }}"></script>
+    <script src="{{ asset('bundles/wapinet/js/module/file/swiper.js') }}"></script>
 
     {% if app.user %}
+        {# todo:bug #}
         <style type="text/css">
             .ui-icon-wapinet-user:after {
                 background-image: url("{{ wapinet_user_get_avatar_url(app.user, 18) }}");
@@ -88,6 +91,7 @@
             } else { f(); }
         })(document, window, "yandex_metrika_callbacks");
 
+
         {# jplayer #}
         window.Jplayer = {
             'swfPath': "//cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.swf"
@@ -98,90 +102,56 @@
 
         var $document = $(document);
 
-        $document.on("pagecreate", "#file_upload", function () {
-            FileUpload.setContainer($(this)).pageCreate();
+        $document.one("pagecreate", "#file_upload", function () {
+            FileUpload.pageCreate();
         });
-        $document.on("pagecreate", "#file_edit", function () {
-            FileEdit.setContainer($(this)).pageCreate();
+        $document.one("pagecreate", "#file_edit", function () {
+            FileEdit.pageCreate();
         });
-
-
-        $document.on("pagecreate", "#archiver_edit", function () {
-            Archiver.setContainer($(this)).pageCreate();
+        $document.one("pagecreate", "#file_view", function () {
+            FileView.pageCreate();
+        }).on("pageshow", "#file_view", function () {
+            FileView.pageShow($(this));
         });
-
-        $document.on("pagecreate", "#php_obfuscator_index", function () {
-            PhpObfuscator.setContainer($(this)).pageCreate();
-        });
-
-        $document.on("pagecreate", "#translate_index", function () {
-            Translate.setContainer($(this)).pageCreate();
+        $document.one("pagecreate", "#file_swiper", function () {
+            FileSwiper.pageCreate();
         });
 
-        $document.on("pagecreate", "#rest_index", function () {
-            Rest.setContainer($(this)).pageCreate();
+
+        $document.one("pagecreate", "#archiver_edit", function () {
+            Archiver.pageCreate();
         });
 
-        $document.on("pagecreate", "#guestbook_index", function () {
-            Guestbook.setContainer($(this)).pageCreate();
+        $document.one("pagecreate", "#php_obfuscator_index", function () {
+            PhpObfuscator.pageCreate();
         });
 
-        $document.on("pagecreate", "#gist_view", function () {
-            Gist.setContainer($(this)).pageCreate();
+        $document.one("pagecreate", "#translate_index", function () {
+            Translate.pageCreate();
         });
 
-        $document.on("pagecreate", "#wapinet_message_inbox", function () {
-            alert('page create inbox');
-            Message.setContainer($(this)).pageCreate();
-        }).on("pagecreate", "#wapinet_message_sent", function () {
-            alert('page create sent');
-            Message.setContainer($(this)).pageCreate();
-        }).on("pagecreate", "#wapinet_message_deleted", function () {
-            alert('page create deleted');
-            Message.setContainer($(this)).pageCreate();
+        $document.one("pagecreate", "#rest_index", function () {
+            Rest.pageCreate();
         });
 
-        $document.on("pageshow", "#page", function () {
+        $document.one("pagecreate", "#guestbook_index", function () {
+            Guestbook.pageCreate();
+        });
 
-            {# комментарии #}
-        {#
-            <script src="{{ asset('bundles/wapinetcomment/js/comments.js') }}"></script>
-            <link rel="stylesheet" href="{{ asset('bundles/wapinetcomment/css/comments.css') }}" type="text/css" />
+        $document.one("pagecreate", "#gist_view", function () {
+            Gist.pageCreate();
+        });
 
-            window.fos.Comment.base_url = '{{ path('fos_comment_get_threads') }}';
-            window.fos.Comment.thread_container = $(":mobile-pagecontainer").find('#fos_comment_thread');
-            window.fos.Comment.thread_container.on("fos_comment_load_thread", function () {
-                window.fos.Comment.thread_container.enhanceWithin();
-            });
-
-            var pathParams = window.location.pathname.slice(1).split('/');
-            if ((pathParams[0] === "file" || pathParams[0] === "gist" || pathParams[0] === "news") && pathParams[1].search('^[0-9]+$') !== -1) {
-                window.fos.Comment.getThreadComments(pathParams[0] + '-' + pathParams[1]);
-            }
-            #}
+        $document.one("pagecreate", "#wapinet_message_inbox", function () {
+            Message.pageCreate();
+        }).one("pagecreate", "#wapinet_message_sent", function () {
+            Message.pageCreate();
+        }).one("pagecreate", "#wapinet_message_deleted", function () {
+            Message.pageCreate();
+        });
 
 
-
-            {# превью картинок в гостевой #}
-            {#
-            $(":mobile-pagecontainer").find("div.long-description img.bb").each(function (i) {
-                var $image = $(this);
-
-                var src = Helper.escapeHtml(Helper.escapeUrl($image.attr('src') || ''));
-                var alt = Helper.escapeHtml($image.attr('alt') || '');
-
-                $image.replaceWith(
-                    '<a href="#popup-' + i + '" data-rel="popup" data-position-to="window" data-transition="fade">' +
-                    '<img src="' + src + '" alt="" class="image-preview" />' +
-                    '</a>' +
-                    '<div data-role="popup" id="popup-' + i + '" data-overlay-theme="b" data-theme="b" data-corners="false">' +
-                    '<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Закрыть</a>' +
-                    '<img src="' + src + '" alt="' + alt + '" style="width: 100%;" />' +
-                    '</div>'
-                );
-            });
-            #}
-
+        //$document.on("pageshow", "#page", function () {
 
 
             {# vk #}
@@ -194,7 +164,7 @@
                 document.getElementsByTagName("head")[0].appendChild(script);
             }
             #}
-        });
+        //});
 
 
         // подгрузка картинок в попапах
@@ -286,10 +256,6 @@
             $.mobile.loading('hide');
         });
     {% endautoescape %}</script>
-
-
-    {% block javascripts %}{% endblock %}
-    {% block stylesheets %}{% endblock %}
 </head>
 <body>
 <!-- Yandex.Metrika counter --><noscript><div><img src="https://mc.yandex.ru/watch/26376855" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->

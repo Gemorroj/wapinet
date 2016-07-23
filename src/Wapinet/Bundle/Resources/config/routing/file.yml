@@ -1,6 +1,8 @@
 file_index:
     path: /
     defaults: { _controller: WapinetBundle:File:index }
+    options:
+        expose: true
 
 file_information:
     path: /information
@@ -32,6 +34,8 @@ file_delete:
     methods: [POST]
     requirements:
         id: \d+
+    options:
+        expose: true
 
 file_search:
     path: /search/{key}

@@ -139,3 +139,18 @@ div.file-md5-hash {
     float: left;
     margin-right: 0.5em;
 }
+.swiper-page {
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.swiper-page .ui-footer {
+    background: none;
+    border: none;
+    bottom: 0;
+}
+.control.ui-btn-left, .image-size-btn.ui-btn-right {
+    top: auto;
+    bottom: 7px;
+    margin: 0;
+}

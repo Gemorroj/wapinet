@@ -1,30 +1,18 @@
 "use strict";
 
 const FileUpload = {
-    $container: null,
-
-    /**
-     *
-     * @param {jQuery} $container
-     */
-    setContainer: function ($container) {
-        this.$container = $container;
-
-        return this;
-    },
-
     pageCreate: function () {
-        var that = this;
+        var $pageContainer = $(":mobile-pagecontainer");
 
         Autocomplete.text(
             Routing.generate('file_tags_search'),
-            that.$container.find('#file_upload_form_tags'),
-            that.$container.find('#suggestions')
+            $pageContainer.find('#file_upload_form_tags'),
+            $pageContainer.find('#suggestions')
         );
 
-        that.$container.find('#upload-password').change(function () {
-            that.$container.find('#upload-password-row').slideToggle();
-            that.$container.find('#file_upload_form_tags').parent().parent().slideToggle();
+        $pageContainer.find('#upload-password').change(function () {
+            $pageContainer.find('#upload-password-row').slideToggle();
+            $pageContainer.find('#file_upload_form_tags').parent().parent().slideToggle();
         });
     }
 };

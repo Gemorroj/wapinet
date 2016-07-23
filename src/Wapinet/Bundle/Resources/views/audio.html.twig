@@ -1,7 +1,7 @@
 {% if file.isAmr %}
     {% set audioMp3 = vich_uploader_asset(file, 'file')|wapinet_audio_to_mp3 %}
     {% if audioMp3 is not null %}
-        <a data-inline="true" data-role="button" href="{{ audioMp3 }}" download="{{ file.originalFileName }}.mp3">Скачать MP3</a>
+        <a data-ajax="false" data-inline="true" data-role="button" href="{{ audioMp3 }}" download="{{ file.originalFileName }}.mp3">Скачать MP3</a>
     {% endif %}
 {% endif %}
 

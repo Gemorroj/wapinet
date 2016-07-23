@@ -93,6 +93,12 @@ fos_message:
     reply_form:
         class: Wapinet\MessageBundle\Form\Type\ReplyMessageFormType
 
+fos_js_routing:
+    cache_control:
+        public: true
+        maxage: 2592000
+        expires: "30 days"
+
 vich_uploader:
     db_driver: orm
     mappings:

@@ -17,37 +17,65 @@
     {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_java_app_screenshot %}
 {% elseif file.isAndroidApp %}
     {% set screenshot = vich_uploader_asset(file, 'file')|wapinet_android_app_screenshot %}
+{% else %}
+    {% set screenshot = null %}
+{% endif %}
+
+{% set format = null %}
+{% set audio = null %}
+{% set video = null %}
+
+{% if file.isPlayableVideo %}
+    {% set format %}{% spaceless %}
+        {% if file.isM4v or file.is3gp or file.isWmv or file.isAvi %}
+            m4v
+        {% elseif file.isOgv %}
+            ogv
+        {% elseif file.isWebmv %}
+            webmv
+        {% elseif file.isFlv %}
+            flv
+        {% endif %}
+    {% endspaceless %}{% endset %}
+
+    {% set video %}{% spaceless %}
+        {% if file.is3gp or file.isAvi or file.isWmv %}
+            {{ vich_uploader_asset(file, 'file')|wapinet_video_to_mp4 }}
+        {% else %}
+            {{ vich_uploader_asset(file, 'file') }}
+        {% endif %}
+    {% endspaceless %}{% endset %}
+{% elseif file.isPlayableAudio %}
+    {% set format %}{% spaceless %}
+        {% if file.isMp3 or file.isAmr %}
+            mp3
+        {% elseif file.isM4a %}
+            m4a
+        {% elseif file.isOga %}
+            oga
+        {% elseif file.isWebma %}
+            webma
+        {% elseif file.isWav %}
+            wav
+        {% elseif file.isFla %}
+            fla
+        {% elseif file.isFlac %}
+            flac
+        {% endif %}
+    {% endspaceless %}{% endset %}
+
+    {% set audio %}{% spaceless %}
+        {% if file.isAmr %}
+            {{ vich_uploader_asset(file, 'file')|wapinet_audio_to_mp3 }}
+        {% else %}
+            {{ vich_uploader_asset(file, 'file') }}
+        {% endif %}
+    {% endspaceless %}{% endset %}
 {% endif %}
 
 
-{% block javascripts %}
-    {% if file.isPlayableVideo %}
-        <script>
-            {% include '@Wapinet/video.js.twig' with {'file': file} %}
-        </script>
-    {% elseif file.isPlayableAudio %}
-        <script>
-            {% include '@Wapinet/audio.js.twig' with {'file': file} %}
-        </script>
-    {% endif %}
-
-    {% if app.user and (is_granted('DELETE', file) or is_granted('ROLE_ADMIN')) %}
-        <script>{% autoescape 'js' %}
-
-            $(":mobile-pagecontainer").on("click", "#delete-popup-do", function () {
-                $.post('{{ path('file_delete', {'id': file.id}) }}', function () {
-                    window.location.assign('{{ path('file_index') }}');
-                });
-            });
-
-        {% endautoescape %}</script>
-    {% endif %}
-
-    <script src="//yastatic.net/share2/share.js" async="async"></script>
-{% endblock %}
-
 {% block content %}
-    <a data-role="button" data-icon="arrow-d" href="{{ vich_uploader_asset(file, 'file') }}" download="{{ file.originalFileName }}">Скачать</a>
+    <a id="file-download" data-screenshot="{{ screenshot }}" data-format="{{ format }}" data-audio="{{ audio }}" data-video="{{ video }}" data-id="{{ file.id }}" data-ajax="false" data-role="button" data-icon="arrow-d" href="{{ vich_uploader_asset(file, 'file') }}" download="{{ file.originalFileName }}">Скачать</a>
 
     {% if file.isHidden %}
         <button class="ui-btn ui-icon-alert ui-btn-icon-left">Файл скрыт от общего просмотра. Дождитесь модерации.</button>
@@ -60,14 +88,14 @@
     {% endif %}
 
     {% if file.isImage %}
-        {% if screenshot is defined and screenshot is not null %}
+        {% if screenshot is not null %}
             {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
         {% endif %}
     {% elseif file.isVideo %}
         {% if file.isPlayableVideo %}
             {% include '@Wapinet/video.html.twig' with {'file': file} %}
         {% else %}
-            {% if screenshot is defined and screenshot is not null %}
+            {% if screenshot is not null %}
                 {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
             {% endif %}
         {% endif %}
@@ -80,11 +108,11 @@
             {% include '@Wapinet/archive.html.twig' with {'file': file} %}
         {% endif %}
     {% elseif file.isJavaApp %}
-        {% if screenshot is defined and screenshot is not null %}
+        {% if screenshot is not null %}
             {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
         {% endif %}
     {% elseif file.isAndroidApp %}
-        {% if screenshot is defined and screenshot is not null %}
+        {% if screenshot is not null %}
             {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
         {% endif %}
     {% elseif file.isTorrent %}
@@ -103,7 +131,7 @@
                 <a data-role="button" data-icon="edit" href="{{ path('file_edit', {'id': file.id}) }}">Редактировать</a>
             {% endif %}
             {% if is_granted('DELETE', file) %}
-                <a data-role="button" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete" href="#delete-popup">Удалить</a>
+                <a data-role="button" data-icon="delete" id="delete-button" href="#">Удалить</a>
             {% endif %}
         </fieldset>
     {% endif %}
@@ -115,9 +143,6 @@
             {% endfor %}
         </fieldset>
     {% endif %}
-
-
-    <p class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,twitter" data-title="{{ file.originalFileName|e('html_attr') }}" data-description="{{ file.description|wapinet_bbcode_parse|striptags|e('html_attr') }}" {% if screenshot is defined and screenshot is not null %}data-image="{{ (app.request.schemeAndHttpHost ~ screenshot)|e('html_attr') }}"{% endif %}></p>
 
     {% include 'WapinetCommentBundle::comments_block.html.twig' %}
 {% endblock %}

@@ -1,24 +1,12 @@
 "use strict";
 
 const Translate = {
-    $container: null,
-
-    /**
-     *
-     * @param {jQuery} $container
-     */
-    setContainer: function ($container) {
-        this.$container = $container;
-
-        return this;
-    },
-
     pageCreate: function () {
-        var that = this;
+        var $pageContainer = $(":mobile-pagecontainer");
 
-        that.$container.find('#downloadTranslation').click(function () {
+        $pageContainer.find('#downloadTranslation').click(function () {
             Helper.downloadText(
-                that.$container.find('#textTranslation').val(),
+                $pageContainer.find('#textTranslation').val(),
                 'translate.txt'
             );
             return false;
