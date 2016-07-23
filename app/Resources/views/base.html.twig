@@ -52,12 +52,12 @@
 
     {% if app.user %}
         {# todo:bug #}
-        <style type="text/css">
+        <style type="text/css">{% autoescape 'css' %}
             .ui-icon-wapinet-user:after {
                 background-image: url("{{ wapinet_user_get_avatar_url(app.user, 18) }}");
                 background-size: 18px 18px;
             }
-        </style>
+        {% endautoescape %}</style>
     {% endif %}
 
 
@@ -150,21 +150,14 @@
             Message.pageCreate();
         });
 
-
-        //$document.on("pageshow", "#page", function () {
-
-
+        $document.one("pagecreate", "#fos_user_profile_show", function () {
             {# vk #}
-            {#
             var vkId = $(":mobile-pagecontainer").find("#user-vk").data("id");
 
             if (vkId) {
-                var script = document.createElement('script');
-                script.src = 'https://api.vk.com/method/users.get?callback=Vk.show&fields=online,photo_200_orig&user_ids=' + vkId;
-                document.getElementsByTagName("head")[0].appendChild(script);
+                $.getScript('https://api.vk.com/method/users.get?callback=Vk.show&fields=online,photo_200_orig&user_ids=' + vkId);
             }
-            #}
-        //});
+        });
 
 
         // подгрузка картинок в попапах
