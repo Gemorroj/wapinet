@@ -319,7 +319,7 @@ class FileController extends Controller
     protected function viewFile(File $file)
     {
         $this->checkMeta($file);
-        $response = $this->render('WapinetBundle:File:view.html.twig', array('comments_id' => 'file-' . $file->getId(), 'file' => $file));
+        $response = $this->render('WapinetBundle:File:view.html.twig', array('file' => $file));
         $this->incrementViews($file);
 
         $entityManager = $this->getDoctrine()->getManager();

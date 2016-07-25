@@ -42,7 +42,6 @@ class NewsController extends Controller
     {
         return $this->render('WapinetBundle:News:show.html.twig', array(
             'entity' => $news,
-            'comments_id' => 'news-' . $news->getId(),
         ));
     }
 }

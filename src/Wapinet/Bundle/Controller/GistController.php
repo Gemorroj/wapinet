@@ -128,7 +128,6 @@ class GistController extends Controller
     public function viewAction(Gist $gist)
     {
         return $this->render('WapinetBundle:Gist:view.html.twig', array(
-            'comments_id' => 'gist-' . $gist->getId(),
             'gist' => $gist,
         ));
     }
@@ -144,9 +143,6 @@ class GistController extends Controller
     public function deleteAction(Request $request, Gist $gist)
     {
         $this->denyAccessUnlessGranted('DELETE', $gist);
-
-        // комментарии
-        $this->get('wapinet_comment.helper')->removeThread('gist-' . $gist->getId());
 
         // БД
         $em = $this->getDoctrine()->getManager();

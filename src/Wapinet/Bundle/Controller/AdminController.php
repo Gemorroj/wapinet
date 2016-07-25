@@ -80,14 +80,6 @@ class AdminController extends BaseAdminController
             case $entity instanceof File:
                 $this->get('file')->cleanupFile($entity);
                 break;
-
-            case $entity instanceof News:
-                $this->get('wapinet_comment.helper')->removeThread('news-' . $entity->getId());
-                break;
-
-            case $entity instanceof Gist:
-                $this->get('wapinet_comment.helper')->removeThread('gist-' . $entity->getId());
-                break;
         }
     }
 }

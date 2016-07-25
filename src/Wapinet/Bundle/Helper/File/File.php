@@ -62,9 +62,6 @@ class File
             ),
             'thumbnail'
         );
-
-        // комментарии
-        $this->container->get('wapinet_comment.helper')->removeThread('file-' . $file->getId());
     }
 
 
