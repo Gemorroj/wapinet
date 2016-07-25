@@ -451,10 +451,6 @@ class FileController extends Controller
         // переадресация на файл
         $url = $this->generateUrl('file_view', array('id' => $file->getId()), Router::ABSOLUTE_URL);
 
-        if ($request->isXmlHttpRequest()) {
-            return new JsonResponse(array('url' => $url));
-        }
-
         return $this->redirect($url);
     }
 
