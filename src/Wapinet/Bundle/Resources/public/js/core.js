@@ -184,6 +184,7 @@ var _commentsLoader = function ($pageContainer, xid) {
             var title = $pageContainer.find('#header-title').html();
 
             HC.widget("Stream", {
+                "hc_disable": 1,
                 "xid": xid,
                 "widget_id": 76882,
                 "title": title,
@@ -213,8 +214,7 @@ $document.on("pageshow", "#file_view", function () {
     );
 });
 
-$document.one("pagecreate", "#file_index", function () {
-    console.log('page create');
+$document.on("pagecreate", "#file_index", function () {
     var $commentsContainer = $(":mobile-pagecontainer").find("#hypercomments_mix");
     $commentsContainer.empty();
 
@@ -226,7 +226,7 @@ $document.one("pagecreate", "#file_index", function () {
                 "filter": "last",
                 "limit": 5,
                 "append": $commentsContainer[0]
-            });
+            }, "add");
         }
     }, 100);
 });
