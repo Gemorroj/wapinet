@@ -31,6 +31,9 @@
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/skin/blue.monday/css/jplayer.blue.monday.min.css" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.min.js"></script>
 
+    {# hypercomments #}
+    <script src="//w.hypercomments.com/widget/hc/76882/ru/widget.js"></script>
+
 
     {# fos js routing #}
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
@@ -98,9 +101,49 @@
         };
 
 
+        {# hypercomments #}
+        var _commentsLoader = function ($pageContainer, xid) {
+            var $commentsContainer = $pageContainer.find("#hypercomments_widget");
+            $commentsContainer.empty();
+
+            var hcInterval = window.setInterval(function () {
+                if ("HC" in window) {
+                    window.clearInterval(hcInterval);
+                    HC.widget("Stream", {
+                        "xid": xid,
+                        "widget_id": 76882,
+                        "append": $commentsContainer[0],
+                        "callback": function (app, init) {
+                            app.on('streamMessage', function (packet) {
+                                console.log('event comment');
+                            });
+                        }
+                    });
+                }
+            }, 100);
+        };
 
 
         var $document = $(document);
+
+        {# hypercomments #}
+        $document.on("pageshow", "#file_view", function () {
+            _commentsLoader(
+                $(this),
+                "file-" + window.location.pathname.split("/").reverse()[0]
+            );
+        }).on("pageshow", "#gist_view", function () {
+            _commentsLoader(
+                $(this),
+                "gist-" + window.location.pathname.split("/").reverse()[0]
+            );
+        }).on("pageshow", "#news_show", function () {
+            _commentsLoader(
+                $(this),
+                "news-" + window.location.pathname.split("/").reverse()[0]
+            );
+        });
+
 
         $document.one("pagecreate", "#file_upload", function () {
             FileUpload.pageCreate();

@@ -28,7 +28,6 @@ class Gist extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('gist_count_all', array($this, 'getCountAll')),
             new \Twig_SimpleFunction('gist_count', array($this, 'getCount')),
-            new \Twig_SimpleFunction('gist_comments_count', array($this, 'getCommentsCount')),
         );
     }
 
@@ -48,17 +47,6 @@ class Gist extends \Twig_Extension
     public function getCount(User $user = null)
     {
         return $this->gistRepository->count($user);
-    }
-
-
-    /**
-     * @param int $id
-     *
-     * @return number
-     */
-    public function getCommentsCount($id)
-    {
-        return $this->gistRepository->countComments($id);
     }
 
     /**
