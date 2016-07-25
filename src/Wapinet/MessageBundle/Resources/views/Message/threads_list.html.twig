@@ -5,7 +5,7 @@
             {# @var thread \FOS\MessageBundle\Model\ThreadInterface #}
             <li data-role="list-divider">{{ thread.lastMessage.createdAt|wapinet_datetime }} <span class="ui-li-count">{{ thread.messages|length|wapinet_count }}</span></li>
             <li>
-                <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}">
+                <a data-thread="{{ thread.id }}" href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}">
                     <h2>
                         {{ thread.subject }}
                     </h2>

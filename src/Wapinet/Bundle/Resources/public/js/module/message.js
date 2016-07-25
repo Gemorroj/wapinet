@@ -17,6 +17,9 @@ const Message = {
             threadId = $this.data('id');
             $row = $this.closest('li');
         });
+        $pageContainer.on("click", "a[data-thread]", function () {
+            $pageContainer.pagecontainer("change", this.href);
+        });
 
         $pageContainer.find("#delete-popup-inbox-do, #delete-popup-sent-do, #delete-popup-deleted-do").on("click", function () {
             $.post(Routing.generate('wapinet_message_thread_delete', {'threadId': threadId}), function () {
