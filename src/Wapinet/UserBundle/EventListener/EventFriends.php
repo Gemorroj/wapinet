@@ -5,8 +5,6 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Wapinet\Bundle\Event\FileEvent;
 use Wapinet\Bundle\Event\GistEvent;
-use Wapinet\CommentBundle\Entity\Comment;
-use Wapinet\CommentBundle\Event\CommentEvent;
 use Wapinet\UserBundle\Entity\Friend;
 use Wapinet\UserBundle\Entity\Event as EntityEvent;
 use Doctrine\Orm\EntityManager;
@@ -34,47 +32,11 @@ class EventFriends implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            CommentEvent::COMMENT_ADD => 'createComment',
             FriendEvent::FRIEND_ADD => 'friendAdd',
             FriendEvent::FRIEND_DELETE => 'friendDelete',
             FileEvent::FILE_ADD => 'fileAdd',
             GistEvent::GIST_ADD => 'gistAdd',
         );
-    }
-
-    /**
-     * @param CommentEvent $event
-     */
-    public function createComment(CommentEvent $event)
-    {
-        /** @var Comment $comment */
-        $comment = $event->getComment();
-        /** @var User $user */
-        $user = $comment->getAuthor();
-        if (null === $user) {
-            return;
-        }
-
-        /** @var Friend $friend */
-        foreach ($user->getFriended() as $friend) {
-            $entityEvent = new EntityEvent();
-            if (true === $friend->getFriend()->isFemale()) {
-                $entityEvent->setSubject('Ваша подруга ' . $friend->getFriend()->getUsername() . ' оставила комментарий.');
-            } else {
-                $entityEvent->setSubject('Ваш друг ' . $friend->getFriend()->getUsername() . ' оставил комментарий.');
-            }
-            $entityEvent->setTemplate('friend_comment');
-            $entityEvent->setVariables(array(
-                'friend' => $friend->getFriend(),
-                'comment' => $comment,
-            ));
-            $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()->getEmailFriends());
-            $entityEvent->setUser($friend->getUser());
-
-            $this->em->persist($entityEvent);
-        }
-
-        $this->em->flush();
     }
 
 

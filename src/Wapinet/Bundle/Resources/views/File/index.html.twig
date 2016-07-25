@@ -29,35 +29,7 @@
         <li data-icon="search"><a href="{{ path('file_search') }}">Поиск</a></li>
     </ul>
 
-    <div data-role="collapsible" data-collapsed="false">
-        <h2>Комментарии</h2>
-        <ul data-role="listview" class="file-comments">
-            {% for comment in comments %}
-                <li data-role="list-divider">
-                    <span>
-                        <a class="bar-button ui-btn-icon-right ui-icon-comment ui-mini ui-btn-inline ui-btn" href="{{ comment.permalink }}">&#10150;</a>
-
-                    </span>
-                    {{ comment.createdAt|wapinet_datetime }}
-                </li>
-                <li>
-                    <span class="comment-authorname">
-                        {% if comment.username %}
-                            <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': comment.username}) }}">{{ comment.username }}</a>
-                        {% else %}
-                            <a class="no-link bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="#">{{ comment.username }}</a>
-                        {% endif %}
-                    </span>
-
-                    <div class="long-description">
-                        {{ comment.body|wapinet_bbcode_parse }}
-                    </div>
-                </li>
-            {% else %}
-                <li>Комментариев нет.</li>
-            {% endfor %}
-        </ul>
-    </div>
+    <div id="hypercomments_mix"></div>
 
     <ul data-role="listview" data-inset="true">
         <li data-icon="action"><a href="{{ path('file_upload') }}">Загрузить файл</a></li>

@@ -17,12 +17,6 @@ wapinet_user_events:
     path:  /events
     defaults: { _controller: WapinetUserBundle:Events:index }
 
-wapinet_user_comments:
-    path:  /comments/{username}
-    defaults: { _controller: WapinetUserBundle:Comments:index }
-    requirements:
-        username: ".+"
-
 wapinet_users:
     path:  /users/{key}
     defaults: { _controller: WapinetUserBundle:Users:index, key: null }

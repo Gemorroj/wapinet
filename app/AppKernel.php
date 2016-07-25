@@ -143,7 +143,6 @@ class AppKernel extends Kernel
             new Wapinet\UserBundle\WapinetUserBundle(),
             new Wapinet\Bundle\WapinetBundle(),
             new Wapinet\MessageBundle\WapinetMessageBundle(),
-            new Wapinet\CommentBundle\WapinetCommentBundle(),
             new Wapinet\UploaderBundle\WapinetUploaderBundle(),
         ];
 

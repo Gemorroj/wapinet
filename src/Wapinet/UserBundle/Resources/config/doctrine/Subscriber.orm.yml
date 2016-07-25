@@ -7,10 +7,6 @@ Wapinet\UserBundle\Entity\Subscriber:
             generator:
                 strategy: AUTO
     fields:
-        emailComments:
-            type: boolean
-            nullable: false
-            column: email_comments
         emailMessages:
             type: boolean
             nullable: false

@@ -7,10 +7,6 @@ namespace Wapinet\UserBundle\Entity;
 class Subscriber extends \ArrayObject
 {
     protected $id;
-    /**
-     * @var bool
-     */
-    protected $emailComments = false;
 
     /**
      * @var bool
@@ -50,7 +46,7 @@ class Subscriber extends \ArrayObject
 
     /**
      * @param User $user
-     * @return Panel
+     * @return Subscriber
      */
     public function setUser(User $user)
     {
@@ -69,7 +65,7 @@ class Subscriber extends \ArrayObject
 
     /**
      * @param bool $emailFriends
-     * @return User
+     * @return Subscriber
      */
     public function setEmailFriends($emailFriends)
     {
@@ -88,30 +84,11 @@ class Subscriber extends \ArrayObject
 
     /**
      * @param bool $emailNews
-     * @return User
+     * @return Subscriber
      */
     public function setEmailNews($emailNews)
     {
         $this->emailNews = (bool)$emailNews;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getEmailComments()
-    {
-        return $this->emailComments;
-    }
-
-    /**
-     * @param bool $emailComments
-     * @return User
-     */
-    public function setEmailComments($emailComments)
-    {
-        $this->emailComments = (bool)$emailComments;
 
         return $this;
     }
@@ -126,7 +103,7 @@ class Subscriber extends \ArrayObject
 
     /**
      * @param bool $emailMessages
-     * @return User
+     * @return Subscriber
      */
     public function setEmailMessages($emailMessages)
     {
@@ -141,10 +118,6 @@ class Subscriber extends \ArrayObject
     public function getIterator()
     {
         return new \ArrayIterator(array(
-            'emailComments' => array(
-                'name' => 'Комментарии',
-                'enabled' => $this->getEmailComments(),
-            ),
             'emailMessages' => array(
                 'name' => 'Сообщения',
                 'enabled' => $this->getEmailMessages(),

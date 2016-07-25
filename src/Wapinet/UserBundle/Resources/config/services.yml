@@ -11,12 +11,6 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    wapinet_user.event.comment:
-        class: Wapinet\UserBundle\EventListener\EventComment
-        arguments: ["@doctrine.orm.entity_manager"]
-        tags:
-            - { name: kernel.event_subscriber }
-
     wapinet_user.listener.last_activity:
             class: Wapinet\UserBundle\EventListener\ListenerLastActivity
             arguments: ["@service_container", "@doctrine.orm.entity_manager"]

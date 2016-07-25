@@ -34,6 +34,8 @@
     {# hypercomments #}
     <script src="//w.hypercomments.com/widget/hc/76882/ru/widget.js"></script>
 
+    {# яндекс метрика #}
+    <script src="//mc.yandex.ru/metrika/watch.js"></script>
 
     {# fos js routing #}
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
@@ -74,24 +76,13 @@
             (w[c] = w[c] || []).push(function() {
                 try {
                     w.yaCounter26376855 = new Ya.Metrika({
-                        id:26376855,
-                        clickmap:true,
-                        trackLinks:true,
-                        accurateTrackBounce:true
+                        id: 26376855,
+                        clickmap: true,
+                        trackLinks: true,
+                        accurateTrackBounce: true
                     });
                 } catch(e) { }
             });
-
-            var n = d.getElementsByTagName("script")[0],
-                    s = d.createElement("script"),
-                    f = function () { n.parentNode.insertBefore(s, n); };
-            s.type = "text/javascript";
-            s.async = true;
-            s.src = "https://mc.yandex.ru/metrika/watch.js";
-
-            if (w.opera == "[object Opera]") {
-                d.addEventListener("DOMContentLoaded", f, false);
-            } else { f(); }
         })(document, window, "yandex_metrika_callbacks");
 
 
@@ -112,12 +103,7 @@
                     HC.widget("Stream", {
                         "xid": xid,
                         "widget_id": 76882,
-                        "append": $commentsContainer[0],
-                        "callback": function (app, init) {
-                            app.on('streamMessage', function (packet) {
-                                console.log('event comment');
-                            });
-                        }
+                        "append": $commentsContainer[0]
                     });
                 }
             }, 100);
@@ -143,6 +129,24 @@
                 "news-" + window.location.pathname.split("/").reverse()[0]
             );
         });
+
+        $document.one("pagecreate", "#file_index", function () {
+            var $commentsContainer = $(":mobile-pagecontainer").find("#hypercomments_mix");
+            $commentsContainer.empty();
+
+            var hcInterval = window.setInterval(function () {
+                if ("HC" in window) {
+                    window.clearInterval(hcInterval);
+                    HC.widget("Mixstream", {
+                        "widget_id": 76882,
+                        "filter": "last",
+                        "limit": 5,
+                        "append": $commentsContainer[0]
+                    });
+                }
+            }, 100);
+        });
+
 
 
         $document.one("pagecreate", "#file_upload", function () {

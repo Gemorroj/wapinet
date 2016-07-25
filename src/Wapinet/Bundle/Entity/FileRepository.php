@@ -40,36 +40,6 @@ class FileRepository extends EntityRepository
 
 
     /**
-     * @param int $maxComments
-     * @return array
-     */
-    public function getComments($maxComments = 8)
-    {
-        $connection = $this->getEntityManager()->getConnection();
-        $q = $connection->query(
-            '
-            SELECT comment.body, comment.created_at, user.username, comment_thread.permalink
-            FROM comment
-            INNER JOIN comment_thread ON comment_thread.id = comment.thread_id
-            LEFT JOIN user ON user.id = comment.author_id
-            WHERE comment.thread_id LIKE "file-%"
-            AND comment.state = 0
-            ORDER BY comment.id DESC
-            LIMIT ' . (int)$maxComments
-        );
-
-        $result = array();
-        foreach ($q->fetchAll() as $v) {
-            $v['createdAt'] = new \DateTime($v['created_at']);
-            unset($v['created_at']);
-            $result[] = $v;
-        }
-
-        return $result;
-    }
-
-
-    /**
      * @return number
      */
     public function countHidden()

@@ -227,20 +227,6 @@ easy_admin:
             form:
                 fields:
                     - { property: 'body', label: 'Сообщение', type: 'textarea', type_options: {required: true} }
-        Comments:
-            disabled_actions: ['new']
-            label: 'Комментарии'
-            class: Wapinet\CommentBundle\Entity\Comment
-            list:
-                fields:
-                    - { property: 'author', label: 'Пользователь' }
-                    - { property: 'createdAt', label: 'Дата создания' }
-                    - { property: 'body', label: 'Комментарий' }
-                    - { property: 'score', label: 'Понравилось' }
-            form:
-                fields:
-                    - { property: 'body', label: 'Комментарий', type: 'textarea', type_options: {required: true} }
-                    - { property: 'score', label: 'Понравилось' }
         Files:
             disabled_actions: ['new']
             label: 'Файлы'

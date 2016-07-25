@@ -20,7 +20,6 @@ class SubscriberType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('emailComments', CheckboxType::class, array('label' => 'Присылать E-mail о новых комментариях', 'required' => false))
             ->add('emailMessages', CheckboxType::class, array('label' => 'Присылать E-mail о новых сообщениях', 'required' => false))
             ->add('emailNews', CheckboxType::class, array('label' => 'Присылать E-mail о новостях сайта', 'required' => false))
             ->add('emailFriends', CheckboxType::class, array('label' => 'Присылать E-mail о действиях друзей', 'required' => false))
