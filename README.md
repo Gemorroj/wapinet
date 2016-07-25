@@ -250,6 +250,3 @@ server {
 - Актуализировать мобильные коды. Найти новые для разных андроидов.
 - Данные о видео на youtube и др. https://github.com/essence/essence
 - Оболочка над nmap https://github.com/willdurand/nmap (работает медленно и выдает мало информации)
-- Сделать лайки или дизлайки в файлообменнике.
-- Заменить комменатрии. Возможно использовать для GUI https://github.com/Viima/jquery-comments
-- Доделать файлообменник под jquery mobile
