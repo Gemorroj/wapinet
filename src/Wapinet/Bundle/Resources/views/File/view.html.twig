@@ -75,7 +75,7 @@
 
 
 {% block content %}
-    <a id="file-download" data-screenshot="{{ screenshot }}" data-format="{{ format }}" data-audio="{{ audio }}" data-video="{{ video }}" data-id="{{ file.id }}" data-ajax="false" data-role="button" data-icon="arrow-d" href="{{ vich_uploader_asset(file, 'file') }}" download="{{ file.originalFileName }}">Скачать</a>
+    <a data-screenshot="{{ screenshot }}" data-format="{{ format }}" data-audio="{{ audio }}" data-video="{{ video }}" data-id="{{ file.id }}" data-ajax="false" data-role="button" data-icon="arrow-d" href="{{ vich_uploader_asset(file, 'file') }}" download="{{ file.originalFileName }}">Скачать</a>
 
     {% if file.isHidden %}
         <button class="ui-btn ui-icon-alert ui-btn-icon-left">Файл скрыт от общего просмотра. Дождитесь модерации.</button>
@@ -148,7 +148,7 @@
 {% endblock %}
 
 {% block popup %}
-    <div data-role="popup" id="delete-popup" data-overlay-theme="a" data-dismissible="false" class="ui-corner-all">
+    <div data-role="popup" id="delete-popup-{{ file.id }}" data-overlay-theme="a" data-dismissible="false" class="ui-corner-all">
         <div data-role="header" class="ui-corner-top" data-theme="b">
             <h1>Удаление</h1>
         </div>

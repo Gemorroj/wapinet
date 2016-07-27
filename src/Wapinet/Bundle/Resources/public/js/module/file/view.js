@@ -5,29 +5,35 @@ const FileView = {
         var $pageContainer = $(":mobile-pagecontainer");
 
         $pageContainer.on("click", "#delete-button", function () {
-            $pageContainer.find("#delete-popup").popup("open", {"transition": "flow", "positionTo": "window"});
+            var id = $pageContainer.find("a[download]").filter(":visible").data('id');
+            $pageContainer.find("#delete-popup-" + id).popup("open", {"transition": "flow", "positionTo": "window"});
+
             return false;
         });
 
         $pageContainer.on("click", "#delete-popup-do", function () {
-            var id = $pageContainer.find("#file-download").data('id');
+            var id = $pageContainer.find("a[download]").filter(":visible").data('id');
             $.post(Routing.generate('file_delete', {'id': id}), function () {
                 $pageContainer.pagecontainer("change", Routing.generate('file_index'));
                 //window.location.assign(Routing.generate('file_index'));
             });
         });
 
-        $pageContainer.on("click", "#meta-button", function () {
-            $pageContainer.find("#meta-popup").popup("open", {"transition": "pop", "positionTo": "window"});
+        $pageContainer.on("click", "a[id^='meta-button-']", function () {
+            var id = $pageContainer.find("a[download]").filter(":visible").data('id');
+            $pageContainer.find("#meta-popup-" + id).popup("open", {"transition": "pop", "positionTo": "window"});
+
             return false;
         });
-        $pageContainer.on("click", "#permissions-button", function () {
-            $pageContainer.find("#permissions-popup").popup("open", {"transition": "pop", "positionTo": "window"});
+        $pageContainer.on("click", "a[id^='permissions-button-']", function () {
+            var id = $pageContainer.find("a[download]").filter(":visible").data('id');
+            $pageContainer.find("#permissions-popup-" + id).popup("open", {"transition": "pop", "positionTo": "window"});
+
             return false;
         });
     },
     pageShow: function ($pageContainer) {
-        var data = $pageContainer.find("#file-download").data();
+        var data = $pageContainer.find("a[download]").filter(":visible").data();
 
         if (data.video) {
             this.viewVideo($pageContainer, data);
