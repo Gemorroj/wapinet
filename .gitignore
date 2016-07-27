@@ -15,9 +15,6 @@
 !/var/tmp
 /var/tmp/*
 !var/tmp/.gitkeep
-!/var/spool
-/var/spool/*
-!var/spool/.gitkeep
 !var/SymfonyRequirements.php
 
 
