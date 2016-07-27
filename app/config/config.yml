@@ -77,8 +77,7 @@ swiftmailer:
     auth_mode:  "%mailer_auth_mode%"
     port:       "%mailer_port%"
     spool:
-        type: file
-        path: "%kernel.root_dir%/../var/spool"
+        type: memory
 
 fos_user:
     db_driver: orm
