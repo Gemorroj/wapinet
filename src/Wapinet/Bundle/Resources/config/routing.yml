@@ -34,10 +34,6 @@ gmanager:
     path:  /gmanager
     defaults: { _controller: WapinetBundle:Default:gmanager }
 
-buy_php_scripts:
-    path:  /buy_php_scripts
-    defaults: { _controller: WapinetBundle:Default:buyPhpScripts }
-
 textbook:
     path:  /textbook
     defaults: { _controller: WapinetBundle:Default:textbook }
@@ -172,25 +168,4 @@ forum_index:
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: %wapinet_forum_url%
-        permanent: true
-
-sea_index:
-    path: /sea/
-    defaults:
-        _controller: FrameworkBundle:Redirect:urlRedirect
-        path: %wapinet_sea_url%
-        permanent: true
-
-sea_readme:
-    path: /sea/readme
-    defaults:
-        _controller: FrameworkBundle:Redirect:urlRedirect
-        path: %wapinet_sea_url%/readme.txt
-        permanent: true
-
-sea_changelog:
-    path: /sea/changelog
-    defaults:
-        _controller: FrameworkBundle:Redirect:urlRedirect
-        path: %wapinet_sea_url%/changelog.txt
         permanent: true

@@ -42,25 +42,4 @@ class SizaControllerTest extends WebTestCaseWapinet
             self::assertEquals(200, $client->getResponse()->getStatusCode());
         }
     }
-
-
-    public function testSearch()
-    {
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/siza/search');
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
-
-        $form = $crawler->selectButton('siza_search_form_submit')->form(array('siza_search_form[search]' => 'game'));
-
-        $client->submit($form);
-
-        $this->assertTrue($client->getResponse()->isRedirection());
-
-        $crawler = $client->followRedirect();
-
-        $countLinks = $crawler->filter('fieldset > ul[data-role="listview"] > li > a')->count();
-
-        self::assertEquals(10, $countLinks);
-    }
 }

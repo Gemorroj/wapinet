@@ -102,44 +102,8 @@ class DefaultController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function buyPhpScriptsAction()
-    {
-        return $this->render('WapinetBundle:Default:buy_php_scripts.html.twig');
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function textbookAction()
     {
         return $this->render('WapinetBundle:Default:textbook.html.twig');
-    }
-
-    /**
-     * @param Request $request
-     * @return BinaryFileResponse
-     */
-    public function seaDownloadAction(Request $request)
-    {
-        $seaCustomer = new Sea();
-        $seaCustomer->setDatetime(new \DateTime());
-        $seaCustomer->setIp($request->getClientIp());
-        $seaCustomer->setBrowser($request->headers->get('User-Agent', ''));
-        $seaCustomer->setReferer($request->headers->get('Referer'));
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($seaCustomer);
-        $em->flush();
-
-        $file = $this->getParameter('wapinet_sea_file');
-
-        $response = new BinaryFileResponse($file);
-        $response->setPrivate();
-        $response->setContentDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            'sea_for_customers.zip'
-        );
-
-        return $response;
     }
 }
