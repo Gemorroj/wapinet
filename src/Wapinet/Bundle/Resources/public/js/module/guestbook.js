@@ -11,7 +11,7 @@ const Guestbook = {
 
             var $liComment = $link.parent().next();
             var text = $liComment.children('div').text();
-            var author = $liComment.find('span.comment-authorname>a').text();
+            var author = $link.next('a').text();
             $textarea.val('[quote=' + author + ']' + text + '[/quote]');
             $textarea.keyup();
 

@@ -21,6 +21,17 @@
         {% for item in pagerfanta %}
             <li data-role="list-divider">
                 <a href="#{{ form.message.vars.id }}" class="item-quote">#</a>
+
+                {% if item.user %}
+                    <a href="{{ path('wapinet_user_profile', {'username': item.user.username}) }}">{{ item.user.username }}</a>
+                {% else %}
+                    {% set geoip2 = wapinet_geoip2_country(item.ip) %}
+                    <a href="#popup-{{ item.id }}">Anonymous</a>
+                    <div data-role="popup" id="popup-{{ item.id }}">
+                        <p>{{ item.ip }}{% if geoip2 and geoip2.country.isoCode%} <img src="{{ asset('bundles/wapinet/images/countries/' ~ geoip2.country.isoCode|lower ~ '.png') }}" alt="{{ geoip2.country.names['ru'] }}" />{% endif %}<br />{{ item.browser }}</p>
+                    </div>
+                {% endif %}
+
                 {{ item.createdAt|wapinet_datetime }}
             </li>
             <li data-icon="false">
@@ -32,18 +43,6 @@
                     {% endif %}
                     {% if item.user and item.user.isOnline %}
                         <span class="avatar-online"></span>
-                    {% endif %}
-                </span>
-
-                <span class="comment-authorname">
-                    {% if item.user %}
-                        <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': item.user.username}) }}">{{ item.user.username }}</a>
-                    {% else %}
-                        {% set geoip2 = wapinet_geoip2_country(item.ip) %}
-                        <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn no-link" href="#popup-{{ item.id }}">Anonymous</a>
-                        <div data-role="popup" id="popup-{{ item.id }}">
-                            <p>{{ item.ip }}{% if geoip2 and geoip2.country.isoCode%} <img src="{{ asset('bundles/wapinet/images/countries/' ~ geoip2.country.isoCode|lower ~ '.png') }}" alt="{{ geoip2.country.names['ru'] }}" />{% endif %}<br />{{ item.browser }}</p>
-                        </div>
                     {% endif %}
                 </span>
 

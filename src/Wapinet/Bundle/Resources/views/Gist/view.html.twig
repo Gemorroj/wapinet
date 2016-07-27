@@ -11,7 +11,8 @@
 {% block content %}
     <ul data-role="listview" data-inset="true">
         <li data-role="list-divider">
-            {{ gist.subject }}
+            <a href="{{ path('wapinet_user_profile', {'username': gist.user.username}) }}">{{ gist.user.username }}</a>
+            {{ gist.createdAt|wapinet_datetime }}
         </li>
         <li data-icon="false">
             <span class="comment-avatar">
@@ -20,11 +21,7 @@
                     <span class="avatar-online"></span>
                 {% endif %}
             </span>
-            <span class="comment-authorname">
-                <a class="bar-button ui-btn-icon-left ui-icon-user ui-mini ui-btn-inline ui-btn" href="{{ path('wapinet_user_profile', {'username': gist.user.username}) }}">{{ gist.user.username }}</a>
-            </span>
 
-            <p>{{ gist.createdAt|wapinet_datetime  }}</p>
             {% if gist.updatedAt is not null %}
                 <p>Обновлено {{ gist.updatedAt|wapinet_datetime }}</p>
             {% endif %}
