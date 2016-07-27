@@ -15,8 +15,8 @@
 
         <div id="footer" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
             <div data-role="controlgroup" class="control ui-btn-left" data-type="horizontal" data-mini="true">
-                <a href="{{ prevFile ? path('file_swiper', {'id': prevFile.id}) : '#' }}" class="{% if prevFile is null %}ui-state-disabled {% endif %}ui-btn ui-btn-icon-notext ui-icon-carat-l" id="swiper-prev">Пред.</a>
-                <a href="{{ nextFile ? path('file_swiper', {'id': nextFile.id}) : '#' }}" class="{% if nextFile is null %}ui-state-disabled {% endif %}ui-btn ui-btn-icon-notext ui-icon-carat-r" id="swiper-next">След.</a>
+                <a href="{{ prevFile ? path('file_swiper', {'id': prevFile.id}) : '#' }}" class="{% if prevFile is null %}ui-state-disabled {% endif %}ui-btn ui-btn-icon-notext ui-icon-carat-l" data-id="swipe-prev">Пред.</a>
+                <a href="{{ nextFile ? path('file_swiper', {'id': nextFile.id}) : '#' }}" class="{% if nextFile is null %}ui-state-disabled {% endif %}ui-btn ui-btn-icon-notext ui-icon-carat-r" data-id="swipe-next">След.</a>
             </div>
 
             <a href="#" class="image-size-btn ui-btn ui-btn-right ui-btn-icon-notext ui-icon-eye ui-mini ui-corner-all">Подгонка</a>

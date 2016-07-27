@@ -5,21 +5,17 @@ const FileSwiper = {
         var $pageContainer = $(":mobile-pagecontainer");
 
         var swiperNext = function () {
-            var $this = $(this);
-            if (!$this.is('a')) {
-                $this = $this.find('#swiper-next');
-            }
-            $pageContainer.pagecontainer("change", $this.attr('href'), {
+            var $link = $(this);
+
+            $pageContainer.pagecontainer("change", $link.attr('href'), {
                 "transition": "slide"
             });
             return false;
         };
         var swiperPrev = function () {
-            var $this = $(this);
-            if (!$this.is('a')) {
-                $this = $this.find('#swiper-prev');
-            }
-            $pageContainer.pagecontainer("change", $this.attr('href'), {
+            var $link = $(this);
+
+            $pageContainer.pagecontainer("change", $link.attr('href'), {
                 "transition": "slide",
                 "reverse": true
             });
@@ -27,10 +23,14 @@ const FileSwiper = {
         };
 
         $pageContainer
-            .on("swipeleft", $pageContainer, swiperNext)
-            .on("swiperight", $pageContainer, swiperPrev)
-            .on("click", "#swiper-next", swiperNext)
-            .on("click", "#swiper-prev", swiperPrev)
+            .on("swipeleft", function () {
+                $(this).find("a[data-id='swipe-next']").filter(":visible").click();
+            })
+            .on("swiperight", function () {
+                $(this).find("a[data-id='swipe-prev']").filter(":visible").click();
+            })
+            .on("click", "a[data-id='swipe-next']", swiperNext)
+            .on("click", "a[data-id='swipe-prev']", swiperPrev)
             .on("click", ".image-size-btn", function () {
                 $pageContainer.css("background-size", ($pageContainer.css("background-size") === 'cover' ? 'contain' : 'cover'));
             })
