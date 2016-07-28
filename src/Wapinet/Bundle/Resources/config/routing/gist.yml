@@ -1,6 +1,7 @@
 gist_index:
     path: /
     defaults: { _controller: WapinetBundle:Gist:index }
+    methods:  [GET, HEAD]
     options:
         expose: true
 
@@ -26,7 +27,7 @@ gist_delete:
         expose: true
 
 gist_add:
-    path: /add
+    path: /
     defaults: { _controller: WapinetBundle:Gist:add }
     methods: [POST]
 
