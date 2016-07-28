@@ -79,12 +79,6 @@
 
     {% if file.isHidden %}
         <button class="ui-btn ui-icon-alert ui-btn-icon-left">Файл скрыт от общего просмотра. Дождитесь модерации.</button>
-        {% if is_granted('ROLE_ADMIN') %}
-            <fieldset data-role="controlgroup" data-type="horizontal">
-                <a data-role="button" data-icon="check" href="{{ path('file_accept', {'id': file.id}) }}">Открыть доступ</a>
-                <a data-role="button" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete" href="#delete-popup">Удалить</a>
-            </fieldset>
-        {% endif %}
     {% endif %}
 
     {% if file.isImage %}
@@ -127,6 +121,9 @@
 
     {% if app.user and (is_granted('EDIT', file) or is_granted('DELETE', file)) %}
         <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+            {% if file.isHidden and is_granted('ROLE_ADMIN') %}
+                <a data-role="button" data-icon="check" href="{{ path('file_accept', {'id': file.id}) }}">Открыть доступ</a>
+            {% endif %}
             {% if is_granted('EDIT', file) %}
                 <a data-role="button" data-icon="edit" href="{{ path('file_edit', {'id': file.id}) }}">Редактировать</a>
             {% endif %}
