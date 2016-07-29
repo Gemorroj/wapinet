@@ -72,48 +72,6 @@ class Provider extends BaseProvider
 
 
     /**
-     * Gets a thread by its ID
-     * Performs authorization checks
-     * Marks the thread as read
-     *
-     * @param int $threadId
-     * @param int $page
-     *
-     * @throws NotFoundHttpException|AccessDeniedException
-     * @return array('thread'=>\Wapinet\MessageBundle\Entity\Thread, 'messages'=>Pagerfanta)
-     */
-    public function getThreadMessages($threadId, $page = 1)
-    {
-        $thread = $this->threadManager->findThreadById($threadId);
-        if (!$thread) {
-            throw new NotFoundHttpException('There is no such thread');
-        }
-        if (!$this->authorizer->canSeeThread($thread)) {
-            throw new AccessDeniedException('You are not allowed to see this thread');
-        }
-
-        $parerfanta = $this->container->get('paginate')->paginate($thread->getMessages(), $page);
-
-        /** @var User $currentUser */
-        $currentUser = $this->container->get('security.token_storage')->getToken()->getUser();
-
-
-        /** @var MessageInterface $message */
-        foreach ($parerfanta->getCurrentPageResults() as $message) {
-            if (!$message->isReadByParticipant($currentUser)) {
-                $message->setIsReadByParticipant($currentUser, true);
-                $this->messageManager->saveMessage($message);
-            }
-        }
-
-        return array(
-            'thread' => $thread,
-            'messages' => $parerfanta,
-        );
-    }
-
-
-    /**
      * @param ContainerInterface $container
      */
     public function setContainer(ContainerInterface $container)
