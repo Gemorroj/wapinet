@@ -129,7 +129,7 @@ class MessageController extends BaseController
      *
      * @param string $threadId the thread id
      *
-     * @return RedirectResponse|JsonResponse
+     * @return JsonResponse
      */
     public function deleteAction($threadId)
     {
@@ -137,13 +137,7 @@ class MessageController extends BaseController
         $this->container->get('fos_message.deleter')->markAsDeleted($thread);
         $this->container->get('fos_message.thread_manager')->saveThread($thread);
 
-        $url = $this->container->get('router')->generate('wapinet_message_inbox');
-
-        if ($this->container->get('request_stack')->getCurrentRequest()->isXmlHttpRequest()) {
-            return new JsonResponse(array('url' => $url));
-        }
-
-        return new RedirectResponse($url);
+        return new JsonResponse(array('threadId' => $threadId));
     }
 
     /**
@@ -151,7 +145,7 @@ class MessageController extends BaseController
      *
      * @param string $threadId
      *
-     * @return RedirectResponse
+     * @return JsonResponse
      */
     public function undeleteAction($threadId)
     {
@@ -159,12 +153,6 @@ class MessageController extends BaseController
         $this->container->get('fos_message.deleter')->markAsUndeleted($thread);
         $this->container->get('fos_message.thread_manager')->saveThread($thread);
 
-        $url = $this->container->get('router')->generate('wapinet_message_inbox');
-
-        if ($this->container->get('request_stack')->getCurrentRequest()->isXmlHttpRequest()) {
-            return new JsonResponse(array('url' => $url));
-        }
-
-        return new RedirectResponse($url);
+        return new JsonResponse(array('threadId' => $threadId));
     }
 }

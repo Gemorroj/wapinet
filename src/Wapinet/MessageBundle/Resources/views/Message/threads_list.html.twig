@@ -22,32 +22,13 @@
                     <p>{% trans with {'%sender%': thread.lastMessage.sender|e } from 'FOSMessageBundle' %}by{% endtrans %}</p>
                 </a>
 
-                {% if route == 'wapinet_message_inbox' %}
-                    {% if fos_message_can_delete_thread(thread) %}
-                        {% if fos_message_deleted_by_participant(thread) %}
-                            <a data-id="{{ thread.id }}" href="#restore-popup-inbox" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="back">Восстановить</a>
-                        {% else %}
-                            <a data-id="{{ thread.id }}" href="#delete-popup-inbox" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
-                        {% endif %}
-                    {% endif %}
-                {% elseif route == 'wapinet_message_sent' %}
-                    {% if fos_message_can_delete_thread(thread) %}
-                        {% if fos_message_deleted_by_participant(thread) %}
-                            <a data-id="{{ thread.id }}" href="#restore-popup-sent" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="back">Восстановить</a>
-                        {% else %}
-                            <a data-id="{{ thread.id }}" href="#delete-popup-sent" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
-                        {% endif %}
-                    {% endif %}
-                {% elseif route == 'wapinet_message_deleted' %}
-                    {% if fos_message_can_delete_thread(thread) %}
-                        {% if fos_message_deleted_by_participant(thread) %}
-                            <a data-id="{{ thread.id }}" href="#restore-popup-deleted" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="back">Восстановить</a>
-                        {% else %}
-                            <a data-id="{{ thread.id }}" href="#delete-popup-deleted" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
-                        {% endif %}
+                {% if fos_message_can_delete_thread(thread) %}
+                    {% if fos_message_deleted_by_participant(thread) %}
+                        <a data-id="{{ thread.id }}" href="#restore-popup" data-icon="back">Восстановить</a>
+                    {% else %}
+                        <a data-id="{{ thread.id }}" href="#delete-popup" data-icon="delete">Удалить</a>
                     {% endif %}
                 {% endif %}
-
             </li>
         {% endfor %}
     {% else %}
@@ -62,3 +43,29 @@
         {{ pagerfanta(pagerfanta) }}
     </div>
 {% endif %}
+
+
+{% block popup %}
+    <div data-role="popup" data-id="restore-popup" data-overlay-theme="a" data-dismissible="false" class="ui-corner-all">
+        <div data-role="header" class="ui-corner-top" data-theme="b">
+            <h1>Восстановление</h1>
+        </div>
+        <div data-role="content" class="ui-corner-bottom ui-content">
+            <h3 class="ui-title">Вы уверенны что хотите восстановить цепочку сообщений?</h3>
+            <p></p>
+            <a href="#" data-role="button" data-inline="true" data-rel="back">Отмена</a>
+            <a href="#" data-id="restore-popup-do" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Восстановить</a>
+        </div>
+    </div>
+    <div data-role="popup" data-id="delete-popup" data-overlay-theme="a" data-dismissible="false" class="ui-corner-all">
+        <div data-role="header" class="ui-corner-top" data-theme="b">
+            <h1>Удаление</h1>
+        </div>
+        <div data-role="content" class="ui-corner-bottom ui-content">
+            <h3 class="ui-title">Вы уверенны что хотите удалить цепочку сообщений?</h3>
+            <p>Цепочка сообщений попадет в корзину.</p>
+            <a href="#" data-role="button" data-inline="true" data-rel="back">Отмена</a>
+            <a href="#" data-id="delete-popup-do" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Удалить</a>
+        </div>
+    </div>
+{% endblock %}

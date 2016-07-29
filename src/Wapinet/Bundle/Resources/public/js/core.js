@@ -273,11 +273,7 @@ $document.one("pagecreate", "#gist_view", function () {
     Gist.pageCreate();
 });
 
-$document.one("pagecreate", "#wapinet_message_inbox", function () {
-    Message.pageCreate();
-}).one("pagecreate", "#wapinet_message_sent", function () {
-    Message.pageCreate();
-}).one("pagecreate", "#wapinet_message_deleted", function () {
+$document.one("pagecreate", "#wapinet_message_inbox, #wapinet_message_sent, #wapinet_message_deleted", function () {
     Message.pageCreate();
 });
 

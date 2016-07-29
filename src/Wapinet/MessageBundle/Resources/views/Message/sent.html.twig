@@ -5,28 +5,3 @@
 {% block fos_message_content %}
     {% include 'WapinetMessageBundle:Message:threads_list.html.twig' %}
 {% endblock %}
-
-{% block popup %}
-    <div data-role="popup" id="restore-popup-sent" data-overlay-theme="a" data-dismissible="false" class="ui-corner-all">
-        <div data-role="header" class="ui-corner-top" data-theme="b">
-            <h1>Восстановление</h1>
-        </div>
-        <div data-role="content" class="ui-corner-bottom ui-content">
-            <h3 class="ui-title">Вы уверенны что хотите восстановить цепочку сообщений?</h3>
-            <p></p>
-            <a href="#" data-role="button" data-inline="true" data-rel="back">Отмена</a>
-            <a href="#" id="restore-popup-sent-do" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Восстановить</a>
-        </div>
-    </div>
-    <div data-role="popup" id="delete-popup-sent" data-overlay-theme="a" data-dismissible="false" class="ui-corner-all">
-        <div data-role="header" class="ui-corner-top" data-theme="b">
-            <h1>Удаление</h1>
-        </div>
-        <div data-role="content" class="ui-corner-bottom ui-content">
-            <h3 class="ui-title">Вы уверенны что хотите удалить цепочку сообщений?</h3>
-            <p>Цепочка сообщений попадет в корзину.</p>
-            <a href="#" data-role="button" data-inline="true" data-rel="back">Отмена</a>
-            <a href="#" id="delete-popup-sent-do" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Удалить</a>
-        </div>
-    </div>
-{% endblock %}
