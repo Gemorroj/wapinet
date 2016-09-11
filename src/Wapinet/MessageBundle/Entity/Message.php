@@ -56,4 +56,12 @@ class Message extends BaseMessage
     {
         return $this->getAllMetadata();
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getBody();
+    }
 }

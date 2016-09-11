@@ -1,6 +1,6 @@
 "use strict";
 
-const PhpObfuscator = {
+var PhpObfuscator = {
     pageCreate: function () {
         var $pageContainer = $(":mobile-pagecontainer");
 

@@ -1,6 +1,6 @@
 "use strict";
 
-const Translate = {
+var Translate = {
     pageCreate: function () {
         var $pageContainer = $(":mobile-pagecontainer");
 

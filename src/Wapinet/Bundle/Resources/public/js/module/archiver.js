@@ -1,6 +1,6 @@
 "use strict";
 
-const Archiver = {
+var Archiver = {
     pageCreate: function () {
         var $pageContainer = $(":mobile-pagecontainer");
         var deletePath;

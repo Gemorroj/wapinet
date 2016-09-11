@@ -2,13 +2,9 @@
 
 namespace Wapinet\MessageBundle\Provider;
 
-use FOS\MessageBundle\Model\MessageInterface;
 use FOS\MessageBundle\Provider\Provider as BaseProvider;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Pagerfanta\Pagerfanta;
-use Wapinet\UserBundle\Entity\User;
 
 /**
  * Provides threads for the current authenticated user
@@ -73,9 +69,11 @@ class Provider extends BaseProvider
 
     /**
      * @param ContainerInterface $container
+     * @return Provider
      */
     public function setContainer(ContainerInterface $container)
     {
         $this->container = $container;
+        return $this;
     }
 }

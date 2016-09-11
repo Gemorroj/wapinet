@@ -1,6 +1,6 @@
 "use strict";
 
-const Message = {
+var Message = {
     pageCreate: function () {
         var $pageContainer = $(":mobile-pagecontainer");
         var threadId;

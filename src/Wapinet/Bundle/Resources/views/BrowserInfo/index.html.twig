@@ -18,7 +18,8 @@
         {% if ip is not null %}<tr><td><abbr title="Internet Protocol Address">IP-адрес</abbr></td> <td>{{ ip }} ({{ ip_host }})</td></tr>{% endif %}
         {% if local is not null %}<tr><td>Локальный <abbr title="Internet Protocol Address">IP-адрес</abbr></td> <td>{{ local }} {{ local_host ? '(' ~ local_host ~ ')' : '' }}</td></tr>{% endif %}
         {% if proxy is not null %}<tr><td>Прокси</td> <td>{{ proxy }}</td></tr>{% endif %}
-        {% if port is not null %}<tr><td>Порт</td> <td>{{ port }}</td></tr>{% endif %}
+        {% if remote_port is not null %}<tr><td>Порт</td> <td>{{ remote_port }}</td></tr>{% endif %}
+        {% if remote_user is not null %}<tr><td>Пользователь</td> <td>{{ remote_user }}</td></tr>{% endif %}
         {% if referer is not null %}<tr><td>Реферер</td> <td>{{ referer }}</td></tr>{% endif %}
         {% if encoding is not null %}<tr><td>Типы компрессии</td> <td>{{ encoding }}</td></tr>{% endif %}
         {% if cache is not null %}<tr><td>Кэш</td> <td>{{ cache }}</td></tr>{% endif %}

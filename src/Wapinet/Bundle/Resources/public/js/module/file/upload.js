@@ -1,6 +1,6 @@
 "use strict";
 
-const FileUpload = {
+var FileUpload = {
     pageCreate: function () {
         var $pageContainer = $(":mobile-pagecontainer");
 

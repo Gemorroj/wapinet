@@ -1,6 +1,6 @@
 "use strict";
 
-const Guestbook = {
+var Guestbook = {
     pageCreate: function () {
         var $pageContainer = $(":mobile-pagecontainer");
 

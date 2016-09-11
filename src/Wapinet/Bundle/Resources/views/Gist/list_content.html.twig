@@ -15,6 +15,8 @@
     {% endfor %}
 </ul>
 
-<div class="pagerfanta">
-    {{ pagerfanta(pagerfanta) }}
-</div>
+{% if pagerfanta is not null %}
+    <div class="pagerfanta">
+        {{ pagerfanta(pagerfanta) }}
+    </div>
+{% endif %}

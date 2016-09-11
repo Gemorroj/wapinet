@@ -1,6 +1,6 @@
 "use strict";
 
-const Loader = {
+var Loader = {
     readFile: function (file, callback) {
         if (FileReader) {
             var fileReader = new FileReader();
@@ -31,7 +31,7 @@ const Loader = {
     }
 };
 
-const Helper = {
+var Helper = {
     sizeFormat: function (fileSizeInBytes) {
         var i = -1;
         var byteUnits = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
@@ -59,7 +59,7 @@ const Helper = {
 };
 
 
-const Autocomplete = {
+var Autocomplete = {
     text: function (source, $input, $suggestions) {
         $input.autocomplete({
             link: '#',
@@ -84,7 +84,7 @@ const Autocomplete = {
     }
 };
 
-const Templating = {
+var Templating = {
     /**
      * @private
      */
@@ -112,7 +112,7 @@ const Templating = {
     }
 };
 
-const Vk = {
+var Vk = {
     data: null,
     show: function (data) {
         if (data && (data.response || data.error)) {

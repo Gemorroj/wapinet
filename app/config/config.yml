@@ -93,9 +93,9 @@ fos_message:
     message_class: Wapinet\MessageBundle\Entity\Message
     provider: wapinet_message.provider
     new_thread_form:
-        class: Wapinet\MessageBundle\Form\Type\NewThreadMessageFormType
+        type: Wapinet\MessageBundle\Form\Type\NewThreadMessageFormType
     reply_form:
-        class: Wapinet\MessageBundle\Form\Type\ReplyMessageFormType
+        type: Wapinet\MessageBundle\Form\Type\ReplyMessageFormType
 
 fos_js_routing:
     cache_control:

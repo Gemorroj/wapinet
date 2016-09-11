@@ -1,6 +1,6 @@
 "use strict";
 
-const Rest = {
+var Rest = {
     pageCreate: function () {
         var $pageContainer = $(":mobile-pagecontainer");
 

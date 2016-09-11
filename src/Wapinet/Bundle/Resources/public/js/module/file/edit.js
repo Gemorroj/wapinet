@@ -1,6 +1,6 @@
 "use strict";
 
-const FileEdit = {
+var FileEdit = {
     pageCreate: function () {
         var $pageContainer = $(":mobile-pagecontainer");
 

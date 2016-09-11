@@ -1,6 +1,6 @@
 "use strict";
 
-const Gist = {
+var Gist = {
     pageCreate: function () {
         var $pageContainer = $(":mobile-pagecontainer");
         var gistId;

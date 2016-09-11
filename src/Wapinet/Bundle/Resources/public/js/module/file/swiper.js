@@ -1,6 +1,6 @@
 "use strict";
 
-const FileSwiper = {
+var FileSwiper = {
     pageCreate: function () {
         var $pageContainer = $(":mobile-pagecontainer");
 

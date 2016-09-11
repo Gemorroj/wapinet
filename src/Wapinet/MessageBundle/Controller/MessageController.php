@@ -3,12 +3,12 @@
 namespace Wapinet\MessageBundle\Controller;
 
 use FOS\MessageBundle\Controller\MessageController as BaseController;
-use FOS\MessageBundle\Model\ThreadInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Wapinet\MessageBundle\Provider\Provider;
 
 class MessageController extends BaseController
 {
@@ -21,7 +21,10 @@ class MessageController extends BaseController
     {
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $page = $request->get('page', 1);
-        $pagerfanta = $this->getProvider()->getInboxThreads($page);
+
+        /** @var Provider $provider */
+        $provider = $this->getProvider();
+        $pagerfanta = $provider->getInboxThreads($page);
 
         return $this->container->get('templating')->renderResponse('WapinetMessageBundle:Message:inbox.html.twig', array(
             'pagerfanta' => $pagerfanta
@@ -37,7 +40,10 @@ class MessageController extends BaseController
     {
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $page = $request->get('page', 1);
-        $pagerfanta = $this->getProvider()->getSentThreads($page);
+
+        /** @var Provider $provider */
+        $provider = $this->getProvider();
+        $pagerfanta = $provider->getSentThreads($page);
 
         return $this->container->get('templating')->renderResponse('WapinetMessageBundle:Message:sent.html.twig', array(
             'pagerfanta' => $pagerfanta
@@ -53,36 +59,13 @@ class MessageController extends BaseController
     {
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $page = $request->get('page', 1);
-        $pagerfanta = $this->getProvider()->getDeletedThreads($page);
+
+        /** @var Provider $provider */
+        $provider = $this->getProvider();
+        $pagerfanta = $provider->getDeletedThreads($page);
 
         return $this->container->get('templating')->renderResponse('WapinetMessageBundle:Message:deleted.html.twig', array(
             'pagerfanta' => $pagerfanta
-        ));
-    }
-
-    /**
-     * Displays a thread, also allows to reply to it
-     *
-     * @param string $threadId the thread id
-     *
-     * @return Response
-     */
-    public function threadAction($threadId)
-    {
-        /** @var ThreadInterface $thread */
-        $thread = $this->getProvider()->getThread($threadId);
-        $form = $this->container->get('fos_message.reply_form.factory')->create($thread);
-        $formHandler = $this->container->get('fos_message.reply_form.handler');
-
-        if ($message = $formHandler->process($form)) {
-            return new RedirectResponse($this->container->get('router')->generate('fos_message_thread_view', array(
-                'threadId' => $message->getThread()->getId()
-            )));
-        }
-
-        return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:thread.html.twig', array(
-            'form' => $form->createView(),
-            'thread' => $thread
         ));
     }
 
@@ -130,9 +113,7 @@ class MessageController extends BaseController
      */
     public function deleteAction($threadId)
     {
-        $thread = $this->getProvider()->getThread($threadId);
-        $this->container->get('fos_message.deleter')->markAsDeleted($thread);
-        $this->container->get('fos_message.thread_manager')->saveThread($thread);
+        parent::deleteAction($threadId);
 
         return new JsonResponse(array('threadId' => $threadId));
     }
@@ -146,9 +127,7 @@ class MessageController extends BaseController
      */
     public function undeleteAction($threadId)
     {
-        $thread = $this->getProvider()->getThread($threadId);
-        $this->container->get('fos_message.deleter')->markAsUndeleted($thread);
-        $this->container->get('fos_message.thread_manager')->saveThread($thread);
+        parent::undeleteAction($threadId);
 
         return new JsonResponse(array('threadId' => $threadId));
     }

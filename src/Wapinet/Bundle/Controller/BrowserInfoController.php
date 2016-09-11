@@ -92,8 +92,15 @@ class BrowserInfoController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function indexAction(Request $request)
     {
+        $headers = clone $request->headers;
+        $headers->remove('X-Php-Ob-Level');
+
         return $this->render('WapinetBundle:BrowserInfo:index.html.twig', array(
             'user_agent' => $request->server->get('HTTP_USER_AGENT'),
             'phone_number' => $this->getPhoneNumber($request),
@@ -101,7 +108,8 @@ class BrowserInfoController extends Controller
             'ip_host' => \gethostbyaddr($request->server->get('REMOTE_ADDR')),
             'local' => $this->getProxy($request),
             'local_host' => $this->getProxyHost($request),
-            'port' => $request->server->get('REMOTE_PORT'),
+            'remote_port' => $request->server->get('REMOTE_PORT'),
+            'remote_user' => $request->server->get('REMOTE_USER'),
             'referer' => $request->server->get('HTTP_REFERER'),
             'encoding' => $this->getEncoding($request),
             'cache' => $request->server->get('HTTP_CACHE_CONTROL'),
@@ -112,7 +120,7 @@ class BrowserInfoController extends Controller
             'lang' => $request->server->get('HTTP_ACCEPT_LANGUAGE'),
             'charset' => $request->server->get('HTTP_ACCEPT_CHARSET'),
             'dnt' => $request->server->get('HTTP_DNT'),
-            'all' => $request->headers,
+            'all' => $headers,
         ));
     }
 }

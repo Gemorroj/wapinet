@@ -35,4 +35,13 @@ class ThreadMetadata extends BaseThreadMetadata
      * @var ParticipantInterface
      */
     protected $participant;
+
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getThread()->getSubject();
+    }
 }

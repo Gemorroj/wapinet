@@ -1,6 +1,6 @@
 "use strict";
 
-const FileView = {
+var FileView = {
     pageCreate: function () {
         var $pageContainer = $(":mobile-pagecontainer");
 

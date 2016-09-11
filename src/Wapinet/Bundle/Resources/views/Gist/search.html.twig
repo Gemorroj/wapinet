@@ -29,7 +29,5 @@
         {{ form_row(form.submit) }}
     </form>
 
-    {% if pagerfanta is not null %}
-        {% include '@Wapinet/Gist/list_content.html.twig' %}
-    {% endif %}
+    {% include '@Wapinet/Gist/list_content.html.twig' %}
 {% endblock %}
