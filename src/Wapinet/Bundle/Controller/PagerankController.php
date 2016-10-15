@@ -2,7 +2,6 @@
 
 namespace Wapinet\Bundle\Controller;
 
-use SEOstats\Services\Google;
 use SEOstats\Services\Social;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,7 +42,7 @@ class PagerankController extends Controller
     /**
      * @param array $data
      *
-     * @return string
+     * @return array
      */
     protected function getPagerank(array $data)
     {
