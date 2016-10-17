@@ -48,6 +48,8 @@ class Mime
             'shtml' => 'text/html',
             'm4a' => 'audio/x-m4a',
             '3gpp' => 'video/3gpp',
+            'tgz' => 'application/gzip',
+            'gz' => 'application/gzip',
         );
         foreach (\explode("\n", $response->getContent()) as $x) {
             if (isset($x[0]) && $x[0] !== '#' && \preg_match_all('#([^\s]+)#', $x, $out) && isset($out[1]) && ($c = \count($out[1])) > 1) {
