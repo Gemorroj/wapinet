@@ -229,7 +229,7 @@ class FileRepository extends EntityRepository
                 $q->setParameter('rtf', 'application/rtf');
                 break;
             case 'archive':
-                $q->andWhere('f.mimeType IN(:zip, :rar, :bz, :bz2, :p7z, :tar, :cab, :iso, :gz, :ace, :lzh)');
+                $q->andWhere('f.mimeType IN(:zip, :rar, :bz, :bz2, :p7z, :tar, :cab, :iso, :gz_old, :gz_new, :ace, :lzh)');
                 $q->setParameter('zip', 'application/zip');
                 $q->setParameter('rar', 'application/x-rar-compressed');
                 $q->setParameter('bz', 'application/x-bzip');
@@ -238,7 +238,8 @@ class FileRepository extends EntityRepository
                 $q->setParameter('tar', 'application/x-tar');
                 $q->setParameter('cab', 'application/vnd.ms-cab-compressed');
                 $q->setParameter('iso', 'application/x-iso9660-image');
-                $q->setParameter('gz', 'application/x-gzip');
+                $q->setParameter('gz_old', 'application/x-gzip');
+                $q->setParameter('gz_new', 'application/gzip');
                 $q->setParameter('ace', 'application/x-ace-compressed');
                 $q->setParameter('lzh', 'application/x-lzh-compressed');
                 break;
