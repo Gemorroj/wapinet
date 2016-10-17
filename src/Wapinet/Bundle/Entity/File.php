@@ -664,6 +664,7 @@ class File implements \Serializable
             'application/vnd.ms-cab-compressed', // cab
             'application/x-iso9660-image', // iso
             'application/x-gzip', // gz
+            'application/gzip', // tgz,gz
             'application/x-ace-compressed', // ace
             'application/x-lzh-compressed', // lzh
         ), true);
