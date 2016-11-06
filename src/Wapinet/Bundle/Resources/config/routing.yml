@@ -160,12 +160,12 @@ proxy_index:
     path: /proxy/
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
-        path: %wapinet_proxy_url%
+        path: "%wapinet_proxy_url%"
         permanent: true
 
 forum_index:
     path: /forum/
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
-        path: %wapinet_forum_url%
+        path: "%wapinet_forum_url%"
         permanent: true
