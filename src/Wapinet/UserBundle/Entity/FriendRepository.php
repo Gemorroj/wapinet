@@ -16,7 +16,7 @@ class FriendRepository extends EntityRepository
         return $this->createQueryBuilder('f')
             ->where('f.user = :user')
             ->setParameter('user', $user)
-            ->innerJoin('f.friend', 'u', Join::WITH, 'u.enabled = 1 AND u.locked = 0 AND u.expired = 0')
+            ->innerJoin('f.friend', 'u', Join::WITH, 'u.enabled = 1 AND u.locked = 0')
             ->orderBy('u.lastActivity', 'DESC')
             ->addOrderBy('u.username', 'ASC')
             ->getQuery();
@@ -33,7 +33,7 @@ class FriendRepository extends EntityRepository
             ->select('COUNT(f.id)')
             ->where('f.user = :user')
             ->setParameter('user', $user)
-            ->innerJoin('f.friend', 'u', Join::WITH, 'u.enabled = 1 AND u.locked = 0 AND u.expired = 0');
+            ->innerJoin('f.friend', 'u', Join::WITH, 'u.enabled = 1 AND u.locked = 0');
 
         if (null !== $lastActivity) {
             $queryBuilder->andWhere('u.lastActivity > :lastActivity');

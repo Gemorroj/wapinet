@@ -50,7 +50,6 @@ class AdminController extends BaseAdminController
         $users = $userRepository->findBy(array(
             'enabled' => true,
             'locked' => false,
-            'expired' => false,
         ));
 
         foreach ($users as $user) {
