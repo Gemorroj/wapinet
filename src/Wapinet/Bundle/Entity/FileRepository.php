@@ -22,7 +22,7 @@ class FileRepository extends EntityRepository
             SELECT u.username, COUNT(f.id) AS uploads
             FROM Wapinet\Bundle\Entity\File f
             INNER JOIN Wapinet\UserBundle\Entity\User u WITH f.user = u
-            WHERE u.enabled = 1 AND u.locked = 0
+            WHERE u.enabled = 1
             GROUP BY u.id
             ORDER BY uploads DESC
         ');

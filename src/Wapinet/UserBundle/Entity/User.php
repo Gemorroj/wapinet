@@ -379,22 +379,6 @@ class User extends BaseUser implements ParticipantInterface
     }
 
     /**
-     * @return \DateTime|null
-     */
-    public function getExpiresAt()
-    {
-        return $this->expiresAt;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getCredentialsExpireAt()
-    {
-        return $this->credentialsExpireAt;
-    }
-
-    /**
      * @return array
      */
     public static function getSexChoices()

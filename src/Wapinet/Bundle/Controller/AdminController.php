@@ -49,7 +49,6 @@ class AdminController extends BaseAdminController
         $userRepository = $em->getRepository('WapinetUserBundle:User');
         $users = $userRepository->findBy(array(
             'enabled' => true,
-            'locked' => false,
         ));
 
         foreach ($users as $user) {
