@@ -250,3 +250,4 @@ server {
 - Актуализировать мобильные коды. Найти новые для разных андроидов.
 - Данные о видео на youtube и др. https://github.com/essence/essence
 - Оболочка над nmap https://github.com/willdurand/nmap (работает медленно и выдает мало информации)
+- Заменить прокси Glype на https://github.com/Athlon1600/php-proxy
