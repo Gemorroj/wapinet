@@ -29,7 +29,7 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
         "javiereguiluz/easyadmin-bundle": "^1.16",
-        "friendsofsymfony/user-bundle": "^2.0@dev",
+        "friendsofsymfony/user-bundle": "dev-master#c080ad2c30cc3f44b0836ba1951a78e0c55c6b42",
         "friendsofsymfony/jsrouting-bundle": "^2.0@dev",
         "friendsofsymfony/message-bundle": "^1.3@dev",
         "white-october/pagerfanta-bundle": "^1.0",

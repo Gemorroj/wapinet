@@ -39,61 +39,6 @@ class ProfileController extends BaseController
             $user = $currentUser;
         }
 
-        return $this->get('templating')->renderResponse('FOSUserBundle:Profile:show.html.twig', array('user' => $user));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function editAction(Request $request)
-    {
-        /** @var User $user */
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        if (!\is_object($user) || !$user instanceof UserInterface) {
-            throw $this->createAccessDeniedException('Вы должны быть авторизованы');
-        }
-
-        /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
-        $dispatcher = $this->get('event_dispatcher');
-
-        $event = new GetResponseUserEvent($user, $request);
-        $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_INITIALIZE, $event);
-
-        if (null !== $event->getResponse()) {
-            return $event->getResponse();
-        }
-
-        /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
-        $formFactory = $this->get('fos_user.profile.form.factory');
-
-        $form = $formFactory->createForm();
-        $form->setData($user);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-
-            if ($form->isValid()) {
-                $userManager = $this->get('fos_user.user_manager');
-
-                $event = new FormEvent($form, $request);
-                $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_SUCCESS, $event);
-
-                $userManager->updateUser($user);
-
-                if (null === $response = $event->getResponse()) {
-                    $response = $this->redirectToRoute('fos_user_profile_show');
-                }
-
-                $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
-
-                return $response;
-            }
-        }
-
-        return $this->get('templating')->renderResponse(
-            'FOSUserBundle:Profile:edit.html.twig',
-            array('form' => $form->createView())
-        );
+        return $this->render('WapinetUserBundle:Profile:show.html.twig', array('user' => $user));
     }
 }
