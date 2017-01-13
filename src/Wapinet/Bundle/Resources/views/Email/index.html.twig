@@ -1,4 +1,4 @@
-{% extends "::base.html.twig" %}
+{% extends "base.html.twig" %}
 
 {% block title %}Отправка Email{% endblock %}
 {% block breadcrumbs %}
@@ -18,7 +18,7 @@
         </strong>
     {% endif %}
 
-    {% form_theme form 'WapinetBundle::captcha.html.twig' %}
+    {% form_theme form '@Wapinet/captcha.html.twig' %}
     {{ form_start(form, {'action': path('email_index'), 'method': 'POST', 'attr': {'data-ajax': 'false'}}) }}
         {{ form_widget(form) }}
     {{ form_end(form) }}

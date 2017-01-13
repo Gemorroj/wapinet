@@ -15,7 +15,7 @@
                         {% set preview = value.web_path|imagine_filter('thumbnail') %}
                     {% endif %}
 
-                    {% include 'WapinetBundle::image.html.twig' with {'image': {'id': 'image', 'alt': '', 'src': value.web_path, 'preview': preview } } %}
+                    {% include '@Wapinet/image.html.twig' with {'image': {'id': 'image', 'alt': '', 'src': value.web_path, 'preview': preview } } %}
                 {% else %}
                     <p>{{ (value.file_url.clientOriginalName is defined ? value.file_url.clientOriginalName : '') }} ({{ value.file_url.size|wapinet_size }})</p>
                 {% endif %}

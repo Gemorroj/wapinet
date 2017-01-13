@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends "base.html.twig" %}
 
 {% block title %}Загрузить файл{% endblock %}
 {% block breadcrumbs %}
@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-    {% form_theme form 'WapinetBundle::captcha.html.twig' %}
+    {% form_theme form '@Wapinet/captcha.html.twig' %}
     {{ form_start(form, {'action': path('file_upload'), 'method': 'POST', 'attr': {'data-ajax': 'false'}}) }}
         {% include '@Wapinet/bot-checker.html.twig' %}
         {{ form_errors(form) }}

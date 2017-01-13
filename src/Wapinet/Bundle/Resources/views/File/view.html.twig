@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends "base.html.twig" %}
 
 {% block title %}{{ file.originalFileName }}{% endblock %}
 {% block breadcrumbs %}
@@ -83,14 +83,14 @@
 
     {% if file.isImage %}
         {% if screenshot is not null %}
-            {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
+            {% include '@Wapinet/image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
         {% endif %}
     {% elseif file.isVideo %}
         {% if file.isPlayableVideo %}
             {% include '@Wapinet/video.html.twig' with {'file': file} %}
         {% else %}
             {% if screenshot is not null %}
-                {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
+                {% include '@Wapinet/image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
             {% endif %}
         {% endif %}
     {% elseif file.isAudio %}
@@ -103,11 +103,11 @@
         {% endif %}
     {% elseif file.isJavaApp %}
         {% if screenshot is not null %}
-            {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
+            {% include '@Wapinet/image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
         {% endif %}
     {% elseif file.isAndroidApp %}
         {% if screenshot is not null %}
-            {% include 'WapinetBundle::image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
+            {% include '@Wapinet/image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
         {% endif %}
     {% elseif file.isTorrent %}
         {% include '@Wapinet/torrent.html.twig' with {'file': file} %}
