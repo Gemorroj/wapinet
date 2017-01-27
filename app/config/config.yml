@@ -130,10 +130,10 @@ liip_imagine:
             filters:
                 thumbnail: { size: [null, 80], mode: inset }
 
-dubture_f_fmpeg:
+wapinet:
     ffmpeg_binary: "%wapinet_ffmpeg_path%"
     ffprobe_binary: "%wapinet_ffprobe_path%"
-    threads_count: "%wapinet_ffmpeg_threads_count%"
+    threads_count: "%wapinet_threads_count%"
 
 
 easy_admin:

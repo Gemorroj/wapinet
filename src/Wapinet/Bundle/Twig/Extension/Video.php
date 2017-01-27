@@ -46,11 +46,11 @@ class Video extends \Twig_Extension
         $mp4File = $path . '.mp4';
 
         if (false === \file_exists($this->getWebDir() . $mp4File)) {
-            $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
+            $ffmpeg = $this->container->get('ffmpeg')->getFfmpeg();
             try {
                 $media = $ffmpeg->open($this->getWebDir() . $path);
 
-                $format = new X264('libfdk_aac');
+                $format = new X264('aac');
                 $this->setOptions($format, $media);
 
                 $media->save($format, $this->getWebDir() . $mp4File);
@@ -116,7 +116,7 @@ class Video extends \Twig_Extension
         $screenshot = $path . '.jpg';
 
         if (false === \file_exists($this->getWebDir() . $screenshot)) {
-            $ffmpeg = $this->container->get('dubture_ffmpeg.ffmpeg');
+            $ffmpeg = $this->container->get('ffmpeg')->getFfmpeg();
 
             try {
                 $media = $ffmpeg->open($this->getWebDir() . $path);

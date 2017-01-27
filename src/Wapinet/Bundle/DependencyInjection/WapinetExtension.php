@@ -22,6 +22,11 @@ class WapinetExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('wapinet.ffmpeg_path', $config['ffmpeg_binary']);
+        $container->setParameter('wapinet.ffprobe_path', $config['ffprobe_binary']);
+        $container->setParameter('wapinet.binary_timeout', $config['binary_timeout']);
+        $container->setParameter('wapinet.threads_count', $config['threads_count']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }

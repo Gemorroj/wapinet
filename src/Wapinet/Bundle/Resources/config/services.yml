@@ -156,6 +156,10 @@ services:
         class: Wapinet\Bundle\Helper\Curl
         arguments: ["@service_container"]
 
+    ffmpeg:
+        class: Wapinet\Bundle\Helper\Ffmpeg
+        arguments: ["@service_container"]
+
     translit:
         class: Wapinet\Bundle\Helper\Translit
 
