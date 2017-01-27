@@ -38,7 +38,7 @@
 #### Если версия в репозитории слишком старая, или нет поддержки rar (RHEL) то ставим из исходников
 ```bash
 cd /root/p7zip_16.02_sources
-curl -L  http://downloads.sourceforge.net/project/p7zip/p7zip/16.02/p7zip_16.02_src_all.tar.bz2 > p7zip_16.02_src_all.tar.bz2
+curl -L http://downloads.sourceforge.net/project/p7zip/p7zip/16.02/p7zip_16.02_src_all.tar.bz2 > p7zip_16.02_src_all.tar.bz2
 tar xjvf p7zip_16.02_src_all.tar.bz2
 cd p7zip_16.02
 # изменить в файле install.sh переменную DEST_HOME на /root/p7zip_16.02_build
@@ -54,8 +54,8 @@ make all3
 ```bash
 yum install autoconf automake cmake freetype-devel gcc gcc-c++ git mercurial libtool make nasm yasm pkgconfig zlib-devel
 
-build_directory="/root/ffmpeg_17_07_2016_build"
-source_directory="/root/ffmpeg_17_07_2016_source"
+build_directory="/root/ffmpeg_27_01_2017_build"
+source_directory="/root/ffmpeg_27_01_2017_source"
 PATH="$build_directory/bin:$PATH"
 
 cd $source_directory
@@ -127,8 +127,9 @@ make install
 make clean
 
 cd $source_directory
-git clone --depth 1 git://github.com/BelledonneCommunications/opencore-amr.git
-cd opencore-amr
+curl -L https://downloads.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.4.tar.gz > opencore-amr-0.1.4.tar.gz
+tar -xzf opencore-amr-0.1.4.tar.gz
+cd opencore-amr-0.1.4
 autoreconf -fiv
 ./configure --prefix="$build_directory" --disable-shared
 make
@@ -138,7 +139,7 @@ make clean
 make distclean
 
 cd $source_directory
-git clone --depth 1 -b release/3.1 https://github.com/FFmpeg/FFmpeg.git
+git clone --depth 1 -b release/3.2 https://github.com/FFmpeg/FFmpeg.git
 cd FFmpeg
 PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure --prefix="$build_directory" --extra-cflags="-I$build_directory/include" --extra-ldflags="-L$build_directory/lib" --bindir="$build_directory/bin" --pkg-config-flags="--static" --enable-gpl --enable-nonfree --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-libopencore-amrwb --enable-libopencore-amrnb --enable-libtheora --enable-version3
 make
