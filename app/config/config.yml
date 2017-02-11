@@ -89,6 +89,9 @@ fos_user:
     profile:
         form:
             type: Wapinet\UserBundle\Form\Type\ProfileType
+    from_email:
+        address: "%mailer_user%"
+        sender_name: "%mailer_user%"
 
 fos_message:
     db_driver: orm
