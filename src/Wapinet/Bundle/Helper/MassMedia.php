@@ -58,7 +58,7 @@ class MassMedia
             $news[] = array(
                 'datetime' => new \DateTime((string)$v->pubDate . 'C'),
                 'title' => (string)$v->title,
-                'description' => $this->stripLink((string)$v->description),
+                'description' => $this->stripDescription((string)$v->description),
                 'author' => null,
                 'category' => (string)$v->category,
                 'link' => (string)$v->link,
@@ -77,7 +77,7 @@ class MassMedia
     public function getInotv()
     {
         $curl = $this->container->get('curl');
-        $curl->init('https://russian.rt.com/inotv/s/rss/main.rss');
+        $curl->init('https://russian.rt.com/inotv/s/rss/inotv_main.rss');
         $curl->addCompression();
 
         $response = $curl->exec();
@@ -107,7 +107,7 @@ class MassMedia
             $news[] = array(
                 'datetime' => new \DateTime((string)$v->pubDate . 'C'),
                 'title' => (string)$v->title,
-                'description' => $this->stripLink((string)$v->description),
+                'description' => $this->stripDescription((string)$v->description),
                 'author' => (string)$v->author,
                 'category' => null,
                 'link' => (string)$v->link,
@@ -123,8 +123,8 @@ class MassMedia
      * @param string $str
      * @return string
      */
-    protected function stripLink($str)
+    private function stripDescription($str)
     {
-        return \rtrim(trim(\preg_replace('/<a\s+.+<\s*\/\s*a>/i', '', $str)), '<br/>');
+        return \strip_tags($str);
     }
 }
