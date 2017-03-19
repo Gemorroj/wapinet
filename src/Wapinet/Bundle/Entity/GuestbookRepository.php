@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
 class GuestbookRepository extends EntityRepository
 {
     /**
-     * @return number
+     * @return int
      */
     public function countAll()
     {

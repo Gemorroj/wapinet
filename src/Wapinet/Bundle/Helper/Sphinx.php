@@ -69,7 +69,6 @@ class Sphinx
      */
     public function getPagerfanta(SphinxQL $sphinxQl, $entityClass)
     {
-
         $bridge = new Bridge($this->container);
         $bridge->setRepositoryClass($entityClass);
         $bridge->setPkColumn('id');

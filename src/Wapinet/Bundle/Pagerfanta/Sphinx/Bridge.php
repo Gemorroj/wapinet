@@ -58,6 +58,11 @@ class Bridge
      */
     protected $discriminatorRepositories = array();
 
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
 
     /**
      * Bridge constructor.
@@ -396,8 +401,6 @@ class Bridge
     }
 
     /**
-     * setDefaultQuery
-     *
      * @return QueryBuilder
      */
     public function getQuery()

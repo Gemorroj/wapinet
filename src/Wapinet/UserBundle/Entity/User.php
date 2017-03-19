@@ -68,7 +68,7 @@ class User extends BaseUser implements ParticipantInterface
     protected $info;
 
     /**
-     * @var \DateTimeZone|null
+     * @var string|null
      */
     protected $timezone;
 

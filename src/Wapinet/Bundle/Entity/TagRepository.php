@@ -8,7 +8,7 @@ class TagRepository extends EntityRepository
 {
     /**
      * @param string $search
-     * @param int $limit
+     * @param int|null $limit
      * @return Tag[]
      */
     public function findLikeName($search, $limit = 10)
@@ -58,12 +58,12 @@ class TagRepository extends EntityRepository
 
 
     /**
-     * @param array  $names   Array of tag names
-     * @return ArrayCollection
+     * @param array $names Array of tag names
+     * @return ArrayCollection|null
      */
     public function makeTags(array $names)
     {
-        if (empty($names)) {
+        if (!$names) {
             return null;
         }
 

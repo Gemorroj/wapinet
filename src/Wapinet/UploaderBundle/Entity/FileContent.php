@@ -30,8 +30,8 @@ class FileContent
 
     /**
      * @param null|string $content
-     * @param null $mimeType
-     * @param null $basename
+     * @param null|string $mimeType
+     * @param null|string $basename
      */
     public function __construct($content, $mimeType = null, $basename = null)
     {

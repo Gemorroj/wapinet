@@ -32,7 +32,7 @@ class Gist extends \Twig_Extension
     }
 
     /**
-     * @return number
+     * @return int
      */
     public function getCountAll()
     {
@@ -40,9 +40,9 @@ class Gist extends \Twig_Extension
     }
 
     /**
-     * @param User $user
+     * @param User|null $user
      *
-     * @return number
+     * @return int
      */
     public function getCount(User $user = null)
     {

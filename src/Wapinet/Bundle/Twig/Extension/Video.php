@@ -70,7 +70,7 @@ class Video extends \Twig_Extension
     /**
      * @param DefaultVideo $format
      * @param FFmpegVideo $media
-     * @return Video
+     * @return $this
      */
     protected function setOptions(DefaultVideo $format, FFmpegVideo $media)
     {

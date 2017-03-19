@@ -33,7 +33,7 @@ class Guestbook extends \Twig_Extension
     }
 
     /**
-     * @return number
+     * @return int
      */
     public function getCountAll()
     {

@@ -38,7 +38,7 @@ class FileRepository extends EntityRepository
 
 
     /**
-     * @return number
+     * @return int
      */
     public function countHidden()
     {
@@ -49,7 +49,7 @@ class FileRepository extends EntityRepository
 
 
     /**
-     * @return number
+     * @return int
      */
     public function countAll()
     {
@@ -60,8 +60,8 @@ class FileRepository extends EntityRepository
 
     /**
      * @param \DateTime $datetimeStart
-     * @param \DateTime $datetimeEnd
-     * @return number
+     * @param \DateTime|null $datetimeEnd
+     * @return int
      */
     public function countDate(\DateTime $datetimeStart, \DateTime $datetimeEnd = null)
     {
@@ -85,7 +85,7 @@ class FileRepository extends EntityRepository
 
     /**
      * @param string $category
-     * @return number
+     * @return int
      */
     public function countCategory($category)
     {
@@ -102,7 +102,7 @@ class FileRepository extends EntityRepository
 
     /**
      * @param User $user
-     * @return number
+     * @return int
      */
     public function countUser(User $user)
     {
@@ -118,9 +118,9 @@ class FileRepository extends EntityRepository
     }
 
     /**
-     * @param \DateTime $datetimeStart
-     * @param \DateTime $datetimeEnd
-     * @param string $category
+     * @param \DateTime|null $datetimeStart
+     * @param \DateTime|null $datetimeEnd
+     * @param string|null $category
      * @return \Doctrine\ORM\Query
      */
     public function getListQuery(\DateTime $datetimeStart = null, \DateTime $datetimeEnd = null, $category = null)
@@ -213,7 +213,7 @@ class FileRepository extends EntityRepository
             case 'audio':
             case 'image':
             case 'text':
-                $mimeType = addcslashes($mimeType, '%_') . '/%';
+                $mimeType = \addcslashes($mimeType, '%_') . '/%';
                 $q->andWhere('f.mimeType LIKE :mime_type');
                 $q->setParameter('mime_type', $mimeType);
                 break;

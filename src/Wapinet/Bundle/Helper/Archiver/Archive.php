@@ -38,11 +38,13 @@ abstract class Archive
      */
     public function getFiles($directory)
     {
-        $archiveDirectory = basename($directory);
+        $archiveDirectory = \basename($directory);
         ArchiveFileInfo::setArchiveDirectory($archiveDirectory);
 
-        /** @var \SplFileInfo[] $objects */
-        $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory, \RecursiveDirectoryIterator::SKIP_DOTS), \RecursiveIteratorIterator::SELF_FIRST);
+        $objects = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($directory, \RecursiveDirectoryIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::SELF_FIRST
+        );
 
         $result = $this->sortFiles($objects);
 
@@ -51,10 +53,10 @@ abstract class Archive
 
 
     /**
-     * @param \SplFileInfo[] $objects
+     * @param \RecursiveIteratorIterator $objects
      * @return \SplFileInfo[]
      */
-    private function sortFiles(\Iterator $objects)
+    private function sortFiles(\RecursiveIteratorIterator $objects)
     {
         $result = array();
         $tmp = array();

@@ -21,7 +21,7 @@ class Avatar extends \Twig_Extension
     /**
      * @param User|null $user
      * @param int|null $size
-     * @return int
+     * @return string
      */
     public function getAvatarUrl(User $user = null, $size = 80)
     {

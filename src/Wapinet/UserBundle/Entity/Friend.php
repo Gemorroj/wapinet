@@ -45,7 +45,7 @@ class Friend
 
 
     /**
-     * @return User
+     * @return $this
      */
     public function setCreatedAtValue()
     {
@@ -63,7 +63,7 @@ class Friend
     }
 
     /**
-     * @return User
+     * @return $this
      */
     public function setUpdatedAtValue()
     {
@@ -75,7 +75,7 @@ class Friend
     /**
      * @param User $user
      *
-     * @return Friend
+     * @return $this
      */
     public function setUser(User $user)
     {
@@ -95,7 +95,7 @@ class Friend
     /**
      * @param User $friend
      *
-     * @return Friend
+     * @return $this
      */
     public function setFriend(User $friend)
     {

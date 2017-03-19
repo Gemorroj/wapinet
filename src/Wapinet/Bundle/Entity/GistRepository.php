@@ -7,7 +7,7 @@ use Wapinet\UserBundle\Entity\User;
 class GistRepository extends EntityRepository
 {
     /**
-     * @return number
+     * @return int
      */
     public function countAll()
     {
@@ -15,9 +15,9 @@ class GistRepository extends EntityRepository
     }
 
     /**
-     * @param User $user
+     * @param User|null $user
      *
-     * @return number
+     * @return int
      */
     public function count(User $user = null)
     {
@@ -32,7 +32,7 @@ class GistRepository extends EntityRepository
     }
 
     /**
-     * @param User $user
+     * @param User|null $user
      *
      * @return \Doctrine\ORM\Query
      */

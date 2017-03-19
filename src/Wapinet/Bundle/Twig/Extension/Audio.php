@@ -68,7 +68,7 @@ class Audio extends \Twig_Extension
     /**
      * @param DefaultAudio $format
      * @param FFmpegAudio $media
-     * @return Video
+     * @return $this
      */
     protected function setOptions(DefaultAudio $format, FFmpegAudio $media)
     {

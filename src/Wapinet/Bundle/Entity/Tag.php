@@ -2,8 +2,6 @@
 
 namespace Wapinet\Bundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 
 /**
  * Tag
@@ -46,7 +44,7 @@ class Tag
      * Set id
      *
      * @param int $id
-     * @return Tag
+     * @return $this
      */
     public function setId($id)
     {
@@ -69,7 +67,7 @@ class Tag
      * Set count
      *
      * @param int $count
-     * @return Tag
+     * @return $this
      */
     public function setCount($count)
     {
@@ -92,7 +90,7 @@ class Tag
      * Set name
      *
      * @param string $name
-     * @return Tag
+     * @return $this
      */
     public function setName($name)
     {
@@ -110,7 +108,7 @@ class Tag
     }
 
     /**
-     * @return File
+     * @return $this
      */
     public function setCreatedAtValue()
     {
@@ -128,7 +126,7 @@ class Tag
     }
 
     /**
-     * @return File
+     * @return $this
      */
     public function setUpdatedAtValue()
     {

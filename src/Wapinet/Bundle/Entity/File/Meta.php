@@ -35,7 +35,7 @@ class Meta
 
     /**
      * @param string $key
-     * @param string $value
+     * @param mixed $value
      * @return Meta
      */
     public function set($key, $value)

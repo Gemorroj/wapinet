@@ -36,7 +36,7 @@ class TagsDataTransformer implements DataTransformerInterface
 
     /**
      * @param string $tagsDataFromForm
-     * @return ArrayCollection
+     * @return ArrayCollection|null
      */
     public function reverseTransform($tagsDataFromForm)
     {
