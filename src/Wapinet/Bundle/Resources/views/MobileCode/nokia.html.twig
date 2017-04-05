@@ -2,249 +2,254 @@
 
 {% block title %}Nokia{% endblock %}
 {% block breadcrumbs %}
-    {{wapinet_breadcrumbs({
-    1: {'uri': path('utilities'), 'title': 'Утилиты'},
-    2: {'uri': path('mobile_code_index'), 'title': 'Телефонные коды'}
-    })}}
+    {{ wapinet_breadcrumbs({
+        1: {'uri': path('utilities'), 'title': 'Утилиты'},
+        2: {'uri': path('mobile_code_index'), 'title': 'Телефонные коды'}
+    }) }}
 {% endblock %}
 
 {% block content %}
-<div class="ui-corner-all custom-corners">
+    <div class="ui-corner-all custom-corners">
         <div class="ui-bar ui-bar-a">
-                <h3>Позиция в телефонной книге</h3>
+            <h3>Позиция в телефонной книге</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>xx# вместо xx - искомый номер позиции</p>
+            <p>xx# вместо xx - искомый номер позиции</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Номер серии и дата выпуска</h3>
+            <h3>Номер серии и дата выпуска</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#0000#</p>
+            <p>*#0000#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Вернуть заводские установки</h3>
+            <h3>Вернуть заводские установки</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#7780#</p>
+            <p>*#7780#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Активирует Enhanced Full Rate</h3>
+            <h3>Активирует Enhanced Full Rate</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*3370#</p>
-                <details>Улучшает качество передачи, что сопровождается увеличением расхода аккумулятора, режим активируется после выключения и включения аппарата.</details>
+            <p>*3370#</p>
+            <details>Улучшает качество передачи, что сопровождается увеличением расхода аккумулятора, режим активируется после выключения и включения аппарата.
+            </details>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Активация/Деактивация Half Rate Codec</h3>
+            <h3>Активация/Деактивация Half Rate Codec</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*4370#</p>
-                <details>Уменьшает расхода аккумулятора, режим активируется после выключения и включения аппарата. При этом ухудшается качество передачи звука.</details>
+            <p>*4370#</p>
+            <details>Уменьшает расхода аккумулятора, режим активируется после выключения и включения аппарата. При этом ухудшается качество передачи звука.
+            </details>
         </div>
         <div class="ui-bar ui-bar-a">
-                <h3>Активация/Деактивация Half Rate</h3>
+            <h3>Активация/Деактивация Half Rate</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*4720#</p>
-                <details>Уменьшает расхода аккумулятора, режим активируется после выключения и включения аппарата. При этом ухудшается качество передачи звука.</details>
+            <p>*4720#</p>
+            <details>Уменьшает расхода аккумулятора, режим активируется после выключения и включения аппарата. При этом ухудшается качество передачи звука.
+            </details>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Включение PCCCH (Packet Common Control Channel)</h3>
+            <h3>Включение PCCCH (Packet Common Control Channel)</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#7220#</p>
-                <details>Улучшает передачу данных в GPRS сети</details>
+            <p>*#7220#</p>
+            <details>Улучшает передачу данных в GPRS сети</details>
         </div>
         <div class="ui-bar ui-bar-a">
-                <h3>Отключение PCCCH (Packet Common Control Channel)</h3>
+            <h3>Отключение PCCCH (Packet Common Control Channel)</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#7230#</p>
+            <p>*#7230#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Активация PCCCH (Packet Common Control Channel)</h3>
+            <h3>Активация PCCCH (Packet Common Control Channel)</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#7320#</p>
-                <details>Улучшает передачу данных в GPRS сети</details>
+            <p>*#7320#</p>
+            <details>Улучшает передачу данных в GPRS сети</details>
         </div>
         <div class="ui-bar ui-bar-a">
-                <h3>Деактивация PCCCH (Packet Common Control Channel)</h3>
+            <h3>Деактивация PCCCH (Packet Common Control Channel)</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#7330#</p>
+            <p>*#7330#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Деактивация PCCCH (Packet Common Control Channel)</h3>
+            <h3>Деактивация PCCCH (Packet Common Control Channel)</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#7330#</p>
+            <p>*#7330#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Инженерное меню</h3>
+            <h3>Инженерное меню</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#92702689#</p>
-                <details>Команды в специальном меню:<br/>
-                        6232 OK - показывает дату выпуска<br/>
-                        7332 OK - показывает дату последнего изменения в программе<br/>
-                        7832 OK - показывает дату продажи (если введено!)<br/>
-                        37832 OK - можно ввести дату продажи MMYY (потом нельзя изменить!)<br/>
-                        9268 OK - показывает IMEI</details>
+            <p>*#92702689#</p>
+            <details>Команды в специальном меню:<br/>
+                6232 OK - показывает дату выпуска<br/>
+                7332 OK - показывает дату последнего изменения в программе<br/>
+                7832 OK - показывает дату продажи (если введено!)<br/>
+                37832 OK - можно ввести дату продажи MMYY (потом нельзя изменить!)<br/>
+                9268 OK - показывает IMEI
+            </details>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Версия программного обеспечения</h3>
+            <h3>Версия программного обеспечения</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#xxxx# вместо xxxx номер модели</p>
-                <details>Например, для Nokia 3310 - *#3310*.</details>
+            <p>*#xxxx# вместо xxxx номер модели</p>
+            <details>Например, для Nokia 3310 - *#3310*.</details>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Сброс данных (RESET)</h3>
+            <h3>Сброс данных (RESET)</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#7370#</p>
+            <p>*#7370#</p>
         </div>
-</div>
+    </div>
 
-<p>Коды ниже работают только на телефонах с ОС Symbian</p>
-<div class="ui-corner-all custom-corners">
+    <p>Коды ниже работают только на телефонах с ОС Symbian</p>
+    <div class="ui-corner-all custom-corners">
         <div class="ui-bar ui-bar-a">
-                <h3>Phone reset</h3>
+            <h3>Phone reset</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#7979#</p>
-        </div>
-
-        <div class="ui-bar ui-bar-a">
-                <h3>Hard reset</h3>
-        </div>
-        <div class="ui-body ui-body-a">
-                <p>*#7470#</p>
+            <p>*#7979#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Status register: C,BS,RR,MMI,CREAT</h3>
+            <h3>Hard reset</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#2254*#</p>
+            <p>*#7470#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Activate and deactivate the "DEBUG CALL" Mode</h3>
+            <h3>Status register: C,BS,RR,MMI,CREAT</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#2255*#</p>
-                <details>When activated, make a call to busy line an the phone will display some hex codes on the display.</details>
+            <p>*#2254*#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>The time in days, hours and minutes you are connected to the net</h3>
+            <h3>Activate and deactivate the "DEBUG CALL" Mode</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#2558*#</p>
+            <p>*#2255*#</p>
+            <details>When activated, make a call to busy line an the phone will display some hex codes on the display.
+            </details>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Not clear; the phone reconnect to the net</h3>
+            <h3>The time in days, hours and minutes you are connected to the net</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#2562*#</p>
+            <p>*#2558*#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Not clear; warmstart</h3>
+            <h3>Not clear; the phone reconnect to the net</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#2565*#</p>
+            <p>*#2562*#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Blocking list (15 items)</h3>
+            <h3>Not clear; warmstart</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#3333*#</p>
+            <p>*#2565*#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Init, Flags, SIM LOCK</h3>
+            <h3>Blocking list (15 items)</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#3377*#</p>
+            <p>*#3333*#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Reset the BLOCKING list</h3>
+            <h3>Init, Flags, SIM LOCK</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#3353*#</p>
+            <p>*#3377*#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Name, Lenght, SIM phase</h3>
+            <h3>Reset the BLOCKING list</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#7378*#</p>
+            <p>*#3353*#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Security Code</h3>
+            <h3>Name, Lenght, SIM phase</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#7489*#</p>
+            <p>*#7378*#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Displays the SW info</h3>
+            <h3>Security Code</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#8377*#</p>
+            <p>*#7489*#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Bluetooth info (Only bluetooth models)</h3>
+            <h3>Displays the SW info</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#2820#</p>
+            <p>*#8377*#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Activate and deactivate the Sleep Menu</h3>
+            <h3>Bluetooth info (Only bluetooth models)</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#7693*#</p>
+            <p>*#2820#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Spurious Interrupt</h3>
+            <h3>Activate and deactivate the Sleep Menu</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#7787*#</p>
+            <p>*#7693*#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Switch Off: not clear: it is a timer or something</h3>
+            <h3>Spurious Interrupt</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#7948*#</p>
+            <p>*#7787*#</p>
         </div>
 
         <div class="ui-bar ui-bar-a">
-                <h3>Some information about the SLEEP MODE: Wake, Sleep Req., Sleep</h3>
+            <h3>Switch Off: not clear: it is a timer or something</h3>
         </div>
         <div class="ui-body ui-body-a">
-                <p>*#8463*#</p>
+            <p>*#7948*#</p>
         </div>
-</div>
+
+        <div class="ui-bar ui-bar-a">
+            <h3>Some information about the SLEEP MODE: Wake, Sleep Req., Sleep</h3>
+        </div>
+        <div class="ui-body ui-body-a">
+            <p>*#8463*#</p>
+        </div>
+    </div>
 {% endblock %}

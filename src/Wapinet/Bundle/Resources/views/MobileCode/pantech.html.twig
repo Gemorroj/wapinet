@@ -9,47 +9,135 @@
 {% endblock %}
 
 {% block content %}
-        G500, G600, G700, G800, G900<br/>
-        *01763*476# - Tests<br/>
-        *01763*5640# (*01763*LOG0#) - Disable LOG<br/>
-        *01763*5641# (*01763*LOG1#) - Enable LOG<br/>
-        *01763*6370# (*01763*MEP0#) - Disable MEP menu (unlock menu)<br/>
-        *01763*6371# (*01763*MEP1#) - Enable MEP menu (unlock menu)<br/>
-        *01763*3640# (*01763*ENG0#) - Disable Engineer Mode<br/>
-        *01763*3641# (*01763*ENG1#) - Enable Engineer Mode<br/>
-        *01763*63866330# (*01763*NETMODE0#) - Disable NetMode<br/>
-        *01763*63866331# (*01763*NETMODE1#) - Enable NetMode<br/>
-        *01763*737381# (*01763*RESET1#) - System reset (all default settings)<br/>
-        *01763*546360# - LineN0<br/>
-        *01763*546361# - LineN1<br/>
-        *01763*546364# - LineN4<br/>
-        *01763*546367# - LineN7<br/>
-        *01763*34531# - ?<br/>
-        *01763*62766# - ?<br/>
-        *01763*727# - ?<br/>
-        *01763*68726# - ?<br/>
-        <br/>
-        G500 [GIHR0507042004 ZEUS  Ver. 0.01s]<br/>
-        *01763*22637266# (*01763*CAMERAON#) Тест камеры<br/>
-        *01763*225837# - ?<br/>
-        <br/>
-        G600 [GZBP0105102004 PANTECH  ver 1.0]<br/>
-        *01763*22637266# (*01763*CAMERAON#) Тест камеры<br/>
-        <br/>
-        G800 [GLAP0006062004 G800 ver 1.0N]<br/>
-        *01763*22637266# (*01763*CAMERAON#) Тест камеры<br/>
-        *01763*79837# (*01763*SWVER#) Версия ПО<br/>
-        *01763*28271# - ?<br/>
-        *01763*28270# - ?<br/>
-        *01763*2873738# - ?<br/>
-        *01763*288# - ?<br/>
-        <br/>
-        G900 [GWBP0206282004 G900 ver 1.0b]<br/>
-        *01763*22637266# (*01763*CAMERAON#) Тест камеры<br/>
-        *01763*79837# (*01763*SWVER#) Версия ПО<br/>
-        *01763*92782# - copy UaData... copy httpUserAgent... Call Edit Mode : %s ?<br/>
-        *01763*927827763# - copy UaProfData... copy httpUserAgentProf...<br/>
-        <br/>
-        HX-550C<br/>
-        Full reset (phone code reset)- #03*934#9367*192#397#7412569746 PWR, after reset - ##27732726 PWR and select "with uim"<br/>
+<div class="ui-corner-all custom-corners">
+    <p>G500, G600, G700, G800, G900</p>
+    <div class="ui-bar ui-bar-a">
+        <h3>Tests</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>*01763*476#</p>
+    </div>
+    <div class="ui-bar ui-bar-a">
+        <h3>Disable LOG</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>*01763*5640# (*01763*LOG0#)</p>
+    </div>
+    <div class="ui-bar ui-bar-a">
+        <h3>Enable LOG</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>*01763*5641# (*01763*LOG1#)</p>
+    </div>
+    <div class="ui-bar ui-bar-a">
+        <h3>Disable MEP menu (unlock menu)</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>*01763*6370# (*01763*MEP0#)</p>
+    </div>
+    <div class="ui-bar ui-bar-a">
+        <h3>Enable MEP menu (unlock menu)</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>*01763*6371# (*01763*MEP1#)</p>
+    </div>
+    <div class="ui-bar ui-bar-a">
+        <h3>Disable Engineer Mode</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>*01763*3640# (*01763*ENG0#)</p>
+    </div>
+    <div class="ui-bar ui-bar-a">
+        <h3>Enable Engineer Mode</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>*01763*3641# (*01763*ENG1#)</p>
+    </div>
+    <div class="ui-bar ui-bar-a">
+        <h3>Disable NetMode</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>*01763*63866330# (*01763*NETMODE0#)</p>
+    </div>
+    <div class="ui-bar ui-bar-a">
+        <h3>Enable NetMode</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>*01763*63866331# (*01763*NETMODE1#)</p>
+    </div>
+    <div class="ui-bar ui-bar-a">
+        <h3>System reset (all default settings)</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>*01763*737381# (*01763*RESET1#)</p>
+    </div>
+    <div class="ui-bar ui-bar-a">
+        <h3>LineN0</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>*01763*546360#</p>
+    </div>
+    <div class="ui-bar ui-bar-a">
+        <h3>LineN1</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>*01763*546361#</p>
+    </div>
+    <div class="ui-bar ui-bar-a">
+        <h3>LineN4</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>*01763*546364#</p>
+    </div>
+    <div class="ui-bar ui-bar-a">
+        <h3>LineN7</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>*01763*546367#</p>
+    </div>
+    <div class="ui-bar ui-bar-a">
+        <h3>Тест камеры (G500, G600, G800, G900)</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>*01763*22637266# (*01763*CAMERAON#)</p>
+    </div>
+
+    <p>G800 [GLAP0006062004 G800 ver 1.0N]</p>
+
+    <div class="ui-bar ui-bar-a">
+        <h3>Версия ПО</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>*01763*79837# (*01763*SWVER#)</p>
+    </div>
+
+    <p>G900 [GWBP0206282004 G900 ver 1.0b]</p>
+
+    <div class="ui-bar ui-bar-a">
+        <h3>Версия ПО</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>*01763*79837# (*01763*SWVER#)</p>
+    </div>
+    <div class="ui-bar ui-bar-a">
+        <h3>copy UaData... copy httpUserAgent... Call Edit Mode</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>*01763*92782#</p>
+    </div>
+    <div class="ui-bar ui-bar-a">
+        <h3>copy UaProfData... copy httpUserAgentProf...</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>*01763*927827763#</p>
+    </div>
+
+    <p>HX-550C</p>
+
+    <div class="ui-bar ui-bar-a">
+        <h3>Full reset</h3>
+    </div>
+    <div class="ui-body ui-body-a">
+        <p>#03*934#9367*192#397#7412569746 PWR, after reset - ##27732726 PWR and select "with uim"</p>
+    </div>
 {% endblock %}

@@ -2,98 +2,108 @@
 
 {% block title %}Ericsson{% endblock %}
 {% block breadcrumbs %}
-    {{wapinet_breadcrumbs({
-    1: {'uri': path('utilities'), 'title': 'Утилиты'},
-    2: {'uri': path('mobile_code_index'), 'title': 'Телефонные коды'}
-    })}}
+    {{ wapinet_breadcrumbs({
+        1: {'uri': path('utilities'), 'title': 'Утилиты'},
+        2: {'uri': path('mobile_code_index'), 'title': 'Телефонные коды'}
+    }) }}
 {% endblock %}
 
 {% block content %}
-        <div class="ui-corner-all custom-corners">
-                <div class="ui-bar ui-bar-a">
-                        <h3>Сбрасывает язык в меню на английский</h3>
-                </div>
-                <div class="ui-body ui-body-a">
-                        <p>*#0000#</p>
-                </div>
-                <div class="ui-bar ui-bar-a">
-                        <h3>Показывает версию программного обеспечения</h3>
-                </div>
-                <div class="ui-body ui-body-a">
-                        <p>&lt;&gt;*&lt;&lt;*&lt;*&gt;</p>
-                </div>
-                <div class="ui-bar ui-bar-a">
-                        <h3>Доступ к меню без SIM-карты</h3>
-                </div>
-                <div class="ui-body ui-body-a">
-                        <p>**04*0000*0000*0000#</p>
-                        <details>На дисплее появится "Wrong Pin" нажмите NO и Вы получите доступ ко всем пунктам меню.</details>
-                </div>
-                <div class="ui-bar ui-bar-a">
-                        <h3>Быстрый набор последнего звонка</h3>
-                </div>
-                <div class="ui-body ui-body-a">
-                        <p>0#</p>
-                </div>
-                <div class="ui-bar ui-bar-a">
-                        <h3>Просмотр уровня заряда батареи при выключенном телефоне</h3>
-                </div>
-                <div class="ui-body ui-body-a">
-                        <p>Нажмите NO на 2 секунды</p>
-                </div>
-
-                <div class="ui-bar ui-bar-a">
-                        <h3>Активация/деактивация SPLock кода (NCK)</h3>
-                </div>
-                <div class="ui-body ui-body-a">
-                        <p>&lt;**&lt;&lt;Lock to Network?</p>
-                        <details>Если нажать YES, то у Вас будет 5 попыток для ввода NCK кода.<br />
-Если Вы 5 раз неправильно наберете код, то Ваш телефон будет заблокирован навечно, на любые попытки ввести NCK код, будет выдаваться "Not Allowed". Возможно, что исправить ситуацию можно только полностью перезаписав EEPROM.</details>
-                </div>
-                <div class="ui-bar ui-bar-a">
-                        <h3>Активация/деактивация SPLock кода (NSCK)</h3>
-                </div>
-                <div class="ui-body ui-body-a">
-                        <p>&lt;**&lt;&lt;Lock to Network subset?</p>
-                        <details>Если нажать YES, то у Вас будет 5 попыток для ввода NSCK кода.<br />
-Если Вы 5 раз неправильно наберете код, то Ваш телефон будет заблокирован навечно, на любые попытки ввести NSCK код, будет выдаваться "Not Allowed". Возможно, что исправить ситуацию можно только полностью перезаписав EEPROM.</details>
-                </div>
-
-                <div class="ui-bar ui-bar-a">
-                        <h3>Проверка времени и даты через сеть (GA628)</h3>
-                </div>
-                <div class="ui-body ui-body-a">
-                        <p>*#103#</p>
-                </div>
-                <div class="ui-bar ui-bar-a">
-                        <h3>Live well be happy</h3>
-                </div>
-                <div class="ui-body ui-body-a">
-                        <p>На экране с логотипом ввести 397. После этого появится надпись :"Live well be happy."</p>
-                </div>
-                <div class="ui-bar ui-bar-a">
-                        <h3>Змейка (Ericsson T68)</h3>
-                </div>
-                <div class="ui-body ui-body-a">
-                        <p>Запустите игру Erix и начните новую игру на любом уровне сложности. На экране логотипа игры наберите 123. После этого активируется игра "Змейка".</p>
-                </div>
-                <div class="ui-bar ui-bar-a">
-                        <h3>Blocks (Ericsson T68)</h3>
-                </div>
-                <div class="ui-body ui-body-a">
-                        <p>Игра Blocks вызывается из игры Q. Начните новую игру на 1 уровне сложности. Пока на экране висит логотип игры, нужно успеть набрать 134679#5.</p>
-                </div>
-                <div class="ui-bar ui-bar-a">
-                        <h3>Игра в очко (Ericsson T68)</h3>
-                </div>
-                <div class="ui-body ui-body-a">
-                        <p>Игра в очко (карточный вариант), только с одной картой. Вызывается из игры Ripple. На экране логотипа игры, нужно набрать 654456.</p>
-                </div>
-                <div class="ui-bar ui-bar-a">
-                        <h3>Змейка (Ericsson T39m и R520m)</h3>
-                </div>
-                <div class="ui-body ui-body-a">
-                        <p>Игра Snake. Начните игру Erix на любом уровне сложности и когда появится логотип (игры) нужно нажать: левую стрелку, потом правую, а потом набрать #12. Игра начнется после нажатия Yes.</p>
-                </div>
+    <div class="ui-corner-all custom-corners">
+        <div class="ui-bar ui-bar-a">
+            <h3>Сбрасывает язык в меню на английский</h3>
         </div>
+        <div class="ui-body ui-body-a">
+            <p>*#0000#</p>
+        </div>
+        <div class="ui-bar ui-bar-a">
+            <h3>Показывает версию программного обеспечения</h3>
+        </div>
+        <div class="ui-body ui-body-a">
+            <p>&lt;&gt;*&lt;&lt;*&lt;*&gt;</p>
+        </div>
+        <div class="ui-bar ui-bar-a">
+            <h3>Доступ к меню без SIM-карты</h3>
+        </div>
+        <div class="ui-body ui-body-a">
+            <p>**04*0000*0000*0000#</p>
+            <details>На дисплее появится "Wrong Pin" нажмите NO и Вы получите доступ ко всем пунктам меню.</details>
+        </div>
+        <div class="ui-bar ui-bar-a">
+            <h3>Быстрый набор последнего звонка</h3>
+        </div>
+        <div class="ui-body ui-body-a">
+            <p>0#</p>
+        </div>
+        <div class="ui-bar ui-bar-a">
+            <h3>Просмотр уровня заряда батареи при выключенном телефоне</h3>
+        </div>
+        <div class="ui-body ui-body-a">
+            <p>Нажмите NO на 2 секунды</p>
+        </div>
+
+        <div class="ui-bar ui-bar-a">
+            <h3>Активация/деактивация SPLock кода (NCK)</h3>
+        </div>
+        <div class="ui-body ui-body-a">
+            <p>&lt;**&lt;&lt;Lock to Network?</p>
+            <details>Если нажать YES, то у Вас будет 5 попыток для ввода NCK кода.<br/>
+                Если Вы 5 раз неправильно наберете код, то Ваш телефон будет заблокирован навечно, на любые попытки
+                ввести NCK код, будет выдаваться "Not Allowed". Возможно, что исправить ситуацию можно только полностью
+                перезаписав EEPROM.
+            </details>
+        </div>
+        <div class="ui-bar ui-bar-a">
+            <h3>Активация/деактивация SPLock кода (NSCK)</h3>
+        </div>
+        <div class="ui-body ui-body-a">
+            <p>&lt;**&lt;&lt;Lock to Network subset?</p>
+            <details>Если нажать YES, то у Вас будет 5 попыток для ввода NSCK кода.<br/>
+                Если Вы 5 раз неправильно наберете код, то Ваш телефон будет заблокирован навечно, на любые попытки
+                ввести NSCK код, будет выдаваться "Not Allowed". Возможно, что исправить ситуацию можно только полностью
+                перезаписав EEPROM.
+            </details>
+        </div>
+
+        <div class="ui-bar ui-bar-a">
+            <h3>Проверка времени и даты через сеть (GA628)</h3>
+        </div>
+        <div class="ui-body ui-body-a">
+            <p>*#103#</p>
+        </div>
+        <div class="ui-bar ui-bar-a">
+            <h3>Live well be happy</h3>
+        </div>
+        <div class="ui-body ui-body-a">
+            <p>На экране с логотипом ввести 397. После этого появится надпись :"Live well be happy."</p>
+        </div>
+        <div class="ui-bar ui-bar-a">
+            <h3>Змейка (Ericsson T68)</h3>
+        </div>
+        <div class="ui-body ui-body-a">
+            <p>Запустите игру Erix и начните новую игру на любом уровне сложности. На экране логотипа игры наберите 123.
+                После этого активируется игра "Змейка".</p>
+        </div>
+        <div class="ui-bar ui-bar-a">
+            <h3>Blocks (Ericsson T68)</h3>
+        </div>
+        <div class="ui-body ui-body-a">
+            <p>Игра Blocks вызывается из игры Q. Начните новую игру на 1 уровне сложности. Пока на экране висит логотип
+                игры, нужно успеть набрать 134679#5.</p>
+        </div>
+        <div class="ui-bar ui-bar-a">
+            <h3>Игра в очко (Ericsson T68)</h3>
+        </div>
+        <div class="ui-body ui-body-a">
+            <p>Игра в очко (карточный вариант), только с одной картой. Вызывается из игры Ripple. На экране логотипа
+                игры, нужно набрать 654456.</p>
+        </div>
+        <div class="ui-bar ui-bar-a">
+            <h3>Змейка (Ericsson T39m и R520m)</h3>
+        </div>
+        <div class="ui-body ui-body-a">
+            <p>Игра Snake. Начните игру Erix на любом уровне сложности и когда появится логотип (игры) нужно нажать:
+                левую стрелку, потом правую, а потом набрать #12. Игра начнется после нажатия Yes.</p>
+        </div>
+    </div>
 {% endblock %}
