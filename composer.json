@@ -54,7 +54,7 @@
         "gemorroj/syntax": "^2.0",
         "gemorroj/htmlvalidator": "^1.0",
         "gemorroj/cssvalidator": "^1.0",
-        "gemorroj/xbbcode": "^2.0"
+        "gemorroj/xbbcode": "^2.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
