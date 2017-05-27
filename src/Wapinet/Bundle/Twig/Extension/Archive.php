@@ -12,6 +12,10 @@ class Archive extends \Twig_Extension
      */
     protected $container;
 
+    /**
+     * Archive constructor.
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;

@@ -12,6 +12,10 @@ class AndroidApp extends \Twig_Extension
      */
     protected $container;
 
+    /**
+     * AndroidApp constructor.
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
