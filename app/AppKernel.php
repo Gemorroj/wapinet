@@ -5,9 +5,47 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
 {
-    /**
-     * {@inheritdoc}
-     */
+    public function registerBundles()
+    {
+        $bundles = [
+            new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new FOS\MessageBundle\FOSMessageBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
+            new Vich\UploaderBundle\VichUploaderBundle(),
+            new Liip\ImagineBundle\LiipImagineBundle(),
+            new Gregwar\CaptchaBundle\GregwarCaptchaBundle(),
+
+            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
+            new Symfony\Bundle\TwigBundle\TwigBundle(),
+            new Symfony\Bundle\MonologBundle\MonologBundle(),
+            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
+            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+
+            new Wapinet\UserBundle\WapinetUserBundle(),
+            new Wapinet\Bundle\WapinetBundle(),
+            new Wapinet\MessageBundle\WapinetMessageBundle(),
+            new Wapinet\UploaderBundle\WapinetUploaderBundle(),
+        ];
+
+        if (\in_array($this->getEnvironment(), ['dev', 'test'], true)) {
+            $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
+            $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
+            $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
+
+            if ('dev' === $this->getEnvironment()) {
+                $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+                $bundles[] = new Symfony\Bundle\WebServerBundle\WebServerBundle();
+            }
+        }
+
+        return $bundles;
+    }
+
+
     protected function buildContainer()
     {
         $container = parent::buildContainer();
@@ -39,25 +77,16 @@ class AppKernel extends Kernel
     }
 
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRootDir()
     {
         return __DIR__;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCacheDir()
     {
         return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLogDir()
     {
         return dirname(__DIR__).'/var/logs';
@@ -113,45 +142,6 @@ class AppKernel extends Kernel
         return $parameters;
     }
 
-
-    /**
-     * {@inheritdoc}
-     */
-    public function registerBundles()
-    {
-        $bundles = [
-            new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
-            new FOS\UserBundle\FOSUserBundle(),
-            new FOS\MessageBundle\FOSMessageBundle(),
-            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
-            new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
-            new Vich\UploaderBundle\VichUploaderBundle(),
-            new Liip\ImagineBundle\LiipImagineBundle(),
-            new Gregwar\CaptchaBundle\GregwarCaptchaBundle(),
-
-            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
-            new Symfony\Bundle\TwigBundle\TwigBundle(),
-            new Symfony\Bundle\MonologBundle\MonologBundle(),
-            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
-            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
-            new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-
-            new Wapinet\UserBundle\WapinetUserBundle(),
-            new Wapinet\Bundle\WapinetBundle(),
-            new Wapinet\MessageBundle\WapinetMessageBundle(),
-            new Wapinet\UploaderBundle\WapinetUploaderBundle(),
-        ];
-
-        if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
-            $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
-            $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
-            $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
-            $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
-        }
-
-        return $bundles;
-    }
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {

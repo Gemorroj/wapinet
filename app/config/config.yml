@@ -11,10 +11,10 @@ parameters:
 
 framework:
     #esi:             ~
-    translator:      { fallbacks: ["%locale%", "en"] }
-    secret:          "%secret%"
+    translator:      { fallbacks: ['%locale%', 'en'] }
+    secret:          '%secret%'
     router:
-        resource: "%kernel.root_dir%/config/routing.yml"
+        resource: '%kernel.project_dir%/app/config/routing.yml'
         strict_requirements: ~
     form:            ~
     csrf_protection: true
@@ -23,62 +23,60 @@ framework:
     #serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
-    default_locale:  "%locale%"
+    default_locale:  '%locale%'
     trusted_hosts:   ~
-    trusted_proxies: ~
     session:
         name: wapinet
         cookie_httponly: true
         handler_id:  session.handler.native_file
-        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        save_path:   '%kernel.project_dir%/var/sessions/%kernel.environment%'
     fragments:       ~
     http_method_override: true
     assets: ~
     php_errors:
         log: true
 
-
 # Twig Configuration
 twig:
-    debug:            "%kernel.debug%"
-    strict_variables: "%kernel.debug%"
+    debug:            '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
     globals:
-        wapinet_title: "%wapinet_title%"
-        wapinet_contact_email: "%wapinet_contact_email%"
-        wapinet_git_log: "%wapinet_git_log%"
+        wapinet_title: '%wapinet_title%'
+        wapinet_contact_email: '%wapinet_contact_email%'
+        wapinet_git_log: '%wapinet_git_log%'
 
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   "%database_driver%"
-        host:     "%database_host%"
-        port:     "%database_port%"
-        dbname:   "%database_name%"
-        user:     "%database_user%"
-        password: "%database_password%"
+        driver:   'pdo_mysql'
+        host:     '%database_host%'
+        port:     '%database_port%'
+        dbname:   '%database_name%'
+        user:     '%database_user%'
+        password: '%database_password%'
         charset:  UTF8
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
-        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #     e.g. database_path: '%kernel.project_dir%/var/data/data.sqlite'
         #   2. Uncomment database_path in parameters.yml.dist
         #   3. Uncomment next line:
-        #     path:     "%database_path%"
+        #     path:     '%database_path%'
         mapping_types:
             enum: string
     orm:
-        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport:  "%mailer_transport%"
-    host:       "%mailer_host%"
-    username:   "%mailer_user%"
-    password:   "%mailer_password%"
-    encryption: "%mailer_encryption%"
-    auth_mode:  "%mailer_auth_mode%"
-    port:       "%mailer_port%"
+    transport:  '%mailer_transport%'
+    host:       '%mailer_host%'
+    username:   '%mailer_user%'
+    password:   '%mailer_password%'
+    encryption: '%mailer_encryption%'
+    auth_mode:  '%mailer_auth_mode%'
+    port:       '%mailer_port%'
     spool:
         type: memory
 
@@ -90,8 +88,8 @@ fos_user:
         form:
             type: Wapinet\UserBundle\Form\Type\ProfileType
     from_email:
-        address: "%mailer_user%"
-        sender_name: "%mailer_user%"
+        address: '%mailer_user%'
+        sender_name: '%mailer_user%'
 
 fos_message:
     db_driver: orm
@@ -107,7 +105,7 @@ fos_js_routing:
     cache_control:
         public: true
         maxage: 2592000
-        expires: "30 days"
+        expires: '30 days'
 
 vich_uploader:
     db_driver: orm
@@ -119,7 +117,7 @@ vich_uploader:
             delete_on_remove: true # determines whether to delete file upon removal of entity
             inject_on_load: true # determines whether to inject a File instance upon load
             uri_prefix: /static/file
-            upload_destination: "%kernel.web_dir%/static/file"
+            upload_destination: '%kernel.web_dir%/static/file'
 
 gregwar_captcha:
     as_url: true
@@ -134,9 +132,9 @@ liip_imagine:
                 thumbnail: { size: [null, 80], mode: inset }
 
 wapinet:
-    ffmpeg_binary: "%wapinet_ffmpeg_path%"
-    ffprobe_binary: "%wapinet_ffprobe_path%"
-    threads_count: "%wapinet_threads_count%"
+    ffmpeg_binary: '%wapinet_ffmpeg_path%'
+    ffprobe_binary: '%wapinet_ffprobe_path%'
+    threads_count: '%wapinet_threads_count%'
 
 
 easy_admin:
@@ -144,7 +142,7 @@ easy_admin:
         assets:
             css:
                 - 'bundles/wapinet/css/core.css'
-    site_name: "%wapinet_title%"
+    site_name: '%wapinet_title%'
     entities:
         News:
             label: 'Новости'
