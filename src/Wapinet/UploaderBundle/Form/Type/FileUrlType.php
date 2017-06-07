@@ -91,6 +91,3 @@ class FileUrlType extends AbstractType
         return 'file_url';
     }
 }
-
-
-
