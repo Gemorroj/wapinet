@@ -39,7 +39,6 @@ class SearchType extends AbstractType
             'label' => 'Сортировать по',
         ));
 
-
         $builder->add('submit', SubmitType::class, array('label' => 'Искать'));
     }
 
