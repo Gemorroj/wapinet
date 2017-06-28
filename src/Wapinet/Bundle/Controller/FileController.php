@@ -554,7 +554,7 @@ class FileController extends Controller
         }
 
         // обновляем ip и браузер только если файл редактирует владелец
-        if ($data->getUser()->getId() === $this->getUser()->getId()) {
+        if ($data->getUser() && $data->getUser()->getId() === $this->getUser()->getId()) {
             //$data->setUser($this->getUser());
             $data->setIp($request->getClientIp());
             $data->setBrowser($request->headers->get('User-Agent', ''));
