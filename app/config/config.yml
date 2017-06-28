@@ -118,6 +118,8 @@ vich_uploader:
             inject_on_load: true # determines whether to inject a File instance upon load
             uri_prefix: /static/file
             upload_destination: '%kernel.web_dir%/static/file'
+    metadata:
+            auto_detection: true
 
 gregwar_captcha:
     as_url: true
