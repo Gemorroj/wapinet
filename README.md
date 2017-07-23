@@ -243,3 +243,4 @@ server {
 - Оболочка над nmap https://github.com/willdurand/nmap (работает медленно и выдает мало информации)
 - Заменить прокси Glype на https://github.com/Athlon1600/php-proxy
 - Проверка на спамеров http://www.stopforumspam.com/usage
+- Проверка на вирусы https://www.virustotal.com/ru/documentation/public-api/
