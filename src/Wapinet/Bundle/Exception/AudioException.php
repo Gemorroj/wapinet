@@ -6,7 +6,7 @@ namespace Wapinet\Bundle\Exception;
  */
 class AudioException extends \RuntimeException
 {
-    protected $messages = array();
+    protected $messages = [];
 
     /**
      * {@inheritdoc}

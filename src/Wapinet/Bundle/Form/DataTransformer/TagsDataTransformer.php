@@ -5,7 +5,6 @@ namespace Wapinet\Bundle\Form\DataTransformer;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\DataTransformerInterface;
-use Wapinet\Bundle\Entity\Tag;
 
 class TagsDataTransformer implements DataTransformerInterface
 {

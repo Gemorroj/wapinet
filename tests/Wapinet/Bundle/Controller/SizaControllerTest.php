@@ -19,7 +19,7 @@ class SizaControllerTest extends WebTestCaseWapinet
     {
         $client = static::createClient();
 
-        $categories = array(
+        $categories = [
             'load/music',
             'load/poly',
             'load/igry',
@@ -35,10 +35,10 @@ class SizaControllerTest extends WebTestCaseWapinet
             'load/animacii',
             'load/znamenitosti',
             'load/windows_mobile',
-        );
+        ];
 
         foreach ($categories as $category) {
-            $crawler = $client->request('GET', '/siza/', array('q' => $category));
+            $crawler = $client->request('GET', '/siza/', ['q' => $category]);
             self::assertEquals(200, $client->getResponse()->getStatusCode());
         }
     }

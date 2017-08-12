@@ -39,7 +39,7 @@ class OnlineListener
         $requestBrowser = $request->headers->get('User-Agent', '');
 
         /** @var Online|null $online */
-        $online = $this->em->getRepository('WapinetBundle:Online')->findOneBy(array('ip' => $requestIp, 'browser' => $requestBrowser));
+        $online = $this->em->getRepository('WapinetBundle:Online')->findOneBy(['ip' => $requestIp, 'browser' => $requestBrowser]);
 
         if (null === $online) {
             $online = new Online();

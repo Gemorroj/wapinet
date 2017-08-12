@@ -14,7 +14,7 @@ abstract class WebTestCaseWapinetUser extends WebTestCase
      *
      * @return Client
      */
-    protected function createClientUser($username, array $options = array(), array $server = array())
+    protected function createClientUser($username, array $options = [], array $server = [])
     {
         $client = static::createClient($options, $server);
         $container = $client->getContainer();

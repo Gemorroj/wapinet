@@ -19,9 +19,9 @@ class TmpClearCommand extends ContainerAwareCommand
         $this
             ->setName('wapinet:tmp:clear')
             ->setDescription('Clean tmp files')
-            ->setDefinition(array(
+            ->setDefinition([
                 new InputArgument('lifetime', InputArgument::OPTIONAL, 'The lifetime timeout', '1 day'),
-            ))
+            ])
             ->setHelp(<<<EOT
 The <info>wapinet:tmp:clear</info> command removes old tmp files:
 
@@ -43,6 +43,6 @@ EOT
         $filesystem = $this->getContainer()->get('filesystem');
         $filesystem->remove($oldFiles);
 
-        $output->writeln(sprintf('Files over "%s" are removed. Removed "%d" files.', $lifetime, $oldFileCount));
+        $output->writeln(\sprintf('Files over "%s" are removed. Removed "%d" files.', $lifetime, $oldFileCount));
     }
 }

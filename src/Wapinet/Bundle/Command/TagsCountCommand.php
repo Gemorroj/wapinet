@@ -39,7 +39,7 @@ EOT
 
         $rows = $repositoryTag->findAll();
         foreach ($rows as $tag) {
-            $fileTags = $repositoryFileTags->findBy(array('tag' => $tag));
+            $fileTags = $repositoryFileTags->findBy(['tag' => $tag]);
             $count = \count($fileTags);
 
             if ($count != $tag->getCount()) {

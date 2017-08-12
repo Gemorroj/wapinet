@@ -54,9 +54,9 @@ class FileDuplicatedException extends \RuntimeException
      */
     public function getPath()
     {
-        return $this->getContainer()->get('router')->generate('file_view', array(
+        return $this->getContainer()->get('router')->generate('file_view', [
                 'id' => $this->getExistingFile()->getId()
-            ), Router::ABSOLUTE_URL
+            ], Router::ABSOLUTE_URL
         );
     }
 }
