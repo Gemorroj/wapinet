@@ -3,31 +3,49 @@
 #parameters:
     #parameter_name: value
 
-#services:
+services:
     # default configuration for services in *this* file
-#    _defaults:
+    _defaults:
         # automatically injects dependencies in your services
-#        autowire: true
+        autowire: true
         # automatically registers your services as commands, event subscribers, etc.
-#        autoconfigure: true
+        autoconfigure: true
         # this means you cannot fetch services directly from the container via $container->get()
         # if you need to do this, you can override this setting on individual services
-#        public: false
+        public: false
 
     # makes classes in src/AppBundle available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
-#    AppBundle\:
-#        resource: '../../src/AppBundle/*'
+    WapinetBundle\:
+        resource: '../../src/WapinetBundle/*'
         # you can exclude directories or files
         # but if a service is unused, it's removed anyway
-#        exclude: '../../src/AppBundle/{Entity,Repository}'
+        exclude: '../../src/WapinetBundle/{Entity,Repository,Resources}'
+    WapinetMessageBundle\:
+        resource: '../../src/WapinetMessageBundle/*'
+        exclude: '../../src/WapinetMessageBundle/{Entity,Repository,Resources}'
+    WapinetUploaderBundle\:
+        resource: '../../src/WapinetUploaderBundle/*'
+        exclude: '../../src/WapinetUploaderBundle/{Entity,Repository,Resources}'
+    WapinetUserBundle\:
+        resource: '../../src/WapinetUserBundle/*'
+        exclude: '../../src/WapinetUserBundle/{Entity,Repository,Resources}'
 
     # controllers are imported separately to make sure they're public
     # and have a tag that allows actions to type-hint services
-#    AppBundle\Controller\:
-#        resource: '../../src/AppBundle/Controller'
-#        public: true
-#        tags: ['controller.service_arguments']
+    WapinetBundle\Controller\:
+        resource: '../../src/WapinetBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+    WapinetMessageBundle\Controller\:
+        resource: '../../src/WapinetMessageBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+    WapinetUserBundle\Controller\:
+        resource: '../../src/WapinetUserBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
 
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:

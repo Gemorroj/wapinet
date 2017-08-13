@@ -1,0 +1,24 @@
+WapinetBundle\Entity\File:
+    properties:
+        file:
+            - File: ~
+        description:
+            - Length:
+                max: 5000
+            - NotBlank: ~
+WapinetBundle\Entity\Gist:
+    properties:
+        subject:
+            - Length:
+                max: 5000
+            - NotBlank: ~
+        body:
+            - Length:
+                max: 4294967295
+            - NotBlank: ~
+WapinetBundle\Entity\Guestbook:
+    properties:
+        message:
+            - Length:
+                max: 5000
+            - NotBlank: ~

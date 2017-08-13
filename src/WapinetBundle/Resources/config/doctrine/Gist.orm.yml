@@ -1,0 +1,47 @@
+WapinetBundle\Entity\Gist:
+    repositoryClass: WapinetBundle\Entity\GistRepository
+    type:  entity
+    table: gist
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        ip:
+            type: string
+            nullable: false
+            column: ip
+        browser:
+            type: string
+            nullable: false
+            column: browser
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+        updatedAt:
+            type: datetime
+            nullable: true
+            column: updated_at
+        body:
+            type: text
+            nullable: false
+        subject:
+            type: string
+            nullable: false
+            length: 5000
+
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]
+
+    manyToOne:
+        user:
+            targetEntity: WapinetUserBundle\Entity\User
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+

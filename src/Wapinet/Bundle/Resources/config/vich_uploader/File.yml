@@ -1,4 +1,0 @@
-Wapinet\Bundle\Entity\File:
-    file:
-        mapping:           file
-        filename_property: fileName

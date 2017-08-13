@@ -83,23 +83,23 @@ swiftmailer:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: Wapinet\UserBundle\Entity\User
+    user_class: WapinetUserBundle\Entity\User
     profile:
         form:
-            type: Wapinet\UserBundle\Form\Type\ProfileType
+            type: WapinetUserBundle\Form\Type\ProfileType
     from_email:
         address: '%mailer_user%'
         sender_name: '%mailer_user%'
 
 fos_message:
     db_driver: orm
-    thread_class: Wapinet\MessageBundle\Entity\Thread
-    message_class: Wapinet\MessageBundle\Entity\Message
+    thread_class: WapinetMessageBundle\Entity\Thread
+    message_class: WapinetMessageBundle\Entity\Message
     provider: wapinet_message.provider
     new_thread_form:
-        type: Wapinet\MessageBundle\Form\Type\NewThreadMessageFormType
+        type: WapinetMessageBundle\Form\Type\NewThreadMessageFormType
     reply_form:
-        type: Wapinet\MessageBundle\Form\Type\ReplyMessageFormType
+        type: WapinetMessageBundle\Form\Type\ReplyMessageFormType
 
 fos_js_routing:
     cache_control:
@@ -148,7 +148,7 @@ easy_admin:
     entities:
         News:
             label: 'Новости'
-            class: Wapinet\Bundle\Entity\News
+            class: WapinetBundle\Entity\News
             list:
                 fields:
                     - { property: 'subject', label: 'Заголовок' }
@@ -161,7 +161,7 @@ easy_admin:
         Users:
             disabled_actions: ['new']
             label: 'Пользователи'
-            class: Wapinet\UserBundle\Entity\User
+            class: WapinetUserBundle\Entity\User
             list:
                 fields:
                     - { property: 'username', label: 'Логин' }
@@ -184,7 +184,7 @@ easy_admin:
         Subscribers:
             disabled_actions: ['new']
             label: 'Подписки'
-            class: Wapinet\UserBundle\Entity\Subscriber
+            class: WapinetUserBundle\Entity\Subscriber
             list:
                 fields:
                     - { property: 'user', label: 'Пользователь' }
@@ -201,7 +201,7 @@ easy_admin:
         Panel:
             disabled_actions: ['new']
             label: 'Панель'
-            class: Wapinet\UserBundle\Entity\Panel
+            class: WapinetUserBundle\Entity\Panel
             list:
                 fields:
                     - { property: 'user', label: 'Пользователь' }
@@ -228,7 +228,7 @@ easy_admin:
         Messages:
             disabled_actions: ['new']
             label: 'Сообщения'
-            class: Wapinet\MessageBundle\Entity\Message
+            class: WapinetMessageBundle\Entity\Message
             list:
                 fields:
                     - { property: 'sender', label: 'Пользователь' }
@@ -240,7 +240,7 @@ easy_admin:
         Files:
             disabled_actions: ['new']
             label: 'Файлы'
-            class: Wapinet\Bundle\Entity\File
+            class: WapinetBundle\Entity\File
             list:
                 fields:
                     - { property: 'originalFileName', label: 'Имя файла' }
@@ -263,7 +263,7 @@ easy_admin:
         Tags:
             disabled_actions: ['new']
             label: 'Тэги'
-            class: Wapinet\Bundle\Entity\Tag
+            class: WapinetBundle\Entity\Tag
             list:
                 fields:
                     - { property: 'name', label: 'Имя' }
@@ -276,7 +276,7 @@ easy_admin:
         Gists:
             disabled_actions: ['new']
             label: 'Блоги'
-            class: Wapinet\Bundle\Entity\Gist
+            class: WapinetBundle\Entity\Gist
             list:
                 fields:
                     - { property: 'user', label: 'Пользователь' }
@@ -289,7 +289,7 @@ easy_admin:
         Guestbook:
             disabled_actions: ['new']
             label: 'Гостевая'
-            class: Wapinet\Bundle\Entity\Guestbook
+            class: WapinetBundle\Entity\Guestbook
             list:
                 fields:
                     - { property: 'user', label: 'Пользователь' }

@@ -25,10 +25,10 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
-            new Wapinet\UserBundle\WapinetUserBundle(),
-            new Wapinet\Bundle\WapinetBundle(),
-            new Wapinet\MessageBundle\WapinetMessageBundle(),
-            new Wapinet\UploaderBundle\WapinetUploaderBundle(),
+            new WapinetUserBundle\WapinetUserBundle(),
+            new WapinetBundle\WapinetBundle(),
+            new WapinetMessageBundle\WapinetMessageBundle(),
+            new WapinetUploaderBundle\WapinetUploaderBundle(),
         ];
 
         if (\in_array($this->getEnvironment(), ['dev', 'test'], true)) {

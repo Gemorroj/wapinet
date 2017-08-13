@@ -1,0 +1,31 @@
+WapinetUserBundle\Entity\Subscriber:
+    type:  entity
+    table: user_subscriber
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        emailMessages:
+            type: boolean
+            nullable: false
+            column: email_messages
+        emailNews:
+            type: boolean
+            nullable: false
+            column: email_news
+        emailFriends:
+            type: boolean
+            nullable: false
+            column: email_friends
+
+    oneToOne:
+        user:
+            targetEntity: WapinetUserBundle\Entity\User
+            cascade: ["persist"]
+            inversedBy: subscriber
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+                nullable: false
