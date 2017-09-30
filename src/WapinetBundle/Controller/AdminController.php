@@ -2,7 +2,7 @@
 
 namespace WapinetBundle\Controller;
 
-use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
 use WapinetBundle\Entity\File;
 use WapinetBundle\Entity\Gist;
 use WapinetBundle\Entity\News;
