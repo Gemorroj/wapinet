@@ -124,6 +124,9 @@ vich_uploader:
 gregwar_captcha:
     as_url: true
     reload: true
+    length: 8
+    width: 260
+    height: 46
 
 liip_imagine:
     driver: gd
