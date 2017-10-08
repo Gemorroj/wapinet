@@ -32,7 +32,7 @@ class StopSpam
 
         $item = $response->getFlowingIp();
 
-        if (!$item->isAppears()) {
+        if ($item->isAppears()) {
             throw new \Exception('Ваш IP адрес находится в спам листе. Извините, вы не можете оставлять сообщения.');
         }
     }
