@@ -45,6 +45,7 @@ class GuestbookController extends Controller
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $this->get('bot_checker')->checkRequest($request);
+                    $this->get('stop_spam')->checkRequest($request);
 
                     /** @var Guestbook $data */
                     $guestbook = $form->getData();

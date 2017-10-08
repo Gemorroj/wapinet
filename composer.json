@@ -48,6 +48,7 @@
         "foolz/sphinxql-query-builder": "^1.0",
         "php-ffmpeg/php-ffmpeg": "^0.9",
         "gemorroj/phpwhois": "dev-master",
+        "gemorroj/stop-spam": "dev-master",
         "gemorroj/archive7z": "^2.0",
         "gemorroj/m3u-parser": "^3.1",
         "gemorroj/syntax": "^2.1",

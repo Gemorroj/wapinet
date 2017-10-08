@@ -177,6 +177,9 @@ services:
     bot_checker:
         class: WapinetBundle\Helper\BotChecker
 
+    stop_spam:
+        class: WapinetBundle\Helper\StopSpam
+
     hash:
         class: WapinetBundle\Helper\Hash
 

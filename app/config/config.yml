@@ -124,8 +124,8 @@ vich_uploader:
 gregwar_captcha:
     as_url: true
     reload: true
-    length: 8
-    width: 260
+    length: 5
+    width: 200
     height: 46
 
 liip_imagine:
