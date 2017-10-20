@@ -52,7 +52,7 @@ make all3
 Дополнительно ставим `theora`, `amr`. Не забываем указать в конфиге `--prefix="$build_directory"`, а для `theora` еще и `--with-ogg="$HOME/ffmpeg_build" --disable-shared`.
 В конце проверить что на всех директориях выше и самих бинарниках есть права на выполнение.
 ```bash
-yum install autoconf automake cmake freetype-devel gcc gcc-c++ git mercurial libtool make nasm yasm pkgconfig zlib-devel
+yum install autoconf automake cmake freetype-devel gcc gcc-c++ git libtool make nasm yasm pkgconfig zlib-devel
 
 build_directory="/root/ffmpeg_27_01_2017_build"
 source_directory="/root/ffmpeg_27_01_2017_source"
@@ -67,7 +67,7 @@ make install
 make distclean
 
 cd $source_directory
-hg clone https://bitbucket.org/multicoreware/x265 -r stable
+git clone --depth 1 git://github.com/videolan/x265.git
 cd x265/build/linux
 cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$build_directory" -DENABLE_SHARED=OFF ../../source
 make
@@ -83,7 +83,7 @@ make install
 make distclean
 
 cd $source_directory
-git clone git://git.opus-codec.org/opus.git
+git clone --depth 1 git://git.opus-codec.org/opus.git
 cd opus
 autoreconf -fiv
 ./configure --prefix="$build_directory" --disable-shared
@@ -127,9 +127,9 @@ make install
 make clean
 
 cd $source_directory
-curl -L https://downloads.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.4.tar.gz > opencore-amr-0.1.4.tar.gz
-tar -xzf opencore-amr-0.1.4.tar.gz
-cd opencore-amr-0.1.4
+curl -L https://downloads.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.5.tar.gz > opencore-amr-0.1.5.tar.gz
+tar -xzf opencore-amr-0.1.5.tar.gz
+cd opencore-amr-0.1.5
 autoreconf -fiv
 ./configure --prefix="$build_directory" --disable-shared
 make
@@ -139,7 +139,7 @@ make clean
 make distclean
 
 cd $source_directory
-git clone --depth 1 -b release/3.2 https://github.com/FFmpeg/FFmpeg.git
+git clone --depth 1 -b release/3.3 https://github.com/FFmpeg/FFmpeg.git
 cd FFmpeg
 PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure --prefix="$build_directory" --extra-cflags="-I$build_directory/include" --extra-ldflags="-L$build_directory/lib" --bindir="$build_directory/bin" --pkg-config-flags="--static" --enable-gpl --enable-nonfree --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-libopencore-amrwb --enable-libopencore-amrnb --enable-libtheora --enable-version3
 make
