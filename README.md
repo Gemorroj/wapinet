@@ -121,7 +121,7 @@ make distclean
 cd $source_directory
 git clone --depth 1 https://chromium.googlesource.com/webm/libvpx.git
 cd libvpx
-./configure --prefix="$build_directory" --disable-examples --as=yasm
+./configure --prefix="$build_directory" --disable-examples --enable-vp9-highbitdepth --as=yasm
 make
 make install
 make clean
@@ -139,9 +139,28 @@ make clean
 make distclean
 
 cd $source_directory
-git clone --depth 1 -b release/3.3 https://github.com/FFmpeg/FFmpeg.git
+git clone --depth 1 -b release/3.4 https://github.com/FFmpeg/FFmpeg.git
 cd FFmpeg
-PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure --prefix="$build_directory" --extra-cflags="-I$build_directory/include" --extra-ldflags="-L$build_directory/lib" --bindir="$build_directory/bin" --pkg-config-flags="--static" --enable-gpl --enable-nonfree --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-libopencore-amrwb --enable-libopencore-amrnb --enable-libtheora --enable-version3
+PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure \
+    --prefix="$build_directory" \
+    --extra-cflags="-I$build_directory/include" \
+    --extra-ldflags="-L$build_directory/lib" \
+    --extra-libs=-lpthread \
+    --bindir="$build_directory/bin" \
+    --pkg-config-flags="--static" \
+    --enable-gpl \
+    --enable-nonfree \
+    --enable-libfreetype \
+    --enable-libmp3lame \
+    --enable-libopus \
+    --enable-libvorbis \
+    --enable-libvpx \
+    --enable-libx264 \
+    --enable-libx265 \
+    --enable-libopencore-amrwb \
+    --enable-libopencore-amrnb \
+    --enable-libtheora \
+    --enable-version3
 make
 make install
 make distclean
