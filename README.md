@@ -74,6 +74,7 @@ make
 make install
 make clean
 
+# todo: заменить на https://sourceforge.net/projects/lame/files/lame/3.100/
 cd $source_directory
 git clone --depth 1 git://github.com/rbrito/lame.git
 cd lame
