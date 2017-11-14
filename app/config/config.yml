@@ -4,7 +4,7 @@ imports:
     - { resource: services.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
-# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: ru
 
@@ -26,6 +26,7 @@ framework:
     default_locale:  '%locale%'
     trusted_hosts:   ~
     session:
+        # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         name: wapinet
         cookie_httponly: true
         handler_id:  session.handler.native_file
@@ -48,7 +49,7 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   'pdo_mysql'
+        driver:   pdo_mysql
         host:     '%database_host%'
         port:     '%database_port%'
         dbname:   '%database_name%'
@@ -60,7 +61,7 @@ doctrine:
         #     e.g. database_path: '%kernel.project_dir%/var/data/data.sqlite'
         #   2. Uncomment database_path in parameters.yml.dist
         #   3. Uncomment next line:
-        #     path:     '%database_path%'
+        #path:     '%database_path%'
         mapping_types:
             enum: string
     orm:
