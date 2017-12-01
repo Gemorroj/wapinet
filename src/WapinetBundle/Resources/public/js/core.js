@@ -117,7 +117,7 @@ var Vk = {
     show: function (data) {
         if (data && (data.response || data.error)) {
             Vk.data = data;
-            $(":mobile-pagecontainer").find("#user-vk").click(Vk.popup);
+            $(":mobile-pagecontainer").on("click", "#user-vk", Vk.popup);
         }
     },
     popup: function () {

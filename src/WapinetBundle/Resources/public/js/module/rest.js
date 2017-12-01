@@ -4,7 +4,7 @@ var Rest = {
     pageCreate: function () {
         var $pageContainer = $(":mobile-pagecontainer");
 
-        $pageContainer.find('#downloadHeaders').click(function () {
+        $pageContainer.on('click', '#downloadHeaders', function () {
             Helper.downloadText(
                 $pageContainer.find('#textHeaders').val(),
                 'headers-' + window.location.host + '.txt'
@@ -12,7 +12,7 @@ var Rest = {
             return false;
         });
 
-        $pageContainer.find('#downloadBody').click(function () {
+        $pageContainer.on('click', '#downloadBody', function () {
             Helper.downloadText(
                 $pageContainer.find('#textBody').val(),
                 'body-' + window.location.host + '.txt'

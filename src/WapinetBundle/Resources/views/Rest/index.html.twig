@@ -18,7 +18,7 @@
                 <div class="ui-block-a">
                     <label>
                         Заголовки <a href="#" id="downloadHeaders" class="ui-btn-inline ui-btn ui-icon-arrow-d ui-btn-icon-notext ui-corner-all">Скачать</a>
-                        <textarea id="textHeaders">{{ result.headers }}</textarea>
+                        <textarea id="textHeaders">{{ result.headers.__toString|slice('0:              '|length) }}</textarea>
                     </label>
                 </div>
                 <div class="ui-block-a">
