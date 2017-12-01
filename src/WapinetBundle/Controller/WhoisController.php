@@ -51,6 +51,7 @@ class WhoisController extends Controller
 
         //$whois->non_icann = true;
         $result = $whois->Lookup($data['query']);
+        \dump($result);
 
         if (!empty($result['rawdata'])) {
             $result['rawdata'] = \str_replace('{query}', \htmlspecialchars($data['query']), $result['rawdata']);
@@ -66,9 +67,9 @@ class WhoisController extends Controller
 
         if (isset($whois->Query['errstr'])) {
             throw new WhoisException($whois->Query['errstr']);
-        } else {
-            throw new WhoisException(array('Неизвестная ошибка'));
         }
+
+        throw new WhoisException(array('Не найдено данных'));
     }
 
 }
