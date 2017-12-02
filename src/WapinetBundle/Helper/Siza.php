@@ -27,7 +27,7 @@ class Siza
      */
     protected $dom;
     /**
-     * @var \DOMXpath
+     * @var \DOMXPath
      */
     protected $xpath;
 
@@ -82,7 +82,7 @@ class Siza
         $content = $this->getLink()->getContent();
         @$this->dom->loadHTML($content);
 
-        $this->xpath = new \DOMXpath($this->dom);
+        $this->xpath = new \DOMXPath($this->dom);
         $this->foldersListChildNodes = $this->xpath->query('//div[@id="foldersList"]/div');
         $this->foldersListDl = $this->xpath->query('//div[@id="foldersList"]/dl/..');
         $this->listingNagivation = $this->xpath->query('//div[@id="listingNagivation"]');

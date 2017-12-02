@@ -62,7 +62,7 @@ class AudioTagsController extends Controller
      */
     protected function saveFile(array $data)
     {
-        /** @var $file UploadedFile */
+        /** @var UploadedFile $file */
         $file = $data['file'];
         $tempDirectory = $this->get('kernel')->getTmpDir();
         $tempName = \tempnam($tempDirectory, 'audio_file');

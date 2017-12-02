@@ -18,8 +18,8 @@ class ArchiveZip extends Archive
     {
         $tmpArchive = $this->getTmpArchive($directory);
 
-        $zip = new \ZipArchive;
-        $result = $zip->open($tmpArchive, \ZipArchive::CREATE | \ZIPARCHIVE::OVERWRITE);
+        $zip = new \ZipArchive();
+        $result = $zip->open($tmpArchive, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
         if (true !== $result) {
             throw new ArchiverException('Не удалось создать ZIP архив', $result);
         }
@@ -58,8 +58,8 @@ class ArchiveZip extends Archive
      */
     public function isValid (File $file)
     {
-        $zip = new \ZipArchive;
-        $result = $zip->open($file->getPathname(), \ZIPARCHIVE::CHECKCONS);
+        $zip = new \ZipArchive();
+        $result = $zip->open($file->getPathname(), \ZipArchive::CHECKCONS);
         if (true !== $result) {
             return false;
         }
@@ -79,7 +79,7 @@ class ArchiveZip extends Archive
      */
     public function extract($directory, File $file)
     {
-        $zip = new \ZipArchive;
+        $zip = new \ZipArchive();
         $result = $zip->open($file->getPathname());
         if (true !== $result) {
             throw new ArchiverException('Не удалось открыть ZIP архив', $result);
@@ -102,7 +102,7 @@ class ArchiveZip extends Archive
      */
     public function extractEntry(File $file, $entry, $directory)
     {
-        $zip = new \ZipArchive;
+        $zip = new \ZipArchive();
         $result = $zip->open($file->getPathname());
         if (true !== $result) {
             throw new ArchiverException('Не удалось открыть ZIP архив', $result);
