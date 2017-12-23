@@ -1,5 +1,6 @@
 <?php
 
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
@@ -65,31 +66,15 @@ class AppKernel extends Kernel
      */
     protected function createDir($dir)
     {
-        if (!is_dir($dir)) {
-            if (false === @mkdir($dir, 0777, true)) {
-                throw new \RuntimeException(sprintf("Unable to create the tmp directory (%s)\n", $dir));
+        if (!\is_dir($dir)) {
+            if (false === @\mkdir($dir, 0777, true)) {
+                throw new \RuntimeException(\sprintf("Unable to create the tmp directory (%s)\n", $dir));
             }
-        } elseif (!is_writable($dir)) {
-            throw new \RuntimeException(sprintf("Unable to write in the tmp directory (%s)\n", $dir));
+        } elseif (!\is_writable($dir)) {
+            throw new \RuntimeException(\sprintf("Unable to write in the tmp directory (%s)\n", $dir));
         }
 
         return true;
-    }
-
-
-    public function getRootDir()
-    {
-        return __DIR__;
-    }
-
-    public function getCacheDir()
-    {
-        return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
-    }
-
-    public function getLogDir()
-    {
-        return dirname(__DIR__).'/var/logs';
     }
 
     /**
@@ -116,7 +101,7 @@ class AppKernel extends Kernel
      */
     public function getTmpDir()
     {
-        return dirname(__DIR__).'/var/tmp';
+        return \dirname(__DIR__).'/var/tmp';
     }
 
     /**
@@ -126,7 +111,7 @@ class AppKernel extends Kernel
      */
     public function getWebDir()
     {
-        return dirname(__DIR__).'/web';
+        return \dirname(__DIR__).'/web';
     }
 
 
@@ -145,6 +130,12 @@ class AppKernel extends Kernel
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
+        $loader->load(function (ContainerBuilder $container) {
+            $container->setParameter('container.autowiring.strict_mode', true);
+            $container->setParameter('container.dumper.inline_class_loader', true);
+
+            $container->addObjectResource($this);
+        });
         $loader->load($this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml');
     }
 }

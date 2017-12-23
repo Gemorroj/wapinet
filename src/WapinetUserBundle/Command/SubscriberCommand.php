@@ -55,7 +55,7 @@ class SubscriberCommand extends ContainerAwareCommand
         $robotEmail = $this->getContainer()->getParameter('wapinet_robot_email');
         $mailer = $this->getContainer()->get('mailer');
 
-        $templating = $this->getContainer()->get('templating');
+        $templating = $this->getContainer()->get('twig');
 
         $variables = $event->getVariables();
         $variables['subject'] = $event->getSubject();

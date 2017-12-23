@@ -141,6 +141,7 @@ services:
         arguments: ["@service_container"]
 
     timezone:
+        public: true
         class: WapinetBundle\Helper\Timezone
         arguments: ["@security.token_storage"]
 
@@ -153,6 +154,7 @@ services:
         arguments: ["@service_container"]
 
     curl:
+        public: true
         class: WapinetBundle\Helper\Curl
         arguments: ["@service_container"]
 
@@ -164,6 +166,7 @@ services:
         class: WapinetBundle\Helper\Translit
 
     paginate:
+        public: true
         class: WapinetBundle\Helper\Paginate
         arguments: ["@service_container"]
 
@@ -196,6 +199,7 @@ services:
         class: WapinetBundle\Helper\HtmlValidator
 
     php_validator:
+        public: true
         class: WapinetBundle\Helper\PhpValidator
         arguments: ["@service_container"]
 
@@ -215,6 +219,7 @@ services:
         arguments: ["@service_container"]
 
     bash:
+        public: true
         class: WapinetBundle\Helper\Bash
         arguments: ["@service_container"]
 
@@ -223,6 +228,7 @@ services:
         arguments: ["@service_container"]
 
     archive_zip:
+        public: true
         class: WapinetBundle\Helper\Archiver\ArchiveZip
         arguments: ["@service_container"]
 
@@ -231,6 +237,7 @@ services:
         arguments: ["@service_container"]
 
     archive_7z:
+        public: true
         class: WapinetBundle\Helper\Archiver\Archive7z
         arguments: ["@service_container"]
 
