@@ -218,10 +218,6 @@ services:
         class: WapinetBundle\Helper\Bash
         arguments: ["@service_container"]
 
-    siza:
-        class: WapinetBundle\Helper\Siza
-        arguments: ["@service_container"]
-
     sphinx:
         class: WapinetBundle\Helper\Sphinx
         arguments: ["@service_container"]

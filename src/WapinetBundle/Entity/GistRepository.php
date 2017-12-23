@@ -19,7 +19,7 @@ class GistRepository extends EntityRepository
      *
      * @return int
      */
-    public function count(User $user = null)
+    public function countUser(User $user = null)
     {
         if (null !== $user) {
             $q = $this->getEntityManager()->createQuery('SELECT COUNT(g.id) FROM WapinetBundle\Entity\Gist g WHERE g.user = :user');

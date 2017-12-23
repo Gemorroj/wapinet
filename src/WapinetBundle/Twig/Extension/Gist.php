@@ -46,7 +46,7 @@ class Gist extends \Twig_Extension
      */
     public function getCount(User $user = null)
     {
-        return $this->gistRepository->count($user);
+        return $this->gistRepository->countUser($user);
     }
 
     /**

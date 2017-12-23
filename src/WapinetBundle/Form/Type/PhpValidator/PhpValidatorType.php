@@ -21,7 +21,7 @@ class PhpValidatorType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder->add('php', TextareaType::class, array(
-            'label' => 'PHP код',
+            'label' => 'PHP код (' . \phpversion() . ')',
             'required' => false,
         ));
         $builder->add('file', FileUrlType::class, array(
