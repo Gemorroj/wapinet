@@ -13,7 +13,7 @@ class FileDirectoryNamer implements DirectoryNamerInterface
     /**
      * @inheritdoc
      */
-    public function directoryName($object, PropertyMapping $mapping)
+    public function directoryName($object, PropertyMapping $mapping): string
     {
         return '/' . $object->getCreatedAt()->format('Y/m/d');
     }

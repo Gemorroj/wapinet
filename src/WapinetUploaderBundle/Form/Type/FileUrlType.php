@@ -43,7 +43,7 @@ class FileUrlType extends AbstractType
 
         $attrFile = array('placeholder' => 'Файл');
         if ($options['accept']) {
-            $attrFile = array_merge($attrFile, array('accept' => $options['accept']));
+            $attrFile = \array_merge($attrFile, array('accept' => $options['accept']));
         }
 
         $builder->add('file', FileType::class, array('attr' => $attrFile, 'label' => false, 'required' => false));
