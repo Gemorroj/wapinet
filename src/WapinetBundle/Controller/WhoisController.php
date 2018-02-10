@@ -51,7 +51,6 @@ class WhoisController extends Controller
 
         //$whois->non_icann = true;
         $result = $whois->Lookup($data['query']);
-        \dump($result);
 
         if (!empty($result['rawdata'])) {
             $result['rawdata'] = \str_replace('{query}', \htmlspecialchars($data['query']), $result['rawdata']);

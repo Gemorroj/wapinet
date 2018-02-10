@@ -72,7 +72,6 @@ class FileUrlDataTransformer implements DataTransformerInterface
             throw new TransformationFailedException('Не заполнено обязательное поле');
         }
         // TODO: вероятно эта проверка не нужна
-        //var_dump($uploadedFile);
         if (null !== $uploadedFile && true !== $uploadedFile->isValid()) {
             throw new TransformationFailedException('Ошибка при загрузке файла');
         }
