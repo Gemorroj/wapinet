@@ -1565,12 +1565,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/phpwhois.git",
-                "reference": "d481170489a35b61829219bc5189c138f14320a2"
+                "reference": "91c937e03c876ba1290b6de2a3ad953d2105fdd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/d481170489a35b61829219bc5189c138f14320a2",
-                "reference": "d481170489a35b61829219bc5189c138f14320a2",
+                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/91c937e03c876ba1290b6de2a3ad953d2105fdd0",
+                "reference": "91c937e03c876ba1290b6de2a3ad953d2105fdd0",
                 "shasum": ""
             },
             "require": {
@@ -1585,10 +1585,10 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPLv2"
+                "GPL-2.0-only"
             ],
             "description": "This package contains a Whois (RFC954) library for PHP. It allows a PHP program to create a Whois object, and obtain the output of a whois query with the Lookup function.",
-            "time": "2017-12-01T09:50:49+00:00"
+            "time": "2018-02-10T17:40:14+00:00"
         },
         {
             "name": "gemorroj/stop-spam",
