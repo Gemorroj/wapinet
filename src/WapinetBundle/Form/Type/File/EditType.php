@@ -9,7 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use WapinetBundle\Entity\File;
 use WapinetBundle\Form\Type\TagsType;
-use WapinetUploaderBundle\Form\Type\FileUrlType;
+use WapinetBundle\Form\Type\FileUrlType;
 
 /**
  * Edit

@@ -1,6 +1,6 @@
 <?php
 
-namespace WapinetUploaderBundle\Form\DataTransformer;
+namespace WapinetBundle\Form\DataTransformer;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -9,8 +9,8 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use WapinetUploaderBundle\Entity\FileContent;
-use WapinetUploaderBundle\Entity\FileUrl;
+use WapinetBundle\Entity\File\FileContent;
+use WapinetBundle\Entity\File\FileUrl;
 
 class FileUrlDataTransformer implements DataTransformerInterface
 {

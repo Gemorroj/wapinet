@@ -1,9 +1,8 @@
 <?php
 
-namespace WapinetUploaderBundle\Entity;
+namespace WapinetBundle\Entity\File;
 
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -12,16 +11,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class FileUrl extends UploadedFile
 {
     /**
-     * Moves the file to a new location.
-     *
-     * @param string $directory The destination folder
-     * @param string $name      The new file name
-     *
-     * @return File A File object representing the new file
-     *
-     * @throws FileException if the target file could not be created
-     *
-     * @api
+     * @inheritdoc
      */
     public function move($directory, $name = null)
     {
@@ -38,7 +28,7 @@ class FileUrl extends UploadedFile
     }
 
     /**
-     * @return bool
+     * @inheritdoc
      */
     public function isValid()
     {

@@ -4,7 +4,7 @@ namespace WapinetBundle\Form\Type\AudioTags;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
-use WapinetUploaderBundle\Form\Type\FileUrlType;
+use WapinetBundle\Form\Type\FileUrlType;
 
 /**
  * Audio Tags

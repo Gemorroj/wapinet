@@ -15,7 +15,7 @@ use WapinetBundle\Form\Type\AudioTags\AudioTagsEditType;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use WapinetUploaderBundle\Entity\FileContent;
+use WapinetBundle\Entity\File\FileContent;
 
 /**
  * @see https://github.com/JamesHeinrich/getID3/blob/master/demos/demo.audioinfo.class.php

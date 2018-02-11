@@ -29,7 +29,6 @@ class AppKernel extends Kernel
             new WapinetUserBundle\WapinetUserBundle(),
             new WapinetBundle\WapinetBundle(),
             new WapinetMessageBundle\WapinetMessageBundle(),
-            new WapinetUploaderBundle\WapinetUploaderBundle(),
         ];
 
         if (\in_array($this->getEnvironment(), ['dev', 'test'], true)) {

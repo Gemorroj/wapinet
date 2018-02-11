@@ -1,6 +1,6 @@
 <?php
 
-namespace WapinetUploaderBundle\Form\Type;
+namespace WapinetBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use WapinetUploaderBundle\Form\DataTransformer\FileUrlDataTransformer;
+use WapinetBundle\Form\DataTransformer\FileUrlDataTransformer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 

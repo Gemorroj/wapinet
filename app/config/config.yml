@@ -113,7 +113,7 @@ vich_uploader:
     mappings:
         file:
             namer: vich_uploader.namer_uniqid
-            directory_namer: wapinet_uploader.file_directory_namer
+            directory_namer: wapinet.file_uploader.namer_file_directory
             delete_on_update: true # Set to true if the file should be deleted from the filesystem when the file is replaced by an other one
             delete_on_remove: true # determines whether to delete file upon removal of entity
             inject_on_load: true # determines whether to inject a File instance upon load

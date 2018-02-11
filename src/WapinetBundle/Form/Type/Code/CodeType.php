@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use WapinetBundle\Helper\Code;
-use WapinetUploaderBundle\Form\Type\FileUrlType;
+use WapinetBundle\Form\Type\FileUrlType;
 
 /**
  * Code

@@ -24,9 +24,6 @@ services:
     WapinetMessageBundle\:
         resource: '../../src/WapinetMessageBundle/*'
         exclude: '../../src/WapinetMessageBundle/{Entity,Repository,Resources}'
-    WapinetUploaderBundle\:
-        resource: '../../src/WapinetUploaderBundle/*'
-        exclude: '../../src/WapinetUploaderBundle/{Entity,Repository,Resources}'
     WapinetUserBundle\:
         resource: '../../src/WapinetUserBundle/*'
         exclude: '../../src/WapinetUserBundle/{Entity,Repository,Resources}'

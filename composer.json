@@ -6,7 +6,6 @@
         "psr-4": {
             "WapinetBundle\\": "src/WapinetBundle",
             "WapinetMessageBundle\\": "src/WapinetMessageBundle",
-            "WapinetUploaderBundle\\": "src/WapinetUploaderBundle",
             "WapinetUserBundle\\": "src/WapinetUserBundle"
         },
         "classmap": [

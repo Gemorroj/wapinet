@@ -1,6 +1,6 @@
 <?php
 
-namespace WapinetUploaderBundle\Naming;
+namespace WapinetBundle\Uploader\Naming;
 
 use Vich\UploaderBundle\Naming\DirectoryNamerInterface;
 use Vich\UploaderBundle\Mapping\PropertyMapping;

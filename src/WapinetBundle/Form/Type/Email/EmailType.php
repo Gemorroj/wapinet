@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
-use WapinetUploaderBundle\Form\Type\FileUrlType;
+use WapinetBundle\Form\Type\FileUrlType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType as CoreEmailType;
 
 /**

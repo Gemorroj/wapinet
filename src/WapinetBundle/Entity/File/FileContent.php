@@ -1,6 +1,6 @@
 <?php
 
-namespace WapinetUploaderBundle\Entity;
+namespace WapinetBundle\Entity\File;
 
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 
@@ -106,7 +106,7 @@ class FileContent
      */
     public function getClientOriginalExtension()
     {
-        return pathinfo($this->getBasename(), PATHINFO_EXTENSION);
+        return \pathinfo($this->getBasename(), \PATHINFO_EXTENSION);
     }
 
     /**
