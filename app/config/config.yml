@@ -178,7 +178,6 @@ easy_admin:
                 fields:
                     - { property: 'username', label: 'Логин' }
                     - { property: 'enabled', label: 'Активен', type_options: {required: false} }
-                    - { property: 'locked', label: 'Заблокирован', type_options: {required: false} }
                     - { property: 'email', label: 'Email', type: 'email' }
                     - { property: 'roles', label: 'Роли', type: 'choice', type_options: { expanded: true, multiple: true, choices: {ROLE_SUPER_ADMIN: 'Админ', ROLE_ADMIN: 'Модератор', ROLE_USER: 'Пользователь'} } }
                     - { property: 'sex', label: 'Пол', type: 'choice', type_options: {choices: {m: 'Мужской', f: 'Женский'}, required: false} }
