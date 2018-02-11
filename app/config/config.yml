@@ -84,10 +84,10 @@ swiftmailer:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: WapinetUserBundle\Entity\User
+    user_class: WapinetBundle\Entity\User
     profile:
         form:
-            type: WapinetUserBundle\Form\Type\ProfileType
+            type: WapinetBundle\Form\Type\User\ProfileType
     from_email:
         address: '%mailer_user%'
         sender_name: '%mailer_user%'
@@ -165,7 +165,7 @@ easy_admin:
         Users:
             disabled_actions: ['new']
             label: 'Пользователи'
-            class: WapinetUserBundle\Entity\User
+            class: WapinetBundle\Entity\User
             list:
                 fields:
                     - { property: 'username', label: 'Логин' }
@@ -188,7 +188,7 @@ easy_admin:
         Subscribers:
             disabled_actions: ['new']
             label: 'Подписки'
-            class: WapinetUserBundle\Entity\Subscriber
+            class: WapinetBundle\Entity\Subscriber
             list:
                 fields:
                     - { property: 'user', label: 'Пользователь' }
@@ -205,7 +205,7 @@ easy_admin:
         Panel:
             disabled_actions: ['new']
             label: 'Панель'
-            class: WapinetUserBundle\Entity\Panel
+            class: WapinetBundle\Entity\Panel
             list:
                 fields:
                     - { property: 'user', label: 'Пользователь' }

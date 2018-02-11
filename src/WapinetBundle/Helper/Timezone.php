@@ -2,7 +2,7 @@
 namespace WapinetBundle\Helper;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use WapinetUserBundle\Entity\User;
+use WapinetBundle\Entity\User;
 
 /**
  * Timezone хэлпер

@@ -19,7 +19,7 @@ class Thread extends BaseThread
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WapinetUserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="WapinetBundle\Entity\User")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $createdBy;

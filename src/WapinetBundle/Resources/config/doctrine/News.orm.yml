@@ -25,7 +25,7 @@ WapinetBundle\Entity\News:
 
     manyToOne:
         createdBy:
-            targetEntity: WapinetUserBundle\Entity\User
+            targetEntity: WapinetBundle\Entity\User
 
     lifecycleCallbacks:
         prePersist: [ setCreatedAtValue ]

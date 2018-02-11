@@ -3,8 +3,8 @@
 namespace WapinetBundle\Twig\Extension;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use WapinetUserBundle\Entity\Panel as UserPanel;
-use WapinetUserBundle\Entity\User;
+use WapinetBundle\Entity\Panel as UserPanel;
+use WapinetBundle\Entity\User;
 
 class Panel extends \Twig_Extension
 {

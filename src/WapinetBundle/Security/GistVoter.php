@@ -1,11 +1,11 @@
 <?php
 namespace WapinetBundle\Security;
 
-use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
-use WapinetBundle\Entity\Gist;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use WapinetUserBundle\Entity\User;
+use WapinetBundle\Entity\Gist;
+use WapinetBundle\Entity\User;
 
 class GistVoter extends Voter
 {

@@ -4,7 +4,7 @@ namespace WapinetBundle\Twig\Extension;
 
 use Doctrine\ORM\EntityManagerInterface;
 use WapinetBundle\Entity\GistRepository;
-use WapinetUserBundle\Entity\User;
+use WapinetBundle\Entity\User;
 
 class Gist extends \Twig_Extension
 {

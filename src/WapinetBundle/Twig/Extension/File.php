@@ -5,7 +5,7 @@ namespace WapinetBundle\Twig\Extension;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use WapinetBundle\Entity\FileRepository;
-use WapinetUserBundle\Entity\User;
+use WapinetBundle\Entity\User;
 
 class File extends \Twig_Extension
 {

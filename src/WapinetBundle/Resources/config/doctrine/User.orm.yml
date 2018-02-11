@@ -1,0 +1,80 @@
+WapinetBundle\Entity\User:
+    repositoryClass: WapinetBundle\Entity\UserRepository
+    type:  entity
+    table: user
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+        updatedAt:
+            type: datetime
+            nullable: true
+            column: updated_at
+        lastActivity:
+            type: datetime
+            nullable: true
+            column: last_activity
+        sex:
+            type: string
+            columnDefinition: ENUM('m', 'f') DEFAULT NULL
+            nullable: true
+        birthday:
+            type: date
+            nullable: true
+        info:
+            type: string
+            nullable: true
+            length: 5000
+        timezone:
+            type: string
+            nullable: true
+        country:
+            type: string
+            nullable: true
+        vk:
+            type: string
+            nullable: true
+
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]
+
+    oneToOne:
+        panel:
+            targetEntity: WapinetBundle\Entity\Panel
+            cascade: ["persist", "remove"]
+            mappedBy: user
+            joinColumn:
+                name: panel_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: true
+        subscriber:
+            targetEntity: WapinetBundle\Entity\Subscriber
+            mappedBy: user
+            cascade: ["persist", "remove"]
+            joinColumn:
+                name: subscriber_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: true
+
+    oneToMany:
+        friends:
+            targetEntity: WapinetBundle\Entity\Friend
+            mappedBy: user
+            cascade: ["persist", "remove"]
+            orphanRemoval: true
+            orderBy:
+                id: DESC
+        friended:
+            targetEntity: WapinetBundle\Entity\Friend
+            mappedBy: friend
+            orderBy:
+                id: DESC

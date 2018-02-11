@@ -152,6 +152,10 @@ gist:
     resource: "@WapinetBundle/Resources/config/routing/gist.yml"
     prefix:   /gist
 
+user:
+    resource: "@WapinetBundle/Resources/config/routing/user.yml"
+    prefix:   /user
+
 proxy_index:
     path: /proxy/
     defaults:

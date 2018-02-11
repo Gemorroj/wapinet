@@ -3,7 +3,6 @@ namespace WapinetBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use WapinetUserBundle\Entity\User;
 
 class FileRepository extends EntityRepository
 {
@@ -21,7 +20,7 @@ class FileRepository extends EntityRepository
         $users = $em->createQuery('
             SELECT u.username, COUNT(f.id) AS uploads
             FROM WapinetBundle\Entity\File f
-            INNER JOIN WapinetUserBundle\Entity\User u WITH f.user = u
+            INNER JOIN WapinetBundle\Entity\User u WITH f.user = u
             WHERE u.enabled = 1
             GROUP BY u.id
             ORDER BY uploads DESC

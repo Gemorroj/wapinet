@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}События{% endblock %}
+{% block breadcrumbs %}
+    {{ wapinet_breadcrumbs({
+    1: {'uri': path('wapinet_users'), 'title': 'Пользователи'},
+    2: {'uri': path('wapinet_user_profile', {'username': user.username}), 'title': user.username}
+    }) }}
+{% endblock %}
+
+{% block content %}
+
+    <ul data-role="listview" data-inset="true">
+        {% for event in pagerfanta %}
+            {% include 'WapinetBundle:User/Subscriber/Event:' ~ event.template ~ '.html.twig' %}
+        {% else %}
+            <li>Событий нет</li>
+        {% endfor %}
+    </ul>
+
+    <div class="pagerfanta">
+        {{ pagerfanta(pagerfanta) }}
+    </div>
+
+{% endblock %}

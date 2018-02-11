@@ -30,7 +30,7 @@ class MessageMetadata extends BaseMessageMetadata
     protected $message;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WapinetUserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="WapinetBundle\Entity\User")
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @var ParticipantInterface
      */

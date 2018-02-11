@@ -84,7 +84,7 @@ WapinetBundle\Entity\File:
 
     manyToOne:
         user:
-            targetEntity: WapinetUserBundle\Entity\User
+            targetEntity: WapinetBundle\Entity\User
             joinColumn:
                 name: user_id
                 referencedColumnName: id

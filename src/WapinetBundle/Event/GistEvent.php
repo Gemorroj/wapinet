@@ -4,7 +4,7 @@ namespace WapinetBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use WapinetBundle\Entity\Gist;
-use WapinetUserBundle\Entity\User;
+use WapinetBundle\Entity\User;
 
 class GistEvent extends Event
 {

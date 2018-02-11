@@ -17,7 +17,6 @@ use WapinetBundle\Event\GistEvent;
 use WapinetBundle\Form\Type\Gist\AddType;
 use WapinetBundle\Form\Type\Gist\EditType;
 use WapinetBundle\Form\Type\Gist\SearchType;
-use WapinetUserBundle\Entity\User;
 
 class GistController extends Controller
 {

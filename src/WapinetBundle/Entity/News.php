@@ -2,8 +2,6 @@
 
 namespace WapinetBundle\Entity;
 
-use WapinetUserBundle\Entity\User;
-
 /**
  * News
  */

@@ -302,3 +302,27 @@ services:
     wapinet.file_uploader.namer_file_directory:
         class: WapinetBundle\Uploader\Naming\FileDirectoryNamer
         public: true
+
+    wapinet.user.profile.form.type:
+        class: WapinetBundle\Form\Type\User\ProfileType
+        arguments: ["%fos_user.model.user.class%"]
+        tags:
+            - { name: form.type }
+
+    wapinet.user.event.message:
+        class: WapinetBundle\EventListener\EventMessage
+        arguments: ["@fos_message.message_manager", "@doctrine.orm.entity_manager", "@router"]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    wapinet.user.listener.last_activity:
+            class: WapinetBundle\EventListener\ListenerLastActivity
+            arguments: ["@service_container", "@doctrine.orm.entity_manager"]
+            tags:
+                - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
+
+    wapinet.user.event.friends:
+        class: WapinetBundle\EventListener\EventFriends
+        arguments: ["@doctrine.orm.entity_manager", "@router"]
+        tags:
+            - { name: kernel.event_subscriber }

@@ -3,11 +3,10 @@
 namespace WapinetBundle\Controller;
 
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
+use WapinetBundle\Entity\Event;
 use WapinetBundle\Entity\File;
-use WapinetBundle\Entity\Gist;
 use WapinetBundle\Entity\News;
-use WapinetUserBundle\Entity\Event;
-use WapinetUserBundle\Entity\User;
+use WapinetBundle\Entity\User;
 
 class AdminController extends BaseAdminController
 {
@@ -46,7 +45,7 @@ class AdminController extends BaseAdminController
     {
         $em = $this->get('doctrine.orm.entity_manager');
 
-        $userRepository = $em->getRepository('WapinetUserBundle:User');
+        $userRepository = $em->getRepository('WapinetBundle:User');
         $users = $userRepository->findBy(array(
             'enabled' => true,
         ));

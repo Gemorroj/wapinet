@@ -1,11 +1,11 @@
 <?php
 namespace WapinetBundle\Security;
 
-use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
-use WapinetBundle\Entity\File;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use WapinetUserBundle\Entity\User;
+use WapinetBundle\Entity\File;
+use WapinetBundle\Entity\User;
 
 class FileVoter extends Voter
 {

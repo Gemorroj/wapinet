@@ -1,0 +1,42 @@
+wapinet_user_profile:
+    path:  /profile/user/{username}
+    defaults: { _controller: WapinetBundle:User\Profile:showUser, username: null }
+    requirements:
+        username: ".+"
+    methods: [GET]
+
+wapinet_user_panel_edit:
+    path:  /panel/edit
+    defaults: { _controller: WapinetBundle:User\Panel:edit }
+
+wapinet_user_subscriber_edit:
+    path:  /subscriber/edit
+    defaults: { _controller: WapinetBundle:User\Subscriber:edit }
+
+wapinet_user_events:
+    path:  /events
+    defaults: { _controller: WapinetBundle:User\Events:index }
+
+wapinet_users:
+    path:  /users/{key}
+    defaults: { _controller: WapinetBundle:User\Users:index, key: null }
+    requirements:
+        key: "[a-zA-Z0-9]+"
+
+wapinet_user_friends:
+    path:  /friends/list/{username}
+    defaults: { _controller: WapinetBundle:User\Friends:index }
+    requirements:
+        username: ".+"
+
+wapinet_user_friends_add:
+    path:  /friends/add/{username}
+    defaults: { _controller: WapinetBundle:User\Friends:add }
+    requirements:
+        username: ".+"
+
+wapinet_user_friends_delete:
+    path:  /friends/delete/{username}
+    defaults: { _controller: WapinetBundle:User\Friends:delete }
+    requirements:
+        username: ".+"

@@ -5,8 +5,7 @@
     "autoload": {
         "psr-4": {
             "WapinetBundle\\": "src/WapinetBundle",
-            "WapinetMessageBundle\\": "src/WapinetMessageBundle",
-            "WapinetUserBundle\\": "src/WapinetUserBundle"
+            "WapinetMessageBundle\\": "src/WapinetMessageBundle"
         },
         "classmap": [
             "app/AppKernel.php",

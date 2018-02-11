@@ -19,13 +19,13 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use WapinetBundle\Entity\File;
 use WapinetBundle\Entity\FileTags;
 use WapinetBundle\Entity\Tag;
+use WapinetBundle\Entity\User;
 use WapinetBundle\Event\FileEvent;
 use WapinetBundle\Exception\FileDuplicatedException;
 use WapinetBundle\Form\Type\File\EditType;
 use WapinetBundle\Form\Type\File\PasswordType;
 use WapinetBundle\Form\Type\File\SearchType;
 use WapinetBundle\Form\Type\File\UploadType;
-use WapinetUserBundle\Entity\User;
 
 /**
  * @see http://wap4file.org

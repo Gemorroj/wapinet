@@ -30,7 +30,7 @@ class Message extends BaseMessage
     protected $thread;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WapinetUserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="WapinetBundle\Entity\User")
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @var ParticipantInterface
      */

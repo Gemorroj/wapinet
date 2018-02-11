@@ -2,7 +2,6 @@
 namespace WapinetBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use WapinetUserBundle\Entity\User;
 
 class GistRepository extends EntityRepository
 {

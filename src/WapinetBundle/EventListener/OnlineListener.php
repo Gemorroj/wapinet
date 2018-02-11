@@ -4,7 +4,7 @@ namespace WapinetBundle\EventListener;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use WapinetBundle\Entity\Online;
-use WapinetUserBundle\Entity\User;
+use WapinetBundle\Entity\User;
 
 class OnlineListener
 {

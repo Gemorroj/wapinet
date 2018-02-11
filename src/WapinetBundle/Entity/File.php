@@ -3,9 +3,8 @@
 namespace WapinetBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use WapinetBundle\Entity\File\Meta;
-use WapinetUserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
+use WapinetBundle\Entity\File\Meta;
 
 /**
  * File

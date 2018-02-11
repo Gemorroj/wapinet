@@ -24,9 +24,6 @@ services:
     WapinetMessageBundle\:
         resource: '../../src/WapinetMessageBundle/*'
         exclude: '../../src/WapinetMessageBundle/{Entity,Repository,Resources}'
-    WapinetUserBundle\:
-        resource: '../../src/WapinetUserBundle/*'
-        exclude: '../../src/WapinetUserBundle/{Entity,Repository,Resources}'
 
     # controllers are imported separately to make sure they're public
     # and have a tag that allows actions to type-hint services
@@ -36,10 +33,6 @@ services:
         tags: ['controller.service_arguments']
     WapinetMessageBundle\Controller\:
         resource: '../../src/WapinetMessageBundle/Controller'
-        public: true
-        tags: ['controller.service_arguments']
-    WapinetUserBundle\Controller\:
-        resource: '../../src/WapinetUserBundle/Controller'
         public: true
         tags: ['controller.service_arguments']
 
