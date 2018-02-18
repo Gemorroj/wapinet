@@ -30,6 +30,8 @@ class HttpType extends AbstractType
                 'PATCH' => 'PATCH',
                 'HEAD' => 'HEAD',
                 'OPTIONS' => 'OPTIONS',
+                'TRACE' => 'TRACE',
+                'CONNECT' => 'CONNECT',
             ),
             'label' => 'Тип',
         ));
