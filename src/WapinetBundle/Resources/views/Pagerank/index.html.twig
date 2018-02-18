@@ -45,17 +45,17 @@
             </li>
             <li>
                 <a rel="external" href="#">
-                    Ссылок <span class="ui-li-count">{{ result.facebook.share_count }}</span>
+                    Ссылок <span class="ui-li-count">{{ constant('SEOstats\\Config\\DefaultSettings::DEFAULT_RETURN_NO_DATA') == result.facebook ? result.facebook : result.facebook.share_count }}</span>
                 </a>
             </li>
             <li>
                 <a rel="external" href="#">
-                    Комментариев <span class="ui-li-count">{{ result.facebook.comment_count }}</span>
+                    Комментариев <span class="ui-li-count">{{ constant('SEOstats\\Config\\DefaultSettings::DEFAULT_RETURN_NO_DATA') == result.facebook ? result.facebook : result.facebook.comment_count }}</span>
                 </a>
             </li>
             <li>
                 <a rel="external" href="#">
-                    Лайков <span class="ui-li-count">{{ result.facebook.like_count }}</span>
+                    Лайков <span class="ui-li-count">{{ constant('SEOstats\\Config\\DefaultSettings::DEFAULT_RETURN_NO_DATA') == result.facebook ? result.facebook : result.facebook.like_count }}</span>
                 </a>
             </li>
         </ul>
