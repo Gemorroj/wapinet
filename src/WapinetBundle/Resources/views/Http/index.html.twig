@@ -18,7 +18,17 @@
                 <div class="ui-block-a">
                     <label>
                         Заголовки <a href="#" id="downloadHeaders" class="ui-btn-inline ui-btn ui-icon-arrow-d ui-btn-icon-notext ui-corner-all">Скачать</a>
-                        <textarea id="textHeaders">{{ result.headers.__toString|slice('0:              '|length) }}</textarea>
+                        <textarea id="textHeaders">
+                            {%- for name, values in result.headers.allPreserveCase %}
+                                {%- if loop.first %}
+                                    {{- values[0] ~ "\r\n" }}
+                                {%- else %}
+                                    {%- for value in values %}
+                                        {{- name }}: {{ value ~ "\r\n" }}
+                                    {%- endfor %}
+                                {%- endif %}
+                            {%- endfor %}
+                        </textarea>
                     </label>
                 </div>
                 <div class="ui-block-a">
