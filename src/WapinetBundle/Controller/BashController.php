@@ -17,7 +17,7 @@ class BashController extends Controller
         $bashHelper = $this->get('bash');
         $items = $bashHelper->getPage($page);
 
-        $response = $this->render('WapinetBundle:Bash:index.html.twig', array(
+        $response = $this->render('@Wapinet/Bash/index.html.twig', array(
             'pagerfanta' => $items,
         ));
         $response->setMaxAge(3600);

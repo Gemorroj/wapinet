@@ -5,17 +5,17 @@ namespace WapinetBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use WapinetBundle\Exception\AudioException;
-use WapinetBundle\Form\Type\AudioTags\AudioTagsType;
-use WapinetBundle\Form\Type\AudioTags\AudioTagsEditType;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use WapinetBundle\Entity\File\FileContent;
+use WapinetBundle\Exception\AudioException;
+use WapinetBundle\Form\Type\AudioTags\AudioTagsEditType;
+use WapinetBundle\Form\Type\AudioTags\AudioTagsType;
 
 /**
  * @see https://github.com/JamesHeinrich/getID3/blob/master/demos/demo.audioinfo.class.php
@@ -50,7 +50,7 @@ class AudioTagsController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:AudioTags:index.html.twig', array(
+        return $this->render('@Wapinet/AudioTags/index.html.twig', array(
             'form' => $form->createView()
         ));
     }
@@ -109,7 +109,7 @@ class AudioTagsController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:AudioTags:edit.html.twig', array(
+        return $this->render('@Wapinet/AudioTags/edit.html.twig', array(
             'form' => $form->createView(),
             'info' => $info,
             'originalFileName' => $originalFileName,

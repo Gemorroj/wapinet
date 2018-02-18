@@ -42,7 +42,7 @@ class Friend extends \Twig_Extension
      */
     public function isFriends(User $user, User $friend)
     {
-        $friendRepository = $this->em->getRepository('WapinetBundle:Friend');
+        $friendRepository = $this->em->getRepository(\WapinetBundle\Entity\Friend::class);
         $objFriend = $friendRepository->getFriend($user, $friend);
 
         return (null !== $objFriend);
@@ -55,7 +55,7 @@ class Friend extends \Twig_Extension
      */
     public function countFriends(User $user)
     {
-        $friendRepository = $this->em->getRepository('WapinetBundle:Friend');
+        $friendRepository = $this->em->getRepository(\WapinetBundle\Entity\Friend::class);
 
         return $friendRepository->getFriendsCount($user);
     }
@@ -66,7 +66,7 @@ class Friend extends \Twig_Extension
      */
     public function countOnlineFriends(User $user)
     {
-        $friendRepository = $this->em->getRepository('WapinetBundle:Friend');
+        $friendRepository = $this->em->getRepository(\WapinetBundle\Entity\Friend::class);
 
         return $friendRepository->getFriendsCount($user, new \DateTime('now -' . User::LIFETIME));
     }

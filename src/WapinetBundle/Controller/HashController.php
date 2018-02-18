@@ -3,10 +3,10 @@
 namespace WapinetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Exception\ValidatorException;
 use WapinetBundle\Form\Type\Hash\HashType;
-use Symfony\Component\Form\FormError;
 
 class HashController extends Controller
 {
@@ -32,7 +32,7 @@ class HashController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:Hash:index.html.twig', array(
+        return $this->render('@Wapinet/Hash/index.html.twig', array(
             'form' => $form->createView(),
             'result' => $hash
         ));

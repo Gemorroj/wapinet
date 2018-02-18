@@ -5,6 +5,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use WapinetBundle\Entity\Event;
 
 
 class EventsController extends Controller
@@ -22,12 +23,12 @@ class EventsController extends Controller
             throw $this->createAccessDeniedException('Пользователь не найден');
         }
 
-        $repository = $this->getDoctrine()->getRepository('WapinetBundle:Event');
+        $repository = $this->getDoctrine()->getRepository(Event::class);
         $events = $repository->findEventsQuery($user);
 
         $pagerfanta = $this->get('paginate')->paginate($events, $page);
 
-        return $this->render('WapinetBundle:User/Events:index.html.twig', array(
+        return $this->render('@Wapinet/User/Events/index.html.twig', array(
             'user' => $user,
             'pagerfanta' => $pagerfanta,
         ));

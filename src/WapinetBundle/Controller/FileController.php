@@ -3,6 +3,7 @@
 namespace WapinetBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use FOS\UserBundle\Model\UserManagerInterface;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
@@ -37,7 +38,7 @@ class FileController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('WapinetBundle:File:index.html.twig');
+        return $this->render('@Wapinet/File/index.html.twig');
     }
 
     /**
@@ -45,7 +46,7 @@ class FileController extends Controller
      */
     public function informationAction()
     {
-        return $this->render('WapinetBundle:File:information.html.twig');
+        return $this->render('@Wapinet/File/information.html.twig');
     }
 
     /**
@@ -53,9 +54,9 @@ class FileController extends Controller
      */
     public function statisticAction()
     {
-        $statistic = $this->getDoctrine()->getRepository('WapinetBundle:File')->getStatistic();
+        $statistic = $this->getDoctrine()->getRepository(File::class)->getStatistic();
 
-        return $this->render('WapinetBundle:File:statistic.html.twig', array('statistic' => $statistic));
+        return $this->render('@Wapinet/File/statistic.html.twig', array('statistic' => $statistic));
     }
 
     /**
@@ -98,7 +99,7 @@ class FileController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:File:search.html.twig', array(
+        return $this->render('@Wapinet/File/search.html.twig', array(
             'form' => $form->createView(),
             'pagerfanta' => $pagerfanta,
             'key' => $key,
@@ -136,7 +137,7 @@ class FileController extends Controller
      */
     public function categoriesAction()
     {
-        return $this->render('WapinetBundle:File:categories.html.twig');
+        return $this->render('@Wapinet/File/categories.html.twig');
     }
 
 
@@ -155,11 +156,11 @@ class FileController extends Controller
         $page = $request->get('page', 1);
 
         $query = $this->getDoctrine()
-            ->getRepository('WapinetBundle:File')
+            ->getRepository(File::class)
             ->getHiddenQuery();
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
-        return $this->render('WapinetBundle:File:list.html.twig', array(
+        return $this->render('@Wapinet/File/list.html.twig', array(
             'pagerfanta' => $pagerfanta,
         ));
     }
@@ -173,12 +174,12 @@ class FileController extends Controller
     public function tagsAction(Request $request)
     {
         $page = $request->get('page', 1);
-        $tagManager = $this->getDoctrine()->getRepository('WapinetBundle:Tag');
+        $tagManager = $this->getDoctrine()->getRepository(Tag::class);
         $query = $tagManager->getTagsQuery();
 
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
-        return $this->render('WapinetBundle:File:tags.html.twig', array(
+        return $this->render('@Wapinet/File/tags.html.twig', array(
             'pagerfanta' => $pagerfanta,
         ));
     }
@@ -193,19 +194,19 @@ class FileController extends Controller
     public function tagAction(Request $request, $tagName)
     {
         $page = $request->get('page', 1);
-        $tagManager = $this->getDoctrine()->getRepository('WapinetBundle:Tag');
+        $tagManager = $this->getDoctrine()->getRepository(Tag::class);
 
         $tag = $tagManager->getTagByName($tagName);
         if (null === $tag) {
             throw $this->createNotFoundException('Тэг не найден');
         }
 
-        $fileManager = $this->getDoctrine()->getRepository('WapinetBundle:File');
+        $fileManager = $this->getDoctrine()->getRepository(File::class);
         $query = $fileManager->getTagFilesQuery($tag);
 
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
-        return $this->render('WapinetBundle:File:tag.html.twig', array(
+        return $this->render('@Wapinet/File/tag.html.twig', array(
             'pagerfanta' => $pagerfanta,
             'tag' => $tag,
         ));
@@ -215,26 +216,26 @@ class FileController extends Controller
     /**
      * @param Request $request
      * @param string $username
+     * @param UserManagerInterface $userManager
      * @throws NotFoundHttpException
      *
      * @return Response
      */
-    public function userAction(Request $request, $username)
+    public function userAction(Request $request, $username, UserManagerInterface $userManager)
     {
         $page = $request->get('page', 1);
-        $userManager = $this->get('fos_user.user_manager');
         $user = $userManager->findUserByUsername($username);
         if (null === $user) {
             throw $this->createNotFoundException('Пользователь не найден');
         }
 
-        $tagManager = $this->getDoctrine()->getRepository('WapinetBundle:File');
+        $tagManager = $this->getDoctrine()->getRepository(File::class);
 
         $query = $tagManager->getUserFilesQuery($user);
 
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
-        return $this->render('WapinetBundle:File:user.html.twig', array(
+        return $this->render('@Wapinet/File/user.html.twig', array(
             'pagerfanta' => $pagerfanta,
             'user' => $user,
         ));
@@ -264,7 +265,7 @@ class FileController extends Controller
         }
 
         $query = $this->getDoctrine()
-            ->getRepository('WapinetBundle:File')
+            ->getRepository(File::class)
             ->getListQuery(
                 $datetimeStart,
                 $datetimeEnd,
@@ -272,7 +273,7 @@ class FileController extends Controller
             );
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
-        return $this->render('WapinetBundle:File:list.html.twig', array(
+        return $this->render('@Wapinet/File/list.html.twig', array(
             'pagerfanta' => $pagerfanta,
             'date' => $date,
             'category' => $category,
@@ -319,7 +320,7 @@ class FileController extends Controller
     protected function viewFile(File $file)
     {
         $this->checkMeta($file);
-        $response = $this->render('WapinetBundle:File:view.html.twig', array('file' => $file));
+        $response = $this->render('@Wapinet/File/view.html.twig', array('file' => $file));
         $this->incrementViews($file);
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -377,7 +378,7 @@ class FileController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:File:password.html.twig', array(
+        return $this->render('@Wapinet/File/password.html.twig', array(
             'form' => $form->createView(),
             'id' => $file->getId(),
         ));
@@ -403,7 +404,7 @@ class FileController extends Controller
         $filesystem = $this->get('filesystem');
 
         if (!$filesystem->exists($entry)) {
-            $file = $this->getDoctrine()->getRepository('WapinetBundle:File')->find($id);
+            $file = $this->getDoctrine()->getRepository(File::class)->find($id);
             if (null === $file) {
                 throw $this->createNotFoundException('Файл не найден.');
             }
@@ -521,7 +522,7 @@ class FileController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:File:edit.html.twig', array(
+        return $this->render('@Wapinet/File/edit.html.twig', array(
             'form' => $form->createView(),
             'file' => $file,
         ));
@@ -542,7 +543,7 @@ class FileController extends Controller
         if (null !== $file) {
             $hash = \md5_file($file->getPathname());
 
-            $existingFile = $this->getDoctrine()->getRepository('WapinetBundle:File')->findOneBy(array('hash' => $hash));
+            $existingFile = $this->getDoctrine()->getRepository(File::class)->findOneBy(array('hash' => $hash));
             if (null !== $existingFile) {
                 throw new FileDuplicatedException($existingFile, $this->container);
             }
@@ -627,7 +628,7 @@ class FileController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:File:upload.html.twig', array(
+        return $this->render('@Wapinet/File/upload.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -646,7 +647,7 @@ class FileController extends Controller
 
         $hash = \md5_file($file->getPathname());
 
-        $existingFile = $this->getDoctrine()->getRepository('WapinetBundle:File')->findOneBy(array('hash' => $hash));
+        $existingFile = $this->getDoctrine()->getRepository(File::class)->findOneBy(array('hash' => $hash));
         if (null !== $existingFile) {
             throw new FileDuplicatedException($existingFile, $this->container);
         }
@@ -766,7 +767,7 @@ class FileController extends Controller
             return new JsonResponse(array());
         }
 
-        $tags = $this->getDoctrine()->getRepository('WapinetBundle:Tag')->findLikeName($term);
+        $tags = $this->getDoctrine()->getRepository(Tag::class)->findLikeName($term);
 
         $result = array();
         foreach ($tags as $tag) {
@@ -783,7 +784,7 @@ class FileController extends Controller
      */
     public function swiperAction(File $file)
     {
-        $repository = $this->getDoctrine()->getRepository('WapinetBundle:File');
+        $repository = $this->getDoctrine()->getRepository(File::class);
 
         if (!$file->isImage()) {
             throw new \InvalidArgumentException('Просмотр возможен только для картинок.');
@@ -800,7 +801,7 @@ class FileController extends Controller
         $prevFile = $repository->getPrevFile($file->getId(), 'image');
         $nextFile = $repository->getNextFile($file->getId(), 'image');
 
-        $response = $this->render('WapinetBundle:File:swiper.html.twig', array(
+        $response = $this->render('@Wapinet/File/swiper.html.twig', array(
             'file' => $file,
             'prevFile' => $prevFile,
             'nextFile' => $nextFile,

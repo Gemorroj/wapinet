@@ -54,7 +54,7 @@ class UsersController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:User/Users:index.html.twig', array(
+        return $this->render('@Wapinet/User/Users/index.html.twig', array(
             'form' => $form->createView(),
             'pagerfanta' => $pagerfanta,
             'key' => $key,
@@ -68,7 +68,7 @@ class UsersController extends Controller
      */
     protected function online ($page = 1)
     {
-        $userRepository = $this->getDoctrine()->getRepository('WapinetBundle:User');
+        $userRepository = $this->getDoctrine()->getRepository(User::class);
         $query = $userRepository->getOnlineUsersQuery();
 
         return $this->get('paginate')->paginate($query, $page);

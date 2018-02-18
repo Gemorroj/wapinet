@@ -3,10 +3,10 @@
 namespace WapinetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Exception\ValidatorException;
 use WapinetBundle\Form\Type\Code\CodeType;
-use Symfony\Component\Form\FormError;
 
 class CodeController extends Controller
 {
@@ -32,7 +32,7 @@ class CodeController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:Code:index.html.twig', array(
+        return $this->render('@Wapinet/Code/index.html.twig', array(
             'form' => $form->createView(),
             'result' => $hash
         ));

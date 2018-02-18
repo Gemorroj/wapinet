@@ -101,7 +101,7 @@ class BrowserInfoController extends Controller
         $headers = clone $request->headers;
         $headers->remove('X-Php-Ob-Level');
 
-        return $this->render('WapinetBundle:BrowserInfo:index.html.twig', array(
+        return $this->render('@Wapinet/BrowserInfo/index.html.twig', array(
             'user_agent' => $request->server->get('HTTP_USER_AGENT'),
             'phone_number' => $this->getPhoneNumber($request),
             'ip' => $request->server->get('REMOTE_ADDR'),

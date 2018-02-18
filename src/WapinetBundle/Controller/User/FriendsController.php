@@ -1,6 +1,7 @@
 <?php
 namespace WapinetBundle\Controller\User;
 
+use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,22 +17,23 @@ class FriendsController extends Controller
     /**
      * @param Request $request
      * @param string $username
+     * @param UserManagerInterface $userManager
      * @return Response
      */
-    public function indexAction(Request $request, $username)
+    public function indexAction(Request $request, $username, UserManagerInterface $userManager)
     {
         $page = $request->get('page', 1);
-        $userManager = $this->get('fos_user.user_manager');
+
         $user = $userManager->findUserByUsername($username);
         if (null === $user) {
             throw $this->createNotFoundException('Пользователь не найден');
         }
 
-        $friendRepository = $this->getDoctrine()->getRepository('WapinetBundle:Friend');
+        $friendRepository = $this->getDoctrine()->getRepository(Friend::class);
         $friends = $friendRepository->getFriendsQuery($user);
         $pagerfanta = $this->get('paginate')->paginate($friends, $page);
 
-        return $this->render('WapinetBundle:User/Friends:index.html.twig', array(
+        return $this->render('@Wapinet/User/Friends/index.html.twig', array(
             'pagerfanta' => $pagerfanta,
             'user' => $user,
         ));
@@ -40,11 +42,12 @@ class FriendsController extends Controller
 
     /**
      * @param string  $username
+     * @param UserManagerInterface $userManager
      *
      * @return RedirectResponse
      * @throws \LogicException|AccessDeniedException
      */
-    public function addAction($username)
+    public function addAction($username, UserManagerInterface $userManager)
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -52,13 +55,12 @@ class FriendsController extends Controller
             throw $this->createAccessDeniedException('Вы не авторизованы');
         }
 
-        $userManager = $this->get('fos_user.user_manager');
         $friend = $userManager->findUserByUsername($username);
         if (null === $friend) {
             throw $this->createNotFoundException('Пользователь не найден.');
         }
 
-        $friendRepository = $this->getDoctrine()->getRepository('WapinetBundle:Friend');
+        $friendRepository = $this->getDoctrine()->getRepository(Friend::class);
         $objFriend = $friendRepository->getFriend($user, $friend);
 
         if (null !== $objFriend) {
@@ -84,11 +86,12 @@ class FriendsController extends Controller
 
     /**
      * @param string  $username
+     * @param UserManagerInterface $userManager
      *
      * @return RedirectResponse
      * @throws \LogicException|AccessDeniedException
      */
-    public function deleteAction($username)
+    public function deleteAction($username, UserManagerInterface $userManager)
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -96,13 +99,12 @@ class FriendsController extends Controller
             throw $this->createAccessDeniedException('Вы не авторизованы');
         }
 
-        $userManager = $this->get('fos_user.user_manager');
         $friend = $userManager->findUserByUsername($username);
         if (null === $friend) {
             throw $this->createNotFoundException('Пользователь не найден.');
         }
 
-        $friendRepository = $this->getDoctrine()->getRepository('WapinetBundle:Friend');
+        $friendRepository = $this->getDoctrine()->getRepository(Friend::class);
         $objFriend = $friendRepository->getFriend($user, $friend);
 
         if (null === $objFriend) {

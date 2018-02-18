@@ -31,7 +31,7 @@ class PhpObfuscatorController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:PhpObfuscator:index.html.twig', array(
+        return $this->render('@Wapinet/PhpObfuscator/index.html.twig', array(
             'form' => $form->createView(),
             'result' => $result,
         ));

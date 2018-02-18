@@ -13,7 +13,7 @@ class IcqController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('WapinetBundle:Icq:index.html.twig');
+        return $this->render('@Wapinet/Icq/index.html.twig');
     }
 
     /**
@@ -21,7 +21,7 @@ class IcqController extends Controller
      */
     public function aboutAction()
     {
-        return $this->render('WapinetBundle:Icq:about.html.twig');
+        return $this->render('@Wapinet/Icq/about.html.twig');
     }
 
     /**
@@ -29,7 +29,7 @@ class IcqController extends Controller
      */
     public function inviseAction()
     {
-        return $this->render('WapinetBundle:Icq:invise.html.twig');
+        return $this->render('@Wapinet/Icq/invise.html.twig');
     }
 
     /**
@@ -37,7 +37,7 @@ class IcqController extends Controller
      */
     public function secureAction()
     {
-        return $this->render('WapinetBundle:Icq:secure.html.twig');
+        return $this->render('@Wapinet/Icq/secure.html.twig');
     }
 
     /**
@@ -45,7 +45,7 @@ class IcqController extends Controller
      */
     public function serversAction()
     {
-        return $this->render('WapinetBundle:Icq:servers.html.twig');
+        return $this->render('@Wapinet/Icq/servers.html.twig');
     }
 
     /**
@@ -53,7 +53,7 @@ class IcqController extends Controller
      */
     public function clientsAction()
     {
-        return $this->render('WapinetBundle:Icq:clients.html.twig');
+        return $this->render('@Wapinet/Icq/clients.html.twig');
     }
 
     /**
@@ -61,7 +61,7 @@ class IcqController extends Controller
      */
     public function servicesAction()
     {
-        return $this->render('WapinetBundle:Icq:services.html.twig');
+        return $this->render('@Wapinet/Icq/services.html.twig');
     }
 
     /**
@@ -69,7 +69,7 @@ class IcqController extends Controller
      */
     public function disconnectAction()
     {
-        return $this->render('WapinetBundle:Icq:disconnect.html.twig');
+        return $this->render('@Wapinet/Icq/disconnect.html.twig');
     }
 
     /**
@@ -77,7 +77,7 @@ class IcqController extends Controller
      */
     public function errorsAction()
     {
-        return $this->render('WapinetBundle:Icq:errors.html.twig');
+        return $this->render('@Wapinet/Icq/errors.html.twig');
     }
 
     /**
@@ -85,6 +85,6 @@ class IcqController extends Controller
      */
     public function searchAction()
     {
-        return $this->render('WapinetBundle:Icq:search.html.twig');
+        return $this->render('@Wapinet/Icq/search.html.twig');
     }
 }

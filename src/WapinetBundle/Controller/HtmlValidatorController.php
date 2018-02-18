@@ -32,7 +32,7 @@ class HtmlValidatorController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:HtmlValidator:index.html.twig', array(
+        return $this->render('@Wapinet/HtmlValidator/index.html.twig', array(
             'form' => $form->createView(),
             'result' => $result,
         ));

@@ -51,7 +51,7 @@ class SubscriberController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:User/Subscriber:edit.html.twig', array(
+        return $this->render('@Wapinet/User/Subscriber/edit.html.twig', array(
             'form' => $form->createView(),
         ));
     }

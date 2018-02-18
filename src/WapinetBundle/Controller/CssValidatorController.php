@@ -33,7 +33,7 @@ class CssValidatorController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:CssValidator:index.html.twig', array(
+        return $this->render('@Wapinet/CssValidator/index.html.twig', array(
             'form' => $form->createView(),
             'result' => $result,
         ));

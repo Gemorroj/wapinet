@@ -3,10 +3,10 @@
 namespace WapinetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use WapinetBundle\Form\Type\Translate\TranslateType;
-use Symfony\Component\Form\FormError;
 
 class TranslateController extends Controller
 {
@@ -41,7 +41,7 @@ class TranslateController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:Translate:index.html.twig', array(
+        return $this->render('@Wapinet/Translate/index.html.twig', array(
             'form' => $form->createView(),
             'result' => $result,
             'detectLangName' => $detectLangName,

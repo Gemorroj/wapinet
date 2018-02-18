@@ -3,6 +3,8 @@
 namespace WapinetBundle\Controller;
 
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
+use FOS\UserBundle\Doctrine\UserManager as UserManagerDoctrine;
+use FOS\UserBundle\Model\UserManagerInterface;
 use WapinetBundle\Entity\Event;
 use WapinetBundle\Entity\File;
 use WapinetBundle\Entity\News;
@@ -11,19 +13,25 @@ use WapinetBundle\Entity\User;
 class AdminController extends BaseAdminController
 {
     /**
+     * @param UserManagerInterface $userManager
      * @return \FOS\UserBundle\Model\UserInterface
      */
-    public function createNewUserEntity()
+    public function createNewUserEntity(UserManagerInterface $userManager)
     {
-        return $this->get('fos_user.user_manager')->createUser();
+        return $userManager->createUser();
     }
 
     /**
      * @param User $user
+     * @param UserManagerInterface $userManage
      */
-    public function prePersistUserEntity(User $user)
+    public function prePersistUserEntity(User $user, UserManagerInterface $userManage)
     {
-        $this->get('fos_user.user_manager')->updateUser($user, false);
+        if ($userManage instanceof UserManagerDoctrine) {
+            $userManage->updateUser($user, false);
+        } else {
+            $userManage->updateUser($user);
+        }
     }
 
 
@@ -45,7 +53,8 @@ class AdminController extends BaseAdminController
     {
         $em = $this->get('doctrine.orm.entity_manager');
 
-        $userRepository = $em->getRepository('WapinetBundle:User');
+        $userRepository = $em->getRepository(User::class);
+        /** @var User[] $users */
         $users = $userRepository->findBy(array(
             'enabled' => true,
         ));

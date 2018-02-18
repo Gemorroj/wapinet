@@ -11,7 +11,7 @@ class MassMediaController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('WapinetBundle:MassMedia:index.html.twig');
+        return $this->render('@Wapinet/MassMedia/index.html.twig');
     }
 
     /**
@@ -19,7 +19,7 @@ class MassMediaController extends Controller
      */
     public function rtAction()
     {
-        return $this->render('WapinetBundle:MassMedia:news.html.twig', array(
+        return $this->render('@Wapinet/MassMedia/news.html.twig', array(
             'name' => 'RT',
             'news' => $this->get('mass_media')->getRt(),
         ));
@@ -30,7 +30,7 @@ class MassMediaController extends Controller
      */
     public function inotvAction()
     {
-        return $this->render('WapinetBundle:MassMedia:news.html.twig', array(
+        return $this->render('@Wapinet/MassMedia/news.html.twig', array(
             'name' => 'Ино ТВ',
             'news' => $this->get('mass_media')->getInotv(),
         ));

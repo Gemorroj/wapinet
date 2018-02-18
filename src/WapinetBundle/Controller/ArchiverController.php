@@ -24,7 +24,7 @@ class ArchiverController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('WapinetBundle:Archiver:index.html.twig');
+        return $this->render('@Wapinet/Archiver/index.html.twig');
     }
 
 
@@ -54,7 +54,7 @@ class ArchiverController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:Archiver:create.html.twig', array(
+        return $this->render('@Wapinet/Archiver/create.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -84,7 +84,7 @@ class ArchiverController extends Controller
 
         $files = $this->get('archive_7z')->getFiles($archiveDirectory);
 
-        return $this->render('WapinetBundle:Archiver:edit.html.twig', array(
+        return $this->render('@Wapinet/Archiver/edit.html.twig', array(
             'archive' => $archive,
             'form' => $form->createView(),
             'files' => $files,
@@ -212,7 +212,7 @@ class ArchiverController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:Archiver:exctract.html.twig', array(
+        return $this->render('@Wapinet/Archiver/exctract.html.twig', array(
             'form' => $form->createView(),
         ));
     }

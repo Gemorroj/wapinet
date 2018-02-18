@@ -3,10 +3,10 @@
 namespace WapinetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use WapinetBundle\Form\Type\Email\EmailType;
-use Symfony\Component\Form\FormError;
 
 class EmailController extends Controller
 {
@@ -34,7 +34,7 @@ class EmailController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:Email:index.html.twig', array(
+        return $this->render('@Wapinet/Email/index.html.twig', array(
             'form' => $form->createView(),
             'result' => $result
         ));

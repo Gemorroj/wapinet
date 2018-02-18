@@ -3,9 +3,9 @@
 namespace WapinetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use WapinetBundle\Form\Type\Unicode\UnicodeType;
-use Symfony\Component\Form\FormError;
 
 
 class UnicodeController extends Controller
@@ -32,7 +32,7 @@ class UnicodeController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:Unicode:index.html.twig', array(
+        return $this->render('@Wapinet/Unicode/index.html.twig', array(
             'form' => $form->createView(),
             'result' => $result,
         ));
@@ -44,7 +44,7 @@ class UnicodeController extends Controller
      */
     public function iconsAction()
     {
-        return $this->render('WapinetBundle:Unicode:icons.html.twig');
+        return $this->render('@Wapinet/Unicode/icons.html.twig');
     }
 
 

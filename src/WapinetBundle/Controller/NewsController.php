@@ -22,12 +22,12 @@ class NewsController extends Controller
     {
         $page = $request->get('page', 1);
         $result = $this->getDoctrine()
-            ->getRepository('WapinetBundle:News')
+            ->getRepository(News::class)
             ->getAllBuilder();
 
         $pagerfanta = $this->get('paginate')->paginate($result, $page);
 
-        return $this->render('WapinetBundle:News:index.html.twig', array(
+        return $this->render('@Wapinet/News/index.html.twig', array(
             'pagerfanta' => $pagerfanta,
         ));
     }
@@ -40,7 +40,7 @@ class NewsController extends Controller
      */
     public function showAction(News $news)
     {
-        return $this->render('WapinetBundle:News:show.html.twig', array(
+        return $this->render('@Wapinet/News/show.html.twig', array(
             'entity' => $news,
         ));
     }

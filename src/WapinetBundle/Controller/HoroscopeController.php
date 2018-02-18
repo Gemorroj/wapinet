@@ -11,7 +11,7 @@ class HoroscopeController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('WapinetBundle:Horoscope:index.html.twig');
+        return $this->render('@Wapinet/Horoscope/index.html.twig');
     }
 
     /**
@@ -23,7 +23,7 @@ class HoroscopeController extends Controller
         $horoscopeHelper = $this->get('horoscope');
         $horoscope = $horoscopeHelper->getHoroscope($zodiac);
 
-        return $this->render('WapinetBundle:Horoscope:show.html.twig', array(
+        return $this->render('@Wapinet/Horoscope/show.html.twig', array(
             'zodiac' => $zodiac,
             'name' => $horoscopeHelper->getName($zodiac),
             'date' => $horoscope['date'],
@@ -39,7 +39,7 @@ class HoroscopeController extends Controller
         $horoscopeHelper = $this->get('horoscope');
         $horoscope = $horoscopeHelper->getHoroscopeDay();
 
-        return $this->render('WapinetBundle:Horoscope:day.html.twig', array(
+        return $this->render('@Wapinet/Horoscope/day.html.twig', array(
             'date' => $horoscope['date'],
             'horoscope' => $horoscope['horoscope'],
         ));

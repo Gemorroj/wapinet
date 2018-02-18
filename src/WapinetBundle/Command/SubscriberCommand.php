@@ -28,7 +28,7 @@ class SubscriberCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $repository = $em->getRepository('WapinetBundle:Event');
+        $repository = $em->getRepository(Event::class);
 
         $rows = $repository->findNeedEmail();
 
@@ -60,7 +60,7 @@ class SubscriberCommand extends ContainerAwareCommand
         $variables = $event->getVariables();
         $variables['subject'] = $event->getSubject();
 
-        $body = $templating->render('WapinetBundle:User/Subscriber/Email:' . $event->getTemplate() . '.html.twig', $variables);
+        $body = $templating->render('@Wapinet/User/Subscriber/Email/' . $event->getTemplate() . '.html.twig', $variables);
 
         try {
             $message = \Swift_Message::newInstance(

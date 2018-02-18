@@ -2,6 +2,7 @@
 
 namespace WapinetBundle\Controller;
 
+use FOS\UserBundle\Model\UserManagerInterface;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
@@ -29,11 +30,11 @@ class GistController extends Controller
         $form = $this->createForm(AddType::class);
         $page = $request->get('page', 1);
 
-        $gistManager = $this->getDoctrine()->getRepository('WapinetBundle:Gist');
+        $gistManager = $this->getDoctrine()->getRepository(Gist::class);
         $query = $gistManager->getListQuery();
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
-        return $this->render('WapinetBundle:Gist:index.html.twig', array(
+        return $this->render('@Wapinet/Gist/index.html.twig', array(
             'form' => $form->createView(),
             'pagerfanta' => $pagerfanta,
         ));
@@ -43,24 +44,24 @@ class GistController extends Controller
     /**
      * @param Request $request
      * @param string $username
+     * @param UserManagerInterface $userManager
      * @return Response
      */
-    public function userAction(Request $request, $username)
+    public function userAction(Request $request, $username, UserManagerInterface $userManager)
     {
         $form = $this->createForm(AddType::class);
         $page = $request->get('page', 1);
 
-        $userManager = $this->get('fos_user.user_manager');
         $user = $userManager->findUserByUsername($username);
         if (null === $user) {
             throw $this->createNotFoundException('Пользователь не найден');
         }
 
-        $gistManager = $this->getDoctrine()->getRepository('WapinetBundle:Gist');
+        $gistManager = $this->getDoctrine()->getRepository(Gist::class);
         $query = $gistManager->getListQuery($user);
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
-        return $this->render('WapinetBundle:Gist:index.html.twig', array(
+        return $this->render('@Wapinet/Gist/index.html.twig', array(
             'form' => $form->createView(),
             'pagerfanta' => $pagerfanta,
             'user' => $user,
@@ -126,7 +127,7 @@ class GistController extends Controller
      */
     public function viewAction(Gist $gist)
     {
-        return $this->render('WapinetBundle:Gist:view.html.twig', array(
+        return $this->render('@Wapinet/Gist/view.html.twig', array(
             'gist' => $gist,
         ));
     }
@@ -194,7 +195,7 @@ class GistController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:Gist:search.html.twig', array(
+        return $this->render('@Wapinet/Gist/search.html.twig', array(
             'form' => $form->createView(),
             'pagerfanta' => $pagerfanta,
             'key' => $key,
@@ -259,7 +260,7 @@ class GistController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:Gist:edit.html.twig', array(
+        return $this->render('@Wapinet/Gist/edit.html.twig', array(
             'form' => $form->createView(),
             'gist' => $gist,
         ));

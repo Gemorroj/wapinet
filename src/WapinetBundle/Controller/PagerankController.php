@@ -4,9 +4,9 @@ namespace WapinetBundle\Controller;
 
 use SEOstats\Services\Social;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use WapinetBundle\Form\Type\Pagerank\PagerankType;
-use Symfony\Component\Form\FormError;
 
 
 class PagerankController extends Controller
@@ -33,7 +33,7 @@ class PagerankController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:Pagerank:index.html.twig', array(
+        return $this->render('@Wapinet/Pagerank/index.html.twig', array(
             'form' => $form->createView(),
             'result' => $result,
         ));

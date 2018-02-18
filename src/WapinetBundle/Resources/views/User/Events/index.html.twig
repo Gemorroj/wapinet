@@ -12,7 +12,7 @@
 
     <ul data-role="listview" data-inset="true">
         {% for event in pagerfanta %}
-            {% include 'WapinetBundle:User/Subscriber/Event:' ~ event.template ~ '.html.twig' %}
+            {% include '@Wapinet/User/Subscriber/Event/' ~ event.template ~ '.html.twig' %}
         {% else %}
             <li>Событий нет</li>
         {% endfor %}
