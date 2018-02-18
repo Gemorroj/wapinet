@@ -1,17 +1,17 @@
 <?php
-namespace WapinetBundle\Form\Type\Rest;
+namespace WapinetBundle\Form\Type\Http;
 
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\AbstractType;
 
 /**
- * Rest
+ * Http
  */
-class RestType extends AbstractType
+class HttpType extends AbstractType
 {
     /**
      * @var FormBuilderInterface $builder
@@ -37,7 +37,7 @@ class RestType extends AbstractType
             'label' => 'Путь'
         ));
         $builder->add('header', TextareaType::class, array(
-            'data' => 'Accept: */*' . "\r\n" . 'Cache-Control: no-cache' . "\r\n" . 'User-Agent: Wapinet REST Client',
+            'data' => 'Accept: */*' . "\r\n" . 'Cache-Control: no-cache' . "\r\n" . 'User-Agent: Wapinet HTTP Client',
             'required' => false,
             'label' => 'Заголовки'
         ));
@@ -56,6 +56,6 @@ class RestType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'rest';
+        return 'http';
     }
 }

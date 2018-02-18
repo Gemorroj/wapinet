@@ -56,10 +56,10 @@ fieldset.file-url {
 p.container-preview {
 
 }
-div.rest-type {
+div.http-type {
     width: 25% !important;
 }
-div.rest-url {
+div.http-url {
     width: 75% !important;
 }
 code.html-validator strong {

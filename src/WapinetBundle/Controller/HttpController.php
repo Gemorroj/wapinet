@@ -6,28 +6,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use WapinetBundle\Form\Type\Rest\RestType;
+use WapinetBundle\Form\Type\Http\HttpType;
 
-class RestController extends Controller
+class HttpController extends Controller
 {
     public function indexAction(Request $request)
     {
         $result = null;
-        $form = $this->createForm(RestType::class);
+        $form = $this->createForm(HttpType::class);
         try {
             $form->handleRequest($request);
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    $result = $this->getRest($data);
+                    $result = $this->getHttp($data);
                 }
             }
         } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('WapinetBundle:Rest:index.html.twig', array(
+        return $this->render('WapinetBundle:Http:index.html.twig', array(
             'form' => $form->createView(),
             'result' => $result,
         ));
@@ -38,7 +38,7 @@ class RestController extends Controller
      * @param array $data
      * @return Response
      */
-    protected function getRest(array $data)
+    protected function getHttp(array $data)
     {
         $curl = $this->get('curl');
         $curl->init($data['url']);

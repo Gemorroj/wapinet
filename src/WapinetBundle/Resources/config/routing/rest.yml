@@ -1,3 +1,0 @@
-rest_index:
-    path: /
-    defaults: { _controller: WapinetBundle:Rest:index }

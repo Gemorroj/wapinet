@@ -261,8 +261,8 @@ $document.one("pagecreate", "#translate_index", function () {
     Translate.pageCreate();
 });
 
-$document.one("pagecreate", "#rest_index", function () {
-    Rest.pageCreate();
+$document.one("pagecreate", "#http_index", function () {
+    Http.pageCreate();
 });
 
 $document.one("pagecreate", "#guestbook_index", function () {

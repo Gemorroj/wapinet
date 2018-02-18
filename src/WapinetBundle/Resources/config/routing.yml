@@ -100,9 +100,9 @@ php_obfuscator:
     resource: "@WapinetBundle/Resources/config/routing/php_obfuscator.yml"
     prefix:   /php_obfuscator
 
-rest:
-    resource: "@WapinetBundle/Resources/config/routing/rest.yml"
-    prefix:   /rest
+http:
+    resource: "@WapinetBundle/Resources/config/routing/http.yml"
+    prefix:   /http
 
 css_validator:
     resource: "@WapinetBundle/Resources/config/routing/css_validator.yml"

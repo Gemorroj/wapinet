@@ -1,6 +1,6 @@
 "use strict";
 
-var Rest = {
+var Http = {
     pageCreate: function () {
         var $pageContainer = $(":mobile-pagecontainer");
 
