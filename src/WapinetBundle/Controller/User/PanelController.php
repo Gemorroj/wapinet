@@ -51,8 +51,8 @@ class PanelController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('@Wapinet/User/Panel/edit.html.twig', array(
+        return $this->render('@Wapinet/User/Panel/edit.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 }

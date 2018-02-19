@@ -1,15 +1,15 @@
 <?php
 namespace WapinetBundle\Controller\User;
 
-use FOS\UserBundle\Controller\ProfileController as BaseController;
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 
-class ProfileController extends BaseController
+class ProfileController extends Controller
 {
     /**
      * Show custom user
@@ -34,6 +34,6 @@ class ProfileController extends BaseController
             $user = $currentUser;
         }
 
-        return $this->render('@FOSUser/Profile/show.html.twig', array('user' => $user));
+        return $this->render('@FOSUser/Profile/show.html.twig', ['user' => $user]);
     }
 }

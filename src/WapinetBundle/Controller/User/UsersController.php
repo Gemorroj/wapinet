@@ -32,13 +32,13 @@ class UsersController extends Controller
                 if ($form->isValid()) {
                     $data = $form->getData();
                     $key = \uniqid('', false);
-                    $session->set('users_search', array(
+                    $session->set('users_search', [
                         'key' => $key,
-                        'data' => $data
-                    ));
+                        'data' => $data,
+                    ]);
                 }
 
-                return $this->redirectToRoute('wapinet_users', array('key' => $key));
+                return $this->redirectToRoute('wapinet_users', ['key' => $key]);
             }
 
             if (null !== $key && true === $session->has('users_search')) {
@@ -54,11 +54,11 @@ class UsersController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('@Wapinet/User/Users/index.html.twig', array(
+        return $this->render('@Wapinet/User/Users/index.html.twig', [
             'form' => $form->createView(),
             'pagerfanta' => $pagerfanta,
             'key' => $key,
-        ));
+        ]);
     }
 
 
@@ -86,7 +86,7 @@ class UsersController extends Controller
         $client = $this->get('sphinx');
         $sphinxQl = $client->select($page)
             ->from('users')
-            ->match(array('username', 'email', 'info'), $data['search'])
+            ->match(['username', 'email', 'info'], $data['search'])
         ;
 
         return $client->getPagerfanta($sphinxQl, User::class);

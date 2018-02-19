@@ -33,10 +33,10 @@ class FriendsController extends Controller
         $friends = $friendRepository->getFriendsQuery($user);
         $pagerfanta = $this->get('paginate')->paginate($friends, $page);
 
-        return $this->render('@Wapinet/User/Friends/index.html.twig', array(
+        return $this->render('@Wapinet/User/Friends/index.html.twig', [
             'pagerfanta' => $pagerfanta,
             'user' => $user,
-        ));
+        ]);
     }
 
 
@@ -80,7 +80,7 @@ class FriendsController extends Controller
             new FriendEvent($user, $friend)
         );
 
-        return $this->redirectToRoute('wapinet_user_profile', array('username' => $friend->getUsername()));
+        return $this->redirectToRoute('wapinet_user_profile', ['username' => $friend->getUsername()]);
     }
 
 
@@ -120,6 +120,6 @@ class FriendsController extends Controller
             new FriendEvent($user, $friend)
         );
 
-        return $this->redirectToRoute('wapinet_user_profile', array('username' => $friend->getUsername()));
+        return $this->redirectToRoute('wapinet_user_profile', ['username' => $friend->getUsername()]);
     }
 }
