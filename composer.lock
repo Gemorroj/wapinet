@@ -2880,16 +2880,16 @@
         },
         {
             "name": "php-ffmpeg/php-ffmpeg",
-            "version": "v0.11.0",
+            "version": "v0.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-FFMpeg/PHP-FFMpeg.git",
-                "reference": "d17f8029583b0e69e2b587039bf1f32fd7d4722e"
+                "reference": "c03e1149694846c2b79e021a720e2e5cafe9711d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-FFMpeg/PHP-FFMpeg/zipball/d17f8029583b0e69e2b587039bf1f32fd7d4722e",
-                "reference": "d17f8029583b0e69e2b587039bf1f32fd7d4722e",
+                "url": "https://api.github.com/repos/PHP-FFMpeg/PHP-FFMpeg/zipball/c03e1149694846c2b79e021a720e2e5cafe9711d",
+                "reference": "c03e1149694846c2b79e021a720e2e5cafe9711d",
                 "shasum": ""
             },
             "require": {
@@ -2900,7 +2900,7 @@
                 "php": "^5.3.9 || ^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.8",
+                "phpunit/phpunit": "^4.8.36",
                 "sami/sami": "~1.0",
                 "silex/silex": "~1.0"
             },
@@ -2960,7 +2960,7 @@
                 "video",
                 "video processing"
             ],
-            "time": "2017-11-08T17:05:52+00:00"
+            "time": "2018-02-20T17:44:55+00:00"
         },
         {
             "name": "phpcollection/phpcollection",
