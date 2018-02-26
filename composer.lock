@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6c15c2685eea65b7c22c634fd6cdcbbe",
+    "content-hash": "16409296b68aaca61fa7119b45d27539",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -1485,24 +1485,24 @@
         },
         {
             "name": "gemorroj/archive7z",
-            "version": "3.0.0",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/Archive7z.git",
-                "reference": "cd231835f7904ecad1a08657ecf1dd2718ea7bf0"
+                "reference": "301a0d0733e503236127020f42e4d533c078008e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/Archive7z/zipball/cd231835f7904ecad1a08657ecf1dd2718ea7bf0",
-                "reference": "cd231835f7904ecad1a08657ecf1dd2718ea7bf0",
+                "url": "https://api.github.com/repos/Gemorroj/Archive7z/zipball/301a0d0733e503236127020f42e4d533c078008e",
+                "reference": "301a0d0733e503236127020f42e4d533c078008e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4",
-                "symfony/process": "^2.8|^3.0"
+                "php": ">=5.6",
+                "symfony/process": "^3.3|^4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.8|^5.0"
+                "phpunit/phpunit": "^5.7"
             },
             "type": "library",
             "autoload": {
@@ -1523,10 +1523,11 @@
             "keywords": [
                 "7-zip",
                 "7z",
+                "7zip",
                 "archive",
                 "p7zip"
             ],
-            "time": "2017-11-12T13:37:34+00:00"
+            "time": "2018-02-26T11:02:04+00:00"
         },
         {
             "name": "gemorroj/cssvalidator",
