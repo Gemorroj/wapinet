@@ -51,7 +51,7 @@
         "gemorroj/phpwhois": "dev-master",
         "gemorroj/stop-spam": "^1.0",
         "gemorroj/archive7z": "^3.0",
-        "gemorroj/m3u-parser": "^3.1",
+        "gemorroj/m3u-parser": "^4.0",
         "gemorroj/syntax": "^2.2",
         "gemorroj/htmlvalidator": "^1.1",
         "gemorroj/cssvalidator": "^1.1",

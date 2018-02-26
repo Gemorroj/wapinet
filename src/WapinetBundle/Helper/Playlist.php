@@ -1,8 +1,9 @@
 <?php
 namespace WapinetBundle\Helper;
 
-use M3uParser\Entry;
+use M3uParser\M3uEntry;
 use M3uParser\M3uParser;
+use M3uParser\Tag\ExtInf;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
@@ -21,12 +22,13 @@ class Playlist
     public function __construct()
     {
         $this->m3uParser = new M3uParser();
+        $this->m3uParser->addTag(ExtInf::class);
     }
 
 
     /**
      * @param File $file
-     * @return Entry[]
+     * @return M3uEntry[]
      */
     public function parseFile(File $file)
     {

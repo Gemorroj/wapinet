@@ -2,7 +2,7 @@
 
 namespace WapinetBundle\Twig\Extension;
 
-use M3uParser\Entry;
+use M3uParser\M3uEntry;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 
@@ -34,7 +34,7 @@ class Playlist extends \Twig_Extension
     /**
      * @param File $file
      *
-     * @return Entry[]|null
+     * @return M3uEntry[]|null
      */
     public function getList (File $file)
     {

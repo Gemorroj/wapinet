@@ -3,7 +3,13 @@
     <ul data-role="listview" data-inset="true">
         {% for entry in wapinet_playlist_list(file.file) %}
             <li class="directory" data-icon="false">
-                <a href="#" class="no-link">{{ entry.extInf ? entry.extInf.title : entry.path }}</a>
+                <a href="#" class="no-link">
+                {% for tag in entry.extTags %}
+                    {{ tag.title is defined ? tag.title : entry.path }}
+                {% else %}
+                    {{ entry.path }}
+                {% endfor %}
+                </a>
             </li>
         {% else %}
             <li>
