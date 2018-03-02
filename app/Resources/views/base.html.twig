@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% if (is_granted('ROLE_USER') and fos_message_nb_unread() > 0) %}+{{ fos_message_nb_unread()|wapinet_count }} {% endif %}{{ title == wapinet_title ? title : wapinet_title ~ ' - ' ~ title }}</title>
+    <title>{{ title == wapinet_title ? title : wapinet_title ~ ' - ' ~ title }}</title>
 
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -37,7 +37,6 @@
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
     <script src="{{ asset('bundles/wapinet/js/module/archiver.js') }}"></script>
-    <script src="{{ asset('bundles/wapinet/js/module/message.js') }}"></script>
     <script src="{{ asset('bundles/wapinet/js/module/php_obfuscator.js') }}"></script>
     <script src="{{ asset('bundles/wapinet/js/module/translate.js') }}"></script>
     <script src="{{ asset('bundles/wapinet/js/module/http.js') }}"></script>
@@ -74,11 +73,9 @@
             <div data-role="panel" data-display="overlay" id="panel">
                 <ul data-role="listview" data-inset="true" data-divider-theme="b">
                     {% if is_granted('ROLE_USER') %}
-                        {% set fos_message_nb_unread = fos_message_nb_unread() %}
                         {% set wapinet_user_count_online_friends = wapinet_user_count_online_friends(app.user) %}
 
                         <li data-icon="calendar"><a href="{{ path('wapinet_user_events') }}">События</a></li>
-                        <li data-icon="mail"><a href="{{ path('wapinet_message_inbox') }}">Сообщения{% if fos_message_nb_unread > 0 %} <span class="ui-li-count">+{{ fos_message_nb_unread|wapinet_count }}</span>{% endif %}</a></li>
                         <li data-icon="user"><a href="{{ path('wapinet_user_friends', {'username': app.user.username}) }}">Друзья{% if wapinet_user_count_online_friends > 0 %} <span class="ui-li-count">{{ wapinet_user_count_online_friends|wapinet_count }}</span>{% endif %}</a></li>
                     {% endif %}
                     <li data-role="list-divider">Закладки</li>

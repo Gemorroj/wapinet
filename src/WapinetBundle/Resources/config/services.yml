@@ -309,12 +309,6 @@ services:
         tags:
             - { name: form.type }
 
-    wapinet.user.event.message:
-        class: WapinetBundle\EventListener\EventMessage
-        arguments: ["@fos_message.message_manager", "@doctrine.orm.entity_manager", "@router"]
-        tags:
-            - { name: kernel.event_subscriber }
-
     wapinet.user.listener.last_activity:
             class: WapinetBundle\EventListener\ListenerLastActivity
             arguments: ["@service_container", "@doctrine.orm.entity_manager"]

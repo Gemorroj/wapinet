@@ -1,3 +1,18 @@
+# ВАЖНО
+В БД выполнить
+```sql
+use wapinet;
+ALTER TABLE `user_subscriber` DROP `email_messages`;
+DROP TABLE IF EXISTS `message_thread_metadata`;
+DROP TABLE IF EXISTS `message_metadata`;
+DROP TABLE IF EXISTS `message`;
+DROP TABLE IF EXISTS `message_thread`;
+TRUNCATE `event`;
+OPTIMIZE TABLE `event`, `file`, `file_tags`, `gist`, `guestbook`, `news`, `online`, `tag`, `user`, `user_friend`, `user_panel`, `user_subscriber`;
+ANALYZE TABLE `event`, `file`, `file_tags`, `gist`, `guestbook`, `news`, `online`, `tag`, `user`, `user_friend`, `user_panel`, `user_subscriber`;
+```
+
+
 # Сайт wapinet.ru
 
 ### Установка крон заданий:

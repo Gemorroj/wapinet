@@ -2,16 +2,8 @@ wapinet:
     resource: "@WapinetBundle/Resources/config/routing.yml"
     prefix:   /
 
-wapinet_message:
-    resource: "@WapinetMessageBundle/Resources/config/routing.yml"
-    prefix:   /message
-
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
-
-fos_message:
-    resource: "@FOSMessageBundle/Resources/config/routing.xml"
-    prefix: /message
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

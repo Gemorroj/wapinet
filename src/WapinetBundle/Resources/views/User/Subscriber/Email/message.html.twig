@@ -1,8 +1,0 @@
-{% extends '@FOSUser/Subscriber/Email/_layout.html.twig' %}
-
-{% block content %}
-    Сообщение от <a href="{{ url('wapinet_user_profile', {'username': message.sender.username}) }}">{{ message.sender }}</a>:<br />
-    <div>{{ message.body|wapinet_bbcode_parse }}</div>
-
-    <strong><a href="{{ url('wapinet_message_thread_view', {'threadId': message.thread.id}) }}">Ответить</a></strong>
-{% endblock %}

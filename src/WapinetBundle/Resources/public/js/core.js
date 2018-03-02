@@ -273,10 +273,6 @@ $document.one("pagecreate", "#gist_view", function () {
     Gist.pageCreate();
 });
 
-$document.one("pagecreate", "#wapinet_message_inbox, #wapinet_message_sent, #wapinet_message_deleted", function () {
-    Message.pageCreate();
-});
-
 
 // vk в профиле пользователя
 $document.one("pagecreate", "#fos_user_profile_show", function () {

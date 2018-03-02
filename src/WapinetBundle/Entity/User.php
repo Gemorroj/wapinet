@@ -2,14 +2,13 @@
 namespace WapinetBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use FOS\MessageBundle\Model\ParticipantInterface;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Intl\Intl;
 
 /**
  * User
  */
-class User extends BaseUser implements ParticipantInterface
+class User extends BaseUser
 {
     const LIFETIME = '5 minutes';
     const SEX_MALE = 'm';

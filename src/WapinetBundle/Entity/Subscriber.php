@@ -11,11 +11,6 @@ class Subscriber extends \ArrayObject
     /**
      * @var bool
      */
-    protected $emailMessages = true;
-
-    /**
-     * @var bool
-     */
     protected $emailNews = true;
 
     /**
@@ -94,34 +89,11 @@ class Subscriber extends \ArrayObject
     }
 
     /**
-     * @return bool
-     */
-    public function getEmailMessages()
-    {
-        return $this->emailMessages;
-    }
-
-    /**
-     * @param bool $emailMessages
-     * @return Subscriber
-     */
-    public function setEmailMessages($emailMessages)
-    {
-        $this->emailMessages = (bool)$emailMessages;
-
-        return $this;
-    }
-
-    /**
      * @return \ArrayIterator
      */
     public function getIterator()
     {
         return new \ArrayIterator(array(
-            'emailMessages' => array(
-                'name' => 'Сообщения',
-                'enabled' => $this->getEmailMessages(),
-            ),
             'emailNews' => array(
                 'name' => 'Новости',
                 'enabled' => $this->getEmailNews(),

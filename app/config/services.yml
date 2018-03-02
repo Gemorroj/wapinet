@@ -21,18 +21,11 @@ services:
         # you can exclude directories or files
         # but if a service is unused, it's removed anyway
         exclude: '../../src/WapinetBundle/{Entity,Repository,Resources}'
-    WapinetMessageBundle\:
-        resource: '../../src/WapinetMessageBundle/*'
-        exclude: '../../src/WapinetMessageBundle/{Entity,Repository,Resources}'
 
     # controllers are imported separately to make sure they're public
     # and have a tag that allows actions to type-hint services
     WapinetBundle\Controller\:
         resource: '../../src/WapinetBundle/Controller'
-        public: true
-        tags: ['controller.service_arguments']
-    WapinetMessageBundle\Controller\:
-        resource: '../../src/WapinetMessageBundle/Controller'
         public: true
         tags: ['controller.service_arguments']
 

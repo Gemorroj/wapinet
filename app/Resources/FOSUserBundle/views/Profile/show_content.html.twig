@@ -55,8 +55,6 @@
 </ul>
 
 {% if app.user.id != user.id %}
-    <a data-icon="mail" data-role="button" href="{{ path('wapinet_message_thread_new', {'recipient': user.username}) }}">Личное сообщение</a>
-
     {% if wapinet_user_is_friends(app.user, user) %}
         <a class="friends-button" data-mini="true" data-icon="delete" data-role="button" data-inline="true" href="{{ path('wapinet_user_friends_delete', {'username': user.username}) }}">Удалить из друзей</a>
     {% else %}
