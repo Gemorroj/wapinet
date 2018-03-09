@@ -33,7 +33,7 @@ class DefaultController extends Controller
     {
         $git = new GitBinary($this->getParameter('wapinet_git_path'));
 
-        $repo = new Repository(\__DIR__, $git, 'wapinet');
+        $repo = new Repository($this->container->getParameter('kernel.root_dir') . '/..', $git, 'wapinet');
 
         $log = $repo->getLog(
             'HEAD',
