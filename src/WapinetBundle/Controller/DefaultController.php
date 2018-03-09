@@ -104,4 +104,12 @@ class DefaultController extends Controller
     {
         return $this->render('@Wapinet/Default/textbook.html.twig');
     }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function videoCoursesAction()
+    {
+        return $this->render('@Wapinet/Default/video_courses.html.twig');
+    }
 }

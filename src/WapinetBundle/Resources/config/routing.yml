@@ -38,6 +38,10 @@ textbook:
     path:  /textbook
     defaults: { _controller: WapinetBundle:Default:textbook }
 
+video_courses:
+    path:  /video_courses
+    defaults: { _controller: WapinetBundle:Default:videoCourses }
+
 
 # Проверка синтаксиса для Gmanager
 syntax:
