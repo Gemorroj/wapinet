@@ -2,14 +2,10 @@
 
 namespace WapinetBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use WapinetBundle\Entity\Online;
-use WapinetBundle\Entity\Sea;
-use GitElephant\Repository;
 use GitElephant\GitBinary;
+use GitElephant\Repository;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use WapinetBundle\Entity\Online;
 
 class DefaultController extends Controller
 {
@@ -31,12 +27,13 @@ class DefaultController extends Controller
 
     /**
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \GitElephant\Exception\InvalidRepositoryPathException
      */
     public function logAction()
     {
         $git = new GitBinary($this->getParameter('wapinet_git_path'));
 
-        $repo = new Repository(__DIR__, $git, 'wapinet');
+        $repo = new Repository(\__DIR__, $git, 'wapinet');
 
         $log = $repo->getLog(
             'HEAD',

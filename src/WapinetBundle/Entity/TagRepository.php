@@ -15,7 +15,7 @@ class TagRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('t');
 
-        $search = '%' . addcslashes($search, '%_') . '%';
+        $search = '%' . \addcslashes($search, '%_') . '%';
 
         $qb->where('t.name LIKE :search');
         $qb->setParameter('search', $search);

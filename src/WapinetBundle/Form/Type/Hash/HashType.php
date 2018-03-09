@@ -1,13 +1,13 @@
 <?php
 namespace WapinetBundle\Form\Type\Hash;
 
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\AbstractType;
-use WapinetBundle\Helper\Hash;
 use WapinetBundle\Form\Type\FileUrlType;
+use WapinetBundle\Helper\Hash;
 
 /**
  * Hash
@@ -38,9 +38,9 @@ class HashType extends AbstractType
             'choices' => \array_flip($algorithms),
             'label' => 'Алгоритм',
             'preferred_choices' => array(
-                array_search('md5', $algorithms, true),
-                array_search('sha512', $algorithms, true),
-                array_search('crc32', $algorithms, true)
+                \array_search('md5', $algorithms, true),
+                \array_search('sha512', $algorithms, true),
+                \array_search('crc32', $algorithms, true)
             ),
         ));
 

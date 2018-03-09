@@ -4368,16 +4368,16 @@
         },
         {
             "name": "vich/uploader-bundle",
-            "version": "1.8.1",
+            "version": "1.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dustin10/VichUploaderBundle.git",
-                "reference": "a6c44e282d79649655ae1398d4ec48c0bd8f70c3"
+                "reference": "a6934c197ba03be03929b4cedc93c5015f1cf3c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dustin10/VichUploaderBundle/zipball/a6c44e282d79649655ae1398d4ec48c0bd8f70c3",
-                "reference": "a6c44e282d79649655ae1398d4ec48c0bd8f70c3",
+                "url": "https://api.github.com/repos/dustin10/VichUploaderBundle/zipball/a6934c197ba03be03929b4cedc93c5015f1cf3c5",
+                "reference": "a6934c197ba03be03929b4cedc93c5015f1cf3c5",
                 "shasum": ""
             },
             "require": {
@@ -4395,11 +4395,12 @@
                 "symfony/templating": "^3.4|^4.0"
             },
             "require-dev": {
+                "alcaeus/mongo-php-adapter": "^1.1",
                 "doctrine/doctrine-bundle": "^1.8",
                 "doctrine/mongodb-odm": "^1.2",
                 "doctrine/orm": "^2.5",
                 "ext-sqlite3": "*",
-                "knplabs/knp-gaufrette-bundle": "^0.4@dev",
+                "knplabs/knp-gaufrette-bundle": "^0.5",
                 "matthiasnoback/symfony-dependency-injection-test": "^2.3",
                 "mikey179/vfsstream": "^1.6",
                 "oneup/flysystem-bundle": "^3.0",
@@ -4456,7 +4457,7 @@
                 "file uploads",
                 "upload"
             ],
-            "time": "2018-01-16T09:06:10+00:00"
+            "time": "2018-03-09T14:08:14+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

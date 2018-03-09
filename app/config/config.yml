@@ -102,7 +102,7 @@ vich_uploader:
     db_driver: orm
     mappings:
         file:
-            namer: vich_uploader.namer_uniqid
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
             directory_namer: wapinet.file_uploader.namer_file_directory
             delete_on_update: true # Set to true if the file should be deleted from the filesystem when the file is replaced by an other one
             delete_on_remove: true # determines whether to delete file upon removal of entity
