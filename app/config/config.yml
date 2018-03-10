@@ -135,11 +135,57 @@ wapinet:
 
 easy_admin:
     design:
+        menu:
+            - { label: 'Мониторинг', route: 'monitoring', default: true }
+            - Files
+            - Tags
+            - News
+            - Users
+            - Subscribers
+            - Panel
+            - Gists
+            - Guestbook
         assets:
             css:
                 - 'bundles/wapinet/css/core.css'
     site_name: '%wapinet_title%'
     entities:
+        Files:
+            disabled_actions: ['new']
+            label: 'Файлы'
+            class: WapinetBundle\Entity\File
+            list:
+                fields:
+                    - { property: 'originalFileName', label: 'Имя файла' }
+                    - { property: 'createdAt', label: 'Дата создания' }
+                    - { property: 'user', label: 'Пользователь' }
+                    - { property: 'mimeType', label: 'MIME тип' }
+                    - { property: 'fileSize', label: 'Размер' }
+                    - { property: 'description', label: 'Описание' }
+                    - { property: 'countViews', label: 'Просмотров' }
+                    - { property: 'password', label: 'Пароль', type: 'boolean' }
+                    - { property: 'hidden', label: 'Скрыт' }
+            form:
+                fields:
+                    - { property: 'originalFileName', label: 'Имя файла' }
+                    - { property: 'mimeType', label: 'MIME тип' }
+                    - { property: 'description', label: 'Описание', type: 'textarea' }
+                    #- { property: 'meta', label: 'Данные', type_options: { read_only: true, required: false } }
+                    - { property: 'countViews', label: 'Просмотров' }
+                    - { property: 'hidden', label: 'Скрыт', type_options: {required: false} }
+        Tags:
+            disabled_actions: ['new']
+            label: 'Тэги'
+            class: WapinetBundle\Entity\Tag
+            list:
+                fields:
+                    - { property: 'name', label: 'Имя' }
+                    - { property: 'createdAt', label: 'Дата создания' }
+                    - { property: 'count', label: 'Использовано раз' }
+            form:
+                fields:
+                    - { property: 'name', label: 'Имя' }
+                    - { property: 'count', label: 'Использовано раз' }
         News:
             label: 'Новости'
             class: WapinetBundle\Entity\News
@@ -214,42 +260,6 @@ easy_admin:
                     - { property: 'downloads', label: 'Развлечения' }
                     - { property: 'utilities', label: 'Утилиты' }
                     - { property: 'programming', label: 'WEB мастерская' }
-        Files:
-            disabled_actions: ['new']
-            label: 'Файлы'
-            class: WapinetBundle\Entity\File
-            list:
-                fields:
-                    - { property: 'originalFileName', label: 'Имя файла' }
-                    - { property: 'createdAt', label: 'Дата создания' }
-                    - { property: 'user', label: 'Пользователь' }
-                    - { property: 'mimeType', label: 'MIME тип' }
-                    - { property: 'fileSize', label: 'Размер' }
-                    - { property: 'description', label: 'Описание' }
-                    - { property: 'countViews', label: 'Просмотров' }
-                    - { property: 'password', label: 'Пароль', type: 'boolean' }
-                    - { property: 'hidden', label: 'Скрыт' }
-            form:
-                fields:
-                    - { property: 'originalFileName', label: 'Имя файла' }
-                    - { property: 'mimeType', label: 'MIME тип' }
-                    - { property: 'description', label: 'Описание', type: 'textarea' }
-                    #- { property: 'meta', label: 'Данные', type_options: { read_only: true, required: false } }
-                    - { property: 'countViews', label: 'Просмотров' }
-                    - { property: 'hidden', label: 'Скрыт', type_options: {required: false} }
-        Tags:
-            disabled_actions: ['new']
-            label: 'Тэги'
-            class: WapinetBundle\Entity\Tag
-            list:
-                fields:
-                    - { property: 'name', label: 'Имя' }
-                    - { property: 'createdAt', label: 'Дата создания' }
-                    - { property: 'count', label: 'Использовано раз' }
-            form:
-                fields:
-                    - { property: 'name', label: 'Имя' }
-                    - { property: 'count', label: 'Использовано раз' }
         Gists:
             disabled_actions: ['new']
             label: 'Блоги'

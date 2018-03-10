@@ -13,6 +13,14 @@ use WapinetBundle\Entity\User;
 class AdminController extends BaseAdminController
 {
     /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function monitoringAction()
+    {
+        return $this->render('@Wapinet/monitoring.html.twig');
+    }
+
+    /**
      * @param UserManagerInterface $userManager
      * @return \FOS\UserBundle\Model\UserInterface
      */
