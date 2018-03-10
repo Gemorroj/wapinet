@@ -181,12 +181,10 @@ easy_admin:
             list:
                 fields:
                     - { property: 'user', label: 'Пользователь' }
-                    - { property: 'emailComments', label: 'Комментарии'}
                     - { property: 'emailNews', label: 'Новости' }
                     - { property: 'emailFriends', label: 'События друзей' }
             form:
                 fields:
-                    - { property: 'emailComments', label: 'Комментарии'}
                     - { property: 'emailNews', label: 'Новости' }
                     - { property: 'emailFriends', label: 'События друзей' }
         Panel:
