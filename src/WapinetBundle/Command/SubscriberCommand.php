@@ -34,6 +34,7 @@ class SubscriberCommand extends ContainerAwareCommand
 
         $em->beginTransaction();
         $q = $em->createQuery('UPDATE WapinetBundle\Entity\Event e SET e.needEmail = 0 WHERE e.id = :id');
+        /** @var Event $v */
         foreach ($rows as $v) {
             if ($this->sendEmail($v)) {
                 $q->execute(array('id' => $v->getId()));
@@ -73,6 +74,12 @@ class SubscriberCommand extends ContainerAwareCommand
             $message->setTo($event->getUser()->getEmail());
 
             return ($mailer->send($message) > 0);
+        } catch (\Swift_RfcComplianceException $e) {
+            $this->getContainer()->get('logger')->warning($e->getMessage(), array($e));
+
+            $event->getUser()->getSubscriber()->setEmailNews(false);
+            $event->getUser()->getSubscriber()->setEmailFriends(false);
+            $this->getContainer()->get('doctrine.orm.entity_manager')->persist($event->getUser()->getSubscriber());
         } catch (\Exception $e) {
             $this->getContainer()->get('logger')->critical($e->getMessage(), array($e));
         }
