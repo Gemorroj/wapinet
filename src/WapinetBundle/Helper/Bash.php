@@ -1,8 +1,8 @@
 <?php
 namespace WapinetBundle\Helper;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Pagerfanta\Pagerfanta;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use WapinetBundle\Pagerfanta\FixedPaginate;
 
 /**
@@ -30,7 +30,7 @@ class Bash
     public function getPage($page = null)
     {
         $curl = $this->container->get('curl');
-        $curl->init('http://bash.im/index/' . $page);
+        $curl->init('https://bash.im/index/' . $page);
         $curl->addBrowserHeaders();
         $curl->addCompression();
         $response = $curl->exec();
