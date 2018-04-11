@@ -8,7 +8,7 @@ class PanelControllerTestWapinet extends WebTestCaseWapinet
 {
     public function testIndex()
     {
-        $client = static::createClientUser('admin');
+        $client = static::loginAdmin();
 
         $crawler = $client->request('GET', '/user/panel/edit');
         self::assertEquals(200, $client->getResponse()->getStatusCode());

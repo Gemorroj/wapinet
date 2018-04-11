@@ -8,7 +8,7 @@ class ProfileControllerTestWapinet extends WebTestCaseWapinet
 {
     public function testIndex()
     {
-        $client = static::createClientUser('admin');
+        $client = static::loginAdmin();
 
         $crawler = $client->request('GET', '/profile/');
         self::assertEquals(200, $client->getResponse()->getStatusCode());
