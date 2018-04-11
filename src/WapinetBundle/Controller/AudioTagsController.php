@@ -4,8 +4,8 @@ namespace WapinetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Exception\IOException;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -119,10 +119,10 @@ class AudioTagsController extends Controller
 
 
     /**
-     * @param Form $form
+     * @param FormInterface $form
      * @param array $tags
      */
-    protected function setFormData(Form $form, array $tags)
+    protected function setFormData(FormInterface $form, array $tags)
     {
         $data = array(
             //'picture' => null,
@@ -165,11 +165,11 @@ class AudioTagsController extends Controller
 
     /**
      * @param string $fileName
-     * @param Form $form
+     * @param FormInterface $form
      * @param array $info
      * @throws AudioException
      */
-    protected function setTags($fileName, Form $form, array $info)
+    protected function setTags(string $fileName, FormInterface $form, array $info)
     {
         $data = $form->getData();
         $writer = $this->get('getid3')->getId3Writer();
