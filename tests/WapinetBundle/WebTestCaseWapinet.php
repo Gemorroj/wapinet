@@ -30,7 +30,7 @@ abstract class WebTestCaseWapinet extends WebTestCase
         // авторизация
         $session = $container->get('session');
         $userManager = $container->get('fos_user.user_manager');
-        $loginManager = $container->get('fos_user.security.login_manager');
+        $loginManager = $container->get('fos_user.security.login_manager'); //fixme
         $firewallName = $container->getParameter('fos_user.firewall_name');
 
         $user = $userManager->findUserByUsername($username);

@@ -7,125 +7,7 @@ services:
 
     pagerfanta.view.default:
         class: WapinetBundle\Pagerfanta\View
-        public: false
         tags: [{ name: pagerfanta.view, alias: default }]
-
-#    wapinet.bbcode.twig_extension:
-#        class: WapinetBundle\Twig\Extension\Bbcode
-#        arguments: ["@router.request_context"]
-#        tags:
-#            - {name: twig.extension, alias: wapinet_bbcode}
-
-#    wapinet.date.twig_extension:
-#        class: WapinetBundle\Twig\Extension\Date
-#        arguments: ["@timezone"]
-#        tags:
-#            - {name: twig.extension, alias: wapinet_date}
-
-#    wapinet.size.twig_extension:
-#        class: WapinetBundle\Twig\Extension\Size
-#        tags:
-#            - {name: twig.extension, alias: wapinet_size}
-
-#    wapinet.count.twig_extension:
-#        class: WapinetBundle\Twig\Extension\Count
-#        tags:
-#            - {name: twig.extension, alias: wapinet_count}
-
-#    wapinet.geoip2.twig_extension:
-#        class: WapinetBundle\Twig\Extension\Geoip2
-#        arguments: ["@geoip2"]
-#        tags:
-#            - {name: twig.extension, alias: wapinet_geoip2}
-
-#    wapinet.video.twig_extension:
-#        class: WapinetBundle\Twig\Extension\Video
-#        arguments: ["@service_container"]
-#        tags:
-#            - {name: twig.extension, alias: wapinet_video}
-
-#    wapinet.audio.twig_extension:
-#        class: WapinetBundle\Twig\Extension\Audio
-#        arguments: ["@service_container"]
-#        tags:
-#            - {name: twig.extension, alias: wapinet_audio}
-
-#    wapinet.java_app.twig_extension:
-#        class: WapinetBundle\Twig\Extension\JavaApp
-#        arguments: ["@service_container"]
-#        tags:
-#            - {name: twig.extension, alias: wapinet_java_app}
-
-#    wapinet.android_app.twig_extension:
-#        class: WapinetBundle\Twig\Extension\AndroidApp
-#        arguments: ["@service_container"]
-#        tags:
-#            - {name: twig.extension, alias: wapinet_android_app}
-
-#    wapinet.archive.twig_extension:
-#        class: WapinetBundle\Twig\Extension\Archive
-#        arguments: ["@service_container"]
-#        tags:
-#            - {name: twig.extension, alias: wapinet_archive}
-
-#    wapinet.torrent.twig_extension:
-#        class: WapinetBundle\Twig\Extension\Torrent
-#        arguments: ["@service_container"]
-#        tags:
-#            - {name: twig.extension, alias: wapinet_torrent}
-
-#    wapinet.playlist.twig_extension:
-#        class: WapinetBundle\Twig\Extension\Playlist
-#        arguments: ["@service_container"]
-#        tags:
-#            - {name: twig.extension, alias: wapinet_playlist}
-
-#    wapinet.online.twig_extension:
-#        class: WapinetBundle\Twig\Extension\Online
-#        arguments: ["@doctrine.orm.entity_manager"]
-#        tags:
-#            - {name: twig.extension, alias: wapinet_online}
-
-#    wapinet.breadcrumbs.twig_extension:
-#        class: WapinetBundle\Twig\Extension\Breadcrumbs
-#        arguments: ["@service_container"]
-#        tags:
-#            - {name: twig.extension, alias: wapinet_breadcrumbs}
-
-#    wapinet.panel.twig_extension:
-#        class: WapinetBundle\Twig\Extension\Panel
-#        arguments: ["@service_container"]
-#        tags:
-#            - {name: twig.extension, alias: wapinet_panel}
-
-#    wapinet.file.twig_extension:
-#        class: WapinetBundle\Twig\Extension\File
-#        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
-#        tags:
-#            - {name: twig.extension, alias: wapinet_file}
-
-#    wapinet.guestbook.twig_extension:
-#        class: WapinetBundle\Twig\Extension\Guestbook
-#        arguments: ["@doctrine.orm.entity_manager"]
-#        tags:
-#            - {name: twig.extension, alias: wapinet_guestbook}
-
-#    wapinet.gist.twig_extension:
-#        class: WapinetBundle\Twig\Extension\Gist
-#        arguments: ["@doctrine.orm.entity_manager"]
-#        tags:
-#            - {name: twig.extension, alias: wapinet_gist}
-
-#    wapinet.base64.twig_extension:
-#        class: WapinetBundle\Twig\Extension\Base64
-#        tags:
-#            - {name: twig.extension, alias: base64}
-
-#    wapinet.forum.twig_extension:
-#        class: WapinetBundle\Twig\Extension\Forum
-#        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
-#        tags:
-#            - {name: twig.extension, alias: wapinet_forum}
 
     online.listener:
         class: WapinetBundle\EventListener\OnlineListener
@@ -133,130 +15,105 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
 
-    error:
-        class: WapinetBundle\Helper\Error
-
-    mime:
-        class: WapinetBundle\Helper\Mime
-        arguments: ["@service_container"]
-
-    timezone:
-        public: true
-        class: WapinetBundle\Helper\Timezone
-        arguments: ["@security.token_storage"]
-
     file:
         class: WapinetBundle\Helper\File\File
         arguments: ["@service_container"]
+        public: true
 
     file_meta:
         class: WapinetBundle\Helper\File\Meta
         arguments: ["@service_container"]
+        public: true
 
     curl:
-        public: true
         class: WapinetBundle\Helper\Curl
         arguments: ["@service_container"]
+        public: true
 
     ffmpeg:
         class: WapinetBundle\Helper\Ffmpeg
         arguments: ["@service_container"]
+        public: true
 
     translit:
         class: WapinetBundle\Helper\Translit
+        public: true
 
     paginate:
-        public: true
         class: WapinetBundle\Helper\Paginate
         arguments: ["@service_container"]
+        public: true
 
     getid3:
         class: WapinetBundle\Helper\Getid3
-
-    geoip2:
-        class: WapinetBundle\Helper\Geoip2
-        arguments: ["@service_container"]
+        public: true
 
     bot_checker:
         class: WapinetBundle\Helper\BotChecker
+        public: true
 
     stop_spam:
         class: WapinetBundle\Helper\StopSpam
+        public: true
 
     hash:
         class: WapinetBundle\Helper\Hash
+        public: true
 
     code:
         class: WapinetBundle\Helper\Code
+        public: true
 
     phpwhois:
         class: WapinetBundle\Helper\Phpwhois
+        public: true
 
     css_validator:
         class: WapinetBundle\Helper\CssValidator
+        public: true
 
     html_validator:
         class: WapinetBundle\Helper\HtmlValidator
-
-    ginfo:
-        class: WapinetBundle\Helper\Ginfo
+        public: true
 
     php_validator:
-        public: true
         class: WapinetBundle\Helper\PhpValidator
         arguments: ["@service_container"]
+        public: true
 
     apk:
         class: WapinetBundle\Helper\Apk
-
-    rates:
-        class: WapinetBundle\Helper\Rates
-        arguments: ["@service_container"]
-
-    horoscope:
-        class: WapinetBundle\Helper\Horoscope
-        arguments: ["@service_container"]
-
-    mass_media:
-        class: WapinetBundle\Helper\MassMedia
-        arguments: ["@service_container"]
-
-    bash:
         public: true
-        class: WapinetBundle\Helper\Bash
-        arguments: ["@service_container"]
 
     sphinx:
         class: WapinetBundle\Helper\Sphinx
         arguments: ["@service_container"]
+        public: true
 
     archive_zip:
-        public: true
         class: WapinetBundle\Helper\Archiver\ArchiveZip
         arguments: ["@service_container"]
+        public: true
 
     archive_rar:
         class: WapinetBundle\Helper\Archiver\ArchiveRar
         arguments: ["@service_container"]
+        public: true
 
     archive_7z:
-        public: true
         class: WapinetBundle\Helper\Archiver\Archive7z
         arguments: ["@service_container"]
+        public: true
 
     torrent:
         class: WapinetBundle\Helper\Torrent
         arguments: ["@service_container"]
+        public: true
 
     playlist:
         class: WapinetBundle\Helper\Playlist
         arguments: ["@service_container"]
-
-#    wapinet.twig_extension:
-#        class: WapinetBundle\Twig\Extension\News
-#        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
-#        tags:
-#            - {name: twig.extension, alias: news}
+        public: true
 
     wapinet.form.file.upload:
         class: WapinetBundle\Form\Type\File\UploadType
@@ -291,7 +148,6 @@ services:
     wapinet.file_voter:
         class: WapinetBundle\Security\FileVoter
         arguments: ['@security.access.decision_manager']
-        public: false
         tags:
             - { name: security.voter }
 
@@ -313,10 +169,10 @@ services:
             - { name: form.type }
 
     wapinet.user.listener.last_activity:
-            class: WapinetBundle\EventListener\ListenerLastActivity
-            arguments: ["@service_container", "@doctrine.orm.entity_manager"]
-            tags:
-                - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
+        class: WapinetBundle\EventListener\ListenerLastActivity
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
 
     wapinet.user.event.friends:
         class: WapinetBundle\EventListener\EventFriends

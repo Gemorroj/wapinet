@@ -3,6 +3,7 @@
 namespace WapinetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use WapinetBundle\Helper\MassMedia;
 
 class MassMediaController extends Controller
 {
@@ -15,24 +16,26 @@ class MassMediaController extends Controller
     }
 
     /**
+     * @param MassMedia $massMediaHelper
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function rtAction()
+    public function rtAction(MassMedia $massMediaHelper)
     {
         return $this->render('@Wapinet/MassMedia/news.html.twig', array(
             'name' => 'RT',
-            'news' => $this->get('mass_media')->getRt(),
+            'news' => $massMediaHelper->getRt(),
         ));
     }
 
     /**
+     * @param MassMedia $massMediaHelper
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function inotvAction()
+    public function inotvAction(MassMedia $massMediaHelper)
     {
         return $this->render('@Wapinet/MassMedia/news.html.twig', array(
             'name' => 'Ино ТВ',
-            'news' => $this->get('mass_media')->getInotv(),
+            'news' => $massMediaHelper->getInotv(),
         ));
     }
 }

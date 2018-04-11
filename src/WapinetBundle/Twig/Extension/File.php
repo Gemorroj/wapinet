@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use WapinetBundle\Entity\FileRepository;
 use WapinetBundle\Entity\User;
+use WapinetBundle\Helper\Timezone;
 
 class File extends \Twig_Extension
 {
@@ -17,15 +18,21 @@ class File extends \Twig_Extension
      * @var ContainerInterface
      */
     protected $container;
+    /**
+     * @var Timezone
+     */
+    protected $timezoneHelper;
 
     /**
      * @param ContainerInterface $container
      * @param EntityManagerInterface $em
+     * @param Timezone $timezoneHelper
      */
-    public function __construct(ContainerInterface $container, EntityManagerInterface $em)
+    public function __construct(ContainerInterface $container, EntityManagerInterface $em, Timezone $timezoneHelper)
     {
         $this->container = $container;
         $this->fileRepository = $em->getRepository(\WapinetBundle\Entity\File::class);
+        $this->timezoneHelper = $timezoneHelper;
     }
 
     /**
@@ -71,7 +78,7 @@ class File extends \Twig_Extension
     public function getCountToday()
     {
         return $this->fileRepository->countDate(
-            new \DateTime('today', $this->container->get('timezone')->getTimezone())
+            new \DateTime('today', $this->timezoneHelper->getTimezone())
         );
     }
 
@@ -81,8 +88,8 @@ class File extends \Twig_Extension
     public function getCountYesterday()
     {
         return $this->fileRepository->countDate(
-            new \DateTime('yesterday', $this->container->get('timezone')->getTimezone()),
-            new \DateTime('today', $this->container->get('timezone')->getTimezone())
+            new \DateTime('yesterday', $this->timezoneHelper->getTimezone()),
+            new \DateTime('today', $this->timezoneHelper->getTimezone())
         );
     }
 

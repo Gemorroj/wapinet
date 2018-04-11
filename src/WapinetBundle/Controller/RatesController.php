@@ -3,6 +3,7 @@
 namespace WapinetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use WapinetBundle\Helper\Rates;
 
 class RatesController extends Controller
 {
@@ -17,11 +18,11 @@ class RatesController extends Controller
 
     /**
      * @param string $country
+     * @param Rates $ratesHelper
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction($country)
+    public function showAction($country, Rates $ratesHelper)
     {
-        $ratesHelper = $this->get('rates');
         $rates = $ratesHelper->getRates($country);
 
         return $this->render('@Wapinet/Rates/show.html.twig', array(

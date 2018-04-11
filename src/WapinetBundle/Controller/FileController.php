@@ -27,6 +27,8 @@ use WapinetBundle\Form\Type\File\EditType;
 use WapinetBundle\Form\Type\File\PasswordType;
 use WapinetBundle\Form\Type\File\SearchType;
 use WapinetBundle\Form\Type\File\UploadType;
+use WapinetBundle\Helper\Mime;
+use WapinetBundle\Helper\Timezone;
 
 /**
  * @see http://wap4file.org
@@ -245,9 +247,10 @@ class FileController extends Controller
      * @param Request $request
      * @param string|null $date
      * @param string|null $category
+     * @param Timezone $timezoneHelper
      * @return Response
      */
-    public function listAction(Request $request, $date = null, $category = null)
+    public function listAction(Request $request, $date = null, $category = null, Timezone $timezoneHelper)
     {
         $page = $request->get('page', 1);
 
@@ -255,12 +258,12 @@ class FileController extends Controller
         $datetimeEnd = null;
         switch ($date) {
             case 'today':
-                $datetimeStart = new \DateTime('today', $this->get('timezone')->getTimezone());
+                $datetimeStart = new \DateTime('today', $timezoneHelper->getTimezone());
                 break;
 
             case 'yesterday':
-                $datetimeStart = new \DateTime('yesterday', $this->get('timezone')->getTimezone());
-                $datetimeEnd = new \DateTime('today', $this->get('timezone')->getTimezone());
+                $datetimeStart = new \DateTime('yesterday', $timezoneHelper->getTimezone());
+                $datetimeEnd = new \DateTime('today', $timezoneHelper->getTimezone());
                 break;
         }
 
@@ -533,10 +536,11 @@ class FileController extends Controller
      * @param Request $request
      * @param File    $data
      * @param File    $oldData
+     * @param Mime    $mimeHelper
      * @throws FileDuplicatedException
      * @return File
      */
-    protected function editFileData(Request $request, File $data, File $oldData)
+    protected function editFileData(Request $request, File $data, File $oldData, Mime $mimeHelper)
     {
         /** @var UploadedFile|null $file */
         $file = $data->getFile();
@@ -549,7 +553,7 @@ class FileController extends Controller
             }
 
             $data->setHash($hash);
-            $data->setMimeType($this->get('mime')->getMimeType($file->getClientOriginalName()));
+            $data->setMimeType($mimeHelper->getMimeType($file->getClientOriginalName()));
             $data->setFileSize($file->getSize());
             $data->setOriginalFileName($file->getClientOriginalName());
         }
@@ -637,10 +641,11 @@ class FileController extends Controller
     /**
      * @param Request $request
      * @param File    $data
+     * @param Mime    $mimeHelper
      * @throws FileDuplicatedException
      * @return File
      */
-    protected function saveFileData(Request $request, File $data)
+    protected function saveFileData(Request $request, File $data, Mime $mimeHelper)
     {
         /** @var UploadedFile $file */
         $file = $data->getFile();
@@ -653,7 +658,7 @@ class FileController extends Controller
         }
 
         $data->setHash($hash);
-        $data->setMimeType($this->get('mime')->getMimeType($file->getClientOriginalName()));
+        $data->setMimeType($mimeHelper->getMimeType($file->getClientOriginalName()));
         $data->setFileSize($file->getSize());
         $data->setOriginalFileName($file->getClientOriginalName());
 

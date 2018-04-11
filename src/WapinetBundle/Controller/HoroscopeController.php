@@ -3,6 +3,7 @@
 namespace WapinetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use WapinetBundle\Helper\Horoscope;
 
 class HoroscopeController extends Controller
 {
@@ -16,11 +17,11 @@ class HoroscopeController extends Controller
 
     /**
      * @param string $zodiac
+     * @param Horoscope $horoscopeHelper
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction($zodiac)
+    public function showAction($zodiac, Horoscope $horoscopeHelper)
     {
-        $horoscopeHelper = $this->get('horoscope');
         $horoscope = $horoscopeHelper->getHoroscope($zodiac);
 
         return $this->render('@Wapinet/Horoscope/show.html.twig', array(
@@ -32,11 +33,11 @@ class HoroscopeController extends Controller
     }
 
     /**
+     * @param Horoscope $horoscopeHelper
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function dayAction()
+    public function dayAction(Horoscope $horoscopeHelper)
     {
-        $horoscopeHelper = $this->get('horoscope');
         $horoscope = $horoscopeHelper->getHoroscopeDay();
 
         return $this->render('@Wapinet/Horoscope/day.html.twig', array(

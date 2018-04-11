@@ -4,17 +4,18 @@ namespace WapinetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use WapinetBundle\Helper\Bash;
 
 class BashController extends Controller
 {
     /**
      * @param Request $request
+     * @param Bash $bashHelper
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, Bash $bashHelper)
     {
         $page = $request->get('page');
-        $bashHelper = $this->get('bash');
         $items = $bashHelper->getPage($page);
 
         $response = $this->render('@Wapinet/Bash/index.html.twig', array(
