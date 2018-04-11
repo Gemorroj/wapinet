@@ -110,17 +110,17 @@
                     {% endmacro %}
 
                     <dt>Nginx:</dt>
-                    <dd>{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('nginx')) }}</dd>
+                    <dd>{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('nginx.service')) }}</dd>
                     <dt>PHP-Fpm:</dt>
-                    <dd>{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('php-fpm')) }}</dd>
+                    <dd>{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('php-fpm.service')) }}</dd>
                     <dt>MariaDB:</dt>
-                    <dd>{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('mariadb')) }}</dd>
+                    <dd>{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('mariadb.service')) }}</dd>
                     <dt>Cron:</dt>
-                    <dd>{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('crond')) }}</dd>
+                    <dd>{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('crond.service')) }}</dd>
                     <dt>Sphinx:</dt>
-                    <dd>{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('searchd')) }}</dd>
+                    <dd>{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('searchd.service')) }}</dd>
                     <dt>OpenSSH:</dt>
-                    <dd>{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('sshd')) }}</dd>
+                    <dd>{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('sshd.service')) }}</dd>
                 </dl>
             </div>
         </div>
@@ -133,8 +133,10 @@
                 <dl class="panel-body dl-horizontal">
                     <dt>Процессор:</dt>
                     <dd>{{ info.cpu.processors[0].model }}</dd>
-                    <dt>Ядер:</dt>
+                    <dt>Физических ядер:</dt>
                     <dd>{{ info.cpu.cores|wapinet_count }}</dd>
+                    <dt>Виртуальных ядер:</dt>
+                    <dd>{{ info.cpu.virtual|wapinet_count }}</dd>
                     <dt>Loadavg:</dt>
                     <dd>{{ info.general.load ? info.general.load|join(' ') : 'Неизвестно' }}</dd>
                 </dl>
