@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4dca7ac46a8b90333cc07c1bb115add5",
+    "content-hash": "622c628b23836552a5e3753feaad59c3",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -1503,6 +1503,64 @@
             ],
             "description": "W3C CSS Validator service.",
             "time": "2017-06-20T15:08:52+00:00"
+        },
+        {
+            "name": "gemorroj/ginfo",
+            "version": "5.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Gemorroj/ginfo.git",
+                "reference": "7a25affed2e8b4a89bda6fcc8249e3294b70b013"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/7a25affed2e8b4a89bda6fcc8249e3294b70b013",
+                "reference": "7a25affed2e8b4a89bda6fcc8249e3294b70b013",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "ext-pcre": "*",
+                "php": "^7.1.3",
+                "symfony/process": "^3.3|^4.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.9",
+                "phpunit/phpunit": "^7.1.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ginfo\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joe Gillotti",
+                    "email": "joe@joegillotti.com",
+                    "homepage": "http://joegillotti.com",
+                    "role": "Author"
+                },
+                {
+                    "name": "Gemorroj",
+                    "role": "Author"
+                }
+            ],
+            "description": "App and library for easily parsing system information, like network/cpu/memory/usb/pci/sound cards/filesystems/raid array/ipmi/etc.",
+            "keywords": [
+                "CPU",
+                "disk",
+                "health",
+                "linux",
+                "memory",
+                "specs",
+                "system"
+            ],
+            "time": "2018-04-11T09:33:31+00:00"
         },
         {
             "name": "gemorroj/htmlvalidator",
@@ -6020,16 +6078,16 @@
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "6.1.0",
+            "version": "6.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "3f5ca97eee66a07951d018f6726017629c85c86d"
+                "reference": "70c740bde8fd9ea9ea295be1cd875dd7b267e157"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/3f5ca97eee66a07951d018f6726017629c85c86d",
-                "reference": "3f5ca97eee66a07951d018f6726017629c85c86d",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/70c740bde8fd9ea9ea295be1cd875dd7b267e157",
+                "reference": "70c740bde8fd9ea9ea295be1cd875dd7b267e157",
                 "shasum": ""
             },
             "require": {
@@ -6072,7 +6130,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2018-04-06T08:14:40+00:00"
+            "time": "2018-04-11T04:50:36+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

@@ -9,15 +9,29 @@ use WapinetBundle\Entity\Event;
 use WapinetBundle\Entity\File;
 use WapinetBundle\Entity\News;
 use WapinetBundle\Entity\User;
+use WapinetBundle\Helper\Ginfo;
 
 class AdminController extends BaseAdminController
 {
     /**
+     * @param Ginfo $ginfo
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function monitoringAction()
+    public function monitoringAction(Ginfo $ginfo)
     {
-        return $this->render('@Wapinet/monitoring.html.twig');
+        $info = $ginfo->getInfo();
+        return $this->render('@Wapinet/monitoring.html.twig', [
+            'info' => [
+                'general' => $info->getGeneral(),
+                'php' => $info->getPhp(),
+                'selinux' => $info->getSelinux(),
+                'cpu' => $info->getCpu(),
+                'network' => $info->getNetwork(),
+                'disk' => $info->getDisk(),
+                'services' => $info->getServices(),
+                'memory' => $info->getMemory(),
+            ],
+        ]);
     }
 
     /**
@@ -63,17 +77,17 @@ class AdminController extends BaseAdminController
 
         $userRepository = $em->getRepository(User::class);
         /** @var User[] $users */
-        $users = $userRepository->findBy(array(
+        $users = $userRepository->findBy([
             'enabled' => true,
-        ));
+        ]);
 
         foreach ($users as $user) {
             $entityEvent = new Event();
             $entityEvent->setSubject('Новость на сайте.');
             $entityEvent->setTemplate('news');
-            $entityEvent->setVariables(array(
+            $entityEvent->setVariables([
                 'news' => $news,
-            ));
+            ]);
 
             $entityEvent->setNeedEmail($user->getSubscriber()->getEmailNews());
             $entityEvent->setUser($user);

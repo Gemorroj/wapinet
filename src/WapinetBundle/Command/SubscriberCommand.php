@@ -37,7 +37,7 @@ class SubscriberCommand extends ContainerAwareCommand
         /** @var Event $v */
         foreach ($rows as $v) {
             if ($this->sendEmail($v)) {
-                $q->execute(array('id' => $v->getId()));
+                $q->execute(['id' => $v->getId()]);
             }
         }
         $em->commit();
@@ -75,13 +75,13 @@ class SubscriberCommand extends ContainerAwareCommand
 
             return ($mailer->send($message) > 0);
         } catch (\Swift_RfcComplianceException $e) {
-            $this->getContainer()->get('logger')->warning($e->getMessage(), array($e));
+            $this->getContainer()->get('logger')->warning($e->getMessage(), [$e]);
 
             $event->getUser()->getSubscriber()->setEmailNews(false);
             $event->getUser()->getSubscriber()->setEmailFriends(false);
             $this->getContainer()->get('doctrine.orm.entity_manager')->persist($event->getUser()->getSubscriber());
         } catch (\Exception $e) {
-            $this->getContainer()->get('logger')->critical($e->getMessage(), array($e));
+            $this->getContainer()->get('logger')->critical($e->getMessage(), [$e]);
         }
 
         return true;

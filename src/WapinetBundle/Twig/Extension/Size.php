@@ -11,19 +11,23 @@ class Size extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('wapinet_size', array($this, 'getSize')),
-        );
+        return [
+            new \Twig_SimpleFilter('wapinet_size', [$this, 'getSize']),
+        ];
     }
 
     /**
-     * @param int $fileSizeInBytes
+     * @param int|float|null $fileSizeInBytes
      * @return string|null
      */
     public function getSize($fileSizeInBytes)
     {
+        if (null === $fileSizeInBytes) {
+            return '';
+        }
+
         $i = -1;
-        $byteUnits = array(' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB');
+        $byteUnits = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
         do {
             $fileSizeInBytes /= 1024;
             $i++;

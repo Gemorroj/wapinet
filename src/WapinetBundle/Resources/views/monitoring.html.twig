@@ -11,5 +11,219 @@
 {% endblock content_header %}
 
 {% block main %}
-    todo
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Общая информация</h3>
+                </div>
+                <dl class="panel-body dl-horizontal">
+                    <dt>ОС:</dt>
+                    <dd>{{ info.general.osName }} {{ info.general.architecture }}</dd>
+                    <dt>Ядро:</dt>
+                    <dd>{{ info.general.kernel }}</dd>
+                    <dt>Uptime:</dt>
+                    <dd>{{ info.general.uptime|date('%d дней %h часов %i минут') }}</dd>
+                    <dt>Selinux:</dt>
+                    <dd>{{ info.selinux ? (info.selinux.enabled ? 'Вкл.' : 'Выкл.') : 'Отсутствует' }}</dd>
+                    <dt>PHP:</dt>
+                    <dd>{{ info.php.version }}</dd>
+                    <dt>Расширения PHP:</dt>
+                    <dd>
+                        <button type="button" class="btn btn-default" data-toggle="tooltip" title="{{ info.php.extensions|sort|join("\n") }}">
+                            {{ info.php.extensions[0] }} {{ info.php.extensions[1] }} ... ({{ info.php.extensions|length|wapinet_count }} всего)
+                        </button>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Opcache</h3>
+                </div>
+                {% if info.php.opcache.enabled %}
+                    <dl class="panel-body dl-horizontal">
+                        <dt>Закэшировано скриптов:</dt>
+                        <dd>{{ info.php.opcache.cachedScripts|wapinet_count }}</dd>
+                        <dt>Использовано памяти:</dt>
+                        <dd>{{ info.php.opcache.usedMemory|wapinet_size }}</dd>
+                        <dt>Свободно памяти:</dt>
+                        <dd>{{ info.php.opcache.freeMemory|wapinet_size }}</dd>
+                        <dt>Попаданий в кэш:</dt>
+                        <dd>{{ info.php.opcache.hits|wapinet_count }}</dd>
+                        <dt>Промахов мимо кэша:</dt>
+                        <dd>{{ info.php.opcache.misses|wapinet_count }}</dd>
+                    </dl>
+                {% else %}
+                    <div class="panel-body">
+                        Выключен
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Apcu</h3>
+                </div>
+                {% if info.php.apcu.enabled %}
+                    <dl class="panel-body dl-horizontal">
+                        <dt>Закэшировано переменных:</dt>
+                        <dd>{{ info.php.apcu.cachedVariables|wapinet_count }}</dd>
+                        <dt>Использовано памяти:</dt>
+                        <dd>{{ info.php.apcu.usedMemory|wapinet_size }}</dd>
+                        <dt>Свободно памяти:</dt>
+                        <dd>{{ info.php.apcu.freeMemory|wapinet_size }}</dd>
+                        <dt>Попаданий в кэш:</dt>
+                        <dd>{{ info.php.apcu.hits|wapinet_count }}</dd>
+                        <dt>Промахов мимо кэша:</dt>
+                        <dd>{{ info.php.apcu.misses|wapinet_count }}</dd>
+                    </dl>
+                {% else %}
+                    <div class="panel-body">
+                        Выключен
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Сервисы</h3>
+                </div>
+                <dl class="panel-body dl-horizontal">
+                    {% import _self as macroService %}
+
+                    {% macro macro_service(service) %}
+                        {% if not service %}
+                            <span class="label label-danger">Не найдено</span>
+                        {% elseif service.started %}
+                            <span class="label label-success">{{ service.state }}</span>
+                        {% else %}
+                            <span class="label label-warning">{{ service.state }}</span>
+                        {% endif %}
+                    {% endmacro %}
+
+                    <dt>Nginx:</dt>
+                    <dd>{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('nginx')) }}</dd>
+                    <dt>PHP-Fpm:</dt>
+                    <dd>{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('php-fpm')) }}</dd>
+                    <dt>MariaDB:</dt>
+                    <dd>{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('mariadb')) }}</dd>
+                    <dt>Cron:</dt>
+                    <dd>{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('crond')) }}</dd>
+                    <dt>Sphinx:</dt>
+                    <dd>{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('searchd')) }}</dd>
+                    <dt>OpenSSH:</dt>
+                    <dd>{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('sshd')) }}</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">CPU</h3>
+                </div>
+                <dl class="panel-body dl-horizontal">
+                    <dt>Процессор:</dt>
+                    <dd>{{ info.cpu.processors[0].model }}</dd>
+                    <dt>Ядер:</dt>
+                    <dd>{{ info.cpu.cores|wapinet_count }}</dd>
+                    <dt>Loadavg:</dt>
+                    <dd>{{ info.general.load ? info.general.load|join(' ') : 'Неизвестно' }}</dd>
+                </dl>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Память</h3>
+                </div>
+                <dl class="panel-body dl-horizontal">
+                    <dt>Использовано:</dt>
+                    <dd>{{ info.memory.used|wapinet_size }}</dd>
+                    <dt>Свободно:</dt>
+                    <dd>{{ info.memory.free|wapinet_size }}</dd>
+                    <dt>Разделяемая память:</dt>
+                    <dd>{{ info.memory.shared|wapinet_size }}</dd>
+                    <dt>Закэшировано памяти:</dt>
+                    <dd>{{ info.memory.cached|wapinet_size }}</dd>
+                    <dt>Swap использовано:</dt>
+                    <dd>{{ info.memory.swapUsed|wapinet_size }}</dd>
+                    <dt>Swap свободно:</dt>
+                    <dd>{{ info.memory.swapFree|wapinet_size }}</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Сеть</h3>
+                </div>
+                <div class="panel-body">
+                    {% for network in info.network %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{ network.name }} ({{ network.state }})</h3>
+                            </div>
+                            <dl class="panel-body dl-horizontal">
+                                <dt>Отправлено:</dt>
+                                <dd>{{ network.statsSent ? network.statsSent.bytes|wapinet_size ~ ' (ошибок: ' ~ network.statsSent.errors|wapinet_count ~ ')' : '' }}</dd>
+                                <dt>Получено:</dt>
+                                <dd>{{ network.statsReceived ? network.statsReceived.bytes|wapinet_size ~ ' (ошибок: ' ~ network.statsReceived.errors|wapinet_count ~ ')' : '' }}</dd>
+                            </dl>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Накопители</h3>
+                </div>
+                <dl class="panel-body dl-horizontal">
+                    {% for drive in info.disk.drives %}
+                        <dt>{{ drive.name }}:</dt>
+                        <dd>{{ drive.size|wapinet_size }}</dd>
+                    {% endfor %}
+                </dl>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Точки монтирования</h3>
+                </div>
+                <div class="panel-body">
+                    {% for mount in info.disk.mounts %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{ mount.mount }}</h3>
+                            </div>
+                            <dl class="panel-body dl-horizontal">
+                                <dt>Файловая система:</dt>
+                                <dd>{{ mount.type }}</dd>
+                                <dt>Использовано:</dt>
+                                <dd>{{ mount.used|wapinet_size }} ({{ mount.usedPercent }}%)</dd>
+                                <dt>Свободно:</dt>
+                                <dd>{{ mount.free|wapinet_size }} ({{ mount.freePercent }}%)</dd>
+                            </dl>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock main %}

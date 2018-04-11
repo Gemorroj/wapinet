@@ -11,9 +11,9 @@ class Count extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('wapinet_count', array($this, 'getCount')),
-        );
+        return [
+            new \Twig_SimpleFilter('wapinet_count', [$this, 'getCount']),
+        ];
     }
 
     /**
@@ -22,7 +22,7 @@ class Count extends \Twig_Extension
      */
     public function getCount($count)
     {
-        return number_format($count, 0, ',', ' ');
+        return \number_format($count, 0, ',', ' ');
     }
 
     /**

@@ -198,6 +198,9 @@ services:
     html_validator:
         class: WapinetBundle\Helper\HtmlValidator
 
+    ginfo:
+        class: WapinetBundle\Helper\Ginfo
+
     php_validator:
         public: true
         class: WapinetBundle\Helper\PhpValidator
