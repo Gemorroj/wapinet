@@ -40,7 +40,7 @@
         "liip/imagine-bundle": "^1.9",
         "gregwar/captcha-bundle": "^2.0",
         "tufanbarisyildirim/php-apk-parser": "dev-master",
-        "geoip2/geoip2": "^2.8",
+        "geoip2/geoip2": "^2.9",
         "christeredvartsen/php-bittorrent": "^1.1",
         "cypresslab/gitelephant": "^1.1",
         "seostats/seostats": "^2.5@dev",
