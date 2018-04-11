@@ -63,7 +63,7 @@ class BrowserInfoController extends Controller
     {
         $proxy = $this->getProxy($request);
         if (null !== $proxy) {
-            $proxyHost = array();
+            $proxyHost = [];
             foreach(\explode(',', $proxy) as $v) {
                 $proxyHost[] = \gethostbyaddr(\trim($v));
             }
@@ -101,7 +101,7 @@ class BrowserInfoController extends Controller
         $headers = clone $request->headers;
         $headers->remove('X-Php-Ob-Level');
 
-        return $this->render('@Wapinet/BrowserInfo/index.html.twig', array(
+        return $this->render('@Wapinet/BrowserInfo/index.html.twig', [
             'user_agent' => $request->server->get('HTTP_USER_AGENT'),
             'phone_number' => $this->getPhoneNumber($request),
             'ip' => $request->server->get('REMOTE_ADDR'),
@@ -121,6 +121,6 @@ class BrowserInfoController extends Controller
             'charset' => $request->server->get('HTTP_ACCEPT_CHARSET'),
             'dnt' => $request->server->get('HTTP_DNT'),
             'all' => $headers,
-        ));
+        ]);
     }
 }

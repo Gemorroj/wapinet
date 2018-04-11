@@ -51,7 +51,7 @@ class SyntaxController extends Controller
      */
     protected function detectEncoding($source)
     {
-        return \mb_detect_encoding($source, array('UTF-8', 'Windows-1251', 'KOI8-R', 'CP866', 'ISO-8859-1', 'US-ASCII'), true);
+        return \mb_detect_encoding($source, ['UTF-8', 'Windows-1251', 'KOI8-R', 'CP866', 'ISO-8859-1', 'US-ASCII'], true);
     }
 
     /**
@@ -113,6 +113,18 @@ class SyntaxController extends Controller
      */
     protected function xhtmlCode($source)
     {
-        return \str_replace(array('&nbsp;', '<code>', '</code>', '<br />'), array(' ', '', '', "\n"), \preg_replace('#color="(.*?)"#', 'style="color: $1"', \str_replace(array('<font ', '</font>'), array('<span ', '</span>'), \highlight_string($source, true))));
+        return \str_replace(
+            ['&nbsp;', '<code>', '</code>', '<br />'],
+            [' ', '', '', "\n"],
+            \preg_replace(
+                '#color="(.*?)"#',
+                'style="color: $1"',
+                \str_replace(
+                    ['<font ', '</font>'],
+                    ['<span ', '</span>'],
+                    \highlight_string($source, true)
+                )
+            )
+        );
     }
 }

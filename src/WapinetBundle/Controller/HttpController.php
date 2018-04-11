@@ -27,10 +27,10 @@ class HttpController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('@Wapinet/Http/index.html.twig', array(
+        return $this->render('@Wapinet/Http/index.html.twig', [
             'form' => $form->createView(),
             'result' => $result,
-        ));
+        ]);
     }
 
 

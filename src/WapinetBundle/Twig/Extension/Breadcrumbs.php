@@ -23,22 +23,22 @@ class Breadcrumbs extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('wapinet_breadcrumbs', array($this, 'getBreadcrumbs'), array('is_safe' => array('html'))),
-        );
+        return [
+            new \Twig_SimpleFunction('wapinet_breadcrumbs', [$this, 'getBreadcrumbs'], ['is_safe' => ['html']]),
+        ];
     }
 
     /**
      * @param array $options
      * @return string
      */
-    public function getBreadcrumbs(array $options = array())
+    public function getBreadcrumbs(array $options = [])
     {
         if (!$options) {
             return  '';
         }
 
-        \ksort($options, SORT_NUMERIC);
+        \ksort($options, \SORT_NUMERIC);
 
         $out = '<div data-role="navbar" data-iconpos="left"><ul>';
         foreach ($options as $key => $value) {

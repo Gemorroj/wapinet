@@ -25,16 +25,16 @@ class Panel extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('wapinet_panel', array($this, 'getPanel')),
-        );
+        return [
+            new \Twig_SimpleFunction('wapinet_panel', [$this, 'getPanel']),
+        ];
     }
 
     /**
      * @param array $options
      * @return array
      */
-    public function getPanel(array $options = array())
+    public function getPanel(array $options = [])
     {
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
         if (\is_object($user) && $user instanceof User) {

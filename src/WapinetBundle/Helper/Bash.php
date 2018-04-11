@@ -40,7 +40,7 @@ class Bash
         }
 
         $content = \mb_convert_encoding($response->getContent(), 'UTF-8', 'Windows-1251');
-        $content = \str_replace(array("\n", "\r", "\t", '<br>'), array('', '', '', "\r\n"), $content);
+        $content = \str_replace(["\n", "\r", "\t", '<br>'], ['', '', '', "\r\n"], $content);
 
         // количество цитат на странице
         $maxPerPage = 50;
@@ -56,7 +56,7 @@ class Bash
         \preg_match_all('/(?:<div class="text">+)(.*?)(?:<\/div>+)/is', $content, $matchItems, PREG_SET_ORDER);
 
         // заносим цитаты в массив
-        $items = array();
+        $items = [];
         foreach($matchItems as $v) {
             $items[] = \strip_tags($v[1]);
         }

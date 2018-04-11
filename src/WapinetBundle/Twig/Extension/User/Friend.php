@@ -27,11 +27,11 @@ class Friend extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('wapinet_user_is_friends', array($this, 'isFriends')),
-            new \Twig_SimpleFunction('wapinet_user_count_friends', array($this, 'countFriends')),
-            new \Twig_SimpleFunction('wapinet_user_count_online_friends', array($this, 'countOnlineFriends')),
-        );
+        return [
+            new \Twig_SimpleFunction('wapinet_user_is_friends', [$this, 'isFriends']),
+            new \Twig_SimpleFunction('wapinet_user_count_friends', [$this, 'countFriends']),
+            new \Twig_SimpleFunction('wapinet_user_count_online_friends', [$this, 'countOnlineFriends']),
+        ];
     }
 
     /**

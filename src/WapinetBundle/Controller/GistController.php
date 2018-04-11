@@ -127,20 +127,19 @@ class GistController extends Controller
      */
     public function viewAction(Gist $gist)
     {
-        return $this->render('@Wapinet/Gist/view.html.twig', array(
+        return $this->render('@Wapinet/Gist/view.html.twig', [
             'gist' => $gist,
-        ));
+        ]);
     }
 
 
     /**
-     * @param Request $request
      * @param Gist $gist
      *
      * @throws AccessDeniedException|NotFoundHttpException
      * @return RedirectResponse|JsonResponse
      */
-    public function deleteAction(Request $request, Gist $gist)
+    public function deleteAction(Gist $gist)
     {
         $this->denyAccessUnlessGranted('DELETE', $gist);
 
@@ -150,7 +149,7 @@ class GistController extends Controller
         $em->flush();
 
         // переадресация на главную
-        $url = $this->generateUrl('gist_index', array(), Router::ABSOLUTE_URL);
+        $url = $this->generateUrl('gist_index', [], Router::ABSOLUTE_URL);
 
         return $this->redirect($url);
     }

@@ -31,10 +31,10 @@ class PhpObfuscatorController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('@Wapinet/PhpObfuscator/index.html.twig', array(
+        return $this->render('@Wapinet/PhpObfuscator/index.html.twig', [
             'form' => $form->createView(),
             'result' => $result,
-        ));
+        ]);
     }
 
     /**

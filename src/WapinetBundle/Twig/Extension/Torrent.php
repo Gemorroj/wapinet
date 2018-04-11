@@ -24,9 +24,9 @@ class Torrent extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('wapinet_torrent_list', array($this, 'getList')),
-        );
+        return [
+            new \Twig_SimpleFunction('wapinet_torrent_list', [$this, 'getList']),
+        ];
     }
 
 
@@ -42,23 +42,23 @@ class Torrent extends \Twig_Extension
         try {
             $data = $torrent->decodeFile($file);
         } catch (\Exception $e) {
-            $this->container->get('logger')->warning($e->getMessage(), array($e));
+            $this->container->get('logger')->warning($e->getMessage(), [$e]);
             return null;
         }
 
-        $list = array();
+        $list = [];
         if (isset($data['info']['files'])) {
             foreach ($data['info']['files'] as $entry) {
-                $list[] = array(
+                $list[] = [
                     'path' => \implode('/', $entry['path']),
                     'size' => $entry['length'],
-                );
+                ];
             }
         } else if (isset($data['info']['name'], $data['info']['length'])) {
-            $list[] = array(
+            $list[] = [
                 'path' => $data['info']['name'],
                 'size' => $data['info']['length'],
-            );
+            ];
         }
 
         return $list;

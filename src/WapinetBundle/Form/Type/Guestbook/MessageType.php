@@ -3,10 +3,10 @@ namespace WapinetBundle\Form\Type\Guestbook;
 
 use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use WapinetBundle\Entity\Guestbook;
 
@@ -36,10 +36,10 @@ class MessageType extends AbstractType
         parent::buildForm($builder, $options);
 
         if (false === $this->container->get('security.authorization_checker')->isGranted($this->container->getParameter('wapinet_role_nocaptcha'))) {
-            $builder->add('captcha', CaptchaType::class, array('required' => true, 'label' => 'Код'));
+            $builder->add('captcha', CaptchaType::class, ['required' => true, 'label' => 'Код']);
         }
-        $builder->add('message', TextareaType::class, array('attr' => array('placeholder' => 'Сообщение'), 'required' => true, 'label' => false));
-        $builder->add('submit', SubmitType::class, array('label' => 'Написать'));
+        $builder->add('message', TextareaType::class, ['attr' => ['placeholder' => 'Сообщение'], 'required' => true, 'label' => false]);
+        $builder->add('submit', SubmitType::class, ['label' => 'Написать']);
     }
 
 
@@ -48,9 +48,9 @@ class MessageType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => Guestbook::class,
-        ));
+        ]);
     }
 
 

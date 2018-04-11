@@ -93,16 +93,16 @@ class Subscriber extends \ArrayObject
      */
     public function getIterator()
     {
-        return new \ArrayIterator(array(
-            'emailNews' => array(
+        return new \ArrayIterator([
+            'emailNews' => [
                 'name' => 'Новости',
                 'enabled' => $this->getEmailNews(),
-            ),
-            'emailFriends =' => array(
+            ],
+            'emailFriends =' => [
                 'name' => 'События друзей',
                 'enabled' => $this->getEmailFriends(),
-            ),
-        ));
+            ],
+        ]);
     }
 
     /**

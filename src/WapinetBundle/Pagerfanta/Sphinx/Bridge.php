@@ -2,9 +2,9 @@
 namespace WapinetBundle\Pagerfanta\Sphinx;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Foolz\SphinxQL\Drivers\ResultSetInterface;
 use Pagerfanta\Pagerfanta;
-use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -56,7 +56,7 @@ class Bridge
      *
      * @var array Discriminator dependant repositories
      */
-    protected $discriminatorRepositories = array();
+    protected $discriminatorRepositories = [];
 
     /**
      * @var ContainerInterface
@@ -90,8 +90,8 @@ class Bridge
      */
     protected function _extractPksFromResults()
     {
-        $matches = isset($this->results['matches']) ? $this->results['matches'] : array();
-        $pks = array();
+        $matches = isset($this->results['matches']) ? $this->results['matches'] : [];
+        $pks = [];
 
         foreach ($matches as $match) {
             $pks[] = $match['id'];
@@ -179,10 +179,10 @@ class Bridge
      */
     public function setDiscriminatorRepository($discriminatorValue, $repositoryClass, $entityManager = 'default')
     {
-        $this->discriminatorRepositories[$discriminatorValue] = array(
+        $this->discriminatorRepositories[$discriminatorValue] = [
             'class' => $repositoryClass,
-            'em' => $entityManager
-        );
+            'em' => $entityManager,
+        ];
 
         return $this;
     }
@@ -196,17 +196,17 @@ class Bridge
     public function setDiscriminatorRepositories(array $repositories)
     {
         foreach ($repositories as $discriminatorColumn => $data) {
-            if (is_array($data)) {
-                $params = array(
+            if (\is_array($data)) {
+                $params = [
                     'discriminatorValue'    => $discriminatorColumn,
                     'class'                 => $data['class'],
-                );
+                ];
 
-                if (key_exists('em', $data)) {
+                if (\key_exists('em', $data)) {
                     $params['em'] = $data['em'];
                 }
 
-                call_user_func_array(array($this, 'setDiscriminatorRepository'), $params);
+                \call_user_func_array([$this, 'setDiscriminatorRepository'], $params);
             } else {
                 $this->setDiscriminatorRepository($discriminatorColumn, $data);
             }
@@ -225,10 +225,10 @@ class Bridge
      */
     public function setSphinxResult(ResultSetInterface $result, ResultSetInterface $resultMeta)
     {
-        $this->results = array(
+        $this->results = [
             'matches' => $result->fetchAllAssoc(),
             'meta' => $this->parseMeta($resultMeta),
-        );
+        ];
 
         return $this;
     }
@@ -240,7 +240,7 @@ class Bridge
      */
     private function parseMeta(ResultSetInterface $resultMeta)
     {
-        $data = array();
+        $data = [];
 
         foreach ($resultMeta as $value) {
             $data[$value['Variable_name']] = $value['Value'];
@@ -263,7 +263,7 @@ class Bridge
             throw new \RuntimeException('You should define either a repository class, either discriminator');
         }
 
-        if (is_null($this->results)) {
+        if (null === $this->results) {
             throw new \RuntimeException('You should define sphinx results on '.__CLASS__);
         }
 
@@ -286,11 +286,11 @@ class Bridge
         $rawResults = $this->results;
 
         if (empty($rawResults) || empty($rawResults['matches'])) {
-            return array();
+            return [];
         }
 
-        $results = array();
-        $usedDiscriminators = array();
+        $results = [];
+        $usedDiscriminators = [];
 
         /**
          * Collect discriminators and their records
@@ -298,14 +298,14 @@ class Bridge
         foreach ($rawResults['matches'] as $row) {
             $id = $row['id'];
 
-            if (!key_exists($this->discriminatorColumn, $row['attrs'])) {
+            if (!\key_exists($this->discriminatorColumn, $row['attrs'])) {
                 throw new \UnexpectedValueException('Missing discriminator column in sphinx result entry');
             }
 
             $rowDiscriminator = $row['attrs'][$this->discriminatorColumn];
 
-            if (!key_exists($rowDiscriminator, $usedDiscriminators)) {
-                $usedDiscriminators[$rowDiscriminator] = array();
+            if (!\key_exists($rowDiscriminator, $usedDiscriminators)) {
+                $usedDiscriminators[$rowDiscriminator] = [];
             }
 
             $results[$id] = null;
@@ -319,7 +319,7 @@ class Bridge
         foreach ($usedDiscriminators as $discriminatorValue => $discriminatorResults) {
             $qb = $this->getDiscriminatorQuery($discriminatorValue);
 
-            $primaryKeys = array_keys($discriminatorResults);
+            $primaryKeys = \array_keys($discriminatorResults);
 
             $query = $qb->where($qb->expr()->in('r.'.$this->pkColumn, $primaryKeys))->getQuery();
 
@@ -338,7 +338,7 @@ class Bridge
     {
         $pks = $this->_extractPksFromResults();
 
-        $results = array();
+        $results = [];
 
         if (false === empty($pks)) {
             $qb = $this->getQuery();
@@ -374,7 +374,7 @@ class Bridge
 
         $repositoryClass = $discriminatorData['class'];
 
-        return $qb->select('r') ->from($repositoryClass, sprintf('r INDEX BY r.%s', $this->pkColumn));
+        return $qb->select('r') ->from($repositoryClass, \sprintf('r INDEX BY r.%s', $this->pkColumn));
     }
 
     /**
@@ -384,7 +384,7 @@ class Bridge
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        return $qb->select('r') ->from($this->repositoryClass, sprintf('r INDEX BY r.%s', $this->pkColumn));
+        return $qb->select('r') ->from($this->repositoryClass, \sprintf('r INDEX BY r.%s', $this->pkColumn));
 
     }
 
@@ -404,7 +404,7 @@ class Bridge
      */
     public function getQuery()
     {
-        if ($this->query == null) {
+        if ($this->query === null) {
             return $this->getDefaultQuery();
         }
 

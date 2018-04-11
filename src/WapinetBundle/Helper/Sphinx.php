@@ -1,8 +1,8 @@
 <?php
 namespace WapinetBundle\Helper;
 
-use Foolz\SphinxQL\SphinxQL;
 use Foolz\SphinxQL\Drivers\Pdo\Connection;
+use Foolz\SphinxQL\SphinxQL;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use WapinetBundle\Pagerfanta\Sphinx\Bridge;
 
@@ -35,11 +35,11 @@ class Sphinx
     public function __construct(ContainerInterface $container)
     {
         $this->connection = new Connection();
-        $this->connection->setParams(array(
+        $this->connection->setParams([
             'host' => $container->getParameter('sphinx_host'),
             'port' => $container->getParameter('sphinx_port'),
             'charset' => 'utf8',
-        ));
+        ]);
         $this->maxPerPage = $container->getParameter('wapinet_paginate_maxperpage');
 
         $this->container = $container;

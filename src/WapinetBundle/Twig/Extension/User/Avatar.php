@@ -13,9 +13,9 @@ class Avatar extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('wapinet_user_get_avatar_url', array($this, 'getAvatarUrl')),
-        );
+        return [
+            new \Twig_SimpleFunction('wapinet_user_get_avatar_url', [$this, 'getAvatarUrl']),
+        ];
     }
 
     /**

@@ -82,7 +82,7 @@ class AudioTagsController extends Controller
         $form = $this->createForm(AudioTagsEditType::class);
 
         $info = $this->getInfo($fileName);
-        $comments = isset($info['comments']) ? $info['comments'] : array();
+        $comments = isset($info['comments']) ? $info['comments'] : [];
 
         $this->setFormData($form, $comments);
         $originalForm = clone $form; //hack stupid symfony
@@ -97,7 +97,7 @@ class AudioTagsController extends Controller
 
                     $form = $originalForm;
                     $info = $this->getInfo($fileName);
-                    $comments = isset($info['comments']) ? $info['comments'] : array();
+                    $comments = isset($info['comments']) ? $info['comments'] : [];
                     $this->setFormData($form, $comments);
                 }
             }
@@ -262,7 +262,7 @@ class AudioTagsController extends Controller
                 switch ($info['audio']['dataformat']) {
                     case 'flac':
                         // metaflac is not (yet) compatible with OggFLAC files
-                        // $AllowedTagFormats = array('metaflac');
+                        // $AllowedTagFormats = ['metaflac'];
                         break;
                     case 'vorbis':
                         return array('vorbiscomment');
@@ -274,7 +274,7 @@ class AudioTagsController extends Controller
                 break;
         }
 
-        return array();
+        return [];
     }
 
 

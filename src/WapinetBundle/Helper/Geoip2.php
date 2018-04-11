@@ -25,7 +25,7 @@ class Geoip2
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->reader = new Reader($container->getParameter('wapinet_geoip2_country_path'), array('ru'));
+        $this->reader = new Reader($container->getParameter('wapinet_geoip2_country_path'), ['ru']);
     }
 
     /**

@@ -52,10 +52,10 @@ class FriendRepository extends EntityRepository
      */
     public function getFriend(User $user, User $friend)
     {
-        $isFriend = $this->findOneBy(array(
+        $isFriend = $this->findOneBy([
             'user' => $user,
             'friend' => $friend,
-        ));
+        ]);
 
         return $isFriend;
     }

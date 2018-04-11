@@ -18,9 +18,9 @@ class BashController extends Controller
         $page = $request->get('page');
         $items = $bashHelper->getPage($page);
 
-        $response = $this->render('@Wapinet/Bash/index.html.twig', array(
+        $response = $this->render('@Wapinet/Bash/index.html.twig', [
             'pagerfanta' => $items,
-        ));
+        ]);
         $response->setMaxAge(3600);
         $response->setSharedMaxAge(3600);
 

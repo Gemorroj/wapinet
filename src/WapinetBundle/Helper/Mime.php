@@ -38,7 +38,7 @@ class Mime
             throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
         }
 
-        $mime = array(
+        $mime = [
             'mod' => 'audio/mod',
             'it' => 'audio/it',
             'amr' => 'audio/3gpp',
@@ -50,7 +50,7 @@ class Mime
             '3gpp' => 'video/3gpp',
             'tgz' => 'application/gzip',
             'gz' => 'application/gzip',
-        );
+        ];
         foreach (\explode("\n", $response->getContent()) as $x) {
             if (isset($x[0]) && $x[0] !== '#' && \preg_match_all('#([^\s]+)#', $x, $out) && isset($out[1]) && ($c = \count($out[1])) > 1) {
                 for ($i = 1; $i < $c; $i++) {

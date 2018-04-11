@@ -30,12 +30,12 @@ class EventFriends implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             FriendEvent::FRIEND_ADD => 'friendAdd',
             FriendEvent::FRIEND_DELETE => 'friendDelete',
             FileEvent::FILE_ADD => 'fileAdd',
             GistEvent::GIST_ADD => 'gistAdd',
-        );
+        ];
     }
 
 
@@ -52,9 +52,9 @@ class EventFriends implements EventSubscriberInterface
             $entityEvent->setSubject('Вас добавил в друзья ' . $event->getUser()->getUsername() . '.');
         }
         $entityEvent->setTemplate('friend_add');
-        $entityEvent->setVariables(array(
+        $entityEvent->setVariables([
             'friend' => $event->getUser(),
-        ));
+        ]);
         $entityEvent->setNeedEmail($event->getFriend()->getSubscriber()->getEmailFriends());
         $entityEvent->setUser($event->getFriend());
         $this->em->persist($entityEvent);
@@ -69,10 +69,10 @@ class EventFriends implements EventSubscriberInterface
                 $entityEvent->setSubject('Ваш друг ' . $event->getUser()->getUsername() . ' добавил в друзья ' . $event->getFriend()->getUsername() . '.');
             }
             $entityEvent->setTemplate('friend_friend_add');
-            $entityEvent->setVariables(array(
+            $entityEvent->setVariables([
                 'friend' => $event->getUser(),
                 'friend_friend' => $event->getFriend(),
-            ));
+            ]);
             $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()->getEmailFriends());
             $entityEvent->setUser($friend->getUser());
 
@@ -95,9 +95,9 @@ class EventFriends implements EventSubscriberInterface
             $entityEvent->setSubject('Вас удалил из друзей ' . $event->getUser()->getUsername() . '.');
         }
         $entityEvent->setTemplate('friend_delete');
-        $entityEvent->setVariables(array(
+        $entityEvent->setVariables([
             'friend' => $event->getUser(),
-        ));
+        ]);
         $entityEvent->setNeedEmail($event->getFriend()->getSubscriber()->getEmailFriends());
         $entityEvent->setUser($event->getFriend());
         $this->em->persist($entityEvent);
@@ -111,10 +111,10 @@ class EventFriends implements EventSubscriberInterface
                 $entityEvent->setSubject('Ваш друг ' . $event->getUser()->getUsername() . ' удалил из друзей ' . $event->getFriend()->getUsername() . '.');
             }
             $entityEvent->setTemplate('friend_friend_delete');
-            $entityEvent->setVariables(array(
+            $entityEvent->setVariables([
                 'friend' => $event->getUser(),
                 'friend_friend' => $event->getFriend(),
-            ));
+            ]);
             $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()->getEmailFriends());
             $entityEvent->setUser($friend->getUser());
 
@@ -144,10 +144,10 @@ class EventFriends implements EventSubscriberInterface
                 $entityEvent->setSubject('Ваш друг ' . $user->getUsername() . ' добавил файл ' . $event->getFile()->getOriginalFileName() . '.');
             }
             $entityEvent->setTemplate('friend_file_add');
-            $entityEvent->setVariables(array(
+            $entityEvent->setVariables([
                 'friend' => $user,
                 'file' => $event->getFile(),
-            ));
+            ]);
             $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()->getEmailFriends());
             $entityEvent->setUser($friend->getUser());
 
@@ -176,10 +176,10 @@ class EventFriends implements EventSubscriberInterface
                 $entityEvent->setSubject('Ваш друг ' . $user->getUsername() . ' добавил в блог сообщение с темой ' . $event->getGist()->getSubject() . '.');
             }
             $entityEvent->setTemplate('friend_gist_add');
-            $entityEvent->setVariables(array(
+            $entityEvent->setVariables([
                 'friend' => $user,
                 'gist' => $event->getGist(),
-            ));
+            ]);
             $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()->getEmailFriends());
             $entityEvent->setUser($friend->getUser());
 

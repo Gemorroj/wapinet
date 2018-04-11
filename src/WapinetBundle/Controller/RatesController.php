@@ -25,11 +25,11 @@ class RatesController extends Controller
     {
         $rates = $ratesHelper->getRates($country);
 
-        return $this->render('@Wapinet/Rates/show.html.twig', array(
+        return $this->render('@Wapinet/Rates/show.html.twig', [
             'country' => $country,
             'name' => $ratesHelper->getName($country),
             'rates' => $rates['rates'],
             'date' => $rates['date'],
-        ));
+        ]);
     }
 }

@@ -82,7 +82,7 @@ class Rates
         }
 
         $obj = \simplexml_load_string($response->getContent());
-        $rates = array();
+        $rates = [];
         foreach ($obj->Valute as $v) {
             $rates[] = array(
                 'name' => (string)$v->Name,
@@ -113,7 +113,7 @@ class Rates
         }
 
         $obj = \simplexml_load_string($response->getContent());
-        $rates = array();
+        $rates = [];
         foreach ($obj->Currency as $v) {
             $rates[] = array(
                 'name' => (string)$v->Name,
@@ -144,7 +144,7 @@ class Rates
         }
 
         $obj = \simplexml_load_string($response->getContent());
-        $rates = array();
+        $rates = [];
         foreach ($obj->item as $v) {
             $rates[] = array(
                 'name' => (string)$v->name,
@@ -175,7 +175,7 @@ class Rates
         }
 
         $obj = \simplexml_load_string($response->getContent());
-        $rates = array();
+        $rates = [];
         foreach ($obj->channel->item as $v) {
             $rates[] = array(
                 'name' => $this->getKzRateName((string)$v->title),

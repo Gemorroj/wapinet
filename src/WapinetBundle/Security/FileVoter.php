@@ -21,7 +21,7 @@ class FileVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, array(self::DELETE, self::EDIT))) {
+        if (!\in_array($attribute, [self::DELETE, self::EDIT])) {
             return false;
         }
 
@@ -43,7 +43,7 @@ class FileVoter extends Voter
             return true;
         }
 
-        if ($this->decisionManager->decide($token, array('ROLE_ADMIN'))) {
+        if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
             return true;
         }
 

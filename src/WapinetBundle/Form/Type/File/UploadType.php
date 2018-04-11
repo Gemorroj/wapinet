@@ -3,15 +3,15 @@ namespace WapinetBundle\Form\Type\File;
 
 use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType as CorePasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use WapinetBundle\Entity\File;
-use WapinetBundle\Form\Type\TagsType;
 use WapinetBundle\Form\Type\FileUrlType;
+use WapinetBundle\Form\Type\TagsType;
 
 /**
  * Upload
@@ -59,9 +59,9 @@ class UploadType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => File::class,
-        ));
+        ]);
     }
 
     /**

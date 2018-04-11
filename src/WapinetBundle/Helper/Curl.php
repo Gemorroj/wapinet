@@ -1,10 +1,10 @@
 <?php
 namespace WapinetBundle\Helper;
 
-use Symfony\Component\HttpFoundation\Response;
-use WapinetBundle\Exception\RequestException;
-use Symfony\Component\HttpKernel\Exception\LengthRequiredHttpException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\LengthRequiredHttpException;
+use WapinetBundle\Exception\RequestException;
 
 /**
  * CURL хэлпер
@@ -24,14 +24,14 @@ class Curl
     /**
      * @var array
      */
-    protected $browserHeaders = array(
+    protected $browserHeaders = [
         'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Connection: Close',
         'Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3',
         'User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0',
-    );
-    protected $headers = array();
-    protected $postData = array();
+    ];
+    protected $headers = [];
+    protected $postData = [];
 
 
     /**
@@ -161,7 +161,7 @@ class Curl
             return \http_parse_headers($rawHeaders);
         }
 
-        $headers = array();
+        $headers = [];
         $key = '';
 
         foreach (\explode("\n", $rawHeaders) as $h) {
@@ -171,9 +171,9 @@ class Curl
                 if (!isset($headers[$h[0]])) {
                     $headers[$h[0]] = \trim($h[1]);
                 } elseif (\is_array($headers[$h[0]])) {
-                    $headers[$h[0]] = \array_merge($headers[$h[0]], array(\trim($h[1])));
+                    $headers[$h[0]] = \array_merge($headers[$h[0]], [\trim($h[1])]);
                 } else {
-                    $headers[$h[0]] = \array_merge(array($headers[$h[0]]), array(\trim($h[1])));
+                    $headers[$h[0]] = \array_merge([$headers[$h[0]]], [\trim($h[1])]);
                 }
 
                 $key = $h[0];

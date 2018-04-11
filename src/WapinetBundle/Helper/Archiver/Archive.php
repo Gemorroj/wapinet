@@ -58,8 +58,8 @@ abstract class Archive
      */
     private function sortFiles(\RecursiveIteratorIterator $objects)
     {
-        $result = array();
-        $tmp = array();
+        $result = [];
+        $tmp = [];
         foreach ($objects as $name => $object) {
             $object->setInfoClass(ArchiveFileInfo::class);
 

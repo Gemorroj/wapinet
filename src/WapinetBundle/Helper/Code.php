@@ -2,6 +2,7 @@
 namespace WapinetBundle\Helper;
 
 use WapinetBundle\Exception\CodeException;
+
 /**
  * Code хэлпер
  */
@@ -12,7 +13,7 @@ class Code
      */
     public function getAlgorithms()
     {
-        return array(
+        return [
             'base64_encode' => 'Base64 encode',
             'base64_decode' => 'Base64 decode',
             'json_encode' => 'JSON encode',
@@ -24,7 +25,7 @@ class Code
             'htmlspecialchars' => 'htmlspecialchars',
             'mb_strtolower' => 'Lower chars',
             'mb_strtoupper' => 'Upper chars',
-        );
+        ];
     }
 
 
@@ -42,7 +43,7 @@ class Code
 
         $result = @$algorithm($string);
 
-        if (\in_array($algorithm, array('json_decode', 'json_encode'), true)) {
+        if (\in_array($algorithm, ['json_decode', 'json_encode'], true)) {
             $this->checkJsonResult($result);
         } else {
             $this->checkResult($result);

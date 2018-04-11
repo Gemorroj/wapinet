@@ -2,15 +2,15 @@
 
 namespace WapinetBundle\Form\Type;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use WapinetBundle\Form\DataTransformer\FileUrlDataTransformer;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 class FileUrlType extends AbstractType
 {
@@ -41,21 +41,21 @@ class FileUrlType extends AbstractType
             $options['required']
         );
 
-        $attrFile = array('placeholder' => 'Файл');
+        $attrFile = ['placeholder' => 'Файл'];
         if ($options['accept']) {
-            $attrFile = \array_merge($attrFile, array('accept' => $options['accept']));
+            $attrFile = \array_merge($attrFile, ['accept' => $options['accept']]);
         }
 
-        $builder->add('file', FileType::class, array('attr' => $attrFile, 'label' => false, 'required' => false));
-        $builder->add('url', UrlType::class, array('attr' => array('placeholder' => 'Ссылка'), 'label' => false, 'required' => false));
+        $builder->add('file', FileType::class, ['attr' => $attrFile, 'label' => false, 'required' => false]);
+        $builder->add('url', UrlType::class, ['attr' => ['placeholder' => 'Ссылка'], 'label' => false, 'required' => false]);
 
 
         if ($options['delete_button']) {
-            $builder->add('file_url_delete', CheckboxType::class, array(
-                'attr' => array('data-mini' => 'true'),
+            $builder->add('file_url_delete', CheckboxType::class, [
+                'attr' => ['data-mini' => 'true'],
                 'required' => false,
-                'label' => 'Удалить'
-            ));
+                'label' => 'Удалить',
+            ]);
         }
 
         $builder->addViewTransformer($transformer);
@@ -68,11 +68,11 @@ class FileUrlType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'required' => false,
             'delete_button' => false,
             'accept' => false,
-        ));
+        ]);
     }
 
     /**

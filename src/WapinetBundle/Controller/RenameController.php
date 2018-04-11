@@ -34,9 +34,9 @@ class RenameController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('@Wapinet/Rename/index.html.twig', array(
+        return $this->render('@Wapinet/Rename/index.html.twig', [
             'form' => $form->createView()
-        ));
+        ]);
     }
 
     /**

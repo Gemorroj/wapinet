@@ -11,7 +11,7 @@ class Meta
     /**
      * @var array
      */
-    protected $meta = array();
+    protected $meta = [];
 
     /**
      * @param string $key

@@ -380,7 +380,10 @@ class User extends BaseUser
      */
     public static function getSexChoices()
     {
-        return array(User::SEX_MALE => 'Мужской', User::SEX_FEMALE => 'Женский');
+        return [
+            User::SEX_MALE => 'Мужской',
+            User::SEX_FEMALE => 'Женский',
+        ];
     }
 
     /**

@@ -69,9 +69,9 @@ class TagRepository extends EntityRepository
 
         $names = \array_unique($names);
 
-        $tags = $this->findBy(array('name' => $names));
+        $tags = $this->findBy(['name' => $names]);
 
-        $loadedNames = array();
+        $loadedNames = [];
         /** @var Tag $loadedTag */
         foreach ($tags as $loadedTag) {
             $loadedNames[] = $loadedTag->getName();

@@ -41,11 +41,11 @@ class TranslateController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('@Wapinet/Translate/index.html.twig', array(
+        return $this->render('@Wapinet/Translate/index.html.twig', [
             'form' => $form->createView(),
             'result' => $result,
             'detectLangName' => $detectLangName,
-        ));
+        ]);
     }
 
 

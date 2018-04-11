@@ -1,9 +1,9 @@
 <?php
 namespace WapinetBundle\Helper;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use FFMpeg\FFProbe;
 use FFMpeg\FFMpeg as FFmpegOriginal;
+use FFMpeg\FFProbe;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class Ffmpeg
 {
@@ -32,23 +32,23 @@ class Ffmpeg
 
     private function createFfprobe()
     {
-        return FFProbe::create(array(
+        return FFProbe::create([
             'ffmpeg.binaries'  => $this->container->getParameter('wapinet.ffmpeg_path'),
             'ffprobe.binaries' => $this->container->getParameter('wapinet.ffprobe_path'),
             'timeout'          => $this->container->getParameter('wapinet.binary_timeout'),
             'ffmpeg.threads'   => $this->container->getParameter('wapinet.threads_count'),
-        ));
+        ]);
     }
 
 
     private function createFfmpeg()
     {
-        return FFmpegOriginal::create(array(
+        return FFmpegOriginal::create([
             'ffmpeg.binaries'  => $this->container->getParameter('wapinet.ffmpeg_path'),
             'ffprobe.binaries' => $this->container->getParameter('wapinet.ffprobe_path'),
             'timeout'          => $this->container->getParameter('wapinet.binary_timeout'),
             'ffmpeg.threads'   => $this->container->getParameter('wapinet.threads_count'),
-        ));
+        ]);
     }
 
 

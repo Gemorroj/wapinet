@@ -14,7 +14,7 @@ class Adapter implements AdapterInterface
     /**
      * @var array
      */
-    protected $array = array();
+    protected $array = [];
     /**
      * @var integer
      */
@@ -84,9 +84,9 @@ class Adapter implements AdapterInterface
      */
     public function getSlice($offset, $length)
     {
-        if ($offset >= count($this->array)) {
+        if ($offset >= \count($this->array)) {
             return $this->array;
         }
-        return array_slice($this->array, $offset, $length);
+        return \array_slice($this->array, $offset, $length);
     }
 }

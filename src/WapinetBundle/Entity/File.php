@@ -653,7 +653,7 @@ class File implements \Serializable
      */
     public function isArchive()
     {
-        return \in_array($this->getMimeType(), array(
+        return \in_array($this->getMimeType(), [
             'application/zip', // zip
             'application/x-rar-compressed', // rar
             'application/x-bzip', // bz
@@ -666,7 +666,7 @@ class File implements \Serializable
             'application/gzip', // gz
             'application/x-ace-compressed', // ace
             'application/x-lzh-compressed', // lzh
-        ), true);
+        ], true);
     }
 
     /**

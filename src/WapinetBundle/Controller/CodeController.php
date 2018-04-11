@@ -32,10 +32,10 @@ class CodeController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('@Wapinet/Code/index.html.twig', array(
+        return $this->render('@Wapinet/Code/index.html.twig', [
             'form' => $form->createView(),
-            'result' => $hash
-        ));
+            'result' => $hash,
+        ]);
     }
 
 

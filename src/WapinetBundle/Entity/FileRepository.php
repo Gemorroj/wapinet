@@ -27,12 +27,12 @@ class FileRepository extends EntityRepository
         ');
         $users->setMaxResults($maxUsers);
 
-        return array(
+        return [
             'count_files' => $countFiles->getSingleScalarResult(),
             'size_files' => $sizeFiles->getSingleScalarResult(),
             'count_views' => $countViews->getSingleScalarResult(),
             'users' => $users->getResult(),
-        );
+        ];
     }
 
 

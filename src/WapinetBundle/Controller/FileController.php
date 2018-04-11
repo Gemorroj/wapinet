@@ -483,10 +483,10 @@ class FileController extends Controller
         $em->flush();
 
         // переадресация на главную
-        $url = $this->generateUrl('file_index', array(), Router::ABSOLUTE_URL);
+        $url = $this->generateUrl('file_index', [], Router::ABSOLUTE_URL);
 
         if ($request->isXmlHttpRequest()) {
-            return new JsonResponse(array('url' => $url));
+            return new JsonResponse(['url' => $url]);
         }
 
         return $this->redirect($url);
@@ -620,7 +620,7 @@ class FileController extends Controller
                         // неавторизованных перенаправляем на главную обменника
                         $url = $this->generateUrl(
                             'file_index',
-                            array(),
+                            [],
                             Router::ABSOLUTE_URL
                         );
                     }
@@ -763,18 +763,18 @@ class FileController extends Controller
     {
         $term = \trim($request->get('term', ''));
         if ('' === $term) {
-            return new JsonResponse(array());
+            return new JsonResponse([]);
         }
 
         $exTerm = \explode(',', $term);
         $term = \ltrim(\end($exTerm));
         if ('' === $term) {
-            return new JsonResponse(array());
+            return new JsonResponse([]);
         }
 
         $tags = $this->getDoctrine()->getRepository(Tag::class)->findLikeName($term);
 
-        $result = array();
+        $result = [];
         foreach ($tags as $tag) {
             $result[] = $tag->getName();
         }

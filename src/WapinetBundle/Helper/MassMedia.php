@@ -39,7 +39,7 @@ class MassMedia
 
         $obj = \simplexml_load_string($response->getContent());
 
-        $news = array();
+        $news = [];
         foreach ($obj->channel->item as $v) {
             $photo = null;
             $video = null;
@@ -88,7 +88,7 @@ class MassMedia
 
         $obj = \simplexml_load_string($response->getContent());
 
-        $news = array();
+        $news = [];
         foreach ($obj->channel->item as $v) {
             $photo = null;
             $video = null;

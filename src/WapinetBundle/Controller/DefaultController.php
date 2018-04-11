@@ -41,7 +41,7 @@ class DefaultController extends Controller
             $this->getParameter('wapinet_git_log')
         );
 
-        return $this->render('@Wapinet/Default/log.html.twig', array('log' => $log));
+        return $this->render('@Wapinet/Default/log.html.twig', ['log' => $log]);
     }
 
     /**
@@ -51,9 +51,9 @@ class DefaultController extends Controller
     {
         return $this->render(
             '@Wapinet/Default/online.html.twig',
-            array(
-                'online' => $this->getDoctrine()->getRepository(Online::class)->findBy(array(), array('datetime' => 'DESC'))
-            )
+            [
+                'online' => $this->getDoctrine()->getRepository(Online::class)->findBy([], ['datetime' => 'DESC'])
+            ]
         );
     }
 

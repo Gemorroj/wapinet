@@ -24,12 +24,12 @@ class HoroscopeController extends Controller
     {
         $horoscope = $horoscopeHelper->getHoroscope($zodiac);
 
-        return $this->render('@Wapinet/Horoscope/show.html.twig', array(
+        return $this->render('@Wapinet/Horoscope/show.html.twig', [
             'zodiac' => $zodiac,
             'name' => $horoscopeHelper->getName($zodiac),
             'date' => $horoscope['date'],
             'horoscope' => $horoscope['horoscope'],
-        ));
+        ]);
     }
 
     /**
@@ -40,9 +40,9 @@ class HoroscopeController extends Controller
     {
         $horoscope = $horoscopeHelper->getHoroscopeDay();
 
-        return $this->render('@Wapinet/Horoscope/day.html.twig', array(
+        return $this->render('@Wapinet/Horoscope/day.html.twig', [
             'date' => $horoscope['date'],
             'horoscope' => $horoscope['horoscope'],
-        ));
+        ]);
     }
 }

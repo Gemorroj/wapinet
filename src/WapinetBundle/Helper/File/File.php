@@ -2,13 +2,10 @@
 namespace WapinetBundle\Helper\File;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use WapinetBundle\Entity\File as DataFile;
-use WapinetBundle\Entity\FileTags;
-use WapinetBundle\Entity\Tag;
 
 /**
  * File хэлпер
@@ -37,7 +34,7 @@ class File
         // скриншоты и сконвертированные видео
         $realPath = $file->getFile()->getRealPath();
         $this->container->get('filesystem')->remove(
-            array(
+            [
                 // $realPath, // сам файл удаляется entity менеджером
                 $realPath . '.png',
                 $realPath . '.jpg',
@@ -45,13 +42,13 @@ class File
                 $realPath . '.mp4.jpg',
                 $realPath . '.mp4.png',
                 $realPath . '.mp3',
-            )
+            ]
         );
 
         // кэш картинок
         $path = $this->container->get('vich_uploader.templating.helper.uploader_helper')->asset($file, 'file');
         $this->container->get('liip_imagine.cache.manager')->remove(
-            array(
+            [
                 $path,
                 $path . '.png',
                 $path . '.jpg',
@@ -59,7 +56,7 @@ class File
                 $path . '.mp4.jpg',
                 $path . '.mp4.png',
                 $path . '.mp3',
-            ),
+            ],
             'thumbnail'
         );
     }

@@ -23,10 +23,10 @@ class GuestbookController extends Controller
         $query = $guestbookManager->getListQuery();
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
-        return $this->render('@Wapinet/Guestbook/index.html.twig', array(
+        return $this->render('@Wapinet/Guestbook/index.html.twig', [
             'form' => $form->createView(),
             'pagerfanta' => $pagerfanta,
-        ));
+        ]);
     }
 
     /**
