@@ -33,32 +33,27 @@ class File
     {
         // скриншоты и сконвертированные видео
         $realPath = $file->getFile()->getRealPath();
-        $this->container->get('filesystem')->remove(
-            [
-                // $realPath, // сам файл удаляется entity менеджером
-                $realPath . '.png',
-                $realPath . '.jpg',
-                $realPath . '.mp4',
-                $realPath . '.mp4.jpg',
-                $realPath . '.mp4.png',
-                $realPath . '.mp3',
-            ]
-        );
+        $this->container->get('filesystem')->remove([
+            // $realPath, // сам файл удаляется entity менеджером
+            $realPath . '.png',
+            $realPath . '.jpg',
+            $realPath . '.mp4',
+            $realPath . '.mp4.jpg',
+            $realPath . '.mp4.png',
+            $realPath . '.mp3',
+        ]);
 
         // кэш картинок
         $path = $this->container->get('vich_uploader.templating.helper.uploader_helper')->asset($file, 'file');
-        $this->container->get('liip_imagine.cache.manager')->remove(
-            [
-                $path,
-                $path . '.png',
-                $path . '.jpg',
-                $path . '.mp4',
-                $path . '.mp4.jpg',
-                $path . '.mp4.png',
-                $path . '.mp3',
-            ],
-            'thumbnail'
-        );
+        $this->container->get('liip_imagine.cache.manager')->remove([
+            $path,
+            $path . '.png',
+            $path . '.jpg',
+            $path . '.mp4',
+            $path . '.mp4.jpg',
+            $path . '.mp4.png',
+            $path . '.mp3',
+        ], 'thumbnail');
     }
 
 

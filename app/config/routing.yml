@@ -13,7 +13,7 @@ gregwar_captcha_routing:
     prefix: /_gcbw
 
 _liip_imagine:
-    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+    resource: "@LiipImagineBundle/Resources/config/routing.yaml"
 
 easy_admin_bundle:
     #resource: "@EasyAdminBundle/Controller/"

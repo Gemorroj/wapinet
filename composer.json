@@ -37,7 +37,7 @@
         "white-october/pagerfanta-bundle": "^1.1",
         "james-heinrich/getid3": "^1.9",
         "vich/uploader-bundle": "^1.8",
-        "liip/imagine-bundle": "^1.9",
+        "liip/imagine-bundle": "^2.0@dev",
         "gregwar/captcha-bundle": "^2.0",
         "tufanbarisyildirim/php-apk-parser": "dev-master",
         "geoip2/geoip2": "^2.9",

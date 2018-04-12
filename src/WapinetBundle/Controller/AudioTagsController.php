@@ -40,19 +40,19 @@ class AudioTagsController extends Controller
 
                     $file = $this->saveFile($data);
 
-                    return $this->redirectToRoute('audio_tags_edit', array(
+                    return $this->redirectToRoute('audio_tags_edit', [
                         'fileName' => $file->getFilename(),
                         'originalFileName' => $data['file']->getClientOriginalName()
-                    ));
+                    ]);
                 }
             }
         } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('@Wapinet/AudioTags/index.html.twig', array(
+        return $this->render('@Wapinet/AudioTags/index.html.twig', [
             'form' => $form->createView()
-        ));
+        ]);
     }
 
 
@@ -77,7 +77,7 @@ class AudioTagsController extends Controller
      * @param string $originalFileName
      * @return Response
      */
-    public function editAction(Request $request, $fileName, $originalFileName)
+    public function editAction(Request $request, string $fileName, string $originalFileName)
     {
         $form = $this->createForm(AudioTagsEditType::class);
 
@@ -109,12 +109,12 @@ class AudioTagsController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('@Wapinet/AudioTags/edit.html.twig', array(
+        return $this->render('@Wapinet/AudioTags/edit.html.twig', [
             'form' => $form->createView(),
             'info' => $info,
             'originalFileName' => $originalFileName,
             'fileName' => $fileName,
-        ));
+        ]);
     }
 
 
@@ -124,7 +124,7 @@ class AudioTagsController extends Controller
      */
     protected function setFormData(FormInterface $form, array $tags)
     {
-        $data = array(
+        $data = [
             //'picture' => null,
             'title' => isset($tags['title'][0]) ? $tags['title'][0] : '',
             'album_artist' => isset($tags['album_artist'][0]) ? $tags['album_artist'][0] : (isset($tags['albumartist'][0]) ? $tags['albumartist'][0] : (isset($tags['band'][0]) ? $tags['band'][0] : '')),
@@ -135,7 +135,7 @@ class AudioTagsController extends Controller
             'url_user' => isset($tags['url_user'][0]) ? $tags['url_user'][0] : '',
             'genre' => isset($tags['genre'][0]) ? $tags['genre'][0] : '',
             'comment' => isset($tags['comment'][0]) ? $tags['comment'][0] : '',
-        );
+        ];
 
         if (isset($tags['picture'][0])) {
             $data['picture'] = new FileContent(
@@ -154,7 +154,7 @@ class AudioTagsController extends Controller
      *
      * @return array
      */
-    protected function getInfo($fileName)
+    protected function getInfo(string $fileName)
     {
         $getid3 = $this->get('getid3')->getId3();
         $info = $getid3->analyze($this->getFilePath($fileName));
@@ -180,7 +180,7 @@ class AudioTagsController extends Controller
         $writer->tagformats = $this->getAllowedTagFormats($info);
         $writer->filename = $this->getFilePath($fileName);
 
-        $writer->tag_data = array(
+        $writer->tag_data = [
             'title' => array($data['title']),
 
             'album_artist' => array($data['album_artist']),
@@ -200,7 +200,7 @@ class AudioTagsController extends Controller
             'genre' => array($data['genre']),
             'comment' => array($data['comment']),
             //'picture' => null,
-        );
+        ];
 
         $requestForm = $this->get('request_stack')->getCurrentRequest()->get($form->getName());
 
@@ -283,7 +283,7 @@ class AudioTagsController extends Controller
      * @param string $originalFileName
      * @return BinaryFileResponse
      */
-    public function downloadAction($fileName, $originalFileName)
+    public function downloadAction(string $fileName, string $originalFileName)
     {
         $file = new BinaryFileResponse($this->getFilePath($fileName));
 
@@ -300,7 +300,7 @@ class AudioTagsController extends Controller
      * @param string $fileName
      * @return string
      */
-    protected function getFilePath($fileName)
+    protected function getFilePath(string $fileName)
     {
         return $this->get('kernel')->getTmpDir() . \DIRECTORY_SEPARATOR . $fileName;
     }

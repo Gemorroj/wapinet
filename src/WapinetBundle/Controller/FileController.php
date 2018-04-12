@@ -58,7 +58,7 @@ class FileController extends Controller
     {
         $statistic = $this->getDoctrine()->getRepository(File::class)->getStatistic();
 
-        return $this->render('@Wapinet/File/statistic.html.twig', array('statistic' => $statistic));
+        return $this->render('@Wapinet/File/statistic.html.twig', ['statistic' => $statistic]);
     }
 
     /**
@@ -80,13 +80,13 @@ class FileController extends Controller
                 if ($form->isValid()) {
                     $data = $form->getData();
                     $key = \uniqid('', false);
-                    $session->set('file_search', array(
+                    $session->set('file_search', [
                         'key' => $key,
                         'data' => $data
-                    ));
+                    ]);
                 }
 
-                return $this->redirectToRoute('file_search', array('key' => $key));
+                return $this->redirectToRoute('file_search', ['key' => $key]);
             }
 
 
@@ -101,11 +101,11 @@ class FileController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('@Wapinet/File/search.html.twig', array(
+        return $this->render('@Wapinet/File/search.html.twig', [
             'form' => $form->createView(),
             'pagerfanta' => $pagerfanta,
             'key' => $key,
-        ));
+        ]);
     }
 
 
@@ -121,7 +121,7 @@ class FileController extends Controller
         $client = $this->get('sphinx');
         $sphinxQl = $client->select($page)
             ->from('files')
-            ->match(array('original_file_name', 'description', 'tag_name'), $data['search'])
+            ->match(['original_file_name', 'description', 'tag_name'], $data['search'])
         ;
 
         if ('date' === $data['sort']) {
@@ -162,9 +162,9 @@ class FileController extends Controller
             ->getHiddenQuery();
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
-        return $this->render('@Wapinet/File/list.html.twig', array(
+        return $this->render('@Wapinet/File/list.html.twig', [
             'pagerfanta' => $pagerfanta,
-        ));
+        ]);
     }
 
 
@@ -181,9 +181,9 @@ class FileController extends Controller
 
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
-        return $this->render('@Wapinet/File/tags.html.twig', array(
+        return $this->render('@Wapinet/File/tags.html.twig', [
             'pagerfanta' => $pagerfanta,
-        ));
+        ]);
     }
 
     /**
@@ -208,10 +208,10 @@ class FileController extends Controller
 
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
-        return $this->render('@Wapinet/File/tag.html.twig', array(
+        return $this->render('@Wapinet/File/tag.html.twig', [
             'pagerfanta' => $pagerfanta,
             'tag' => $tag,
-        ));
+        ]);
     }
 
 
@@ -237,10 +237,10 @@ class FileController extends Controller
 
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
-        return $this->render('@Wapinet/File/user.html.twig', array(
+        return $this->render('@Wapinet/File/user.html.twig', [
             'pagerfanta' => $pagerfanta,
             'user' => $user,
-        ));
+        ]);
     }
 
     /**
@@ -276,11 +276,11 @@ class FileController extends Controller
             );
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
-        return $this->render('@Wapinet/File/list.html.twig', array(
+        return $this->render('@Wapinet/File/list.html.twig', [
             'pagerfanta' => $pagerfanta,
             'date' => $date,
             'category' => $category,
-        ));
+        ]);
     }
 
     /**
@@ -323,7 +323,7 @@ class FileController extends Controller
     protected function viewFile(File $file)
     {
         $this->checkMeta($file);
-        $response = $this->render('@Wapinet/File/view.html.twig', array('file' => $file));
+        $response = $this->render('@Wapinet/File/view.html.twig', ['file' => $file]);
         $this->incrementViews($file);
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -347,7 +347,7 @@ class FileController extends Controller
         try {
             $meta = $this->get('file_meta')->setFile($file)->getFileMeta();
         } catch (\Exception $e) {
-            $this->get('logger')->warning('Не удалось получить мета-информацию из файла.', array($e));
+            $this->get('logger')->warning('Не удалось получить мета-информацию из файла.', [$e]);
         }
 
         $file->setMeta($meta);
@@ -381,10 +381,10 @@ class FileController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('@Wapinet/File/password.html.twig', array(
+        return $this->render('@Wapinet/File/password.html.twig', [
             'form' => $form->createView(),
             'id' => $file->getId(),
-        ));
+        ]);
     }
 
     /**
@@ -453,7 +453,7 @@ class FileController extends Controller
 
 
         // переадресация на файл
-        $url = $this->generateUrl('file_view', array('id' => $file->getId()), Router::ABSOLUTE_URL);
+        $url = $this->generateUrl('file_view', ['id' => $file->getId()], Router::ABSOLUTE_URL);
 
         return $this->redirect($url);
     }
@@ -516,7 +516,7 @@ class FileController extends Controller
                 if ($form->isValid()) {
                     $this->editFileData($request, $form->getData(), $oldFile);
 
-                    $url = $this->generateUrl('file_view', array('id' => $file->getId()), Router::ABSOLUTE_URL);
+                    $url = $this->generateUrl('file_view', ['id' => $file->getId()], Router::ABSOLUTE_URL);
 
                     return $this->redirect($url);
                 }
@@ -525,10 +525,10 @@ class FileController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('@Wapinet/File/edit.html.twig', array(
+        return $this->render('@Wapinet/File/edit.html.twig', [
             'form' => $form->createView(),
             'file' => $file,
-        ));
+        ]);
     }
 
 
@@ -547,7 +547,7 @@ class FileController extends Controller
         if (null !== $file) {
             $hash = \md5_file($file->getPathname());
 
-            $existingFile = $this->getDoctrine()->getRepository(File::class)->findOneBy(array('hash' => $hash));
+            $existingFile = $this->getDoctrine()->getRepository(File::class)->findOneBy(['hash' => $hash]);
             if (null !== $existingFile) {
                 throw new FileDuplicatedException($existingFile, $this->container);
             }
@@ -591,10 +591,11 @@ class FileController extends Controller
 
     /**
      * @param Request $request
+     * @param Mime $mimeHelper
      *
      * @return RedirectResponse|Response
      */
-    public function uploadAction(Request $request)
+    public function uploadAction(Request $request, Mime $mimeHelper)
     {
         $form = $this->createForm(UploadType::class);
 
@@ -605,15 +606,15 @@ class FileController extends Controller
                 if ($form->isValid()) {
                     $this->get('bot_checker')->checkRequest($request);
 
-                    $file = $this->saveFileData($request, $form->getData());
+                    $file = $this->saveFileData($request, $form->getData(), $mimeHelper);
 
                     // просмотр файла авторизованными пользователями
                     if ($this->isGranted('ROLE_USER')) {
                         $url = $this->generateUrl(
                             'file_view',
-                            array(
+                            [
                                 'id' => $file->getId()
-                            ),
+                            ],
                             Router::ABSOLUTE_URL
                         );
                     } else {
@@ -632,9 +633,9 @@ class FileController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('@Wapinet/File/upload.html.twig', array(
+        return $this->render('@Wapinet/File/upload.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
 
@@ -652,7 +653,7 @@ class FileController extends Controller
 
         $hash = \md5_file($file->getPathname());
 
-        $existingFile = $this->getDoctrine()->getRepository(File::class)->findOneBy(array('hash' => $hash));
+        $existingFile = $this->getDoctrine()->getRepository(File::class)->findOneBy(['hash' => $hash]);
         if (null !== $existingFile) {
             throw new FileDuplicatedException($existingFile, $this->container);
         }
@@ -806,11 +807,11 @@ class FileController extends Controller
         $prevFile = $repository->getPrevFile($file->getId(), 'image');
         $nextFile = $repository->getNextFile($file->getId(), 'image');
 
-        $response = $this->render('@Wapinet/File/swiper.html.twig', array(
+        $response = $this->render('@Wapinet/File/swiper.html.twig', [
             'file' => $file,
             'prevFile' => $prevFile,
             'nextFile' => $nextFile,
-        ));
+        ]);
 
         $this->incrementViews($file);
 
