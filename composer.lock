@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7da94f7d9eee74ccf926812dc17b0fd0",
+    "content-hash": "277b3c5555c8388e6540b40ad7f58cfe",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1591,16 +1591,16 @@
         },
         {
             "name": "gemorroj/ginfo",
-            "version": "5.0.4",
+            "version": "5.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/ginfo.git",
-                "reference": "7a25affed2e8b4a89bda6fcc8249e3294b70b013"
+                "reference": "6d673373ec32e81cc30cbfcc4aff85bb1e7fa7dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/7a25affed2e8b4a89bda6fcc8249e3294b70b013",
-                "reference": "7a25affed2e8b4a89bda6fcc8249e3294b70b013",
+                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/6d673373ec32e81cc30cbfcc4aff85bb1e7fa7dd",
+                "reference": "6d673373ec32e81cc30cbfcc4aff85bb1e7fa7dd",
                 "shasum": ""
             },
             "require": {
@@ -1645,7 +1645,7 @@
                 "specs",
                 "system"
             ],
-            "time": "2018-04-11T09:33:31+00:00"
+            "time": "2018-04-13T13:25:19+00:00"
         },
         {
             "name": "gemorroj/htmlvalidator",

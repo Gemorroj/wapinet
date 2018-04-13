@@ -28,6 +28,8 @@
                     <dd>{{ info.selinux ? (info.selinux.enabled ? 'Вкл.' : 'Выкл.') : 'Отсутствует' }}</dd>
                     <dt>PHP:</dt>
                     <dd>{{ info.php.version }}</dd>
+                    <dt>Realpath cache size:</dt>
+                    <dd>{{ info.php.realpathCacheSizeUsed|wapinet_size }} использовано из {{ info.php.realpathCacheSizeAllowed|wapinet_size }}</dd>
                     <dt>Расширения PHP:</dt>
                     <dd>
                         <button type="button" class="btn btn-default" data-toggle="tooltip" title="{{ info.php.extensions|sort|join("\n") }}">
