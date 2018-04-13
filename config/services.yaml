@@ -19,7 +19,7 @@ parameters:
     wapinet_paginate_maxperpage: 10
     wapinet_user_last_activity_delay: 60
     wapinet_php_path: '%env(PHP_PATH)%'
-    wapinet_7z_path: '%env(7Z_PATH)%'
+    wapinet_7z_path: '%env(P7Z_PATH)%'
     wapinet_archiver_comment: 'Wapinet.ru archiver'
     wapinet_video_screenshot_second: 5
     wapinet_email_footer: 'Сообщение отправлено через бесплатный сервис отправки E-mail http://wapinet.ru'
