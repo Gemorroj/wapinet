@@ -176,11 +176,17 @@ server {
     #    deny all;
     #}
 
+    ssl on;
+    ssl_protocols TLSv1.1 TLSv1.2;
+    ssl_certificate /path_to_fullchain.pem;
+    ssl_certificate_key /path_to_key.pem;
+    ssl_trusted_certificate /path_to_chain.pem;
+
     charset utf-8;
-    listen 80;
+    listen 443 ssl http2;
 
     server_name wapinet.ru www.wapinet.ru;
-    root /var/www/wapinet/web;
+    root /var/www/wapinet/public;
 
     error_log /var/log/nginx/wapinet.error.log;
     access_log /var/log/nginx/wapinet.access.log;
@@ -211,7 +217,7 @@ server {
         access_log off;
         expires 30d;
 
-        try_files $uri /app.php$is_args$args;
+        try_files $uri /index.php$is_args$args;
     }
     location ~ ^/static/ {
         # Скачивание всех файлов (в т.ч. и txt, html и проч. в обменнике), чтобы потенциальный html/js код не выполнился в браузере
@@ -226,7 +232,7 @@ server {
         try_files $uri /index.php$is_args$args;
     }
 
-    location ~ ^public/index\.php(/|$) {
+    location ~ ^/index\.php(/|$) {
         fastcgi_pass unix:/run/php-fpm.sock;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
@@ -240,14 +246,14 @@ server {
        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
        fastcgi_param DOCUMENT_ROOT $realpath_root;
        # Prevents URIs that include the front controller. This will 404:
-       # http://domain.tld/app.php/some-path
+       # http://domain.tld/index.php/some-path
        # Remove the internal directive to allow URIs like this
        internal;
    }
 
-    location ~ \.php$ {
-        return 404;
-    }
+    #location ~ \.php$ {
+    #    return 404;
+    #}
 }
 ```
 
