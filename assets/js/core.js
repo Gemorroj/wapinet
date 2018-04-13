@@ -291,7 +291,11 @@ $document.one("pagecreate", "#fos_user_profile_show", function () {
     var vkId = $(":mobile-pagecontainer").find("#user-vk").data("id");
 
     if (vkId) {
-        $.getScript('https://api.vk.com/method/users.get?callback=Vk.show&fields=online,photo_200_orig&user_ids=' + vkId);
+        $.post('https://api.vk.com/method/users.get', {
+            'v': '5.74',
+            'fields': 'online,photo_200_orig',
+            'user_ids': vkId
+        }, Vk.show, 'jsonp');
     }
 });
 
