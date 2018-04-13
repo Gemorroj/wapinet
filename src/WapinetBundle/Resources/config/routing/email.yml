@@ -1,3 +1,0 @@
-email_index:
-    path: /
-    defaults: { _controller: WapinetBundle:Email:index }

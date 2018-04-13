@@ -1,0 +1,238 @@
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'ru'
+    wapinet_title: 'WEB мастерская wapinet.ru'
+    wapinet_contact_email: 'wapinet@mail.ru'
+    wapinet_robot_email: 'robot@wapinet.ru'
+    wapinet_ffmpeg_path: 'c:\_SOFT_\ffmpeg\bin\ffmpeg.exe'
+    wapinet_ffprobe_path: 'c:\_SOFT_\ffmpeg\bin\ffprobe.exe'
+    wapinet_max_download_filesize: 50000000 # 50 mb
+    wapinet_yandex_search_key: '%env(YANDEX_SEARCH_KEY)%'
+    wapinet_yandex_translate_key: '%env(YANDEX_TRANSLATE_KEY)%'
+    wapinet_threads_count: 3
+    wapinet_geoip2_country_path: 's:\GeoLite2-Country.mmdb'
+    wapinet_proxy_url: 'http://proxy.loc'
+    wapinet_forum_url: 'http://forum-old.loc'
+    wapinet_forum_database_name: forum
+    wapinet_role_nocaptcha: ROLE_USER
+    wapinet_paginate_maxperpage: 10
+    wapinet_user_last_activity_delay: 60
+    wapinet_php_path: 's:\OpenServer\modules\php\PHP-7.2-x64\php.exe'
+    wapinet_7z_path: 'c:\_SOFT_\Universal Extractor\bin\7z.exe'
+    wapinet_archiver_comment: 'Wapinet.ru archiver'
+    wapinet_video_screenshot_second: 5
+    wapinet_email_footer: 'Сообщение отправлено через бесплатный сервис отправки E-mail http://wapinet.ru'
+
+    sphinx_port: 9312
+    sphinx_host: 127.0.0.1
+
+    router.request_context.host: wapinet.ru # для определения хоста в консольном режиме
+
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    # Мне он нужен публичным, блять!
+    logger:
+        alias: 'monolog.logger'
+        public: true
+
+    App\Form\Type\User\ProfileType:
+        $class: '%fos_user.model.user.class%'
+
+    wapinet.type.tags:
+        class: App\Form\Type\TagsType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type }
+
+    pagerfanta.view.default:
+        class: App\Pagerfanta\View
+        tags: [{ name: pagerfanta.view, alias: default }]
+
+    online.listener:
+        class: App\EventListener\OnlineListener
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
+
+    file:
+        class: App\Helper\File\File
+        arguments: ["@service_container"]
+        public: true
+
+    file_meta:
+        class: App\Helper\File\Meta
+        arguments: ["@service_container"]
+        public: true
+
+    curl:
+        class: App\Helper\Curl
+        arguments: ["@service_container"]
+        public: true
+
+    ffmpeg:
+        class: App\Helper\Ffmpeg
+        arguments: ["@service_container"]
+        public: true
+
+    translit:
+        class: App\Helper\Translit
+        public: true
+
+    paginate:
+        class: App\Helper\Paginate
+        arguments: ["@service_container"]
+        public: true
+
+    getid3:
+        class: App\Helper\Getid3
+        public: true
+
+    bot_checker:
+        class: App\Helper\BotChecker
+        public: true
+
+    stop_spam:
+        class: App\Helper\StopSpam
+        public: true
+
+    hash:
+        class: App\Helper\Hash
+        public: true
+
+    code:
+        class: App\Helper\Code
+        public: true
+
+    phpwhois:
+        class: App\Helper\Phpwhois
+        public: true
+
+    css_validator:
+        class: App\Helper\CssValidator
+        public: true
+
+    html_validator:
+        class: App\Helper\HtmlValidator
+        public: true
+
+    php_validator:
+        class: App\Helper\PhpValidator
+        arguments: ["@service_container"]
+        public: true
+
+    apk:
+        class: App\Helper\Apk
+        public: true
+
+    sphinx:
+        class: App\Helper\Sphinx
+        arguments: ["@service_container"]
+        public: true
+
+    archive_zip:
+        class: App\Helper\Archiver\ArchiveZip
+        arguments: ["@service_container"]
+        public: true
+
+    archive_rar:
+        class: App\Helper\Archiver\ArchiveRar
+        arguments: ["@service_container"]
+        public: true
+
+    archive_7z:
+        class: App\Helper\Archiver\Archive7z
+        arguments: ["@service_container"]
+        public: true
+
+    torrent:
+        class: App\Helper\Torrent
+        arguments: ["@service_container"]
+        public: true
+
+    playlist:
+        class: App\Helper\Playlist
+        arguments: ["@service_container"]
+        public: true
+
+    wapinet.form.file.upload:
+        class: App\Form\Type\File\UploadType
+        arguments: ["@service_container"]
+        tags:
+            - { name: form.type }
+
+    wapinet.form.email.email:
+        class: App\Form\Type\Email\EmailType
+        arguments: ["@service_container"]
+        tags:
+            - { name: form.type }
+
+    wapinet.form.guestbook.message:
+        class: App\Form\Type\Guestbook\MessageType
+        arguments: ["@service_container"]
+        tags:
+            - { name: form.type }
+
+    wapinet.form.code.code:
+        class: App\Form\Type\Code\CodeType
+        arguments: ["@code"]
+        tags:
+            - { name: form.type }
+
+    wapinet.form.hash.hash:
+        class: App\Form\Type\Hash\HashType
+        arguments: ["@hash"]
+        tags:
+            - { name: form.type }
+
+    wapinet.file_voter:
+        class: App\Security\FileVoter
+        arguments: ['@security.access.decision_manager']
+        tags:
+            - { name: security.voter }
+
+    wapinet.gist_voter:
+        class: App\Security\GistVoter
+        arguments: ['@security.access.decision_manager']
+        public: false
+        tags:
+            - { name: security.voter }
+
+    wapinet.file_uploader.namer_file_directory:
+        class: App\Uploader\Naming\FileDirectoryNamer
+        public: true
+
+    wapinet.user.listener.last_activity:
+        class: App\EventListener\ListenerLastActivity
+        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
+
+    wapinet.user.event.friends:
+        class: App\EventListener\EventFriends
+        arguments: ["@doctrine.orm.entity_manager", "@router"]
+        tags:
+            - { name: kernel.event_subscriber }

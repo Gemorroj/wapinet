@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block title %}О сайте{% endblock %}
+{% block breadcrumbs %}
+    {{ wapinet_breadcrumbs() }}
+{% endblock %}
+
+{% block content %}
+    <p>
+        Сайт <em>wapinet.ru</em> появился в 2006 году.<br />
+        Был написан на <abbr title="Wireless Markup Language — язык разметки для беспроводных устройств">WML</abbr> без использования каких-либо скриптовых языков.<br />
+        Постепенно сайт переписывался с использованием <abbr title="PHP: Hypertext Preprocessor — PHP: препроцессор гипертекста">PHP</abbr> и <abbr title="Extensible Hypertext Markup Language — расширяемый язык гипертекстовой разметки">XHTML</abbr>.<br />
+        В 2013 году было решено полностью переписать сайт на новых технологиях.<br />
+        На данный момент используется <abbr title="PHP: Hypertext Preprocessor — PHP: препроцессор гипертекста">PHP</abbr> фреймворк <a title="Веб фреймворк, написанный на PHP5, который использует паттерн Model-View-Controller" rel="external" href="http://symfony.com">Symfony 2</a> и <abbr title="Прототипно-ориентированный сценарный язык программирования">JavaScript</abbr> фреймворк <a title="Cенсорно-ориентированный веб фреймворк" rel="external" href="http://jquerymobile.com">jQuery Mobile</a>.<br />
+        Некоторые из наработок сайта можно найти на <a rel="external" href="https://github.com/Gemorroj">личной странице Github</a>.
+    </p>
+
+    <p>
+        <img src="//php.net/images/logo.php?refresh" alt="PHP" style="max-width: 130px" />
+        <img src="//symfony.com/logos/symfony_black_02.png" alt="Symfony" style="max-width: 130px" />
+        <img src="//upload.wikimedia.org/wikipedia/commons/5/53/Jquery-mobile-logo.png" alt="jQuery Mobile" style="max-width: 130px" />
+    </p>
+{% endblock %}

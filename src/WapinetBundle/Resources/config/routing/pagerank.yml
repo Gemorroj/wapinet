@@ -1,3 +1,0 @@
-pagerank_index:
-    path: /
-    defaults: { _controller: WapinetBundle:Pagerank:index }

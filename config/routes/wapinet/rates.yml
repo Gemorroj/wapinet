@@ -1,0 +1,10 @@
+rates_index:
+    path: /
+    defaults: { _controller: App\Controller\RatesController:indexAction }
+
+rates_show:
+    path: /{country}
+    defaults: { _controller: App\Controller\RatesController:showAction }
+    requirements:
+        country: (ru|by|ua|kz)
+

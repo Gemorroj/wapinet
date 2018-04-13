@@ -1,0 +1,3 @@
+code_index:
+    path: /
+    defaults: { _controller: App\Controller\CodeController:indexAction }

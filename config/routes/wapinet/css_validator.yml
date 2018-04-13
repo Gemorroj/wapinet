@@ -1,0 +1,3 @@
+css_validator_index:
+    path: /
+    defaults: { _controller: App\Controller\CssValidatorController:indexAction }

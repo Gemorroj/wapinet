@@ -1,0 +1,176 @@
+index:
+    path:  /
+    defaults: { _controller: App\Controller\DefaultController:indexAction }
+
+about:
+    path:  /about
+    defaults: { _controller: App\Controller\DefaultController:aboutAction }
+
+online:
+    path:  /online
+    defaults: { _controller: App\Controller\DefaultController:onlineAction }
+
+utilities:
+    path:  /utilities
+    defaults: { _controller: App\Controller\DefaultController:utilitiesAction }
+
+downloads:
+    path:  /downloads
+    defaults: { _controller: App\Controller\DefaultController:downloadsAction }
+
+programming:
+    path:  /programming
+    defaults: { _controller: App\Controller\DefaultController:programmingAction }
+
+open_source:
+    path:  /open_source
+    defaults: { _controller: App\Controller\DefaultController:openSourceAction }
+
+gmanager:
+    path:  /gmanager
+    defaults: { _controller: App\Controller\DefaultController:gmanagerAction }
+
+textbook:
+    path:  /textbook
+    defaults: { _controller: App\Controller\DefaultController:textbookAction }
+
+video_courses:
+    path:  /video_courses
+    defaults: { _controller: App\Controller\DefaultController:videoCoursesAction }
+
+
+# Проверка синтаксиса для Gmanager
+syntax:
+    path:  /syntax
+    defaults: { _controller: App\Controller\SyntaxController:indexAction }
+syntax_old:
+    path:  /syntax2/index.php
+    defaults: { _controller: App\Controller\SyntaxController:indexAction }
+
+
+browser_info:
+    path: /browser_info
+    defaults: { _controller: App\Controller\BrowserInfoController:indexAction }
+
+mobile_code:
+    resource: 'routes/wapinet/mobile_code.yml'
+    prefix:   /mobile_code
+
+icq:
+    resource: "routes/wapinet/icq.yml"
+    prefix:   /icq
+
+hash:
+    resource: "routes/wapinet/hash.yml"
+    prefix:   /hash
+
+code:
+    resource: "routes/wapinet/code.yml"
+    prefix:   /code
+
+email:
+    resource: "routes/wapinet/email.yml"
+    prefix:   /email
+
+translate:
+    resource: "routes/wapinet/translate.yml"
+    prefix:   /translate
+
+pagerank:
+    resource: "routes/wapinet/pagerank.yml"
+    prefix:   /pagerank
+
+unicode:
+    resource: "routes/wapinet/unicode.yml"
+    prefix:   /unicode
+
+rename:
+    resource: "routes/wapinet/rename.yml"
+    prefix:   /rename
+
+audio_tags:
+    resource: "routes/wapinet/audio_tags.yml"
+    prefix:   /audio_tags
+
+whois:
+    resource: "routes/wapinet/whois.yml"
+    prefix:   /whois
+
+php_obfuscator:
+    resource: "routes/wapinet/php_obfuscator.yml"
+    prefix:   /php_obfuscator
+
+http:
+    resource: "routes/wapinet/http.yml"
+    prefix:   /http
+
+css_validator:
+    resource: "routes/wapinet/css_validator.yml"
+    prefix:   /css_validator
+
+html_validator:
+    resource: "routes/wapinet/html_validator.yml"
+    prefix:   /html_validator
+
+php_validator:
+    resource: "routes/wapinet/php_validator.yml"
+    prefix:   /php_validator
+
+rates:
+    resource: "routes/wapinet/rates.yml"
+    prefix:   /rates
+
+horoscope:
+    resource: "routes/wapinet/horoscope.yml"
+    prefix:   /horoscope
+
+mass_media:
+    resource: "routes/wapinet/mass_media.yml"
+    prefix:   /mass_media
+
+bash:
+    resource: "routes/wapinet/bash.yml"
+    prefix:   /bash
+
+archiver:
+    resource: "routes/wapinet/archiver.yml"
+    prefix:   /archiver
+
+file:
+    resource: "routes/wapinet/file.yml"
+    prefix:   /file
+
+news:
+    resource: "routes/wapinet/news.yml"
+    prefix:   /news
+
+guestbook:
+    resource: "routes/wapinet/guestbook.yml"
+    prefix:   /guestbook
+
+gist:
+    resource: "routes/wapinet/gist.yml"
+    prefix:   /gist
+
+user:
+    resource: "routes/wapinet/user.yml"
+    prefix:   /user
+
+proxy_index:
+    path: /proxy/
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: "%wapinet_proxy_url%"
+        permanent: true
+
+forum_index:
+    path: /forum/
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: "%wapinet_forum_url%"
+        permanent: true
+
+monitoring:
+    path: /admin/monitoring
+    defaults:
+        _controller: App\Controller\AdminController:monitoringAction

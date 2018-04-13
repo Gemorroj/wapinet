@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Разработки с открытым кодом{% endblock %}
+{% block breadcrumbs %}
+    {{wapinet_breadcrumbs({
+    1: {'uri': path('programming'), 'title': 'WEB мастерская'}
+    })}}
+{% endblock %}
+
+{% block content %}
+    <ul data-role="listview" data-inset="true">
+        <li><a rel="external" href="https://github.com/Gemorroj/gmanager" title="Среда администрирования и разработки для WAP мастера">Gmanager</a></li>
+        <li><a rel="external" href="https://github.com/Gemorroj/punbb-mod" title="Модификация форума Punbb под WAP">Punbb mod</a></li>
+        <li><a rel="external" href="https://github.com/Gemorroj/forum" title="Форум на Symfony3 и Jquery Mobile">Forum</a></li>
+        <li><a rel="external" href="https://github.com/Gemorroj/sea" title="Загруз-центр Sea mod by Gemorroj">Sea download</a></li>
+        <li><a rel="external" href="https://github.com/Gemorroj/Archive7z" title="Библиотека для работы с 7z архивами">Archive 7z</a></li>
+        <li><a rel="external" href="https://github.com/Gemorroj/M3uParser" title="Библиотека для работы с m3u плейлистами">M3u parser</a></li>
+        <li><a rel="external" href="https://github.com/Gemorroj/xBBCode" title="Парсер BBCode">xBBCode</a></li>
+        <li><a rel="external" href="https://github.com/Gemorroj/Syntax" title="Проверка PHP синтаксиса">Syntax</a></li>
+        <li><a rel="external" href="https://github.com/Gemorroj/Logio" title="Парсер логов">Logio</a></li>
+        <li><a rel="external" href="https://github.com/Gemorroj/ginfo" title="Анализ сервера">Ginfo</a></li>
+        <li><a rel="external" href="https://github.com/Gemorroj/StopSpam" title="Проверка на спам">StopSpam</a></li>
+        <li><a rel="external" href="https://github.com/Gemorroj/CSSValidator" title="CSS валидатор">CSSValidator</a></li>
+        <li><a rel="external" href="https://github.com/Gemorroj/HTMLValidator" title="HTML валидатор">HTMLValidator</a></li>
+    </ul>
+
+    <div class="ui-corner-all custom-corners">
+        <div class="ui-body ui-body-a">
+            <p>Другие открытые проекты можно найти на <a rel="external" href="https://github.com/Gemorroj">личной странице Github</a>.</p>
+        </div>
+    </div>
+{% endblock %}

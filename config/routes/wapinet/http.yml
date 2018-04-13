@@ -1,0 +1,3 @@
+http_index:
+    path: /
+    defaults: { _controller: App\Controller\HttpController:indexAction }

@@ -1,0 +1,79 @@
+mobile_code_index:
+    path: /
+    defaults: { _controller: App\Controller\MobileCodeController:indexAction }
+
+mobile_code_all_phones:
+    path: /all_phones
+    defaults: { _controller: App\Controller\MobileCodeController:allPhonesAction }
+
+mobile_code_android:
+    path: /android
+    defaults: { _controller: App\Controller\MobileCodeController:androidAction }
+
+mobile_code_iphone:
+    path: /iphone
+    defaults: { _controller: App\Controller\MobileCodeController:iphoneAction }
+
+mobile_code_alcatel:
+    path: /alcatel
+    defaults: { _controller: App\Controller\MobileCodeController:alcatelAction }
+
+mobile_code_bosch:
+    path: /bosch
+    defaults: { _controller: App\Controller\MobileCodeController:boschAction }
+
+mobile_code_ericsson:
+    path: /ericsson
+    defaults: { _controller: App\Controller\MobileCodeController:ericssonAction }
+
+mobile_code_lg:
+    path: /lg
+    defaults: { _controller: App\Controller\MobileCodeController:lgAction }
+
+mobile_code_maxon:
+    path: /maxon
+    defaults: { _controller: App\Controller\MobileCodeController:maxonAction }
+
+mobile_code_motorola:
+    path: /motorola
+    defaults: { _controller: App\Controller\MobileCodeController:motorolaAction }
+
+mobile_code_nokia:
+    path: /nokia
+    defaults: { _controller: App\Controller\MobileCodeController:nokiaAction }
+
+mobile_code_panasonic:
+    path: /panasonic
+    defaults: { _controller: App\Controller\MobileCodeController:panasonicAction }
+
+mobile_code_pantech:
+    path: /pantech
+    defaults: { _controller: App\Controller\MobileCodeController:pantechAction }
+
+mobile_code_philips:
+    path: /philips
+    defaults: { _controller: App\Controller\MobileCodeController:philipsAction }
+
+mobile_code_sagem:
+    path: /sagem
+    defaults: { _controller: App\Controller\MobileCodeController:sagemAction }
+
+mobile_code_samsung:
+    path: /samsung
+    defaults: { _controller: App\Controller\MobileCodeController:samsungAction }
+
+mobile_code_siemens:
+    path: /siemens
+    defaults: { _controller: App\Controller\MobileCodeController:siemensAction }
+
+mobile_code_sim_card:
+    path: /sim_card
+    defaults: { _controller: App\Controller\MobileCodeController:simCardAction }
+
+mobile_code_sony_ericsson:
+    path: /sony_ericsson
+    defaults: { _controller: App\Controller\MobileCodeController:sonyEricssonAction }
+
+mobile_code_mitsubishi_trium:
+    path: /mitsubishi_trium
+    defaults: { _controller: App\Controller\MobileCodeController:mitsubishiTriumAction }

@@ -1,7 +1,0 @@
-unicode_index:
-    path: /
-    defaults: { _controller: WapinetBundle:Unicode:index }
-
-unicode_icons:
-    path: /icons
-    defaults: { _controller: WapinetBundle:Unicode:icons }

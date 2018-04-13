@@ -1,9 +1,0 @@
-news_index:
-    path:  /
-    defaults: { _controller: WapinetBundle:News:index }
-
-news_show:
-    path:  /{id}
-    defaults: { _controller: WapinetBundle:News:show }
-    requirements:
-        id: \d+

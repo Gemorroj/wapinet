@@ -1,3 +1,0 @@
-rename_index:
-    path: /
-    defaults: { _controller: WapinetBundle:Rename:index }

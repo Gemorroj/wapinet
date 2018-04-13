@@ -1,3 +1,0 @@
-http_index:
-    path: /
-    defaults: { _controller: WapinetBundle:Http:index }

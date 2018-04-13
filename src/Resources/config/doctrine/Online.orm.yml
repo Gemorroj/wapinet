@@ -1,0 +1,26 @@
+App\Entity\Online:
+    type: entity
+    table: online
+    options:
+        engine: MEMORY
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        datetime:
+            type: datetime
+        ip:
+            type: string
+            length: 255
+        browser:
+            type: string
+            length: 255
+        path:
+            type: string
+            length: 255
+
+    uniqueConstraints:
+        unique_idx:
+            columns: ip, browser

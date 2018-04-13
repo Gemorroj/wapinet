@@ -1,0 +1,19 @@
+vich_uploader:
+    db_driver: orm
+    mappings:
+        file:
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            directory_namer: wapinet.file_uploader.namer_file_directory
+            delete_on_update: true # Set to true if the file should be deleted from the filesystem when the file is replaced by an other one
+            delete_on_remove: true # determines whether to delete file upon removal of entity
+            inject_on_load: true # determines whether to inject a File instance upon load
+            uri_prefix: /static/file
+            upload_destination: '%kernel.public_dir%/static/file'
+    metadata:
+        auto_detection: false
+        directories:
+            - {path: '%kernel.project_dir%/config/vich_uploader', namespace_prefix: 'App'}
+    #mappings:
+    #    products:
+    #        uri_prefix: /images/products
+    #        upload_destination: '%kernel.project_dir%/public/images/products'

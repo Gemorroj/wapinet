@@ -1,0 +1,7 @@
+unicode_index:
+    path: /
+    defaults: { _controller: App\Controller\UnicodeController:indexAction }
+
+unicode_icons:
+    path: /icons
+    defaults: { _controller: App\Controller\UnicodeController:iconsAction }

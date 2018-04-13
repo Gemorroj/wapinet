@@ -1,0 +1,164 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Siemens{% endblock %}
+{% block breadcrumbs %}
+    {{wapinet_breadcrumbs({
+    1: {'uri': path('utilities'), 'title': 'Утилиты'},
+    2: {'uri': path('mobile_code_index'), 'title': 'Телефонные коды'}
+    })}}
+{% endblock %}
+
+{% block content %}
+        Выбор языка:<br/>
+        *#0000# + "зеленая трубка" - Автоматический<br/>
+        *#0001# + "зеленая трубка" - English<br/>
+        *#0032# + "зеленая трубка" - French<br/>
+        *#0007# + "зеленая трубка" - русский язык меню (если есть в прошивке)<br/>
+        *#0030# + "зеленая трубка" - греческий (если есть в прошивке)<br/>
+        *#0031# + "зеленая трубка" - датский (если есть в прошивке)<br/>
+        *#0034# + "зеленая трубка" - испанский (если есть в прошивке)<br/>
+        *#0039# + "зеленая трубка" - итальянский (если есть в прошивке)<br/>
+        *#0043# + "зеленая трубка" - немецкий (если есть в прошивке)<br/>
+        *#0044# + "зеленая трубка" - английский (если есть в прошивке)<br/>
+        *#0049# + "зеленая трубка" - немецкий (если есть в прошивке)<br/>
+        *#0090# + "зеленая трубка" - турецкий (если есть в прошивке)<br/>
+        <br/>
+        # в режиме ожидания, затем правую soft-key - "View CB" - сообщение Cell broadcast, если оно(они) есть<br/>
+        # в режиме ожидания, а на экране - flashSMS, затем правую soft-key - "View flashSMS" - сообщение flash будет показано как обычное<br/>
+        * в режиме ожидания, затем правую soft-key - "Profiles" - в меню Профилей<br/>
+        в режиме ожидания 0, затем # - "Phonebook" - перейти в Phonebook на запись "собствен. номер."<br/>
+        в режиме ожидания число NN = от 1 до nMAX, затем # - "режим SIM memory" - перейти в Phonebook на запись номер NN. (nMAX - кол-во записей в Phonebook на SIM)<br/>
+        + в режиме ожидания, затем правую soft-key - "+List" - список кодов стран для международных звонков<br/>
+        <br/>
+        *#9999# затем зеленую трубу - сбрасывает параметры телефона к заводским. Установки на СИМ-карте не меняются.<br/>
+        *#002# затем зеленую трубу - тест уст. переадресации (ALL CALLS, IF BUSY, IF NO REPLY, IF NOT REACHIBLE). (26 секунд)<br/>
+        *#004# затем зеленую трубу - тест уст. переадресации (IF BUSY, IF NO REPLY, IF NOT REACHIBLE). (20 секунд)<br/>
+        <br/>
+        *3370# затем зеленую трубу - включение EFR (Enhanced Full Rate)- система для улучшенного качества связи в телефонах GSM за счет более быстрой разрядки батареи (около 5 %). EFR использует улучшенное кодирование, чтобы улучшить качество звука, не расширяя полосу частот.<br/>
+        #3370# затем зеленую трубу - выключение EFR (Enhanced Full Rate)<br/>
+        *4720# затем зеленую трубу - включение HR (Half Rate Mode) - продлевает жизнь батареи где-то на 30%, за счет уменьшения примерно в половину полосы частот.<br/>
+        #4720# затем зеленую трубу - выключение HR (Half Rate Mode)<br/>
+        <br/>
+        *#0003* затем секретный код из 8 цифр и # - снятие SP Lock<br/>
+        <br/>
+        Вытащить из аппарата СИМ-карту, включить, набрать код *#0606# и нажать левую "софт-клавишу": аппарат покажет наличие установленных в нем блокировок.<br/>
+        Если везде написано Unbarred - значит вам повезло, телефон не заблокирован.<br/>
+        <br/>
+        Если написать SMS следующего содержания "%English", то телефон зависнет. Отправьте такое сообщение своему знакомому ;)<br/>
+        Переполнение буфера в Siemens 45 серии.
+        Чуток теории: для вставки в сообщение картинки используется такая конструкция "%IMG_NAME", вот тут-то и кроется глюк на переполнение. 157 точек, поставленные в теге, указывающем на картинку, будут служить причиной переполнения буфера в телефончике.
+        После получения сего злостного послания телефон вырубается с каким-то странным пуканьем =)<br/>
+        <br/>
+        В Siemens&#x27;aх есть дополнительное место для хранения закладок (от 1 до 10 шт.). Для использования это функции надо вместо URL ввести слово bookmarks, после чего появится меню.<br/>
+        <br/>
+        Так как в beeline порт 9201 работает плохо и если его заменить (в профилях интернета) на порт 9203 то wap станет работать на много быстрее и без ошибок. Если возникает "неустранимая ошибка безопасности",то вместо URL нужно ввести device:key-exch (без http://) ,a имя любое.
+        На некоторых моделях установить новый ключ можно, войдя в меню wap&#x27;a: Далее-&gt;Настройки-&gt;Безопасность-&gt;Шифрование-&gt;Новый ключ-&gt;ОК<br/>
+        <br/>
+        Flash-sms
+        Если с сименса на сименс отправить сообщение, в начале которого будет написать #flash#, пробел и текст, то у получателя текст сообщения появится в виде "бегущей строки" (flash-sms).
+        Номер отправителя не указывается.<br/>
+        <br/>
+        PC TO SEND/DISABLE YOUR PHONE NUMBER BEING SENT<br/>
+        DISABLE your phone number being sent #30#DestinationNumber@<br/>
+        ENABLE your phone number being sent *30#DestinationNumner@<br/>
+        STATUS of your phone number being sent *#30#<br/>
+        PC TO SEND/DISABLE INCOMING PHONE NUMBER BEING SENT TO YOUR PHONE<br/>
+        DISABLE incoming number being shown on your phone *77#<br/>
+        ENABLE incoming number being shown on your phone #77#@<br/>
+        STATUS of whether calling parties number is shown on your phone *#77#@<br/>
+
+    <br/>
+
+        <div>
+            Во всех телефонах Siemens(начиная с 35-ой серии) есть вшитые картинки для отправления в SMS.
+            Вернее не сами картинки, а ключевые слова, заменяемые телефоном(Siemens&#x27;ом) на картинки.
+            Чтобы получатель(обладатель телефона Siemens) смог увидеть подобную картинку Вам надо в любом месте текстового сообщения написать одно из ключевых слов(с кавычками), перечисленных ниже.<br/>
+        </div>
+        "%Biker" <img src="{{ asset('build/app/images/mobile_code/siemens/biker.wbmp') }}" alt="Biker"/><br/>
+        "%Break" <img src="{{ asset('build/app/images/mobile_code/siemens/break.wbmp') }}" alt="Break"/><br/>
+        "%Cake" <img src="{{ asset('build/app/images/mobile_code/siemens/cake.wbmp') }}" alt="Cake"/><br/>
+        "%Dinner" <img src="{{ asset('build/app/images/mobile_code/siemens/dinner.wbmp') }}" alt="Dinner"/><br/>
+        "%Flowers" <img src="{{ asset('build/app/images/mobile_code/siemens/flowers.wbmp') }}" alt="Flowers"/><br/>
+        "%Gift" <img src="{{ asset('build/app/images/mobile_code/siemens/gift.wbmp') }}" alt="Gift"/><br/>
+        "%Halloween" <img src="{{ asset('build/app/images/mobile_code/siemens/halloween.wbmp') }}" alt="Halloween"/><br/>
+        "%Headache" <img src="{{ asset('build/app/images/mobile_code/siemens/headache.wbmp') }}" alt="Headache"/><br/>
+        "%Heart" <img src="{{ asset('build/app/images/mobile_code/siemens/heart.wbmp') }}" alt="Heart"/><br/>
+        "%Heartache" <img src="{{ asset('build/app/images/mobile_code/siemens/heartache.wbmp') }}" alt="Heartache"/><br/>
+        "%Holiday" <img src="{{ asset('build/app/images/mobile_code/siemens/holiday.wbmp') }}" alt="Holiday"/><br/>
+        "%Idea" <img src="{{ asset('build/app/images/mobile_code/siemens/idea.wbmp') }}" alt="Idea"/><br/>
+        "%Kiss" <img src="{{ asset('build/app/images/mobile_code/siemens/kiss.wbmp') }}" alt="Kiss"/><br/>
+        "%Love" <img src="{{ asset('build/app/images/mobile_code/siemens/love.wbmp') }}" alt="Love"/><br/>
+        "%Music" <img src="{{ asset('build/app/images/mobile_code/siemens/music.wbmp') }}" alt="Music"/><br/>
+        "%No" <img src="{{ asset('build/app/images/mobile_code/siemens/no.wbmp') }}" alt="No"/><br/>
+        "%Running" <img src="{{ asset('build/app/images/mobile_code/siemens/running.wbmp') }}" alt="Running"/><br/>
+        "%Shark" <img src="{{ asset('build/app/images/mobile_code/siemens/shark.wbmp') }}" alt="Shark"/><br/>
+        "%Shopping" <img src="{{ asset('build/app/images/mobile_code/siemens/shopping.wbmp') }}" alt="Shopping"/><br/>
+        "%Skyline" <img src="{{ asset('build/app/images/mobile_code/siemens/skyline.wbmp') }}" alt="Skyline"/><br/>
+        "%Sorry" <img src="{{ asset('build/app/images/mobile_code/siemens/sorry.wbmp') }}" alt="Sorry"/><br/>
+        "%Theatre" <img src="{{ asset('build/app/images/mobile_code/siemens/theatre.wbmp') }}" alt="Theatre"/><br/>
+        "%Trip" <img src="{{ asset('build/app/images/mobile_code/siemens/trip.wbmp') }}" alt="Trip"/><br/>
+        "%Turtle" <img src="{{ asset('build/app/images/mobile_code/siemens/turtle.wbmp') }}" alt="Turtle"/><br/>
+        "%Yes" <img src="{{ asset('build/app/images/mobile_code/siemens/yes.wbmp') }}" alt="Yes"/><br/>
+
+    <br/>
+
+        <div>
+            Локальные ссылки браузера Openwave
+            Вызываются вводом в графу "URL:" (без "http://") ,которая находится в пункте меню браузера "Перейти к URL".
+            Далее представлена лишь наиболее интересная часть ссылок. Есть ещё куча разных адресов, но не советую вам их подбирать, так как некоторые из них могут непосредственно повлиять на работу вашего браузера!<br/>
+        </div>
+        <a href="device:home">device:home</a> - Перейти на домашнюю страничку<br/>
+        <a href="device:homepage">device:homepage</a> - Перейти на домашнюю страничку<br/>
+        <a href="device:mt">device:mt</a> - "For Mike Tyler 1962-1997"<br/>
+        <a href="device:status">device:status</a> - Страница "Входящие"<br/>
+        <a href="device:outbox">device:outbox</a> - Страница "Исходящие"<br/>
+        <a href="device:outbox/full">device:outbox/full</a> - Исходящие: "Ваш ящик "Исходящие" заполнен."<br/>
+        <a href="device:outbox/almost">device:outbox/almost</a> - Исходящие: "Ваш ящик входящие почти заполнен. Отправьте ваши сообщения в ближайщее время."<br/>
+        <a href="device:channels">device:channels</a> - Страница "WAP каналы"<br/>
+        <a href="device:retry">device:retry</a> - Выход из браузера в меню "Интернет/Игр"<br/>
+        <a href="device:key-exch">device:key-exch</a> - Обмен ключами<br/>
+        <a href="devise:goto?url=">devise:goto?url=</a> - Перейти на URL<br/>
+        <a href="device:L-2">device:L-2</a> - Стартовое меню браузера<br/>
+        <a href="device:L-4">device:L-4</a> - Меню браузера<br/>
+        <a href="device:L-5">device:L-5</a> - Подменю браузера<br/>
+        <a href="device:L-6">device:L-6</a> - Меню браузера<br/>
+        <a href="device:L-8">device:L-8</a> - Выход из браузера<br/>
+        <a href="device:L-9">device:L-9</a> - Выход из браузера<br/>
+        <a href="device:L-10">device:L-10</a> - Страница "Перейти к URL"<br/>
+        <a href="device:L-11">device:L-11</a> - Страница "Перейти к URL"<br/>
+        <a href="device:L-12">device:L-12</a> - Страница "Далее..."<br/>
+        <a href="device:L-13">device:L-13</a> - Страница "Далее..." (в виде подменю)<br/>
+        <a href="device:L-14">device:L-14</a> - Страница "Запуск с..."<br/>
+        <a href="device:L-15">device:L-15</a> - Страница "Запуск с..."<br/>
+        <a href="device:L-18">device:L-18</a> - Команда для изменения размера шрифта (тоже что и #)<br/>
+        <a href="device:L-19">device:L-19</a> - Инф.о.стоим.: Общее время и трафик всех сеансов<br/>
+        <a href="device:L-20">device:L-20</a> - Инф.о.стоим.: Общее время и трафик всех сеансов (в виде подменю)<br/>
+        device:L-21 - Сброс "Инф.о.стоим."<br/>
+        device:L-22 - Сброс "Инф.о.стоим." (в виде подменю)<br/>
+        <a href="device:L-23">device:L-23</a> - Страница "О браузере"<br/>
+        <a href="device:L-24">device:L-24</a> - Страница "О браузере" (в виде подменю)<br/>
+        <a href="device:L-25">device:L-25</a> - Страница "Профили"<br/>
+        device:L-48 - Команда для удаления закладок<br/>
+        <a href="device:L-53">device:L-53</a> - WTAI "Набрать?"<br/>
+        <a href="device:L-54">device:L-54</a> - Service menu<br/>
+        <a href="device:L-55">device:L-55</a> - Service menu (в виде подменю)<br/>
+        <a href="device:L-56">device:L-56</a> - Браузер WAP "Выйти?"<br/>
+        <a href="device:log">device:log</a> - Service menu: "Logging"<br/>
+        <a href="device:logcl">device:logcl</a> - Service menu: "Clear Logging"<br/>
+        <a href="device:extmodem">device:extmodem</a> - Service menu: "ExtModem"<br/>
+        <a href="device:logpdu">device:logpdu</a> - Service menu: "Log PDUs" (похоже, лог пакетов, проходящих через аппарат )<br/>
+        <a href="device:ip">device:ip</a> - Service menu: "Show IP address" (показывает какой ip у нас и на том конце p2p линка)<br/>
+        <a href="internal:loop">internal:loop</a> - Сообщение: "Ошибка приложения: зацикливание документа. Нажмите OK  для возврата на стартовую страницу."<br/>
+        <a href="internal:syserr-text">internal:syserr-text</a> - Страница для сообщения о ошибки системы<br/>
+        <a href="internal:apperr-text">internal:apperr-text</a> - Сообщение: "Ошибка приложения"<br/>
+        <a href="internal:mark-url">internal:mark-url</a> - Команда для создания закладки<br/>
+        <a href="internal:authfail">internal:authfail</a> - Сообщение: "Аутентификация завершилась неудачно. Повторить попытку? Пользователь:... Пароль:... OK" <br/>
+        <a href="internal:register">internal:register</a> - Страница: "Выберите профиль для регистрации"<br/>
+        <a href="internal:register_s">internal:register_s</a> - Сообщение: "Сервер недоступен"<br/>
+        <a href="internal:help">internal:help</a> - Сообщение: "Нет справки"<br/>
+        <a href="internal:exit">internal:exit</a> - Выход из браузера<br/>
+        <a href="internal:home-edit">internal:home-edit</a> - Редактирование Домашней страницы<br/>
+        <a href="internal:primprov">internal:primprov</a> - Страница: "Для настройки услуг интернет введите ваш PIN-код."<br/>
+        <a href="internal:main-menu">internal:main-menu</a> - Подменю<br/>
+        <a href="internal:main-menu_s">internal:main-menu_s</a> - Подменю на чистом окне<br/>
+{% endblock %}

@@ -7,38 +7,33 @@
 `indexer --rotate --all`  
 
 ### Установка прав доступа на запись:
-`var/logs`  
-`var/sessions`  
+`var/log`  
+`var/session`  
 `var/tmp`  
 `var/cache`  
-`web/media/cache/resolve/thumbnail/static`  
-`web/media/cache/thumbnail/static`  
-`web/static/file`  
+`public/media/cache/resolve/thumbnail/static`  
+`public/media/cache/thumbnail/static`  
+`public/static/file`  
 
 ### Установка cron:
 ```bash
-    yum install cronie
-```
-
-### Установка sendmail:
-```bash
-    yum install sendmail
+yum install cronie
 ```
 
 ### Установка sphinx:
 ```bash
-    yum install sphinx
+yum install sphinx
 ```
 
 ### Установка p7zip:
 ```bash
-    yum install p7zip p7zip-plugins
+yum install p7zip p7zip-plugins
 ```
 
 #### Если версия в репозитории слишком старая, или нет поддержки rar (RHEL) то ставим из исходников
 ```bash
 cd /root/p7zip_16.02_sources
-curl -L http://downloads.sourceforge.net/project/p7zip/p7zip/16.02/p7zip_16.02_src_all.tar.bz2 > p7zip_16.02_src_all.tar.bz2
+curl -L https://downloads.sourceforge.net/project/p7zip/p7zip/16.02/p7zip_16.02_src_all.tar.bz2 > p7zip_16.02_src_all.tar.bz2
 tar xjvf p7zip_16.02_src_all.tar.bz2
 cd p7zip_16.02
 # изменить в файле install.sh переменную DEST_HOME на /root/p7zip_16.02_build
@@ -59,7 +54,7 @@ source_directory="/root/ffmpeg_27_01_2017_source"
 PATH="$build_directory/bin:$PATH"
 
 cd $source_directory
-git clone --depth 1 git://git.videolan.org/x264
+git clone --depth 1 -b stable git://git.videolan.org/x264
 cd x264
 PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure --prefix="$build_directory" --bindir="$build_directory/bin" --enable-static
 make
@@ -67,25 +62,19 @@ make install
 make distclean
 
 cd $source_directory
-git clone --depth 1 git://github.com/videolan/x265.git
-cd x265/build/linux
+git clone git://github.com/videolan/x265.git
+cd x265
+git checkout tags/2.7
+cd build/linux
 cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$build_directory" -DENABLE_SHARED=OFF ../../source
 make
 make install
 make clean
 
-# todo: заменить на https://sourceforge.net/projects/lame/files/lame/3.100/
 cd $source_directory
-git clone --depth 1 git://github.com/rbrito/lame.git
-cd lame
-./configure --prefix="$build_directory" --bindir="$build_directory/bin" --disable-shared --enable-nasm
-make
-make install
-make distclean
-
-cd $source_directory
-git clone --depth 1 git://git.opus-codec.org/opus.git
+git clone git://git.opus-codec.org/opus.git
 cd opus
+git checkout tags/v1.3-beta
 autoreconf -fiv
 ./configure --prefix="$build_directory" --disable-shared
 make
@@ -93,25 +82,25 @@ make install
 make distclean
 
 cd $source_directory
-curl -O http://downloads.xiph.org/releases/ogg/libogg-1.3.2.tar.gz
-tar xzvf libogg-1.3.2.tar.gz
-cd libogg-1.3.2
+curl -O https://downloads.xiph.org/releases/ogg/libogg-1.3.3.tar.gz
+tar xzvf libogg-1.3.3.tar.gz
+cd libogg-1.3.3
 ./configure --prefix="$build_directory" --disable-shared
 make
 make install
 make distclean
 
 cd $source_directory
-curl -O http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.5.tar.gz
-tar xzvf libvorbis-1.3.5.tar.gz
-cd libvorbis-1.3.5
+curl -O https://downloads.xiph.org/releases/vorbis/libvorbis-1.3.6.tar.gz
+tar xzvf libvorbis-1.3.6.tar.gz
+cd libvorbis-1.3.6
 LDFLAGS="-L$build_directory/lib" CPPFLAGS="-I$build_directory/include" ./configure --prefix="$build_directory" --with-ogg="$build_directory" --disable-shared
 make
 make install
 make distclean
 
 cd $source_directory
-curl -O http://downloads.xiph.org/releases/theora/libtheora-1.1.1.tar.gz
+curl -O https://downloads.xiph.org/releases/theora/libtheora-1.1.1.tar.gz
 tar xzvf libtheora-1.1.1.tar.gz
 cd libtheora-1.1.1
 ./configure --prefix="$build_directory" --with-ogg="$build_directory" --disable-examples --disable-shared --disable-sdltest --disable-vorbistest
@@ -120,8 +109,18 @@ make install
 make distclean
 
 cd $source_directory
-git clone --depth 1 https://chromium.googlesource.com/webm/libvpx.git
+curl -L https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz > lame-3.100.tar.gz
+tar xzvf lame-3.100.tar.gz
+cd lame-3.100
+./configure --prefix="$build_directory" --bindir="$build_directory/bin" --disable-shared --enable-nasm
+make
+make install
+make distclean
+
+cd $source_directory
+git clone https://chromium.googlesource.com/webm/libvpx.git 
 cd libvpx
+git checkout tags/v1.7.0
 ./configure --prefix="$build_directory" --disable-examples --enable-vp9-highbitdepth --as=yasm
 make
 make install
@@ -129,7 +128,7 @@ make clean
 
 cd $source_directory
 curl -L https://downloads.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.5.tar.gz > opencore-amr-0.1.5.tar.gz
-tar -xzf opencore-amr-0.1.5.tar.gz
+tar -xzvf opencore-amr-0.1.5.tar.gz
 cd opencore-amr-0.1.5
 autoreconf -fiv
 ./configure --prefix="$build_directory" --disable-shared
@@ -200,15 +199,19 @@ server {
         access_log off;
         expires 30d;
     }
+    location /bundles/ {
+        access_log off;
+        expires 30d;
+    }
+    location /build/ {
+        access_log off;
+        expires 30d;
+    }
     location /media/ {
         access_log off;
         expires 30d;
 
         try_files $uri /app.php$is_args$args;
-    }
-    location /bundles/ {
-        access_log off;
-        expires 30d;
     }
     location ~ ^/static/ {
         # Скачивание всех файлов (в т.ч. и txt, html и проч. в обменнике), чтобы потенциальный html/js код не выполнился в браузере
@@ -216,35 +219,30 @@ server {
         access_log off;
         expires 30d;
     }
-    ###
 
 
     location / {
-        # try to serve file directly, fallback to app.php
-        try_files $uri /app.php$is_args$args;
+        # try to serve file directly, fallback to index.php
+        try_files $uri /index.php$is_args$args;
     }
 
-    location ~ ^/app\.php(/|$) {
-        fastcgi_pass phpfcgi;
+    location ~ ^public/index\.php(/|$) {
+        fastcgi_pass unix:/run/php-fpm.sock;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
-
-        # When you are using symlinks to link the document root to the
-        # current version of your application, you should pass the real
-        # application path instead of the path to the symlink to PHP
-        # FPM.
-        # Otherwise, PHP's OPcache may not properly detect changes to
-        # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
-        # for more information).
-        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-        fastcgi_param DOCUMENT_ROOT $realpath_root;
-
-        fastcgi_param  HTTPS off;
-
-        # Prevents URIs that include the front controller. This will 404:
-        # http://domain.tld/app.php/some-path
-        # Remove the internal directive to allow URIs like this
-        internal;
+       # When you are using symlinks to link the document root to the
+       # current version of your application, you should pass the real
+       # application path instead of the path to the symlink to PHP
+       # FPM.
+       # Otherwise, PHP's OPcache may not properly detect changes to
+       # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
+       # for more information).
+       fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+       fastcgi_param DOCUMENT_ROOT $realpath_root;
+       # Prevents URIs that include the front controller. This will 404:
+       # http://domain.tld/app.php/some-path
+       # Remove the internal directive to allow URIs like this
+       internal;
    }
 
     location ~ \.php$ {

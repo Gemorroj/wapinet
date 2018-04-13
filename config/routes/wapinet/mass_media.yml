@@ -1,0 +1,12 @@
+mass_media_index:
+    path: /
+    defaults: { _controller: App\Controller\MassMediaController:indexAction }
+
+mass_media_rt:
+    path: /rt
+    defaults: { _controller: App\Controller\MassMediaController:rtAction }
+
+mass_media_inotv:
+    path: /inotv
+    defaults: { _controller: App\Controller\MassMediaController:inotvAction }
+

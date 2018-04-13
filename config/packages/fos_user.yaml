@@ -1,0 +1,10 @@
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: App\Entity\User
+    profile:
+        form:
+            type: App\Form\Type\User\ProfileType
+    from_email:
+        address: '%wapinet_robot_email%'
+        sender_name: '%wapinet_robot_email%'

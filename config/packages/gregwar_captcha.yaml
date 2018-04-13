@@ -1,0 +1,6 @@
+gregwar_captcha:
+    as_url: true
+    reload: true
+    length: 5
+    width: 200
+    height: 46

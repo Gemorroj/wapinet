@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Пользователи - {{ user.username }}{% endblock %}
+{% block breadcrumbs %}
+    {{wapinet_breadcrumbs({
+    1: {'uri': path('downloads'), 'title': 'Развлечения'},
+    2: {'uri': path('file_index'), 'title': 'Файлообменник'}
+    })}}
+{% endblock %}
+
+{% block content %}
+    {% include 'File/list_content.html.twig' %}
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Загрузить файл{% endblock %}
+{% block breadcrumbs %}
+    {{wapinet_breadcrumbs({
+    1: {'uri': path('downloads'), 'title': 'Развлечения'},
+    2: {'uri': path('file_index'), 'title': 'Файлообменник'}
+    })}}
+{% endblock %}
+
+{% block content %}
+    {% form_theme form 'captcha.html.twig' %}
+    {{ form_start(form, {'action': path('file_upload'), 'method': 'POST', 'attr': {'data-ajax': 'false'}}) }}
+        {% include 'bot-checker.html.twig' %}
+        {{ form_errors(form) }}
+
+        {{ form_row(form.file) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.tags) }}
+        <ul id="suggestions" data-role="listview" data-inset="true"></ul>
+
+
+    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+        <input type="checkbox" id="upload-password" />
+        <label for="upload-password" title="Включите, если файл нужно защитить паролем">Пароль</label>
+    </fieldset>
+
+
+    <div id="upload-password-row" style="display: none;">
+        {{ form_widget(form.plainPassword) }}
+    </div>
+    <br />
+
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}

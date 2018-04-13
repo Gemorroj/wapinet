@@ -1,0 +1,3 @@
+translate_index:
+    path: /
+    defaults: { _controller: App\Controller\TranslateController:indexAction }

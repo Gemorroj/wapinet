@@ -1,0 +1,14 @@
+horoscope_index:
+    path: /
+    defaults: { _controller: App\Controller\HoroscopeController:indexAction }
+
+horoscope_show:
+    path: /{zodiac}
+    defaults: { _controller: App\Controller\HoroscopeController:showAction }
+    requirements:
+        zodiac: (aquarius|aries|cancer|capricorn|gemini|leo|libra|pisces|sagittarius|scorpio|taurus|virgo)
+
+horoscope_day:
+    path: /day
+    defaults: { _controller: App\Controller\HoroscopeController:dayAction }
+

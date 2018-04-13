@@ -1,0 +1,46 @@
+App\Entity\Panel:
+    type:  entity
+    table: user_panel
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        forum:
+            type: boolean
+            nullable: false
+        guestbook:
+            type: boolean
+            nullable: false
+        gist:
+            type: boolean
+            nullable: false
+        file:
+            type: boolean
+            nullable: false
+        archiver:
+            type: boolean
+            nullable: false
+        proxy:
+            type: boolean
+            nullable: false
+        downloads:
+            type: boolean
+            nullable: false
+        utilities:
+            type: boolean
+            nullable: false
+        programming:
+            type: boolean
+            nullable: false
+
+    oneToOne:
+        user:
+            targetEntity: App\Entity\User
+            cascade: ["persist"]
+            inversedBy: panel
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+                nullable: false

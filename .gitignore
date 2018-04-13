@@ -1,37 +1,31 @@
 # PHPStorm
 .idea/
 
-# Cache and logs (Symfony3)
-/var/*
-!/var/cache
-/var/cache/*
-!var/cache/.gitkeep
-!/var/logs
-/var/logs/*
-!var/logs/.gitkeep
-!/var/sessions
-/var/sessions/*
-!var/sessions/.gitkeep
-!/var/tmp
-/var/tmp/*
-!var/tmp/.gitkeep
-!var/SymfonyRequirements.php
-
-
-# Parameters
-/app/config/parameters.yml
-
-# Managed by Composer
-/vendor/
-
 # Assets
-/web/bundles/
-/web/static/file/*
-!web/static/file/index.html
-/web/media/cache/resolve/thumbnail/static/*
-!web/media/cache/resolve/thumbnail/static/index.html
-/web/media/cache/thumbnail/static/*
-!web/media/cache/thumbnail/static/index.html
+/public/static/file/*
+!public/static/file/index.html
+/public/media/cache/resolve/thumbnail/static/*
+!public/media/cache/resolve/thumbnail/static/index.html
+/public/media/cache/thumbnail/static/*
+!public/media/cache/thumbnail/static/index.html
 
 # Composer PHAR
 /composer.phar
+
+###> symfony/framework-bundle ###
+/.env
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/webpack-encore-pack ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-pack ###
+
+###> symfony/web-server-bundle ###
+/.web-server-pid
+###< symfony/web-server-bundle ###

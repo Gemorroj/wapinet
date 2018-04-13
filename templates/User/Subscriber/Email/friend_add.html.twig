@@ -1,0 +1,9 @@
+{% extends 'User/Subscriber/Email/_layout.html.twig' %}
+
+{% block content %}
+    {% if friend.isFemale %}
+        Вас добавила в друзья <a href="{{ url('wapinet_user_profile', {'username': friend.username}) }}">{{ friend }}</a>.
+    {% else %}
+        Вас добавил в друзья <a href="{{ url('wapinet_user_profile', {'username': friend.username}) }}">{{ friend }}</a>.
+    {% endif %}
+{% endblock %}

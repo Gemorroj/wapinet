@@ -1,0 +1,7 @@
+twig:
+    paths: ['%kernel.project_dir%/templates']
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    globals:
+        wapinet_title: '%wapinet_title%'
+        wapinet_contact_email: '%wapinet_contact_email%'

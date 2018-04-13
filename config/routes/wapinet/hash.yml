@@ -1,0 +1,3 @@
+hash_index:
+    path: /
+    defaults: { _controller: App\Controller\HashController:indexAction }
