@@ -172,9 +172,12 @@ hash -r
 ### Конфиг nginx:
 ```nginx
 server {
-    #location ~ /\. {
-    #    deny all;
-    #}
+    location ~ /\.well-known\/acme-challenge {
+        allow all;
+    }
+    location ~ /\. {
+        deny all;
+    }
 
     ssl on;
     ssl_protocols TLSv1.1 TLSv1.2;
