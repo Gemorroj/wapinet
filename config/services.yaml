@@ -12,7 +12,7 @@ parameters:
     wapinet_yandex_translate_key: '%env(YANDEX_TRANSLATE_KEY)%'
     wapinet_threads_count: 3
     wapinet_geoip2_country_path: '%env(GEOIP2_COUNTRY_PATH)%'
-    wapinet_forum_url: 'http://forum.wapinet.ru'
+    wapinet_forum_url: 'https://forum.wapinet.ru'
     wapinet_forum_database_name: forum
     wapinet_role_nocaptcha: ROLE_USER
     wapinet_paginate_maxperpage: 10
@@ -21,7 +21,7 @@ parameters:
     wapinet_7z_path: '%env(P7Z_PATH)%'
     wapinet_archiver_comment: 'Wapinet.ru archiver'
     wapinet_video_screenshot_second: 5
-    wapinet_email_footer: 'Сообщение отправлено через бесплатный сервис отправки E-mail http://wapinet.ru'
+    wapinet_email_footer: 'Сообщение отправлено через бесплатный сервис отправки E-mail https://wapinet.ru'
 
     sphinx_port: 9312
     sphinx_host: 127.0.0.1
