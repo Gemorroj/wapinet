@@ -4,7 +4,7 @@ import {Helper} from "../core";
 
 const Translate = {
     pageCreate: function () {
-        var $pageContainer = $(":mobile-pagecontainer");
+        let $pageContainer = $(":mobile-pagecontainer");
 
         $pageContainer.on('click', '#downloadTranslation', function () {
             Helper.downloadText(

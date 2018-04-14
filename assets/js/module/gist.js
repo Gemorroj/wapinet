@@ -2,8 +2,8 @@
 
 const Gist = {
     pageCreate: function () {
-        var $pageContainer = $(":mobile-pagecontainer");
-        var gistId;
+        let $pageContainer = $(":mobile-pagecontainer");
+        let gistId;
 
         $pageContainer.find("a[href='#delete-popup']").on("click", function () {
             gistId = $(this).data('id');

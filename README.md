@@ -8,7 +8,6 @@
 
 ### Установка прав доступа на запись:
 `var/log`  
-`var/session`  
 `var/tmp`  
 `var/cache`  
 `public/media/cache/resolve/thumbnail/static`  

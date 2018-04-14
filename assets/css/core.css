@@ -1,21 +1,25 @@
 @media (min-width: 800px) {
-    div.wapinet-logo {
+    a.wapinet-logo {
         padding: 2%;
     }
 }
 
-div.wapinet-logo {
+a.wapinet-logo {
     display: block;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+    width: 200px;
+    background-image: url('../images/georg_lent_200.png');
+    background-repeat: no-repeat;
+    background-position: center;
 }
 img.image-preview {
     width: 80px;
     height: auto;
 }
 span.avatar-online {
-    background-image: url('/static/online.png');
+    background-image: url('../images/online.png');
     display: block;
     height: 15px;
     width: 15px;

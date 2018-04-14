@@ -4,7 +4,7 @@ import {Helper} from "../core";
 
 const Http = {
     pageCreate: function () {
-        var $pageContainer = $(":mobile-pagecontainer");
+        let $pageContainer = $(":mobile-pagecontainer");
 
         $pageContainer.on('click', '#downloadHeaders', function () {
             Helper.downloadText(

@@ -90,7 +90,7 @@
         </div>
 
         <div data-role="main" class="ui-content center-container">
-            {% block logo %}<div class="wapinet-logo"><a href="{{ path('index') }}"><img src="{{ asset('build/app/images/georg_lent_200.png') }}" /></a></div>{% endblock %}
+            {% block logo %}<a class="wapinet-logo" href="{{ path('index') }}"></a>{% endblock %}
             {% block breadcrumbs %}{% endblock %}
             {% block navbar %}{% endblock %}
             <fieldset>{% block content %}{% endblock %}</fieldset>

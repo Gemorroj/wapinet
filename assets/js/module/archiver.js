@@ -2,14 +2,14 @@
 
 const Archiver = {
     pageCreate: function () {
-        var $pageContainer = $(":mobile-pagecontainer");
-        var deletePath;
-        var $row;
+        let $pageContainer = $(":mobile-pagecontainer");
+        let deletePath;
+        let $row;
 
-        var $listArchive = $pageContainer.find("#list-archive");
+        let $listArchive = $pageContainer.find("#list-archive");
 
         $listArchive.find("a[href='#delete-popup']").on("click", function () {
-            var $this = $(this);
+            let $this = $(this);
             deletePath = $this.data('path');
             $row = $this.closest('li');
         });

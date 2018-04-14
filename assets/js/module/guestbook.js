@@ -2,24 +2,24 @@
 
 const Guestbook = {
     pageCreate: function () {
-        var $pageContainer = $(":mobile-pagecontainer");
+        let $pageContainer = $(":mobile-pagecontainer");
 
-        var quote = function () {
-            var $link = $(this);
-            var $textarea = $pageContainer.find("textarea[name='message_form[message]']").filter(":visible");
+        let quote = function () {
+            let $link = $(this);
+            let $textarea = $pageContainer.find("textarea[name='message_form[message]']").filter(":visible");
             $textarea.focus();
 
-            var $liComment = $link.parent().next();
-            var text = $liComment.children('div').text();
-            var author = $link.next('a').text();
+            let $liComment = $link.parent().next();
+            let text = $liComment.children('div').text();
+            let author = $link.next('a').text();
             $textarea.val('[quote=' + author + ']' + text + '[/quote]');
             $textarea.keyup();
 
             return false;
         };
-        var popup = function () {
-            var $link = $(this);
-            var selector = $link.attr('href');
+        let popup = function () {
+            let $link = $(this);
+            let selector = $link.attr('href');
 
             $pageContainer.find(selector).popup("open", {"transition": "turn", "positionTo": $link});
 

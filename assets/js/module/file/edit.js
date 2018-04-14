@@ -4,7 +4,7 @@ import {Autocomplete} from "../../core";
 
 const FileEdit = {
     pageCreate: function () {
-        var $pageContainer = $(":mobile-pagecontainer");
+        let $pageContainer = $(":mobile-pagecontainer");
 
         Autocomplete.text(
             Routing.generate('file_tags_search'),

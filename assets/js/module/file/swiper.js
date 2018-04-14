@@ -2,18 +2,18 @@
 
 const FileSwiper = {
     pageCreate: function () {
-        var $pageContainer = $(":mobile-pagecontainer");
+        let $pageContainer = $(":mobile-pagecontainer");
 
-        var swiperNext = function () {
-            var $link = $(this);
+        let swiperNext = function () {
+            let $link = $(this);
 
             $pageContainer.pagecontainer("change", $link.attr('href'), {
                 "transition": "slide"
             });
             return false;
         };
-        var swiperPrev = function () {
-            var $link = $(this);
+        let swiperPrev = function () {
+            let $link = $(this);
 
             $pageContainer.pagecontainer("change", $link.attr('href'), {
                 "transition": "slide",

@@ -2,17 +2,17 @@
 
 const FileView = {
     pageCreate: function () {
-        var $pageContainer = $(":mobile-pagecontainer");
+        let $pageContainer = $(":mobile-pagecontainer");
 
         $pageContainer.on("click", "#delete-button", function () {
-            var id = $pageContainer.find("a[download]").filter(":visible").data('id');
+            let id = $pageContainer.find("a[download]").filter(":visible").data('id');
             $pageContainer.find("#delete-popup-" + id).popup("open", {"transition": "flow", "positionTo": "window"});
 
             return false;
         });
 
         $pageContainer.on("click", "#delete-popup-do", function () {
-            var id = $pageContainer.find("a[download]").filter(":visible").data('id');
+            let id = $pageContainer.find("a[download]").filter(":visible").data('id');
             $.post(Routing.generate('file_delete', {'id': id}), function () {
                 $pageContainer.pagecontainer("change", Routing.generate('file_index'));
                 //window.location.assign(Routing.generate('file_index'));
@@ -20,20 +20,20 @@ const FileView = {
         });
 
         $pageContainer.on("click", "a[id^='meta-button-']", function () {
-            var id = $pageContainer.find("a[download]").filter(":visible").data('id');
+            let id = $pageContainer.find("a[download]").filter(":visible").data('id');
             $pageContainer.find("#meta-popup-" + id).popup("open", {"transition": "pop", "positionTo": "window"});
 
             return false;
         });
         $pageContainer.on("click", "a[id^='permissions-button-']", function () {
-            var id = $pageContainer.find("a[download]").filter(":visible").data('id');
+            let id = $pageContainer.find("a[download]").filter(":visible").data('id');
             $pageContainer.find("#permissions-popup-" + id).popup("open", {"transition": "pop", "positionTo": "window"});
 
             return false;
         });
     },
     pageShow: function ($pageContainer) {
-        var data = $pageContainer.find("a[download]").filter(":visible").data();
+        let data = $pageContainer.find("a[download]").filter(":visible").data();
 
         if (data.video) {
             this.viewVideo($pageContainer, data);
@@ -51,12 +51,12 @@ const FileView = {
     viewAudio: function ($pageContainer, data) {
         // (Default width: "420px")
 
-        var width = $(window).width();
-        var space = 30;
-        var defaultWidth = 420;
+        let width = $(window).width();
+        let space = 30;
+        let defaultWidth = 420;
         width = (width > (defaultWidth + space)) ? defaultWidth : (width - space);
 
-        var media = {};
+        let media = {};
         media[data.format] = data.audio;
 
         $pageContainer.find("#jquery_jplayer_1").jPlayer({
@@ -80,12 +80,12 @@ const FileView = {
         // (Default width: "480px")
         // (Default height: "270px")
 
-        var width = $(window).width();
-        var space = 30;
-        var defaultWidth = 480;
+        let width = $(window).width();
+        let space = 30;
+        let defaultWidth = 480;
         width = (width > (defaultWidth + space)) ? defaultWidth : (width - space);
 
-        var media = {};
+        let media = {};
         media[data.format] = data.video;
         if (data.screenshot) {
             media.poster = data.screenshot;

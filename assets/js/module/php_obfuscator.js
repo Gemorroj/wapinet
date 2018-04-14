@@ -4,7 +4,7 @@ import {Helper} from "../core";
 
 const PhpObfuscator = {
     pageCreate: function () {
-        var $pageContainer = $(":mobile-pagecontainer");
+        let $pageContainer = $(":mobile-pagecontainer");
 
         $pageContainer.on('click', '#downloadObfuscation', function () {
             Helper.downloadText(

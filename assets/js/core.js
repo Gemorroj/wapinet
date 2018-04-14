@@ -15,7 +15,7 @@ import FileView from "./module/file/view";
 const Loader = {
     readFile: function (file, callback) {
         if (FileReader) {
-            var fileReader = new FileReader();
+            let fileReader = new FileReader();
             fileReader.onload = callback;
             fileReader.readAsDataURL(file);
             return fileReader;
@@ -23,17 +23,17 @@ const Loader = {
         return false;
     },
     preview: function (e, file, previewElement) {
-        var container = document.createElement('p');
+        let container = document.createElement('p');
         container.className = 'container-preview';
 
         if (file.type.match('^image/.+')) {
-            var img = new Image();
+            let img = new Image();
             img.src = e.target.result;
             img.className = 'image-preview';
             container.appendChild(img);
         }
 
-        var size = document.createTextNode(' ' + Helper.sizeFormat(e.total));
+        let size = document.createTextNode(' ' + Helper.sizeFormat(e.total));
         container.appendChild(size);
 
         $(previewElement).parent().prepend(container);
@@ -45,8 +45,8 @@ const Loader = {
 
 const Helper = {
     sizeFormat: function (fileSizeInBytes) {
-        var i = -1;
-        var byteUnits = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
+        let i = -1;
+        let byteUnits = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
         do {
             fileSizeInBytes = fileSizeInBytes / 1024;
             i++;
@@ -61,7 +61,7 @@ const Helper = {
         return window.encodeURI(str.toString());
     },
     downloadText: function (text, fileName) {
-        var blob = new Blob(
+        let blob = new Blob(
             [text],
             {"type": "text/plain;charset=utf-8"}
         );
@@ -80,12 +80,12 @@ const Autocomplete = {
             loadingHtml: '',
             icon: 'tag',
             callback: function (e) {
-                var arrText = $input.val().split(',');
+                let arrText = $input.val().split(',');
 
                 arrText.pop();
                 arrText.push($(e.currentTarget).text());
 
-                var text = arrText.join(',');
+                let text = arrText.join(',');
 
                 $input.val(text);
                 $input.autocomplete('clear');
@@ -116,7 +116,7 @@ const Templating = {
         return Templating._title;
     },
     render: function () {
-        var title = Templating.getTitle();
+        let title = Templating.getTitle();
 
         if (title !== null) {
             $(":mobile-pagecontainer").find('#header-title').text(title);
@@ -133,9 +133,9 @@ const Vk = {
         }
     },
     popup: function () {
-        var $link = $(this);
-        var $popup = $($link.attr("href"));
-        var content = Vk._makeContent();
+        let $link = $(this);
+        let $popup = $($link.attr("href"));
+        let content = Vk._makeContent();
 
         $popup.find('p').html(content);
         $popup.popup("open", {"transition": "pop", "positionTo": $link});
@@ -152,7 +152,7 @@ const Vk = {
         }
 
         if (Vk.data.response && Vk.data.response[0]) {
-            var user = Vk.data.response[0];
+            let user = Vk.data.response[0];
             return '<a rel="external" href="https://vk.com/id' + user.uid + '"><img src="' + user.photo_200_orig + '" /></a><br/><span>' + user.first_name + ' ' + user.last_name + '</span><br/>' + (user.online ? '<span class="green">Онлайн</span>' : '<span class="gray">Офлайн</span>');
         }
 
@@ -187,13 +187,13 @@ window.Jplayer = {
 
 // hypercomments
 const _commentsLoader = function ($pageContainer, xid) {
-    var $commentsContainer = $pageContainer.find("#hypercomments_widget");
+    let $commentsContainer = $pageContainer.find("#hypercomments_widget");
     $commentsContainer.empty();
 
-    var hcInterval = window.setInterval(function () {
+    let hcInterval = window.setInterval(function () {
         if ("HC" in window) {
             window.clearInterval(hcInterval);
-            var title = $pageContainer.find('#header-title').html();
+            let title = $pageContainer.find('#header-title').html();
 
             HC.widget("Stream", {
                 "hc_disable": 1,
@@ -227,10 +227,10 @@ $document.on("pageshow", "#file_view", function () {
 });
 
 $document.on("pagecreate", "#file_index", function () {
-    var $commentsContainer = $(":mobile-pagecontainer").find("#hypercomments_mix");
+    let $commentsContainer = $(":mobile-pagecontainer").find("#hypercomments_mix");
     $commentsContainer.empty();
 
-    var hcInterval = window.setInterval(function () {
+    let hcInterval = window.setInterval(function () {
         if ("HC" in window) {
             window.clearInterval(hcInterval);
             HC.widget("Mixstream", {
@@ -288,7 +288,7 @@ $document.one("pagecreate", "#gist_view", function () {
 
 // vk в профиле пользователя
 $document.one("pagecreate", "#fos_user_profile_show", function () {
-    var vkId = $(":mobile-pagecontainer").find("#user-vk").data("id");
+    let vkId = $(":mobile-pagecontainer").find("#user-vk").data("id");
 
     if (vkId) {
         $.post('https://api.vk.com/method/users.get', {
@@ -304,11 +304,11 @@ $document.one("pagecreate", "#fos_user_profile_show", function () {
 $document.on("click", "a[href^='#image-']", function () {
     $.mobile.loading("show");
 
-    var popup = $(this.getAttribute('href'));
-    var img = popup.find("img");
+    let popup = $(this.getAttribute('href'));
+    let img = popup.find("img");
 
-    var src = img.attr('src');
-    var srcData = img.data('src');
+    let src = img.attr('src');
+    let srcData = img.data('src');
 
     if (src === srcData) {
         popup.popup("open");
@@ -328,17 +328,17 @@ $document.on("click", "a[href^='#image-']", function () {
 
 // свайпер в пагинации
 $document.on("click", ".pagerfanta a", function () {
-    var $pageContainer = $(":mobile-pagecontainer");
-    var that = this;
-    var $this = $(that);
+    let $pageContainer = $(":mobile-pagecontainer");
+    let that = this;
+    let $this = $(that);
 
-    var swiperNext = function () {
+    let swiperNext = function () {
         $pageContainer.pagecontainer("change", $this.attr('href'), {
             "transition": "slide"
         });
         return false;
     };
-    var swiperPrev = function () {
+    let swiperPrev = function () {
         $pageContainer.pagecontainer("change", $this.attr('href'), {
             "transition": "slide",
             "reverse": true
@@ -354,7 +354,7 @@ $document.on("click", ".pagerfanta a", function () {
         return swiperNext();
     }
 
-    var Page = {
+    let Page = {
         "all": 0,
         "current": 0,
         "click": 0
@@ -381,10 +381,10 @@ $document.on("click", ".pagerfanta a", function () {
 
 // предпросмотр картинок в загружаемых файлах
 $document.on("change", 'input[type="file"]', function (e) {
-    var fileElement = e.target;
+    let fileElement = e.target;
     // только если поддерживается
     if (fileElement.files) {
-        var file = fileElement.files[0];
+        let file = fileElement.files[0];
         Loader.previewCleaner(fileElement);
         Loader.readFile(file, function (e) {
             Loader.preview(e, file, fileElement);
@@ -396,22 +396,22 @@ $document.on("change", 'input[type="file"]', function (e) {
 
 // обновление капчи
 $document.on("click", 'a.captcha-reload', function () {
-    var $this = $(this);
+    let $this = $(this);
 
-    var img = $(":mobile-pagecontainer").find('#' + $this.data('id'))[0];
+    let img = $(":mobile-pagecontainer").find('#' + $this.data('id'))[0];
     img.src = $this.data('path') + '?n=' + (new Date()).getTime();
 });
 
 
 // выключение взаимозаменяющих полей в url_file
 $document.on("change", "fieldset.file-url input[type='file']", function (e) {
-    var state = 'enable';
+    let state = 'enable';
     if (e.target.value) {
         state = 'disable';
     }
     $(":mobile-pagecontainer").find('fieldset.file-url input[type="url"]').textinput(state);
 }).on("change", "fieldset.file-url input[type='url']", function (e) {
-    var state = 'enable';
+    let state = 'enable';
     if (e.target.value) {
         state = 'disable';
     }
@@ -433,7 +433,7 @@ $document.ajaxError(function () {
     $.mobile.loading('show');
 }).ajaxSuccess(function (data) {
     // заголовок
-    var $title = $(data).find('title');
+    let $title = $(data).find('title');
     if ($title.length) {
         Templating.setTitle($title.html()).render();
     }
