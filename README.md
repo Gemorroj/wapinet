@@ -43,14 +43,16 @@ make all3
 Проверить список поддерживаемых форматов можно так `7z i` или `7za i` 
 
 ### Установка FFmpeg:
+Добавить репозиторий с актуальной версией nasm: https://www.nasm.us/nasm.repo
+
 Делаем все как указано по ссылке [https://trac.ffmpeg.org/wiki/CompilationGuide/Centos](https://trac.ffmpeg.org/wiki/CompilationGuide/Centos).  
 Дополнительно ставим `theora`, `amr`. Не забываем указать в конфиге `--prefix="$build_directory"`, а для `theora` еще и `--with-ogg="$HOME/ffmpeg_build" --disable-shared`.
 В конце проверить что на всех директориях выше и самих бинарниках есть права на выполнение.
 ```bash
 yum install autoconf automake cmake freetype-devel gcc gcc-c++ git libtool make nasm yasm pkgconfig zlib-devel
 
-build_directory="/root/ffmpeg_27_01_2017_build"
-source_directory="/root/ffmpeg_27_01_2017_source"
+build_directory="/root/ffmpeg_2018-04-14_build"
+source_directory="/root/ffmpeg_2018-04-14_source"
 PATH="$build_directory/bin:$PATH"
 
 cd $source_directory
@@ -75,14 +77,14 @@ cd $source_directory
 git clone git://git.opus-codec.org/opus.git
 cd opus
 git checkout tags/v1.3-beta
-autoreconf -fiv
+./autogen.sh
 ./configure --prefix="$build_directory" --disable-shared
 make
 make install
 make distclean
 
 cd $source_directory
-curl -O https://downloads.xiph.org/releases/ogg/libogg-1.3.3.tar.gz
+curl -O -L https://downloads.xiph.org/releases/ogg/libogg-1.3.3.tar.gz
 tar xzvf libogg-1.3.3.tar.gz
 cd libogg-1.3.3
 ./configure --prefix="$build_directory" --disable-shared
@@ -91,7 +93,7 @@ make install
 make distclean
 
 cd $source_directory
-curl -O https://downloads.xiph.org/releases/vorbis/libvorbis-1.3.6.tar.gz
+curl -O -L https://downloads.xiph.org/releases/vorbis/libvorbis-1.3.6.tar.gz
 tar xzvf libvorbis-1.3.6.tar.gz
 cd libvorbis-1.3.6
 LDFLAGS="-L$build_directory/lib" CPPFLAGS="-I$build_directory/include" ./configure --prefix="$build_directory" --with-ogg="$build_directory" --disable-shared
@@ -100,7 +102,7 @@ make install
 make distclean
 
 cd $source_directory
-curl -O https://downloads.xiph.org/releases/theora/libtheora-1.1.1.tar.gz
+curl -O -L https://downloads.xiph.org/releases/theora/libtheora-1.1.1.tar.gz
 tar xzvf libtheora-1.1.1.tar.gz
 cd libtheora-1.1.1
 ./configure --prefix="$build_directory" --with-ogg="$build_directory" --disable-examples --disable-shared --disable-sdltest --disable-vorbistest
@@ -109,7 +111,7 @@ make install
 make distclean
 
 cd $source_directory
-curl -L https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz > lame-3.100.tar.gz
+curl -O -L https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz
 tar xzvf lame-3.100.tar.gz
 cd lame-3.100
 ./configure --prefix="$build_directory" --bindir="$build_directory/bin" --disable-shared --enable-nasm
@@ -121,13 +123,13 @@ cd $source_directory
 git clone https://chromium.googlesource.com/webm/libvpx.git 
 cd libvpx
 git checkout tags/v1.7.0
-./configure --prefix="$build_directory" --disable-examples --enable-vp9-highbitdepth --as=yasm
+./configure --prefix="$build_directory" --disable-examples --disable-unit-tests --enable-vp9-highbitdepth --as=yasm
 make
 make install
 make clean
 
 cd $source_directory
-curl -L https://downloads.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.5.tar.gz > opencore-amr-0.1.5.tar.gz
+curl -O -L https://downloads.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.5.tar.gz
 tar -xzvf opencore-amr-0.1.5.tar.gz
 cd opencore-amr-0.1.5
 autoreconf -fiv
@@ -146,6 +148,7 @@ PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure \
     --extra-cflags="-I$build_directory/include" \
     --extra-ldflags="-L$build_directory/lib" \
     --extra-libs=-lpthread \
+    --extra-libs=-lm \
     --bindir="$build_directory/bin" \
     --pkg-config-flags="--static" \
     --enable-gpl \
@@ -265,9 +268,8 @@ server {
 
 ### TODO:
 - сделать мониторинг в админке (сделано, дальше доделать в мониторинге информацию о состоянии БД и веб-серверов)
-- перевести на Symfony 4
+- перенести репозиторий на github, соответственно открыть код (GPL ?)
 - Переделать интерфейс на vue (огромная задача)
-- перенести репозиторий на github, соответственно открыть код.
 - переделать редактор аудиотегов на https://github.com/duncan3dc/meta-audio/issues/3 (когда будут картинки)
 - Сделать возможность в переводчике и обфускаторе загружать файлы
 - Актуализировать мобильные коды. Найти новые для разных андроидов.
