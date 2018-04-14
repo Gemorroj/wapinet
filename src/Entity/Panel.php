@@ -11,7 +11,6 @@ class Panel extends \ArrayObject
     const ROUTE_GIST = 'gist_index';
     const ROUTE_FILE = 'file_index';
     const ROUTE_ARCHIVER = 'archiver_index';
-    const ROUTE_PROXY = 'proxy_index';
     const ROUTE_DOWNLOADS = 'downloads';
     const ROUTE_UTILITIES = 'utilities';
     const ROUTE_PROGRAMMING = 'programming';
@@ -22,7 +21,6 @@ class Panel extends \ArrayObject
     protected $gist = true;
     protected $file = true;
     protected $archiver = false;
-    protected $proxy = false;
     protected $downloads = true;
     protected $utilities = true;
     protected $programming = true;
@@ -88,11 +86,6 @@ class Panel extends \ArrayObject
                 'route' => self::ROUTE_ARCHIVER,
                 'name' => 'Архиватор',
                 'enabled' => $this->getArchiver(),
-            ),
-            self::ROUTE_PROXY => array(
-                'route' => self::ROUTE_PROXY,
-                'name' => 'Анонимайзер',
-                'enabled' => $this->getProxy(),
             ),
             self::ROUTE_DOWNLOADS => array(
                 'route' => self::ROUTE_DOWNLOADS,
@@ -186,25 +179,6 @@ class Panel extends \ArrayObject
     public function getProgramming()
     {
         return $this->programming;
-    }
-
-    /**
-     * @param boolean $proxy
-     * @return Panel
-     */
-    public function setProxy($proxy)
-    {
-        $this->proxy = (bool)$proxy;
-
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getProxy()
-    {
-        return $this->proxy;
     }
 
     /**

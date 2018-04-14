@@ -26,7 +26,6 @@ class PanelType extends AbstractType
         $builder->add('gist', CheckboxType::class, array('required' => false, 'label' => 'Блоги'));
         $builder->add('file', CheckboxType::class, array('required' => false, 'label' => 'Файлообменник'));
         $builder->add('archiver', CheckboxType::class, array('required' => false, 'label' => 'Архиватор'));
-        $builder->add('proxy', CheckboxType::class, array('required' => false, 'label' => 'Анонимайзер'));
         $builder->add('downloads', CheckboxType::class, array('required' => false, 'label' => 'Развлечения'));
         $builder->add('utilities', CheckboxType::class, array('required' => false, 'label' => 'Утилиты'));
         $builder->add('programming', CheckboxType::class, array('required' => false, 'label' => 'WEB мастерская'));

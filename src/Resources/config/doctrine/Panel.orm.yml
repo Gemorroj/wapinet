@@ -22,9 +22,6 @@ App\Entity\Panel:
         archiver:
             type: boolean
             nullable: false
-        proxy:
-            type: boolean
-            nullable: false
         downloads:
             type: boolean
             nullable: false

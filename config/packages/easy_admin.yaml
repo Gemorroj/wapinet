@@ -117,7 +117,6 @@ easy_admin:
                     - { property: 'gist', label: 'Блоги' }
                     - { property: 'file', label: 'Файлообменник' }
                     - { property: 'archiver', label: 'Архиватор' }
-                    - { property: 'proxy', label: 'Анонимайзер' }
                     - { property: 'downloads', label: 'Развлечения' }
                     - { property: 'utilities', label: 'Утилиты' }
                     - { property: 'programming', label: 'WEB мастерская' }
@@ -128,7 +127,6 @@ easy_admin:
                     - { property: 'gist', label: 'Блоги' }
                     - { property: 'file', label: 'Файлообменник' }
                     - { property: 'archiver', label: 'Архиватор' }
-                    - { property: 'proxy', label: 'Анонимайзер' }
                     - { property: 'downloads', label: 'Развлечения' }
                     - { property: 'utilities', label: 'Утилиты' }
                     - { property: 'programming', label: 'WEB мастерская' }

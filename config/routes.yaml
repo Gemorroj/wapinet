@@ -156,13 +156,6 @@ user:
     resource: "routes/wapinet/user.yml"
     prefix:   /user
 
-proxy_index:
-    path: /proxy/
-    defaults:
-        _controller: FrameworkBundle:Redirect:urlRedirect
-        path: "%wapinet_proxy_url%"
-        permanent: true
-
 forum_index:
     path: /forum/
     defaults:
