@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "277b3c5555c8388e6540b40ad7f58cfe",
+    "content-hash": "6cbeba3e225730853e291494f8883049",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1321,20 +1321,20 @@
         },
         {
             "name": "foolz/sphinxql-query-builder",
-            "version": "1.2.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FoolCode/SphinxQL-Query-Builder.git",
-                "reference": "ca6e6836b5f1bc5077e0d179874aa252440ea4dc"
+                "reference": "1f43e8c1eafbe9a9c43ed43e8bc9faf52d306781"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FoolCode/SphinxQL-Query-Builder/zipball/ca6e6836b5f1bc5077e0d179874aa252440ea4dc",
-                "reference": "ca6e6836b5f1bc5077e0d179874aa252440ea4dc",
+                "url": "https://api.github.com/repos/FoolCode/SphinxQL-Query-Builder/zipball/1f43e8c1eafbe9a9c43ed43e8bc9faf52d306781",
+                "reference": "1f43e8c1eafbe9a9c43ed43e8bc9faf52d306781",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": "^5.6 || ^7.0"
             },
             "replace": {
                 "foolz/sphinxql": "self.version"
@@ -1368,7 +1368,7 @@
                 "sphinxql",
                 "sql"
             ],
-            "time": "2017-11-07T14:00:57+00:00"
+            "time": "2018-04-13T22:14:37+00:00"
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",

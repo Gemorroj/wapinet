@@ -5,7 +5,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Foolz\SphinxQL\Drivers\ResultSetInterface;
 use Pagerfanta\Pagerfanta;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * Pagerfanta Bridge
@@ -36,7 +36,7 @@ class Bridge
     /**
      * @var QueryBuilder
      */
-    protected $query = null;
+    protected $query;
 
     /**
      * The results obtained from sphinx
@@ -50,7 +50,7 @@ class Bridge
      *
      * @var string
      */
-    protected $discriminatorColumn = null;
+    protected $discriminatorColumn;
 
     /**
      *
@@ -59,18 +59,18 @@ class Bridge
     protected $discriminatorRepositories = [];
 
     /**
-     * @var ContainerInterface
+     * @var RegistryInterface
      */
-    protected $container;
+    protected $doctrine;
 
 
     /**
      * Bridge constructor.
-     * @param ContainerInterface $container
+     * @param RegistryInterface $doctrine
      */
-    public function __construct(ContainerInterface $container = null)
+    public function __construct(RegistryInterface $doctrine)
     {
-        $this->container = $container;
+        $this->doctrine = $doctrine;
     }
 
     /**
@@ -79,7 +79,7 @@ class Bridge
     protected function getEntityManager()
     {
         if ($this->em === null) {
-            $this->em = $this->container->get('doctrine')->getManager();
+            $this->em = $this->doctrine->getManager();
         }
 
         return $this->em;
@@ -90,7 +90,7 @@ class Bridge
      */
     protected function _extractPksFromResults()
     {
-        $matches = isset($this->results['matches']) ? $this->results['matches'] : [];
+        $matches = $this->results['matches'] ?? [];
         $pks = [];
 
         foreach ($matches as $match) {
@@ -111,7 +111,7 @@ class Bridge
      */
     public function setEntityManagerByName($name)
     {
-        return $this->setEntityManager($this->container->get('doctrine')->getManager($name));
+        return $this->setEntityManager($this->doctrine->getManager($name));
     }
 
     /**
@@ -202,7 +202,7 @@ class Bridge
                     'class'                 => $data['class'],
                 ];
 
-                if (\key_exists('em', $data)) {
+                if (\array_key_exists('em', $data)) {
                     $params['em'] = $data['em'];
                 }
 
@@ -271,7 +271,7 @@ class Bridge
 
         $adapter = new Adapter($results);
 
-        $adapter->setNbResults(isset($this->results['meta']['total_found']) ? $this->results['meta']['total_found'] : 0);
+        $adapter->setNbResults($this->results['meta']['total_found'] ?? 0);
 
         return new Pagerfanta($adapter);
     }
@@ -298,13 +298,13 @@ class Bridge
         foreach ($rawResults['matches'] as $row) {
             $id = $row['id'];
 
-            if (!\key_exists($this->discriminatorColumn, $row['attrs'])) {
+            if (!\array_key_exists($this->discriminatorColumn, $row['attrs'])) {
                 throw new \UnexpectedValueException('Missing discriminator column in sphinx result entry');
             }
 
             $rowDiscriminator = $row['attrs'][$this->discriminatorColumn];
 
-            if (!\key_exists($rowDiscriminator, $usedDiscriminators)) {
+            if (!\array_key_exists($rowDiscriminator, $usedDiscriminators)) {
                 $usedDiscriminators[$rowDiscriminator] = [];
             }
 
@@ -369,7 +369,7 @@ class Bridge
         $discriminatorData = $this->discriminatorRepositories[$discriminatorValue];
 
         /** @var EntityManagerInterface $em */
-        $em = $this->container->get('doctrine')->getManager($discriminatorData['em']);
+        $em = $this->doctrine->getManager($discriminatorData['em']);
         $qb = $em->createQueryBuilder();
 
         $repositoryClass = $discriminatorData['class'];
