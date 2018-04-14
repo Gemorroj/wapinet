@@ -1,15 +1,10 @@
-@media (min-width: 800px) {
-    a.wapinet-logo {
-        padding: 2%;
-    }
-}
-
 a.wapinet-logo {
     display: block;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
     width: 200px;
+    height: 40px;
     background-image: url('../images/georg_lent_200.png');
     background-repeat: no-repeat;
     background-position: center;
