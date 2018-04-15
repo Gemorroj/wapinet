@@ -46,7 +46,7 @@
         "php-ffmpeg/binary-driver": "dev-master",
         "php-ffmpeg/php-ffmpeg": "^0.11",
         "gemorroj/phpwhois": "dev-master",
-        "gemorroj/stop-spam": "^1.0",
+        "gemorroj/stop-spam": "^2.0",
         "gemorroj/archive7z": "^4.0",
         "gemorroj/m3u-parser": "^4.0",
         "gemorroj/syntax": "^3.0",

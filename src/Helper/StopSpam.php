@@ -4,6 +4,7 @@ namespace App\Helper;
 use StopSpam\Query as StopSpamQuery;
 use StopSpam\Request as StopSpamRequest;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class StopSpam
 {
@@ -16,9 +17,10 @@ class StopSpam
 
     /**
      * @param Request $request
-     * @throws \Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws AccessDeniedException
      */
-    public function checkRequest(Request $request)
+    public function checkRequest(Request $request) : void
     {
         $query = new StopSpamQuery();
         $query->addIp($request->getClientIp());
@@ -31,9 +33,12 @@ class StopSpam
         }
 
         $item = $response->getFlowingIp();
+        if (null === $item) {
+            return;
+        }
 
         if ($item->isAppears()) {
-            throw new \Exception('Ваш IP адрес находится в спам листе. Извините, вы не можете оставлять сообщения.');
+            throw new AccessDeniedException('Ваш IP адрес находится в спам листе. Извините, вы не можете оставлять сообщения.');
         }
     }
 }

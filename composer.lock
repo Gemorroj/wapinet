@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6cbeba3e225730853e291494f8883049",
+    "content-hash": "256613e986af98ef7ada00516dbaef93",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1761,16 +1761,16 @@
         },
         {
             "name": "gemorroj/stop-spam",
-            "version": "1.0.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/StopSpam.git",
-                "reference": "b598bb5936b1567425abef6d5b9d94bb23354d88"
+                "reference": "274126b4f7c682bd37694c247bcccd3628d7d728"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/StopSpam/zipball/b598bb5936b1567425abef6d5b9d94bb23354d88",
-                "reference": "b598bb5936b1567425abef6d5b9d94bb23354d88",
+                "url": "https://api.github.com/repos/Gemorroj/StopSpam/zipball/274126b4f7c682bd37694c247bcccd3628d7d728",
+                "reference": "274126b4f7c682bd37694c247bcccd3628d7d728",
                 "shasum": ""
             },
             "require": {
@@ -1804,7 +1804,7 @@
                 "spam-protection",
                 "stopforumspam"
             ],
-            "time": "2017-11-10T10:07:16+00:00"
+            "time": "2018-04-15T06:54:26+00:00"
         },
         {
             "name": "gemorroj/syntax",
