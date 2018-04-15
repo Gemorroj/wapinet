@@ -47,15 +47,15 @@ class MassMedia
             if ($v->enclosure) {
                 foreach ($v->enclosure as $enclosure) {
                     $type = (string)$enclosure->attributes()->type;
-                    if ('image/' === substr($type, 0, 6)) {
+                    if ('image/' === \substr($type, 0, 6)) {
                         $photo = (string)$enclosure->attributes()->url;
-                    } elseif ('video/' === substr($type, 0, 6)) {
+                    } elseif ('video/' === \substr($type, 0, 6)) {
                         $video = (string)$enclosure->attributes()->url;
                     }
                 }
             }
 
-            $news[] = array(
+            $news[] = [
                 'datetime' => new \DateTime((string)$v->pubDate . 'C'),
                 'title' => (string)$v->title,
                 'description' => $this->stripDescription((string)$v->description),
@@ -64,7 +64,7 @@ class MassMedia
                 'link' => (string)$v->link,
                 'photo' => $photo,
                 'video' => $video,
-            );
+            ];
         }
 
         return $news;
@@ -96,15 +96,15 @@ class MassMedia
             if ($v->enclosure) {
                 foreach ($v->enclosure as $enclosure) {
                     $type = (string)$enclosure->attributes()->type;
-                    if ('image/' === substr($type, 0, 6)) {
+                    if ('image/' === \substr($type, 0, 6)) {
                         $photo = (string)$enclosure->attributes()->url;
-                    } elseif ('video/' === substr($type, 0, 6)) {
+                    } elseif ('video/' === \substr($type, 0, 6)) {
                         $video = (string)$enclosure->attributes()->url;
                     }
                 }
             }
 
-            $news[] = array(
+            $news[] = [
                 'datetime' => new \DateTime((string)$v->pubDate . 'C'),
                 'title' => (string)$v->title,
                 'description' => $this->stripDescription((string)$v->description),
@@ -113,7 +113,7 @@ class MassMedia
                 'link' => (string)$v->link,
                 'photo' => $photo,
                 'video' => $video,
-            );
+            ];
         }
 
         return $news;

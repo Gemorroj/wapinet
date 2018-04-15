@@ -47,14 +47,4 @@ class Playlist extends \Twig_Extension
             return null;
         }
     }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'wapinet_playlist';
-    }
 }

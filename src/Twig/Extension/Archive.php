@@ -28,9 +28,9 @@ class Archive extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('wapinet_archive_list', array($this, 'getList')),
-        );
+        return [
+            new \Twig_SimpleFunction('wapinet_archive_list', [$this, 'getList']),
+        ];
     }
 
 

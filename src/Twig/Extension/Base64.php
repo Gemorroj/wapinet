@@ -11,20 +11,9 @@ class Base64 extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
+        return [
             new \Twig_SimpleFilter('base64_encode', 'base64_encode'),
             new \Twig_SimpleFilter('base64_decode', 'base64_decode'),
-        );
-    }
-
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'base64';
+        ];
     }
 }

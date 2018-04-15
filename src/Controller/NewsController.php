@@ -27,9 +27,9 @@ class NewsController extends Controller
 
         $pagerfanta = $this->get('paginate')->paginate($result, $page);
 
-        return $this->render('News/index.html.twig', array(
+        return $this->render('News/index.html.twig', [
             'pagerfanta' => $pagerfanta,
-        ));
+        ]);
     }
 
     /**
@@ -40,8 +40,8 @@ class NewsController extends Controller
      */
     public function showAction(News $news)
     {
-        return $this->render('News/show.html.twig', array(
+        return $this->render('News/show.html.twig', [
             'entity' => $news,
-        ));
+        ]);
     }
 }

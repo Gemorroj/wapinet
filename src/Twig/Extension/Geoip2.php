@@ -26,33 +26,14 @@ class Geoip2 extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('wapinet_geoip2_country', array($this, 'getCountry')),
-        );
-    }
-
-
-    /**
-     * @param string $ip
-     * @return \GeoIp2\Model\Country|null
-     */
-    public function getCountry ($ip)
-    {
-        try {
-            return $this->geoip2->getCountry($ip);
-        } catch (\Exception $e) {
-            return null;
-        }
-    }
-
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'wapinet_geoip2';
+        return [
+            new \Twig_SimpleFunction('wapinet_geoip2_country', function (string $ip) : ?\GeoIp2\Model\Country {
+                try {
+                    return $this->geoip2->getCountry($ip);
+                } catch (\Exception $e) {
+                    return null;
+                }
+            }),
+        ];
     }
 }

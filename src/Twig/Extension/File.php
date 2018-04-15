@@ -118,14 +118,4 @@ class File extends \Twig_Extension
     {
         return $this->fileRepository->countUser($user);
     }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'file';
-    }
 }

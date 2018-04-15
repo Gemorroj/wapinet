@@ -37,14 +37,4 @@ class News extends \Twig_Extension
 
         return (null === $result ? null : $result['createdAt']);
     }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'news';
-    }
 }

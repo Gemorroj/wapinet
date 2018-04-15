@@ -53,107 +53,107 @@ browser_info:
     defaults: { _controller: App\Controller\BrowserInfoController:indexAction }
 
 mobile_code:
-    resource: 'routes/wapinet/mobile_code.yml'
+    resource: '../src/Resources/config/routes/mobile_code.yml'
     prefix:   /mobile_code
 
 icq:
-    resource: "routes/wapinet/icq.yml"
+    resource: "../src/Resources/config/routes/icq.yml"
     prefix:   /icq
 
 hash:
-    resource: "routes/wapinet/hash.yml"
+    resource: "../src/Resources/config/routes/hash.yml"
     prefix:   /hash
 
 code:
-    resource: "routes/wapinet/code.yml"
+    resource: "../src/Resources/config/routes/code.yml"
     prefix:   /code
 
 email:
-    resource: "routes/wapinet/email.yml"
+    resource: "../src/Resources/config/routes/email.yml"
     prefix:   /email
 
 translate:
-    resource: "routes/wapinet/translate.yml"
+    resource: "../src/Resources/config/routes/translate.yml"
     prefix:   /translate
 
 pagerank:
-    resource: "routes/wapinet/pagerank.yml"
+    resource: "../src/Resources/config/routes/pagerank.yml"
     prefix:   /pagerank
 
 unicode:
-    resource: "routes/wapinet/unicode.yml"
+    resource: "../src/Resources/config/routes/unicode.yml"
     prefix:   /unicode
 
 rename:
-    resource: "routes/wapinet/rename.yml"
+    resource: "../src/Resources/config/routes/rename.yml"
     prefix:   /rename
 
 audio_tags:
-    resource: "routes/wapinet/audio_tags.yml"
+    resource: "../src/Resources/config/routes/audio_tags.yml"
     prefix:   /audio_tags
 
 whois:
-    resource: "routes/wapinet/whois.yml"
+    resource: "../src/Resources/config/routes/whois.yml"
     prefix:   /whois
 
 php_obfuscator:
-    resource: "routes/wapinet/php_obfuscator.yml"
+    resource: "../src/Resources/config/routes/php_obfuscator.yml"
     prefix:   /php_obfuscator
 
 http:
-    resource: "routes/wapinet/http.yml"
+    resource: "../src/Resources/config/routes/http.yml"
     prefix:   /http
 
 css_validator:
-    resource: "routes/wapinet/css_validator.yml"
+    resource: "../src/Resources/config/routes/css_validator.yml"
     prefix:   /css_validator
 
 html_validator:
-    resource: "routes/wapinet/html_validator.yml"
+    resource: "../src/Resources/config/routes/html_validator.yml"
     prefix:   /html_validator
 
 php_validator:
-    resource: "routes/wapinet/php_validator.yml"
+    resource: "../src/Resources/config/routes/php_validator.yml"
     prefix:   /php_validator
 
 rates:
-    resource: "routes/wapinet/rates.yml"
+    resource: "../src/Resources/config/routes/rates.yml"
     prefix:   /rates
 
 horoscope:
-    resource: "routes/wapinet/horoscope.yml"
+    resource: "../src/Resources/config/routes/horoscope.yml"
     prefix:   /horoscope
 
 mass_media:
-    resource: "routes/wapinet/mass_media.yml"
+    resource: "../src/Resources/config/routes/mass_media.yml"
     prefix:   /mass_media
 
 bash:
-    resource: "routes/wapinet/bash.yml"
+    resource: "../src/Resources/config/routes/bash.yml"
     prefix:   /bash
 
 archiver:
-    resource: "routes/wapinet/archiver.yml"
+    resource: "../src/Resources/config/routes/archiver.yml"
     prefix:   /archiver
 
 file:
-    resource: "routes/wapinet/file.yml"
+    resource: "../src/Resources/config/routes/file.yml"
     prefix:   /file
 
 news:
-    resource: "routes/wapinet/news.yml"
+    resource: "../src/Resources/config/routes/news.yml"
     prefix:   /news
 
 guestbook:
-    resource: "routes/wapinet/guestbook.yml"
+    resource: "../src/Resources/config/routes/guestbook.yml"
     prefix:   /guestbook
 
 gist:
-    resource: "routes/wapinet/gist.yml"
+    resource: "../src/Resources/config/routes/gist.yml"
     prefix:   /gist
 
 user:
-    resource: "routes/wapinet/user.yml"
+    resource: "../src/Resources/config/routes/user.yml"
     prefix:   /user
 
 forum_index:

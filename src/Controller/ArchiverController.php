@@ -47,16 +47,16 @@ class ArchiverController extends Controller
 
                     $archive = basename($archiveDirectory);
 
-                    return $this->redirectToRoute('archiver_edit', array('archive' => $archive));
+                    return $this->redirectToRoute('archiver_edit', ['archive' => $archive]);
                 }
             }
         } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('Archiver/create.html.twig', array(
+        return $this->render('Archiver/create.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
 
@@ -84,11 +84,11 @@ class ArchiverController extends Controller
 
         $files = $this->get('archive_7z')->getFiles($archiveDirectory);
 
-        return $this->render('Archiver/edit.html.twig', array(
+        return $this->render('Archiver/edit.html.twig', [
             'archive' => $archive,
             'form' => $form->createView(),
             'files' => $files,
-        ));
+        ]);
     }
 
 
@@ -154,7 +154,7 @@ class ArchiverController extends Controller
 
         $this->get('filesystem')->remove($file);
 
-        return $this->redirectToRoute('archiver_edit', array('archive' => $archive));
+        return $this->redirectToRoute('archiver_edit', ['archive' => $archive]);
     }
 
 
@@ -205,16 +205,16 @@ class ArchiverController extends Controller
 
                     $archive = \basename($archiveDirectory);
 
-                    return $this->redirectToRoute('archiver_edit', array('archive' => $archive));
+                    return $this->redirectToRoute('archiver_edit', ['archive' => $archive]);
                 }
             }
         } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('Archiver/exctract.html.twig', array(
+        return $this->render('Archiver/exctract.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
 

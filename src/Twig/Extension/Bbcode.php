@@ -27,35 +27,17 @@ class Bbcode extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('wapinet_bbcode_parse', array($this, 'bbcodeParse'), array('is_safe' => array('html'))),
-        );
-    }
+        return [
+            new \Twig_SimpleFilter('wapinet_bbcode_parse', function (string $text) : string {
+                // хост нужен для email
+                $host = $this->requestContext->getHost();
+                $xbbcode = new Xbbcode('//'.$host.'/build/app/xbbcode');
+                $xbbcode->setTagHandler('spoiler', WapinetSpoiler::class);
+                $xbbcode->parse($text);
 
-
-    /**
-     * @param string $text
-     * @return string
-     */
-    public function bbcodeParse($text)
-    {
-        // хост нужен для email
-        $host = $this->requestContext->getHost();
-        $xbbcode = new Xbbcode('//'.$host.'/build/app/xbbcode');
-        $xbbcode->setTagHandler('spoiler', WapinetSpoiler::class);
-        $xbbcode->parse($text);
-
-        return $xbbcode->getHtml();
-    }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'wapinet_bbcode';
+                return $xbbcode->getHtml();
+            }, ['is_safe' => ['html']]),
+        ];
     }
 }
 

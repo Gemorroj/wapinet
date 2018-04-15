@@ -26,12 +26,12 @@ class Date extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
+        return [
             new \Twig_SimpleFilter('wapinet_date', array($this, 'getDate')),
             new \Twig_SimpleFilter('wapinet_time', array($this, 'getTime')),
             new \Twig_SimpleFilter('wapinet_datetime', array($this, 'getDateTime')),
             new \Twig_SimpleFilter('wapinet_length', array($this, 'getLength')),
-        );
+        ];
     }
 
     /**
@@ -167,15 +167,5 @@ class Date extends \Twig_Extension
         }
 
         return $length;
-    }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'wapinet_date';
     }
 }

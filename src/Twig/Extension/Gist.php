@@ -48,14 +48,4 @@ class Gist extends \Twig_Extension
     {
         return $this->gistRepository->countUser($user);
     }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'gist';
-    }
 }

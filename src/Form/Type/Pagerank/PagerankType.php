@@ -19,9 +19,9 @@ class PagerankType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('url', UrlType::class, array('label' => 'Сайт', 'data' => 'http://'));
+        $builder->add('url', UrlType::class, ['label' => 'Сайт', 'data' => 'http://']);
 
-        $builder->add('submit', SubmitType::class, array('label' => 'Анализировать'));
+        $builder->add('submit', SubmitType::class, ['label' => 'Анализировать']);
     }
 
     /**

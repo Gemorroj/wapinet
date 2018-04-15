@@ -98,12 +98,12 @@ class Horoscope
             throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
         }
 
-        $obj = simplexml_load_string($response->getContent());
+        $obj = \simplexml_load_string($response->getContent());
 
-        return array(
+        return [
             'date' => new \DateTime((string)$obj->channel->item->pubDate),
             'horoscope' => (string)$obj->channel->item->description,
-        );
+        ];
     }
 
 
@@ -122,11 +122,11 @@ class Horoscope
             throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
         }
 
-        $obj = simplexml_load_string($response->getContent());
+        $obj = \simplexml_load_string($response->getContent());
 
-        return array(
+        return [
             'date' => new \DateTime((string)$obj->channel->item->pubDate),
             'horoscope' => (string)$obj->channel->item->description,
-        );
+        ];
     }
 }

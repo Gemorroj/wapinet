@@ -23,27 +23,10 @@ class Online extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('wapinet_online', array($this, 'getOnline')),
-        );
-    }
-
-    /**
-     * @return int
-     */
-    public function getOnline()
-    {
-        return $this->em->createQuery('SELECT COUNT(o.id) FROM App\Entity\Online o')->getSingleScalarResult();
-    }
-
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'wapinet_online';
+        return [
+            new \Twig_SimpleFunction('wapinet_online', function () {
+                return $this->em->createQuery('SELECT COUNT(o.id) FROM App\Entity\Online o')->getSingleScalarResult();
+            }),
+        ];
     }
 }

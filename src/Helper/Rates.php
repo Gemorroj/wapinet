@@ -84,17 +84,17 @@ class Rates
         $obj = \simplexml_load_string($response->getContent());
         $rates = [];
         foreach ($obj->Valute as $v) {
-            $rates[] = array(
+            $rates[] = [
                 'name' => (string)$v->Name,
                 'code' => (string)$v->CharCode,
                 'rate' => (string)$v->Value,
-            );
+            ];
         }
 
-        return array(
+        return [
             'date' => new \DateTime((string)$obj->attributes()->Date),
             'rates' => $rates,
-        );
+        ];
     }
 
     /**
@@ -115,17 +115,17 @@ class Rates
         $obj = \simplexml_load_string($response->getContent());
         $rates = [];
         foreach ($obj->Currency as $v) {
-            $rates[] = array(
+            $rates[] = [
                 'name' => (string)$v->Name,
                 'code' => (string)$v->CharCode,
                 'rate' => (string)$v->Rate,
-            );
+            ];
         }
 
-        return array(
+        return [
             'date' => new \DateTime((string)$obj->attributes()->Date),
             'rates' => $rates,
-        );
+        ];
     }
 
     /**
@@ -146,17 +146,17 @@ class Rates
         $obj = \simplexml_load_string($response->getContent());
         $rates = [];
         foreach ($obj->item as $v) {
-            $rates[] = array(
+            $rates[] = [
                 'name' => (string)$v->name,
                 'code' => (string)$v->char3,
                 'rate' => (string)$v->change,
-            );
+            ];
         }
 
-        return array(
+        return [
             'date' => new \DateTime((string)$obj->item[0]->date),
             'rates' => $rates,
-        );
+        ];
     }
 
     /**
@@ -177,17 +177,17 @@ class Rates
         $obj = \simplexml_load_string($response->getContent());
         $rates = [];
         foreach ($obj->channel->item as $v) {
-            $rates[] = array(
+            $rates[] = [
                 'name' => $this->getKzRateName((string)$v->title),
                 'code' => (string)$v->title,
                 'rate' => (string)$v->description,
-            );
+            ];
         }
 
-        return array(
+        return [
             'date' => new \DateTime((string)$obj->channel->item[0]->pubDate),
             'rates' => $rates,
-        );
+        ];
     }
 
 

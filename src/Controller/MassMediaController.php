@@ -21,10 +21,10 @@ class MassMediaController extends Controller
      */
     public function rtAction(MassMedia $massMediaHelper)
     {
-        return $this->render('MassMedia/news.html.twig', array(
+        return $this->render('MassMedia/news.html.twig', [
             'name' => 'RT',
             'news' => $massMediaHelper->getRt(),
-        ));
+        ]);
     }
 
     /**
@@ -33,9 +33,9 @@ class MassMediaController extends Controller
      */
     public function inotvAction(MassMedia $massMediaHelper)
     {
-        return $this->render('MassMedia/news.html.twig', array(
+        return $this->render('MassMedia/news.html.twig', [
             'name' => 'Ино ТВ',
             'news' => $massMediaHelper->getInotv(),
-        ));
+        ]);
     }
 }

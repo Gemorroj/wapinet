@@ -27,26 +27,10 @@ class Guestbook extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('guestbook_count_all', array($this, 'getCountAll')),
-        );
-    }
-
-    /**
-     * @return int
-     */
-    public function getCountAll()
-    {
-        return $this->guestbookRepository->countAll();
-    }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'guestbook';
+        return [
+            new \Twig_SimpleFunction('guestbook_count_all', function () {
+                return $this->guestbookRepository->countAll();
+            }),
+        ];
     }
 }

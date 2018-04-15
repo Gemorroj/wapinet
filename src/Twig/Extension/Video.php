@@ -30,10 +30,10 @@ class Video extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('wapinet_video_screenshot', array($this, 'getScreenshot')),
-            new \Twig_SimpleFilter('wapinet_video_to_mp4', array($this, 'convertToMp4')),
-        );
+        return [
+            new \Twig_SimpleFilter('wapinet_video_screenshot', [$this, 'getScreenshot']),
+            new \Twig_SimpleFilter('wapinet_video_to_mp4', [$this, 'convertToMp4']),
+        ];
     }
 
 
@@ -59,7 +59,7 @@ class Video extends \Twig_Extension
                     throw new \RuntimeException('Не удалось создать MP4 файл');
                 }
             } catch (\Exception $e) {
-                $this->container->get('logger')->warning('Ошибка при конвертировании видео в MP4.', array($e));
+                $this->container->get('logger')->warning('Ошибка при конвертировании видео в MP4.', [$e]);
                 return null;
             }
         }
@@ -131,7 +131,7 @@ class Video extends \Twig_Extension
                     throw new \RuntimeException('Не найден видео поток');
                 }
             } catch (\Exception $e) {
-                $this->container->get('logger')->warning('Ошибка при создании скриншота видео.', array($e));
+                $this->container->get('logger')->warning('Ошибка при создании скриншота видео.', [$e]);
                 return null;
             }
         }
@@ -167,16 +167,5 @@ class Video extends \Twig_Extension
     protected function getPublicDir() : string
     {
         return $this->container->get('kernel')->getPublicDir();
-    }
-
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'wapinet_video';
     }
 }
