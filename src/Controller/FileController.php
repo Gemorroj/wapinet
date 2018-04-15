@@ -150,8 +150,9 @@ class FileController extends Controller
      */
     public function hiddenAction(Request $request)
     {
+        /** @var User $user */
         $user = $this->getUser();
-        if (!$user || !$user->hasRole('ROLE_ADMIN') && !$user->hasRole('ROLE_SUPER_ADMIN')) {
+        if (!$user || (!$user->hasRole('ROLE_ADMIN') && !$user->hasRole('ROLE_SUPER_ADMIN'))) {
             throw $this->createAccessDeniedException('Доступ запрещен.');
         }
 

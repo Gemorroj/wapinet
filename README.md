@@ -196,6 +196,9 @@ server {
     error_log /var/log/nginx/wapinet.error.log;
     access_log /var/log/nginx/wapinet.access.log;
 
+    # todo: Content-Security-Policy
+    add_header Strict-Transport-Security "max-age=31536000";
+    add_header X-Frame-Options "DENY";
 
     # Кэширование
     location = /favicon.ico {

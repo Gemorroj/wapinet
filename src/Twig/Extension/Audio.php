@@ -29,9 +29,9 @@ class Audio extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('wapinet_audio_to_mp3', array($this, 'convertToMp3')),
-        );
+        return [
+            new \Twig_SimpleFilter('wapinet_audio_to_mp3', [$this, 'convertToMp3']),
+        ];
     }
 
 
@@ -39,7 +39,7 @@ class Audio extends \Twig_Extension
      * @param string $path
      * @return string|null
      */
-    public function convertToMp3 ($path)
+    public function convertToMp3 (string $path) : ?string
     {
         $mp3File = $path . '.mp3';
 
@@ -57,7 +57,7 @@ class Audio extends \Twig_Extension
                     throw new \RuntimeException('Не удалось создать MP3 файл');
                 }
             } catch (\Exception $e) {
-                $this->container->get('logger')->warning('Ошибка при конвертировании аудио в MP3.', array($e));
+                $this->container->get('logger')->warning('Ошибка при конвертировании аудио в MP3.', [$e]);
                 return null;
             }
         }
@@ -70,7 +70,7 @@ class Audio extends \Twig_Extension
      * @param FFmpegAudio $media
      * @return $this
      */
-    protected function setOptions(DefaultAudio $format, FFmpegAudio $media)
+    protected function setOptions(DefaultAudio $format, FFmpegAudio $media) : self
     {
         $streams = $media->getStreams();
         $audioStream = $streams->audios()->first();

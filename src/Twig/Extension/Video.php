@@ -41,7 +41,7 @@ class Video extends \Twig_Extension
      * @param string $path
      * @return string|null
      */
-    public function convertToMp4 ($path)
+    public function convertToMp4 (string $path) : ?string
     {
         $mp4File = $path . '.mp4';
 
@@ -72,7 +72,7 @@ class Video extends \Twig_Extension
      * @param FFmpegVideo $media
      * @return $this
      */
-    protected function setOptions(DefaultVideo $format, FFmpegVideo $media)
+    protected function setOptions(DefaultVideo $format, FFmpegVideo $media) : self
     {
         $streams = $media->getStreams();
 
@@ -111,7 +111,7 @@ class Video extends \Twig_Extension
      * @param string $path
      * @return string|null
      */
-    public function getScreenshot($path)
+    public function getScreenshot(string $path) : ?string
     {
         $screenshot = $path . '.jpg';
 
@@ -144,7 +144,7 @@ class Video extends \Twig_Extension
      * @param FFmpegVideo $media
      * @return int
      */
-    protected function getScreenshotSecond(FFmpegVideo $media)
+    protected function getScreenshotSecond(FFmpegVideo $media) : int
     {
         $second = $this->container->getParameter('wapinet_video_screenshot_second');
         $video = $media->getStreams()->videos()->first();
