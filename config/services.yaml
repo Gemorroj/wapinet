@@ -22,6 +22,7 @@ parameters:
     wapinet_archiver_comment: 'Wapinet.ru archiver'
     wapinet_video_screenshot_second: 5
     wapinet_email_footer: 'Сообщение отправлено через бесплатный сервис отправки E-mail https://wapinet.ru'
+    wapinet_vk_access_token: '%env(VK_ACCESS_TOKEN)%'
 
     sphinx_port: 9312
     sphinx_host: 127.0.0.1

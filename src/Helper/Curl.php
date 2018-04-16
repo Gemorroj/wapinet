@@ -49,7 +49,7 @@ class Curl
      * @param string|null $url
      * @return Curl
      */
-    public function init($url = null)
+    public function init(?string $url = null) : self
     {
         $this->curl = \curl_init();
 
@@ -68,7 +68,7 @@ class Curl
     /**
      * Закрываем соединение
      */
-    public function close()
+    public function close() : void
     {
         \curl_close($this->curl);
     }
@@ -80,7 +80,7 @@ class Curl
      * @param mixed $value
      * @return Curl
      */
-    public function setOpt($key, $value)
+    public function setOpt(int $key, $value) : self
     {
         \curl_setopt($this->curl, $key, $value);
 
@@ -94,7 +94,7 @@ class Curl
      * @param string $value
      * @return Curl
      */
-    public function setUrl($value)
+    public function setUrl(string $value) : self
     {
         \curl_setopt($this->curl, \CURLOPT_URL, $value);
 
@@ -108,7 +108,7 @@ class Curl
      * @param int $maxRedirects
      * @return Curl
      */
-    public function acceptRedirects($maxRedirects = null)
+    public function acceptRedirects(?int $maxRedirects = null) : self
     {
         \curl_setopt($this->curl, \CURLOPT_FOLLOWLOCATION, true);
         if (null !== $maxRedirects) {
@@ -125,7 +125,7 @@ class Curl
      * @param bool $strict Исключение если не удалось определить размер файла (не найден Content-Length)
      * @return Response
      */
-    public function checkFileSize($strict = true)
+    public function checkFileSize(bool $strict = true) : Response
     {
         $this->setOpt(\CURLOPT_NOBODY, true);
         $response = $this->exec();
@@ -155,7 +155,7 @@ class Curl
      * @see http://php.net/manual/ru/function.http-parse-headers.php#112986
      * @return array
      */
-    protected function parseHeaders($rawHeaders)
+    protected function parseHeaders(string $rawHeaders) : array
     {
         if (\function_exists('http_parse_headers')) {
             return \http_parse_headers($rawHeaders);
@@ -238,7 +238,7 @@ class Curl
      * @throws RequestException
      * @return Response
      */
-    public function exec()
+    public function exec() : Response
     {
         if ($this->headers) {
             $this->setOpt(\CURLOPT_HTTPHEADER, $this->headers);
@@ -266,7 +266,7 @@ class Curl
     /**
      * @return Curl
      */
-    protected function sendPostData()
+    protected function sendPostData() : self
     {
         $this->addHeader('Content-Type', 'application/x-www-form-urlencoded');
         $this->setOpt(\CURLOPT_POST, true);
@@ -294,7 +294,7 @@ class Curl
     /**
      * @return Curl
      */
-    public function addCompression()
+    public function addCompression() : self
     {
         $this->setOpt(\CURLOPT_ENCODING, '');
 
@@ -306,7 +306,7 @@ class Curl
      * @param string $value
      * @return Curl
      */
-    public function addHeader($key, $value)
+    public function addHeader(string $key, string $value) : self
     {
         $this->headers[] = $key . ': ' . $value;
 
@@ -316,7 +316,7 @@ class Curl
     /**
      * @return Curl
      */
-    public function addBrowserHeaders()
+    public function addBrowserHeaders() : self
     {
         $this->headers = \array_merge($this->headers, $this->browserHeaders);
 
@@ -328,7 +328,7 @@ class Curl
      * @param string $value
      * @return Curl
      */
-    public function addPostData($key, $value)
+    public function addPostData(string $key, string $value) : self
     {
         $this->postData[$key] = $value;
 

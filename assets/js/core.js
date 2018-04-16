@@ -153,7 +153,7 @@ const Vk = {
 
         if (Vk.data.response && Vk.data.response[0]) {
             let user = Vk.data.response[0];
-            return '<a rel="external" href="https://vk.com/id' + user.uid + '"><img src="' + user.photo_200_orig + '" /></a><br/><span>' + user.first_name + ' ' + user.last_name + '</span><br/>' + (user.online ? '<span class="green">Онлайн</span>' : '<span class="gray">Офлайн</span>');
+            return '<a rel="external" href="https://vk.com/id' + user.id + '"><img src="' + user.photo_200_orig + '" /></a><br/><span>' + user.first_name + ' ' + user.last_name + '</span><br/>' + (user.online ? '<span class="green">Онлайн</span>' : '<span class="gray">Офлайн</span>');
         }
 
         return 'No data';
@@ -291,11 +291,11 @@ $document.one("pagecreate", "#fos_user_profile_show", function () {
     let vkId = $(":mobile-pagecontainer").find("#user-vk").data("id");
 
     if (vkId) {
-        $.post('https://api.vk.com/method/users.get', {
+        $.post(Routing.generate('vk_api_get', {"method": "users.get"}), {
             'v': '5.74',
             'fields': 'online,photo_200_orig',
             'user_ids': vkId
-        }, Vk.show, 'jsonp');
+        }, Vk.show, 'json');
     }
 });
 
