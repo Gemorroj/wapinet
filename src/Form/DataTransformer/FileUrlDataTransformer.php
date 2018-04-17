@@ -187,7 +187,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
      * language sub-component is defined in RFC5646, and that the filename
      * is URL encoded (in the charset specified)
      *
-     * @see https://github.com/osTicket/osTicket/blob/master/include/class.format.php#L102
+     * @see https://github.com/osTicket/osTicket/blob/v1.10.2/include/class.format.php#L70
      * @param string $encodedFilename
      * @return string|null
      */
