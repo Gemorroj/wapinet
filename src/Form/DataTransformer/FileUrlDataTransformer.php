@@ -4,6 +4,7 @@ namespace App\Form\DataTransformer;
 
 use App\Entity\File\FileContent;
 use App\Entity\File\FileUrl;
+use Riverline\MultiPartParser\Part;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
@@ -48,7 +49,8 @@ class FileUrlDataTransformer implements DataTransformerInterface
                 'web_path' => \str_replace('\\', '//', \mb_substr($fileDataFromDb->getPathname(), \mb_strlen($this->container->get('kernel')->getPublicDir()))),
                 'file_url' => $fileDataFromDb
             ];
-        } elseif ($fileDataFromDb instanceof FileContent) {
+        }
+        if ($fileDataFromDb instanceof FileContent) {
             return [
                 'web_path' => 'data:' . $fileDataFromDb->getMimeType() . ';base64,' . \base64_encode($fileDataFromDb->getContent()),
                 'file_url' => $fileDataFromDb
@@ -112,7 +114,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
             if (false === $temp) {
                 throw new TransformationFailedException('Не удалось создать временный файл');
             }
-            $f = \fopen($temp, 'w');
+            $f = \fopen($temp, 'wb');
             if (false === $f) {
                 throw new TransformationFailedException('Не удалось открыть временный файл на запись');
             }
@@ -128,21 +130,11 @@ class FileUrlDataTransformer implements DataTransformerInterface
                 throw new TransformationFailedException('Не удалось скачать файл по ссылке (HTTP код: ' . $responseBody->getStatusCode() . ')');
             }
 
-
-            $contentType = $responseHead->headers->get('Content-Type');
-            if (\is_array($contentType)) {
-                $contentType = \end($contentType);
-            }
-            $contentLength = $responseHead->headers->get('Content-Length');
-            if (\is_array($contentLength)) {
-                $contentLength = \end($contentLength);
-            }
-
             $uploadedFile = new FileUrl(
                 $temp,
                 $this->getOriginalName($responseHead->headers, $fileDataFromForm['url']),
-                $contentType,
-                $contentLength
+                $responseHead->headers->get('Content-Type'),
+                $responseHead->headers->get('Content-Length')
             );
         }
 
@@ -153,65 +145,57 @@ class FileUrlDataTransformer implements DataTransformerInterface
     /**
      * @param ResponseHeaderBag $headers
      * @param string $url
+     * @param string $default
      * @return string
      */
-    protected function getOriginalName(ResponseHeaderBag $headers, $url)
+    protected function getOriginalName(ResponseHeaderBag $headers, string $url, string $default = 'index.html') : string
     {
         $contentDisposition = $headers->get('Content-Disposition');
-        if (\is_array($contentDisposition)) {
-            $contentDisposition = \end($contentDisposition);
-        }
         if ($contentDisposition) {
-            $tmpName = $this->parseContentDisposition($contentDisposition);
-            if (null !== $tmpName) {
-                return $tmpName;
+            $tmpName = Part::getHeaderOptions($contentDisposition);
+            if (isset($tmpName['filename*']) && $tmpName['filename*']) {
+                $encodedFilename = $this->decodeRfc5987($tmpName['filename*']);
+                if ($encodedFilename) {
+                    return $encodedFilename;
+                }
+            }
+            if (isset($tmpName['filename']) && $tmpName['filename']) {
+                return $tmpName['filename'];
             }
         }
 
-        $location = $headers->get('Location');
-        if (\is_array($location)) {
-            $location = \end($location);
-        }
-        if ($location) {
-            return \parse_url($location, PHP_URL_PATH);
+        $path = \parse_url($url, PHP_URL_PATH);
+        if (null !== $path && '/' !== $path) {
+            return $path;
         }
 
-        return \parse_url($url, PHP_URL_PATH);
+        $location = $headers->get('Location');
+        if ($location) {
+            $locationPath = \parse_url($location, PHP_URL_PATH);
+            if (null !== $locationPath && '/' !== $locationPath) {
+                return $locationPath;
+            }
+        }
+
+        return $default;
     }
 
 
     /**
-     * @param string $contentDisposition
-     * @return null|string
+     * Decodes filenames given in the content-disposition header according
+     * to RFC5987, such as filename*=utf-8''filename.png. Note that the
+     * language sub-component is defined in RFC5646, and that the filename
+     * is URL encoded (in the charset specified)
+     *
+     * @see https://github.com/osTicket/osTicket/blob/master/include/class.format.php#L102
+     * @param string $encodedFilename
+     * @return string|null
      */
-    private function parseContentDisposition($contentDisposition)
+    private function decodeRfc5987($encodedFilename): ?string
     {
-        $tmpName = \explode('=', $contentDisposition, 2);
-        if (isset($tmpName[1])) {
-            $tmpName = \trim($tmpName[1], '";\'');
-
-            $utf8Prefix = 'utf-8\'\''; // utf-8\'\'' . \rawurlencode($var)
-            $utf8BPrefix = '=?UTF-8?B?'; // =?UTF-8?B?' . \base64_encode($var) . '?=
-            $utf8BPostfix = '?='; // =?UTF-8?B?' . \base64_encode($var) . '?=
-
-            if (0 === \stripos($tmpName, $utf8Prefix)) {
-                $tmpName = \substr($tmpName, \strlen($utf8Prefix));
-                $tmpName = \rawurldecode($tmpName);
-
-                return $tmpName;
-            }
-
-            if (0 === \stripos($tmpName, $utf8BPrefix)) {
-                $tmpName = \substr($tmpName, \strlen($utf8BPrefix));
-                $tmpName = \substr($tmpName, 0, -\strlen($utf8BPostfix));
-                $tmpName = \base64_decode($tmpName);
-
-                return $tmpName;
-            }
-
-            return $tmpName;
+        if (\preg_match("/(?P<charset>[\w!#$%&+^_`{}~-]+)'(?P<language>[\w-]*)'(?P<filename>.*)$/", $encodedFilename, $match)) {
+            return \mb_convert_encoding(\rawurldecode($match['filename']), 'UTF-8', $match['charset']);
         }
-
         return null;
     }
 }

@@ -45,6 +45,7 @@
         "foolz/sphinxql-query-builder": "^2.0",
         "php-ffmpeg/binary-driver": "dev-master",
         "php-ffmpeg/php-ffmpeg": "^0.11",
+        "riverline/multipart-parser": "^1.1",
         "gemorroj/phpwhois": "dev-master",
         "gemorroj/stop-spam": "^2.0",
         "gemorroj/archive7z": "^4.0",
