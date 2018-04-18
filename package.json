@@ -3,8 +3,7 @@
         "@symfony/webpack-encore": "^0.20.0",
         "copy-webpack-plugin": "^4.5.1"
     },
-    "license": "UNLICENSED",
-    "private": true,
+    "license": "GPL-3.0-or-later",
     "scripts": {
         "dev-server": "encore dev-server",
         "dev": "encore dev",
