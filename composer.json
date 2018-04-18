@@ -1,6 +1,6 @@
 {
     "type": "project",
-    "license": "proprietary",
+    "license": "GPL-3.0-or-later",
     "repositories": [
         {
             "type": "vcs",
