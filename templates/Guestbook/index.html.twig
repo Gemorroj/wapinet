@@ -29,7 +29,7 @@
                     {% set geoip2 = wapinet_geoip2_country(item.ip) %}
                     <a href="#popup-{{ item.id }}">Anonymous</a>
                     <div data-role="popup" id="popup-{{ item.id }}">
-                        <p>{{ item.ip }}{% if geoip2 and geoip2.country.isoCode%} <img src="{{ asset('build/app/images/countries/' ~ geoip2.country.isoCode|lower ~ '.png') }}" alt="{{ geoip2.country.names['ru'] }}" />{% endif %}<br />{{ item.browser }}</p>
+                        <p>{{ item.ip }}{% if geoip2 and geoip2.country.isoCode%} <img src="{{ asset('build/resources/images/countries/' ~ geoip2.country.isoCode|lower ~ '.png') }}" alt="{{ geoip2.country.names['ru'] }}" />{% endif %}<br />{{ item.browser }}</p>
                     </div>
                 {% endif %}
 

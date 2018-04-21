@@ -21,9 +21,7 @@ class Bbcode extends \Twig_Extension
     }
 
     /**
-     * Returns a list of global functions to add to the existing list.
-     *
-     * @return array An array of global functions
+     * @inheritdoc
      */
     public function getFilters()
     {
@@ -31,7 +29,7 @@ class Bbcode extends \Twig_Extension
             new \Twig_SimpleFilter('wapinet_bbcode_parse', function (string $text) : string {
                 // хост нужен для email
                 $host = $this->requestContext->getHost();
-                $xbbcode = new Xbbcode('//'.$host.'/build/app/xbbcode');
+                $xbbcode = new Xbbcode('//'.$host.'/build/resources/xbbcode');
                 $xbbcode->setTagHandler('spoiler', WapinetSpoiler::class);
                 $xbbcode->parse($text);
 
@@ -44,8 +42,7 @@ class Bbcode extends \Twig_Extension
 class WapinetSpoiler extends \Xbbcode\Tag\Spoiler
 {
     /**
-     * @param string $id
-     * @return string
+     * @inheritdoc
      */
     protected function getSpoiler($id)
     {

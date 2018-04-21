@@ -36,9 +36,9 @@ Encore
 
 var config = Encore.getWebpackConfig();
 
-// копируем файлы которые не испозьзуются в js/css, а напрямую в twig
+// копируем файлы которые не используются в js/css, а напрямую в twig
 config.plugins.push(new CopyWebpackPlugin([
-    { from: './assets/public/', to: 'app'}
+    { from: './assets/resources/', to: 'resources'}
 ]));
 
 

@@ -17,7 +17,7 @@
         <div class="ui-block-a"><div class="ui-bar ui-bar-a">День рождения</div></div>
         <div class="ui-block-b"><div class="ui-bar ui-bar-a">{% if user.birthday %}{{ user.birthday|wapinet_date }}{% else %}Не указано{% endif %}</div></div>
         <div class="ui-block-a"><div class="ui-bar ui-bar-a">Страна</div></div>
-        <div class="ui-block-b"><div class="ui-bar ui-bar-a">{% if user.country %}{{ user.countryName }} <img src="{{ asset('build/app/images/countries/'~user.country|lower~'.png') }}" alt="{{ user.countryName }}" />{% else %}Не указано{% endif %}</div></div>
+        <div class="ui-block-b"><div class="ui-bar ui-bar-a">{% if user.country %}{{ user.countryName }} <img src="{{ asset('build/resources/images/countries/'~user.country|lower~'.png') }}" alt="{{ user.countryName }}" />{% else %}Не указано{% endif %}</div></div>
         <div class="ui-block-a"><div class="ui-bar ui-bar-a">Дата регистрации</div></div>
         <div class="ui-block-b"><div class="ui-bar ui-bar-a">{{ user.createdAt|wapinet_datetime }}</div></div>
         <div class="ui-block-a"><div class="ui-bar ui-bar-a">Активность</div></div>
