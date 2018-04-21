@@ -2,11 +2,35 @@
 
 ##### Лицензия GPL v3
 
+##### Используются:
+- Symfony 4
+- Jquery Mobile
+- PHP 7
+- Mariadb
+- Sphinx
+- p7zip
+- ffmpeg
+
+
+### Базовая установка (актуально для Centos 7)
+- Отключить `selinux`
+- Установить дополнительные репозитории `epel`, `remi`, `nginx`, `mysql`/`mariadb`
+- Установить Mysql 5.7 или Mariadb 10.2 `yum install mysql mysql-community-server`
+- Установить Nginx `yum install nginx`
+- Установить php 7.2 `yum install php-fpm php-cli php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-pecl-apcu php-pecl-zip php-process php-xml`
+- Установить cron, если не установлен `yum install cronie`
+- Установить sphinx `yum install sphinx`
+
+
 ### Установка крон заданий:
-`php /var/www/wapinet/bin/console --env=prod wapinet:tmp:clear "1 day"`  
-`php /var/www/wapinet/bin/console --env=prod wapinet:tags:clear`  
-`php /var/www/wapinet/bin/console --env=prod wapinet:user:subscriber`  
+##### Каждый день в 1 час ночи от пользователя php-fpm
+`php /var/www/wapinet/bin/console wapinet:tmp:clear "1 day"`    
+`php /var/www/wapinet/bin/console wapinet:tags:clear`
+##### Каждые пол часа от пользователя php-fpm
+`php /var/www/wapinet/bin/console wapinet:user:subscriber`
+##### Каждый день в 2 часа ночи от рута
 `indexer --rotate --all`  
+
 
 ### Установка прав доступа на запись:
 `var/log`  
@@ -16,22 +40,13 @@
 `public/media/cache/thumbnail/static`  
 `public/static/file`  
 
-### Установка cron:
-```bash
-yum install cronie
-```
-
-### Установка sphinx:
-```bash
-yum install sphinx
-```
 
 ### Установка p7zip:
 ```bash
 yum install p7zip p7zip-plugins
 ```
 
-#### Если версия в репозитории слишком старая, или нет поддержки rar (RHEL) то ставим из исходников
+##### Если версия в репозитории слишком старая, или нет поддержки rar (RHEL) то ставим из исходников
 ```bash
 cd /root/p7zip_16.02_sources
 curl -L https://downloads.sourceforge.net/project/p7zip/p7zip/16.02/p7zip_16.02_src_all.tar.bz2 > p7zip_16.02_src_all.tar.bz2
@@ -42,6 +57,7 @@ make all3
 ./install.sh
 ```
 Проверить список поддерживаемых форматов можно так `7z i` или `7za i` 
+
 
 ### Установка FFmpeg:
 Добавить репозиторий с актуальной версией nasm: https://www.nasm.us/nasm.repo
@@ -267,10 +283,8 @@ server {
 }
 ```
 
-### BUG:
- - ...
-
 ### TODO:
+- перевести на mysql 8 (см. https://bugs.php.net/bug.php?id=76243 https://bugs.mysql.com/bug.php?id=90529)
 - сделать мониторинг в админке (сделано, дальше доделать в мониторинге информацию о состоянии БД и веб-серверов)
 - Переделать интерфейс на vue (огромная задача)
 - переделать редактор аудиотегов на https://github.com/duncan3dc/meta-audio/issues/3 (когда будут картинки)
@@ -279,5 +293,5 @@ server {
 - Данные о видео на youtube и др. https://github.com/essence/essence
 - Оболочка над nmap https://github.com/willdurand/nmap (работает медленно и выдает мало информации)
 - Заменить прокси Glype на https://github.com/Athlon1600/php-proxy
-- Проверка на спамеров http://www.stopforumspam.com/usage
+- Проверка на спамеров http://www.stopforumspam.com/usage (https://github.com/Gemorroj/StopSpam)
 - Проверка на вирусы https://www.virustotal.com/ru/documentation/public-api/
