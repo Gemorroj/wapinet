@@ -2340,12 +2340,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JamesHeinrich/getID3.git",
-                "reference": "e275ca34f641d25953593bab62a9c117bd4c9bc9"
+                "reference": "379f48c93ab75eda8d954f9334669534b3021eb6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/e275ca34f641d25953593bab62a9c117bd4c9bc9",
-                "reference": "e275ca34f641d25953593bab62a9c117bd4c9bc9",
+                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/379f48c93ab75eda8d954f9334669534b3021eb6",
+                "reference": "379f48c93ab75eda8d954f9334669534b3021eb6",
                 "shasum": ""
             },
             "require": {
@@ -2378,7 +2378,7 @@
                 "php",
                 "tags"
             ],
-            "time": "2018-04-12T17:07:59+00:00"
+            "time": "2018-05-17T00:08:15+00:00"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -7381,16 +7381,16 @@
         },
         {
             "name": "nette/bootstrap",
-            "version": "v2.4.5",
+            "version": "v2.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/bootstrap.git",
-                "reference": "804925787764d708a7782ea0d9382a310bb21968"
+                "reference": "a64071253a70fb31ca31762763f993859ff0b691"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/bootstrap/zipball/804925787764d708a7782ea0d9382a310bb21968",
-                "reference": "804925787764d708a7782ea0d9382a310bb21968",
+                "url": "https://api.github.com/repos/nette/bootstrap/zipball/a64071253a70fb31ca31762763f993859ff0b691",
+                "reference": "a64071253a70fb31ca31762763f993859ff0b691",
                 "shasum": ""
             },
             "require": {
@@ -7453,20 +7453,20 @@
                 "configurator",
                 "nette"
             ],
-            "time": "2017-08-20T17:36:59+00:00"
+            "time": "2018-05-16T11:51:51+00:00"
         },
         {
             "name": "nette/di",
-            "version": "v2.4.11",
+            "version": "v2.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/di.git",
-                "reference": "a300c8b8e8549595ab90c04d8ee21b8b2a5a88f9"
+                "reference": "8e717aed2d182a26763be58c220eebaaa32917df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/di/zipball/a300c8b8e8549595ab90c04d8ee21b8b2a5a88f9",
-                "reference": "a300c8b8e8549595ab90c04d8ee21b8b2a5a88f9",
+                "url": "https://api.github.com/repos/nette/di/zipball/8e717aed2d182a26763be58c220eebaaa32917df",
+                "reference": "8e717aed2d182a26763be58c220eebaaa32917df",
                 "shasum": ""
             },
             "require": {
@@ -7522,7 +7522,7 @@
                 "nette",
                 "static"
             ],
-            "time": "2018-03-28T23:53:36+00:00"
+            "time": "2018-04-26T09:18:42+00:00"
         },
         {
             "name": "nette/finder",
