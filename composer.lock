@@ -2340,12 +2340,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JamesHeinrich/getID3.git",
-                "reference": "379f48c93ab75eda8d954f9334669534b3021eb6"
+                "reference": "2a11c52e7ca2b63418da96feb543f8666fa5d924"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/379f48c93ab75eda8d954f9334669534b3021eb6",
-                "reference": "379f48c93ab75eda8d954f9334669534b3021eb6",
+                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/2a11c52e7ca2b63418da96feb543f8666fa5d924",
+                "reference": "2a11c52e7ca2b63418da96feb543f8666fa5d924",
                 "shasum": ""
             },
             "require": {
@@ -2378,7 +2378,7 @@
                 "php",
                 "tags"
             ],
-            "time": "2018-05-17T00:08:15+00:00"
+            "time": "2018-05-18T23:17:45+00:00"
         },
         {
             "name": "jdorn/sql-formatter",
