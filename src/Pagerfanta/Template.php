@@ -7,7 +7,7 @@ use Pagerfanta\View\Template\DefaultTemplate;
 class Template extends DefaultTemplate
 {
     static protected $defaultOptions = [
-        'previous_message'   => 'Пред.',
+        'prev_message'       => 'Пред.',
         'next_message'       => 'След.',
         'css_disabled_class' => '',
         'css_dots_class'     => '',

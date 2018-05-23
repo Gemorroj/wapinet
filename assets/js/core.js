@@ -185,26 +185,22 @@ window.Jplayer = {
 };
 
 
-// hypercomments
+// vk comments
 const _commentsLoader = function ($pageContainer, xid) {
-    let $commentsContainer = $pageContainer.find("#hypercomments_widget");
+    let $commentsContainer = $pageContainer.find("#vkcomments_widget");
     $commentsContainer.empty();
 
-    let hcInterval = window.setInterval(function () {
-        if ("HC" in window) {
-            window.clearInterval(hcInterval);
-            let title = $pageContainer.find('#header-title').html();
+    const id = 'vkcomments_widget-' + new Date().getTime();
+    $commentsContainer.attr('id', id); // заменяем id на уникальный для API вконтакте
 
-            HC.widget("Stream", {
-                "hc_disable": 1,
-                "xid": xid,
-                "widget_id": 76882,
-                "title": title,
-                "href": window.location.pathname,
-                "like_href": window.location.href,
-                "like_title": title,
-                "append": $commentsContainer[0]
+    let vkCommentsInterval = window.setInterval(function () {
+        if ("VK" in window) {
+            window.clearInterval(vkCommentsInterval);
+            VK.init({
+                apiId: 6449783,
+                onlyWidgets: true
             });
+            VK.Widgets.Comments(id, {}, xid);
         }
     }, 100);
 };
@@ -225,24 +221,6 @@ $document.on("pageshow", "#file_view", function () {
         "news-" + window.location.pathname.split("/").reverse()[0]
     );
 });
-
-$document.on("pagecreate", "#file_index", function () {
-    let $commentsContainer = $(":mobile-pagecontainer").find("#hypercomments_mix");
-    $commentsContainer.empty();
-
-    let hcInterval = window.setInterval(function () {
-        if ("HC" in window) {
-            window.clearInterval(hcInterval);
-            HC.widget("Mixstream", {
-                "widget_id": 76882,
-                "filter": "last",
-                "limit": 5,
-                "append": $commentsContainer[0]
-            }, "add");
-        }
-    }, 100);
-});
-
 
 
 $document.one("pagecreate", "#file_upload", function () {
