@@ -158,14 +158,16 @@ class FileContent
      * Returns the file size.
      *
      * It is extracted from the request from which the file has been uploaded.
-     * Then is should not be considered as a safe value.
+     * Then it should not be considered as a safe value.
      *
-     * @return integer|null The file size
+     * @deprecated since Symfony 4.1, use getSize() instead.
      *
-     * @api
+     * @return int|null The file sizes
      */
     public function getClientSize()
     {
-        return $this->size;
+        @\trigger_error(\sprintf('"%s" is deprecated since Symfony 4.1. Use getSize() instead.', __METHOD__), \E_USER_DEPRECATED);
+
+        return $this->getSize();
     }
 }

@@ -30,8 +30,8 @@
     yargs "^8.0.1"
 
 "@types/node@*":
-  version "10.1.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.1.4.tgz#606651d3f8a8bec08b8cb262161aab9209f4a29d"
+  version "10.3.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.3.0.tgz#078516315a84d56216b5d4fed8f75d59d3b16cac"
 
 "@types/tapable@^0":
   version "0.2.5"
@@ -74,8 +74,8 @@ acorn@^4.0.3:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.13.tgz#105495ae5361d697bd195c825192e1ad7f253787"
 
 acorn@^5.0.0:
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.6.0.tgz#572bedb377a1c61b7a289e72b8c5cfeb7baaf0bf"
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.6.1.tgz#c9e50c3e3717cf897f1b071ceadbb543bbc0a8d4"
 
 adjust-sourcemap-loader@^1.1.0:
   version "1.2.0"
@@ -1714,14 +1714,14 @@ error-ex@^1.2.0:
     is-arrayish "^0.2.1"
 
 error-stack-parser@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/error-stack-parser/-/error-stack-parser-2.0.1.tgz#a3202b8fb03114aa9b40a0e3669e48b2b65a010a"
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/error-stack-parser/-/error-stack-parser-2.0.2.tgz#4ae8dbaa2bf90a8b450707b9149dcabca135520d"
   dependencies:
-    stackframe "^1.0.3"
+    stackframe "^1.0.4"
 
 es-abstract@^1.7.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.11.0.tgz#cce87d518f0496893b1a30cd8461835535480681"
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.12.0.tgz#9dbbdd27c6856f0001421ca18782d786bf8a6165"
   dependencies:
     es-to-primitive "^1.1.1"
     function-bind "^1.1.1"
@@ -4632,7 +4632,7 @@ ssri@^5.2.4:
   dependencies:
     safe-buffer "^5.1.1"
 
-stackframe@^1.0.3:
+stackframe@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/stackframe/-/stackframe-1.0.4.tgz#357b24a992f9427cba6b545d96a14ed2cbca187b"
 
