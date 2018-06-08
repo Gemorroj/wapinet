@@ -39,7 +39,7 @@ class Audio extends \Twig_Extension
      * @param string $path
      * @return string|null
      */
-    public function convertToMp3 (string $path) : ?string
+    public function convertToMp3(string $path) : ?string
     {
         $mp3File = $path . '.mp3';
 

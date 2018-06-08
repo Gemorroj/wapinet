@@ -4,18 +4,18 @@ namespace App\Twig\Extension;
 
 use App\Entity\Panel as UserPanel;
 use App\Entity\User;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class Panel extends \Twig_Extension
 {
     /**
-     * @var ContainerInterface
+     * @var TokenStorageInterface
      */
-    protected $container;
+    protected $tokenStorage;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(TokenStorageInterface $tokenStorage)
     {
-        $this->container = $container;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -36,9 +36,10 @@ class Panel extends \Twig_Extension
      */
     public function getPanel(array $options = [])
     {
-        $user = $this->container->get('security.token_storage')->getToken()->getUser();
-        if (\is_object($user) && $user instanceof User) {
-            $panel = $user->getPanel();
+        $token = $this->tokenStorage->getToken();
+
+        if ($token && $token->getUser() && $token->getUser() instanceof User) {
+            $panel = $token->getUser()->getPanel();
         } else {
             $panel = new UserPanel();
         }

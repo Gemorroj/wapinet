@@ -6,7 +6,6 @@ use App\Entity\FileRepository;
 use App\Entity\User;
 use App\Helper\Timezone;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class File extends \Twig_Extension
 {
@@ -15,22 +14,16 @@ class File extends \Twig_Extension
      */
     protected $fileRepository;
     /**
-     * @var ContainerInterface
-     */
-    protected $container;
-    /**
      * @var Timezone
      */
     protected $timezoneHelper;
 
     /**
-     * @param ContainerInterface $container
      * @param EntityManagerInterface $em
      * @param Timezone $timezoneHelper
      */
-    public function __construct(ContainerInterface $container, EntityManagerInterface $em, Timezone $timezoneHelper)
+    public function __construct(EntityManagerInterface $em, Timezone $timezoneHelper)
     {
-        $this->container = $container;
         $this->fileRepository = $em->getRepository(\App\Entity\File::class);
         $this->timezoneHelper = $timezoneHelper;
     }

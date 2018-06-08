@@ -2,20 +2,9 @@
 
 namespace App\Twig\Extension;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class Breadcrumbs extends \Twig_Extension
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
-
     /**
      * Returns a list of global functions to add to the existing list.
      *

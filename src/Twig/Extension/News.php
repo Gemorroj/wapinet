@@ -3,16 +3,13 @@
 namespace App\Twig\Extension;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class News extends \Twig_Extension
 {
-    protected $container;
     protected $em;
 
-    public function __construct(ContainerInterface $container, EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->container = $container;
         $this->em = $em;
     }
 
@@ -24,7 +21,7 @@ class News extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('news_last_date', array($this, 'getLastDate')),
+            new \Twig_SimpleFunction('news_last_date', [$this, 'getLastDate']),
         );
     }
 
