@@ -70,7 +70,7 @@
                     <li data-role="list-divider">Закладки</li>
                     {% for item in wapinet_panel() %}
                         {% if item.enabled %}
-                            <li><a href="{{ path(item.route) }}">{{ item.name }}</a></li>
+                            <li><a {% if item.route == 'forum_index' %}data-ajax="false"{% endif %} href="{{ path(item.route) }}">{{ item.name }}</a></li>
                         {% endif %}
                     {% endfor %}
                 </ul>
