@@ -2337,12 +2337,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JamesHeinrich/getID3.git",
-                "reference": "2a11c52e7ca2b63418da96feb543f8666fa5d924"
+                "reference": "8553baf78653075a9b34687fa732a95399fd2f57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/2a11c52e7ca2b63418da96feb543f8666fa5d924",
-                "reference": "2a11c52e7ca2b63418da96feb543f8666fa5d924",
+                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/8553baf78653075a9b34687fa732a95399fd2f57",
+                "reference": "8553baf78653075a9b34687fa732a95399fd2f57",
                 "shasum": ""
             },
             "require": {
@@ -2375,7 +2375,7 @@
                 "php",
                 "tags"
             ],
-            "time": "2018-05-18T23:17:45+00:00"
+            "time": "2018-06-20T20:23:41+00:00"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -7097,16 +7097,16 @@
         },
         {
             "name": "white-october/pagerfanta-bundle",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/whiteoctober/WhiteOctoberPagerfantaBundle.git",
-                "reference": "a4895420aace01cc2c78c22c501a9f464cf30961"
+                "reference": "3f97e71c9d3f75e7a6179aa82c863497bf298b2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/whiteoctober/WhiteOctoberPagerfantaBundle/zipball/a4895420aace01cc2c78c22c501a9f464cf30961",
-                "reference": "a4895420aace01cc2c78c22c501a9f464cf30961",
+                "url": "https://api.github.com/repos/whiteoctober/WhiteOctoberPagerfantaBundle/zipball/3f97e71c9d3f75e7a6179aa82c863497bf298b2d",
+                "reference": "3f97e71c9d3f75e7a6179aa82c863497bf298b2d",
                 "shasum": ""
             },
             "require": {
@@ -7152,7 +7152,7 @@
                 "page",
                 "paging"
             ],
-            "time": "2018-05-21T08:36:13+00:00"
+            "time": "2018-06-20T09:32:42+00:00"
         },
         {
             "name": "willdurand/jsonp-callback-validator",
@@ -8491,16 +8491,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.2.4",
+            "version": "7.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "00bc0b93f0ff4f557e9ea766557fde96da9a03dd"
+                "reference": "400a3836ee549ae6f665323ac3f21e27eac7155f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/00bc0b93f0ff4f557e9ea766557fde96da9a03dd",
-                "reference": "00bc0b93f0ff4f557e9ea766557fde96da9a03dd",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/400a3836ee549ae6f665323ac3f21e27eac7155f",
+                "reference": "400a3836ee549ae6f665323ac3f21e27eac7155f",
                 "shasum": ""
             },
             "require": {
@@ -8516,7 +8516,7 @@
                 "php": "^7.1",
                 "phpspec/prophecy": "^1.7",
                 "phpunit/php-code-coverage": "^6.0.7",
-                "phpunit/php-file-iterator": "^2.0",
+                "phpunit/php-file-iterator": "^2.0.1",
                 "phpunit/php-text-template": "^1.2.1",
                 "phpunit/php-timer": "^2.0",
                 "sebastian/comparator": "^3.0",
@@ -8571,7 +8571,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-06-05T03:40:05+00:00"
+            "time": "2018-06-21T13:13:39+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
