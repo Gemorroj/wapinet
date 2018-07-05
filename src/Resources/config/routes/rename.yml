@@ -1,3 +1,3 @@
 rename_index:
     path: /
-    defaults: { _controller: App\Controller\RenameController:indexAction }
+    defaults: { _controller: App\Controller\RenameController::indexAction }

@@ -1,56 +1,56 @@
 index:
     path:  /
-    defaults: { _controller: App\Controller\DefaultController:indexAction }
+    defaults: { _controller: App\Controller\DefaultController::indexAction }
 
 about:
     path:  /about
-    defaults: { _controller: App\Controller\DefaultController:aboutAction }
+    defaults: { _controller: App\Controller\DefaultController::aboutAction }
 
 online:
     path:  /online
-    defaults: { _controller: App\Controller\DefaultController:onlineAction }
+    defaults: { _controller: App\Controller\DefaultController::onlineAction }
 
 utilities:
     path:  /utilities
-    defaults: { _controller: App\Controller\DefaultController:utilitiesAction }
+    defaults: { _controller: App\Controller\DefaultController::utilitiesAction }
 
 downloads:
     path:  /downloads
-    defaults: { _controller: App\Controller\DefaultController:downloadsAction }
+    defaults: { _controller: App\Controller\DefaultController::downloadsAction }
 
 programming:
     path:  /programming
-    defaults: { _controller: App\Controller\DefaultController:programmingAction }
+    defaults: { _controller: App\Controller\DefaultController::programmingAction }
 
 open_source:
     path:  /open_source
-    defaults: { _controller: App\Controller\DefaultController:openSourceAction }
+    defaults: { _controller: App\Controller\DefaultController::openSourceAction }
 
 gmanager:
     path:  /gmanager
-    defaults: { _controller: App\Controller\DefaultController:gmanagerAction }
+    defaults: { _controller: App\Controller\DefaultController::gmanagerAction }
 
 textbook:
     path:  /textbook
-    defaults: { _controller: App\Controller\DefaultController:textbookAction }
+    defaults: { _controller: App\Controller\DefaultController::textbookAction }
 
 video_courses:
     path:  /video_courses
-    defaults: { _controller: App\Controller\DefaultController:videoCoursesAction }
+    defaults: { _controller: App\Controller\DefaultController::videoCoursesAction }
 
 
 # Проверка синтаксиса для Gmanager
 syntax:
     path:  /syntax
-    defaults: { _controller: App\Controller\SyntaxController:indexAction }
+    defaults: { _controller: App\Controller\SyntaxController::indexAction }
 syntax_old:
     path:  /syntax2/index.php
-    defaults: { _controller: App\Controller\SyntaxController:indexAction }
+    defaults: { _controller: App\Controller\SyntaxController::indexAction }
 
 
 browser_info:
     path: /browser_info
-    defaults: { _controller: App\Controller\BrowserInfoController:indexAction }
+    defaults: { _controller: App\Controller\BrowserInfoController::indexAction }
 
 mobile_code:
     resource: '../src/Resources/config/routes/mobile_code.yml'
@@ -170,4 +170,4 @@ forum_index:
 monitoring:
     path: /admin/monitoring
     defaults:
-        _controller: App\Controller\AdminController:monitoringAction
+        _controller: App\Controller\AdminController::monitoringAction

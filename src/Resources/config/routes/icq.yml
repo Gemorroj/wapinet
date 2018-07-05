@@ -1,39 +1,39 @@
 icq_index:
     path: /
-    defaults: { _controller: App\Controller\IcqController:indexAction }
+    defaults: { _controller: App\Controller\IcqController::indexAction }
 
 icq_about:
     path: /about
-    defaults: { _controller: App\Controller\IcqController:aboutAction }
+    defaults: { _controller: App\Controller\IcqController::aboutAction }
 
 icq_invise:
     path: /invise
-    defaults: { _controller: App\Controller\IcqController:inviseAction }
+    defaults: { _controller: App\Controller\IcqController::inviseAction }
 
 icq_secure:
     path: /secure
-    defaults: { _controller: App\Controller\IcqController:secureAction }
+    defaults: { _controller: App\Controller\IcqController::secureAction }
 
 icq_servers:
     path: /servers
-    defaults: { _controller: App\Controller\IcqController:serversAction }
+    defaults: { _controller: App\Controller\IcqController::serversAction }
 
 icq_clients:
     path: /clients
-    defaults: { _controller: App\Controller\IcqController:clientsAction }
+    defaults: { _controller: App\Controller\IcqController::clientsAction }
 
 icq_services:
     path: /services
-    defaults: { _controller: App\Controller\IcqController:servicesAction }
+    defaults: { _controller: App\Controller\IcqController::servicesAction }
 
 icq_disconnect:
     path: /disconnect
-    defaults: { _controller: App\Controller\IcqController:disconnectAction }
+    defaults: { _controller: App\Controller\IcqController::disconnectAction }
 
 icq_errors:
     path: /errors
-    defaults: { _controller: App\Controller\IcqController:errorsAction }
+    defaults: { _controller: App\Controller\IcqController::errorsAction }
 
 icq_search:
     path: /search
-    defaults: { _controller: App\Controller\IcqController:searchAction }
+    defaults: { _controller: App\Controller\IcqController::searchAction }

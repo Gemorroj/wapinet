@@ -1,3 +1,3 @@
 php_validator_index:
     path: /
-    defaults: { _controller: App\Controller\PhpValidatorController:indexAction }
+    defaults: { _controller: App\Controller\PhpValidatorController::indexAction }

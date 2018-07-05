@@ -1,42 +1,42 @@
 wapinet_user_profile:
     path:  /profile/user/{username}
-    defaults: { _controller: App\Controller\User\ProfileController:showUserAction, username: null }
+    defaults: { _controller: App\Controller\User\ProfileController::showUserAction, username: null }
     requirements:
         username: ".+"
     methods: [GET]
 
 wapinet_user_panel_edit:
     path:  /panel/edit
-    defaults: { _controller: App\Controller\User\PanelController:editAction }
+    defaults: { _controller: App\Controller\User\PanelController::editAction }
 
 wapinet_user_subscriber_edit:
     path:  /subscriber/edit
-    defaults: { _controller: App\Controller\User\SubscriberController:editAction }
+    defaults: { _controller: App\Controller\User\SubscriberController::editAction }
 
 wapinet_user_events:
     path:  /events
-    defaults: { _controller: App\Controller\User\EventsController:indexAction }
+    defaults: { _controller: App\Controller\User\EventsController::indexAction }
 
 wapinet_users:
     path:  /users/{key}
-    defaults: { _controller: App\Controller\User\UsersController:indexAction, key: null }
+    defaults: { _controller: App\Controller\User\UsersController::indexAction, key: null }
     requirements:
         key: "[a-zA-Z0-9]+"
 
 wapinet_user_friends:
     path:  /friends/list/{username}
-    defaults: { _controller: App\Controller\User\FriendsController:indexAction }
+    defaults: { _controller: App\Controller\User\FriendsController::indexAction }
     requirements:
         username: ".+"
 
 wapinet_user_friends_add:
     path:  /friends/add/{username}
-    defaults: { _controller: App\Controller\User\FriendsController:addAction }
+    defaults: { _controller: App\Controller\User\FriendsController::addAction }
     requirements:
         username: ".+"
 
 wapinet_user_friends_delete:
     path:  /friends/delete/{username}
-    defaults: { _controller: App\Controller\User\FriendsController:deleteAction }
+    defaults: { _controller: App\Controller\User\FriendsController::deleteAction }
     requirements:
         username: ".+"

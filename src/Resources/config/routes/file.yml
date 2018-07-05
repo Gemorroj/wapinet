@@ -1,36 +1,36 @@
 file_index:
     path: /
-    defaults: { _controller: App\Controller\FileController:indexAction }
+    defaults: { _controller: App\Controller\FileController::indexAction }
     options:
         expose: true
 
 file_information:
     path: /information
-    defaults: { _controller: App\Controller\FileController:informationAction }
+    defaults: { _controller: App\Controller\FileController::informationAction }
 
 file_statistic:
     path: /statistic
-    defaults: { _controller: App\Controller\FileController:statisticAction }
+    defaults: { _controller: App\Controller\FileController::statisticAction }
 
 file_upload:
     path: /upload
-    defaults: { _controller: App\Controller\FileController:uploadAction }
+    defaults: { _controller: App\Controller\FileController::uploadAction }
 
 file_edit:
     path: /edit/{id}
-    defaults: { _controller: App\Controller\FileController:editAction }
+    defaults: { _controller: App\Controller\FileController::editAction }
     requirements:
         id: \d+
 
 file_accept:
     path: /accept/{id}
-    defaults: { _controller: App\Controller\FileController:acceptAction }
+    defaults: { _controller: App\Controller\FileController::acceptAction }
     requirements:
         id: \d+
 
 file_delete:
     path: /delete/{id}
-    defaults: { _controller: App\Controller\FileController:deleteAction }
+    defaults: { _controller: App\Controller\FileController::deleteAction }
     methods: [POST]
     requirements:
         id: \d+
@@ -39,62 +39,62 @@ file_delete:
 
 file_search:
     path: /search/{key}
-    defaults: { _controller: App\Controller\FileController:searchAction, key: null }
+    defaults: { _controller: App\Controller\FileController::searchAction, key: null }
     requirements:
         key: "[a-zA-Z0-9]+"
 
 file_hidden:
     path: /hidden
-    defaults: { _controller: App\Controller\FileController:hiddenAction }
+    defaults: { _controller: App\Controller\FileController::hiddenAction }
 
 file_tags:
     path: /tags
-    defaults: { _controller: App\Controller\FileController:tagsAction }
+    defaults: { _controller: App\Controller\FileController::tagsAction }
 
 file_tag:
     path: /tags/{tagName}
-    defaults: { _controller: App\Controller\FileController:tagAction }
+    defaults: { _controller: App\Controller\FileController::tagAction }
     requirements:
         tagName: ".+"
 
 file_tags_search:
     path: /tags_search
-    defaults: { _controller: App\Controller\FileController:tagsSearchAction, _format: json }
+    defaults: { _controller: App\Controller\FileController::tagsSearchAction, _format: json }
     options:
         expose: true
 
 file_user:
     path: /users/{username}
-    defaults: { _controller: App\Controller\FileController:userAction }
+    defaults: { _controller: App\Controller\FileController::userAction }
     requirements:
         username: ".+"
 
 file_categories:
     path: /categories
-    defaults: { _controller: App\Controller\FileController:categoriesAction }
+    defaults: { _controller: App\Controller\FileController::categoriesAction }
 
 file_list:
     path: /list/{date}/{category}
-    defaults: { _controller: App\Controller\FileController:listAction, date: all, category: null }
+    defaults: { _controller: App\Controller\FileController::listAction, date: all, category: null }
     requirements:
         date: (all|today|yesterday)
         category: (video|audio|image|text|office|archive|android|java)
 
 file_view:
     path: /{id}
-    defaults: { _controller: App\Controller\FileController:viewAction }
+    defaults: { _controller: App\Controller\FileController::viewAction }
     requirements:
         id: \d+
 
 file_archive_download_file:
     path: /{id}/download/{name}
-    defaults: { _controller: App\Controller\FileController:archiveDownloadFileAction }
+    defaults: { _controller: App\Controller\FileController::archiveDownloadFileAction }
     requirements:
         id: \d+
 
 file_swiper:
     path: /swiper/{id}
-    defaults: { _controller: App\Controller\FileController:swiperAction }
+    defaults: { _controller: App\Controller\FileController::swiperAction }
     requirements:
         id: \d+
 
