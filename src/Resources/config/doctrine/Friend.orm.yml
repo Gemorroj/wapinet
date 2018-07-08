@@ -1,5 +1,5 @@
 App\Entity\Friend:
-    repositoryClass: App\Entity\FriendRepository
+    repositoryClass: App\Repository\FriendRepository
     type:  entity
     table: user_friend
     id:

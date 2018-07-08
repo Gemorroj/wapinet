@@ -1,5 +1,5 @@
 App\Entity\Gist:
-    repositoryClass: App\Entity\GistRepository
+    repositoryClass: App\Repository\GistRepository
     type:  entity
     table: gist
     id:

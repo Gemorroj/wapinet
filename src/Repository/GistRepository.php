@@ -1,6 +1,7 @@
 <?php
-namespace App\Entity;
+namespace App\Repository;
 
+use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 class GistRepository extends EntityRepository

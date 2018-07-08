@@ -1,7 +1,7 @@
 <?php
 namespace App\Helper;
 
-use M3uParser\M3uEntry;
+use M3uParser\M3uData;
 use M3uParser\M3uParser;
 use M3uParser\Tag\ExtInf;
 use Symfony\Component\HttpFoundation\File\File;
@@ -28,7 +28,7 @@ class Playlist
 
     /**
      * @param File $file
-     * @return M3uEntry[]
+     * @return M3uData
      */
     public function parseFile(File $file)
     {

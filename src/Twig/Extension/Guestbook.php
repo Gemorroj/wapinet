@@ -2,7 +2,7 @@
 
 namespace App\Twig\Extension;
 
-use App\Entity\GuestbookRepository;
+use App\Repository\GuestbookRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class Guestbook extends \Twig_Extension

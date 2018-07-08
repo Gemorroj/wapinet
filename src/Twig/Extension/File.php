@@ -2,9 +2,9 @@
 
 namespace App\Twig\Extension;
 
-use App\Entity\FileRepository;
 use App\Entity\User;
 use App\Helper\Timezone;
+use App\Repository\FileRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class File extends \Twig_Extension

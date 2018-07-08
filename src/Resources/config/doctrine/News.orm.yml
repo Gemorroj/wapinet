@@ -1,5 +1,5 @@
 App\Entity\News:
-    repositoryClass: App\Entity\NewsRepository
+    repositoryClass: App\Repository\NewsRepository
     type:  entity
     table: news
     id:

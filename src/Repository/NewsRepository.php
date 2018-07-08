@@ -1,6 +1,7 @@
 <?php
-namespace App\Entity;
+namespace App\Repository;
 
+use App\Entity\News;
 use Doctrine\ORM\EntityRepository;
 
 class NewsRepository extends EntityRepository

@@ -1,5 +1,5 @@
 App\Entity\File:
-    repositoryClass: App\Entity\FileRepository
+    repositoryClass: App\Repository\FileRepository
     type:  entity
     table: file
     id:

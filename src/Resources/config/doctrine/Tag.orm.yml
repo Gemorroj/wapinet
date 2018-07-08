@@ -1,5 +1,5 @@
 App\Entity\Tag:
-    repositoryClass: App\Entity\TagRepository
+    repositoryClass: App\Repository\TagRepository
     type:  entity
     table: tag
     id:

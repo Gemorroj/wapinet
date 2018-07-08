@@ -1,6 +1,8 @@
 <?php
-namespace App\Entity;
+namespace App\Repository;
 
+use App\Entity\Friend;
+use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;

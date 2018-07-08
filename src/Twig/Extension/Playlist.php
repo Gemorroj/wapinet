@@ -2,7 +2,7 @@
 
 namespace App\Twig\Extension;
 
-use M3uParser\M3uEntry;
+use M3uParser\M3uData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 
@@ -19,22 +19,20 @@ class Playlist extends \Twig_Extension
     }
 
     /**
-     * Returns a list of global functions to add to the existing list.
-     *
-     * @return array An array of global functions
+     * @inheritdoc
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('wapinet_playlist_list', array($this, 'getList')),
-        );
+        return [
+            new \Twig_SimpleFunction('wapinet_playlist_list', [$this, 'getList']),
+        ];
     }
 
 
     /**
      * @param File $file
      *
-     * @return M3uEntry[]|null
+     * @return M3uData|null
      */
     public function getList (File $file)
     {

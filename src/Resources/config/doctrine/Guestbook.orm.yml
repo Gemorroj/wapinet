@@ -1,5 +1,5 @@
 App\Entity\Guestbook:
-    repositoryClass: App\Entity\GuestbookRepository
+    repositoryClass: App\Repository\GuestbookRepository
     type:  entity
     table: guestbook
     id:

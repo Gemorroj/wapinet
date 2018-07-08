@@ -1,6 +1,7 @@
 <?php
-namespace App\Entity;
+namespace App\Repository;
 
+use App\Entity\Tag;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 

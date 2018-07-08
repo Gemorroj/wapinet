@@ -1,5 +1,5 @@
 App\Entity\User:
-    repositoryClass: App\Entity\UserRepository
+    repositoryClass: App\Repository\UserRepository
     type:  entity
     table: user
     id:

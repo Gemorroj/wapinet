@@ -2,8 +2,8 @@
 
 namespace App\Twig\Extension;
 
-use App\Entity\GistRepository;
 use App\Entity\User;
+use App\Repository\GistRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class Gist extends \Twig_Extension
