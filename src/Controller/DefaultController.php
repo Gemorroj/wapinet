@@ -10,7 +10,7 @@ class DefaultController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
+    public function indexAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('Default/index.html.twig');
     }
@@ -18,7 +18,7 @@ class DefaultController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function aboutAction()
+    public function aboutAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('Default/about.html.twig');
     }
@@ -26,7 +26,7 @@ class DefaultController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function onlineAction()
+    public function onlineAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render(
             'Default/online.html.twig',
@@ -39,7 +39,7 @@ class DefaultController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function utilitiesAction()
+    public function utilitiesAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('Default/utilities.html.twig');
     }
@@ -47,7 +47,7 @@ class DefaultController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function programmingAction()
+    public function programmingAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('Default/programming.html.twig');
     }
@@ -55,7 +55,7 @@ class DefaultController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function openSourceAction()
+    public function openSourceAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('Default/open_source.html.twig');
     }
@@ -63,7 +63,7 @@ class DefaultController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function gmanagerAction()
+    public function gmanagerAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->redirect('https://github.com/Gemorroj/gmanager', 301);
     }
@@ -71,7 +71,7 @@ class DefaultController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function downloadsAction()
+    public function downloadsAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('Default/downloads.html.twig');
     }
@@ -79,7 +79,7 @@ class DefaultController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function textbookAction()
+    public function textbookAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('Default/textbook.html.twig');
     }
@@ -87,7 +87,7 @@ class DefaultController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function videoCoursesAction()
+    public function videoCoursesAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('Default/video_courses.html.twig');
     }
