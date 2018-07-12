@@ -50,7 +50,7 @@ class SubscriberCommand extends ContainerAwareCommand
      * @param Event $event
      * @return bool
      */
-    protected function sendEmail(Event $event)
+    protected function sendEmail(Event $event) : bool
     {
         $siteTitle = $this->getContainer()->getParameter('wapinet_title');
         $robotEmail = $this->getContainer()->getParameter('wapinet_robot_email');

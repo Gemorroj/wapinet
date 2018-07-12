@@ -9,10 +9,10 @@ class TagRepository extends EntityRepository
 {
     /**
      * @param string $search
-     * @param int|null $limit
+     * @param int $limit
      * @return Tag[]
      */
-    public function findLikeName($search, $limit = 10)
+    public function findLikeName(string $search, int $limit = 10): array
     {
         $qb = $this->createQueryBuilder('t');
 
@@ -32,7 +32,7 @@ class TagRepository extends EntityRepository
     /**
      * @return \Doctrine\ORM\Query
      */
-    public function  getTagsQuery()
+    public function  getTagsQuery(): \Doctrine\ORM\Query
     {
         return $this->createQueryBuilder('t')
             ->orderBy('t.count', 'DESC')
@@ -46,7 +46,7 @@ class TagRepository extends EntityRepository
      *
      * @return Tag|null
      */
-    public function getTagByName($name)
+    public function getTagByName(string $name): ?Tag
     {
         return $this->createQueryBuilder('t')
 
@@ -62,7 +62,7 @@ class TagRepository extends EntityRepository
      * @param array $names Array of tag names
      * @return ArrayCollection|null
      */
-    public function makeTags(array $names)
+    public function makeTags(array $names): ?ArrayCollection
     {
         if (!$names) {
             return null;
@@ -95,7 +95,7 @@ class TagRepository extends EntityRepository
     /**
      * @return Tag[]
      */
-    public function findEmptyTags()
+    public function findEmptyTags(): array
     {
         return $this->createQueryBuilder('t')
             ->where('t.count = 0')

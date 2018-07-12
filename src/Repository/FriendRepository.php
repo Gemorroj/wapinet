@@ -13,7 +13,7 @@ class FriendRepository extends EntityRepository
      * @param User $user
      * @return Query
      */
-    public function getFriendsQuery(User $user)
+    public function getFriendsQuery(User $user): Query
     {
         return $this->createQueryBuilder('f')
             ->where('f.user = :user')
@@ -29,7 +29,7 @@ class FriendRepository extends EntityRepository
      * @param  \DateTime|null $lastActivity
      * @return int
      */
-    public function getFriendsCount(User $user, \DateTime $lastActivity = null)
+    public function getFriendsCount(User $user, ?\DateTime $lastActivity = null): int
     {
         $queryBuilder = $this->createQueryBuilder('f')
             ->select('COUNT(f.id)')
@@ -52,13 +52,11 @@ class FriendRepository extends EntityRepository
      * @param User $friend
      * @return null|Friend
      */
-    public function getFriend(User $user, User $friend)
+    public function getFriend(User $user, User $friend): ?Friend
     {
-        $isFriend = $this->findOneBy([
+        return $this->findOneBy([
             'user' => $user,
             'friend' => $friend,
         ]);
-
-        return $isFriend;
     }
 }

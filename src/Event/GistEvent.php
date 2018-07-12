@@ -16,10 +16,10 @@ class GistEvent extends Event
     /**
      * Constructs an event.
      *
-     * @param User $user
+     * @param User|null $user
      * @param Gist $gist
      */
-    public function __construct(User $user = null, Gist $gist)
+    public function __construct(?User $user = null, Gist $gist)
     {
         $this->user = $user;
         $this->gist = $gist;
@@ -28,9 +28,9 @@ class GistEvent extends Event
     /**
      * Returns the user for this event.
      *
-     * @return User
+     * @return User|null
      */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -41,7 +41,7 @@ class GistEvent extends Event
      *
      * @return Gist
      */
-    public function getGist()
+    public function getGist(): Gist
     {
         return $this->gist;
     }

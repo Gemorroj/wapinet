@@ -22,7 +22,7 @@ class OnlineListener
      * Update online
      * @param FilterControllerEvent $event
      */
-    public function onCoreController(FilterControllerEvent $event)
+    public function onCoreController(FilterControllerEvent $event): void
     {
         if (!$event->isMasterRequest()) {
             return;
@@ -63,7 +63,7 @@ class OnlineListener
     /**
      * Cleanup online
      */
-    private function cleanupOnline()
+    private function cleanupOnline(): void
     {
         $this->em->createQuery('DELETE FROM App\Entity\Online o WHERE o.datetime < :lifetime')
             ->setParameter('lifetime', new \DateTime('now -' . User::LIFETIME))

@@ -233,6 +233,6 @@ services:
 
     wapinet.user.event.friends:
         class: App\EventListener\EventFriends
-        arguments: ["@doctrine.orm.entity_manager", "@router"]
+        arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: kernel.event_subscriber }

@@ -23,7 +23,7 @@ class FixedPaginate
      *
      * @return FixedPaginate
      */
-    public function setNbResults($nbResults)
+    public function setNbResults(int $nbResults): self
     {
         $this->nbResults = $nbResults;
 
@@ -33,7 +33,7 @@ class FixedPaginate
     /**
      * @return int
      */
-    public function getNbResults()
+    public function getNbResults(): int
     {
         return $this->nbResults;
     }
@@ -44,7 +44,7 @@ class FixedPaginate
      *
      * @return FixedPaginate
      */
-    public function setResults(array $results)
+    public function setResults(array $results): self
     {
         $this->results = $results;
 
@@ -54,7 +54,7 @@ class FixedPaginate
     /**
      * @return array
      */
-    public function getResults()
+    public function getResults(): array
     {
         return $this->results;
     }

@@ -9,7 +9,7 @@ class NewsRepository extends EntityRepository
     /**
      * @return \Doctrine\ORM\Query
      */
-    public function getAllBuilder()
+    public function getAllBuilder(): \Doctrine\ORM\Query
     {
         return $this->getEntityManager()->createQueryBuilder()
             ->select('news')
@@ -21,7 +21,7 @@ class NewsRepository extends EntityRepository
     /**
      * @return \Doctrine\ORM\Query
      */
-    public function getLastDate()
+    public function getLastDate(): \Doctrine\ORM\Query
     {
         return $this->getEntityManager()->createQueryBuilder()
             ->select('news.createdAt')

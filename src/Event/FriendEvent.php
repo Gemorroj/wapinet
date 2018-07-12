@@ -30,7 +30,7 @@ class FriendEvent extends Event
      *
      * @return User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
@@ -41,7 +41,7 @@ class FriendEvent extends Event
      *
      * @return User
      */
-    public function getFriend()
+    public function getFriend(): User
     {
         return $this->friend;
     }

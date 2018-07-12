@@ -66,7 +66,7 @@ class FileUrlDataTransformerTest extends WebTestCaseWapinet
     /**
      * @dataProvider getOriginalNameDataProvider
      */
-    public function testGetOriginalName(ResponseHeaderBag $headerBag, string $url, string $expectedFilename)
+    public function testGetOriginalName(ResponseHeaderBag $headerBag, string $url, string $expectedFilename): void
     {
         static::bootKernel();
         $obj = new FileUrlDataTransformer(static::$kernel->getContainer());

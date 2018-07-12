@@ -10,7 +10,7 @@ class UserRepository extends EntityRepository
     /**
      * @return Query
      */
-    public function getOnlineUsersQuery()
+    public function getOnlineUsersQuery(): Query
     {
         return $this->createQueryBuilder('u')
             ->where('u.enabled = 1')

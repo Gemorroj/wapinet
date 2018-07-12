@@ -21,7 +21,7 @@ class FileVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        if (!\in_array($attribute, [self::DELETE, self::EDIT])) {
+        if (!\in_array($attribute, [self::DELETE, self::EDIT], true)) {
             return false;
         }
 
@@ -32,7 +32,7 @@ class FileVoter extends Voter
         return true;
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token) : bool
     {
         $user = $token->getUser();
         if (!($user instanceof User)) {

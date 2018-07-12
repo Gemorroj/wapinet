@@ -11,7 +11,7 @@ class EventRepository extends EntityRepository
     /**
      * @return Event[]
      */
-    public function findNeedEmail()
+    public function findNeedEmail(): array
     {
         return $this->createQueryBuilder('e')
             ->where('e.needEmail = 1')
@@ -25,7 +25,7 @@ class EventRepository extends EntityRepository
      * @param User $user
      * @return Query
      */
-    public function findEventsQuery(User $user)
+    public function findEventsQuery(User $user): Query
     {
         return $this->createQueryBuilder('e')
             ->where('e.user = :user')

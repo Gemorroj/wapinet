@@ -8,21 +8,17 @@ use App\Event\FriendEvent;
 use App\Event\GistEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Routing\RouterInterface;
 
 class EventFriends implements EventSubscriberInterface
 {
     private $em;
-    private $router;
 
     /**
      * @param EntityManagerInterface $em
-     * @param RouterInterface $router
      */
-    public function __construct(EntityManagerInterface $em, RouterInterface $router)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
-        $this->router = $router;
     }
 
     /**
@@ -42,7 +38,7 @@ class EventFriends implements EventSubscriberInterface
     /**
      * @param FriendEvent $event
      */
-    public function friendAdd(FriendEvent $event)
+    public function friendAdd(FriendEvent $event): void
     {
         // Уведомление о добавлении  в друзья
         $entityEvent = new EntityEvent();
@@ -85,7 +81,7 @@ class EventFriends implements EventSubscriberInterface
     /**
      * @param FriendEvent $event
      */
-    public function friendDelete(FriendEvent $event)
+    public function friendDelete(FriendEvent $event): void
     {
         // Уведомление об удалении из друзей
         $entityEvent = new EntityEvent();
@@ -128,7 +124,7 @@ class EventFriends implements EventSubscriberInterface
     /**
      * @param FileEvent $event
      */
-    public function fileAdd(FileEvent $event)
+    public function fileAdd(FileEvent $event): void
     {
         $user = $event->getUser();
         if (null === $user) {
@@ -160,7 +156,7 @@ class EventFriends implements EventSubscriberInterface
     /**
      * @param GistEvent $event
      */
-    public function gistAdd(GistEvent $event)
+    public function gistAdd(GistEvent $event): void
     {
         $user = $event->getUser();
         if (null === $user) {

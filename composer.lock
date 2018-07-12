@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "638b3ba1188fe8f618cb6b623361f080",
+    "content-hash": "550fd95cacf6e54f5a8740fe02d90855",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -3105,16 +3105,16 @@
         },
         {
             "name": "php-ffmpeg/php-ffmpeg",
-            "version": "v0.11.1-pl-1",
+            "version": "v0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-FFMpeg/PHP-FFMpeg.git",
-                "reference": "e91b2276e349e28030e6d2a46eb292294fd5e947"
+                "reference": "0b871e59e7a809033fa27c3086588e72c662e9ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-FFMpeg/PHP-FFMpeg/zipball/e91b2276e349e28030e6d2a46eb292294fd5e947",
-                "reference": "e91b2276e349e28030e6d2a46eb292294fd5e947",
+                "url": "https://api.github.com/repos/PHP-FFMpeg/PHP-FFMpeg/zipball/0b871e59e7a809033fa27c3086588e72c662e9ab",
+                "reference": "0b871e59e7a809033fa27c3086588e72c662e9ab",
                 "shasum": ""
             },
             "require": {
@@ -3185,7 +3185,7 @@
                 "video",
                 "video processing"
             ],
-            "time": "2018-02-21T19:24:02+00:00"
+            "time": "2018-07-06T16:51:09+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",

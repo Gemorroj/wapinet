@@ -9,7 +9,7 @@ class GistRepository extends EntityRepository
     /**
      * @return int
      */
-    public function countAll()
+    public function countAll(): int
     {
         return $this->getEntityManager()->createQuery('SELECT COUNT(g.id) FROM App\Entity\Gist g')->getSingleScalarResult();
     }
@@ -19,7 +19,7 @@ class GistRepository extends EntityRepository
      *
      * @return int
      */
-    public function countUser(User $user = null)
+    public function countUser(?User $user = null): int
     {
         if (null !== $user) {
             $q = $this->getEntityManager()->createQuery('SELECT COUNT(g.id) FROM App\Entity\Gist g WHERE g.user = :user');
@@ -36,7 +36,7 @@ class GistRepository extends EntityRepository
      *
      * @return \Doctrine\ORM\Query
      */
-    public function getListQuery(User $user = null)
+    public function getListQuery(?User $user = null): \Doctrine\ORM\Query
     {
         $qb = $this->createQueryBuilder('g');
         if (null !== $user) {

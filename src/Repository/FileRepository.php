@@ -13,7 +13,7 @@ class FileRepository extends EntityRepository
      * @param int $maxUsers
      * @return array
      */
-    public function getStatistic($maxUsers = 10)
+    public function getStatistic(int $maxUsers = 10): array
     {
         $em = $this->getEntityManager();
         $countFiles = $em->createQuery('SELECT COUNT(f.id) FROM App\Entity\File f');
@@ -42,7 +42,7 @@ class FileRepository extends EntityRepository
     /**
      * @return int
      */
-    public function countHidden()
+    public function countHidden(): int
     {
         return $this->getEntityManager()->createQuery(
             'SELECT COUNT(f.id) FROM App\Entity\File f WHERE f.password IS NULL AND f.hidden = 1'
@@ -53,7 +53,7 @@ class FileRepository extends EntityRepository
     /**
      * @return int
      */
-    public function countAll()
+    public function countAll(): int
     {
         return $this->getEntityManager()->createQuery(
             'SELECT COUNT(f.id) FROM App\Entity\File f WHERE f.password IS NULL AND f.hidden = 0'
@@ -65,7 +65,7 @@ class FileRepository extends EntityRepository
      * @param \DateTime|null $datetimeEnd
      * @return int
      */
-    public function countDate(\DateTime $datetimeStart, \DateTime $datetimeEnd = null)
+    public function countDate(\DateTime $datetimeStart, ?\DateTime $datetimeEnd = null): int
     {
         $queryBuilder = $this->createQueryBuilder('f')
             ->select('COUNT(f.id)')
@@ -89,7 +89,7 @@ class FileRepository extends EntityRepository
      * @param string $category
      * @return int
      */
-    public function countCategory($category)
+    public function countCategory(string $category): int
     {
         $q = $this->createQueryBuilder('f')
             ->select('COUNT(f.id)')
@@ -106,7 +106,7 @@ class FileRepository extends EntityRepository
      * @param User $user
      * @return int
      */
-    public function countUser(User $user)
+    public function countUser(User $user): int
     {
         $q = $this->createQueryBuilder('f')
             ->select('COUNT(f.id)')
@@ -125,7 +125,7 @@ class FileRepository extends EntityRepository
      * @param string|null $category
      * @return \Doctrine\ORM\Query
      */
-    public function getListQuery(\DateTime $datetimeStart = null, \DateTime $datetimeEnd = null, $category = null)
+    public function getListQuery(?\DateTime $datetimeStart = null, ?\DateTime $datetimeEnd = null, ?string $category = null): \Doctrine\ORM\Query
     {
         $q = $this->createQueryBuilder('f')
             ->where('f.password IS NULL')
@@ -150,7 +150,7 @@ class FileRepository extends EntityRepository
     /**
      * @return \Doctrine\ORM\Query
      */
-    public function getHiddenQuery()
+    public function getHiddenQuery(): \Doctrine\ORM\Query
     {
         $q = $this->createQueryBuilder('f')
             ->andWhere('f.hidden = 1')
@@ -163,10 +163,9 @@ class FileRepository extends EntityRepository
      * @param int $id
      * @param string|null $category
      * @return File|null
-     * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getPrevFile($id, $category = null)
+    public function getPrevFile(int $id, ?string $category = null): ?File
     {
         $q = $this->createQueryBuilder('f')
             ->where('f.id > :id')
@@ -185,10 +184,9 @@ class FileRepository extends EntityRepository
      * @param int $id
      * @param string|null $category
      * @return File|null
-     * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getNextFile($id, $category = null)
+    public function getNextFile(int $id, ?string $category = null): ?File
     {
         $q = $this->createQueryBuilder('f')
             ->where('f.id < :id')
@@ -206,9 +204,9 @@ class FileRepository extends EntityRepository
 
     /**
      * @param QueryBuilder $q
-     * @param string $mimeType
+     * @param null|string $mimeType
      */
-    private function addCategoryMime(QueryBuilder $q, $mimeType)
+    private function addCategoryMime(QueryBuilder $q, ?string $mimeType): void
     {
         switch ($mimeType) {
             case 'video':
@@ -260,7 +258,7 @@ class FileRepository extends EntityRepository
      *
      * @return \Doctrine\ORM\Query
      */
-    public function getUserFilesQuery(User $user)
+    public function getUserFilesQuery(User $user): \Doctrine\ORM\Query
     {
         $q = $this->createQueryBuilder('f')
             ->innerJoin('f.user', 'u')
@@ -282,7 +280,7 @@ class FileRepository extends EntityRepository
      *
      * @return \Doctrine\ORM\Query
      */
-    public function getTagFilesQuery(Tag $tag)
+    public function getTagFilesQuery(Tag $tag): \Doctrine\ORM\Query
     {
         $q = $this->createQueryBuilder('f')
             ->innerJoin('f.fileTags', 'ft')

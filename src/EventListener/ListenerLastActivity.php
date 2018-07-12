@@ -25,7 +25,7 @@ class ListenerLastActivity
      * Update the user "lastActivity" on each request
      * @param FilterControllerEvent $event
      */
-    public function onCoreController(FilterControllerEvent $event)
+    public function onCoreController(FilterControllerEvent $event): void
     {
         // Here we are checking that the current request is a "MASTER_REQUEST", and ignore any subrequest in the process (for example when doing a render() in a twig template)
         if (!$event->isMasterRequest()) {
