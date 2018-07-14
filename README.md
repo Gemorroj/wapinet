@@ -83,7 +83,7 @@ make distclean
 cd $source_directory
 git clone git://github.com/videolan/x265.git
 cd x265
-git checkout tags/2.7
+git checkout tags/2.8
 cd build/linux
 cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$build_directory" -DENABLE_SHARED=OFF ../../source
 make
@@ -91,10 +91,9 @@ make install
 make clean
 
 cd $source_directory
-git clone git://git.opus-codec.org/opus.git
-cd opus
-git checkout tags/v1.3-beta
-./autogen.sh
+curl -O -L https://downloads.xiph.org/releases/opus/opus-1.3-rc.tar.gz
+tar xzvf opus-1.3-rc.tar.gz
+cd opus-1.3-rc
 ./configure --prefix="$build_directory" --disable-shared
 make
 make install
