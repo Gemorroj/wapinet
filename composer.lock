@@ -2281,16 +2281,16 @@
         },
         {
             "name": "gregwar/captcha-bundle",
-            "version": "v2.0.4",
+            "version": "v2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gregwar/CaptchaBundle.git",
-                "reference": "639430383fd6aaedd421e39404445cd65d377f10"
+                "reference": "980afdc10a4a3350a3d64811da08915dd002ed4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gregwar/CaptchaBundle/zipball/639430383fd6aaedd421e39404445cd65d377f10",
-                "reference": "639430383fd6aaedd421e39404445cd65d377f10",
+                "url": "https://api.github.com/repos/Gregwar/CaptchaBundle/zipball/980afdc10a4a3350a3d64811da08915dd002ed4c",
+                "reference": "980afdc10a4a3350a3d64811da08915dd002ed4c",
                 "shasum": ""
             },
             "require": {
@@ -2331,7 +2331,7 @@
                 "spam",
                 "visual"
             ],
-            "time": "2017-12-28T11:21:03+00:00"
+            "time": "2018-04-24T09:22:05+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
