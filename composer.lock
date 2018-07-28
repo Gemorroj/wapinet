@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b1a224b825fbe8c568aed5cf92ee20a7",
+    "content-hash": "034ee311fce49294736b7baf2dffd1d8",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1830,16 +1830,16 @@
         },
         {
             "name": "gemorroj/ginfo",
-            "version": "5.0.5",
+            "version": "5.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/ginfo.git",
-                "reference": "6d673373ec32e81cc30cbfcc4aff85bb1e7fa7dd"
+                "reference": "e43432a0fbb769f400532e3e1f591f02819fe7be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/6d673373ec32e81cc30cbfcc4aff85bb1e7fa7dd",
-                "reference": "6d673373ec32e81cc30cbfcc4aff85bb1e7fa7dd",
+                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/e43432a0fbb769f400532e3e1f591f02819fe7be",
+                "reference": "e43432a0fbb769f400532e3e1f591f02819fe7be",
                 "shasum": ""
             },
             "require": {
@@ -1849,7 +1849,7 @@
                 "symfony/process": "^3.3|^4.0"
             },
             "require-dev": {
-                "phpstan/phpstan": "^0.9",
+                "phpstan/phpstan": "^0.10",
                 "phpunit/phpunit": "^7.1.2"
             },
             "type": "library",
@@ -1884,7 +1884,7 @@
                 "specs",
                 "system"
             ],
-            "time": "2018-04-13T13:25:19+00:00"
+            "time": "2018-07-28T14:33:41+00:00"
         },
         {
             "name": "gemorroj/htmlvalidator",

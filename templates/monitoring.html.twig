@@ -28,6 +28,8 @@
                     <dd>{{ info.selinux ? (info.selinux.enabled ? 'Вкл.' : 'Выкл.') : 'Отсутствует' }}</dd>
                     <dt>PHP:</dt>
                     <dd>{{ info.php.version }}</dd>
+                    <dt>Memory limit:</dt>
+                    <dd>{{ info.php.memoryLimit|wapinet_size }}</dd>
                     <dt>Realpath cache size:</dt>
                     <dd>{{ info.php.realpathCacheSizeUsed|wapinet_size }} использовано из {{ info.php.realpathCacheSizeAllowed|wapinet_size }}</dd>
                     <dt>Расширения PHP:</dt>
@@ -56,6 +58,12 @@
                         <dd>{{ info.php.opcache.hits|wapinet_count }}</dd>
                         <dt>Промахов мимо кэша:</dt>
                         <dd>{{ info.php.opcache.misses|wapinet_count }}</dd>
+                        <dt>Закешировно интернированных строк:</dt>
+                        <dd>{{ info.php.opcache.cachedInternedStrings|wapinet_count }}</dd>
+                        <dt>Использовано памяти для интернированных строк:</dt>
+                        <dd>{{ info.php.opcache.internedStringsUsedMemory|wapinet_size }}</dd>
+                        <dt>Свободно памяти для интернированных строк:</dt>
+                        <dd>{{ info.php.opcache.internedStringsFreeMemory|wapinet_size }}</dd>
                     </dl>
                 {% else %}
                     <div class="panel-body">

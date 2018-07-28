@@ -54,7 +54,7 @@
         "gemorroj/htmlvalidator": "^1.1",
         "gemorroj/cssvalidator": "^1.1",
         "gemorroj/xbbcode": "^2.2",
-        "gemorroj/ginfo": "^5.0.5"
+        "gemorroj/ginfo": "^5.0.6"
     },
     "require-dev": {
         "symfony/browser-kit": "^4.1",
