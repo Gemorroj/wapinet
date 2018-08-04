@@ -30,8 +30,8 @@
     yargs "^8.0.1"
 
 "@types/node@*":
-  version "10.5.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.5.tgz#8e84d24e896cd77b0d4f73df274027e3149ec2ba"
+  version "10.5.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.6.tgz#1640f021dd0eaf12e731e54198c12ad2e020dc8e"
 
 "@types/tapable@^0":
   version "0.2.5"
@@ -1017,12 +1017,12 @@ caniuse-api@^1.5.2:
     lodash.uniq "^4.5.0"
 
 caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000872"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000872.tgz#3f6e53b63d373768bf99e896133d66ef89c49999"
+  version "1.0.30000874"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000874.tgz#49edc0262efdc6c49d4d962bb16d1f0c790fa44e"
 
 caniuse-lite@^1.0.30000844:
-  version "1.0.30000865"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000865.tgz#70026616e8afe6e1442f8bb4e1092987d81a2f25"
+  version "1.0.30000874"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000874.tgz#a641b1f1c420d58d9b132920ef6ba87bbdcd2223"
 
 center-align@^0.1.1:
   version "0.1.3"
