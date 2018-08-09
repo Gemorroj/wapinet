@@ -60,7 +60,7 @@
         "symfony/browser-kit": "^4.1",
         "symfony/css-selector": "^4.1",
         "symfony/debug-pack": "*",
-        "symfony/maker-bundle": "^1.0",
+        "symfony/maker-bundle": "^1.6",
         "symfony/phpunit-bridge": "^4.1",
         "symfony/profiler-pack": "*",
         "symfony/web-server-bundle": "^4.1",
