@@ -3,10 +3,10 @@
 ##### Лицензия GPL v3
 
 ##### Используются:
-- Symfony 4
+- Symfony 4.1
 - Jquery Mobile
-- PHP 7
-- Mariadb
+- PHP 7.2
+- Mariadb 10.3
 - Sphinx
 - p7zip
 - ffmpeg
@@ -15,7 +15,7 @@
 ### Базовая установка (актуально для Centos 7)
 - Отключить `selinux`
 - Установить дополнительные репозитории `epel`, `remi`, `nginx`, `mysql`/`mariadb`
-- Установить Mysql 5.7 или Mariadb 10.2 `yum install mysql mysql-community-server`
+- Установить Mariadb 10.3 `yum install mysql mysql-community-server`
 - Установить Nginx `yum install nginx`
 - Установить php 7.2 `yum install php-fpm php-cli php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-pecl-apcu php-pecl-zip php-process php-xml`
 - Установить cron, если не установлен `yum install cronie`
@@ -283,13 +283,13 @@ server {
 ```
 
 ### TODO:
-- сделать мониторинг в админке (сделано, дальше доделать в мониторинге информацию о состоянии БД и веб-серверов)
-- Переделать интерфейс на vue (огромная задача)
+- Перевести на mysql 8
+- Переделать интерфейс на vue/react (огромная задача)
 - переделать редактор аудиотегов на https://github.com/duncan3dc/meta-audio/issues/3 (когда будут картинки)
 - Сделать возможность в переводчике и обфускаторе загружать файлы
 - Актуализировать мобильные коды. Найти новые для разных андроидов.
 - Данные о видео на youtube и др. https://github.com/essence/essence
 - Оболочка над nmap https://github.com/willdurand/nmap (работает медленно и выдает мало информации)
-- Заменить прокси Glype на https://github.com/Athlon1600/php-proxy
+- Прокси https://github.com/Athlon1600/php-proxy
 - Проверка на спамеров http://www.stopforumspam.com/usage (https://github.com/Gemorroj/StopSpam)
 - Проверка на вирусы https://www.virustotal.com/ru/documentation/public-api/
