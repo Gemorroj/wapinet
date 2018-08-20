@@ -11,6 +11,6 @@ class WhoisControllerTest extends WebTestCaseWapinet
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/whois/');
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

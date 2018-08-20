@@ -11,7 +11,7 @@ class CssValidatorControllerTest extends WebTestCaseWapinet
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/css_validator/');
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 
 }

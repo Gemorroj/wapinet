@@ -11,7 +11,7 @@ class SubscriberControllerTestWapinet extends WebTestCaseWapinet
         $client = static::loginAdmin();
 
         $crawler = $client->request('GET', '/user/subscriber/edit');
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 
 }

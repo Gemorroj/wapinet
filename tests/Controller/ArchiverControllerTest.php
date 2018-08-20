@@ -11,7 +11,7 @@ class ArchiverControllerTest extends WebTestCaseWapinet
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/archiver/');
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 
 
@@ -37,6 +37,6 @@ class ArchiverControllerTest extends WebTestCaseWapinet
 
         self::assertStringStartsWith('micro_orc.fbx', $link);
 
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

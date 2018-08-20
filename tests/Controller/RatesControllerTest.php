@@ -11,6 +11,6 @@ class RatesControllerTest extends WebTestCaseWapinet
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/rates/');
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }
