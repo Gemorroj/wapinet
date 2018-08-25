@@ -33,7 +33,7 @@ class File extends \Twig_Extension
      *
      * @return array An array of global functions
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new \Twig_SimpleFilter('basename', 'basename'),
@@ -45,7 +45,7 @@ class File extends \Twig_Extension
      *
      * @return array An array of global functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new \Twig_SimpleFunction('file_count_all', [$this, 'getCountAll']),
@@ -60,7 +60,7 @@ class File extends \Twig_Extension
     /**
      * @return int
      */
-    public function getCountAll()
+    public function getCountAll(): int
     {
         return $this->fileRepository->countAll();
     }
@@ -68,7 +68,7 @@ class File extends \Twig_Extension
     /**
      * @return int
      */
-    public function getCountToday()
+    public function getCountToday(): int
     {
         return $this->fileRepository->countDate(
             new \DateTime('today', $this->timezoneHelper->getTimezone())
@@ -78,7 +78,7 @@ class File extends \Twig_Extension
     /**
      * @return int
      */
-    public function getCountYesterday()
+    public function getCountYesterday(): int
     {
         return $this->fileRepository->countDate(
             new \DateTime('yesterday', $this->timezoneHelper->getTimezone()),
@@ -89,7 +89,7 @@ class File extends \Twig_Extension
     /**
      * @return int
      */
-    public function getCountHidden()
+    public function getCountHidden(): int
     {
         return $this->fileRepository->countHidden();
     }
@@ -99,7 +99,7 @@ class File extends \Twig_Extension
      *
      * @return int
      */
-    public function getCountCategory($category)
+    public function getCountCategory(string $category): int
     {
         return $this->fileRepository->countCategory($category);
     }
@@ -109,7 +109,7 @@ class File extends \Twig_Extension
      *
      * @return int
      */
-    public function getCountUser(User $user)
+    public function getCountUser(User $user): int
     {
         return $this->fileRepository->countUser($user);
     }

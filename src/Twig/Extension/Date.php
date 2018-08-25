@@ -24,7 +24,7 @@ class Date extends \Twig_Extension
      *
      * @return array An array of global functions
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new \Twig_SimpleFilter('wapinet_date', [$this, 'getDate']),
@@ -37,9 +37,9 @@ class Date extends \Twig_Extension
     /**
      * @param \DateTime|mixed $date
      *
-     * @return string|null
+     * @return string
      */
-    public function getDate($date)
+    public function getDate($date): string
     {
         if ($date instanceof \DateTime) {
             $timezone = $this->timezone->getTimezone();
@@ -56,28 +56,32 @@ class Date extends \Twig_Extension
 
             if ($date->format('Ymd') === $today->format('Ymd')) {
                 return 'Сегодня';
-            } elseif ($date->format('Ymd') === $yesterday->format('Ymd')) {
-                return 'Вчера';
-            } elseif ($date->format('Ymd') === $dayBeforeYesterday->format('Ymd')) {
-                return 'Позавчера';
-            } elseif ($date->format('Ymd') === $tomorrow->format('Ymd')) {
-                return 'Завтра';
-            } elseif ($date->format('Ymd') === $dayAfterTomorrow->format('Ymd')) {
-                return 'Послезавтра';
-            } else {
-                return $date->format('d.m.Y');
             }
+            if ($date->format('Ymd') === $yesterday->format('Ymd')) {
+                return 'Вчера';
+            }
+            if ($date->format('Ymd') === $dayBeforeYesterday->format('Ymd')) {
+                return 'Позавчера';
+            }
+            if ($date->format('Ymd') === $tomorrow->format('Ymd')) {
+                return 'Завтра';
+            }
+            if ($date->format('Ymd') === $dayAfterTomorrow->format('Ymd')) {
+                return 'Послезавтра';
+            }
+
+            return $date->format('d.m.Y');
         }
 
-        return null;
+        return '';
     }
 
     /**
      * @param \DateTime|mixed $datetime
      *
-     * @return string|null
+     * @return string
      */
-    public function getDateTime($datetime)
+    public function getDateTime($datetime): string
     {
         if ($datetime instanceof \DateTime) {
             $timezone = $this->timezone->getTimezone();
@@ -94,29 +98,33 @@ class Date extends \Twig_Extension
 
             if ($datetime->format('Ymd') === $today->format('Ymd')) {
                 return 'Сегодня в '.$datetime->format('H:i');
-            } elseif ($datetime->format('Ymd') === $yesterday->format('Ymd')) {
-                return 'Вчера в '.$datetime->format('H:i');
-            } elseif ($datetime->format('Ymd') === $dayBeforeYesterday->format('Ymd')) {
-                return 'Позавчера в '.$datetime->format('H:i');
-            } elseif ($datetime->format('Ymd') === $tomorrow->format('Ymd')) {
-                return 'Завтра в '.$datetime->format('H:i');
-            } elseif ($datetime->format('Ymd') === $dayAfterTomorrow->format('Ymd')) {
-                return 'Послезавтра в '.$datetime->format('H:i');
-            } else {
-                //return $datetime->format('d.m.Y H:i:s');
-                return $datetime->format('d.m.Y H:i');
             }
+            if ($datetime->format('Ymd') === $yesterday->format('Ymd')) {
+                return 'Вчера в '.$datetime->format('H:i');
+            }
+            if ($datetime->format('Ymd') === $dayBeforeYesterday->format('Ymd')) {
+                return 'Позавчера в '.$datetime->format('H:i');
+            }
+            if ($datetime->format('Ymd') === $tomorrow->format('Ymd')) {
+                return 'Завтра в '.$datetime->format('H:i');
+            }
+            if ($datetime->format('Ymd') === $dayAfterTomorrow->format('Ymd')) {
+                return 'Послезавтра в '.$datetime->format('H:i');
+            }
+
+            //return $datetime->format('d.m.Y H:i:s');
+            return $datetime->format('d.m.Y H:i');
         }
 
-        return null;
+        return '';
     }
 
     /**
      * @param \DateTime|mixed $datetime
      *
-     * @return string|null
+     * @return string
      */
-    public function getTime($datetime)
+    public function getTime($datetime): string
     {
         if ($datetime instanceof \DateTime) {
             $timezone = $this->timezone->getTimezone();
@@ -128,19 +136,19 @@ class Date extends \Twig_Extension
             return $datetime->format('Hч.iм.sс.');
         }
 
-        return null;
+        return '';
     }
 
     /**
      * @param int $seconds
      *
-     * @return string|null
+     * @return string
      */
-    public function getLength($seconds)
+    public function getLength(int $seconds): string
     {
-        $length = null;
+        $length = '';
         $d1 = new \DateTime();
-        $d2 = new \DateTime('- '.(int) $seconds.' seconds');
+        $d2 = new \DateTime('- '.$seconds.' seconds');
 
         $iv = $d2->diff($d1);
 

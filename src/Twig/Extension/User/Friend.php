@@ -75,14 +75,4 @@ class Friend extends \Twig_Extension
 
         return $friendRepository->getFriendsCount($user, new \DateTime('now -'.User::LIFETIME));
     }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName(): string
-    {
-        return 'wapinet_user_friend';
-    }
 }

@@ -47,14 +47,4 @@ class Panel extends \Twig_Extension
 
         return $panel->getIterator();
     }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'wapinet_panel';
-    }
 }

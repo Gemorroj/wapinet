@@ -21,7 +21,7 @@ class Online extends \Twig_Extension
      *
      * @return array An array of global functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new \Twig_SimpleFunction('wapinet_online', function () {

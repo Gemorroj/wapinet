@@ -28,14 +28,4 @@ class Avatar extends \Twig_Extension
     {
         return '//gravatar.com/avatar/'.($user ? \md5($user->getEmailCanonical()) : '').'?d=mm'.($size ? '&s='.$size : '');
     }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName(): string
-    {
-        return 'wapinet_user_avatar';
-    }
 }

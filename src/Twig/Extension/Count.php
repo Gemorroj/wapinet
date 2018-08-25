@@ -9,7 +9,7 @@ class Count extends \Twig_Extension
      *
      * @return array An array of global functions
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new \Twig_SimpleFilter('wapinet_count', [$this, 'getCount']),
@@ -21,18 +21,8 @@ class Count extends \Twig_Extension
      *
      * @return string
      */
-    public function getCount($count)
+    public function getCount($count): string
     {
         return \number_format($count, 0, ',', ' ');
-    }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'wapinet_count';
     }
 }

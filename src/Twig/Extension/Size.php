@@ -9,7 +9,7 @@ class Size extends \Twig_Extension
      *
      * @return array An array of global functions
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new \Twig_SimpleFilter('wapinet_size', [$this, 'getSize']),
@@ -19,9 +19,9 @@ class Size extends \Twig_Extension
     /**
      * @param int|float|null $fileSizeInBytes
      *
-     * @return string|null
+     * @return string
      */
-    public function getSize($fileSizeInBytes)
+    public function getSize($fileSizeInBytes): string
     {
         if (null === $fileSizeInBytes) {
             return '';
@@ -35,15 +35,5 @@ class Size extends \Twig_Extension
         } while ($fileSizeInBytes > 1024);
 
         return \round(\max($fileSizeInBytes, 0.1), 1).$byteUnits[$i];
-    }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'wapinet_size';
     }
 }

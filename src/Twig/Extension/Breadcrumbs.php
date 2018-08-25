@@ -37,14 +37,4 @@ class Breadcrumbs extends \Twig_Extension
 
         return $out;
     }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'wapinet_breadcrumbs';
-    }
 }

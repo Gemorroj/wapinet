@@ -63,14 +63,4 @@ class Torrent extends \Twig_Extension
 
         return $list;
     }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'wapinet_torrent';
-    }
 }

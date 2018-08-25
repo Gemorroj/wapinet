@@ -24,7 +24,7 @@ class Geoip2 extends \Twig_Extension
      *
      * @return array An array of global functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new \Twig_SimpleFunction('wapinet_geoip2_country', function (string $ip): ?\GeoIp2\Model\Country {
