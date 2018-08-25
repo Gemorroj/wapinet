@@ -15,11 +15,9 @@ class StopSpam
         $this->request = new StopSpamRequest();
     }
 
-    /**
-     * @param Request $request
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws AccessDeniedException
-     */
+	/**
+	 * @param Request $request
+	 */
     public function checkRequest(Request $request) : void
     {
         $query = new StopSpamQuery();

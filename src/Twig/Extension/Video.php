@@ -28,7 +28,7 @@ class Video extends \Twig_Extension
      *
      * @return array An array of global functions
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new \Twig_SimpleFilter('wapinet_video_screenshot', [$this, 'getScreenshot']),

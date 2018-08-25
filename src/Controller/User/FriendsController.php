@@ -4,6 +4,7 @@ namespace App\Controller\User;
 use App\Entity\Friend;
 use App\Entity\User;
 use App\Event\FriendEvent;
+use App\Repository\FriendRepository;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -29,6 +30,7 @@ class FriendsController extends Controller
             throw $this->createNotFoundException('Пользователь не найден');
         }
 
+        /** @var FriendRepository $friendRepository */
         $friendRepository = $this->getDoctrine()->getRepository(Friend::class);
         $friends = $friendRepository->getFriendsQuery($user);
         $pagerfanta = $this->get('paginate')->paginate($friends, $page);
@@ -60,6 +62,7 @@ class FriendsController extends Controller
             throw $this->createNotFoundException('Пользователь не найден.');
         }
 
+        /** @var FriendRepository $friendRepository */
         $friendRepository = $this->getDoctrine()->getRepository(Friend::class);
         $objFriend = $friendRepository->getFriend($user, $friend);
 
@@ -104,6 +107,7 @@ class FriendsController extends Controller
             throw $this->createNotFoundException('Пользователь не найден.');
         }
 
+        /** @var FriendRepository $friendRepository */
         $friendRepository = $this->getDoctrine()->getRepository(Friend::class);
         $objFriend = $friendRepository->getFriend($user, $friend);
 

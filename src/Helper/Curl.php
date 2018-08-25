@@ -22,9 +22,9 @@ class Curl
     private $curl;
 
     /**
-     * @var array
+     * @var string[]
      */
-    protected $browserHeaders = [
+    protected static $browserHeaders = [
         'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Connection: Close',
         'Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3',
@@ -318,7 +318,7 @@ class Curl
      */
     public function addBrowserHeaders() : self
     {
-        $this->headers = \array_merge($this->headers, $this->browserHeaders);
+        $this->headers = \array_merge($this->headers, static::$browserHeaders);
 
         return $this;
     }

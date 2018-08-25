@@ -15,7 +15,7 @@ class ArchiveFileInfo extends \SplFileInfo
     /**
      * @param string $archiveDirectory
      */
-    public static function setArchiveDirectory($archiveDirectory)
+    public static function setArchiveDirectory(string $archiveDirectory): void
     {
         self::$archiveDirectory = $archiveDirectory;
     }
@@ -23,7 +23,7 @@ class ArchiveFileInfo extends \SplFileInfo
     /**
      * @return string
      */
-    public function getArchiveName()
+    public function getArchiveName(): string
     {
         $explodePath = \explode(self::$archiveDirectory, $this->getPathname(), 2);
         $path = \ltrim($explodePath[1], \DIRECTORY_SEPARATOR);

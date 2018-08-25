@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\News;
+use App\Repository\NewsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,9 +22,10 @@ class NewsController extends Controller
     public function indexAction(Request $request)
     {
         $page = $request->get('page', 1);
-        $result = $this->getDoctrine()
-            ->getRepository(News::class)
-            ->getAllBuilder();
+
+        /** @var NewsRepository $repository */
+        $repository = $this->getDoctrine()->getRepository(News::class);
+        $result = $repository->getAllBuilder();
 
         $pagerfanta = $this->get('paginate')->paginate($result, $page);
 

@@ -2,6 +2,7 @@
 namespace App\Controller\User;
 
 use App\Entity\Event;
+use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +24,7 @@ class EventsController extends Controller
             throw $this->createAccessDeniedException('Пользователь не найден');
         }
 
+        /** @var EventRepository $repository */
         $repository = $this->getDoctrine()->getRepository(Event::class);
         $events = $repository->findEventsQuery($user);
 

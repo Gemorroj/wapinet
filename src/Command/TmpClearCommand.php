@@ -6,12 +6,30 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 
 class TmpClearCommand extends ContainerAwareCommand
 {
-    /**
+	/**
+	 * @var ParameterBagInterface
+	 */
+	private $parameterBag;
+	/**
+	 * @var Filesystem
+	 */
+	private $filesystem;
+
+	public function __construct(ParameterBagInterface $parameterBag, Filesystem $filesystem, ?string $name = null)
+	{
+		$this->parameterBag = $parameterBag;
+		$this->filesystem = $filesystem;
+		parent::__construct($name);
+	}
+
+	/**
      * {@inheritdoc}
      */
     protected function configure()
@@ -36,12 +54,11 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $lifetime = $input->getArgument('lifetime');
-        $tmpDir = $this->getContainer()->get('kernel')->getTmpDir();
+        $tmpDir = $this->parameterBag->get('kernel.tmp_dir');
 
         $oldFiles = Finder::create()->date('< now - ' . $lifetime)->in($tmpDir);
         $oldFileCount = $oldFiles->count();
-        $filesystem = $this->getContainer()->get('filesystem');
-        $filesystem->remove($oldFiles);
+		$this->filesystem->remove($oldFiles);
 
         $output->writeln(\sprintf('Files over "%s" are removed. Removed "%d" files.', $lifetime, $oldFileCount));
     }

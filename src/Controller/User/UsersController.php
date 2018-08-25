@@ -3,6 +3,7 @@ namespace App\Controller\User;
 
 use App\Entity\User;
 use App\Form\Type\User\SearchType;
+use App\Repository\UserRepository;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
@@ -68,6 +69,7 @@ class UsersController extends Controller
      */
     protected function online ($page = 1)
     {
+    	/** @var UserRepository $userRepository */
         $userRepository = $this->getDoctrine()->getRepository(User::class);
         $query = $userRepository->getOnlineUsersQuery();
 

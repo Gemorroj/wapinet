@@ -3,6 +3,7 @@
 namespace App\Tests\Controller;
 
 use App\Tests\WebTestCaseWapinet;
+use Symfony\Component\DomCrawler\Field\FileFormField;
 
 class ArchiverControllerTest extends WebTestCaseWapinet
 {
@@ -23,7 +24,9 @@ class ArchiverControllerTest extends WebTestCaseWapinet
 
         $form = $crawler->filter('form[name="archiver_add"]')->form();
 
-        $form['archiver_add[file][file]']->upload($this->getFixturesPath().'/sample.rar');
+        /** @var FileFormField $file */
+        $file = $form->get('archiver_add[file][file]');
+		$file->upload($this->getFixturesPath().'/sample.rar');
 
         $client->submit($form);
 

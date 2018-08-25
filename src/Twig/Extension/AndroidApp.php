@@ -146,7 +146,6 @@ class AndroidApp extends \Twig_Extension
     }
 
 
-
     /**
      * @return string
      */

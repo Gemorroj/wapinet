@@ -32,7 +32,7 @@ class Panel extends \Twig_Extension
 
     /**
      * @param array $options
-     * @return array
+     * @return \ArrayIterator
      */
     public function getPanel(array $options = [])
     {

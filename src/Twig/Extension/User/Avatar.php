@@ -11,7 +11,7 @@ class Avatar extends \Twig_Extension
      *
      * @return array An array of global functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new \Twig_SimpleFunction('wapinet_user_get_avatar_url', [$this, 'getAvatarUrl']),
@@ -23,9 +23,9 @@ class Avatar extends \Twig_Extension
      * @param int|null $size
      * @return string
      */
-    public function getAvatarUrl(User $user = null, $size = 80)
+    public function getAvatarUrl(User $user = null, ?int $size = 80): string
     {
-        return '//gravatar.com/avatar/' . ($user ? \md5($user->getEmailCanonical()) : '') . '?d=mm' . ($size ? '&s=' . (int)$size : '');
+        return '//gravatar.com/avatar/' . ($user ? \md5($user->getEmailCanonical()) : '') . '?d=mm' . ($size ? '&s=' . $size : '');
     }
 
     /**
@@ -33,7 +33,7 @@ class Avatar extends \Twig_Extension
      *
      * @return string The extension name
      */
-    public function getName()
+    public function getName(): string
     {
         return 'wapinet_user_avatar';
     }

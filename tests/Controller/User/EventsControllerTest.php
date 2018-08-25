@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\WapinetUserBundle\Controller;
+namespace App\Tests\Controller\User;
 
 use App\Tests\WebTestCaseWapinet;
 
-class EventsControllerTestWapinet extends WebTestCaseWapinet
+class EventsControllerTest extends WebTestCaseWapinet
 {
     public function testIndex()
     {

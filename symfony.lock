@@ -8,6 +8,9 @@
     "composer/ca-bundle": {
         "version": "1.1.1"
     },
+    "composer/semver": {
+        "version": "1.4.2"
+    },
     "composer/xdebug-handler": {
         "version": "1.1.0"
     },
@@ -106,6 +109,15 @@
     },
     "foolz/sphinxql-query-builder": {
         "version": "2.0.0"
+    },
+    "friendsofphp/php-cs-fixer": {
+        "version": "2.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.2",
+            "ref": "81dee417d2cc60cd1c9d6208dff2ec22a1103e93"
+        }
     },
     "friendsofsymfony/jsrouting-bundle": {
         "version": "2.0",
@@ -245,6 +257,9 @@
     "phar-io/version": {
         "version": "1.0.1"
     },
+    "php-cs-fixer/diff": {
+        "version": "v1.3.0"
+    },
     "php-ffmpeg/binary-driver": {
         "version": "dev-master"
     },
@@ -268,6 +283,12 @@
     },
     "phpstan/phpstan": {
         "version": "0.9.2"
+    },
+    "phpstan/phpstan-phpunit": {
+        "version": "0.10"
+    },
+    "phpstan/phpstan-symfony": {
+        "version": "0.10.1"
     },
     "phpunit/php-code-coverage": {
         "version": "6.0.7"
@@ -313,6 +334,9 @@
     },
     "riverline/multipart-parser": {
         "version": "1.1.9"
+    },
+    "roave/security-advisories": {
+        "version": "dev-master"
     },
     "sebastian/code-unit-reverse-lookup": {
         "version": "1.0.1"

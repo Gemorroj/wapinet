@@ -5,6 +5,7 @@ use App\Entity\File as DataFile;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -16,13 +17,20 @@ class File
      * @var ContainerInterface
      */
     protected $container;
+	/**
+	 * @var EncoderFactoryInterface
+	 */
+    protected $encoderFactory;
 
-    /**
-     * @param ContainerInterface $container
-     */
-    public function __construct(ContainerInterface $container)
+	/**
+	 * File constructor.
+	 * @param ContainerInterface $container
+	 * @param EncoderFactoryInterface $encoderFactory
+	 */
+    public function __construct(ContainerInterface $container, EncoderFactoryInterface $encoderFactory)
     {
         $this->container = $container;
+        $this->encoderFactory = $encoderFactory;
     }
 
 
@@ -76,11 +84,11 @@ class File
      * @param DataFile $file
      * @param string $password
      */
-    public function setPassword(DataFile $file, $password)
+    public function setPassword(DataFile $file, string $password)
     {
         $file->setSaltValue();
 
-        $encoder = $this->container->get('security.encoder_factory')->getEncoder($file);
+        $encoder = $this->encoderFactory->getEncoder($file);
         $encodedPassword = $encoder->encodePassword($password, $file->getSalt());
         $file->setPassword($encodedPassword);
     }

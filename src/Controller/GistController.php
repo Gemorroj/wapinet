@@ -7,6 +7,7 @@ use App\Event\GistEvent;
 use App\Form\Type\Gist\AddType;
 use App\Form\Type\Gist\EditType;
 use App\Form\Type\Gist\SearchType;
+use App\Repository\GistRepository;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -30,8 +31,9 @@ class GistController extends Controller
         $form = $this->createForm(AddType::class);
         $page = $request->get('page', 1);
 
-        $gistManager = $this->getDoctrine()->getRepository(Gist::class);
-        $query = $gistManager->getListQuery();
+        /** @var GistRepository $gistRepository */
+        $gistRepository = $this->getDoctrine()->getRepository(Gist::class);
+        $query = $gistRepository->getListQuery();
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
         return $this->render('Gist/index.html.twig', array(
@@ -57,8 +59,9 @@ class GistController extends Controller
             throw $this->createNotFoundException('Пользователь не найден');
         }
 
-        $gistManager = $this->getDoctrine()->getRepository(Gist::class);
-        $query = $gistManager->getListQuery($user);
+        /** @var GistRepository $gistRepository */
+        $gistRepository = $this->getDoctrine()->getRepository(Gist::class);
+        $query = $gistRepository->getListQuery($user);
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
         return $this->render('Gist/index.html.twig', array(

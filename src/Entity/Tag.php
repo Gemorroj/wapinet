@@ -9,7 +9,7 @@ namespace App\Entity;
 class Tag
 {
     /**
-     * @var integer
+     * @var int
      */
     private $id;
     /**
@@ -33,7 +33,7 @@ class Tag
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -56,7 +56,7 @@ class Tag
     /**
      * Get count
      *
-     * @return integer
+     * @return int
      */
     public function getCount()
     {

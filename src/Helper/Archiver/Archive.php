@@ -34,7 +34,7 @@ abstract class Archive
 
     /**
      * @param string $directory
-     * @return \SplFileInfo[]
+     * @return \SplFileObject[]
      */
     public function getFiles($directory)
     {
@@ -46,24 +46,25 @@ abstract class Archive
             \RecursiveIteratorIterator::SELF_FIRST
         );
 
-        $result = $this->sortFiles($objects);
-
-        return $result;
+        return $this->sortFiles($objects);
     }
 
 
     /**
      * @param \RecursiveIteratorIterator $objects
-     * @return \SplFileInfo[]
+     * @return \SplFileObject[]
      */
     private function sortFiles(\RecursiveIteratorIterator $objects)
     {
         $result = [];
         $tmp = [];
-        foreach ($objects as $name => $object) {
+        /** @var \SplFileObject $object */
+		foreach ($objects as $name => $object) {
             $object->setInfoClass(ArchiveFileInfo::class);
+            /** @var ArchiveFileInfo $info */
+            $info = $object->getPathInfo();
 
-            if (false === $object->isDir() && '' === $object->getPathInfo()->getArchiveName()) {
+            if (false === $object->isDir() && '' === $info->getArchiveName()) {
                 $result[] = $object;
             } else {
                 $tmp[$name] = $object;

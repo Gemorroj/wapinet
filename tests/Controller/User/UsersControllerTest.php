@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\WapinetUserBundle\Controller;
+namespace App\Tests\Controller\User;
 
 use App\Tests\WebTestCaseWapinet;
 

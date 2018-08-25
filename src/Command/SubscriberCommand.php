@@ -3,15 +3,57 @@
 namespace App\Command;
 
 use App\Entity\Event;
+use App\Repository\EventRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Twig\Environment;
 
 /**
  * Subscriber
  */
 class SubscriberCommand extends ContainerAwareCommand
 {
+	/**
+	 * @var EntityManagerInterface
+	 */
+	private $entityManager;
+	/**
+	 * @var \Swift_Mailer
+	 */
+	private $mailer;
+	/**
+	 * @var Environment
+	 */
+	private $twig;
+	/**
+	 * @var LoggerInterface
+	 */
+	private $logger;
+	/**
+	 * @var ParameterBagInterface
+	 */
+	private $parameterBag;
+
+	public function __construct(
+		EntityManagerInterface $entityManager,
+		\Swift_Mailer $mailer,
+		Environment $twig,
+		LoggerInterface $logger,
+		ParameterBagInterface $parameterBag,
+		?string $name = null)
+	{
+		$this->entityManager = $entityManager;
+		$this->mailer = $mailer;
+		$this->twig = $twig;
+		$this->logger = $logger;
+		$this->parameterBag = $parameterBag;
+		parent::__construct($name);
+	}
+
     /**
      * {@inheritdoc}
      */
@@ -27,20 +69,20 @@ class SubscriberCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $repository = $em->getRepository(Event::class);
+    	/** @var EventRepository $repository */
+        $repository = $this->entityManager->getRepository(Event::class);
 
         $rows = $repository->findNeedEmail();
 
-        $em->beginTransaction();
-        $q = $em->createQuery('UPDATE App\Entity\Event e SET e.needEmail = 0 WHERE e.id = :id');
-        /** @var Event $v */
-        foreach ($rows as $v) {
-            if ($this->sendEmail($v)) {
-                $q->execute(['id' => $v->getId()]);
+		$this->entityManager->beginTransaction();
+        $q = $this->entityManager->createQuery('UPDATE App\Entity\Event e SET e.needEmail = 0 WHERE e.id = :id');
+        /** @var Event $row */
+        foreach ($rows as $row) {
+            if ($this->sendEmail($row)) {
+                $q->execute(['id' => $row->getId()]);
             }
         }
-        $em->commit();
+		$this->entityManager->commit();
 
         $output->writeln('All Emails sended.');
     }
@@ -52,16 +94,13 @@ class SubscriberCommand extends ContainerAwareCommand
      */
     protected function sendEmail(Event $event) : bool
     {
-        $siteTitle = $this->getContainer()->getParameter('wapinet_title');
-        $robotEmail = $this->getContainer()->getParameter('wapinet_robot_email');
-        $mailer = $this->getContainer()->get('mailer');
-
-        $templating = $this->getContainer()->get('twig');
+        $siteTitle = $this->parameterBag->get('wapinet_title');
+        $robotEmail = $this->parameterBag->get('wapinet_robot_email');
 
         $variables = $event->getVariables();
         $variables['subject'] = $event->getSubject();
 
-        $body = $templating->render('User/Subscriber/Email/' . $event->getTemplate() . '.html.twig', $variables);
+        $body = $this->twig->render('User/Subscriber/Email/' . $event->getTemplate() . '.html.twig', $variables);
 
         try {
             $message = new \Swift_Message(
@@ -73,15 +112,15 @@ class SubscriberCommand extends ContainerAwareCommand
             $message->setFrom($robotEmail);
             $message->setTo($event->getUser()->getEmail());
 
-            return ($mailer->send($message) > 0);
+            return ($this->mailer->send($message) > 0);
         } catch (\Swift_RfcComplianceException $e) {
-            $this->getContainer()->get('logger')->warning($e->getMessage(), [$e]);
+			$this->logger->warning($e->getMessage(), [$e]);
 
             $event->getUser()->getSubscriber()->setEmailNews(false);
             $event->getUser()->getSubscriber()->setEmailFriends(false);
-            $this->getContainer()->get('doctrine.orm.entity_manager')->persist($event->getUser()->getSubscriber());
+			$this->entityManager->persist($event->getUser()->getSubscriber());
         } catch (\Exception $e) {
-            $this->getContainer()->get('logger')->critical($e->getMessage(), [$e]);
+			$this->logger->critical($e->getMessage(), [$e]);
         }
 
         return true;

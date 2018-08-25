@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Guestbook;
 use App\Form\Type\Guestbook\MessageType;
+use App\Repository\GuestbookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,8 +20,9 @@ class GuestbookController extends Controller
         $form = $this->createForm(MessageType::class);
 
         $page = $request->get('page', 1);
-        $guestbookManager = $this->getDoctrine()->getRepository(Guestbook::class);
-        $query = $guestbookManager->getListQuery();
+        /** @var GuestbookRepository $guestbookRepository */
+        $guestbookRepository = $this->getDoctrine()->getRepository(Guestbook::class);
+        $query = $guestbookRepository->getListQuery();
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
         return $this->render('Guestbook/index.html.twig', [

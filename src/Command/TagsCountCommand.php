@@ -4,6 +4,8 @@ namespace App\Command;
 
 use App\Entity\FileTags;
 use App\Entity\Tag;
+use App\Repository\TagRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -11,6 +13,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class TagsCountCommand extends ContainerAwareCommand
 {
+	/**
+	 * @var EntityManagerInterface
+	 */
+	private $entityManager;
+
+	public function __construct(EntityManagerInterface $entityManager, ?string $name = null)
+	{
+		$this->entityManager = $entityManager;
+		parent::__construct($name);
+	}
+
     /**
      * {@inheritdoc}
      */
@@ -33,23 +46,23 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $fixedCounts = 0;
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $repositoryTag = $em->getRepository(Tag::class);
-        $repositoryFileTags = $em->getRepository(FileTags::class);
+        /** @var TagRepository $repositoryTag */
+        $repositoryTag = $this->entityManager->getRepository(Tag::class);
+        $repositoryFileTags = $this->entityManager->getRepository(FileTags::class);
 
-        $rows = $repositoryTag->findAll();
-        foreach ($rows as $tag) {
+        /** @var Tag $tag */
+		foreach ($repositoryTag->findAll() as $tag) {
             $fileTags = $repositoryFileTags->findBy(['tag' => $tag]);
             $count = \count($fileTags);
 
-            if ($count != $tag->getCount()) {
+            if ($count !== $tag->getCount()) {
                 $tag->setCount($count);
-                $em->persist($tag);
+				$this->entityManager->persist($tag);
                 $fixedCounts++;
             }
         }
 
-        $em->flush();
+		$this->entityManager->flush();
 
         $output->writeln('Fixed ' . $fixedCounts . ' tags count.');
     }

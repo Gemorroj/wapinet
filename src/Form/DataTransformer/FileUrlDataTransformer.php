@@ -84,7 +84,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
 
     /**
      * @param array $fileDataFromForm
-     * @return null|FileUrl
+     * @return null|FileUrl|UploadedFile
      */
     protected function getUploadedFile(array $fileDataFromForm)
     {
@@ -94,7 +94,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
             // UploadedFile|string
             $uploadedFile = $fileDataFromForm['file'];
             // TODO: вероятно эта проверка не нужна
-            if (!$uploadedFile instanceof UploadedFile) {
+            if (!($uploadedFile instanceof UploadedFile)) {
                 throw new TransformationFailedException('Ошибка при загрузке файла');
             }
         }

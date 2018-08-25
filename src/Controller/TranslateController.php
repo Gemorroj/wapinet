@@ -57,7 +57,7 @@ class TranslateController extends Controller
      * @return string
      * @throws HttpException
      */
-    private function translate($langFrom, $langTo, $text)
+    private function translate($langFrom, $langTo, $text): string
     {
         $curl = $this->get('curl');
         $curl->init(

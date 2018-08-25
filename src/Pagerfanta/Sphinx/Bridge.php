@@ -76,9 +76,9 @@ class Bridge
     /**
      * @return EntityManagerInterface
      */
-    protected function getEntityManager()
+    protected function getEntityManager(): EntityManagerInterface
     {
-        if ($this->em === null) {
+        if (null === $this->em) {
             $this->em = $this->doctrine->getManager();
         }
 

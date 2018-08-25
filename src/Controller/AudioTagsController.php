@@ -66,6 +66,9 @@ class AudioTagsController extends Controller
         $file = $data['file'];
         $tempDirectory = $this->get('kernel')->getTmpDir();
         $tempName = \tempnam($tempDirectory, 'audio_file');
+        if (false === $tempName) {
+        	throw new \RuntimeException('Не удалось создать временный файл');
+		}
 
         return $file->move($tempDirectory, $tempName);
     }
