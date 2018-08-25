@@ -43,7 +43,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../src/{Resources,Exception,DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -208,31 +208,16 @@ services:
         tags:
             - { name: form.type }
 
-    wapinet.file_voter:
-        class: App\Security\FileVoter
-        arguments: ['@security.access.decision_manager']
-        tags:
-            - { name: security.voter }
-
-    wapinet.gist_voter:
-        class: App\Security\GistVoter
-        arguments: ['@security.access.decision_manager']
-        public: false
-        tags:
-            - { name: security.voter }
-
     wapinet.file_uploader.namer_file_directory:
         class: App\Uploader\Naming\FileDirectoryNamer
         public: true
 
     wapinet.user.listener.last_activity:
         class: App\EventListener\ListenerLastActivity
-        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
 
     wapinet.user.event.friends:
         class: App\EventListener\EventFriends
-        arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: kernel.event_subscriber }
