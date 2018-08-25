@@ -13,5 +13,4 @@ class SubscriberControllerTest extends WebTestCaseWapinet
         $crawler = $client->request('GET', '/user/subscriber/edit');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
-
 }

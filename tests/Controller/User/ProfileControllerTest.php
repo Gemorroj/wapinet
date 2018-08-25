@@ -13,5 +13,4 @@ class ProfileControllerTest extends WebTestCaseWapinet
         $crawler = $client->request('GET', '/profile/');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
-
 }

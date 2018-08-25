@@ -13,5 +13,4 @@ class UsersControllerTest extends WebTestCaseWapinet
         $crawler = $client->request('GET', '/user/users');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
-
 }

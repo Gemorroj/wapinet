@@ -13,5 +13,4 @@ class PanelControllerTest extends WebTestCaseWapinet
         $crawler = $client->request('GET', '/user/panel/edit');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
-
 }

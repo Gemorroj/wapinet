@@ -13,5 +13,4 @@ class BashControllerTest extends WebTestCaseWapinet
         $crawler = $client->request('GET', '/bash/');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
-
 }

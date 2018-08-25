@@ -13,5 +13,4 @@ class HtmlValidatorControllerTest extends WebTestCaseWapinet
         $crawler = $client->request('GET', '/html_validator/');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
-
 }

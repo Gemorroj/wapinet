@@ -13,5 +13,4 @@ class MassMediaControllerTest extends WebTestCaseWapinet
         $crawler = $client->request('GET', '/mass_media/');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
-
 }

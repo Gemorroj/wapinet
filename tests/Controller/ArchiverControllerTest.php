@@ -15,7 +15,6 @@ class ArchiverControllerTest extends WebTestCaseWapinet
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 
-
     public function testExtract()
     {
         $client = static::createClient();
@@ -26,15 +25,13 @@ class ArchiverControllerTest extends WebTestCaseWapinet
 
         /** @var FileFormField $file */
         $file = $form->get('archiver_add[file][file]');
-		$file->upload($this->getFixturesPath().'/sample.rar');
+        $file->upload($this->getFixturesPath().'/sample.rar');
 
         $client->submit($form);
-
 
         $this->assertTrue($client->getResponse()->isRedirection());
 
         $crawler = $client->followRedirect();
-
 
         $link = $crawler->filter('ul#list-archive > li > a')->html();
 
