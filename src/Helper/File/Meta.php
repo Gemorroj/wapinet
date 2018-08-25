@@ -1,10 +1,10 @@
 <?php
+
 namespace App\Helper\File;
 
 use App\Entity\File as EntityFile;
 use App\Entity\File\Meta as FileMeta;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 
 /**
  * Meta хэлпер
@@ -37,6 +37,7 @@ class Meta
 
     /**
      * @param EntityFile $file
+     *
      * @return Meta
      */
     public function setFile(EntityFile $file)
@@ -47,9 +48,10 @@ class Meta
     }
 
     /**
-     * Получаем мета-информацию файла
+     * Получаем мета-информацию файла.
      *
      * @throws \RuntimeException
+     *
      * @return FileMeta
      */
     public function getFileMeta()
@@ -72,7 +74,6 @@ class Meta
 
         return $this->fileMeta;
     }
-
 
     /**
      * @return Meta
@@ -124,7 +125,6 @@ class Meta
         return $this;
     }
 
-
     /**
      * @return Meta
      */
@@ -164,7 +164,6 @@ class Meta
 
         return $this;
     }
-
 
     /**
      * @return Meta
@@ -224,7 +223,6 @@ class Meta
         return $this;
     }
 
-
     /**
      * @return Meta
      */
@@ -233,7 +231,6 @@ class Meta
         $torrent = $this->container->get('torrent');
 
         $data = $torrent->decodeFile($this->file->getFile());
-
 
         if (isset($data['info']['length'])) {
             $size = $data['info']['length'];
@@ -253,7 +250,7 @@ class Meta
             $this->fileMeta->set('name', $data['info']['name']);
         }
         if (isset($data['creation date'])) {
-            $this->fileMeta->set('datetime', new \DateTime('@' . $data['creation date']));
+            $this->fileMeta->set('datetime', new \DateTime('@'.$data['creation date']));
         }
         if (isset($data['comment'])) {
             $this->fileMeta->set('comment', $data['comment']);

@@ -15,10 +15,10 @@ class RatesController extends Controller
         return $this->render('Rates/index.html.twig');
     }
 
-
     /**
      * @param string $country
-     * @param Rates $ratesHelper
+     * @param Rates  $ratesHelper
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction($country, Rates $ratesHelper)

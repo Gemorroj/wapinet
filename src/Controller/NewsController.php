@@ -17,6 +17,7 @@ class NewsController extends Controller
      * Lists all News entities.
      *
      * @param Request $request
+     *
      * @return Response
      */
     public function indexAction(Request $request)
@@ -38,6 +39,7 @@ class NewsController extends Controller
      * Finds and displays a News entity.
      *
      * @param News $news
+     *
      * @return Response
      */
     public function showAction(News $news)

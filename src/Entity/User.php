@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -6,7 +7,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Intl\Intl;
 
 /**
- * User
+ * User.
  */
 class User extends BaseUser
 {
@@ -79,14 +80,12 @@ class User extends BaseUser
      */
     protected $vk;
 
-
     public function __construct()
     {
         parent::__construct();
         $this->friends = new ArrayCollection();
         $this->friended = new ArrayCollection();
     }
-
 
     /**
      * @return ArrayCollection
@@ -114,6 +113,7 @@ class User extends BaseUser
 
     /**
      * @param string|null $vk
+     *
      * @return User
      */
     public function setVk($vk = null)
@@ -122,7 +122,6 @@ class User extends BaseUser
 
         return $this;
     }
-
 
     /**
      * @return string|null
@@ -134,6 +133,7 @@ class User extends BaseUser
 
     /**
      * @param string|null $country
+     *
      * @return User
      */
     public function setCountry($country = null)
@@ -165,6 +165,7 @@ class User extends BaseUser
 
     /**
      * @param string|null $timezone
+     *
      * @return User
      */
     public function setTimezone($timezone = null)
@@ -174,7 +175,6 @@ class User extends BaseUser
         return $this;
     }
 
-
     /**
      * @return bool
      */
@@ -182,7 +182,7 @@ class User extends BaseUser
     {
         $lastActivity = $this->getLastActivity();
         if (null !== $lastActivity) {
-            if ($lastActivity > new \DateTime('now -' . self::LIFETIME)) {
+            if ($lastActivity > new \DateTime('now -'.self::LIFETIME)) {
                 return true;
             }
         }
@@ -190,9 +190,9 @@ class User extends BaseUser
         return false;
     }
 
-
     /**
      * @param Panel $panel
+     *
      * @return User
      */
     public function setPanel(Panel $panel)
@@ -217,9 +217,9 @@ class User extends BaseUser
         return $this->panel;
     }
 
-
     /**
      * @param Subscriber $subscriber
+     *
      * @return User
      */
     public function setSubscriber(Subscriber $subscriber)
@@ -254,6 +254,7 @@ class User extends BaseUser
 
     /**
      * @param string $info
+     *
      * @return User
      */
     public function setInfo($info)
@@ -263,14 +264,15 @@ class User extends BaseUser
         return $this;
     }
 
-
     /**
      * @param \DateTime $birthday
+     *
      * @return User
      */
     public function setBirthday(\DateTime $birthday = null)
     {
         $this->birthday = $birthday;
+
         return $this;
     }
 
@@ -284,16 +286,19 @@ class User extends BaseUser
 
     /**
      * @param string $sex
+     *
      * @return User
+     *
      * @throws \InvalidArgumentException
      */
     public function setSex($sex)
     {
-        if ($sex !== self::SEX_MALE && $sex !== self::SEX_FEMALE) {
+        if (self::SEX_MALE !== $sex && self::SEX_FEMALE !== $sex) {
             throw new \InvalidArgumentException('Invalid sex');
         }
 
         $this->sex = $sex;
+
         return $this;
     }
 
@@ -305,7 +310,6 @@ class User extends BaseUser
         return $this->sex;
     }
 
-
     /**
      * @return \DateTime
      */
@@ -313,7 +317,6 @@ class User extends BaseUser
     {
         return $this->createdAt;
     }
-
 
     /**
      * @return User
@@ -379,7 +382,7 @@ class User extends BaseUser
      */
     public function isMale()
     {
-        return (self::SEX_MALE === $this->getSex());
+        return self::SEX_MALE === $this->getSex();
     }
 
     /**
@@ -387,6 +390,6 @@ class User extends BaseUser
      */
     public function isFemale()
     {
-        return (self::SEX_FEMALE === $this->getSex());
+        return self::SEX_FEMALE === $this->getSex();
     }
 }

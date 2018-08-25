@@ -12,6 +12,7 @@ class HashController extends Controller
 {
     /**
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
@@ -34,14 +35,15 @@ class HashController extends Controller
 
         return $this->render('Hash/index.html.twig', [
             'form' => $form->createView(),
-            'result' => $hash
+            'result' => $hash,
         ]);
     }
 
-
     /**
      * @param array $data
+     *
      * @throws ValidatorException
+     *
      * @return string
      */
     protected function getHash(array $data)

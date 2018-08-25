@@ -2,9 +2,8 @@
 
 namespace App\Entity\File;
 
-
 /**
- * Meta
+ * Meta.
  */
 class Meta
 {
@@ -15,6 +14,7 @@ class Meta
 
     /**
      * @param string $key
+     *
      * @return bool
      */
     public function has($key)
@@ -22,9 +22,9 @@ class Meta
         return isset($this->meta[$key]);
     }
 
-
     /**
      * @param string $key
+     *
      * @return string
      */
     public function get($key)
@@ -32,10 +32,10 @@ class Meta
         return isset($this->meta[$key]) ? $this->meta[$key] : null;
     }
 
-
     /**
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return Meta
      */
     public function set($key, $value)
@@ -45,7 +45,6 @@ class Meta
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -53,7 +52,7 @@ class Meta
     {
         $out = '';
         foreach ($this->meta as $key => $value) {
-            $out .= $key . ': ' . $value . "\n";
+            $out .= $key.': '.$value."\n";
         }
 
         return $out;

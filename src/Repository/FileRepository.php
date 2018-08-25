@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repository;
 
 use App\Entity\File;
@@ -11,6 +12,7 @@ class FileRepository extends EntityRepository
 {
     /**
      * @param int $maxUsers
+     *
      * @return array
      */
     public function getStatistic(int $maxUsers = 10): array
@@ -38,7 +40,6 @@ class FileRepository extends EntityRepository
         ];
     }
 
-
     /**
      * @return int
      */
@@ -48,7 +49,6 @@ class FileRepository extends EntityRepository
             'SELECT COUNT(f.id) FROM App\Entity\File f WHERE f.password IS NULL AND f.hidden = 1'
         )->getSingleScalarResult();
     }
-
 
     /**
      * @return int
@@ -61,8 +61,9 @@ class FileRepository extends EntityRepository
     }
 
     /**
-     * @param \DateTime $datetimeStart
+     * @param \DateTime      $datetimeStart
      * @param \DateTime|null $datetimeEnd
+     *
      * @return int
      */
     public function countDate(\DateTime $datetimeStart, ?\DateTime $datetimeEnd = null): int
@@ -87,6 +88,7 @@ class FileRepository extends EntityRepository
 
     /**
      * @param string $category
+     *
      * @return int
      */
     public function countCategory(string $category): int
@@ -104,6 +106,7 @@ class FileRepository extends EntityRepository
 
     /**
      * @param User $user
+     *
      * @return int
      */
     public function countUser(User $user): int
@@ -122,7 +125,8 @@ class FileRepository extends EntityRepository
     /**
      * @param \DateTime|null $datetimeStart
      * @param \DateTime|null $datetimeEnd
-     * @param string|null $category
+     * @param string|null    $category
+     *
      * @return \Doctrine\ORM\Query
      */
     public function getListQuery(?\DateTime $datetimeStart = null, ?\DateTime $datetimeEnd = null, ?string $category = null): \Doctrine\ORM\Query
@@ -146,7 +150,6 @@ class FileRepository extends EntityRepository
         return $q->getQuery();
     }
 
-
     /**
      * @return \Doctrine\ORM\Query
      */
@@ -160,9 +163,11 @@ class FileRepository extends EntityRepository
     }
 
     /**
-     * @param int $id
+     * @param int         $id
      * @param string|null $category
+     *
      * @return File|null
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getPrevFile(int $id, ?string $category = null): ?File
@@ -181,9 +186,11 @@ class FileRepository extends EntityRepository
     }
 
     /**
-     * @param int $id
+     * @param int         $id
      * @param string|null $category
+     *
      * @return File|null
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getNextFile(int $id, ?string $category = null): ?File
@@ -201,10 +208,9 @@ class FileRepository extends EntityRepository
         return $q->getQuery()->getOneOrNullResult();
     }
 
-
     /**
      * @param QueryBuilder $q
-     * @param null|string $mimeType
+     * @param null|string  $mimeType
      */
     private function addCategoryMime(QueryBuilder $q, ?string $mimeType): void
     {
@@ -213,7 +219,7 @@ class FileRepository extends EntityRepository
             case 'audio':
             case 'image':
             case 'text':
-                $mimeType = \addcslashes($mimeType, '%_') . '/%';
+                $mimeType = \addcslashes($mimeType, '%_').'/%';
                 $q->andWhere('f.mimeType LIKE :mime_type');
                 $q->setParameter('mime_type', $mimeType);
                 break;
@@ -252,7 +258,6 @@ class FileRepository extends EntityRepository
         }
     }
 
-
     /**
      * @param User $user
      *
@@ -272,6 +277,7 @@ class FileRepository extends EntityRepository
 
             ->getQuery()
         ;
+
         return $q;
     }
 
@@ -294,6 +300,7 @@ class FileRepository extends EntityRepository
 
             ->getQuery()
             ;
+
         return $q;
     }
 }

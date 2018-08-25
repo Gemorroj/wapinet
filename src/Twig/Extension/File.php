@@ -20,7 +20,7 @@ class File extends \Twig_Extension
 
     /**
      * @param EntityManagerInterface $em
-     * @param Timezone $timezoneHelper
+     * @param Timezone               $timezoneHelper
      */
     public function __construct(EntityManagerInterface $em, Timezone $timezoneHelper)
     {
@@ -35,9 +35,9 @@ class File extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
+        return [
             new \Twig_SimpleFilter('basename', 'basename'),
-        );
+        ];
     }
 
     /**
@@ -47,14 +47,14 @@ class File extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('file_count_all', array($this, 'getCountAll')),
-            new \Twig_SimpleFunction('file_count_today', array($this, 'getCountToday')),
-            new \Twig_SimpleFunction('file_count_hidden', array($this, 'getCountHidden')),
-            new \Twig_SimpleFunction('file_count_yesterday', array($this, 'getCountYesterday')),
-            new \Twig_SimpleFunction('file_count_category', array($this, 'getCountCategory')),
-            new \Twig_SimpleFunction('file_count_user', array($this, 'getCountUser')),
-        );
+        return [
+            new \Twig_SimpleFunction('file_count_all', [$this, 'getCountAll']),
+            new \Twig_SimpleFunction('file_count_today', [$this, 'getCountToday']),
+            new \Twig_SimpleFunction('file_count_hidden', [$this, 'getCountHidden']),
+            new \Twig_SimpleFunction('file_count_yesterday', [$this, 'getCountYesterday']),
+            new \Twig_SimpleFunction('file_count_category', [$this, 'getCountCategory']),
+            new \Twig_SimpleFunction('file_count_user', [$this, 'getCountUser']),
+        ];
     }
 
     /**
@@ -96,6 +96,7 @@ class File extends \Twig_Extension
 
     /**
      * @param string $category
+     *
      * @return int
      */
     public function getCountCategory($category)
@@ -105,6 +106,7 @@ class File extends \Twig_Extension
 
     /**
      * @param User $user
+     *
      * @return int
      */
     public function getCountUser(User $user)

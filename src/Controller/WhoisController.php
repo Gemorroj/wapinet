@@ -24,7 +24,7 @@ class WhoisController extends Controller
                     $resultHtml = $this->getWhois($data);
                 }
             } elseif (null !== $request->get('query')) {
-                $data = array('query' => $request->get('query'));
+                $data = ['query' => $request->get('query')];
                 $form->setData($data);
 
                 $resultHtml = $this->getWhois($data);
@@ -33,15 +33,17 @@ class WhoisController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('Whois/index.html.twig', array(
+        return $this->render('Whois/index.html.twig', [
             'form' => $form->createView(),
             'resultHtml' => $resultHtml,
-        ));
+        ]);
     }
 
     /**
      * @param array $data
+     *
      * @return string HTML текст
+     *
      * @throws WhoisException
      */
     protected function getWhois(array $data)
@@ -68,7 +70,6 @@ class WhoisController extends Controller
             throw new WhoisException($whois->Query['errstr']);
         }
 
-        throw new WhoisException(array('Не найдено данных'));
+        throw new WhoisException(['Не найдено данных']);
     }
-
 }

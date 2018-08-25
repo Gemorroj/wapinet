@@ -16,7 +16,8 @@ class SearchService extends \Twig_Extension
 
     /**
      * @param Service[] $services
-     * @param string $serviceName
+     * @param string    $serviceName
+     *
      * @return \Ginfo\Info\Service|null
      */
     public function searchService(array $services, string $serviceName)

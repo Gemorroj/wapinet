@@ -9,21 +9,20 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-
 class TagsClearCommand extends ContainerAwareCommand
 {
-	/**
-	 * @var EntityManagerInterface
-	 */
-	private $entityManager;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
 
-	public function __construct(EntityManagerInterface $entityManager, ?string $name = null)
-	{
-		$this->entityManager = $entityManager;
-		parent::__construct($name);
-	}
+    public function __construct(EntityManagerInterface $entityManager, ?string $name = null)
+    {
+        $this->entityManager = $entityManager;
+        parent::__construct($name);
+    }
 
-	/**
+    /**
      * {@inheritdoc}
      */
     protected function configure()
@@ -44,16 +43,16 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-    	/** @var TagRepository $repository */
+        /** @var TagRepository $repository */
         $repository = $this->entityManager->getRepository(Tag::class);
 
         $rows = $repository->findEmptyTags();
         foreach ($rows as $tag) {
-			$this->entityManager->remove($tag);
+            $this->entityManager->remove($tag);
         }
 
-		$this->entityManager->flush();
+        $this->entityManager->flush();
 
-        $output->writeln('Deleted ' . \count($rows) . ' tags.');
+        $output->writeln('Deleted '.\count($rows).' tags.');
     }
 }

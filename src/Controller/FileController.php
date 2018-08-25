@@ -59,16 +59,17 @@ class FileController extends Controller
      */
     public function statisticAction()
     {
-    	/** @var FileRepository $repository */
-    	$repository = $this->getDoctrine()->getRepository(File::class);
+        /** @var FileRepository $repository */
+        $repository = $this->getDoctrine()->getRepository(File::class);
         $statistic = $repository->getStatistic();
 
         return $this->render('File/statistic.html.twig', ['statistic' => $statistic]);
     }
 
     /**
-     * @param Request $request
+     * @param Request     $request
      * @param string|null $key
+     *
      * @return Response|RedirectResponse
      */
     public function searchAction(Request $request, $key = null)
@@ -87,13 +88,12 @@ class FileController extends Controller
                     $key = \uniqid('', false);
                     $session->set('file_search', [
                         'key' => $key,
-                        'data' => $data
+                        'data' => $data,
                     ]);
                 }
 
                 return $this->redirectToRoute('file_search', ['key' => $key]);
             }
-
 
             if (null !== $key && $session->has('file_search')) {
                 $search = $session->get('file_search');
@@ -113,12 +113,12 @@ class FileController extends Controller
         ]);
     }
 
-
     /**
      * @param array $data
      * @param int   $page
      *
      * @throws \RuntimeException
+     *
      * @return Pagerfanta
      */
     protected function searchSphinx(array $data, $page = 1)
@@ -138,7 +138,6 @@ class FileController extends Controller
         return $client->getPagerfanta($sphinxQl, File::class);
     }
 
-
     /**
      * @return Response
      */
@@ -146,7 +145,6 @@ class FileController extends Controller
     {
         return $this->render('File/categories.html.twig');
     }
-
 
     /**
      * @param Request $request
@@ -163,8 +161,8 @@ class FileController extends Controller
 
         $page = $request->get('page', 1);
 
-		/** @var FileRepository $repository */
-		$repository = $this->getDoctrine()->getRepository(File::class);
+        /** @var FileRepository $repository */
+        $repository = $this->getDoctrine()->getRepository(File::class);
         $query = $repository->getHiddenQuery();
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
@@ -172,7 +170,6 @@ class FileController extends Controller
             'pagerfanta' => $pagerfanta,
         ]);
     }
-
 
     /**
      * @param Request $request
@@ -195,7 +192,8 @@ class FileController extends Controller
 
     /**
      * @param Request $request
-     * @param string $tagName
+     * @param string  $tagName
+     *
      * @throws NotFoundHttpException
      *
      * @return Response
@@ -203,8 +201,8 @@ class FileController extends Controller
     public function tagAction(Request $request, $tagName)
     {
         $page = $request->get('page', 1);
-		/** @var TagRepository $tagRepository */
-		$tagRepository = $this->getDoctrine()->getRepository(Tag::class);
+        /** @var TagRepository $tagRepository */
+        $tagRepository = $this->getDoctrine()->getRepository(Tag::class);
 
         $tag = $tagRepository->getTagByName($tagName);
         if (null === $tag) {
@@ -223,11 +221,11 @@ class FileController extends Controller
         ]);
     }
 
-
     /**
-     * @param Request $request
-     * @param string $username
+     * @param Request              $request
+     * @param string               $username
      * @param UserManagerInterface $userManager
+     *
      * @throws NotFoundHttpException
      *
      * @return Response
@@ -253,10 +251,11 @@ class FileController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param Request     $request
      * @param string|null $date
      * @param string|null $category
-     * @param Timezone $timezoneHelper
+     * @param Timezone    $timezoneHelper
+     *
      * @return Response
      */
     public function listAction(Request $request, $date = null, $category = null, Timezone $timezoneHelper)
@@ -279,10 +278,10 @@ class FileController extends Controller
         /** @var FileRepository $fileRepository */
         $fileRepository = $this->getDoctrine()->getRepository(File::class);
         $query = $fileRepository->getListQuery(
-			$datetimeStart,
-			$datetimeEnd,
-			$category
-		);
+            $datetimeStart,
+            $datetimeEnd,
+            $category
+        );
         $pagerfanta = $this->get('paginate')->paginate($query, $page);
 
         return $this->render('File/list.html.twig', [
@@ -292,17 +291,17 @@ class FileController extends Controller
         ]);
     }
 
-	/**
-	 * @param File $file
-	 * @param EncoderFactoryInterface $encoderFactory
-	 * @return Response
-	 */
+    /**
+     * @param File                    $file
+     * @param EncoderFactoryInterface $encoderFactory
+     *
+     * @return Response
+     */
     public function viewAction(File $file, EncoderFactoryInterface $encoderFactory): Response
     {
         if (null !== $file->getPassword() && !$this->isGranted('ROLE_ADMIN') && (!($this->getUser() instanceof User) || !($file->getUser() instanceof User) || $file->getUser()->getId() !== $this->getUser()->getId())) {
             return $this->passwordAction($file, $encoderFactory);
         }
-
 
         if ($file->isHidden()) {
             $isAdmin = ($this->getUser() instanceof User) && ($this->getUser()->hasRole('ROLE_ADMIN') || $this->getUser()->hasRole('ROLE_SUPER_ADMIN'));
@@ -343,7 +342,6 @@ class FileController extends Controller
         return $response;
     }
 
-
     /**
      * @param File $file
      */
@@ -363,11 +361,12 @@ class FileController extends Controller
         $file->setMeta($meta);
     }
 
-	/**
-	 * @param File $file
-	 * @param EncoderFactoryInterface $encoderFactory
-	 * @return Response
-	 */
+    /**
+     * @param File                    $file
+     * @param EncoderFactoryInterface $encoderFactory
+     *
+     * @return Response
+     */
     public function passwordAction(File $file, EncoderFactoryInterface $encoderFactory): Response
     {
         $encoder = $encoderFactory->getEncoder($file);
@@ -399,8 +398,9 @@ class FileController extends Controller
 
     /**
      * @param Request $request
-     * @param int $id
-     * @param string $name
+     * @param int     $id
+     * @param string  $name
+     *
      * @return BinaryFileResponse
      */
     public function archiveDownloadFileAction(Request $request, int $id, string $name): BinaryFileResponse
@@ -412,12 +412,12 @@ class FileController extends Controller
             throw $this->createNotFoundException('Не указан файл для скачивания.');
         }
 
-        $entry = $tmpDir . \DIRECTORY_SEPARATOR . $path;
+        $entry = $tmpDir.\DIRECTORY_SEPARATOR.$path;
 
         $filesystem = $this->get('filesystem');
 
         if (!$filesystem->exists($entry)) {
-        	/** @var File|null $file */
+            /** @var File|null $file */
             $file = $this->getDoctrine()->getRepository(File::class)->find($id);
             if (null === $file) {
                 throw $this->createNotFoundException('Файл не найден.');
@@ -442,12 +442,12 @@ class FileController extends Controller
         return $file;
     }
 
-
     /**
      * @param Request $request
-     * @param File $file
+     * @param File    $file
      *
      * @throws AccessDeniedException|NotFoundHttpException
+     *
      * @return RedirectResponse|JsonResponse
      */
     public function acceptAction(Request $request, File $file)
@@ -462,19 +462,18 @@ class FileController extends Controller
         $em->persist($file);
         $em->flush();
 
-
         // переадресация на файл
         $url = $this->generateUrl('file_view', ['id' => $file->getId()], Router::ABSOLUTE_URL);
 
         return $this->redirect($url);
     }
 
-
     /**
      * @param Request $request
-     * @param File $file
+     * @param File    $file
      *
      * @throws AccessDeniedException|NotFoundHttpException
+     *
      * @return RedirectResponse|JsonResponse
      */
     public function deleteAction(Request $request, File $file)
@@ -503,13 +502,13 @@ class FileController extends Controller
         return $this->redirect($url);
     }
 
-
     /**
      * @param Request $request
-     * @param File $file
-     * @param Mime $mimeHelper
+     * @param File    $file
+     * @param Mime    $mimeHelper
      *
      * @throws AccessDeniedException|NotFoundHttpException
+     *
      * @return RedirectResponse|Response
      */
     public function editAction(Request $request, File $file, Mime $mimeHelper)
@@ -543,13 +542,14 @@ class FileController extends Controller
         ]);
     }
 
-
     /**
      * @param Request $request
      * @param File    $data
      * @param File    $oldData
      * @param Mime    $mimeHelper
+     *
      * @throws FileDuplicatedException
+     *
      * @return File
      */
     protected function editFileData(Request $request, File $data, File $oldData, Mime $mimeHelper)
@@ -602,8 +602,8 @@ class FileController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param Mime $mimeHelper
+     * @param Request                 $request
+     * @param Mime                    $mimeHelper
      * @param EncoderFactoryInterface $encoderFactory
      *
      * @return RedirectResponse|Response
@@ -626,7 +626,7 @@ class FileController extends Controller
                         $url = $this->generateUrl(
                             'file_view',
                             [
-                                'id' => $file->getId()
+                                'id' => $file->getId(),
                             ],
                             Router::ABSOLUTE_URL
                         );
@@ -651,13 +651,14 @@ class FileController extends Controller
         ]);
     }
 
-
     /**
-     * @param Request $request
-     * @param File    $data
-     * @param Mime    $mimeHelper
+     * @param Request                 $request
+     * @param File                    $data
+     * @param Mime                    $mimeHelper
      * @param EncoderFactoryInterface $encoderFactory
+     *
      * @throws FileDuplicatedException
+     *
      * @return File
      */
     protected function saveFileData(Request $request, File $data, Mime $mimeHelper, EncoderFactoryInterface $encoderFactory)
@@ -676,7 +677,6 @@ class FileController extends Controller
         $data->setMimeType($mimeHelper->getMimeType($file->getClientOriginalName()));
         $data->setFileSize($file->getSize());
         $data->setOriginalFileName($file->getClientOriginalName());
-
 
         $data->setUser($this->getUser());
         $data->setIp($request->getClientIp());
@@ -709,9 +709,9 @@ class FileController extends Controller
         return $data;
     }
 
-
     /**
      * TODO: отрефакторить.
+     *
      * @param File $file
      */
     private function makeEditFileTags(File $file)
@@ -725,6 +725,7 @@ class FileController extends Controller
                     return false;
                 }
             }
+
             return true;
         });
 
@@ -740,6 +741,7 @@ class FileController extends Controller
                     return false;
                 }
             }
+
             return true;
         });
 
@@ -749,7 +751,6 @@ class FileController extends Controller
             );
         }
     }
-
 
     /**
      * @param File $file
@@ -769,9 +770,9 @@ class FileController extends Controller
         $file->setFileTags($fileTags);
     }
 
-
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function tagsSearchAction(Request $request)
@@ -799,14 +800,14 @@ class FileController extends Controller
         return new JsonResponse($result);
     }
 
-
     /**
      * @param File $file
+     *
      * @return Response
      */
     public function swiperAction(File $file)
     {
-    	/** @var FileRepository $repository */
+        /** @var FileRepository $repository */
         $repository = $this->getDoctrine()->getRepository(File::class);
 
         if (!$file->isImage()) {

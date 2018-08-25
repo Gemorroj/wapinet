@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Pagerfanta\Sphinx;
+
 use Pagerfanta\Adapter\AdapterInterface;
 
 /**
- * Sphinx Adapter
+ * Sphinx Adapter.
  *
- * @uses AdapterInterface
+ * @uses \AdapterInterface
+ *
  * @author Stephane PY <py.stephane1@gmail.com>
  * @author Gemorroj <wapinet@mail.ru>
  */
@@ -23,7 +26,7 @@ class Adapter implements AdapterInterface
     /**
      * Constructor.
      *
-     * @param array $array The array.
+     * @param array $array the array
      *
      * @api
      */
@@ -35,7 +38,7 @@ class Adapter implements AdapterInterface
     /**
      * Returns the array.
      *
-     * @return array The array.
+     * @return array the array
      *
      * @api
      */
@@ -57,7 +60,7 @@ class Adapter implements AdapterInterface
     }
 
     /**
-     * get nb results
+     * get nb results.
      */
     public function getNbResults()
     {
@@ -65,9 +68,10 @@ class Adapter implements AdapterInterface
     }
 
     /**
-     * setNbResults
+     * setNbResults.
      *
      * @param int $v nbOfResults
+     *
      * @return Adapter
      */
     public function setNbResults($v)
@@ -80,6 +84,7 @@ class Adapter implements AdapterInterface
     /**
      * @param int $offset
      * @param int $length
+     *
      * @return array
      */
     public function getSlice($offset, $length)
@@ -87,6 +92,7 @@ class Adapter implements AdapterInterface
         if ($offset >= \count($this->array)) {
             return $this->array;
         }
+
         return \array_slice($this->array, $offset, $length);
     }
 }

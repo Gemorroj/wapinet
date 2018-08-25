@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller\User;
 
 use FOS\UserBundle\Model\UserInterface;
@@ -8,14 +9,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
-
 class ProfileController extends Controller
 {
     /**
-     * Show custom user
-     * @param string $username
+     * Show custom user.
+     *
+     * @param string               $username
      * @param UserManagerInterface $userManager
+     *
      * @return Response
+     *
      * @throws AccessDeniedException|UsernameNotFoundException
      */
     public function showUserAction($username = null, UserManagerInterface $userManager)

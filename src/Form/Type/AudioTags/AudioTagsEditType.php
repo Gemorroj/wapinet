@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form\Type\AudioTags;
 
 use App\Form\Type\FileUrlType;
@@ -10,41 +11,40 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Audio Tags Edit
+ * Audio Tags Edit.
  */
 class AudioTagsEditType extends AbstractType
 {
     /**
-     * @var FormBuilderInterface $builder
+     * @var FormBuilderInterface
      * @var array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('title', TextType::class, array('required' => false, 'label' => 'Название'));
-        $builder->add('album_artist', TextType::class, array('required' => false, 'label' => 'Исполнитель альбома'));
-        $builder->add('artist', TextType::class, array('required' => false, 'label' => 'Исполнитель'));
-        $builder->add('album', TextType::class, array('required' => false, 'label' => 'Альбом'));
-        $builder->add('year', TextType::class, array('required' => false, 'label' => 'Год'));
-        $builder->add('track_number', TextType::class, array('required' => false, 'label' => 'Номер трека'));
-        $builder->add('url_user', TextType::class, array('required' => false, 'label' => 'Ссылка'));
-        $builder->add('genre', TextType::class, array('required' => false, 'label' => 'Стиль'));
-        $builder->add('comment', TextareaType::class, array('required' => false, 'label' => 'Комментарий'));
-        $builder->add('picture', FileUrlType::class, array(
+        $builder->add('title', TextType::class, ['required' => false, 'label' => 'Название']);
+        $builder->add('album_artist', TextType::class, ['required' => false, 'label' => 'Исполнитель альбома']);
+        $builder->add('artist', TextType::class, ['required' => false, 'label' => 'Исполнитель']);
+        $builder->add('album', TextType::class, ['required' => false, 'label' => 'Альбом']);
+        $builder->add('year', TextType::class, ['required' => false, 'label' => 'Год']);
+        $builder->add('track_number', TextType::class, ['required' => false, 'label' => 'Номер трека']);
+        $builder->add('url_user', TextType::class, ['required' => false, 'label' => 'Ссылка']);
+        $builder->add('genre', TextType::class, ['required' => false, 'label' => 'Стиль']);
+        $builder->add('comment', TextareaType::class, ['required' => false, 'label' => 'Комментарий']);
+        $builder->add('picture', FileUrlType::class, [
             'delete_button' => true,
             'accept' => 'image/*',
             'required' => false,
             'label' => 'Изображение',
-        ));
-        $builder->add('remove_other_tags', CheckboxType::class, array('required' => false, 'label' => 'Удалить другие тэги'));
+        ]);
+        $builder->add('remove_other_tags', CheckboxType::class, ['required' => false, 'label' => 'Удалить другие тэги']);
 
-        $builder->add('submit', SubmitType::class, array('label' => 'Редактировать'));
+        $builder->add('submit', SubmitType::class, ['label' => 'Редактировать']);
     }
 
-
     /**
-     * Уникальное имя формы
+     * Уникальное имя формы.
      *
      * @return string
      */

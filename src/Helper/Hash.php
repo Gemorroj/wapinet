@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper;
 
 /**
@@ -14,10 +15,10 @@ class Hash
         return \hash_algos();
     }
 
-
     /**
      * @param string $algorithm
      * @param string $string
+     *
      * @return string
      */
     public function hashString($algorithm, $string)
@@ -28,6 +29,7 @@ class Hash
     /**
      * @param string $algorithm
      * @param string $fileName
+     *
      * @return string
      */
     public function hashFile($algorithm, $fileName)

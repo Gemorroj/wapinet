@@ -31,7 +31,7 @@ class DefaultController extends Controller
         return $this->render(
             'Default/online.html.twig',
             [
-                'online' => $this->getDoctrine()->getRepository(Online::class)->findBy([], ['datetime' => 'DESC'])
+                'online' => $this->getDoctrine()->getRepository(Online::class)->findBy([], ['datetime' => 'DESC']),
             ]
         );
     }

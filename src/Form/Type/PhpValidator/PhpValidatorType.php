@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form\Type\PhpValidator;
 
 use App\Form\Type\FileUrlType;
@@ -8,32 +9,32 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * PhpValidator
+ * PhpValidator.
  */
 class PhpValidatorType extends AbstractType
 {
     /**
-     * @var FormBuilderInterface $builder
+     * @var FormBuilderInterface
      * @var array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('php', TextareaType::class, array(
-            'label' => 'PHP код (' . \phpversion() . ')',
+        $builder->add('php', TextareaType::class, [
+            'label' => 'PHP код ('.\phpversion().')',
             'required' => false,
-        ));
-        $builder->add('file', FileUrlType::class, array(
+        ]);
+        $builder->add('file', FileUrlType::class, [
             'label' => false,
             'required' => false,
-        ));
+        ]);
 
-        $builder->add('submit', SubmitType::class, array('label' => 'Проверить'));
+        $builder->add('submit', SubmitType::class, ['label' => 'Проверить']);
     }
 
     /**
-     * Уникальное имя формы
+     * Уникальное имя формы.
      *
      * @return string
      */

@@ -2,9 +2,8 @@
 
 namespace App\Entity;
 
-
 /**
- * File
+ * File.
  */
 class FileTags
 {
@@ -21,9 +20,8 @@ class FileTags
      */
     protected $tag;
 
-
     /**
-     * Get id
+     * Get id.
      *
      * @return integer
      */
@@ -33,9 +31,10 @@ class FileTags
     }
 
     /**
-     * Set id
+     * Set id.
      *
      * @param int $id
+     *
      * @return FileTags
      */
     public function setId($id)
@@ -45,9 +44,8 @@ class FileTags
         return $this;
     }
 
-
     /**
-     * Get file
+     * Get file.
      *
      * @return File
      */
@@ -57,9 +55,10 @@ class FileTags
     }
 
     /**
-     * Set file
+     * Set file.
      *
      * @param File $file
+     *
      * @return FileTags
      */
     public function setFile(File $file)
@@ -69,9 +68,8 @@ class FileTags
         return $this;
     }
 
-
     /**
-     * Get tag
+     * Get tag.
      *
      * @return Tag
      */
@@ -81,9 +79,10 @@ class FileTags
     }
 
     /**
-     * Set tag
+     * Set tag.
      *
      * @param Tag $tag
+     *
      * @return FileTags
      */
     public function setTag(Tag $tag)

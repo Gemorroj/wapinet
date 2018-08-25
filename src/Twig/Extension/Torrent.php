@@ -29,13 +29,12 @@ class Torrent extends \Twig_Extension
         ];
     }
 
-
     /**
      * @param File $file
      *
      * @return array|null
      */
-    public function getList (File $file)
+    public function getList(File $file)
     {
         $torrent = $this->container->get('torrent');
 
@@ -43,6 +42,7 @@ class Torrent extends \Twig_Extension
             $data = $torrent->decodeFile($file);
         } catch (\Exception $e) {
             $this->container->get('logger')->warning($e->getMessage(), [$e]);
+
             return null;
         }
 
@@ -54,7 +54,7 @@ class Torrent extends \Twig_Extension
                     'size' => $entry['length'],
                 ];
             }
-        } else if (isset($data['info']['name'], $data['info']['length'])) {
+        } elseif (isset($data['info']['name'], $data['info']['length'])) {
             $list[] = [
                 'path' => $data['info']['name'],
                 'size' => $data['info']['length'],

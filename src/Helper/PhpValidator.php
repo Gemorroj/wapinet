@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -25,7 +26,9 @@ class PhpValidator
 
     /**
      * @param BaseFile $file
+     *
      * @return array
+     *
      * @throws \Exception
      */
     public function validateFile(BaseFile $file)
@@ -38,10 +41,11 @@ class PhpValidator
         return $syntax->checkFile($file->getPathname());
     }
 
-
     /**
      * @param string $source
+     *
      * @return array
+     *
      * @throws \Exception
      */
     public function validateFragment($source)

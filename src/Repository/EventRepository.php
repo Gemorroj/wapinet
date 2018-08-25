@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repository;
 
 use App\Entity\Event;
@@ -20,9 +21,9 @@ class EventRepository extends EntityRepository
             ->getResult();
     }
 
-
     /**
      * @param User $user
+     *
      * @return Query
      */
     public function findEventsQuery(User $user): Query

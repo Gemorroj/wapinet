@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper\Archiver;
 
 use App\Exception\ArchiverException;
@@ -25,15 +26,17 @@ abstract class Archive
 
     /**
      * @param string $directory
+     *
      * @return string
      */
     protected function getTmpArchive($directory)
     {
-        return $directory . '.tmp';
+        return $directory.'.tmp';
     }
 
     /**
      * @param string $directory
+     *
      * @return \SplFileObject[]
      */
     public function getFiles($directory)
@@ -49,9 +52,9 @@ abstract class Archive
         return $this->sortFiles($objects);
     }
 
-
     /**
      * @param \RecursiveIteratorIterator $objects
+     *
      * @return \SplFileObject[]
      */
     private function sortFiles(\RecursiveIteratorIterator $objects)
@@ -59,7 +62,7 @@ abstract class Archive
         $result = [];
         $tmp = [];
         /** @var \SplFileObject $object */
-		foreach ($objects as $name => $object) {
+        foreach ($objects as $name => $object) {
             $object->setInfoClass(ArchiveFileInfo::class);
             /** @var ArchiveFileInfo $info */
             $info = $object->getPathInfo();
@@ -81,29 +84,35 @@ abstract class Archive
 
     /**
      * @param string $directory
+     *
      * @throws ArchiverException
+     *
      * @return File
      */
-    abstract public function create ($directory);
+    abstract public function create($directory);
 
     /**
      * @param File $file
+     *
      * @throws ArchiverException
+     *
      * @return bool
      */
-    abstract public function isValid (File $file);
+    abstract public function isValid(File $file);
 
     /**
      * @param string $directory
-     * @param File $file
+     * @param File   $file
+     *
      * @throws ArchiverException
      */
     abstract public function extract($directory, File $file);
 
     /**
-     * @param File $file
+     * @param File   $file
      * @param string $entry
      * @param string $directory
+     *
      * @throws ArchiverException
      */
     abstract public function extractEntry(File $file, $entry, $directory);

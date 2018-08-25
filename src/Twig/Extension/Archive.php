@@ -14,6 +14,7 @@ class Archive extends \Twig_Extension
 
     /**
      * Archive constructor.
+     *
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
@@ -33,13 +34,12 @@ class Archive extends \Twig_Extension
         ];
     }
 
-
     /**
      * @param File $file
      *
      * @return \Archive7z\Entry[]|null
      */
-    public function getList (File $file)
+    public function getList(File $file)
     {
         $archive = $this->container->get('archive_7z');
 
@@ -52,7 +52,6 @@ class Archive extends \Twig_Extension
 
         return $entries;
     }
-
 
     /**
      * Returns the name of the extension.

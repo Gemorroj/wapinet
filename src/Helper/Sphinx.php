@@ -1,11 +1,11 @@
 <?php
+
 namespace App\Helper;
 
 use App\Pagerfanta\Sphinx\Bridge;
 use Foolz\SphinxQL\Drivers\Pdo\Connection;
 use Foolz\SphinxQL\SphinxQL;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 
 /**
  * Sphinx хэлпер
@@ -45,12 +45,12 @@ class Sphinx
         $this->container = $container;
     }
 
-
     /**
      * @param int $page
+     *
      * @return SphinxQL
      */
-    public function select(int $page = 1) : SphinxQL
+    public function select(int $page = 1): SphinxQL
     {
         $this->page = $page;
 
@@ -60,14 +60,13 @@ class Sphinx
         return (new SphinxQL($this->connection))->select()->limit($offset, $limit);
     }
 
-
     /**
      * @param SphinxQL $sphinxQl
-     * @param string $entityClass
+     * @param string   $entityClass
      *
      * @return \Pagerfanta\Pagerfanta
      */
-    public function getPagerfanta(SphinxQL $sphinxQl, string $entityClass) : \Pagerfanta\Pagerfanta
+    public function getPagerfanta(SphinxQL $sphinxQl, string $entityClass): \Pagerfanta\Pagerfanta
     {
         $bridge = new Bridge($this->container->get('doctrine'));
         $bridge->setRepositoryClass($entityClass);

@@ -7,11 +7,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
-
 class UnicodeController extends Controller
 {
     /**
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
@@ -32,12 +32,11 @@ class UnicodeController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('Unicode/index.html.twig', array(
+        return $this->render('Unicode/index.html.twig', [
             'form' => $form->createView(),
             'result' => $result,
-        ));
+        ]);
     }
-
 
     /**
      * @return \Symfony\Component\HttpFoundation\Response
@@ -46,7 +45,6 @@ class UnicodeController extends Controller
     {
         return $this->render('Unicode/icons.html.twig');
     }
-
 
     /**
      * @param array $data
@@ -72,34 +70,35 @@ class UnicodeController extends Controller
             if ($data['zerofill']) {
                 $key = $that->getZeroFill($key);
             }
-            return '&#x' . $key . ';';
-        }, $out);
 
+            return '&#x'.$key.';';
+        }, $out);
 
         $out = \substr($out, 1); // удаляем вначале "
         $out = \substr($out, 0, -1); // удаляем в конце "
-        $out = \str_replace(array('\"', '\\\\'), array('"', '\\'), $out);
+        $out = \str_replace(['\"', '\\\\'], ['"', '\\'], $out);
 
         return $out;
     }
 
-
     /**
      * @param string $str
+     *
      * @return string
      */
     protected function getLatin($str)
     {
-        return \strtr($str, array(
+        return \strtr($str, [
             'А' => 'A', 'В' => 'B', 'Е' => 'E', 'К' => 'K', 'М' => 'M',
             'Н' => 'H', 'О' => 'O', 'Р' => 'Р', 'С' => 'C', 'Т' => 'T',
             'Х' => 'X', 'а' => 'a', 'е' => 'e', 'о' => 'o', 'р' => 'p',
-            'с' => 'c', 'у' => 'y', 'х' => 'x'
-        ));
+            'с' => 'c', 'у' => 'y', 'х' => 'x',
+        ]);
     }
 
     /**
      * @param string $str
+     *
      * @return string
      */
     protected function getHtmlSpecialChars($str)
@@ -109,6 +108,7 @@ class UnicodeController extends Controller
 
     /**
      * @param string $str
+     *
      * @return string
      */
     protected function getZeroFill($str)

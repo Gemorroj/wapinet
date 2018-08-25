@@ -19,7 +19,7 @@ class Playlist extends \Twig_Extension
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getFunctions()
     {
@@ -28,13 +28,12 @@ class Playlist extends \Twig_Extension
         ];
     }
 
-
     /**
      * @param File $file
      *
      * @return M3uData|null
      */
-    public function getList (File $file)
+    public function getList(File $file)
     {
         $playlist = $this->container->get('playlist');
 
@@ -42,6 +41,7 @@ class Playlist extends \Twig_Extension
             return $playlist->parseFile($file);
         } catch (\Exception $e) {
             $this->container->get('logger')->warning($e->getMessage());
+
             return null;
         }
     }

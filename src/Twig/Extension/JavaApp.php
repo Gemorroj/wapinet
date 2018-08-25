@@ -25,20 +25,21 @@ class JavaApp extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('wapinet_java_app_screenshot', array($this, 'getScreenshot')),
-        );
+        return [
+            new \Twig_SimpleFilter('wapinet_java_app_screenshot', [$this, 'getScreenshot']),
+        ];
     }
 
     /**
      * @param string $path
+     *
      * @return string|null
      */
     public function getScreenshot($path)
     {
-        $screenshot = $path . '.png';
+        $screenshot = $path.'.png';
 
-        if (false === \file_exists($this->getPublicDir() . $screenshot)) {
+        if (false === \file_exists($this->getPublicDir().$screenshot)) {
             $manifestContent = $this->getManifestContent($path);
 
             $issetIcon = false;
@@ -53,7 +54,6 @@ class JavaApp extends \Twig_Extension
 
         return $screenshot;
     }
-
 
     /**
      * @param string $manifestContent
@@ -81,20 +81,19 @@ class JavaApp extends \Twig_Extension
         return $issetIcon;
     }
 
-
     /**
      * @param string $path
+     *
      * @throws ArchiverException
      */
     protected function extractManifest($path)
     {
         $this->container->get('archive_zip')->extractEntry(
-            new BaseFile($this->getPublicDir() . $path, false),
+            new BaseFile($this->getPublicDir().$path, false),
             'META-INF/MANIFEST.MF',
             $this->getTmpDir()
         );
     }
-
 
     /**
      * @param string $path
@@ -106,7 +105,7 @@ class JavaApp extends \Twig_Extension
         try {
             $this->extractManifest($path);
 
-            $file = new BaseFile($this->getTmpDir() . '/META-INF/MANIFEST.MF');
+            $file = new BaseFile($this->getTmpDir().'/META-INF/MANIFEST.MF');
             $content = '';
             $reader = $file->openFile('r');
             while (!$reader->eof()) {
@@ -133,23 +132,24 @@ class JavaApp extends \Twig_Extension
             if ('png' === \strtolower(\pathinfo($v, PATHINFO_EXTENSION))) {
                 try {
                     $this->container->get('archive_zip')->extractEntry(
-                        new BaseFile($this->getPublicDir() . $path, false),
+                        new BaseFile($this->getPublicDir().$path, false),
                         $v,
                         $this->getTmpDir()
                     );
                     $this->container->get('filesystem')->rename(
-                        $this->getTmpDir() . '/' . $v,
-                        $this->getPublicDir() . $screenshot
+                        $this->getTmpDir().'/'.$v,
+                        $this->getPublicDir().$screenshot
                     );
+
                     return true;
                     break;
-                } catch (\Exception $e) {}
+                } catch (\Exception $e) {
+                }
             }
         }
 
         return false;
     }
-
 
     /**
      * @return string

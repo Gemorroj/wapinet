@@ -10,7 +10,8 @@ class BashController extends Controller
 {
     /**
      * @param Request $request
-     * @param Bash $bashHelper
+     * @param Bash    $bashHelper
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request, Bash $bashHelper)

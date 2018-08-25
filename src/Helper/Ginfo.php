@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper;
 
 /**
@@ -13,6 +14,7 @@ class Ginfo
 
     /**
      * Ginfo constructor.
+     *
      * @throws \Ginfo\Exceptions\FatalException
      */
     public function __construct()

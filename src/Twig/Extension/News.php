@@ -20,9 +20,9 @@ class News extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new \Twig_SimpleFunction('news_last_date', [$this, 'getLastDate']),
-        );
+        ];
     }
 
     /**
@@ -32,6 +32,6 @@ class News extends \Twig_Extension
     {
         $result = $this->em->getRepository(\App\Entity\News::class)->getLastDate()->getOneOrNullResult();
 
-        return (null === $result ? null : $result['createdAt']);
+        return null === $result ? null : $result['createdAt'];
     }
 }

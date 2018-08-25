@@ -25,6 +25,7 @@ class AudioTagsController extends Controller
 {
     /**
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function indexAction(Request $request)
@@ -42,7 +43,7 @@ class AudioTagsController extends Controller
 
                     return $this->redirectToRoute('audio_tags_edit', [
                         'fileName' => $file->getFilename(),
-                        'originalFileName' => $data['file']->getClientOriginalName()
+                        'originalFileName' => $data['file']->getClientOriginalName(),
                     ]);
                 }
             }
@@ -51,13 +52,13 @@ class AudioTagsController extends Controller
         }
 
         return $this->render('AudioTags/index.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
-
     /**
      * @param array $data
+     *
      * @return File
      */
     protected function saveFile(array $data)
@@ -67,17 +68,17 @@ class AudioTagsController extends Controller
         $tempDirectory = $this->get('kernel')->getTmpDir();
         $tempName = \tempnam($tempDirectory, 'audio_file');
         if (false === $tempName) {
-        	throw new \RuntimeException('Не удалось создать временный файл');
-		}
+            throw new \RuntimeException('Не удалось создать временный файл');
+        }
 
         return $file->move($tempDirectory, $tempName);
     }
 
-
     /**
      * @param Request $request
-     * @param string $fileName
-     * @param string $originalFileName
+     * @param string  $fileName
+     * @param string  $originalFileName
+     *
      * @return Response
      */
     public function editAction(Request $request, string $fileName, string $originalFileName)
@@ -95,7 +96,6 @@ class AudioTagsController extends Controller
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
-
                     $this->setTags($fileName, $form, $info);
 
                     $form = $originalForm;
@@ -120,10 +120,9 @@ class AudioTagsController extends Controller
         ]);
     }
 
-
     /**
      * @param FormInterface $form
-     * @param array $tags
+     * @param array         $tags
      */
     protected function setFormData(FormInterface $form, array $tags)
     {
@@ -151,13 +150,12 @@ class AudioTagsController extends Controller
         $form->setData($data);
     }
 
-
     /**
      * @param string $fileName
      *
      * @return array
      */
-    protected function getInfo(string $fileName) : array
+    protected function getInfo(string $fileName): array
     {
         $getid3 = $this->get('getid3')->getId3();
         $info = $getid3->analyze($this->getFilePath($fileName));
@@ -171,9 +169,10 @@ class AudioTagsController extends Controller
     }
 
     /**
-     * @param string $fileName
+     * @param string        $fileName
      * @param FormInterface $form
-     * @param array $info
+     * @param array         $info
+     *
      * @throws AudioException
      */
     protected function setTags(string $fileName, FormInterface $form, array $info)
@@ -188,48 +187,47 @@ class AudioTagsController extends Controller
         $writer->filename = $this->getFilePath($fileName);
 
         $writer->tag_data = [
-            'title' => array($data['title']),
+            'title' => [$data['title']],
 
-            'album_artist' => array($data['album_artist']),
-            'albumartist' => array($data['album_artist']),
-            'band' => array($data['album_artist']),
+            'album_artist' => [$data['album_artist']],
+            'albumartist' => [$data['album_artist']],
+            'band' => [$data['album_artist']],
 
-            'artist' => array($data['artist']),
-            'album' => array($data['album']),
+            'artist' => [$data['artist']],
+            'album' => [$data['album']],
 
-            'year' => array($data['year']),
-            'date' => array($data['year']),
+            'year' => [$data['year']],
+            'date' => [$data['year']],
 
-            'track_number' => array($data['track_number']),
-            'track' => array($data['track_number']),
+            'track_number' => [$data['track_number']],
+            'track' => [$data['track_number']],
 
-            'url_user' => array($data['url_user']),
-            'genre' => array($data['genre']),
-            'comment' => array($data['comment']),
+            'url_user' => [$data['url_user']],
+            'genre' => [$data['genre']],
+            'comment' => [$data['comment']],
             //'picture' => null,
         ];
 
         $requestForm = $this->get('request_stack')->getCurrentRequest()->get($form->getName());
 
         if (isset($info['comments']['picture'][0]) && (!isset($requestForm['picture']['file_url_delete']) || !$requestForm['picture']['file_url_delete'])) {
-            $writer->tag_data['attached_picture'][0]['data']          = $info['comments']['picture'][0]['data'];
+            $writer->tag_data['attached_picture'][0]['data'] = $info['comments']['picture'][0]['data'];
             $writer->tag_data['attached_picture'][0]['picturetypeid'] = 0;
-            $writer->tag_data['attached_picture'][0]['description']   = 'image';
-            $writer->tag_data['attached_picture'][0]['mime']          = $info['comments']['picture'][0]['image_mime'];
+            $writer->tag_data['attached_picture'][0]['description'] = 'image';
+            $writer->tag_data['attached_picture'][0]['mime'] = $info['comments']['picture'][0]['image_mime'];
         }
 
         $picture = $data['picture'];
         if ($picture instanceof UploadedFile) {
-
             $data = \file_get_contents($picture->getPathname());
             if (false === $data) {
                 throw new IOException('Не удалось получить изображение.', 0, null, $picture->getPathname());
             }
 
-            $writer->tag_data['attached_picture'][0]['data']          = $data;
+            $writer->tag_data['attached_picture'][0]['data'] = $data;
             $writer->tag_data['attached_picture'][0]['picturetypeid'] = 0;
-            $writer->tag_data['attached_picture'][0]['description']   = 'image';
-            $writer->tag_data['attached_picture'][0]['mime']          = $picture->getMimeType();
+            $writer->tag_data['attached_picture'][0]['description'] = 'image';
+            $writer->tag_data['attached_picture'][0]['mime'] = $picture->getMimeType();
 
             unset($data); // чистим память
         }
@@ -241,6 +239,7 @@ class AudioTagsController extends Controller
 
     /**
      * @param array $info (поддерживаются mp3, mp2, mp1, riff, mpc, flac, real, ogg)
+     *
      * @return array
      */
     protected function getAllowedTagFormats(array $info)
@@ -250,19 +249,19 @@ class AudioTagsController extends Controller
             case 'mp2':
             case 'mp1':
             case 'riff': // maybe not officially, but people do it anyway
-                return array('id3v1', /*'id3v2.2', */'id3v2.3', 'id3v2.4', /*'ape', 'lyrics3'*/);
+                return ['id3v1', /*'id3v2.2', */'id3v2.3', 'id3v2.4'/*'ape', 'lyrics3'*/];
                 break;
 
             case 'mpc':
-                return array('ape');
+                return ['ape'];
                 break;
 
             case 'flac':
-                return array('metaflac');
+                return ['metaflac'];
                 break;
 
             case 'real':
-                return array('real');
+                return ['real'];
                 break;
 
             case 'ogg':
@@ -272,7 +271,7 @@ class AudioTagsController extends Controller
                         // $AllowedTagFormats = ['metaflac'];
                         break;
                     case 'vorbis':
-                        return array('vorbiscomment');
+                        return ['vorbiscomment'];
                         break;
                     default:
                         // metaflac is not (yet) compatible with Ogg files other than OggVorbis
@@ -284,10 +283,10 @@ class AudioTagsController extends Controller
         return [];
     }
 
-
     /**
      * @param string $fileName
      * @param string $originalFileName
+     *
      * @return BinaryFileResponse
      */
     public function downloadAction(string $fileName, string $originalFileName)
@@ -305,10 +304,11 @@ class AudioTagsController extends Controller
 
     /**
      * @param string $fileName
+     *
      * @return string
      */
     protected function getFilePath(string $fileName)
     {
-        return $this->get('kernel')->getTmpDir() . \DIRECTORY_SEPARATOR . $fileName;
+        return $this->get('kernel')->getTmpDir().\DIRECTORY_SEPARATOR.$fileName;
     }
 }

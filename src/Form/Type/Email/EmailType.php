@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form\Type\Email;
 
 use App\Form\Type\FileUrlType;
@@ -12,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Email
+ * Email.
  */
 class EmailType extends AbstractType
 {
@@ -20,6 +21,7 @@ class EmailType extends AbstractType
      * @var ContainerInterface
      */
     protected $container;
+
     /**
      * @param ContainerInterface $container
      */
@@ -29,28 +31,28 @@ class EmailType extends AbstractType
     }
 
     /**
-     * @var FormBuilderInterface $builder
+     * @var FormBuilderInterface
      * @var array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('to', CoreEmailType::class, array('label' => 'Кому', 'data' => '@'));
-        $builder->add('from', CoreEmailType::class, array('label' => 'От кого', 'data' => '@'));
-        $builder->add('subject', TextType::class, array('label' => 'Тема'));
-        $builder->add('message', TextareaType::class, array('label' => 'Сообщение'));
-        $builder->add('file', FileUrlType::class, array('required' => false, 'label' => false));
+        $builder->add('to', CoreEmailType::class, ['label' => 'Кому', 'data' => '@']);
+        $builder->add('from', CoreEmailType::class, ['label' => 'От кого', 'data' => '@']);
+        $builder->add('subject', TextType::class, ['label' => 'Тема']);
+        $builder->add('message', TextareaType::class, ['label' => 'Сообщение']);
+        $builder->add('file', FileUrlType::class, ['required' => false, 'label' => false]);
 
         if (false === $this->container->get('security.authorization_checker')->isGranted($this->container->getParameter('wapinet_role_nocaptcha'))) {
-            $builder->add('captcha', CaptchaType::class, array('required' => true, 'label' => 'Код'));
+            $builder->add('captcha', CaptchaType::class, ['required' => true, 'label' => 'Код']);
         }
 
-        $builder->add('submit', SubmitType::class, array('label' => 'Отправить'));
+        $builder->add('submit', SubmitType::class, ['label' => 'Отправить']);
     }
 
     /**
-     * Уникальное имя формы
+     * Уникальное имя формы.
      *
      * @return string
      */

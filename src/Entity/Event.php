@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Entity;
 
 /**
- * Event
+ * Event.
  */
 class Event
 {
@@ -61,7 +62,6 @@ class Event
         return $this->id;
     }
 
-
     /**
      * @return \DateTime
      */
@@ -69,7 +69,6 @@ class Event
     {
         return $this->createdAt;
     }
-
 
     /**
      * @return Event

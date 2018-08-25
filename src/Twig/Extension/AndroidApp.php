@@ -14,6 +14,7 @@ class AndroidApp extends \Twig_Extension
 
     /**
      * AndroidApp constructor.
+     *
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
@@ -28,20 +29,21 @@ class AndroidApp extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('wapinet_android_app_screenshot', array($this, 'getScreenshot')),
-        );
+        return [
+            new \Twig_SimpleFilter('wapinet_android_app_screenshot', [$this, 'getScreenshot']),
+        ];
     }
 
     /**
      * @param string $path
+     *
      * @return string|null
      */
     public function getScreenshot($path)
     {
-        $screenshot = $path . '.png';
+        $screenshot = $path.'.png';
 
-        if (false === \file_exists($this->getPublicDir() . $screenshot)) {
+        if (false === \file_exists($this->getPublicDir().$screenshot)) {
             $issetIcon = $this->findIcon($path, $screenshot);
 
             if (true !== $issetIcon) {
@@ -51,7 +53,6 @@ class AndroidApp extends \Twig_Extension
 
         return $screenshot;
     }
-
 
     /**
      * @param string $path
@@ -63,17 +64,17 @@ class AndroidApp extends \Twig_Extension
     {
         try {
             $apk = $this->container->get('apk');
-            $apk->init($this->getPublicDir() . $path);
+            $apk->init($this->getPublicDir().$path);
             $icon = $apk->getIcon();
 
             if ($icon && $this->extractIcon($icon, $path, $screenshot)) {
                 return true;
             }
         } catch (\Exception $e) {
-            $this->container->get('logger')->warning('Не удалось прочитать APK файл.', array($e));
+            $this->container->get('logger')->warning('Не удалось прочитать APK файл.', [$e]);
         }
 
-        $icons = array(
+        $icons = [
             'icon.png',
             'icon32.png',
             'icon24.png',
@@ -92,8 +93,8 @@ class AndroidApp extends \Twig_Extension
             'logo.PNG',
             'root.png',
             'apk.png',
-        );
-        $dirs = array(
+        ];
+        $dirs = [
             '',
             '/drawable-hdpi',
             '/drawable-xhdpi',
@@ -105,11 +106,11 @@ class AndroidApp extends \Twig_Extension
             '/drawable-hdpi-v7',
             '/drawable-hdpi-v11',
             '/drawable-nodpi',
-        );
+        ];
 
         foreach ($dirs as $dir) {
             foreach ($icons as $icon) {
-                if ($this->extractIcon('res' . $dir . '/' . $icon, $path, $screenshot)) {
+                if ($this->extractIcon('res'.$dir.'/'.$icon, $path, $screenshot)) {
                     return true;
                 }
             }
@@ -117,7 +118,6 @@ class AndroidApp extends \Twig_Extension
 
         return false;
     }
-
 
     /**
      * @param string $icon
@@ -130,26 +130,26 @@ class AndroidApp extends \Twig_Extension
     {
         try {
             $this->container->get('archive_zip')->extractEntry(
-                new BaseFile($this->getPublicDir() . $path, false),
+                new BaseFile($this->getPublicDir().$path, false),
                 $icon,
                 $this->getTmpDir()
             );
             $this->container->get('filesystem')->rename(
-                $this->getTmpDir() . '/' . $icon,
-                $this->getPublicDir() . $screenshot
+                $this->getTmpDir().'/'.$icon,
+                $this->getPublicDir().$screenshot
             );
 
             return true;
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         return false;
     }
 
-
     /**
      * @return string
      */
-    protected function getPublicDir() : string
+    protected function getPublicDir(): string
     {
         return $this->container->get('kernel')->getPublicDir();
     }
@@ -157,7 +157,7 @@ class AndroidApp extends \Twig_Extension
     /**
      * @return string
      */
-    protected function getTmpDir() : string
+    protected function getTmpDir(): string
     {
         return $this->container->get('kernel')->getTmpFileDir();
     }

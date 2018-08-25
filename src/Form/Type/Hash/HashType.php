@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form\Type\Hash;
 
 use App\Form\Type\FileUrlType;
@@ -10,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Hash
+ * Hash.
  */
 class HashType extends AbstractType
 {
@@ -18,6 +19,7 @@ class HashType extends AbstractType
 
     /**
      * HashType constructor.
+     *
      * @param Hash $hash
      */
     public function __construct(Hash $hash)
@@ -26,7 +28,7 @@ class HashType extends AbstractType
     }
 
     /**
-     * @var FormBuilderInterface $builder
+     * @var FormBuilderInterface
      * @var array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -34,28 +36,28 @@ class HashType extends AbstractType
         parent::buildForm($builder, $options);
 
         $algorithms = $this->hash->getAlgorithms();
-        $builder->add('algorithm', ChoiceType::class, array(
+        $builder->add('algorithm', ChoiceType::class, [
             'choices' => \array_flip($algorithms),
             'label' => 'Алгоритм',
-            'preferred_choices' => array(
+            'preferred_choices' => [
                 \array_search('md5', $algorithms, true),
                 \array_search('sha512', $algorithms, true),
-                \array_search('crc32', $algorithms, true)
-            ),
-        ));
+                \array_search('crc32', $algorithms, true),
+            ],
+        ]);
 
-        $builder->add('text', TextareaType::class, array('label' => 'Текст', 'required' => false));
+        $builder->add('text', TextareaType::class, ['label' => 'Текст', 'required' => false]);
 
-        $builder->add('file', FileUrlType::class, array(
+        $builder->add('file', FileUrlType::class, [
             'label' => false,
             'required' => false,
-        ));
+        ]);
 
-        $builder->add('submit', SubmitType::class, array('label' => 'Хэшировать'));
+        $builder->add('submit', SubmitType::class, ['label' => 'Хэшировать']);
     }
 
     /**
-     * Уникальное имя формы
+     * Уникальное имя формы.
      *
      * @return string
      */

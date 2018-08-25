@@ -13,7 +13,6 @@ use Pagerfanta\Adapter\FixedAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-
 class Paginate
 {
     /**
@@ -31,10 +30,11 @@ class Paginate
 
     /**
      * @param Query|QueryBuilder|Collection|array|FixedPaginate $data
-     * @param int $page
-     * @param int|null $maxPerPage
+     * @param int                                               $page
+     * @param int|null                                          $maxPerPage
      *
      * @throws \RuntimeException
+     *
      * @return Pagerfanta
      */
     public function paginate($data, $page = 1, $maxPerPage = null)
@@ -60,10 +60,10 @@ class Paginate
         return $pagerfanta;
     }
 
-
     /**
      * @param Pagerfanta $pagerfanta
-     * @param int $page
+     * @param int        $page
+     *
      * @return int
      */
     protected function normalizePage(Pagerfanta $pagerfanta, $page)

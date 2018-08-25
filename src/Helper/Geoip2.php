@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper;
 
 use GeoIp2\Database\Reader;
@@ -30,6 +31,7 @@ class Geoip2
 
     /**
      * @param string $ip
+     *
      * @return \GeoIp2\Model\Country
      */
     public function getCountry($ip)

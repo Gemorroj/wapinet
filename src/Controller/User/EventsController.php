@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller\User;
 
 use App\Entity\Event;
@@ -8,12 +9,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-
 class EventsController extends Controller
 {
     /**
      * @param Request $request
+     *
      * @throws AccessDeniedException
+     *
      * @return Response
      */
     public function indexAction(Request $request)

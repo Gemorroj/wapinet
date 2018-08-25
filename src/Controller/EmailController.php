@@ -12,6 +12,7 @@ class EmailController extends Controller
 {
     /**
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
@@ -27,7 +28,7 @@ class EmailController extends Controller
                     $data = $form->getData();
 
                     $message = $this->getMessage($data);
-                    $result = (bool)$this->get('mailer')->send($message);
+                    $result = (bool) $this->get('mailer')->send($message);
                 }
             }
         } catch (\Exception $e) {
@@ -36,19 +37,17 @@ class EmailController extends Controller
 
         return $this->render('Email/index.html.twig', [
             'form' => $form->createView(),
-            'result' => $result
+            'result' => $result,
         ]);
     }
-
 
     /**
      * @return string
      */
     protected function getEmailFooter()
     {
-        return "\r\n\r\n---\r\n" . $this->getParameter('wapinet_email_footer');
+        return "\r\n\r\n---\r\n".$this->getParameter('wapinet_email_footer');
     }
-
 
     /**
      * @param array $data
@@ -59,7 +58,7 @@ class EmailController extends Controller
     {
         $message = new \Swift_Message(
             $data['subject'],
-            $data['message'] . $this->getEmailFooter(),
+            $data['message'].$this->getEmailFooter(),
             'text/plain',
             'UTF-8'
         );
@@ -75,7 +74,7 @@ class EmailController extends Controller
         $request = $this->get('request_stack')->getCurrentRequest();
         $ip = \implode(', ', $request->getClientIps());
 
-        $message->getHeaders()->addTextHeader('Received', 'from user [' . $ip . ']');
+        $message->getHeaders()->addTextHeader('Received', 'from user ['.$ip.']');
 
         return $message;
     }

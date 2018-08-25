@@ -21,19 +21,18 @@ class ProfileType extends BaseType
             ->add(
                 'sex',
                 ChoiceType::class,
-                array(
+                [
                     'label' => 'Пол',
                     'required' => false,
-                    'choices' => \array_flip(User::getSexChoices())
-                )
+                    'choices' => \array_flip(User::getSexChoices()),
+                ]
             )
-            ->add('birthday', BirthdayType::class, array('widget' => 'single_text', 'label' => 'Дата рождения', 'required' => false, 'attr' => array('placeholder' => 'ГГГГ-ММ-ДД')))
-            ->add('timezone', TimezoneType::class, array('label' => 'Временная зона', 'required' => false))
-            ->add('country', CountryType::class, array('label' => 'Страна', 'required' => false))
-            ->add('vk', TextType::class, array('label' => 'ID вконтакте', 'required' => false, 'attr' => array('pattern' => '[a-z0-9_]{0,255}', 'placeholder' => 'id123456789')))
-            ->add('info', TextareaType::class, array('label' => 'Дополнительная информация', 'required' => false, 'attr' => array('maxlength' => 5000)))
+            ->add('birthday', BirthdayType::class, ['widget' => 'single_text', 'label' => 'Дата рождения', 'required' => false, 'attr' => ['placeholder' => 'ГГГГ-ММ-ДД']])
+            ->add('timezone', TimezoneType::class, ['label' => 'Временная зона', 'required' => false])
+            ->add('country', CountryType::class, ['label' => 'Страна', 'required' => false])
+            ->add('vk', TextType::class, ['label' => 'ID вконтакте', 'required' => false, 'attr' => ['pattern' => '[a-z0-9_]{0,255}', 'placeholder' => 'id123456789']])
+            ->add('info', TextareaType::class, ['label' => 'Дополнительная информация', 'required' => false, 'attr' => ['maxlength' => 5000]])
             ;
-        ;
     }
 
     public function getBlockPrefix()

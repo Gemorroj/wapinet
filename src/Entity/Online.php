@@ -2,9 +2,8 @@
 
 namespace App\Entity;
 
-
 /**
- * Online
+ * Online.
  */
 class Online
 {
@@ -33,11 +32,10 @@ class Online
      */
     private $path;
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -45,9 +43,10 @@ class Online
     }
 
     /**
-     * Set id
+     * Set id.
      *
      * @param int $id
+     *
      * @return Online
      */
     public function setId($id)
@@ -58,7 +57,7 @@ class Online
     }
 
     /**
-     * Get path
+     * Get path.
      *
      * @return string
      */
@@ -68,9 +67,10 @@ class Online
     }
 
     /**
-     * Set path
+     * Set path.
      *
      * @param string $path
+     *
      * @return Online
      */
     public function setPath($path)
@@ -80,24 +80,24 @@ class Online
         return $this;
     }
 
-
     /**
-     * Set datetime
+     * Set datetime.
      *
      * @param \DateTime $datetime
+     *
      * @return Online
      */
     public function setDatetime(\DateTime $datetime)
     {
         $this->datetime = $datetime;
-    
+
         return $this;
     }
 
     /**
-     * Get datetime
+     * Get datetime.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDatetime()
     {
@@ -105,22 +105,23 @@ class Online
     }
 
     /**
-     * Set ip
+     * Set ip.
      *
      * @param string $ip
+     *
      * @return Online
      */
     public function setIp($ip)
     {
         $this->ip = $ip;
-    
+
         return $this;
     }
 
     /**
-     * Get ip
+     * Get ip.
      *
-     * @return string 
+     * @return string
      */
     public function getIp()
     {
@@ -128,22 +129,23 @@ class Online
     }
 
     /**
-     * Set browser
+     * Set browser.
      *
      * @param string $browser
+     *
      * @return Online
      */
     public function setBrowser($browser)
     {
         $this->browser = $browser;
-    
+
         return $this;
     }
 
     /**
-     * Get browser
+     * Get browser.
      *
-     * @return string 
+     * @return string
      */
     public function getBrowser()
     {

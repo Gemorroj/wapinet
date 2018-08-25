@@ -1,4 +1,5 @@
 <?php
+
 namespace App\EventListener;
 
 use App\Entity\User;
@@ -12,7 +13,7 @@ class ListenerLastActivity
     protected $em;
 
     /**
-     * @param ContainerInterface $container
+     * @param ContainerInterface     $container
      * @param EntityManagerInterface $em
      */
     public function __construct(ContainerInterface $container, EntityManagerInterface $em)
@@ -22,7 +23,8 @@ class ListenerLastActivity
     }
 
     /**
-     * Update the user "lastActivity" on each request
+     * Update the user "lastActivity" on each request.
+     *
      * @param FilterControllerEvent $event
      */
     public function onCoreController(FilterControllerEvent $event): void
@@ -39,7 +41,7 @@ class ListenerLastActivity
             $user = $token->getUser();
             if (\is_object($user) && $user instanceof User) {
                 // We are using a delay during wich the user will be considered as still active, in order to avoid too much UPDATE in the database
-                $delay = new \DateTime($this->container->getParameter('wapinet_user_last_activity_delay') . ' seconds ago');
+                $delay = new \DateTime($this->container->getParameter('wapinet_user_last_activity_delay').' seconds ago');
 
                 // We are checking the User class in order to be certain we can call "getLastActivity".
                 if ($user->getLastActivity() < $delay) {

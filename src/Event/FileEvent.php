@@ -17,7 +17,7 @@ class FileEvent extends Event
      * Constructs an event.
      *
      * @param User|null $user
-     * @param File $file
+     * @param File      $file
      */
     public function __construct(?User $user = null, File $file)
     {
@@ -34,7 +34,6 @@ class FileEvent extends Event
     {
         return $this->user;
     }
-
 
     /**
      * Returns the file for this event.

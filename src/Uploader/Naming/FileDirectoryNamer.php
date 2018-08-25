@@ -6,15 +6,15 @@ use Vich\UploaderBundle\Mapping\PropertyMapping;
 use Vich\UploaderBundle\Naming\DirectoryNamerInterface;
 
 /**
- * FileDirectoryNamer
+ * FileDirectoryNamer.
  */
 class FileDirectoryNamer implements DirectoryNamerInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function directoryName($object, PropertyMapping $mapping): string
     {
-        return '/' . $object->getCreatedAt()->format('Y/m/d');
+        return '/'.$object->getCreatedAt()->format('Y/m/d');
     }
 }

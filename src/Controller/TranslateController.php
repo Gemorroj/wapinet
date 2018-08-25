@@ -12,6 +12,7 @@ class TranslateController extends Controller
 {
     /**
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
@@ -48,23 +49,23 @@ class TranslateController extends Controller
         ]);
     }
 
-
     /**
      * @param string $langFrom
      * @param string $langTo
      * @param string $text
      *
      * @return string
+     *
      * @throws HttpException
      */
     private function translate($langFrom, $langTo, $text): string
     {
         $curl = $this->get('curl');
         $curl->init(
-            'https://translate.yandex.net/api/v1.5/tr.json/translate?key=' .
-            $this->getParameter('wapinet_yandex_translate_key') .
-            '&lang=' . $langFrom . '-' . $langTo .
-            '&text=' . \urlencode($text)
+            'https://translate.yandex.net/api/v1.5/tr.json/translate?key='.
+            $this->getParameter('wapinet_yandex_translate_key').
+            '&lang='.$langFrom.'-'.$langTo.
+            '&text='.\urlencode($text)
         );
 
         $response = $curl->exec();
@@ -77,20 +78,20 @@ class TranslateController extends Controller
         return \implode('', $json->text);
     }
 
-
     /**
      * @param string $text
      *
      * @return string
+     *
      * @throws HttpException
      */
     private function detectLang($text)
     {
         $curl = $this->get('curl');
         $curl->init(
-            'https://translate.yandex.net/api/v1.5/tr.json/detect?key=' .
-            $this->getParameter('wapinet_yandex_translate_key') .
-            '&text=' . \urlencode($text)
+            'https://translate.yandex.net/api/v1.5/tr.json/detect?key='.
+            $this->getParameter('wapinet_yandex_translate_key').
+            '&text='.\urlencode($text)
         );
 
         $response = $curl->exec();
@@ -100,36 +101,36 @@ class TranslateController extends Controller
 
         $json = \json_decode($response->getContent());
 
-        return ($json->lang ?: 'en');
+        return $json->lang ?: 'en';
     }
-
 
     /**
      * @param string $code
+     *
      * @return string
      */
     private function getLangName($code)
     {
         $json = $this->getLangs();
 
-        return (string)$json->langs->{$code};
+        return (string) $json->langs->{$code};
     }
-
 
     /**
      * @return \stdClass
+     *
      * @throws \RuntimeException
      */
     private function getLangs()
     {
         $cacheDir = $this->get('kernel')->getCacheDir();
-        $langsFileName = $cacheDir . \DIRECTORY_SEPARATOR . 'yandex-langs.json';
+        $langsFileName = $cacheDir.\DIRECTORY_SEPARATOR.'yandex-langs.json';
 
         if (false === \file_exists($langsFileName)) {
             $curl = $this->get('curl');
             $curl->init(
-                'https://translate.yandex.net/api/v1.5/tr.json/getLangs?key=' .
-                $this->getParameter('wapinet_yandex_translate_key') .
+                'https://translate.yandex.net/api/v1.5/tr.json/getLangs?key='.
+                $this->getParameter('wapinet_yandex_translate_key').
                 '&ui=ru'
             );
 

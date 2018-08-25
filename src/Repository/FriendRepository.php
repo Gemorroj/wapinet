@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repository;
 
 use App\Entity\Friend;
@@ -11,6 +12,7 @@ class FriendRepository extends EntityRepository
 {
     /**
      * @param User $user
+     *
      * @return Query
      */
     public function getFriendsQuery(User $user): Query
@@ -25,8 +27,9 @@ class FriendRepository extends EntityRepository
     }
 
     /**
-     * @param User $user
-     * @param  \DateTime|null $lastActivity
+     * @param User           $user
+     * @param \DateTime|null $lastActivity
+     *
      * @return int
      */
     public function getFriendsCount(User $user, ?\DateTime $lastActivity = null): int
@@ -50,6 +53,7 @@ class FriendRepository extends EntityRepository
     /**
      * @param User $user
      * @param User $friend
+     *
      * @return null|Friend
      */
     public function getFriend(User $user, User $friend): ?Friend

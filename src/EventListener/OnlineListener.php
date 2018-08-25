@@ -1,4 +1,5 @@
 <?php
+
 namespace App\EventListener;
 
 use App\Entity\Online;
@@ -19,7 +20,8 @@ class OnlineListener
     }
 
     /**
-     * Update online
+     * Update online.
+     *
      * @param FilterControllerEvent $event
      */
     public function onCoreController(FilterControllerEvent $event): void
@@ -29,7 +31,7 @@ class OnlineListener
         }
 
         // чистим случайным образом, чтобы разгрузить БД
-        if (\mt_rand(1, 10) === 1) {
+        if (1 === \mt_rand(1, 10)) {
             $this->cleanupOnline();
         }
 
@@ -59,14 +61,13 @@ class OnlineListener
         }
     }
 
-
     /**
-     * Cleanup online
+     * Cleanup online.
      */
     private function cleanupOnline(): void
     {
         $this->em->createQuery('DELETE FROM App\Entity\Online o WHERE o.datetime < :lifetime')
-            ->setParameter('lifetime', new \DateTime('now -' . User::LIFETIME))
+            ->setParameter('lifetime', new \DateTime('now -'.User::LIFETIME))
             ->execute();
     }
 }

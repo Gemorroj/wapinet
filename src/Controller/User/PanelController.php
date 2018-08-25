@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller\User;
 
 use App\Entity\Panel;
@@ -17,6 +18,7 @@ class PanelController extends Controller
      * @param Request $request
      *
      * @return RedirectResponse|Response
+     *
      * @throws AccessDeniedException
      */
     public function editAction(Request $request)

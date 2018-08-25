@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 /**
- * News
+ * News.
  */
 class News
 {
@@ -37,7 +37,6 @@ class News
      */
     protected $updatedAt;
 
-
     public function getId()
     {
         return $this->id;
@@ -45,11 +44,13 @@ class News
 
     /**
      * @param string $body
+     *
      * @return News
      */
     public function setBody($body)
     {
         $this->body = $body;
+
         return $this;
     }
 
@@ -63,11 +64,13 @@ class News
 
     /**
      * @param User $createdBy
+     *
      * @return News
      */
     public function setCreatedBy(User $createdBy)
     {
         $this->createdBy = $createdBy;
+
         return $this;
     }
 
@@ -81,11 +84,13 @@ class News
 
     /**
      * @param string $subject
+     *
      * @return News
      */
     public function setSubject($subject)
     {
         $this->subject = $subject;
+
         return $this;
     }
 
@@ -97,7 +102,6 @@ class News
         return $this->subject;
     }
 
-
     public function getCreatedAt()
     {
         return $this->createdAt;
@@ -106,6 +110,7 @@ class News
     public function setCreatedAtValue()
     {
         $this->createdAt = new \DateTime();
+
         return $this;
     }
 
@@ -117,7 +122,7 @@ class News
     public function setUpdatedAtValue()
     {
         $this->updatedAt = new \DateTime();
+
         return $this;
     }
-
 }

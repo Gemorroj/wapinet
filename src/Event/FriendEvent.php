@@ -35,7 +35,6 @@ class FriendEvent extends Event
         return $this->user;
     }
 
-
     /**
      * Returns the friend for this event.
      *

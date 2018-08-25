@@ -10,26 +10,25 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
-
 class TmpClearCommand extends ContainerAwareCommand
 {
-	/**
-	 * @var ParameterBagInterface
-	 */
-	private $parameterBag;
-	/**
-	 * @var Filesystem
-	 */
-	private $filesystem;
+    /**
+     * @var ParameterBagInterface
+     */
+    private $parameterBag;
+    /**
+     * @var Filesystem
+     */
+    private $filesystem;
 
-	public function __construct(ParameterBagInterface $parameterBag, Filesystem $filesystem, ?string $name = null)
-	{
-		$this->parameterBag = $parameterBag;
-		$this->filesystem = $filesystem;
-		parent::__construct($name);
-	}
+    public function __construct(ParameterBagInterface $parameterBag, Filesystem $filesystem, ?string $name = null)
+    {
+        $this->parameterBag = $parameterBag;
+        $this->filesystem = $filesystem;
+        parent::__construct($name);
+    }
 
-	/**
+    /**
      * {@inheritdoc}
      */
     protected function configure()
@@ -56,9 +55,9 @@ EOT
         $lifetime = $input->getArgument('lifetime');
         $tmpDir = $this->parameterBag->get('kernel.tmp_dir');
 
-        $oldFiles = Finder::create()->date('< now - ' . $lifetime)->in($tmpDir);
+        $oldFiles = Finder::create()->date('< now - '.$lifetime)->in($tmpDir);
         $oldFileCount = $oldFiles->count();
-		$this->filesystem->remove($oldFiles);
+        $this->filesystem->remove($oldFiles);
 
         $output->writeln(\sprintf('Files over "%s" are removed. Removed "%d" files.', $lifetime, $oldFileCount));
     }

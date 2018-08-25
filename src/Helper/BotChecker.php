@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -11,9 +12,10 @@ class BotChecker
 {
     /**
      * @param Request $request
+     *
      * @throws AccessDeniedException
      */
-    public function checkRequest(Request $request) : void
+    public function checkRequest(Request $request): void
     {
         if ('' !== $request->get('bot-checker')) {
             throw new AccessDeniedException('Кажется, вы - спам-бот.');

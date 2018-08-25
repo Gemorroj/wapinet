@@ -1,8 +1,8 @@
 <?php
+
 namespace App\Helper;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 
 /**
  * Rates хэлпер
@@ -22,9 +22,9 @@ class Rates
         $this->container = $container;
     }
 
-
     /**
      * @param string $country
+     *
      * @return null|string
      */
     public function getName($country)
@@ -50,21 +50,21 @@ class Rates
         return null;
     }
 
-
     /**
      * @param string $country
+     *
      * @return array
+     *
      * @throws \RuntimeException
      */
     public function getRates($country)
     {
-        $method = 'get' . \ucfirst($country);
+        $method = 'get'.\ucfirst($country);
         if (\method_exists($this, $method)) {
             return $this->{$method}();
         }
         throw new \RuntimeException('Указанная страна не поддерживается');
     }
-
 
     /**
      * @return array
@@ -78,21 +78,21 @@ class Rates
         $response = $curl->exec();
 
         if (!$response->isSuccessful()) {
-            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
         }
 
         $obj = \simplexml_load_string($response->getContent());
         $rates = [];
         foreach ($obj->Valute as $v) {
             $rates[] = [
-                'name' => (string)$v->Name,
-                'code' => (string)$v->CharCode,
-                'rate' => (string)$v->Value,
+                'name' => (string) $v->Name,
+                'code' => (string) $v->CharCode,
+                'rate' => (string) $v->Value,
             ];
         }
 
         return [
-            'date' => new \DateTime((string)$obj->attributes()->Date),
+            'date' => new \DateTime((string) $obj->attributes()->Date),
             'rates' => $rates,
         ];
     }
@@ -109,21 +109,21 @@ class Rates
         $response = $curl->exec();
 
         if (!$response->isSuccessful()) {
-            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
         }
 
         $obj = \simplexml_load_string($response->getContent());
         $rates = [];
         foreach ($obj->Currency as $v) {
             $rates[] = [
-                'name' => (string)$v->Name,
-                'code' => (string)$v->CharCode,
-                'rate' => (string)$v->Rate,
+                'name' => (string) $v->Name,
+                'code' => (string) $v->CharCode,
+                'rate' => (string) $v->Rate,
             ];
         }
 
         return [
-            'date' => new \DateTime((string)$obj->attributes()->Date),
+            'date' => new \DateTime((string) $obj->attributes()->Date),
             'rates' => $rates,
         ];
     }
@@ -140,21 +140,21 @@ class Rates
         $response = $curl->exec();
 
         if (!$response->isSuccessful()) {
-            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
         }
 
         $obj = \simplexml_load_string($response->getContent());
         $rates = [];
         foreach ($obj->item as $v) {
             $rates[] = [
-                'name' => (string)$v->name,
-                'code' => (string)$v->char3,
-                'rate' => (string)$v->change,
+                'name' => (string) $v->name,
+                'code' => (string) $v->char3,
+                'rate' => (string) $v->change,
             ];
         }
 
         return [
-            'date' => new \DateTime((string)$obj->item[0]->date),
+            'date' => new \DateTime((string) $obj->item[0]->date),
             'rates' => $rates,
         ];
     }
@@ -171,28 +171,28 @@ class Rates
         $response = $curl->exec();
 
         if (!$response->isSuccessful()) {
-            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
         }
 
         $obj = \simplexml_load_string($response->getContent());
         $rates = [];
         foreach ($obj->channel->item as $v) {
             $rates[] = [
-                'name' => $this->getKzRateName((string)$v->title),
-                'code' => (string)$v->title,
-                'rate' => (string)$v->description,
+                'name' => $this->getKzRateName((string) $v->title),
+                'code' => (string) $v->title,
+                'rate' => (string) $v->description,
             ];
         }
 
         return [
-            'date' => new \DateTime((string)$obj->channel->item[0]->pubDate),
+            'date' => new \DateTime((string) $obj->channel->item[0]->pubDate),
             'rates' => $rates,
         ];
     }
 
-
     /**
      * @param string $code
+     *
      * @return string|null
      */
     private function getKzRateName($code)

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form\Type\Rename;
 
 use App\Form\Type\FileUrlType;
@@ -8,26 +9,26 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Rename
+ * Rename.
  */
 class RenameType extends AbstractType
 {
     /**
-     * @var FormBuilderInterface $builder
+     * @var FormBuilderInterface
      * @var array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('file', FileUrlType::class, array('required' => true, 'label' => false));
-        $builder->add('name', TextType::class, array('label' => 'Новое название'));
+        $builder->add('file', FileUrlType::class, ['required' => true, 'label' => false]);
+        $builder->add('name', TextType::class, ['label' => 'Новое название']);
 
-        $builder->add('submit', SubmitType::class, array('label' => 'Переименовать'));
+        $builder->add('submit', SubmitType::class, ['label' => 'Переименовать']);
     }
 
     /**
-     * Уникальное имя формы
+     * Уникальное имя формы.
      *
      * @return string
      */

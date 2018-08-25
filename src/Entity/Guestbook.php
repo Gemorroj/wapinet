@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 /**
- * Guestbook
+ * Guestbook.
  */
 class Guestbook
 {
@@ -36,9 +36,8 @@ class Guestbook
      */
     protected $message;
 
-
     /**
-     * Get id
+     * Get id.
      *
      * @return integer
      */
@@ -48,9 +47,10 @@ class Guestbook
     }
 
     /**
-     * Set id
+     * Set id.
      *
      * @param int $id
+     *
      * @return Guestbook
      */
     public function setId($id)
@@ -61,7 +61,7 @@ class Guestbook
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return User|null
      */
@@ -71,9 +71,10 @@ class Guestbook
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param User $user
+     *
      * @return Guestbook
      */
     public function setUser(User $user = null)
@@ -93,6 +94,7 @@ class Guestbook
 
     /**
      * @param string $ip
+     *
      * @return Guestbook
      */
     public function setIp($ip)
@@ -112,6 +114,7 @@ class Guestbook
 
     /**
      * @param string $browser
+     *
      * @return Guestbook
      */
     public function setBrowser($browser)
@@ -167,6 +170,7 @@ class Guestbook
 
     /**
      * @param string $message
+     *
      * @return Guestbook
      */
     public function setMessage($message)

@@ -4,9 +4,8 @@ namespace App\Entity\File;
 
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 
-
 /**
- * File content
+ * File content.
  */
 class FileContent
 {
@@ -26,7 +25,6 @@ class FileContent
      * @var int
      */
     protected $size;
-
 
     /**
      * @param null|string $content
@@ -97,7 +95,7 @@ class FileContent
     }
 
     /**
-     * Returns the original file extension
+     * Returns the original file extension.
      *
      * It is extracted from the original file name that was uploaded.
      * Then is should not be considered as a safe value.

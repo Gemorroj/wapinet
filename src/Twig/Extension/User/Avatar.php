@@ -20,12 +20,13 @@ class Avatar extends \Twig_Extension
 
     /**
      * @param User|null $user
-     * @param int|null $size
+     * @param int|null  $size
+     *
      * @return string
      */
     public function getAvatarUrl(User $user = null, ?int $size = 80): string
     {
-        return '//gravatar.com/avatar/' . ($user ? \md5($user->getEmailCanonical()) : '') . '?d=mm' . ($size ? '&s=' . $size : '');
+        return '//gravatar.com/avatar/'.($user ? \md5($user->getEmailCanonical()) : '').'?d=mm'.($size ? '&s='.$size : '');
     }
 
     /**

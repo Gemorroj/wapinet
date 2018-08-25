@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper;
 
 use CSSValidator\CSSValidator as W3CService;
@@ -36,7 +37,9 @@ class CssValidator
 
     /**
      * @param string $css
+     *
      * @throws W3CServiceException
+     *
      * @return W3CServiceResponse
      */
     public function validateFragment($css)
@@ -46,7 +49,9 @@ class CssValidator
 
     /**
      * @param File $file
+     *
      * @throws W3CServiceException
+     *
      * @return W3CServiceResponse
      */
     public function validateFile(File $file)

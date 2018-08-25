@@ -16,8 +16,9 @@ class HoroscopeController extends Controller
     }
 
     /**
-     * @param string $zodiac
+     * @param string    $zodiac
      * @param Horoscope $horoscopeHelper
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction($zodiac, Horoscope $horoscopeHelper)
@@ -34,6 +35,7 @@ class HoroscopeController extends Controller
 
     /**
      * @param Horoscope $horoscopeHelper
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function dayAction(Horoscope $horoscopeHelper)

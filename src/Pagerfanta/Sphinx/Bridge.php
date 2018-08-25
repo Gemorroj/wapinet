@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Pagerfanta\Sphinx;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -8,10 +9,11 @@ use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * Pagerfanta Bridge
+ * Pagerfanta Bridge.
  *
- * @uses AbstractSphinxPager
- * @uses InterfaceSphinxPager
+ * @uses \AbstractSphinxPager
+ * @uses \InterfaceSphinxPager
+ *
  * @author Stephane PY <py.stephane1@gmail.com>
  * @author Nikola Petkanski <nikola@petkanski.com>
  * @author Gemorroj <wapinet@mail.ru>
@@ -39,21 +41,20 @@ class Bridge
     protected $query;
 
     /**
-     * The results obtained from sphinx
+     * The results obtained from sphinx.
      *
      * @var array
      */
     protected $results;
 
     /**
-     * The discriminator column name
+     * The discriminator column name.
      *
      * @var string
      */
     protected $discriminatorColumn;
 
     /**
-     *
      * @var array Discriminator dependant repositories
      */
     protected $discriminatorRepositories = [];
@@ -63,9 +64,9 @@ class Bridge
      */
     protected $doctrine;
 
-
     /**
      * Bridge constructor.
+     *
      * @param RegistryInterface $doctrine
      */
     public function __construct(RegistryInterface $doctrine)
@@ -123,7 +124,7 @@ class Bridge
      */
     public function setEntityManager(EntityManagerInterface $em)
     {
-        if ($this->em !== null) {
+        if (null !== $this->em) {
             throw new \LogicException('Entity manager can only be set before any results are fetched');
         }
 
@@ -133,7 +134,7 @@ class Bridge
     }
 
     /**
-     * setRepositoryClass
+     * setRepositoryClass.
      *
      * @param string $repositoryClass
      *
@@ -147,7 +148,7 @@ class Bridge
     }
 
     /**
-     * setPkColumn
+     * setPkColumn.
      *
      * @param string $pkColumn
      *
@@ -162,6 +163,7 @@ class Bridge
 
     /**
      * @param string $column
+     *
      * @return Bridge
      */
     public function setDiscriminatorColumn($column)
@@ -172,9 +174,10 @@ class Bridge
     }
 
     /**
-     * @param mixed $discriminatorValue
+     * @param mixed  $discriminatorValue
      * @param string $repositoryClass
      * @param string $entityManager
+     *
      * @return Bridge
      */
     public function setDiscriminatorRepository($discriminatorValue, $repositoryClass, $entityManager = 'default')
@@ -188,7 +191,6 @@ class Bridge
     }
 
     /**
-     *
      * @param array $repositories
      *
      * @return Bridge
@@ -198,8 +200,8 @@ class Bridge
         foreach ($repositories as $discriminatorColumn => $data) {
             if (\is_array($data)) {
                 $params = [
-                    'discriminatorValue'    => $discriminatorColumn,
-                    'class'                 => $data['class'],
+                    'discriminatorValue' => $discriminatorColumn,
+                    'class' => $data['class'],
                 ];
 
                 if (\array_key_exists('em', $data)) {
@@ -216,7 +218,7 @@ class Bridge
     }
 
     /**
-     * setSphinxResults
+     * setSphinxResults.
      *
      * @param ResultSetInterface $result
      * @param ResultSetInterface $resultMeta
@@ -233,9 +235,9 @@ class Bridge
         return $this;
     }
 
-
     /**
      * @param ResultSetInterface $resultMeta
+     *
      * @return array
      */
     private function parseMeta(ResultSetInterface $resultMeta)
@@ -250,14 +252,14 @@ class Bridge
     }
 
     /**
-     * Returns an instance of the pager
+     * Returns an instance of the pager.
      *
      * @return Pagerfanta
      */
     public function getPager()
     {
-        $hasDiscriminator = $this->discriminatorColumn !== null;
-        $hasRepositoryClass = $this->repositoryClass !== null;
+        $hasDiscriminator = null !== $this->discriminatorColumn;
+        $hasRepositoryClass = null !== $this->repositoryClass;
 
         if (!$hasRepositoryClass && !$hasDiscriminator) {
             throw new \RuntimeException('You should define either a repository class, either discriminator');
@@ -277,8 +279,8 @@ class Bridge
     }
 
     /**
-     *
      * @return array
+     *
      * @throws \UnexpectedValueException
      */
     protected function getDiscriminatorResults()
@@ -292,7 +294,7 @@ class Bridge
         $results = [];
         $usedDiscriminators = [];
 
-        /**
+        /*
          * Collect discriminators and their records
          */
         foreach ($rawResults['matches'] as $row) {
@@ -312,7 +314,7 @@ class Bridge
             $usedDiscriminators[$rowDiscriminator][$id] = $row;
         }
 
-        /**
+        /*
          * Fetchs the results for each discriminator used and populate the $results array,
          * which contains the proper order of items as returned by Sphinx
          */
@@ -362,6 +364,7 @@ class Bridge
 
     /**
      * @param mixed $discriminatorValue
+     *
      * @return QueryBuilder
      */
     public function getDiscriminatorQuery($discriminatorValue)
@@ -374,7 +377,7 @@ class Bridge
 
         $repositoryClass = $discriminatorData['class'];
 
-        return $qb->select('r') ->from($repositoryClass, \sprintf('r INDEX BY r.%s', $this->pkColumn));
+        return $qb->select('r')->from($repositoryClass, \sprintf('r INDEX BY r.%s', $this->pkColumn));
     }
 
     /**
@@ -384,12 +387,12 @@ class Bridge
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        return $qb->select('r') ->from($this->repositoryClass, \sprintf('r INDEX BY r.%s', $this->pkColumn));
-
+        return $qb->select('r')->from($this->repositoryClass, \sprintf('r INDEX BY r.%s', $this->pkColumn));
     }
 
     /**
      * @param QueryBuilder|null $query
+     *
      * @return Bridge
      */
     public function setQuery(QueryBuilder $query = null)
@@ -404,7 +407,7 @@ class Bridge
      */
     public function getQuery()
     {
-        if ($this->query === null) {
+        if (null === $this->query) {
             return $this->getDefaultQuery();
         }
 

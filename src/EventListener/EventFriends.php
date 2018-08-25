@@ -1,4 +1,5 @@
 <?php
+
 namespace App\EventListener;
 
 use App\Entity\Event as EntityEvent;
@@ -34,7 +35,6 @@ class EventFriends implements EventSubscriberInterface
         ];
     }
 
-
     /**
      * @param FriendEvent $event
      */
@@ -43,9 +43,9 @@ class EventFriends implements EventSubscriberInterface
         // Уведомление о добавлении  в друзья
         $entityEvent = new EntityEvent();
         if (true === $event->getUser()->isFemale()) {
-            $entityEvent->setSubject('Вас добавила в друзья ' . $event->getUser()->getUsername() . '.');
+            $entityEvent->setSubject('Вас добавила в друзья '.$event->getUser()->getUsername().'.');
         } else {
-            $entityEvent->setSubject('Вас добавил в друзья ' . $event->getUser()->getUsername() . '.');
+            $entityEvent->setSubject('Вас добавил в друзья '.$event->getUser()->getUsername().'.');
         }
         $entityEvent->setTemplate('friend_add');
         $entityEvent->setVariables([
@@ -55,14 +55,13 @@ class EventFriends implements EventSubscriberInterface
         $entityEvent->setUser($event->getFriend());
         $this->em->persist($entityEvent);
 
-
         /** @var Friend $friend */
         foreach ($event->getUser()->getFriended() as $friend) {
             $entityEvent = new EntityEvent();
             if (true === $event->getUser()->isFemale()) {
-                $entityEvent->setSubject('Ваша подруга ' . $event->getUser()->getUsername() . ' добавила в друзья ' . $event->getFriend()->getUsername() . '.');
+                $entityEvent->setSubject('Ваша подруга '.$event->getUser()->getUsername().' добавила в друзья '.$event->getFriend()->getUsername().'.');
             } else {
-                $entityEvent->setSubject('Ваш друг ' . $event->getUser()->getUsername() . ' добавил в друзья ' . $event->getFriend()->getUsername() . '.');
+                $entityEvent->setSubject('Ваш друг '.$event->getUser()->getUsername().' добавил в друзья '.$event->getFriend()->getUsername().'.');
             }
             $entityEvent->setTemplate('friend_friend_add');
             $entityEvent->setVariables([
@@ -86,9 +85,9 @@ class EventFriends implements EventSubscriberInterface
         // Уведомление об удалении из друзей
         $entityEvent = new EntityEvent();
         if (true === $event->getUser()->isFemale()) {
-            $entityEvent->setSubject('Вас удалила из друзей ' . $event->getUser()->getUsername() . '.');
+            $entityEvent->setSubject('Вас удалила из друзей '.$event->getUser()->getUsername().'.');
         } else {
-            $entityEvent->setSubject('Вас удалил из друзей ' . $event->getUser()->getUsername() . '.');
+            $entityEvent->setSubject('Вас удалил из друзей '.$event->getUser()->getUsername().'.');
         }
         $entityEvent->setTemplate('friend_delete');
         $entityEvent->setVariables([
@@ -102,9 +101,9 @@ class EventFriends implements EventSubscriberInterface
         foreach ($event->getUser()->getFriended() as $friend) {
             $entityEvent = new EntityEvent();
             if (true === $event->getUser()->isFemale()) {
-                $entityEvent->setSubject('Ваша подруга ' . $event->getUser()->getUsername() . ' удалила из друзей ' . $event->getFriend()->getUsername() . '.');
+                $entityEvent->setSubject('Ваша подруга '.$event->getUser()->getUsername().' удалила из друзей '.$event->getFriend()->getUsername().'.');
             } else {
-                $entityEvent->setSubject('Ваш друг ' . $event->getUser()->getUsername() . ' удалил из друзей ' . $event->getFriend()->getUsername() . '.');
+                $entityEvent->setSubject('Ваш друг '.$event->getUser()->getUsername().' удалил из друзей '.$event->getFriend()->getUsername().'.');
             }
             $entityEvent->setTemplate('friend_friend_delete');
             $entityEvent->setVariables([
@@ -120,7 +119,6 @@ class EventFriends implements EventSubscriberInterface
         $this->em->flush();
     }
 
-
     /**
      * @param FileEvent $event
      */
@@ -135,9 +133,9 @@ class EventFriends implements EventSubscriberInterface
         foreach ($user->getFriended() as $friend) {
             $entityEvent = new EntityEvent();
             if (true === $user->isFemale()) {
-                $entityEvent->setSubject('Ваша подруга ' . $user->getUsername() . ' добавила файл ' . $event->getFile()->getOriginalFileName() . '.');
+                $entityEvent->setSubject('Ваша подруга '.$user->getUsername().' добавила файл '.$event->getFile()->getOriginalFileName().'.');
             } else {
-                $entityEvent->setSubject('Ваш друг ' . $user->getUsername() . ' добавил файл ' . $event->getFile()->getOriginalFileName() . '.');
+                $entityEvent->setSubject('Ваш друг '.$user->getUsername().' добавил файл '.$event->getFile()->getOriginalFileName().'.');
             }
             $entityEvent->setTemplate('friend_file_add');
             $entityEvent->setVariables([
@@ -167,9 +165,9 @@ class EventFriends implements EventSubscriberInterface
         foreach ($user->getFriended() as $friend) {
             $entityEvent = new EntityEvent();
             if (true === $user->isFemale()) {
-                $entityEvent->setSubject('Ваша подруга ' . $user->getUsername() . ' добавила в блог сообщение с темой ' . $event->getGist()->getSubject() . '.');
+                $entityEvent->setSubject('Ваша подруга '.$user->getUsername().' добавила в блог сообщение с темой '.$event->getGist()->getSubject().'.');
             } else {
-                $entityEvent->setSubject('Ваш друг ' . $user->getUsername() . ' добавил в блог сообщение с темой ' . $event->getGist()->getSubject() . '.');
+                $entityEvent->setSubject('Ваш друг '.$user->getUsername().' добавил в блог сообщение с темой '.$event->getGist()->getSubject().'.');
             }
             $entityEvent->setTemplate('friend_gist_add');
             $entityEvent->setVariables([

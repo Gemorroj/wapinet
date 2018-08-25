@@ -27,15 +27,16 @@ class Date extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('wapinet_date', array($this, 'getDate')),
-            new \Twig_SimpleFilter('wapinet_time', array($this, 'getTime')),
-            new \Twig_SimpleFilter('wapinet_datetime', array($this, 'getDateTime')),
-            new \Twig_SimpleFilter('wapinet_length', array($this, 'getLength')),
+            new \Twig_SimpleFilter('wapinet_date', [$this, 'getDate']),
+            new \Twig_SimpleFilter('wapinet_time', [$this, 'getTime']),
+            new \Twig_SimpleFilter('wapinet_datetime', [$this, 'getDateTime']),
+            new \Twig_SimpleFilter('wapinet_length', [$this, 'getLength']),
         ];
     }
 
     /**
      * @param \DateTime|mixed $date
+     *
      * @return string|null
      */
     public function getDate($date)
@@ -73,6 +74,7 @@ class Date extends \Twig_Extension
 
     /**
      * @param \DateTime|mixed $datetime
+     *
      * @return string|null
      */
     public function getDateTime($datetime)
@@ -91,15 +93,15 @@ class Date extends \Twig_Extension
             $dayAfterTomorrow = new \DateTime('tomorrow + 1 day', $timezone);
 
             if ($datetime->format('Ymd') === $today->format('Ymd')) {
-                return 'Сегодня в ' . $datetime->format('H:i');
+                return 'Сегодня в '.$datetime->format('H:i');
             } elseif ($datetime->format('Ymd') === $yesterday->format('Ymd')) {
-                return 'Вчера в ' . $datetime->format('H:i');
+                return 'Вчера в '.$datetime->format('H:i');
             } elseif ($datetime->format('Ymd') === $dayBeforeYesterday->format('Ymd')) {
-                return 'Позавчера в ' . $datetime->format('H:i');
+                return 'Позавчера в '.$datetime->format('H:i');
             } elseif ($datetime->format('Ymd') === $tomorrow->format('Ymd')) {
-                return 'Завтра в ' . $datetime->format('H:i');
+                return 'Завтра в '.$datetime->format('H:i');
             } elseif ($datetime->format('Ymd') === $dayAfterTomorrow->format('Ymd')) {
-                return 'Послезавтра в ' . $datetime->format('H:i');
+                return 'Послезавтра в '.$datetime->format('H:i');
             } else {
                 //return $datetime->format('d.m.Y H:i:s');
                 return $datetime->format('d.m.Y H:i');
@@ -109,9 +111,9 @@ class Date extends \Twig_Extension
         return null;
     }
 
-
     /**
      * @param \DateTime|mixed $datetime
+     *
      * @return string|null
      */
     public function getTime($datetime)
@@ -129,41 +131,41 @@ class Date extends \Twig_Extension
         return null;
     }
 
-
     /**
      * @param int $seconds
+     *
      * @return string|null
      */
     public function getLength($seconds)
     {
         $length = null;
         $d1 = new \DateTime();
-        $d2 = new \DateTime('- ' . (int)$seconds . ' seconds');
+        $d2 = new \DateTime('- '.(int) $seconds.' seconds');
 
         $iv = $d2->diff($d1);
 
         if ($iv->y) {
-            $length .= $iv->y . 'г.';
+            $length .= $iv->y.'г.';
         }
 
         if ($iv->m) {
-            $length .= $iv->m . 'м.';
+            $length .= $iv->m.'м.';
         }
 
         if ($iv->d) {
-            $length .= $iv->d . 'д.';
+            $length .= $iv->d.'д.';
         }
 
         if ($iv->h) {
-            $length .= $iv->h . 'ч.';
+            $length .= $iv->h.'ч.';
         }
 
         if ($iv->i) {
-            $length .= $iv->i . 'мин.';
+            $length .= $iv->i.'мин.';
         }
 
         if ($iv->s) {
-            $length .= $iv->s . 'сек.';
+            $length .= $iv->s.'сек.';
         }
 
         return $length;

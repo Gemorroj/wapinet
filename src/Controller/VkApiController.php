@@ -16,7 +16,7 @@ class VkApiController extends Controller
 
         $query = \http_build_query($params);
 
-        $curl = $this->get('curl')->init('https://api.vk.com/method/' . $method . '?' . $query);
+        $curl = $this->get('curl')->init('https://api.vk.com/method/'.$method.'?'.$query);
         $curl->addCompression();
 
         $response = $curl->exec();
@@ -25,6 +25,7 @@ class VkApiController extends Controller
         }
 
         $json = \json_decode($response->getContent(), true);
+
         return new JsonResponse($json);
     }
 }

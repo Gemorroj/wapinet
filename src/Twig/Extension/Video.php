@@ -36,30 +36,31 @@ class Video extends \Twig_Extension
         ];
     }
 
-
     /**
      * @param string $path
+     *
      * @return string|null
      */
-    public function convertToMp4 (string $path) : ?string
+    public function convertToMp4(string $path): ?string
     {
-        $mp4File = $path . '.mp4';
+        $mp4File = $path.'.mp4';
 
-        if (false === \file_exists($this->getPublicDir() . $mp4File)) {
+        if (false === \file_exists($this->getPublicDir().$mp4File)) {
             $ffmpeg = $this->container->get('ffmpeg')->getFfmpeg();
             try {
-                $media = $ffmpeg->open($this->getPublicDir() . $path);
+                $media = $ffmpeg->open($this->getPublicDir().$path);
 
                 $format = new X264('aac');
                 $this->setOptions($format, $media);
 
-                $media->save($format, $this->getPublicDir() . $mp4File);
+                $media->save($format, $this->getPublicDir().$mp4File);
 
-                if (false === \file_exists($this->getPublicDir() . $mp4File)) {
+                if (false === \file_exists($this->getPublicDir().$mp4File)) {
                     throw new \RuntimeException('Не удалось создать MP4 файл');
                 }
             } catch (\Exception $e) {
                 $this->container->get('logger')->warning('Ошибка при конвертировании видео в MP4.', [$e]);
+
                 return null;
             }
         }
@@ -69,10 +70,11 @@ class Video extends \Twig_Extension
 
     /**
      * @param DefaultVideo $format
-     * @param FFmpegVideo $media
+     * @param FFmpegVideo  $media
+     *
      * @return $this
      */
-    protected function setOptions(DefaultVideo $format, FFmpegVideo $media) : self
+    protected function setOptions(DefaultVideo $format, FFmpegVideo $media): self
     {
         $streams = $media->getStreams();
 
@@ -106,25 +108,25 @@ class Video extends \Twig_Extension
         return $this;
     }
 
-
     /**
      * @param string $path
+     *
      * @return string|null
      */
-    public function getScreenshot(string $path) : ?string
+    public function getScreenshot(string $path): ?string
     {
-        $screenshot = $path . '.jpg';
+        $screenshot = $path.'.jpg';
 
-        if (false === \file_exists($this->getPublicDir() . $screenshot)) {
+        if (false === \file_exists($this->getPublicDir().$screenshot)) {
             $ffmpeg = $this->container->get('ffmpeg')->getFfmpeg();
 
             try {
-                $media = $ffmpeg->open($this->getPublicDir() . $path);
+                $media = $ffmpeg->open($this->getPublicDir().$path);
                 if ($media instanceof FFmpegVideo) {
                     $second = $this->getScreenshotSecond($media);
                     $frame = $media->frame(TimeCode::fromSeconds($second));
-                    $frame->save($this->getPublicDir() . $screenshot);
-                    if (false === \file_exists($this->getPublicDir() . $screenshot)) {
+                    $frame->save($this->getPublicDir().$screenshot);
+                    if (false === \file_exists($this->getPublicDir().$screenshot)) {
                         throw new \RuntimeException('Не удалось создать скриншот');
                     }
                 } else {
@@ -132,6 +134,7 @@ class Video extends \Twig_Extension
                 }
             } catch (\Exception $e) {
                 $this->container->get('logger')->warning('Ошибка при создании скриншота видео.', [$e]);
+
                 return null;
             }
         }
@@ -139,12 +142,12 @@ class Video extends \Twig_Extension
         return $screenshot;
     }
 
-
     /**
      * @param FFmpegVideo $media
+     *
      * @return int
      */
-    protected function getScreenshotSecond(FFmpegVideo $media) : int
+    protected function getScreenshotSecond(FFmpegVideo $media): int
     {
         $second = $this->container->getParameter('wapinet_video_screenshot_second');
         $video = $media->getStreams()->videos()->first();
@@ -157,14 +160,13 @@ class Video extends \Twig_Extension
             }
         }
 
-        return (int)$second;
+        return (int) $second;
     }
-
 
     /**
      * @return string
      */
-    protected function getPublicDir() : string
+    protected function getPublicDir(): string
     {
         return $this->container->get('kernel')->getPublicDir();
     }

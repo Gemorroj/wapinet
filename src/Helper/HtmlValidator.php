@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper;
 
 use HTMLValidator\Exception as W3CServiceException;
@@ -26,7 +27,9 @@ class HtmlValidator
 
     /**
      * @param string $html
+     *
      * @return W3CServiceResponse
+     *
      * @throws W3CServiceException
      */
     public function validateFragment($html)
@@ -34,10 +37,11 @@ class HtmlValidator
         return $this->htmlValidator->validateFragment($html);
     }
 
-
     /**
      * @param File $file
+     *
      * @return W3CServiceResponse
+     *
      * @throws W3CServiceException
      */
     public function validateFile(File $file)

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper;
 
 /**
@@ -8,6 +9,7 @@ class Translit
 {
     /**
      * @param string $str
+     *
      * @return string
      */
     public function toAscii($str)

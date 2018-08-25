@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form\Type\Http;
 
 use Symfony\Component\Form\AbstractType;
@@ -9,20 +10,20 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Http
+ * Http.
  */
 class HttpType extends AbstractType
 {
     /**
-     * @var FormBuilderInterface $builder
+     * @var FormBuilderInterface
      * @var array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('type', ChoiceType::class, array(
-            'choices' => array(
+        $builder->add('type', ChoiceType::class, [
+            'choices' => [
                 'GET' => 'GET',
                 'POST' => 'POST',
                 'PUT' => 'PUT',
@@ -32,27 +33,27 @@ class HttpType extends AbstractType
                 'OPTIONS' => 'OPTIONS',
                 'TRACE' => 'TRACE',
                 'CONNECT' => 'CONNECT',
-            ),
+            ],
             'label' => 'Тип',
-        ));
-        $builder->add('url', UrlType::class, array(
-            'label' => 'Путь'
-        ));
-        $builder->add('header', TextareaType::class, array(
-            'data' => 'Accept: */*' . "\r\n" . 'Cache-Control: no-cache' . "\r\n" . 'User-Agent: Wapinet HTTP Client',
+        ]);
+        $builder->add('url', UrlType::class, [
+            'label' => 'Путь',
+        ]);
+        $builder->add('header', TextareaType::class, [
+            'data' => 'Accept: */*'."\r\n".'Cache-Control: no-cache'."\r\n".'User-Agent: Wapinet HTTP Client',
             'required' => false,
-            'label' => 'Заголовки'
-        ));
-        $builder->add('body', TextareaType::class, array(
+            'label' => 'Заголовки',
+        ]);
+        $builder->add('body', TextareaType::class, [
             'required' => false,
-            'label' => 'Тело'
-        ));
+            'label' => 'Тело',
+        ]);
 
-        $builder->add('submit', SubmitType::class, array('label' => 'Выполнить'));
+        $builder->add('submit', SubmitType::class, ['label' => 'Выполнить']);
     }
 
     /**
-     * Уникальное имя формы
+     * Уникальное имя формы.
      *
      * @return string
      */

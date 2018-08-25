@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Entity;
 
 /**
- * Friend
+ * Friend.
  */
 class Friend
 {
@@ -42,7 +43,6 @@ class Friend
     {
         return $this->createdAt;
     }
-
 
     /**
      * @return $this
@@ -117,6 +117,6 @@ class Friend
      */
     public function __toString()
     {
-        return (string)$this->getFriend();
+        return (string) $this->getFriend();
     }
 }

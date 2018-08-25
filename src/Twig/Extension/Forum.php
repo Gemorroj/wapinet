@@ -23,10 +23,10 @@ class Forum extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('wapinet_forum_topics_count', array($this, 'getTopicsCount')),
-            new \Twig_SimpleFunction('wapinet_forum_posts_count', array($this, 'getPostsCount')),
-        );
+        return [
+            new \Twig_SimpleFunction('wapinet_forum_topics_count', [$this, 'getTopicsCount']),
+            new \Twig_SimpleFunction('wapinet_forum_posts_count', [$this, 'getPostsCount']),
+        ];
     }
 
     /**
@@ -37,6 +37,7 @@ class Forum extends \Twig_Extension
         $database = $this->container->getParameter('wapinet_forum_database_name');
         $query = $this->em->getConnection()->executeQuery("SELECT COUNT(1) FROM `{$database}`.`topics`");
         $query->execute();
+
         return $query->fetchColumn(0);
     }
 
@@ -48,6 +49,7 @@ class Forum extends \Twig_Extension
         $database = $this->container->getParameter('wapinet_forum_database_name');
         $query = $this->em->getConnection()->executeQuery("SELECT COUNT(1) FROM `{$database}`.`posts`");
         $query->execute();
+
         return $query->fetchColumn(0);
     }
 }

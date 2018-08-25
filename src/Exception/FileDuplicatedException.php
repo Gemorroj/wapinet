@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Exception;
 
 use App\Entity\File;
@@ -19,9 +20,8 @@ class FileDuplicatedException extends \RuntimeException
      */
     protected $container;
 
-
     /**
-     * @param File $existingFile
+     * @param File               $existingFile
      * @param ContainerInterface $container
      */
     public function __construct(File $existingFile, ContainerInterface $container)
@@ -29,7 +29,7 @@ class FileDuplicatedException extends \RuntimeException
         $this->existingFile = $existingFile;
         $this->container = $container;
 
-        parent::__construct('Такой файл уже существует: ' . $this->getPath());
+        parent::__construct('Такой файл уже существует: '.$this->getPath());
     }
 
     /**
@@ -48,14 +48,13 @@ class FileDuplicatedException extends \RuntimeException
         return $this->container;
     }
 
-
     /**
      * @return string
      */
     public function getPath()
     {
         return $this->getContainer()->get('router')->generate('file_view', [
-                'id' => $this->getExistingFile()->getId()
+                'id' => $this->getExistingFile()->getId(),
             ], Router::ABSOLUTE_URL
         );
     }

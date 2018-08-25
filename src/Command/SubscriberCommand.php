@@ -13,46 +13,46 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Twig\Environment;
 
 /**
- * Subscriber
+ * Subscriber.
  */
 class SubscriberCommand extends ContainerAwareCommand
 {
-	/**
-	 * @var EntityManagerInterface
-	 */
-	private $entityManager;
-	/**
-	 * @var \Swift_Mailer
-	 */
-	private $mailer;
-	/**
-	 * @var Environment
-	 */
-	private $twig;
-	/**
-	 * @var LoggerInterface
-	 */
-	private $logger;
-	/**
-	 * @var ParameterBagInterface
-	 */
-	private $parameterBag;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+    /**
+     * @var \Swift_Mailer
+     */
+    private $mailer;
+    /**
+     * @var Environment
+     */
+    private $twig;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+    /**
+     * @var ParameterBagInterface
+     */
+    private $parameterBag;
 
-	public function __construct(
-		EntityManagerInterface $entityManager,
-		\Swift_Mailer $mailer,
-		Environment $twig,
-		LoggerInterface $logger,
-		ParameterBagInterface $parameterBag,
-		?string $name = null)
-	{
-		$this->entityManager = $entityManager;
-		$this->mailer = $mailer;
-		$this->twig = $twig;
-		$this->logger = $logger;
-		$this->parameterBag = $parameterBag;
-		parent::__construct($name);
-	}
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        \Swift_Mailer $mailer,
+        Environment $twig,
+        LoggerInterface $logger,
+        ParameterBagInterface $parameterBag,
+        ?string $name = null)
+    {
+        $this->entityManager = $entityManager;
+        $this->mailer = $mailer;
+        $this->twig = $twig;
+        $this->logger = $logger;
+        $this->parameterBag = $parameterBag;
+        parent::__construct($name);
+    }
 
     /**
      * {@inheritdoc}
@@ -69,12 +69,12 @@ class SubscriberCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-    	/** @var EventRepository $repository */
+        /** @var EventRepository $repository */
         $repository = $this->entityManager->getRepository(Event::class);
 
         $rows = $repository->findNeedEmail();
 
-		$this->entityManager->beginTransaction();
+        $this->entityManager->beginTransaction();
         $q = $this->entityManager->createQuery('UPDATE App\Entity\Event e SET e.needEmail = 0 WHERE e.id = :id');
         /** @var Event $row */
         foreach ($rows as $row) {
@@ -82,17 +82,17 @@ class SubscriberCommand extends ContainerAwareCommand
                 $q->execute(['id' => $row->getId()]);
             }
         }
-		$this->entityManager->commit();
+        $this->entityManager->commit();
 
         $output->writeln('All Emails sended.');
     }
 
-
     /**
      * @param Event $event
+     *
      * @return bool
      */
-    protected function sendEmail(Event $event) : bool
+    protected function sendEmail(Event $event): bool
     {
         $siteTitle = $this->parameterBag->get('wapinet_title');
         $robotEmail = $this->parameterBag->get('wapinet_robot_email');
@@ -100,11 +100,11 @@ class SubscriberCommand extends ContainerAwareCommand
         $variables = $event->getVariables();
         $variables['subject'] = $event->getSubject();
 
-        $body = $this->twig->render('User/Subscriber/Email/' . $event->getTemplate() . '.html.twig', $variables);
+        $body = $this->twig->render('User/Subscriber/Email/'.$event->getTemplate().'.html.twig', $variables);
 
         try {
             $message = new \Swift_Message(
-                $siteTitle . ' - ' . $event->getSubject(),
+                $siteTitle.' - '.$event->getSubject(),
                 $body,
                 'text/html',
                 'UTF-8'
@@ -112,15 +112,15 @@ class SubscriberCommand extends ContainerAwareCommand
             $message->setFrom($robotEmail);
             $message->setTo($event->getUser()->getEmail());
 
-            return ($this->mailer->send($message) > 0);
+            return $this->mailer->send($message) > 0;
         } catch (\Swift_RfcComplianceException $e) {
-			$this->logger->warning($e->getMessage(), [$e]);
+            $this->logger->warning($e->getMessage(), [$e]);
 
             $event->getUser()->getSubscriber()->setEmailNews(false);
             $event->getUser()->getSubscriber()->setEmailFriends(false);
-			$this->entityManager->persist($event->getUser()->getSubscriber());
+            $this->entityManager->persist($event->getUser()->getSubscriber());
         } catch (\Exception $e) {
-			$this->logger->critical($e->getMessage(), [$e]);
+            $this->logger->critical($e->getMessage(), [$e]);
         }
 
         return true;

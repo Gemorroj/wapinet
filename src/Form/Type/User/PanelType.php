@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form\Type\User;
 
 use App\Entity\Panel;
@@ -9,28 +10,28 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Panel
+ * Panel.
  */
 class PanelType extends AbstractType
 {
     /**
-     * @var FormBuilderInterface $builder
+     * @var FormBuilderInterface
      * @var array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('forum', CheckboxType::class, array('required' => false, 'label' => 'Форум'));
-        $builder->add('guestbook', CheckboxType::class, array('required' => false, 'label' => 'Гостевая'));
-        $builder->add('gist', CheckboxType::class, array('required' => false, 'label' => 'Блоги'));
-        $builder->add('file', CheckboxType::class, array('required' => false, 'label' => 'Файлообменник'));
-        $builder->add('archiver', CheckboxType::class, array('required' => false, 'label' => 'Архиватор'));
-        $builder->add('downloads', CheckboxType::class, array('required' => false, 'label' => 'Развлечения'));
-        $builder->add('utilities', CheckboxType::class, array('required' => false, 'label' => 'Утилиты'));
-        $builder->add('programming', CheckboxType::class, array('required' => false, 'label' => 'WEB мастерская'));
+        $builder->add('forum', CheckboxType::class, ['required' => false, 'label' => 'Форум']);
+        $builder->add('guestbook', CheckboxType::class, ['required' => false, 'label' => 'Гостевая']);
+        $builder->add('gist', CheckboxType::class, ['required' => false, 'label' => 'Блоги']);
+        $builder->add('file', CheckboxType::class, ['required' => false, 'label' => 'Файлообменник']);
+        $builder->add('archiver', CheckboxType::class, ['required' => false, 'label' => 'Архиватор']);
+        $builder->add('downloads', CheckboxType::class, ['required' => false, 'label' => 'Развлечения']);
+        $builder->add('utilities', CheckboxType::class, ['required' => false, 'label' => 'Утилиты']);
+        $builder->add('programming', CheckboxType::class, ['required' => false, 'label' => 'WEB мастерская']);
 
-        $builder->add('submit', SubmitType::class, array('label' => 'Изменить'));
+        $builder->add('submit', SubmitType::class, ['label' => 'Изменить']);
     }
 
     /**
@@ -38,13 +39,13 @@ class PanelType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => Panel::class,
-        ));
+        ]);
     }
 
     /**
-     * Уникальное имя формы
+     * Уникальное имя формы.
      *
      * @return string
      */

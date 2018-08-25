@@ -2,9 +2,8 @@
 
 namespace App\Entity;
 
-
 /**
- * Gist
+ * Gist.
  */
 class Gist
 {
@@ -42,7 +41,7 @@ class Gist
     protected $subject;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return integer
      */
@@ -52,9 +51,10 @@ class Gist
     }
 
     /**
-     * Set id
+     * Set id.
      *
      * @param int $id
+     *
      * @return Gist
      */
     public function setId($id)
@@ -65,7 +65,7 @@ class Gist
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return User
      */
@@ -75,9 +75,10 @@ class Gist
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param User $user
+     *
      * @return Gist
      */
     public function setUser(User $user)
@@ -97,6 +98,7 @@ class Gist
 
     /**
      * @param string $ip
+     *
      * @return Gist
      */
     public function setIp($ip)
@@ -116,6 +118,7 @@ class Gist
 
     /**
      * @param string $browser
+     *
      * @return Gist
      */
     public function setBrowser($browser)
@@ -171,6 +174,7 @@ class Gist
 
     /**
      * @param string $body
+     *
      * @return Gist
      */
     public function setBody($body)
@@ -179,7 +183,6 @@ class Gist
 
         return $this;
     }
-
 
     /**
      * @return string
@@ -191,6 +194,7 @@ class Gist
 
     /**
      * @param string $subject
+     *
      * @return Gist
      */
     public function setSubject($subject)

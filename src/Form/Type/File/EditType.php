@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form\Type\File;
 
 use App\Entity\File;
@@ -12,29 +13,28 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Edit
+ * Edit.
  */
 class EditType extends AbstractType
 {
     /**
-     * @var FormBuilderInterface $builder
+     * @var FormBuilderInterface
      * @var array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('file', FileUrlType::class, array('required' => false, 'label' => false));
-        $builder->add('description', TextareaType::class, array('required' => true, 'label' => 'Описание'));
+        $builder->add('file', FileUrlType::class, ['required' => false, 'label' => false]);
+        $builder->add('description', TextareaType::class, ['required' => true, 'label' => 'Описание']);
 
         // http://view.jquerymobile.com/1.3.2/dist/demos/widgets/autocomplete/autocomplete-remote.html
         // тэги
-        $builder->add('tags', TagsType::class, array('required' => false, 'label' => 'Тэги через запятую'));
+        $builder->add('tags', TagsType::class, ['required' => false, 'label' => 'Тэги через запятую']);
 
+        $builder->add('plainPassword', CorePasswordType::class, ['required' => false, 'label' => 'Пароль', 'attr' => ['autocomplete' => 'off']]);
 
-        $builder->add('plainPassword', CorePasswordType::class, array('required' => false, 'label' => 'Пароль', 'attr' => array('autocomplete' => 'off')));
-
-        $builder->add('submit', SubmitType::class, array('label' => 'Загрузить'));
+        $builder->add('submit', SubmitType::class, ['label' => 'Загрузить']);
     }
 
     /**
@@ -42,13 +42,13 @@ class EditType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => File::class,
-        ));
+        ]);
     }
 
     /**
-     * Уникальное имя формы
+     * Уникальное имя формы.
      *
      * @return string
      */

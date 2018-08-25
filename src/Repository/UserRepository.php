@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repository;
 
 use App\Entity\User;
@@ -15,7 +16,7 @@ class UserRepository extends EntityRepository
         return $this->createQueryBuilder('u')
             ->where('u.enabled = 1')
             ->andWhere('u.lastActivity > :lastActivity')
-            ->setParameter('lastActivity', new \DateTime('now -' . User::LIFETIME))
+            ->setParameter('lastActivity', new \DateTime('now -'.User::LIFETIME))
             ->orderBy('u.username', 'ASC')
             ->getQuery();
     }

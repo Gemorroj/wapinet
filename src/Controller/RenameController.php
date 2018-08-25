@@ -15,6 +15,7 @@ class RenameController extends Controller
 {
     /**
      * @param Request $request
+     *
      * @return Response|BinaryFileResponse
      */
     public function indexAction(Request $request)
@@ -27,6 +28,7 @@ class RenameController extends Controller
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
+
                     return $this->getRename($data);
                 }
             }
@@ -35,13 +37,15 @@ class RenameController extends Controller
         }
 
         return $this->render('Rename/index.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
     /**
      * @param array $data
+     *
      * @return BinaryFileResponse
+     *
      * @throws \RuntimeException
      */
     protected function getRename(array $data)
@@ -54,6 +58,7 @@ class RenameController extends Controller
                 $data['name'],
                 $this->get('translit')->toAscii($data['name'])
             );
+
             return $file;
         }
 

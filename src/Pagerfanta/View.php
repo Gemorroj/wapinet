@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Pagerfanta;
 
 use Pagerfanta\View\DefaultView;

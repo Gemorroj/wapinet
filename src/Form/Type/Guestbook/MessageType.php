@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form\Type\Guestbook;
 
 use App\Entity\Guestbook;
@@ -11,7 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Message
+ * Message.
  */
 class MessageType extends AbstractType
 {
@@ -19,6 +20,7 @@ class MessageType extends AbstractType
      * @var ContainerInterface
      */
     protected $container;
+
     /**
      * @param ContainerInterface $container
      */
@@ -28,7 +30,7 @@ class MessageType extends AbstractType
     }
 
     /**
-     * @var FormBuilderInterface $builder
+     * @var FormBuilderInterface
      * @var array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -42,7 +44,6 @@ class MessageType extends AbstractType
         $builder->add('submit', SubmitType::class, ['label' => 'Написать']);
     }
 
-
     /**
      * @param OptionsResolver $resolver
      */
@@ -53,9 +54,8 @@ class MessageType extends AbstractType
         ]);
     }
 
-
     /**
-     * Уникальное имя формы
+     * Уникальное имя формы.
      *
      * @return string
      */

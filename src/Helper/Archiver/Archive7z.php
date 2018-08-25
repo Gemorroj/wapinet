@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper\Archiver;
 
 use App\Exception\ArchiverException;
@@ -12,31 +13,34 @@ class Archive7z extends Archive
 {
     /**
      * @param string $directory
+     *
      * @return File
+     *
      * @throws ArchiverException
      */
-    public function create ($directory)
+    public function create($directory)
     {
         throw new ArchiverException('Создание 7z архивов не поддерживается');
     }
 
-
     /**
      * @param File $file
+     *
      * @return bool
+     *
      * @throws ArchiverException
      */
-    public function isValid (File $file)
+    public function isValid(File $file)
     {
         $archive7z = new Base7zArchive($file->getPathname(), $this->container->getParameter('wapinet_7z_path'));
 
         return $archive7z->isValid();
     }
 
-
     /**
      * @param string $directory
-     * @param File $file
+     * @param File   $file
+     *
      * @throws ArchiverException
      */
     public function extract($directory, File $file)
@@ -46,10 +50,11 @@ class Archive7z extends Archive
         $archive7z->extract();
     }
 
-
     /**
      * @param File $file
+     *
      * @throws ArchiverException
+     *
      * @return \Archive7z\Entry[]
      */
     public function getEntries(File $file)
@@ -60,9 +65,10 @@ class Archive7z extends Archive
     }
 
     /**
-     * @param File $file
+     * @param File   $file
      * @param string $entry
      * @param string $directory
+     *
      * @throws ArchiverException
      */
     public function extractEntry(File $file, $entry, $directory)

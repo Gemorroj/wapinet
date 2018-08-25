@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repository;
 
 use App\Entity\Tag;
@@ -9,14 +10,15 @@ class TagRepository extends EntityRepository
 {
     /**
      * @param string $search
-     * @param int $limit
+     * @param int    $limit
+     *
      * @return Tag[]
      */
     public function findLikeName(string $search, int $limit = 10): array
     {
         $qb = $this->createQueryBuilder('t');
 
-        $search = '%' . \addcslashes($search, '%_') . '%';
+        $search = '%'.\addcslashes($search, '%_').'%';
 
         $qb->where('t.name LIKE :search');
         $qb->setParameter('search', $search);
@@ -32,14 +34,13 @@ class TagRepository extends EntityRepository
     /**
      * @return \Doctrine\ORM\Query
      */
-    public function  getTagsQuery(): \Doctrine\ORM\Query
+    public function getTagsQuery(): \Doctrine\ORM\Query
     {
         return $this->createQueryBuilder('t')
             ->orderBy('t.count', 'DESC')
             ->addOrderBy('t.name', 'ASC')
             ->getQuery();
     }
-
 
     /**
      * @param string $name
@@ -57,9 +58,9 @@ class TagRepository extends EntityRepository
             ->getOneOrNullResult();
     }
 
-
     /**
      * @param array $names Array of tag names
+     *
      * @return ArrayCollection|null
      */
     public function makeTags(array $names): ?ArrayCollection
@@ -90,7 +91,6 @@ class TagRepository extends EntityRepository
 
         return new ArrayCollection($tags);
     }
-
 
     /**
      * @return Tag[]

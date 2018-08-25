@@ -16,7 +16,7 @@ class Kernel extends BaseKernel
 
     const CONFIG_EXTS = '.{php,xml,yaml,yml}';
 
-    public function getCacheDir() : string
+    public function getCacheDir(): string
     {
         return $this->getProjectDir().'/var/cache/'.$this->environment;
     }
@@ -26,27 +26,27 @@ class Kernel extends BaseKernel
         $container->addCompilerPass(new FileUrlCompilerPass());
     }
 
-    public function getLogDir() : string
+    public function getLogDir(): string
     {
         return $this->getProjectDir().'/var/log';
     }
 
-    public function getTmpArchiverDir() : string
+    public function getTmpArchiverDir(): string
     {
         return $this->getTmpDir().'/archiver';
     }
 
-    public function getTmpFileDir() : string
+    public function getTmpFileDir(): string
     {
         return $this->getTmpDir().'/file';
     }
 
-    public function getTmpDir() : string
+    public function getTmpDir(): string
     {
         return $this->getProjectDir().'/var/tmp';
     }
 
-    public function getPublicDir() : string
+    public function getPublicDir(): string
     {
         return $this->getProjectDir().'/public';
     }
@@ -89,7 +89,7 @@ class Kernel extends BaseKernel
         return $container;
     }
 
-    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader) : void
+    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
         $container->addResource(new FileResource($this->getProjectDir().'/config/bundles.php'));
         // Feel free to remove the "container.autowiring.strict_mode" parameter
@@ -104,7 +104,7 @@ class Kernel extends BaseKernel
         $loader->load($confDir.'/{services}_'.$this->environment.self::CONFIG_EXTS, 'glob');
     }
 
-    protected function configureRoutes(RouteCollectionBuilder $routes) : void
+    protected function configureRoutes(RouteCollectionBuilder $routes): void
     {
         $confDir = $this->getProjectDir().'/config';
 

@@ -1,8 +1,8 @@
 <?php
+
 namespace App\Helper;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 
 /**
  * MassMedia хэлпер
@@ -34,7 +34,7 @@ class MassMedia
         $response = $curl->exec();
 
         if (!$response->isSuccessful()) {
-            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
         }
 
         $obj = \simplexml_load_string($response->getContent());
@@ -46,22 +46,22 @@ class MassMedia
 
             if ($v->enclosure) {
                 foreach ($v->enclosure as $enclosure) {
-                    $type = (string)$enclosure->attributes()->type;
+                    $type = (string) $enclosure->attributes()->type;
                     if ('image/' === \substr($type, 0, 6)) {
-                        $photo = (string)$enclosure->attributes()->url;
+                        $photo = (string) $enclosure->attributes()->url;
                     } elseif ('video/' === \substr($type, 0, 6)) {
-                        $video = (string)$enclosure->attributes()->url;
+                        $video = (string) $enclosure->attributes()->url;
                     }
                 }
             }
 
             $news[] = [
-                'datetime' => new \DateTime((string)$v->pubDate . 'C'),
-                'title' => (string)$v->title,
-                'description' => $this->stripDescription((string)$v->description),
+                'datetime' => new \DateTime((string) $v->pubDate.'C'),
+                'title' => (string) $v->title,
+                'description' => $this->stripDescription((string) $v->description),
                 'author' => null,
-                'category' => (string)$v->category,
-                'link' => (string)$v->link,
+                'category' => (string) $v->category,
+                'link' => (string) $v->link,
                 'photo' => $photo,
                 'video' => $video,
             ];
@@ -69,7 +69,6 @@ class MassMedia
 
         return $news;
     }
-
 
     /**
      * @return array
@@ -83,7 +82,7 @@ class MassMedia
         $response = $curl->exec();
 
         if (!$response->isSuccessful()) {
-            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
         }
 
         $obj = \simplexml_load_string($response->getContent());
@@ -95,22 +94,22 @@ class MassMedia
 
             if ($v->enclosure) {
                 foreach ($v->enclosure as $enclosure) {
-                    $type = (string)$enclosure->attributes()->type;
+                    $type = (string) $enclosure->attributes()->type;
                     if ('image/' === \substr($type, 0, 6)) {
-                        $photo = (string)$enclosure->attributes()->url;
+                        $photo = (string) $enclosure->attributes()->url;
                     } elseif ('video/' === \substr($type, 0, 6)) {
-                        $video = (string)$enclosure->attributes()->url;
+                        $video = (string) $enclosure->attributes()->url;
                     }
                 }
             }
 
             $news[] = [
-                'datetime' => new \DateTime((string)$v->pubDate . 'C'),
-                'title' => (string)$v->title,
-                'description' => $this->stripDescription((string)$v->description),
-                'author' => (string)$v->author,
+                'datetime' => new \DateTime((string) $v->pubDate.'C'),
+                'title' => (string) $v->title,
+                'description' => $this->stripDescription((string) $v->description),
+                'author' => (string) $v->author,
                 'category' => null,
-                'link' => (string)$v->link,
+                'link' => (string) $v->link,
                 'photo' => $photo,
                 'video' => $video,
             ];
@@ -121,6 +120,7 @@ class MassMedia
 
     /**
      * @param string $str
+     *
      * @return string
      */
     private function stripDescription($str)

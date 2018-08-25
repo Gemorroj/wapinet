@@ -10,19 +10,18 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-
 class TagsCountCommand extends ContainerAwareCommand
 {
-	/**
-	 * @var EntityManagerInterface
-	 */
-	private $entityManager;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
 
-	public function __construct(EntityManagerInterface $entityManager, ?string $name = null)
-	{
-		$this->entityManager = $entityManager;
-		parent::__construct($name);
-	}
+    public function __construct(EntityManagerInterface $entityManager, ?string $name = null)
+    {
+        $this->entityManager = $entityManager;
+        parent::__construct($name);
+    }
 
     /**
      * {@inheritdoc}
@@ -51,19 +50,19 @@ EOT
         $repositoryFileTags = $this->entityManager->getRepository(FileTags::class);
 
         /** @var Tag $tag */
-		foreach ($repositoryTag->findAll() as $tag) {
+        foreach ($repositoryTag->findAll() as $tag) {
             $fileTags = $repositoryFileTags->findBy(['tag' => $tag]);
             $count = \count($fileTags);
 
             if ($count !== $tag->getCount()) {
                 $tag->setCount($count);
-				$this->entityManager->persist($tag);
-                $fixedCounts++;
+                $this->entityManager->persist($tag);
+                ++$fixedCounts;
             }
         }
 
-		$this->entityManager->flush();
+        $this->entityManager->flush();
 
-        $output->writeln('Fixed ' . $fixedCounts . ' tags count.');
+        $output->writeln('Fixed '.$fixedCounts.' tags count.');
     }
 }

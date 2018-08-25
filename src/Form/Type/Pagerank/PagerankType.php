@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form\Type\Pagerank;
 
 use Symfony\Component\Form\AbstractType;
@@ -7,12 +8,12 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Pagerank
+ * Pagerank.
  */
 class PagerankType extends AbstractType
 {
     /**
-     * @var FormBuilderInterface $builder
+     * @var FormBuilderInterface
      * @var array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -25,7 +26,7 @@ class PagerankType extends AbstractType
     }
 
     /**
-     * Уникальное имя формы
+     * Уникальное имя формы.
      *
      * @return string
      */

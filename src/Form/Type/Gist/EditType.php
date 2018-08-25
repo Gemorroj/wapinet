@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form\Type\Gist;
 
 use App\Entity\Gist;
@@ -10,37 +11,35 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Edit
+ * Edit.
  */
 class EditType extends AbstractType
 {
     /**
-     * @var FormBuilderInterface $builder
+     * @var FormBuilderInterface
      * @var array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('subject', TextType::class, array('attr' => array('placeholder' => 'Тема'), 'required' => true, 'label' => false));
-        $builder->add('body', TextareaType::class, array('attr' => array('placeholder' => 'Сообщение'), 'required' => true, 'label' => false));
-        $builder->add('submit', SubmitType::class, array('label' => 'Изменить'));
+        $builder->add('subject', TextType::class, ['attr' => ['placeholder' => 'Тема'], 'required' => true, 'label' => false]);
+        $builder->add('body', TextareaType::class, ['attr' => ['placeholder' => 'Сообщение'], 'required' => true, 'label' => false]);
+        $builder->add('submit', SubmitType::class, ['label' => 'Изменить']);
     }
-
 
     /**
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => Gist::class,
-        ));
+        ]);
     }
 
-
     /**
-     * Уникальное имя формы
+     * Уникальное имя формы.
      *
      * @return string
      */

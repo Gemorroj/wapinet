@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper;
 
 use FFMpeg\FFMpeg as FFmpegOriginal;
@@ -20,7 +21,6 @@ class Ffmpeg
      */
     private $ffprobe;
 
-
     /**
      * @param ContainerInterface $container
      */
@@ -29,26 +29,23 @@ class Ffmpeg
         $this->container = $container;
     }
 
-
     private function createFfprobe()
     {
         return FFProbe::create([
-            'ffmpeg.binaries'  => $this->container->getParameter('wapinet_ffmpeg_path'),
+            'ffmpeg.binaries' => $this->container->getParameter('wapinet_ffmpeg_path'),
             'ffprobe.binaries' => $this->container->getParameter('wapinet_ffprobe_path'),
-            'ffmpeg.threads'   => $this->container->getParameter('wapinet_threads_count'),
+            'ffmpeg.threads' => $this->container->getParameter('wapinet_threads_count'),
         ]);
     }
-
 
     private function createFfmpeg()
     {
         return FFmpegOriginal::create([
-            'ffmpeg.binaries'  => $this->container->getParameter('wapinet_ffmpeg_path'),
+            'ffmpeg.binaries' => $this->container->getParameter('wapinet_ffmpeg_path'),
             'ffprobe.binaries' => $this->container->getParameter('wapinet_ffprobe_path'),
-            'ffmpeg.threads'   => $this->container->getParameter('wapinet_threads_count'),
+            'ffmpeg.threads' => $this->container->getParameter('wapinet_threads_count'),
         ]);
     }
-
 
     public function getFfmpeg()
     {

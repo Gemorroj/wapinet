@@ -12,6 +12,7 @@ class HtmlValidatorController extends Controller
 {
     /**
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
@@ -38,10 +39,11 @@ class HtmlValidatorController extends Controller
         ]);
     }
 
-
     /**
      * @param array $data
+     *
      * @throws ValidatorException
+     *
      * @return \HTMLValidator\Response
      */
     protected function getHtmlValidator(array $data)

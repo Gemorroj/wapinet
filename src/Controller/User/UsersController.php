@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller\User;
 
 use App\Entity\User;
@@ -11,12 +12,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-
 class UsersController extends Controller
 {
     /**
-     * @param Request $request
+     * @param Request     $request
      * @param string|null $key
+     *
      * @return Response|RedirectResponse
      */
     public function indexAction(Request $request, $key = null)
@@ -62,14 +63,14 @@ class UsersController extends Controller
         ]);
     }
 
-
     /**
      * @param int $page
+     *
      * @return Pagerfanta
      */
-    protected function online ($page = 1)
+    protected function online($page = 1)
     {
-    	/** @var UserRepository $userRepository */
+        /** @var UserRepository $userRepository */
         $userRepository = $this->getDoctrine()->getRepository(User::class);
         $query = $userRepository->getOnlineUsersQuery();
 
@@ -81,6 +82,7 @@ class UsersController extends Controller
      * @param int   $page
      *
      * @throws \RuntimeException
+     *
      * @return Pagerfanta
      */
     protected function searchSphinx(array $data, $page = 1)

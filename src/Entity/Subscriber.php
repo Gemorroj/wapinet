@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Entity;
 
 /**
- * Subscriber
+ * Subscriber.
  */
 class Subscriber extends \ArrayObject
 {
@@ -41,6 +42,7 @@ class Subscriber extends \ArrayObject
 
     /**
      * @param User $user
+     *
      * @return Subscriber
      */
     public function setUser(User $user)
@@ -60,11 +62,12 @@ class Subscriber extends \ArrayObject
 
     /**
      * @param bool $emailFriends
+     *
      * @return Subscriber
      */
     public function setEmailFriends($emailFriends)
     {
-        $this->emailFriends = (bool)$emailFriends;
+        $this->emailFriends = (bool) $emailFriends;
 
         return $this;
     }
@@ -79,11 +82,12 @@ class Subscriber extends \ArrayObject
 
     /**
      * @param bool $emailNews
+     *
      * @return Subscriber
      */
     public function setEmailNews($emailNews)
     {
-        $this->emailNews = (bool)$emailNews;
+        $this->emailNews = (bool) $emailNews;
 
         return $this;
     }
@@ -113,7 +117,7 @@ class Subscriber extends \ArrayObject
         $result = '';
         foreach ($this->getIterator() as $item) {
             if (true === $item['enabled']) {
-                $result .= $item['name'] . ', ';
+                $result .= $item['name'].', ';
             }
         }
 

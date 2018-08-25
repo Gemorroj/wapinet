@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Entity;
 
 /**
- * Panel
+ * Panel.
  */
 class Panel extends \ArrayObject
 {
@@ -47,6 +48,7 @@ class Panel extends \ArrayObject
 
     /**
      * @param User $user
+     *
      * @return Panel
      */
     public function setUser(User $user)
@@ -61,57 +63,58 @@ class Panel extends \ArrayObject
      */
     public function getIterator()
     {
-        return new \ArrayIterator(array(
-            self::ROUTE_FORUM => array(
+        return new \ArrayIterator([
+            self::ROUTE_FORUM => [
                 'route' => self::ROUTE_FORUM,
                 'name' => 'Форум',
                 'enabled' => $this->getForum(),
-            ),
-            self::ROUTE_GUESTBOOK => array(
+            ],
+            self::ROUTE_GUESTBOOK => [
                 'route' => self::ROUTE_GUESTBOOK,
                 'name' => 'Гостевая',
                 'enabled' => $this->getGuestbook(),
-            ),
-            self::ROUTE_GIST => array(
+            ],
+            self::ROUTE_GIST => [
                 'route' => self::ROUTE_GIST,
                 'name' => 'Блоги',
                 'enabled' => $this->getGist(),
-            ),
-            self::ROUTE_FILE => array(
+            ],
+            self::ROUTE_FILE => [
                 'route' => self::ROUTE_FILE,
                 'name' => 'Файлообменник',
                 'enabled' => $this->getFile(),
-            ),
-            self::ROUTE_ARCHIVER => array(
+            ],
+            self::ROUTE_ARCHIVER => [
                 'route' => self::ROUTE_ARCHIVER,
                 'name' => 'Архиватор',
                 'enabled' => $this->getArchiver(),
-            ),
-            self::ROUTE_DOWNLOADS => array(
+            ],
+            self::ROUTE_DOWNLOADS => [
                 'route' => self::ROUTE_DOWNLOADS,
                 'name' => 'Развлечения',
                 'enabled' => $this->getDownloads(),
-            ),
-            self::ROUTE_UTILITIES => array(
+            ],
+            self::ROUTE_UTILITIES => [
                 'route' => self::ROUTE_UTILITIES,
                 'name' => 'Утилиты',
                 'enabled' => $this->getUtilities(),
-            ),
-            self::ROUTE_PROGRAMMING => array(
+            ],
+            self::ROUTE_PROGRAMMING => [
                 'route' => self::ROUTE_PROGRAMMING,
                 'name' => 'WEB мастерская',
                 'enabled' => $this->getProgramming(),
-            ),
-        ));
+            ],
+        ]);
     }
 
     /**
-     * @param boolean $forum
+     * @param bool $forum
+     *
      * @return Panel
      */
     public function setForum($forum)
     {
-        $this->forum = (bool)$forum;
+        $this->forum = (bool) $forum;
 
         return $this;
     }
@@ -125,12 +128,13 @@ class Panel extends \ArrayObject
     }
 
     /**
-     * @param boolean $guestbook
+     * @param bool $guestbook
+     *
      * @return Panel
      */
     public function setGuestbook($guestbook)
     {
-        $this->guestbook = (bool)$guestbook;
+        $this->guestbook = (bool) $guestbook;
 
         return $this;
     }
@@ -144,12 +148,13 @@ class Panel extends \ArrayObject
     }
 
     /**
-     * @param boolean $downloads
+     * @param bool $downloads
+     *
      * @return Panel
      */
     public function setDownloads($downloads)
     {
-        $this->downloads = (bool)$downloads;
+        $this->downloads = (bool) $downloads;
 
         return $this;
     }
@@ -163,12 +168,13 @@ class Panel extends \ArrayObject
     }
 
     /**
-     * @param boolean $programming
+     * @param bool $programming
+     *
      * @return Panel
      */
     public function setProgramming($programming)
     {
-        $this->programming = (bool)$programming;
+        $this->programming = (bool) $programming;
 
         return $this;
     }
@@ -182,12 +188,13 @@ class Panel extends \ArrayObject
     }
 
     /**
-     * @param boolean $utilities
+     * @param bool $utilities
+     *
      * @return Panel
      */
     public function setUtilities($utilities)
     {
-        $this->utilities = (bool)$utilities;
+        $this->utilities = (bool) $utilities;
 
         return $this;
     }
@@ -201,12 +208,13 @@ class Panel extends \ArrayObject
     }
 
     /**
-     * @param boolean $archiver
+     * @param bool $archiver
+     *
      * @return Panel
      */
     public function setArchiver($archiver)
     {
-        $this->archiver = (bool)$archiver;
+        $this->archiver = (bool) $archiver;
 
         return $this;
     }
@@ -220,12 +228,13 @@ class Panel extends \ArrayObject
     }
 
     /**
-     * @param boolean $gist
+     * @param bool $gist
+     *
      * @return Panel
      */
     public function setGist($gist)
     {
-        $this->gist = (bool)$gist;
+        $this->gist = (bool) $gist;
 
         return $this;
     }
@@ -239,12 +248,13 @@ class Panel extends \ArrayObject
     }
 
     /**
-     * @param boolean $file
+     * @param bool $file
+     *
      * @return Panel
      */
     public function setFile($file)
     {
-        $this->file = (bool)$file;
+        $this->file = (bool) $file;
 
         return $this;
     }
@@ -265,7 +275,7 @@ class Panel extends \ArrayObject
         $result = '';
         foreach ($this->getIterator() as $item) {
             if (true === $item['enabled']) {
-                $result .= $item['name'] . ', ';
+                $result .= $item['name'].', ';
             }
         }
 

@@ -17,6 +17,7 @@ class MassMediaController extends Controller
 
     /**
      * @param MassMedia $massMediaHelper
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function rtAction(MassMedia $massMediaHelper)
@@ -29,6 +30,7 @@ class MassMediaController extends Controller
 
     /**
      * @param MassMedia $massMediaHelper
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function inotvAction(MassMedia $massMediaHelper)

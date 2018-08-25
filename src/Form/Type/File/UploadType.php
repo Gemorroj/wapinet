@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form\Type\File;
 
 use App\Entity\File;
@@ -14,7 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Upload
+ * Upload.
  */
 class UploadType extends AbstractType
 {
@@ -22,6 +23,7 @@ class UploadType extends AbstractType
      * @var ContainerInterface
      */
     protected $container;
+
     /**
      * @param ContainerInterface $container
      */
@@ -31,27 +33,27 @@ class UploadType extends AbstractType
     }
 
     /**
-     * @var FormBuilderInterface $builder
+     * @var FormBuilderInterface
      * @var array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('file', FileUrlType::class, array('required' => true, 'label' => false));
-        $builder->add('description', TextareaType::class, array('required' => true, 'label' => 'Описание'));
+        $builder->add('file', FileUrlType::class, ['required' => true, 'label' => false]);
+        $builder->add('description', TextareaType::class, ['required' => true, 'label' => 'Описание']);
 
         // http://view.jquerymobile.com/1.3.2/dist/demos/widgets/autocomplete/autocomplete-remote.html
         // тэги
-        $builder->add('tags', TagsType::class, array('required' => false, 'label' => 'Тэги через запятую', 'attr' => array('autocomplete' => 'off')));
+        $builder->add('tags', TagsType::class, ['required' => false, 'label' => 'Тэги через запятую', 'attr' => ['autocomplete' => 'off']]);
 
-        $builder->add('plainPassword', CorePasswordType::class, array('required' => false, 'label' => 'Пароль', 'attr' => array('autocomplete' => 'off')));
+        $builder->add('plainPassword', CorePasswordType::class, ['required' => false, 'label' => 'Пароль', 'attr' => ['autocomplete' => 'off']]);
 
         if (false === $this->container->get('security.authorization_checker')->isGranted($this->container->getParameter('wapinet_role_nocaptcha'))) {
-            $builder->add('captcha', CaptchaType::class, array('required' => true, 'label' => 'Код'));
+            $builder->add('captcha', CaptchaType::class, ['required' => true, 'label' => 'Код']);
         }
 
-        $builder->add('submit', SubmitType::class, array('label' => 'Загрузить'));
+        $builder->add('submit', SubmitType::class, ['label' => 'Загрузить']);
     }
 
     /**
@@ -65,7 +67,7 @@ class UploadType extends AbstractType
     }
 
     /**
-     * Уникальное имя формы
+     * Уникальное имя формы.
      *
      * @return string
      */

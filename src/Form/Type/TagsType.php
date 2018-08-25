@@ -13,9 +13,9 @@ class TagsType extends AbstractType
     public $builder;
     private $entityManager;
 
-
     /**
      * TagsType constructor.
+     *
      * @param EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
@@ -34,7 +34,6 @@ class TagsType extends AbstractType
         $this->builder = $builder->getData();
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -51,6 +50,3 @@ class TagsType extends AbstractType
         return 'tags';
     }
 }
-
-
-

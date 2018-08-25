@@ -25,10 +25,10 @@ class Gist extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('gist_count_all', array($this, 'getCountAll')),
-            new \Twig_SimpleFunction('gist_count', array($this, 'getCount')),
-        );
+        return [
+            new \Twig_SimpleFunction('gist_count_all', [$this, 'getCountAll']),
+            new \Twig_SimpleFunction('gist_count', [$this, 'getCount']),
+        ];
     }
 
     /**

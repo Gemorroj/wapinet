@@ -8,11 +8,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
-
 class PagerankController extends Controller
 {
     /**
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
@@ -33,10 +33,10 @@ class PagerankController extends Controller
             $form->addError(new FormError($e->getMessage()));
         }
 
-        return $this->render('Pagerank/index.html.twig', array(
+        return $this->render('Pagerank/index.html.twig', [
             'form' => $form->createView(),
             'result' => $result,
-        ));
+        ]);
     }
 
     /**
@@ -47,33 +47,34 @@ class PagerankController extends Controller
     protected function getPagerank(array $data)
     {
         $url = $data['url'];
-        $domain = \str_ireplace(array('http://', 'https://'), '', $url);
+        $domain = \str_ireplace(['http://', 'https://'], '', $url);
 
-        return array(
+        return [
             'domain' => $domain,
-            'google' => array(
+            'google' => [
                 'pages' => $this->getGooglePages($domain),
                 'inurl' => $this->getGoogleInurl($domain),
-            ),
-            'yandex' => array(
+            ],
+            'yandex' => [
                 'pages' => $this->getYandexPages($domain),
                 'tcy' => $this->getYandexTcy($domain),
-            ),
+            ],
             'facebook' => Social::getFacebookShares($url),
             'vk' => Social::getVKontakteShares($url),
-        );
+        ];
     }
 
     /**
      * @param string $domain
+     *
      * @return string
      */
     private function getYandexPages($domain)
     {
         $curl = $this->get('curl');
-        $curl->init('https://yandex.ru/search/xml?user=gemorwapinet&key=' . $this->getParameter('wapinet_yandex_search_key'));
+        $curl->init('https://yandex.ru/search/xml?user=gemorwapinet&key='.$this->getParameter('wapinet_yandex_search_key'));
         $curl->setOpt(\CURLOPT_POST, true);
-        $curl->setOpt(\CURLOPT_POSTFIELDS, '<?xml version="1.0" encoding="UTF-8"?><request><query>' . \htmlspecialchars($domain, \ENT_XML1) . '</query><groupings><groupby groups-on-page="1"/></groupings></request>');
+        $curl->setOpt(\CURLOPT_POSTFIELDS, '<?xml version="1.0" encoding="UTF-8"?><request><query>'.\htmlspecialchars($domain, \ENT_XML1).'</query><groupings><groupby groups-on-page="1"/></groupings></request>');
 
         $out = 'n.a.';
         try {
@@ -82,20 +83,21 @@ class PagerankController extends Controller
             if (\preg_match('/<found priority="all">(.*)<\/found>/U', $response->getContent(), $match)) {
                 $out = $match[1];
             }
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         return $out;
     }
 
-
     /**
      * @param string $domain
+     *
      * @return string
      */
     private function getYandexTcy($domain)
     {
         $curl = $this->get('curl');
-        $curl->init('https://bar-navig.yandex.ru/u?ver=2&show=32&url=http://' . $domain);
+        $curl->init('https://bar-navig.yandex.ru/u?ver=2&show=32&url=http://'.$domain);
         $curl->addCompression();
 
         $out = 'n.a.';
@@ -105,14 +107,15 @@ class PagerankController extends Controller
             if (\preg_match("/value=\"(.\d*)\"/", $response, $match)) {
                 $out = $match[1];
             }
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         return $out;
     }
 
-
     /**
      * @param string $domain
+     *
      * @return string
      */
     protected function getGooglePages($domain)
@@ -120,7 +123,7 @@ class PagerankController extends Controller
         //return Google::getSiteindexTotal($domain);
 
         $curl = $this->get('curl');
-        $curl->init('https://www.google.com/search?hl=en&q=' . \rawurlencode('site:' . $domain));
+        $curl->init('https://www.google.com/search?hl=en&q='.\rawurlencode('site:'.$domain));
         $curl->acceptRedirects();
         $curl->addCompression();
         $curl->addHeader('Accept-Language', 'en-US,en');
@@ -147,15 +150,15 @@ class PagerankController extends Controller
                     $out = $match[1];
                 }
             }
-
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         return $out;
     }
 
-
     /**
      * @param string $domain
+     *
      * @return string
      */
     protected function getGoogleInurl($domain)
@@ -163,7 +166,7 @@ class PagerankController extends Controller
         //return Google::getBacklinksTotal($domain);
 
         $curl = $this->get('curl');
-        $curl->init('https://www.google.com/search?hl=en&q=' . \rawurlencode('"' . $domain . '" -inurl:"' . $domain . '"'));
+        $curl->init('https://www.google.com/search?hl=en&q='.\rawurlencode('"'.$domain.'" -inurl:"'.$domain.'"'));
         $curl->acceptRedirects();
         $curl->addCompression();
         $curl->addHeader('Accept-Language', 'en-US,en');
@@ -176,7 +179,6 @@ class PagerankController extends Controller
             <div id="resultStats">About 345,000 results</div>
             <div class="sd" id="resultStats">About 7,720 results</div>
              */
-
 
             if (\strpos($response->getContent(), 'did not match any documents')) {
                 $out = '0';
@@ -191,8 +193,8 @@ class PagerankController extends Controller
                     $out = $match[1];
                 }
             }
-
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         return $out;
     }

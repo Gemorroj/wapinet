@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form\Type\User;
 
 use Symfony\Component\Form\AbstractType;
@@ -8,32 +9,32 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * Search
+ * Search.
  */
 class SearchType extends AbstractType
 {
     /**
-     * @var FormBuilderInterface $builder
+     * @var FormBuilderInterface
      * @var array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('search', CoreSearchType::class, array('attr' => array(
+        $builder->add('search', CoreSearchType::class, ['attr' => [
                 'maxlength' => 5000,
-                'title' => 'Слова разделенные пробелами. Работает модификатор *, кавычки и др.'
-            ),
+                'title' => 'Слова разделенные пробелами. Работает модификатор *, кавычки и др.',
+            ],
             'required' => true,
             'label' => false,
-            'constraints' => new NotBlank()
-        ));
+            'constraints' => new NotBlank(),
+        ]);
 
-        $builder->add('submit', SubmitType::class, array('label' => 'Искать'));
+        $builder->add('submit', SubmitType::class, ['label' => 'Искать']);
     }
 
     /**
-     * Уникальное имя формы
+     * Уникальное имя формы.
      *
      * @return string
      */

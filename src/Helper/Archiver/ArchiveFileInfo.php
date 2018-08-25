@@ -3,7 +3,7 @@
 namespace App\Helper\Archiver;
 
 /**
- * ArchiveFileInfo
+ * ArchiveFileInfo.
  */
 class ArchiveFileInfo extends \SplFileInfo
 {

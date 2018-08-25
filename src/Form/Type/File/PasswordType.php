@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form\Type\File;
 
 use Symfony\Component\Form\AbstractType;
@@ -8,25 +9,25 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * Password
+ * Password.
  */
 class PasswordType extends AbstractType
 {
     /**
-     * @var FormBuilderInterface $builder
+     * @var FormBuilderInterface
      * @var array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('password', CorePasswordType::class, array('required' => true, 'label' => 'Пароль', 'constraints' => new NotBlank()));
+        $builder->add('password', CorePasswordType::class, ['required' => true, 'label' => 'Пароль', 'constraints' => new NotBlank()]);
 
-        $builder->add('submit', SubmitType::class, array('label' => 'Готово'));
+        $builder->add('submit', SubmitType::class, ['label' => 'Готово']);
     }
 
     /**
-     * Уникальное имя формы
+     * Уникальное имя формы.
      *
      * @return string
      */

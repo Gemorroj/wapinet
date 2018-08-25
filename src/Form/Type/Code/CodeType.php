@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form\Type\Code;
 
 use App\Helper\Code;
@@ -9,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Code
+ * Code.
  */
 class CodeType extends AbstractType
 {
@@ -17,6 +18,7 @@ class CodeType extends AbstractType
 
     /**
      * CodeType constructor.
+     *
      * @param Code $code
      */
     public function __construct(Code $code)
@@ -25,7 +27,7 @@ class CodeType extends AbstractType
     }
 
     /**
-     * @var FormBuilderInterface $builder
+     * @var FormBuilderInterface
      * @var array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -48,7 +50,7 @@ class CodeType extends AbstractType
     }
 
     /**
-     * Уникальное имя формы
+     * Уникальное имя формы.
      *
      * @return string
      */

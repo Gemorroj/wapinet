@@ -17,7 +17,7 @@ class GistEvent extends Event
      * Constructs an event.
      *
      * @param User|null $user
-     * @param Gist $gist
+     * @param Gist      $gist
      */
     public function __construct(?User $user = null, Gist $gist)
     {
@@ -34,7 +34,6 @@ class GistEvent extends Event
     {
         return $this->user;
     }
-
 
     /**
      * Returns the file for this event.

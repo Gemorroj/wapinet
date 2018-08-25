@@ -15,11 +15,13 @@ class AdminController extends BaseAdminController
 {
     /**
      * @param Ginfo $ginfo
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function monitoringAction(Ginfo $ginfo)
     {
         $info = $ginfo->getInfo();
+
         return $this->render('monitoring.html.twig', [
             'info' => [
                 'general' => $info->getGeneral(),
@@ -36,6 +38,7 @@ class AdminController extends BaseAdminController
 
     /**
      * @param UserManagerInterface $userManager
+     *
      * @return \FOS\UserBundle\Model\UserInterface
      */
     public function createNewUserEntity(UserManagerInterface $userManager)
@@ -44,7 +47,7 @@ class AdminController extends BaseAdminController
     }
 
     /**
-     * @param User $user
+     * @param User                 $user
      * @param UserManagerInterface $userManage
      */
     public function prePersistUserEntity(User $user, UserManagerInterface $userManage)
@@ -55,7 +58,6 @@ class AdminController extends BaseAdminController
             $userManage->updateUser($user);
         }
     }
-
 
     /**
      * @param News $news
@@ -68,7 +70,7 @@ class AdminController extends BaseAdminController
     }
 
     /**
-     * Подписка на новости
+     * Подписка на новости.
      *
      * @param News $news
      */
@@ -98,7 +100,6 @@ class AdminController extends BaseAdminController
 
         $em->flush();
     }
-
 
     /**
      * @param object $entity

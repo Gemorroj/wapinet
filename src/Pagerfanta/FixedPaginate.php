@@ -17,7 +17,6 @@ class FixedPaginate
         $this->setResults($results);
     }
 
-
     /**
      * @param int $nbResults
      *
@@ -37,7 +36,6 @@ class FixedPaginate
     {
         return $this->nbResults;
     }
-
 
     /**
      * @param array $results

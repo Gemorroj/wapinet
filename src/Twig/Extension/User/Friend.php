@@ -43,21 +43,21 @@ class Friend extends \Twig_Extension
      */
     public function isFriends(User $user, User $friend): bool
     {
-    	/** @var FriendRepository $friendRepository */
+        /** @var FriendRepository $friendRepository */
         $friendRepository = $this->em->getRepository(\App\Entity\Friend::class);
         $objFriend = $friendRepository->getFriend($user, $friend);
 
-        return (null !== $objFriend);
+        return null !== $objFriend;
     }
-
 
     /**
      * @param User $user
+     *
      * @return int
      */
     public function countFriends(User $user): int
     {
-		/** @var FriendRepository $friendRepository */
+        /** @var FriendRepository $friendRepository */
         $friendRepository = $this->em->getRepository(\App\Entity\Friend::class);
 
         return $friendRepository->getFriendsCount($user);
@@ -65,14 +65,15 @@ class Friend extends \Twig_Extension
 
     /**
      * @param User $user
+     *
      * @return int
      */
     public function countOnlineFriends(User $user): int
     {
-		/** @var FriendRepository $friendRepository */
+        /** @var FriendRepository $friendRepository */
         $friendRepository = $this->em->getRepository(\App\Entity\Friend::class);
 
-        return $friendRepository->getFriendsCount($user, new \DateTime('now -' . User::LIFETIME));
+        return $friendRepository->getFriendsCount($user, new \DateTime('now -'.User::LIFETIME));
     }
 
     /**

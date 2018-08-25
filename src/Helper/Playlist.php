@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper;
 
 use M3uParser\M3uData;
@@ -25,9 +26,9 @@ class Playlist
         $this->m3uParser->addTag(ExtInf::class);
     }
 
-
     /**
      * @param File $file
+     *
      * @return M3uData
      */
     public function parseFile(File $file)

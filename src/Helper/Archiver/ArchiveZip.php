@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper\Archiver;
 
 use App\Exception\ArchiverException;
@@ -11,10 +12,12 @@ class ArchiveZip extends Archive
 {
     /**
      * @param string $directory
+     *
      * @return File
+     *
      * @throws ArchiverException
      */
-    public function create ($directory)
+    public function create($directory)
     {
         $tmpArchive = $this->getTmpArchive($directory);
 
@@ -28,18 +31,18 @@ class ArchiveZip extends Archive
             throw new ArchiverException('Не удалось добавить комментарий к ZIP архиву');
         }
 
-		foreach ($this->getFiles($directory) as $entry) {
-			/** @var ArchiveFileInfo $info */
-			$info = $entry->getPathInfo();
+        foreach ($this->getFiles($directory) as $entry) {
+            /** @var ArchiveFileInfo $info */
+            $info = $entry->getPathInfo();
             $dir = $info->getArchiveName();
-            $dir = ('' !== $dir ? $dir . '/' : '');
+            $dir = ('' !== $dir ? $dir.'/' : '');
 
             if (true === $entry->isDir()) {
-                if (false === $zip->addEmptyDir($dir . $entry->getFilename())) {
+                if (false === $zip->addEmptyDir($dir.$entry->getFilename())) {
                     throw new ArchiverException('Не удалось добавить директорию в ZIP архив');
                 }
             } else {
-                if (false === $zip->addFile($entry->getPathname(), $dir . $entry->getFilename())) {
+                if (false === $zip->addFile($entry->getPathname(), $dir.$entry->getFilename())) {
                     throw new ArchiverException('Не удалось добавить файл в ZIP архив');
                 }
             }
@@ -52,13 +55,14 @@ class ArchiveZip extends Archive
         return new File($tmpArchive);
     }
 
-
     /**
      * @param File $file
+     *
      * @return bool
+     *
      * @throws ArchiverException
      */
-    public function isValid (File $file)
+    public function isValid(File $file)
     {
         $zip = new \ZipArchive();
         $result = $zip->open($file->getPathname(), \ZipArchive::CHECKCONS);
@@ -73,10 +77,10 @@ class ArchiveZip extends Archive
         return true;
     }
 
-
     /**
      * @param string $directory
-     * @param File $file
+     * @param File   $file
+     *
      * @throws ArchiverException
      */
     public function extract($directory, File $file)
@@ -95,11 +99,11 @@ class ArchiveZip extends Archive
         }
     }
 
-
     /**
-     * @param File $file
+     * @param File   $file
      * @param string $entry
      * @param string $directory
+     *
      * @throws ArchiverException
      */
     public function extractEntry(File $file, $entry, $directory)

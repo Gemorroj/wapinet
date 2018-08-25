@@ -12,16 +12,15 @@ class TagsDataTransformer implements DataTransformerInterface
     private $separator = ',';
     private $entityManager;
 
-
     /**
      * TagsType constructor.
+     *
      * @param EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
     }
-
 
     /**
      * @param ArrayCollection|null $tagsDataFromDb
@@ -33,9 +32,9 @@ class TagsDataTransformer implements DataTransformerInterface
         return $tagsDataFromDb ? \implode($this->separator, $tagsDataFromDb->toArray()) : '';
     }
 
-
     /**
      * @param string $tagsDataFromForm
+     *
      * @return ArrayCollection|null
      */
     public function reverseTransform($tagsDataFromForm)

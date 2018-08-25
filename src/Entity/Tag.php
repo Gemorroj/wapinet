@@ -2,9 +2,8 @@
 
 namespace App\Entity;
 
-
 /**
- * Tag
+ * Tag.
  */
 class Tag
 {
@@ -29,9 +28,8 @@ class Tag
      */
     protected $updatedAt;
 
-
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -41,9 +39,10 @@ class Tag
     }
 
     /**
-     * Set id
+     * Set id.
      *
      * @param int $id
+     *
      * @return $this
      */
     public function setId($id)
@@ -54,7 +53,7 @@ class Tag
     }
 
     /**
-     * Get count
+     * Get count.
      *
      * @return int
      */
@@ -64,9 +63,10 @@ class Tag
     }
 
     /**
-     * Set count
+     * Set count.
      *
      * @param int $count
+     *
      * @return $this
      */
     public function setCount($count)
@@ -77,7 +77,7 @@ class Tag
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -87,9 +87,10 @@ class Tag
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return $this
      */
     public function setName($name)

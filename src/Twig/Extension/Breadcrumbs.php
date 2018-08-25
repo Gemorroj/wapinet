@@ -2,7 +2,6 @@
 
 namespace App\Twig\Extension;
 
-
 class Breadcrumbs extends \Twig_Extension
 {
     /**
@@ -19,6 +18,7 @@ class Breadcrumbs extends \Twig_Extension
 
     /**
      * @param array $options
+     *
      * @return string
      */
     public function getBreadcrumbs(array $options = [])
@@ -31,13 +31,12 @@ class Breadcrumbs extends \Twig_Extension
 
         $out = '<div data-role="navbar" data-iconpos="left"><ul>';
         foreach ($options as $key => $value) {
-            $out .= '<li><a class="ui-corner-all" data-icon="arrow-l" href="' . \htmlspecialchars($value['uri']) . '">' . \htmlspecialchars($value['title'], \ENT_NOQUOTES) . '</a></li>';
+            $out .= '<li><a class="ui-corner-all" data-icon="arrow-l" href="'.\htmlspecialchars($value['uri']).'">'.\htmlspecialchars($value['title'], \ENT_NOQUOTES).'</a></li>';
         }
         $out .= '</ul></div>';
 
         return $out;
     }
-
 
     /**
      * Returns the name of the extension.

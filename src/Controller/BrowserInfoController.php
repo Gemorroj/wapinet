@@ -53,7 +53,6 @@ class BrowserInfoController extends Controller
         return null;
     }
 
-
     /**
      * @param Request $request
      *
@@ -64,15 +63,15 @@ class BrowserInfoController extends Controller
         $proxy = $this->getProxy($request);
         if (null !== $proxy) {
             $proxyHost = [];
-            foreach(\explode(',', $proxy) as $v) {
+            foreach (\explode(',', $proxy) as $v) {
                 $proxyHost[] = \gethostbyaddr(\trim($v));
             }
+
             return \implode(',', $proxyHost);
         }
 
         return null;
     }
-
 
     /**
      * @param Request $request
@@ -91,9 +90,9 @@ class BrowserInfoController extends Controller
         return null;
     }
 
-
     /**
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)

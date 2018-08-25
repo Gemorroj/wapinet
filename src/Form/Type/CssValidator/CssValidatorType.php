@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form\Type\CssValidator;
 
 use App\Form\Type\FileUrlType;
@@ -9,29 +10,29 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * CssValidator
+ * CssValidator.
  */
 class CssValidatorType extends AbstractType
 {
     /**
-     * @var FormBuilderInterface $builder
+     * @var FormBuilderInterface
      * @var array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('css', TextareaType::class, array(
+        $builder->add('css', TextareaType::class, [
             'label' => 'CSS код',
             'required' => false,
-        ));
-        $builder->add('file', FileUrlType::class, array(
+        ]);
+        $builder->add('file', FileUrlType::class, [
             'label' => false,
             'required' => false,
-        ));
-        $builder->add('profile', ChoiceType::class, array(
+        ]);
+        $builder->add('profile', ChoiceType::class, [
             'label' => 'Профиль',
-            'choices' => array(
+            'choices' => [
                 'CSS3' => 'css3',
                 'Мобильный' => 'mobile',
                 'CSS2.1' => 'css21',
@@ -43,20 +44,20 @@ class CssValidatorType extends AbstractType
                 'телевидение ATSC' => 'atsc-tv',
                 'телевидение' => 'tv',
                 'Без специальных настроек' => 'none',
-            ),
-        ));
-        $builder->add('warning', ChoiceType::class, array(
+            ],
+        ]);
+        $builder->add('warning', ChoiceType::class, [
             'label' => 'Предупреждения',
-            'choices' => array(
+            'choices' => [
                 'Обычный отчет' => '1',
                 'Наиболее важные' => '0',
                 'Все' => '2',
                 'Без предупреждений' => 'no',
-            ),
-        ));
-        $builder->add('usermedium', ChoiceType::class, array(
+            ],
+        ]);
+        $builder->add('usermedium', ChoiceType::class, [
             'label' => 'Среда',
-            'choices' => array(
+            'choices' => [
                 'Все' => 'all',
                 'аудио (aural)' => 'aural',
                 'терминал Брайля (braille)' => 'braille',
@@ -68,14 +69,14 @@ class CssValidatorType extends AbstractType
                 'телетайп (tty)' => 'tty',
                 'телевизор (tv)' => 'tv',
                 'презентация (presentation)' => 'presentation',
-            ),
-        ));
+            ],
+        ]);
 
-        $builder->add('submit', SubmitType::class, array('label' => 'Проверить'));
+        $builder->add('submit', SubmitType::class, ['label' => 'Проверить']);
     }
 
     /**
-     * Уникальное имя формы
+     * Уникальное имя формы.
      *
      * @return string
      */

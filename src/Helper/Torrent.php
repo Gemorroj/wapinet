@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper;
 
 use PHP\BitTorrent\Decoder;
@@ -23,9 +24,9 @@ class Torrent
         $this->decoder = new Decoder(new Encoder());
     }
 
-
     /**
      * @param File $file
+     *
      * @return array
      */
     public function decodeFile(File $file)

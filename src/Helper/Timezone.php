@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper;
 
 use App\Entity\User;
@@ -17,7 +18,7 @@ class Timezone
     /**
      * @param TokenStorageInterface $tokenStorage
      */
-    public function __construct (TokenStorageInterface $tokenStorage)
+    public function __construct(TokenStorageInterface $tokenStorage)
     {
         $this->tokenStorage = $tokenStorage;
     }

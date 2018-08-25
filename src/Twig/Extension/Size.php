@@ -18,6 +18,7 @@ class Size extends \Twig_Extension
 
     /**
      * @param int|float|null $fileSizeInBytes
+     *
      * @return string|null
      */
     public function getSize($fileSizeInBytes)
@@ -30,11 +31,10 @@ class Size extends \Twig_Extension
         $byteUnits = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
         do {
             $fileSizeInBytes /= 1024;
-            $i++;
+            ++$i;
         } while ($fileSizeInBytes > 1024);
 
-
-        return \round(\max($fileSizeInBytes, 0.1), 1) . $byteUnits[$i];
+        return \round(\max($fileSizeInBytes, 0.1), 1).$byteUnits[$i];
     }
 
     /**

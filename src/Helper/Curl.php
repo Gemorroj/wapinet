@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper;
 
 use App\Exception\RequestException;
@@ -33,7 +34,6 @@ class Curl
     protected $headers = [];
     protected $postData = [];
 
-
     /**
      * @param ContainerInterface $container
      */
@@ -42,14 +42,14 @@ class Curl
         $this->container = $container;
     }
 
-
     /**
-     * Инициализация
+     * Инициализация.
      *
      * @param string|null $url
+     *
      * @return Curl
      */
-    public function init(?string $url = null) : self
+    public function init(?string $url = null): self
     {
         $this->curl = \curl_init();
 
@@ -66,49 +66,50 @@ class Curl
     }
 
     /**
-     * Закрываем соединение
+     * Закрываем соединение.
      */
-    public function close() : void
+    public function close(): void
     {
         \curl_close($this->curl);
     }
 
     /**
-     * Задаем опцию
+     * Задаем опцию.
      *
-     * @param int $key
+     * @param int   $key
      * @param mixed $value
+     *
      * @return Curl
      */
-    public function setOpt(int $key, $value) : self
+    public function setOpt(int $key, $value): self
     {
         \curl_setopt($this->curl, $key, $value);
 
         return $this;
     }
 
-
     /**
-     * Задаем url
+     * Задаем url.
      *
      * @param string $value
+     *
      * @return Curl
      */
-    public function setUrl(string $value) : self
+    public function setUrl(string $value): self
     {
         \curl_setopt($this->curl, \CURLOPT_URL, $value);
 
         return $this;
     }
 
-
     /**
      * Следовать перенаправлениям
      *
      * @param int $maxRedirects
+     *
      * @return Curl
      */
-    public function acceptRedirects(?int $maxRedirects = null) : self
+    public function acceptRedirects(?int $maxRedirects = null): self
     {
         \curl_setopt($this->curl, \CURLOPT_FOLLOWLOCATION, true);
         if (null !== $maxRedirects) {
@@ -118,14 +119,14 @@ class Curl
         return $this;
     }
 
-
     /**
      * @throws LengthRequiredHttpException|\LengthException
      *
      * @param bool $strict Исключение если не удалось определить размер файла (не найден Content-Length)
+     *
      * @return Response
      */
-    public function checkFileSize(bool $strict = true) : Response
+    public function checkFileSize(bool $strict = true): Response
     {
         $this->setOpt(\CURLOPT_NOBODY, true);
         $response = $this->exec();
@@ -148,14 +149,14 @@ class Curl
         return $response;
     }
 
-
     /**
      * @param string $rawHeaders
      *
      * @see http://php.net/manual/ru/function.http-parse-headers.php#112986
+     *
      * @return array
      */
-    protected function parseHeaders(string $rawHeaders) : array
+    protected function parseHeaders(string $rawHeaders): array
     {
         if (\function_exists('http_parse_headers')) {
             return \http_parse_headers($rawHeaders);
@@ -178,8 +179,8 @@ class Curl
 
                 $key = $h[0];
             } else {
-                if (\substr($h[0], 0, 1) === "\t") {
-                    $headers[$key] .= "\r\n\t" . \trim($h[0]);
+                if ("\t" === \substr($h[0], 0, 1)) {
+                    $headers[$key] .= "\r\n\t".\trim($h[0]);
                 } elseif (!$key) {
                     $headers[0] = \trim($h[0]);
                 }
@@ -188,7 +189,6 @@ class Curl
 
         return $headers;
     }
-
 
     // загрузка файлов
     // @see https://github.com/kriswallsmith/Buzz/blob/master/lib/Buzz/Client/AbstractCurl.php#L101
@@ -231,14 +231,14 @@ class Curl
     }
     */
 
-
     /**
      * Получаем результат
      *
      * @throws RequestException
+     *
      * @return Response
      */
-    public function exec() : Response
+    public function exec(): Response
     {
         if ($this->headers) {
             $this->setOpt(\CURLOPT_HTTPHEADER, $this->headers);
@@ -266,13 +266,13 @@ class Curl
     /**
      * @return Curl
      */
-    protected function sendPostData() : self
+    protected function sendPostData(): self
     {
         $this->addHeader('Content-Type', 'application/x-www-form-urlencoded');
         $this->setOpt(\CURLOPT_POST, true);
         $post = '';
         foreach ($this->postData as $key => $value) {
-            $post .= \rawurlencode($key) . '=' . \rawurlencode($value) . '&';
+            $post .= \rawurlencode($key).'='.\rawurlencode($value).'&';
         }
         $post = \rtrim($post, '&');
         $this->setOpt(\CURLOPT_POSTFIELDS, $post);
@@ -280,9 +280,8 @@ class Curl
         return $this;
     }
 
-
     /**
-     * Получение ресурса CURL
+     * Получение ресурса CURL.
      *
      * @return resource
      */
@@ -294,7 +293,7 @@ class Curl
     /**
      * @return Curl
      */
-    public function addCompression() : self
+    public function addCompression(): self
     {
         $this->setOpt(\CURLOPT_ENCODING, '');
 
@@ -304,11 +303,12 @@ class Curl
     /**
      * @param string $key
      * @param string $value
+     *
      * @return Curl
      */
-    public function addHeader(string $key, string $value) : self
+    public function addHeader(string $key, string $value): self
     {
-        $this->headers[] = $key . ': ' . $value;
+        $this->headers[] = $key.': '.$value;
 
         return $this;
     }
@@ -316,7 +316,7 @@ class Curl
     /**
      * @return Curl
      */
-    public function addBrowserHeaders() : self
+    public function addBrowserHeaders(): self
     {
         $this->headers = \array_merge($this->headers, static::$browserHeaders);
 
@@ -326,9 +326,10 @@ class Curl
     /**
      * @param string $key
      * @param string $value
+     *
      * @return Curl
      */
-    public function addPostData(string $key, string $value) : self
+    public function addPostData(string $key, string $value): self
     {
         $this->postData[$key] = $value;
 

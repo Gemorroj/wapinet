@@ -20,7 +20,6 @@ class FileUrlType extends AbstractType
      */
     protected $container;
 
-
     /**
      * @param ContainerInterface $container
      */
@@ -49,7 +48,6 @@ class FileUrlType extends AbstractType
         $builder->add('file', FileType::class, ['attr' => $attrFile, 'label' => false, 'required' => false]);
         $builder->add('url', UrlType::class, ['attr' => ['placeholder' => 'Ссылка'], 'label' => false, 'required' => false]);
 
-
         if ($options['delete_button']) {
             $builder->add('file_url_delete', CheckboxType::class, [
                 'attr' => ['data-mini' => 'true'],
@@ -62,9 +60,8 @@ class FileUrlType extends AbstractType
         $this->builder = $builder->getData();
     }
 
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {

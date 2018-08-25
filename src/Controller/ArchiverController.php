@@ -27,9 +27,9 @@ class ArchiverController extends Controller
         return $this->render('Archiver/index.html.twig');
     }
 
-
     /**
      * @param Request $request
+     *
      * @return RedirectResponse|Response
      */
     public function createAction(Request $request)
@@ -59,10 +59,10 @@ class ArchiverController extends Controller
         ]);
     }
 
-
     /**
      * @param Request $request
-     * @param string $archive
+     * @param string  $archive
+     *
      * @return Response
      */
     public function editAction(Request $request, $archive)
@@ -91,16 +91,16 @@ class ArchiverController extends Controller
         ]);
     }
 
-
     /**
      * @param string $archive
+     *
      * @return BinaryFileResponse
      */
     public function downloadAction($archive)
     {
         $archiveDirectory = $this->checkArchiveDirectory($archive);
 
-        $name = $archive . '.zip';
+        $name = $archive.'.zip';
         $archiveZip = $this->get('archive_zip');
 
         $file = new BinaryFileResponse($archiveZip->create($archiveDirectory));
@@ -116,9 +116,11 @@ class ArchiverController extends Controller
 
     /**
      * @param Request $request
-     * @param string $archive
-     * @param string $name
+     * @param string  $archive
+     * @param string  $name
+     *
      * @return BinaryFileResponse
+     *
      * @throws AccessDeniedException
      */
     public function downloadFileAction(Request $request, $archive, $name)
@@ -141,8 +143,9 @@ class ArchiverController extends Controller
 
     /**
      * @param Request $request
-     * @param string $archive
-     * @param string $name
+     * @param string  $archive
+     * @param string  $name
+     *
      * @return RedirectResponse
      */
     public function deleteFileAction(Request $request, $archive, $name)
@@ -157,12 +160,13 @@ class ArchiverController extends Controller
         return $this->redirectToRoute('archiver_edit', ['archive' => $archive]);
     }
 
-
     /**
      * @param string $archiveDirectory
      * @param string $path
-     * @param bool $allowDirectory
+     * @param bool   $allowDirectory
+     *
      * @throws AccessDeniedException
+     *
      * @return string
      */
     protected function checkFile($archiveDirectory, $path, $allowDirectory = false)
@@ -170,17 +174,17 @@ class ArchiverController extends Controller
         $path = \str_replace('\\', '/', $path);
 
         if (false !== \strpos($path, '../')) {
-            throw $this->createAccessDeniedException('Запрещен доступ: "' . $path . '"".');
+            throw $this->createAccessDeniedException('Запрещен доступ: "'.$path.'"".');
         }
 
-        $file = \realpath($archiveDirectory . \DIRECTORY_SEPARATOR . $path);
+        $file = \realpath($archiveDirectory.\DIRECTORY_SEPARATOR.$path);
 
         if (false === $file) {
-            throw $this->createNotFoundException('Файл не найден: "' . $path . '"".');
+            throw $this->createNotFoundException('Файл не найден: "'.$path.'"".');
         }
 
         if (true !== $allowDirectory && true === \is_dir($allowDirectory)) {
-            throw $this->createAccessDeniedException('Запрещен доступ: "' . $path . '"".');
+            throw $this->createAccessDeniedException('Запрещен доступ: "'.$path.'"".');
         }
 
         return $file;
@@ -188,6 +192,7 @@ class ArchiverController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return RedirectResponse|Response
      */
     public function extractAction(Request $request)
@@ -217,10 +222,11 @@ class ArchiverController extends Controller
         ]);
     }
 
-
     /**
      * @param File $file
+     *
      * @throws ArchiverException
+     *
      * @return string
      */
     protected function extractArchive(File $file)
@@ -229,6 +235,7 @@ class ArchiverController extends Controller
         if (true === $archiveZip->isValid($file)) {
             $archiveDirectory = $this->createArchiveDirectory();
             $archiveZip->extract($archiveDirectory, $file);
+
             return $archiveDirectory;
         }
         //$archiveRar = $this->get('archive_rar');
@@ -241,12 +248,12 @@ class ArchiverController extends Controller
         if (true === $archive7z->isValid($file)) {
             $archiveDirectory = $this->createArchiveDirectory();
             $archive7z->extract($archiveDirectory, $file);
+
             return $archiveDirectory;
         }
 
         throw new ArchiverException('Неподдерживаемый тип архива');
     }
-
 
     /**
      * @return string
@@ -266,12 +273,14 @@ class ArchiverController extends Controller
 
     /**
      * @param string $archive
+     *
      * @return string
+     *
      * @throws FileException
      */
     protected function checkArchiveDirectory($archive)
     {
-        $directory = $this->getTmpDir() . \DIRECTORY_SEPARATOR . $archive;
+        $directory = $this->getTmpDir().\DIRECTORY_SEPARATOR.$archive;
 
         if (false === \is_dir($directory)) {
             throw new FileException('Не удалось найти временную директорию');
@@ -286,23 +295,25 @@ class ArchiverController extends Controller
         return $directory;
     }
 
-
     /**
      * @return string
+     *
      * @throws IOException
      */
     protected function createArchiveDirectory()
     {
-        $directory = $this->getTmpDir() . \DIRECTORY_SEPARATOR . $this->generateArchiveName();
+        $directory = $this->getTmpDir().\DIRECTORY_SEPARATOR.$this->generateArchiveName();
         $this->get('filesystem')->mkdir($directory);
 
         return $directory;
     }
 
     /**
-     * @param string $directory
+     * @param string       $directory
      * @param UploadedFile $file
+     *
      * @throws FileException
+     *
      * @return File
      */
     protected function addFile($directory, UploadedFile $file)

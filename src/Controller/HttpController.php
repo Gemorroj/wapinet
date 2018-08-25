@@ -33,9 +33,9 @@ class HttpController extends Controller
         ]);
     }
 
-
     /**
      * @param array $data
+     *
      * @return Response
      */
     protected function getHttp(array $data)

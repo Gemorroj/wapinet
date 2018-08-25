@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper;
 
 use App\Pagerfanta\FixedPaginate;
@@ -25,18 +26,19 @@ class Bash
 
     /**
      * @param int|null $page
+     *
      * @return Pagerfanta
      */
     public function getPage($page = null)
     {
         $curl = $this->container->get('curl');
-        $curl->init('https://bash.im/index/' . $page);
+        $curl->init('https://bash.im/index/'.$page);
         $curl->addBrowserHeaders();
         $curl->addCompression();
         $response = $curl->exec();
 
         if (!$response->isSuccessful()) {
-            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
         }
 
         $content = \mb_convert_encoding($response->getContent(), 'UTF-8', 'Windows-1251');
@@ -57,7 +59,7 @@ class Bash
 
         // заносим цитаты в массив
         $items = [];
-        foreach($matchItems as $v) {
+        foreach ($matchItems as $v) {
             $items[] = \strip_tags($v[1]);
         }
 

@@ -13,7 +13,6 @@ class SyntaxController extends Controller
      */
     protected $data;
 
-
     /**
      * @param Request $request
      *
@@ -30,19 +29,18 @@ class SyntaxController extends Controller
         $this->data = $this->get('php_validator')->validateFragment($code);
         $charset = $this->detectEncoding($code);
 
-        $page = '<div class="border">Кодировка: ' . $charset . '<br/></div><div class="border">Размер: ' . $this->codeSize($code) . '<br/></div>';
+        $page = '<div class="border">Кодировка: '.$charset.'<br/></div><div class="border">Размер: '.$this->codeSize($code).'<br/></div>';
 
         if ($this->data['validity']) {
             $page .= '<div class="green">Синтаксических ошибок не найдено<br/></div>';
         } else {
-            $page .= '<div class="red">' . $this->data['errors'][0]['type'] . ': ' . $this->data['errors'][0]['message'] . '<br/>Ошибка в ' . $this->data['errors'][0]['line'] . ' строке<br/></div>';
+            $page .= '<div class="red">'.$this->data['errors'][0]['type'].': '.$this->data['errors'][0]['message'].'<br/>Ошибка в '.$this->data['errors'][0]['line'].' строке<br/></div>';
         }
 
         $page .= $this->highlightCode($this->toUtf8Encoding($code, $charset), $this->data['errors'][0]['line']);
 
         return new Response($page);
     }
-
 
     /**
      * @param string $source
@@ -79,10 +77,10 @@ class SyntaxController extends Controller
         $size = \strlen($source);
 
         if ($size < 1024) {
-            return $size . ' b';
+            return $size.' b';
         }
 
-        return \round($size / 1024, 2) . ' kb';
+        return \round($size / 1024, 2).' kb';
     }
 
     /**
@@ -100,10 +98,10 @@ class SyntaxController extends Controller
         for ($i = 0; $i < $all; ++$i) {
             $next = $i + 1;
             $l = \strlen($next);
-            $page .= '<span class="' . ($line == $next ? 'fail_code' : 'true_code') . '">' . ($l < $len ? \str_repeat('&#160;', $len - $l) : '') . $next . '</span> ' . $array[$i] . "\n";
+            $page .= '<span class="'.($line == $next ? 'fail_code' : 'true_code').'">'.($l < $len ? \str_repeat('&#160;', $len - $l) : '').$next.'</span> '.$array[$i]."\n";
         }
 
-        return '<div class="code"><pre><code>' . $page . '</code></pre></div>';
+        return '<div class="code"><pre><code>'.$page.'</code></pre></div>';
     }
 
     /**

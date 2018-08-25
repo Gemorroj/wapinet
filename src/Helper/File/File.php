@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper\File;
 
 use App\Entity\File as DataFile;
@@ -17,22 +18,22 @@ class File
      * @var ContainerInterface
      */
     protected $container;
-	/**
-	 * @var EncoderFactoryInterface
-	 */
+    /**
+     * @var EncoderFactoryInterface
+     */
     protected $encoderFactory;
 
-	/**
-	 * File constructor.
-	 * @param ContainerInterface $container
-	 * @param EncoderFactoryInterface $encoderFactory
-	 */
+    /**
+     * File constructor.
+     *
+     * @param ContainerInterface      $container
+     * @param EncoderFactoryInterface $encoderFactory
+     */
     public function __construct(ContainerInterface $container, EncoderFactoryInterface $encoderFactory)
     {
         $this->container = $container;
         $this->encoderFactory = $encoderFactory;
     }
-
 
     /**
      * @param DataFile $file
@@ -43,27 +44,26 @@ class File
         $realPath = $file->getFile()->getRealPath();
         $this->container->get('filesystem')->remove([
             // $realPath, // сам файл удаляется entity менеджером
-            $realPath . '.png',
-            $realPath . '.jpg',
-            $realPath . '.mp4',
-            $realPath . '.mp4.jpg',
-            $realPath . '.mp4.png',
-            $realPath . '.mp3',
+            $realPath.'.png',
+            $realPath.'.jpg',
+            $realPath.'.mp4',
+            $realPath.'.mp4.jpg',
+            $realPath.'.mp4.png',
+            $realPath.'.mp3',
         ]);
 
         // кэш картинок
         $path = $this->container->get('vich_uploader.templating.helper.uploader_helper')->asset($file, 'file');
         $this->container->get('liip_imagine.cache.manager')->remove([
             $path,
-            $path . '.png',
-            $path . '.jpg',
-            $path . '.mp4',
-            $path . '.mp4.jpg',
-            $path . '.mp4.png',
-            $path . '.mp3',
+            $path.'.png',
+            $path.'.jpg',
+            $path.'.mp4',
+            $path.'.mp4.jpg',
+            $path.'.mp4.png',
+            $path.'.mp3',
         ], 'thumbnail');
     }
-
 
     /**
      * @param DataFile $file
@@ -79,10 +79,9 @@ class File
         $file->setTags($tagsCollection);
     }
 
-
     /**
      * @param DataFile $file
-     * @param string $password
+     * @param string   $password
      */
     public function setPassword(DataFile $file, string $password)
     {
@@ -103,12 +102,13 @@ class File
         $file->setPlainPassword(null);
     }
 
-
     /**
      * @param string $directory
      * @param string $path
-     * @param bool $allowDirectory
+     * @param bool   $allowDirectory
+     *
      * @throws AccessDeniedException|NotFoundHttpException
+     *
      * @return string
      */
     public function checkFile($directory, $path, $allowDirectory = false)
@@ -116,17 +116,17 @@ class File
         $path = \str_replace('\\', '/', $path);
 
         if (false !== \strpos($path, '../')) {
-            throw new AccessDeniedException('Запрещен доступ: "' . $path . '"".');
+            throw new AccessDeniedException('Запрещен доступ: "'.$path.'"".');
         }
 
-        $file = \realpath($directory . \DIRECTORY_SEPARATOR . $path);
+        $file = \realpath($directory.\DIRECTORY_SEPARATOR.$path);
 
         if (false === $file) {
-            throw new NotFoundHttpException('Файл не найден: "' . $path . '"".');
+            throw new NotFoundHttpException('Файл не найден: "'.$path.'"".');
         }
 
         if (true !== $allowDirectory && true === \is_dir($allowDirectory)) {
-            throw new AccessDeniedException('Запрещен доступ: "' . $path . '"".');
+            throw new AccessDeniedException('Запрещен доступ: "'.$path.'"".');
         }
 
         return $file;

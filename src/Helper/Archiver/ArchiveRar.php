@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper\Archiver;
 
 use App\Exception\ArchiverException;
@@ -11,21 +12,24 @@ class ArchiveRar extends Archive
 {
     /**
      * @param string $directory
+     *
      * @return File
+     *
      * @throws ArchiverException
      */
-    public function create ($directory)
+    public function create($directory)
     {
         throw new ArchiverException('Создание RAR архивов не поддерживается');
     }
 
-
     /**
      * @param File $file
+     *
      * @return bool
+     *
      * @throws ArchiverException
      */
-    public function isValid (File $file)
+    public function isValid(File $file)
     {
         $rar = \RarArchive::open($file->getPathname());
         if (false === $rar) {
@@ -43,10 +47,10 @@ class ArchiveRar extends Archive
         return true;
     }
 
-
     /**
      * @param string $directory
-     * @param File $file
+     * @param File   $file
+     *
      * @throws ArchiverException
      */
     public function extract($directory, File $file)
@@ -72,11 +76,11 @@ class ArchiveRar extends Archive
         }
     }
 
-
     /**
-     * @param File $file
+     * @param File   $file
      * @param string $entry
      * @param string $directory
+     *
      * @throws ArchiverException
      */
     public function extractEntry(File $file, $entry, $directory)

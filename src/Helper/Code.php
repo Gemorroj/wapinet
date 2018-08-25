@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper;
 
 use App\Exception\CodeException;
@@ -28,11 +29,12 @@ class Code
         ];
     }
 
-
     /**
      * @param string $algorithm
      * @param string $string
+     *
      * @return string
+     *
      * @throws CodeException
      */
     public function convertString($algorithm, $string)
@@ -54,6 +56,7 @@ class Code
 
     /**
      * @param string $result
+     *
      * @throws CodeException
      */
     private function checkJsonResult($result)
@@ -85,6 +88,7 @@ class Code
 
     /**
      * @param mixed $result
+     *
      * @throws CodeException
      */
     private function checkResult($result)
@@ -97,6 +101,7 @@ class Code
     /**
      * @param string $algorithm
      * @param string $fileName
+     *
      * @return string
      */
     public function convertFile($algorithm, $fileName)

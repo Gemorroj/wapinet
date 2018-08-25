@@ -24,7 +24,6 @@ class FileUrlDataTransformer implements DataTransformerInterface
      */
     protected $required;
 
-
     /**
      * @param ContainerInterface $container
      * @param bool               $required
@@ -47,23 +46,24 @@ class FileUrlDataTransformer implements DataTransformerInterface
         if ($fileDataFromDb instanceof File) {
             return [
                 'web_path' => \str_replace('\\', '//', \mb_substr($fileDataFromDb->getPathname(), \mb_strlen($this->container->get('kernel')->getPublicDir()))),
-                'file_url' => $fileDataFromDb
+                'file_url' => $fileDataFromDb,
             ];
         }
         if ($fileDataFromDb instanceof FileContent) {
             return [
-                'web_path' => 'data:' . $fileDataFromDb->getMimeType() . ';base64,' . \base64_encode($fileDataFromDb->getContent()),
-                'file_url' => $fileDataFromDb
+                'web_path' => 'data:'.$fileDataFromDb->getMimeType().';base64,'.\base64_encode($fileDataFromDb->getContent()),
+                'file_url' => $fileDataFromDb,
             ];
         }
 
         return null;
     }
 
-
     /**
      * @param array $fileDataFromForm
+     *
      * @return UploadedFile|FileUrl|null
+     *
      * @throws TransformationFailedException|InvalidArgumentException
      */
     public function reverseTransform($fileDataFromForm)
@@ -81,9 +81,9 @@ class FileUrlDataTransformer implements DataTransformerInterface
         return $uploadedFile;
     }
 
-
     /**
      * @param array $fileDataFromForm
+     *
      * @return null|FileUrl|UploadedFile
      */
     protected function getUploadedFile(array $fileDataFromForm)
@@ -107,7 +107,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
             $responseHead = $curl->checkFileSize(false);
 
             if (!$responseHead->isSuccessful() && !$responseHead->isRedirection()) {
-                throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $responseHead->getStatusCode() . ')');
+                throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$responseHead->getStatusCode().')');
             }
 
             $temp = \tempnam($this->container->get('kernel')->getTmpDir(), 'file_url');
@@ -127,7 +127,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
             \fclose($f);
 
             if (!$responseBody->isSuccessful()) {
-                throw new TransformationFailedException('Не удалось скачать файл по ссылке (HTTP код: ' . $responseBody->getStatusCode() . ')');
+                throw new TransformationFailedException('Не удалось скачать файл по ссылке (HTTP код: '.$responseBody->getStatusCode().')');
             }
 
             $uploadedFile = new FileUrl(
@@ -141,14 +141,14 @@ class FileUrlDataTransformer implements DataTransformerInterface
         return $uploadedFile;
     }
 
-
     /**
      * @param ResponseHeaderBag $headers
-     * @param string $url
-     * @param string $default
+     * @param string            $url
+     * @param string            $default
+     *
      * @return string
      */
-    protected function getOriginalName(ResponseHeaderBag $headers, string $url, string $default = 'index.html') : string
+    protected function getOriginalName(ResponseHeaderBag $headers, string $url, string $default = 'index.html'): string
     {
         $contentDisposition = $headers->get('Content-Disposition');
         if ($contentDisposition) {

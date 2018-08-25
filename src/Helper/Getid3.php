@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper;
 
 /**
@@ -25,7 +26,7 @@ class Getid3
         if (!defined('GETID3_INCLUDEPATH')) {
             $this->getId3();
         }
-        include_once(GETID3_INCLUDEPATH.'write.php');
+        include_once GETID3_INCLUDEPATH.'write.php';
 
         $writer = new \getid3_writetags();
         $writer->tag_encoding = 'UTF-8';

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -16,17 +17,19 @@ class Mime
     /**
      * @param ContainerInterface $container
      */
-    public function __construct (ContainerInterface $container)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
     /**
      * @param string $url
+     *
      * @return array
+     *
      * @see http://www.php.net/manual/ru/function.mime-content-type.php#107798
      */
-    private function generateMime ($url = 'http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types')
+    private function generateMime($url = 'http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types')
     {
         $curl = $this->container->get('curl');
         $curl->init($url);
@@ -35,7 +38,7 @@ class Mime
         $curl->close();
 
         if (!$response->isSuccessful()) {
-            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
         }
 
         $mime = [
@@ -52,8 +55,8 @@ class Mime
             'gz' => 'application/gzip',
         ];
         foreach (\explode("\n", $response->getContent()) as $x) {
-            if (isset($x[0]) && $x[0] !== '#' && \preg_match_all('#([^\s]+)#', $x, $out) && isset($out[1]) && ($c = \count($out[1])) > 1) {
-                for ($i = 1; $i < $c; $i++) {
+            if (isset($x[0]) && '#' !== $x[0] && \preg_match_all('#([^\s]+)#', $x, $out) && isset($out[1]) && ($c = \count($out[1])) > 1) {
+                for ($i = 1; $i < $c; ++$i) {
                     $mime[$out[1][$i]] = $out[1][0];
                 }
             }
@@ -62,22 +65,22 @@ class Mime
         return $mime;
     }
 
-
     /**
      * @return array
+     *
      * @throws \RuntimeException
      */
     private function getMimeArray()
     {
         $cacheDir = $this->container->get('kernel')->getCacheDir();
-        $mimeFileName = $cacheDir . \DIRECTORY_SEPARATOR . 'mime.types.php';
+        $mimeFileName = $cacheDir.\DIRECTORY_SEPARATOR.'mime.types.php';
 
         if (true === \file_exists($mimeFileName)) {
             return include $mimeFileName;
         }
 
         $mimeArray = $this->generateMime();
-        $result = \file_put_contents($mimeFileName, '<?php return ' . \var_export($mimeArray, true) . ';' . "\n");
+        $result = \file_put_contents($mimeFileName, '<?php return '.\var_export($mimeArray, true).';'."\n");
         if (false === $result) {
             throw new \RuntimeException('Не удалось записать MIME типы');
         }
@@ -85,9 +88,9 @@ class Mime
         return $mimeArray;
     }
 
-
     /**
      * @param string $path
+     *
      * @return string
      */
     public function getMimeType($path)

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper;
 
 use StopSpam\Query as StopSpamQuery;
@@ -15,10 +16,10 @@ class StopSpam
         $this->request = new StopSpamRequest();
     }
 
-	/**
-	 * @param Request $request
-	 */
-    public function checkRequest(Request $request) : void
+    /**
+     * @param Request $request
+     */
+    public function checkRequest(Request $request): void
     {
         $query = new StopSpamQuery();
         $query->addIp($request->getClientIp());

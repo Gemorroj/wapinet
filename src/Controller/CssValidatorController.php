@@ -12,6 +12,7 @@ class CssValidatorController extends Controller
 {
     /**
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
@@ -39,10 +40,11 @@ class CssValidatorController extends Controller
         ]);
     }
 
-
     /**
      * @param array $data
+     *
      * @throws ValidatorException
+     *
      * @return \CSSValidator\Response
      */
     protected function getCssValidator(array $data)

@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class SubscriberType extends AbstractType
 {
     /**
-     * @var FormBuilderInterface $builder
+     * @var FormBuilderInterface
      * @var array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -20,18 +20,18 @@ class SubscriberType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('emailNews', CheckboxType::class, array('label' => 'Присылать E-mail о новостях сайта', 'required' => false))
-            ->add('emailFriends', CheckboxType::class, array('label' => 'Присылать E-mail о действиях друзей', 'required' => false))
+            ->add('emailNews', CheckboxType::class, ['label' => 'Присылать E-mail о новостях сайта', 'required' => false])
+            ->add('emailFriends', CheckboxType::class, ['label' => 'Присылать E-mail о действиях друзей', 'required' => false])
         ;
 
-        $builder->add('submit', SubmitType::class, array('label' => 'Изменить'));
+        $builder->add('submit', SubmitType::class, ['label' => 'Изменить']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => Subscriber::class,
-        ));
+        ]);
     }
 
     public function getBlockPrefix()

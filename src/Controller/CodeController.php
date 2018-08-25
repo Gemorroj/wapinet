@@ -12,6 +12,7 @@ class CodeController extends Controller
 {
     /**
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
@@ -38,10 +39,11 @@ class CodeController extends Controller
         ]);
     }
 
-
     /**
      * @param array $data
+     *
      * @throws ValidatorException
+     *
      * @return string
      */
     protected function getCode(array $data)

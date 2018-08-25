@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
 
 /**
- * File
+ * File.
  */
 class File implements \Serializable
 {
@@ -109,7 +109,6 @@ class File implements \Serializable
         $this->tags = new ArrayCollection();
     }
 
-
     /**
      * @return string
      */
@@ -135,7 +134,6 @@ class File implements \Serializable
         }
     }
 
-
     /**
      * @return bool
      */
@@ -153,19 +151,19 @@ class File implements \Serializable
     }
 
     /**
-     * @param boolean $hidden
+     * @param bool $hidden
+     *
      * @return File
      */
     public function setHidden($hidden)
     {
-        $this->hidden = (bool)$hidden;
+        $this->hidden = (bool) $hidden;
 
         return $this;
     }
 
-
     /**
-     * Get id
+     * Get id.
      *
      * @return integer
      */
@@ -175,9 +173,10 @@ class File implements \Serializable
     }
 
     /**
-     * Set id
+     * Set id.
      *
      * @param int $id
+     *
      * @return File
      */
     public function setId($id)
@@ -188,7 +187,7 @@ class File implements \Serializable
     }
 
     /**
-     * Get meta
+     * Get meta.
      *
      * @return Meta|null
      */
@@ -198,9 +197,10 @@ class File implements \Serializable
     }
 
     /**
-     * Set meta
+     * Set meta.
      *
      * @param Meta $meta
+     *
      * @return File
      */
     public function setMeta(Meta $meta = null)
@@ -211,7 +211,7 @@ class File implements \Serializable
     }
 
     /**
-     * Get fileTags
+     * Get fileTags.
      *
      * @return ArrayCollection
      */
@@ -221,9 +221,10 @@ class File implements \Serializable
     }
 
     /**
-     * Set fileTags
+     * Set fileTags.
      *
      * @param ArrayCollection $fileTags
+     *
      * @return File
      */
     public function setFileTags(ArrayCollection $fileTags)
@@ -249,6 +250,7 @@ class File implements \Serializable
      * Использовать только для отображения. В БД этого поля нет.
      *
      * @param ArrayCollection $tags
+     *
      * @return File
      */
     public function setTags(ArrayCollection $tags = null)
@@ -259,7 +261,7 @@ class File implements \Serializable
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return User|null
      */
@@ -269,9 +271,10 @@ class File implements \Serializable
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param User $user
+     *
      * @return File
      */
     public function setUser(User $user = null)
@@ -291,6 +294,7 @@ class File implements \Serializable
 
     /**
      * @param string $ip
+     *
      * @return File
      */
     public function setIp($ip)
@@ -310,6 +314,7 @@ class File implements \Serializable
 
     /**
      * @param string $browser
+     *
      * @return File
      */
     public function setBrowser($browser)
@@ -365,6 +370,7 @@ class File implements \Serializable
 
     /**
      * @param \DateTime $lastViewAt
+     *
      * @return File
      */
     public function setLastViewAt(\DateTime $lastViewAt)
@@ -384,6 +390,7 @@ class File implements \Serializable
 
     /**
      * @param int $countViews
+     *
      * @return File
      */
     public function setCountViews($countViews)
@@ -431,6 +438,7 @@ class File implements \Serializable
 
     /**
      * @param string|null $plainPassword
+     *
      * @return File
      */
     public function setPlainPassword($plainPassword = null)
@@ -450,6 +458,7 @@ class File implements \Serializable
 
     /**
      * @param string|null $password
+     *
      * @return File
      */
     public function setPassword($password = null)
@@ -469,6 +478,7 @@ class File implements \Serializable
 
     /**
      * @param string|null $mimeType
+     *
      * @return File
      */
     public function setMimeType($mimeType)
@@ -489,6 +499,7 @@ class File implements \Serializable
 
     /**
      * @param int $fileSize
+     *
      * @return File
      */
     public function setFileSize($fileSize)
@@ -508,6 +519,7 @@ class File implements \Serializable
 
     /**
      * @param string $fileName
+     *
      * @return File
      */
     public function setFileName($fileName)
@@ -516,7 +528,6 @@ class File implements \Serializable
 
         return $this;
     }
-
 
     /**
      * @return string
@@ -528,6 +539,7 @@ class File implements \Serializable
 
     /**
      * @param string $originalFileName
+     *
      * @return File
      */
     public function setOriginalFileName($originalFileName)
@@ -536,7 +548,6 @@ class File implements \Serializable
 
         return $this;
     }
-
 
     /**
      * @return string
@@ -576,6 +587,7 @@ class File implements \Serializable
 
     /**
      * @param string $description
+     *
      * @return File
      */
     public function setDescription($description)
@@ -586,7 +598,7 @@ class File implements \Serializable
     }
 
     /**
-     * MD5 file hash
+     * MD5 file hash.
      *
      * @return string
      */
@@ -596,9 +608,10 @@ class File implements \Serializable
     }
 
     /**
-     * MD5 file hash
+     * MD5 file hash.
      *
      * @param string $hash
+     *
      * @return File
      */
     public function setHash($hash)
@@ -613,7 +626,7 @@ class File implements \Serializable
      */
     public function isImage()
     {
-        return (0 === \strpos($this->getMimeType(), 'image/') || 'application/postscript' === $this->getMimeType() || 'application/illustrator' === $this->getMimeType());
+        return 0 === \strpos($this->getMimeType(), 'image/') || 'application/postscript' === $this->getMimeType() || 'application/illustrator' === $this->getMimeType();
     }
 
     /**
@@ -621,7 +634,7 @@ class File implements \Serializable
      */
     public function isVideo()
     {
-        return (0 === \strpos($this->getMimeType(), 'video/') || 'application/vnd.rn-realmedia' === $this->getMimeType());
+        return 0 === \strpos($this->getMimeType(), 'video/') || 'application/vnd.rn-realmedia' === $this->getMimeType();
     }
 
     /**
@@ -629,7 +642,7 @@ class File implements \Serializable
      */
     public function isAudio()
     {
-        return (0 === \strpos($this->getMimeType(), 'audio/') && 'audio/x-mpegurl' !== $this->getMimeType());
+        return 0 === \strpos($this->getMimeType(), 'audio/') && 'audio/x-mpegurl' !== $this->getMimeType();
     }
 
     /**
@@ -637,7 +650,7 @@ class File implements \Serializable
      */
     public function isText()
     {
-        return (0 === \strpos($this->getMimeType(), 'text/'));
+        return 0 === \strpos($this->getMimeType(), 'text/');
     }
 
     /**
@@ -645,7 +658,7 @@ class File implements \Serializable
      */
     public function isXml()
     {
-        return ('application/xml' === $this->getMimeType() || false !== \strpos($this->getMimeType(), '+xml'));
+        return 'application/xml' === $this->getMimeType() || false !== \strpos($this->getMimeType(), '+xml');
     }
 
     /**
@@ -674,7 +687,7 @@ class File implements \Serializable
      */
     public function isFlash()
     {
-        return ('application/x-shockwave-flash' === $this->getMimeType());
+        return 'application/x-shockwave-flash' === $this->getMimeType();
     }
 
     /**
@@ -682,7 +695,7 @@ class File implements \Serializable
      */
     public function isJavaApp()
     {
-        return ('application/java-archive' === $this->getMimeType());
+        return 'application/java-archive' === $this->getMimeType();
     }
 
     /**
@@ -690,7 +703,7 @@ class File implements \Serializable
      */
     public function isAndroidApp()
     {
-        return ('application/vnd.android.package-archive' === $this->getMimeType());
+        return 'application/vnd.android.package-archive' === $this->getMimeType();
     }
 
     /**
@@ -698,7 +711,7 @@ class File implements \Serializable
      */
     public function isSymbianApp()
     {
-        return ('application/vnd.symbian.install' === $this->getMimeType() || 'x-epoc/x-sisx-app' === $this->getMimeType());
+        return 'application/vnd.symbian.install' === $this->getMimeType() || 'x-epoc/x-sisx-app' === $this->getMimeType();
     }
 
     /**
@@ -706,7 +719,7 @@ class File implements \Serializable
      */
     public function isWindowsApp()
     {
-        return ('application/x-msdownload' === $this->getMimeType());
+        return 'application/x-msdownload' === $this->getMimeType();
     }
 
     /**
@@ -714,7 +727,7 @@ class File implements \Serializable
      */
     public function isPdf()
     {
-        return ('application/pdf' === $this->getMimeType());
+        return 'application/pdf' === $this->getMimeType();
     }
 
     /**
@@ -722,7 +735,7 @@ class File implements \Serializable
      */
     public function isWord()
     {
-        return ('application/vnd.openxmlformats-officedocument.wordprocessingml.document' === $this->getMimeType() || 'application/msword' === $this->getMimeType());
+        return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' === $this->getMimeType() || 'application/msword' === $this->getMimeType();
     }
 
     /**
@@ -730,7 +743,7 @@ class File implements \Serializable
      */
     public function isRtf()
     {
-        return ('application/rtf' === $this->getMimeType());
+        return 'application/rtf' === $this->getMimeType();
     }
 
     /**
@@ -738,7 +751,7 @@ class File implements \Serializable
      */
     public function isExcel()
     {
-        return ('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' === $this->getMimeType() || 'application/vnd.ms-excel' === $this->getMimeType());
+        return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' === $this->getMimeType() || 'application/vnd.ms-excel' === $this->getMimeType();
     }
 
     /**
@@ -746,7 +759,7 @@ class File implements \Serializable
      */
     public function is3gp()
     {
-        return ('video/3gpp' === $this->getMimeType() || 'video/3gpp2' === $this->getMimeType());
+        return 'video/3gpp' === $this->getMimeType() || 'video/3gpp2' === $this->getMimeType();
     }
 
     /**
@@ -754,7 +767,7 @@ class File implements \Serializable
      */
     public function isAvi()
     {
-        return ('video/x-msvideo' === $this->getMimeType());
+        return 'video/x-msvideo' === $this->getMimeType();
     }
 
     /**
@@ -762,7 +775,7 @@ class File implements \Serializable
      */
     public function isWmv()
     {
-        return ('video/x-ms-wmv' === $this->getMimeType());
+        return 'video/x-ms-wmv' === $this->getMimeType();
     }
 
     /**
@@ -770,7 +783,7 @@ class File implements \Serializable
      */
     public function isMp3()
     {
-        return ('audio/mpeg' === $this->getMimeType());
+        return 'audio/mpeg' === $this->getMimeType();
     }
 
     /**
@@ -778,7 +791,7 @@ class File implements \Serializable
      */
     public function isM4a()
     {
-        return ('audio/mp4' === $this->getMimeType() || 'audio/x-m4a' === $this->getMimeType());
+        return 'audio/mp4' === $this->getMimeType() || 'audio/x-m4a' === $this->getMimeType();
     }
 
     /**
@@ -786,7 +799,7 @@ class File implements \Serializable
      */
     public function isM4v()
     {
-        return ('video/mp4' === $this->getMimeType() || 'video/x-m4v' === $this->getMimeType());
+        return 'video/mp4' === $this->getMimeType() || 'video/x-m4v' === $this->getMimeType();
     }
 
     /**
@@ -794,7 +807,7 @@ class File implements \Serializable
      */
     public function isOga()
     {
-        return ('audio/ogg' === $this->getMimeType());
+        return 'audio/ogg' === $this->getMimeType();
     }
 
     /**
@@ -802,7 +815,7 @@ class File implements \Serializable
      */
     public function isOgv()
     {
-        return ('video/ogg' === $this->getMimeType());
+        return 'video/ogg' === $this->getMimeType();
     }
 
     /**
@@ -810,7 +823,7 @@ class File implements \Serializable
      */
     public function isWebma()
     {
-        return ('audio/webm' === $this->getMimeType());
+        return 'audio/webm' === $this->getMimeType();
     }
 
     /**
@@ -818,7 +831,7 @@ class File implements \Serializable
      */
     public function isWebmv()
     {
-        return ('video/webm' === $this->getMimeType());
+        return 'video/webm' === $this->getMimeType();
     }
 
     /**
@@ -826,7 +839,7 @@ class File implements \Serializable
      */
     public function isWav()
     {
-        return ('audio/x-wav' === $this->getMimeType());
+        return 'audio/x-wav' === $this->getMimeType();
     }
 
     /**
@@ -834,7 +847,7 @@ class File implements \Serializable
      */
     public function isAmr()
     {
-        return ('audio/3gpp' === $this->getMimeType());
+        return 'audio/3gpp' === $this->getMimeType();
     }
 
     /**
@@ -842,7 +855,7 @@ class File implements \Serializable
      */
     public function isFla()
     {
-        return ('audio/x-flv' === $this->getMimeType());
+        return 'audio/x-flv' === $this->getMimeType();
     }
 
     /**
@@ -850,7 +863,7 @@ class File implements \Serializable
      */
     public function isFlv()
     {
-        return ('video/x-flv' === $this->getMimeType());
+        return 'video/x-flv' === $this->getMimeType();
     }
 
     /**
@@ -858,7 +871,7 @@ class File implements \Serializable
      */
     public function isFlac()
     {
-        return ('audio/x-flac' === $this->getMimeType());
+        return 'audio/x-flac' === $this->getMimeType();
     }
 
     /**
@@ -866,7 +879,7 @@ class File implements \Serializable
      */
     public function isTorrent()
     {
-        return ('application/x-bittorrent' === $this->getMimeType());
+        return 'application/x-bittorrent' === $this->getMimeType();
     }
 
     /**
@@ -874,7 +887,7 @@ class File implements \Serializable
      */
     public function isPlaylist()
     {
-        return ('audio/x-mpegurl' === $this->getMimeType());
+        return 'audio/x-mpegurl' === $this->getMimeType();
     }
 
     /**
@@ -913,11 +926,10 @@ class File implements \Serializable
     /**
      * @return bool
      */
-    public function isExtractableArchive ()
+    public function isExtractableArchive()
     {
         return $this->isArchive();
     }
-
 
     /**
      * @return string

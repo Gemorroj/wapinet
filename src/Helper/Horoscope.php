@@ -1,8 +1,8 @@
 <?php
+
 namespace App\Helper;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 
 /**
  * Horoscope хэлпер
@@ -22,9 +22,9 @@ class Horoscope
         $this->container = $container;
     }
 
-
     /**
      * @param string $zodiac
+     *
      * @return null|string
      */
     public function getName($zodiac)
@@ -82,30 +82,29 @@ class Horoscope
         return null;
     }
 
-
     /**
      * @param string $zodiac
+     *
      * @return array
      */
     public function getHoroscope($zodiac)
     {
         $curl = $this->container->get('curl');
-        $curl->init('http://hyrax.ru/rss_daily_common_' . $zodiac . '.xml');
+        $curl->init('http://hyrax.ru/rss_daily_common_'.$zodiac.'.xml');
         $curl->addCompression();
         $response = $curl->exec();
 
         if (!$response->isSuccessful()) {
-            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
         }
 
         $obj = \simplexml_load_string($response->getContent());
 
         return [
-            'date' => new \DateTime((string)$obj->channel->item->pubDate),
-            'horoscope' => (string)$obj->channel->item->description,
+            'date' => new \DateTime((string) $obj->channel->item->pubDate),
+            'horoscope' => (string) $obj->channel->item->description,
         ];
     }
-
 
     /**
      * @return array
@@ -119,14 +118,14 @@ class Horoscope
         $response = $curl->exec();
 
         if (!$response->isSuccessful()) {
-            throw new \RuntimeException('Не удалось получить данные (HTTP код: ' . $response->getStatusCode() . ')');
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
         }
 
         $obj = \simplexml_load_string($response->getContent());
 
         return [
-            'date' => new \DateTime((string)$obj->channel->item->pubDate),
-            'horoscope' => (string)$obj->channel->item->description,
+            'date' => new \DateTime((string) $obj->channel->item->pubDate),
+            'horoscope' => (string) $obj->channel->item->description,
         ];
     }
 }

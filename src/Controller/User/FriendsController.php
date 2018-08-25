@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller\User;
 
 use App\Entity\Friend;
@@ -12,13 +13,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-
 class FriendsController extends Controller
 {
     /**
-     * @param Request $request
-     * @param string $username
+     * @param Request              $request
+     * @param string               $username
      * @param UserManagerInterface $userManager
+     *
      * @return Response
      */
     public function indexAction(Request $request, $username, UserManagerInterface $userManager)
@@ -41,12 +42,12 @@ class FriendsController extends Controller
         ]);
     }
 
-
     /**
-     * @param string  $username
+     * @param string               $username
      * @param UserManagerInterface $userManager
      *
      * @return RedirectResponse
+     *
      * @throws \LogicException|AccessDeniedException
      */
     public function addAction($username, UserManagerInterface $userManager)
@@ -67,7 +68,7 @@ class FriendsController extends Controller
         $objFriend = $friendRepository->getFriend($user, $friend);
 
         if (null !== $objFriend) {
-            throw new \LogicException($user->getUsername() . ' уже в друзьях.');
+            throw new \LogicException($user->getUsername().' уже в друзьях.');
         }
 
         $objFriend = new Friend();
@@ -86,12 +87,12 @@ class FriendsController extends Controller
         return $this->redirectToRoute('wapinet_user_profile', ['username' => $friend->getUsername()]);
     }
 
-
     /**
-     * @param string  $username
+     * @param string               $username
      * @param UserManagerInterface $userManager
      *
      * @return RedirectResponse
+     *
      * @throws \LogicException|AccessDeniedException
      */
     public function deleteAction($username, UserManagerInterface $userManager)
@@ -112,7 +113,7 @@ class FriendsController extends Controller
         $objFriend = $friendRepository->getFriend($user, $friend);
 
         if (null === $objFriend) {
-            throw new \LogicException($user->getUsername() . ' не в друзьях.');
+            throw new \LogicException($user->getUsername().' не в друзьях.');
         }
 
         $user->getFriends()->removeElement($objFriend);

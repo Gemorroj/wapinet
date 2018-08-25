@@ -21,12 +21,12 @@ class Bbcode extends \Twig_Extension
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('wapinet_bbcode_parse', function (string $text) : string {
+            new \Twig_SimpleFilter('wapinet_bbcode_parse', function (string $text): string {
                 // хост нужен для email
                 $host = $this->requestContext->getHost();
                 $xbbcode = new Xbbcode('//'.$host.'/build/resources/xbbcode');
@@ -42,10 +42,10 @@ class Bbcode extends \Twig_Extension
 class WapinetSpoiler extends \Xbbcode\Tag\Spoiler
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getSpoiler($id)
     {
-        return '<input data-inline="true" data-mini="true" class="bb_spoiler" type="button" value="Спойлер" onclick="$(\'#' . $id . '\').toggle(); return false;" />';
+        return '<input data-inline="true" data-mini="true" class="bb_spoiler" type="button" value="Спойлер" onclick="$(\'#'.$id.'\').toggle(); return false;" />';
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Security;
 
 use App\Entity\File;
@@ -32,7 +33,7 @@ class FileVoter extends Voter
         return true;
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token) : bool
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
         if (!($user instanceof User)) {
