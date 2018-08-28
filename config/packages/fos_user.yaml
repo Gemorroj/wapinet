@@ -8,3 +8,5 @@ fos_user:
     from_email:
         address: '%wapinet_robot_email%'
         sender_name: '%wapinet_robot_email%'
+    service:
+        mailer: fos_user.mailer.twig_swift

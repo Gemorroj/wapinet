@@ -1,12 +1,4 @@
 framework:
-    templating:
-        engines:
-            twig
-
-    validation:
-        enabled: true
-        enable_annotations: false
-
     secret: '%env(APP_SECRET)%'
     #default_locale: en
     #csrf_protection: true

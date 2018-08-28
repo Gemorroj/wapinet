@@ -10,7 +10,7 @@ class Hash
     /**
      * @return array
      */
-    public function getAlgorithms()
+    public function getAlgorithms(): array
     {
         return \hash_algos();
     }
@@ -21,7 +21,7 @@ class Hash
      *
      * @return string
      */
-    public function hashString($algorithm, $string)
+    public function hashString(string $algorithm, string $string): string
     {
         return \hash($algorithm, $string);
     }
@@ -32,7 +32,7 @@ class Hash
      *
      * @return string
      */
-    public function hashFile($algorithm, $fileName)
+    public function hashFile(string $algorithm, string $fileName): string
     {
         return \hash_file($algorithm, $fileName);
     }
