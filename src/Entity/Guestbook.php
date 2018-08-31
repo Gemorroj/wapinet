@@ -8,7 +8,7 @@ namespace App\Entity;
 class Guestbook
 {
     /**
-     * @var integer
+     * @var int
      */
     private $id;
     /**
@@ -39,7 +39,7 @@ class Guestbook
     /**
      * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

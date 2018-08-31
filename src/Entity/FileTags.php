@@ -8,7 +8,7 @@ namespace App\Entity;
 class FileTags
 {
     /**
-     * @var integer
+     * @var int
      */
     private $id;
     /**
@@ -23,7 +23,7 @@ class FileTags
     /**
      * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

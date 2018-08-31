@@ -75,9 +75,9 @@ class GistController extends Controller
     /**
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws AccessDeniedException
+     *
+     * @return RedirectResponse
      */
     public function addAction(Request $request)
     {

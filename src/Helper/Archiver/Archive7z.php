@@ -14,9 +14,9 @@ class Archive7z extends Archive
     /**
      * @param string $directory
      *
-     * @return File
-     *
      * @throws ArchiverException
+     *
+     * @return File
      */
     public function create($directory)
     {
@@ -26,9 +26,9 @@ class Archive7z extends Archive
     /**
      * @param File $file
      *
-     * @return bool
-     *
      * @throws ArchiverException
+     *
+     * @return bool
      */
     public function isValid(File $file)
     {

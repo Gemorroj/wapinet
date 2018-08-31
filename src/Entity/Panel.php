@@ -120,7 +120,7 @@ class Panel extends \ArrayObject
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getForum()
     {
@@ -140,7 +140,7 @@ class Panel extends \ArrayObject
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getGuestbook()
     {
@@ -160,7 +160,7 @@ class Panel extends \ArrayObject
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getDownloads()
     {
@@ -180,7 +180,7 @@ class Panel extends \ArrayObject
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getProgramming()
     {
@@ -200,7 +200,7 @@ class Panel extends \ArrayObject
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getUtilities()
     {
@@ -220,7 +220,7 @@ class Panel extends \ArrayObject
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getArchiver()
     {
@@ -240,7 +240,7 @@ class Panel extends \ArrayObject
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getGist()
     {
@@ -260,7 +260,7 @@ class Panel extends \ArrayObject
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getFile()
     {

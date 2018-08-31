@@ -45,7 +45,7 @@ class ArchiverController extends Controller
                     $archiveDirectory = $this->createArchiveDirectory();
                     $this->addFile($archiveDirectory, $data['file']);
 
-                    $archive = basename($archiveDirectory);
+                    $archive = \basename($archiveDirectory);
 
                     return $this->redirectToRoute('archiver_edit', ['archive' => $archive]);
                 }
@@ -119,9 +119,9 @@ class ArchiverController extends Controller
      * @param string  $archive
      * @param string  $name
      *
-     * @return BinaryFileResponse
-     *
      * @throws AccessDeniedException
+     *
+     * @return BinaryFileResponse
      */
     public function downloadFileAction(Request $request, $archive, $name)
     {
@@ -173,7 +173,7 @@ class ArchiverController extends Controller
     {
         $path = \str_replace('\\', '/', $path);
 
-        if (false !== \strpos($path, '../')) {
+        if (false !== \mb_strpos($path, '../')) {
             throw $this->createAccessDeniedException('Запрещен доступ: "'.$path.'"".');
         }
 
@@ -260,7 +260,7 @@ class ArchiverController extends Controller
      */
     protected function generateArchiveName()
     {
-        return uniqid('archive', false);
+        return \uniqid('archive', false);
     }
 
     /**
@@ -274,9 +274,9 @@ class ArchiverController extends Controller
     /**
      * @param string $archive
      *
-     * @return string
-     *
      * @throws FileException
+     *
+     * @return string
      */
     protected function checkArchiveDirectory($archive)
     {
@@ -296,9 +296,9 @@ class ArchiverController extends Controller
     }
 
     /**
-     * @return string
-     *
      * @throws IOException
+     *
+     * @return string
      */
     protected function createArchiveDirectory()
     {

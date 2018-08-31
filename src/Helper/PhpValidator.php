@@ -27,9 +27,9 @@ class PhpValidator
     /**
      * @param BaseFile $file
      *
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function validateFile(BaseFile $file)
     {
@@ -44,9 +44,9 @@ class PhpValidator
     /**
      * @param string $source
      *
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function validateFragment($source)
     {

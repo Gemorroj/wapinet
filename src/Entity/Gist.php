@@ -8,7 +8,7 @@ namespace App\Entity;
 class Gist
 {
     /**
-     * @var integer
+     * @var int
      */
     private $id;
     /**
@@ -43,7 +43,7 @@ class Gist
     /**
      * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

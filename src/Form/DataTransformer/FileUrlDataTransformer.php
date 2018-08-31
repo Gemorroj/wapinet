@@ -62,9 +62,9 @@ class FileUrlDataTransformer implements DataTransformerInterface
     /**
      * @param array $fileDataFromForm
      *
-     * @return UploadedFile|FileUrl|null
-     *
      * @throws TransformationFailedException|InvalidArgumentException
+     *
+     * @return UploadedFile|FileUrl|null
      */
     public function reverseTransform($fileDataFromForm)
     {

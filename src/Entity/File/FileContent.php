@@ -36,7 +36,7 @@ class FileContent
         $this->content = $content;
         $this->mimeType = $mimeType;
         $this->basename = $basename;
-        $this->size = \strlen($content);
+        $this->size = \mb_strlen($content);
     }
 
     /**

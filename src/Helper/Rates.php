@@ -53,9 +53,9 @@ class Rates
     /**
      * @param string $country
      *
-     * @return array
-     *
      * @throws \RuntimeException
+     *
+     * @return array
      */
     public function getRates($country)
     {

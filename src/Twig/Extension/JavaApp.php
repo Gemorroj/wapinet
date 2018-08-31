@@ -129,7 +129,7 @@ class JavaApp extends \Twig_Extension
     {
         foreach (\explode(',', $content) as $v) {
             $v = \trim(\trim($v), '/');
-            if ('png' === \strtolower(\pathinfo($v, PATHINFO_EXTENSION))) {
+            if ('png' === \mb_strtolower(\pathinfo($v, PATHINFO_EXTENSION))) {
                 try {
                     $this->container->get('archive_zip')->extractEntry(
                         new BaseFile($this->getPublicDir().$path, false),

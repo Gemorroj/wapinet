@@ -42,9 +42,9 @@ class WhoisController extends Controller
     /**
      * @param array $data
      *
-     * @return string HTML текст
-     *
      * @throws WhoisException
+     *
+     * @return string HTML текст
      */
     protected function getWhois(array $data)
     {

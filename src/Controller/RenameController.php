@@ -44,9 +44,9 @@ class RenameController extends Controller
     /**
      * @param array $data
      *
-     * @return BinaryFileResponse
-     *
      * @throws \RuntimeException
+     *
+     * @return BinaryFileResponse
      */
     protected function getRename(array $data)
     {

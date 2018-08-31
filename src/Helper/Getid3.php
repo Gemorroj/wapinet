@@ -23,7 +23,7 @@ class Getid3
      */
     public function getId3Writer()
     {
-        if (!defined('GETID3_INCLUDEPATH')) {
+        if (!\defined('GETID3_INCLUDEPATH')) {
             $this->getId3();
         }
         include_once GETID3_INCLUDEPATH.'write.php';

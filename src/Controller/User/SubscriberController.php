@@ -17,9 +17,9 @@ class SubscriberController extends Controller
     /**
      * @param Request $request
      *
-     * @return RedirectResponse|Response
-     *
      * @throws AccessDeniedException
+     *
+     * @return RedirectResponse|Response
      */
     public function editAction(Request $request)
     {

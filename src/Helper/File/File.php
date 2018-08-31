@@ -115,7 +115,7 @@ class File
     {
         $path = \str_replace('\\', '/', $path);
 
-        if (false !== \strpos($path, '../')) {
+        if (false !== \mb_strpos($path, '../')) {
             throw new AccessDeniedException('Запрещен доступ: "'.$path.'"".');
         }
 

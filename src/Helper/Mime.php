@@ -66,9 +66,9 @@ class Mime
     }
 
     /**
-     * @return array
-     *
      * @throws \RuntimeException
+     *
+     * @return array
      */
     private function getMimeArray()
     {
@@ -95,7 +95,7 @@ class Mime
      */
     public function getMimeType($path)
     {
-        $extension = \strtolower(\pathinfo($path, PATHINFO_EXTENSION));
+        $extension = \mb_strtolower(\pathinfo($path, PATHINFO_EXTENSION));
         $mimeArray = $this->getMimeArray();
 
         if (true === isset($mimeArray[$extension])) {

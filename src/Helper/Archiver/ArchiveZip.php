@@ -13,9 +13,9 @@ class ArchiveZip extends Archive
     /**
      * @param string $directory
      *
-     * @return File
-     *
      * @throws ArchiverException
+     *
+     * @return File
      */
     public function create($directory)
     {
@@ -58,9 +58,9 @@ class ArchiveZip extends Archive
     /**
      * @param File $file
      *
-     * @return bool
-     *
      * @throws ArchiverException
+     *
+     * @return bool
      */
     public function isValid(File $file)
     {

@@ -16,7 +16,7 @@ class AudioException extends \RuntimeException
     {
         $this->messages = $messages;
 
-        parent::__construct(implode("\r\n", $messages), $code, $previous);
+        parent::__construct(\implode("\r\n", $messages), $code, $previous);
     }
 
     /**

@@ -18,7 +18,7 @@ class SyntaxController extends Controller
      *
      * @return Response
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $code = $request->get('f');
 
@@ -47,7 +47,7 @@ class SyntaxController extends Controller
      *
      * @return string
      */
-    protected function detectEncoding($source)
+    protected function detectEncoding(string $source): string
     {
         return \mb_detect_encoding($source, ['UTF-8', 'Windows-1251', 'KOI8-R', 'CP866', 'ISO-8859-1', 'US-ASCII'], true);
     }
@@ -58,7 +58,7 @@ class SyntaxController extends Controller
      *
      * @return string
      */
-    protected function toUtf8Encoding($source, $encoding)
+    protected function toUtf8Encoding(string $source, string $encoding): string
     {
         if ('UTF-8' !== $encoding) {
             return \mb_convert_encoding($source, 'UTF-8', $encoding);
@@ -72,9 +72,9 @@ class SyntaxController extends Controller
      *
      * @return string
      */
-    protected function codeSize($source)
+    protected function codeSize(string $source): string
     {
-        $size = \strlen($source);
+        $size = \mb_strlen($source);
 
         if ($size < 1024) {
             return $size.' b';
@@ -84,21 +84,21 @@ class SyntaxController extends Controller
     }
 
     /**
-     * @param string $source
-     * @param int    $line
+     * @param string   $source
+     * @param int|null $line
      *
      * @return string
      */
-    protected function highlightCode($source, $line = 0)
+    protected function highlightCode(string $source, ?int $line = null): string
     {
         $array = \array_slice(\explode("\n", $this->xhtmlCode($source)), 1, -2);
         $all = \count($array);
-        $len = \strlen($all);
+        $len = \mb_strlen((string) $all);
         $page = '';
         for ($i = 0; $i < $all; ++$i) {
             $next = $i + 1;
-            $l = \strlen($next);
-            $page .= '<span class="'.($line == $next ? 'fail_code' : 'true_code').'">'.($l < $len ? \str_repeat('&#160;', $len - $l) : '').$next.'</span> '.$array[$i]."\n";
+            $l = \mb_strlen((string) $next);
+            $page .= '<span class="'.($line === $next ? 'fail_code' : 'true_code').'">'.($l < $len ? \str_repeat('&#160;', $len - $l) : '').$next.'</span> '.$array[$i]."\n";
         }
 
         return '<div class="code"><pre><code>'.$page.'</code></pre></div>';
@@ -109,7 +109,7 @@ class SyntaxController extends Controller
      *
      * @return string
      */
-    protected function xhtmlCode($source)
+    protected function xhtmlCode(string $source): string
     {
         return \str_replace(
             ['&nbsp;', '<code>', '</code>', '<br />'],

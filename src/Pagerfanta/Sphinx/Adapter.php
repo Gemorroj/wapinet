@@ -19,7 +19,7 @@ class Adapter implements AdapterInterface
      */
     protected $array = [];
     /**
-     * @var integer
+     * @var int
      */
     protected $nbResults = 0;
 

@@ -74,8 +74,8 @@ class UnicodeController extends Controller
             return '&#x'.$key.';';
         }, $out);
 
-        $out = \substr($out, 1); // удаляем вначале "
-        $out = \substr($out, 0, -1); // удаляем в конце "
+        $out = \mb_substr($out, 1); // удаляем вначале "
+        $out = \mb_substr($out, 0, -1); // удаляем в конце "
         $out = \str_replace(['\"', '\\\\'], ['"', '\\'], $out);
 
         return $out;

@@ -28,9 +28,9 @@ class HtmlValidator
     /**
      * @param string $html
      *
-     * @return W3CServiceResponse
-     *
      * @throws W3CServiceException
+     *
+     * @return W3CServiceResponse
      */
     public function validateFragment($html)
     {
@@ -40,9 +40,9 @@ class HtmlValidator
     /**
      * @param File $file
      *
-     * @return W3CServiceResponse
-     *
      * @throws W3CServiceException
+     *
+     * @return W3CServiceResponse
      */
     public function validateFile(File $file)
     {

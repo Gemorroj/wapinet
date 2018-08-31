@@ -54,9 +54,9 @@ class TranslateController extends Controller
      * @param string $langTo
      * @param string $text
      *
-     * @return string
-     *
      * @throws HttpException
+     *
+     * @return string
      */
     private function translate($langFrom, $langTo, $text): string
     {
@@ -81,9 +81,9 @@ class TranslateController extends Controller
     /**
      * @param string $text
      *
-     * @return string
-     *
      * @throws HttpException
+     *
+     * @return string
      */
     private function detectLang($text)
     {
@@ -117,9 +117,9 @@ class TranslateController extends Controller
     }
 
     /**
-     * @return \stdClass
-     *
      * @throws \RuntimeException
+     *
+     * @return \stdClass
      */
     private function getLangs()
     {

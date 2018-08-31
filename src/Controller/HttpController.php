@@ -46,7 +46,7 @@ class HttpController extends Controller
 
         if (null !== $data['header']) {
             foreach (\explode("\n", \str_replace("\r", '', \trim($data['header']))) as $header) {
-                list($key, $value) = \explode(':', $header, 2);
+                [$key, $value] = \explode(':', $header, 2);
                 $curl->addHeader($key, $value);
             }
         }

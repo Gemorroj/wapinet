@@ -33,9 +33,9 @@ class Code
      * @param string $algorithm
      * @param string $string
      *
-     * @return string
-     *
      * @throws CodeException
+     *
+     * @return string
      */
     public function convertString($algorithm, $string)
     {

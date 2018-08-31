@@ -17,9 +17,9 @@ class ProfileController extends Controller
      * @param string               $username
      * @param UserManagerInterface $userManager
      *
-     * @return Response
-     *
      * @throws AccessDeniedException|UsernameNotFoundException
+     *
+     * @return Response
      */
     public function showUserAction($username = null, UserManagerInterface $userManager)
     {

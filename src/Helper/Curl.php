@@ -120,9 +120,9 @@ class Curl
     }
 
     /**
-     * @throws LengthRequiredHttpException|\LengthException
-     *
      * @param bool $strict Исключение если не удалось определить размер файла (не найден Content-Length)
+     *
+     * @throws LengthRequiredHttpException|\LengthException
      *
      * @return Response
      */
@@ -179,7 +179,7 @@ class Curl
 
                 $key = $h[0];
             } else {
-                if ("\t" === \substr($h[0], 0, 1)) {
+                if ("\t" === \mb_substr($h[0], 0, 1)) {
                     $headers[$key] .= "\r\n\t".\trim($h[0]);
                 } elseif (!$key) {
                     $headers[0] = \trim($h[0]);
@@ -255,9 +255,9 @@ class Curl
         $status = \curl_getinfo($this->curl, \CURLINFO_HTTP_CODE);
 
         // заголовки
-        $headers = $this->parseHeaders(\rtrim(\substr($out, 0, $size)));
+        $headers = $this->parseHeaders(\rtrim(\mb_substr($out, 0, $size)));
         // тело
-        $content = \substr($out, $size);
+        $content = \mb_substr($out, $size);
         $content = (false === $content ? null : $content);
 
         return new Response($content, $status, $headers);

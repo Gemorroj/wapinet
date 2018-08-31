@@ -287,9 +287,9 @@ class User extends BaseUser
     /**
      * @param string $sex
      *
-     * @return User
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return User
      */
     public function setSex($sex)
     {
@@ -372,8 +372,8 @@ class User extends BaseUser
     public static function getSexChoices()
     {
         return [
-            User::SEX_MALE => 'Мужской',
-            User::SEX_FEMALE => 'Женский',
+            self::SEX_MALE => 'Мужской',
+            self::SEX_FEMALE => 'Женский',
         ];
     }
 

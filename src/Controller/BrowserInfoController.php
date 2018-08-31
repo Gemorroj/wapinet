@@ -15,13 +15,13 @@ class BrowserInfoController extends Controller
     protected function getPhoneNumber(Request $request)
     {
         if ($request->server->has('HTTP_X_NETWORK_INFO')) {
-            return preg_replace('/(.*,)(11[d])(,.*)/i', '$2', $request->server->get('HTTP_X_NETWORK_INFO'));
+            return \preg_replace('/(.*,)(11[d])(,.*)/i', '$2', $request->server->get('HTTP_X_NETWORK_INFO'));
         }
         if ($request->server->has('HTTP_X_UP_CALLING_LINE_ID')) {
             return $request->server->get('HTTP_X_UP_CALLING_LINE_ID');
         }
         if ($request->server->has('HTTP_X_UP_SUBNO')) {
-            return preg_replace('/(.*)(11[d])(.*)/i', '$2', $request->server->get('HTTP_X_UP_SUBNO'));
+            return \preg_replace('/(.*)(11[d])(.*)/i', '$2', $request->server->get('HTTP_X_UP_SUBNO'));
         }
         if ($request->server->has('DEVICEID')) {
             return $request->server->get('DEVICEID');

@@ -8,7 +8,7 @@ namespace App\Entity;
 class Event
 {
     /**
-     * @var integer
+     * @var int
      */
     private $id;
 

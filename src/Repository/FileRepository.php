@@ -166,9 +166,9 @@ class FileRepository extends EntityRepository
      * @param int         $id
      * @param string|null $category
      *
-     * @return File|null
-     *
      * @throws \Doctrine\ORM\NonUniqueResultException
+     *
+     * @return File|null
      */
     public function getPrevFile(int $id, ?string $category = null): ?File
     {
@@ -189,9 +189,9 @@ class FileRepository extends EntityRepository
      * @param int         $id
      * @param string|null $category
      *
-     * @return File|null
-     *
      * @throws \Doctrine\ORM\NonUniqueResultException
+     *
+     * @return File|null
      */
     public function getNextFile(int $id, ?string $category = null): ?File
     {

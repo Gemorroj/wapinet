@@ -12,6 +12,6 @@ class WhoisException extends \RuntimeException
      */
     public function __construct(array $messages, $code = 0, \Exception $previous = null)
     {
-        parent::__construct(implode("\r\n", $messages), $code, $previous);
+        parent::__construct(\implode("\r\n", $messages), $code, $previous);
     }
 }

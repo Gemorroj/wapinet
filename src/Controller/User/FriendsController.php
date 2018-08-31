@@ -46,9 +46,9 @@ class FriendsController extends Controller
      * @param string               $username
      * @param UserManagerInterface $userManager
      *
-     * @return RedirectResponse
-     *
      * @throws \LogicException|AccessDeniedException
+     *
+     * @return RedirectResponse
      */
     public function addAction($username, UserManagerInterface $userManager)
     {
@@ -91,9 +91,9 @@ class FriendsController extends Controller
      * @param string               $username
      * @param UserManagerInterface $userManager
      *
-     * @return RedirectResponse
-     *
      * @throws \LogicException|AccessDeniedException
+     *
+     * @return RedirectResponse
      */
     public function deleteAction($username, UserManagerInterface $userManager)
     {

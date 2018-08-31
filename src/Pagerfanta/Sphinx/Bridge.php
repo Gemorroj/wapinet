@@ -106,9 +106,9 @@ class Bridge
      *
      * @param string $name
      *
-     * @return Bridge
-     *
      * @throws \LogicException
+     *
+     * @return Bridge
      */
     public function setEntityManagerByName($name)
     {
@@ -279,9 +279,9 @@ class Bridge
     }
 
     /**
-     * @return array
-     *
      * @throws \UnexpectedValueException
+     *
+     * @return array
      */
     protected function getDiscriminatorResults()
     {

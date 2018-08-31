@@ -721,7 +721,7 @@ class FileController extends Controller
         // удаляем из коллекции устаревшие тэги
         $removedFileTagsCollection = $file->getFileTags()->filter(function (FileTags $oldFileTags) use ($file) {
             foreach ($file->getTags() as $newTag) {
-                if ($newTag == $oldFileTags->getTag()) {
+                if ($newTag === $oldFileTags->getTag()) {
                     return false;
                 }
             }
@@ -737,7 +737,7 @@ class FileController extends Controller
         // Находим добавленные тэги, которых не было в коллекции
         $newTagsCollection = $file->getTags()->filter(function (Tag $newTag) use ($file) {
             foreach ($file->getFileTags() as $fileTags) {
-                if ($newTag == $fileTags->getTag()) {
+                if ($newTag === $fileTags->getTag()) {
                     return false;
                 }
             }

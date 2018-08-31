@@ -8,7 +8,7 @@ namespace App\Entity;
 class Online
 {
     /**
-     * @var integer
+     * @var int
      */
     private $id;
 
