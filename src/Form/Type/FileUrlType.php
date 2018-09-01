@@ -3,7 +3,8 @@
 namespace App\Form\Type;
 
 use App\Form\DataTransformer\FileUrlDataTransformer;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use App\Helper\Curl;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -16,16 +17,22 @@ class FileUrlType extends AbstractType
 {
     public $builder;
     /**
-     * @var ContainerInterface
+     * @var ParameterBagInterface
      */
-    protected $container;
+    protected $parameterBag;
+    /**
+     * @var Curl
+     */
+    protected $curl;
 
     /**
-     * @param ContainerInterface $container
+     * @param ParameterBagInterface $parameterBag
+     * @param Curl                  $curl
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ParameterBagInterface $parameterBag, Curl $curl)
     {
-        $this->container = $container;
+        $this->parameterBag = $parameterBag;
+        $this->curl = $curl;
     }
 
     /**
@@ -36,7 +43,8 @@ class FileUrlType extends AbstractType
         parent::buildForm($builder, $options);
 
         $transformer = new FileUrlDataTransformer(
-            $this->container,
+            $this->parameterBag,
+            $this->curl,
             $options['required']
         );
 

@@ -8,6 +8,7 @@ use App\Event\FriendEvent;
 use App\Repository\FriendRepository;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,14 +44,15 @@ class FriendsController extends Controller
     }
 
     /**
-     * @param string               $username
-     * @param UserManagerInterface $userManager
+     * @param string                   $username
+     * @param UserManagerInterface     $userManager
+     * @param EventDispatcherInterface $eventDispatcher
      *
      * @throws \LogicException|AccessDeniedException
      *
      * @return RedirectResponse
      */
-    public function addAction($username, UserManagerInterface $userManager)
+    public function addAction(string $username, UserManagerInterface $userManager, EventDispatcherInterface $eventDispatcher): RedirectResponse
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -79,7 +81,7 @@ class FriendsController extends Controller
         $this->getDoctrine()->getManager()->merge($user);
         $this->getDoctrine()->getManager()->flush();
 
-        $this->container->get('event_dispatcher')->dispatch(
+        $eventDispatcher->dispatch(
             FriendEvent::FRIEND_ADD,
             new FriendEvent($user, $friend)
         );
@@ -88,14 +90,15 @@ class FriendsController extends Controller
     }
 
     /**
-     * @param string               $username
-     * @param UserManagerInterface $userManager
+     * @param string                   $username
+     * @param UserManagerInterface     $userManager
+     * @param EventDispatcherInterface $eventDispatcher
      *
      * @throws \LogicException|AccessDeniedException
      *
      * @return RedirectResponse
      */
-    public function deleteAction($username, UserManagerInterface $userManager)
+    public function deleteAction(string $username, UserManagerInterface $userManager, EventDispatcherInterface $eventDispatcher)
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -120,7 +123,7 @@ class FriendsController extends Controller
         $this->getDoctrine()->getManager()->merge($user);
         $this->getDoctrine()->getManager()->flush();
 
-        $this->container->get('event_dispatcher')->dispatch(
+        $eventDispatcher->dispatch(
             FriendEvent::FRIEND_DELETE,
             new FriendEvent($user, $friend)
         );

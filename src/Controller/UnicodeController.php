@@ -3,11 +3,11 @@
 namespace App\Controller;
 
 use App\Form\Type\Unicode\UnicodeType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
-class UnicodeController extends Controller
+class UnicodeController extends AbstractController
 {
     /**
      * @param Request $request

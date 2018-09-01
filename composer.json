@@ -13,6 +13,7 @@
         "ext-curl": "*",
         "ext-zip": "*",
         "ext-json": "*",
+        "ext-simplexml": "*",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "^4.1",
         "symfony/console": "^4.1",

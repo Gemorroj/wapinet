@@ -4,8 +4,9 @@ namespace App\Form\DataTransformer;
 
 use App\Entity\File\FileContent;
 use App\Entity\File\FileUrl;
+use App\Helper\Curl;
 use Riverline\MultiPartParser\Part;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -16,21 +17,27 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class FileUrlDataTransformer implements DataTransformerInterface
 {
     /**
-     * @var ContainerInterface
+     * @var ParameterBagInterface
      */
-    protected $container;
+    protected $parameterBag;
     /**
      * @var bool
      */
     protected $required;
+    /**
+     * @var Curl
+     */
+    protected $curl;
 
     /**
-     * @param ContainerInterface $container
-     * @param bool               $required
+     * @param ParameterBagInterface $parameterBag
+     * @param Curl                  $curl
+     * @param bool                  $required
      */
-    public function __construct(ContainerInterface $container, $required = true)
+    public function __construct(ParameterBagInterface $parameterBag, Curl $curl, bool $required = true)
     {
-        $this->container = $container;
+        $this->parameterBag = $parameterBag;
+        $this->curl = $curl;
         $this->required = $required;
     }
 
@@ -41,11 +48,11 @@ class FileUrlDataTransformer implements DataTransformerInterface
      *
      * @see https://github.com/dustin10/VichUploaderBundle/issues/27
      */
-    public function transform($fileDataFromDb)
+    public function transform($fileDataFromDb): ?array
     {
         if ($fileDataFromDb instanceof File) {
             return [
-                'web_path' => \str_replace('\\', '//', \mb_substr($fileDataFromDb->getPathname(), \mb_strlen($this->container->get('kernel')->getPublicDir()))),
+                'web_path' => \str_replace('\\', '//', \mb_substr($fileDataFromDb->getPathname(), \mb_strlen($this->parameterBag->get('kernel.public_dir')))),
                 'file_url' => $fileDataFromDb,
             ];
         }
@@ -100,17 +107,16 @@ class FileUrlDataTransformer implements DataTransformerInterface
         }
 
         if ($fileDataFromForm['url']) {
-            $curl = $this->container->get('curl');
-            $curl->init($fileDataFromForm['url']);
-            $curl->addBrowserHeaders();
-            $curl->acceptRedirects();
-            $responseHead = $curl->checkFileSize(false);
+            $this->curl->init($fileDataFromForm['url']);
+            $this->curl->addBrowserHeaders();
+            $this->curl->acceptRedirects();
+            $responseHead = $this->curl->checkFileSize(false);
 
             if (!$responseHead->isSuccessful() && !$responseHead->isRedirection()) {
                 throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$responseHead->getStatusCode().')');
             }
 
-            $temp = \tempnam($this->container->get('kernel')->getTmpDir(), 'file_url');
+            $temp = \tempnam($this->parameterBag->get('kernel.tmp_dir'), 'file_url');
             if (false === $temp) {
                 throw new TransformationFailedException('Не удалось создать временный файл');
             }
@@ -119,11 +125,11 @@ class FileUrlDataTransformer implements DataTransformerInterface
                 throw new TransformationFailedException('Не удалось открыть временный файл на запись');
             }
 
-            $curl->setOpt(\CURLOPT_HEADER, false);
-            $curl->setOpt(\CURLOPT_FILE, $f);
+            $this->curl->setOpt(\CURLOPT_HEADER, false);
+            $this->curl->setOpt(\CURLOPT_FILE, $f);
 
-            $responseBody = $curl->exec();
-            $curl->close();
+            $responseBody = $this->curl->exec();
+            $this->curl->close();
             \fclose($f);
 
             if (!$responseBody->isSuccessful()) {

@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Helper\Horoscope;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class HoroscopeController extends Controller
+class HoroscopeController extends AbstractController
 {
     /**
      * @return \Symfony\Component\HttpFoundation\Response

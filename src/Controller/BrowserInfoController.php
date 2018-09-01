@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-class BrowserInfoController extends Controller
+class BrowserInfoController extends AbstractController
 {
     /**
      * @param Request $request

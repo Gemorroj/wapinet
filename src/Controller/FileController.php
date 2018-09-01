@@ -28,6 +28,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
@@ -67,17 +68,17 @@ class FileController extends Controller
     }
 
     /**
-     * @param Request     $request
-     * @param string|null $key
+     * @param Request          $request
+     * @param SessionInterface $session
+     * @param string|null      $key
      *
      * @return Response|RedirectResponse
      */
-    public function searchAction(Request $request, $key = null)
+    public function searchAction(Request $request, SessionInterface $session, $key = null)
     {
         $page = $request->get('page', 1);
         $form = $this->createForm(SearchType::class);
         $pagerfanta = null;
-        $session = $this->get('session');
 
         try {
             $form->handleRequest($request);
@@ -406,12 +407,11 @@ class FileController extends Controller
     public function archiveDownloadFileAction(Request $request, int $id, string $name): BinaryFileResponse
     {
         $path = \str_replace('\\', '/', $request->get('path'));
-        $tmpDir = $this->get('kernel')->getTmpFileDir();
-
         if (null === $path) {
             throw $this->createNotFoundException('Не указан файл для скачивания.');
         }
 
+        $tmpDir = $this->getParameter('kernel.tmp_file_dir');
         $entry = $tmpDir.\DIRECTORY_SEPARATOR.$path;
 
         $filesystem = $this->get('filesystem');
@@ -561,7 +561,7 @@ class FileController extends Controller
 
             $existingFile = $this->getDoctrine()->getRepository(File::class)->findOneBy(['hash' => $hash]);
             if (null !== $existingFile) {
-                throw new FileDuplicatedException($existingFile, $this->container);
+                throw new FileDuplicatedException($existingFile, $this->container->get('router'));
             }
 
             $data->setHash($hash);
@@ -670,7 +670,7 @@ class FileController extends Controller
 
         $existingFile = $this->getDoctrine()->getRepository(File::class)->findOneBy(['hash' => $hash]);
         if (null !== $existingFile) {
-            throw new FileDuplicatedException($existingFile, $this->container);
+            throw new FileDuplicatedException($existingFile, $this->container->get('router'));
         }
 
         $data->setHash($hash);

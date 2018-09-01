@@ -3,11 +3,11 @@
 namespace App\Controller;
 
 use App\Form\Type\Obfuscator\ObfuscatorType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
-class PhpObfuscatorController extends Controller
+class PhpObfuscatorController extends AbstractController
 {
     /**
      * @param Request $request

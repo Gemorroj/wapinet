@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class MobileCodeController extends Controller
+class MobileCodeController extends AbstractController
 {
     public function indexAction()
     {

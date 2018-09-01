@@ -2,24 +2,22 @@
 
 namespace App\Helper;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 /**
  * Rates хэлпер
  */
 class Rates
 {
     /**
-     * @var ContainerInterface
+     * @var Curl
      */
-    protected $container;
+    protected $curl;
 
     /**
-     * @param ContainerInterface $container
+     * @param Curl $curl
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Curl $curl)
     {
-        $this->container = $container;
+        $this->curl = $curl;
     }
 
     /**
@@ -71,11 +69,10 @@ class Rates
      */
     protected function getRu()
     {
-        $curl = $this->container->get('curl');
-        $curl->init('http://www.cbr.ru/scripts/XML_daily.asp');
-        $curl->addCompression();
+        $this->curl->init('http://www.cbr.ru/scripts/XML_daily.asp');
+        $this->curl->addCompression();
 
-        $response = $curl->exec();
+        $response = $this->curl->exec();
 
         if (!$response->isSuccessful()) {
             throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
@@ -102,11 +99,10 @@ class Rates
      */
     protected function getBy()
     {
-        $curl = $this->container->get('curl');
-        $curl->init('http://nbrb.by/Services/XmlExRates.aspx');
-        $curl->addCompression();
+        $this->curl->init('http://nbrb.by/Services/XmlExRates.aspx');
+        $this->curl->addCompression();
 
-        $response = $curl->exec();
+        $response = $this->curl->exec();
 
         if (!$response->isSuccessful()) {
             throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
@@ -133,11 +129,10 @@ class Rates
      */
     protected function getUa()
     {
-        $curl = $this->container->get('curl');
-        $curl->init('http://bank-ua.com/export/currrate.xml');
-        $curl->addCompression();
+        $this->curl->init('http://bank-ua.com/export/currrate.xml');
+        $this->curl->addCompression();
 
-        $response = $curl->exec();
+        $response = $this->curl->exec();
 
         if (!$response->isSuccessful()) {
             throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
@@ -164,11 +159,10 @@ class Rates
      */
     protected function getKz()
     {
-        $curl = $this->container->get('curl');
-        $curl->init('http://www.nationalbank.kz/rss/rates_all.xml');
-        $curl->addCompression();
+        $this->curl->init('http://www.nationalbank.kz/rss/rates_all.xml');
+        $this->curl->addCompression();
 
-        $response = $curl->exec();
+        $response = $this->curl->exec();
 
         if (!$response->isSuccessful()) {
             throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');

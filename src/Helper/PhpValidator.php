@@ -2,7 +2,7 @@
 
 namespace App\Helper;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
 use Syntax\Php;
 
@@ -12,16 +12,16 @@ use Syntax\Php;
 class PhpValidator
 {
     /**
-     * @var ContainerInterface
+     * @var ParameterBagInterface
      */
-    protected $container;
+    protected $parameterBag;
 
     /**
-     * @param ContainerInterface $container
+     * @param ParameterBagInterface $parameterBag
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ParameterBagInterface $parameterBag)
     {
-        $this->container = $container;
+        $this->parameterBag = $parameterBag;
     }
 
     /**
@@ -33,7 +33,7 @@ class PhpValidator
      */
     public function validateFile(BaseFile $file)
     {
-        $cli = $this->container->getParameter('wapinet_php_path');
+        $cli = $this->parameterBag->get('wapinet_php_path');
 
         $syntax = new Php();
         $syntax->setCli($cli);
@@ -50,11 +50,11 @@ class PhpValidator
      */
     public function validateFragment($source)
     {
-        $cli = $this->container->getParameter('wapinet_php_path');
+        $cli = $this->parameterBag->get('wapinet_php_path');
 
         $syntax = new Php();
         $syntax->setCli($cli);
-        $syntax->setTempDirectory($this->container->get('kernel')->getTmpDir());
+        $syntax->setTempDirectory($this->parameterBag->get('kernel.tmp_dir'));
 
         return $syntax->check($source);
     }

@@ -3,10 +3,10 @@
 namespace App\Controller;
 
 use App\Helper\Bash;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-class BashController extends Controller
+class BashController extends AbstractController
 {
     /**
      * @param Request $request

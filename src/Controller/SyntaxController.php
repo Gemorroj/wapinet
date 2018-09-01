@@ -2,23 +2,19 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Helper\PhpValidator;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SyntaxController extends Controller
+class SyntaxController extends AbstractController
 {
     /**
      * @var null|array
      */
     protected $data;
 
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function indexAction(Request $request): Response
+    public function indexAction(Request $request, PhpValidator $phpValidator): Response
     {
         $code = $request->get('f');
 
@@ -26,7 +22,7 @@ class SyntaxController extends Controller
             return new Response('<div class="red">Не передан PHP код</div>');
         }
 
-        $this->data = $this->get('php_validator')->validateFragment($code);
+        $this->data = $phpValidator->validateFragment($code);
         $charset = $this->detectEncoding($code);
 
         $page = '<div class="border">Кодировка: '.$charset.'<br/></div><div class="border">Размер: '.$this->codeSize($code).'<br/></div>';

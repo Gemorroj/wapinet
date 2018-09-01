@@ -92,6 +92,6 @@ class Audio extends \Twig_Extension
      */
     protected function getPublicDir(): string
     {
-        return $this->container->get('kernel')->getPublicDir();
+        return $this->container->getParameter('kernel.public_dir');
     }
 }

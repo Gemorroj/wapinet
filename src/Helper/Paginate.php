@@ -11,21 +11,21 @@ use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Adapter\FixedAdapter;
 use Pagerfanta\Pagerfanta;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class Paginate
 {
     /**
-     * @var ContainerInterface
+     * @var ParameterBagInterface
      */
-    protected $container;
+    protected $parameterBag;
 
     /**
-     * @param ContainerInterface $container
+     * @param ParameterBagInterface $parameterBag
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ParameterBagInterface $parameterBag)
     {
-        $this->container = $container;
+        $this->parameterBag = $parameterBag;
     }
 
     /**
@@ -52,7 +52,7 @@ class Paginate
         }
 
         $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage(null === $maxPerPage ? $this->container->getParameter('wapinet_paginate_maxperpage') : $maxPerPage);
+        $pagerfanta->setMaxPerPage($maxPerPage ?? $this->parameterBag->get('wapinet_paginate_maxperpage'));
         $pagerfanta->setCurrentPage(
             $this->normalizePage($pagerfanta, $page)
         );

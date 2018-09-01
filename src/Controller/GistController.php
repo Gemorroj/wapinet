@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -159,17 +160,17 @@ class GistController extends Controller
     }
 
     /**
-     * @param Request     $request
-     * @param string|null $key
+     * @param Request          $request
+     * @param SessionInterface $session
+     * @param string|null      $key
      *
      * @return Response|RedirectResponse
      */
-    public function searchAction(Request $request, $key = null)
+    public function searchAction(Request $request, SessionInterface $session, $key = null)
     {
         $page = $request->get('page', 1);
         $form = $this->createForm(SearchType::class);
         $pagerfanta = null;
-        $session = $this->get('session');
 
         try {
             $form->handleRequest($request);

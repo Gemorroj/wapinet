@@ -160,7 +160,7 @@ class Video extends \Twig_Extension
             }
         }
 
-        return (int) $second;
+        return $second;
     }
 
     /**
@@ -168,6 +168,6 @@ class Video extends \Twig_Extension
      */
     protected function getPublicDir(): string
     {
-        return $this->container->get('kernel')->getPublicDir();
+        return $this->container->getParameter('kernel.public_dir');
     }
 }

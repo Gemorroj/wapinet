@@ -76,7 +76,7 @@ class AdminController extends BaseAdminController
      */
     private function newsSubscriber(News $news)
     {
-        $em = $this->get('doctrine.orm.entity_manager');
+        $em = $this->getDoctrine()->getManager();
 
         $userRepository = $em->getRepository(User::class);
         /** @var User[] $users */

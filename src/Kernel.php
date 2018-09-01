@@ -31,31 +31,13 @@ class Kernel extends BaseKernel
         return $this->getProjectDir().'/var/log';
     }
 
-    public function getTmpArchiverDir(): string
-    {
-        return $this->getTmpDir().'/archiver';
-    }
-
-    public function getTmpFileDir(): string
-    {
-        return $this->getTmpDir().'/file';
-    }
-
-    public function getTmpDir(): string
-    {
-        return $this->getProjectDir().'/var/tmp';
-    }
-
-    public function getPublicDir(): string
-    {
-        return $this->getProjectDir().'/public';
-    }
-
-    protected function getKernelParameters()
+    protected function getKernelParameters(): array
     {
         $parameters = parent::getKernelParameters();
-        $parameters['kernel.public_dir'] = $this->getPublicDir();
-        $parameters['kernel.tmp_dir'] = $this->getTmpDir();
+        $parameters['kernel.public_dir'] = $this->getProjectDir().'/public';
+        $parameters['kernel.tmp_dir'] = $this->getProjectDir().'/var/tmp';
+        $parameters['kernel.tmp_archiver_dir'] = $this->getProjectDir().'/var/tmp/archiver';
+        $parameters['kernel.tmp_file_dir'] = $this->getProjectDir().'/var/tmp/file';
 
         return $parameters;
     }

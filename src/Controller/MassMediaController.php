@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Helper\MassMedia;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class MassMediaController extends Controller
+class MassMediaController extends AbstractController
 {
     /**
      * @return \Symfony\Component\HttpFoundation\Response

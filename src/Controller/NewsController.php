@@ -3,24 +3,26 @@
 namespace App\Controller;
 
 use App\Entity\News;
+use App\Helper\Paginate;
 use App\Repository\NewsRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * News controller.
  */
-class NewsController extends Controller
+class NewsController extends AbstractController
 {
     /**
      * Lists all News entities.
      *
-     * @param Request $request
+     * @param Request  $request
+     * @param Paginate $paginate
      *
      * @return Response
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, Paginate $paginate): Response
     {
         $page = $request->get('page', 1);
 
@@ -28,7 +30,7 @@ class NewsController extends Controller
         $repository = $this->getDoctrine()->getRepository(News::class);
         $result = $repository->getAllBuilder();
 
-        $pagerfanta = $this->get('paginate')->paginate($result, $page);
+        $pagerfanta = $paginate->paginate($result, $page);
 
         return $this->render('News/index.html.twig', [
             'pagerfanta' => $pagerfanta,
@@ -42,7 +44,7 @@ class NewsController extends Controller
      *
      * @return Response
      */
-    public function showAction(News $news)
+    public function showAction(News $news): Response
     {
         return $this->render('News/show.html.twig', [
             'entity' => $news,

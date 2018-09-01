@@ -2,24 +2,22 @@
 
 namespace App\Helper;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 /**
  * Horoscope хэлпер
  */
 class Horoscope
 {
     /**
-     * @var ContainerInterface
+     * @var Curl
      */
-    protected $container;
+    protected $curl;
 
     /**
-     * @param ContainerInterface $container
+     * @param Curl $curl
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Curl $curl)
     {
-        $this->container = $container;
+        $this->curl = $curl;
     }
 
     /**
@@ -27,7 +25,7 @@ class Horoscope
      *
      * @return null|string
      */
-    public function getName($zodiac)
+    public function getName(string $zodiac): ?string
     {
         switch ($zodiac) {
             case 'aries':
@@ -87,12 +85,11 @@ class Horoscope
      *
      * @return array
      */
-    public function getHoroscope($zodiac)
+    public function getHoroscope(string $zodiac): array
     {
-        $curl = $this->container->get('curl');
-        $curl->init('http://hyrax.ru/rss_daily_common_'.$zodiac.'.xml');
-        $curl->addCompression();
-        $response = $curl->exec();
+        $this->curl->init('http://hyrax.ru/rss_daily_common_'.$zodiac.'.xml');
+        $this->curl->addCompression();
+        $response = $this->curl->exec();
 
         if (!$response->isSuccessful()) {
             throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
@@ -109,13 +106,12 @@ class Horoscope
     /**
      * @return array
      */
-    public function getHoroscopeDay()
+    public function getHoroscopeDay(): array
     {
-        $curl = $this->container->get('curl');
-        $curl->init('http://hyrax.ru/rss_daily_common.xml');
-        $curl->addCompression();
+        $this->curl->init('http://hyrax.ru/rss_daily_common.xml');
+        $this->curl->addCompression();
 
-        $response = $curl->exec();
+        $response = $this->curl->exec();
 
         if (!$response->isSuccessful()) {
             throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');

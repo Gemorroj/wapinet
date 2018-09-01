@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Helper\Rates;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class RatesController extends Controller
+class RatesController extends AbstractController
 {
     /**
      * @return \Symfony\Component\HttpFoundation\Response

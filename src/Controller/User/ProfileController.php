@@ -14,17 +14,17 @@ class ProfileController extends Controller
     /**
      * Show custom user.
      *
-     * @param string               $username
+     * @param string|null          $username
      * @param UserManagerInterface $userManager
      *
      * @throws AccessDeniedException|UsernameNotFoundException
      *
      * @return Response
      */
-    public function showUserAction($username = null, UserManagerInterface $userManager)
+    public function showUserAction(?string $username = null, UserManagerInterface $userManager)
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
-        if (!\is_object($currentUser) || !$currentUser instanceof UserInterface) {
+        $currentUser = $this->getUser();
+        if (!$currentUser || !$currentUser instanceof UserInterface) {
             throw $this->createAccessDeniedException('Вы должны быть авторизованы');
         }
 

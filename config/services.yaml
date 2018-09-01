@@ -90,12 +90,12 @@ services:
 
     curl:
         class: App\Helper\Curl
-        arguments: ["@service_container"]
+        arguments: ["@parameter_bag"]
         public: true
 
     ffmpeg:
         class: App\Helper\Ffmpeg
-        arguments: ["@service_container"]
+        arguments: ["@parameter_bag"]
         public: true
 
     translit:
@@ -104,7 +104,7 @@ services:
 
     paginate:
         class: App\Helper\Paginate
-        arguments: ["@service_container"]
+        arguments: ["@parameter_bag"]
         public: true
 
     getid3:
@@ -141,7 +141,7 @@ services:
 
     php_validator:
         class: App\Helper\PhpValidator
-        arguments: ["@service_container"]
+        arguments: ["@parameter_bag"]
         public: true
 
     apk:
@@ -155,17 +155,17 @@ services:
 
     archive_zip:
         class: App\Helper\Archiver\ArchiveZip
-        arguments: ["@service_container"]
+        arguments: ["@parameter_bag"]
         public: true
 
     archive_rar:
         class: App\Helper\Archiver\ArchiveRar
-        arguments: ["@service_container"]
+        arguments: ["@parameter_bag"]
         public: true
 
     archive_7z:
         class: App\Helper\Archiver\Archive7z
-        arguments: ["@service_container"]
+        arguments: ["@parameter_bag"]
         public: true
 
     torrent:

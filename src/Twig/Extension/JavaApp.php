@@ -154,16 +154,16 @@ class JavaApp extends \Twig_Extension
     /**
      * @return string
      */
-    protected function getPublicDir()
+    protected function getPublicDir(): string
     {
-        return $this->container->get('kernel')->getPublicDir();
+        return $this->container->getParameter('kernel.public_dir');
     }
 
     /**
      * @return string
      */
-    protected function getTmpDir()
+    protected function getTmpDir(): string
     {
-        return $this->container->get('kernel')->getTmpFileDir();
+        return $this->container->getParameter('kernel.tmp_file_dir');
     }
 }

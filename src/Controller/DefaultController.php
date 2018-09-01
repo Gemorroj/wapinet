@@ -3,30 +3,32 @@
 namespace App\Controller;
 
 use App\Entity\Online;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
-class DefaultController extends Controller
+class DefaultController extends AbstractController
 {
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function indexAction(): \Symfony\Component\HttpFoundation\Response
+    public function indexAction(): Response
     {
         return $this->render('Default/index.html.twig');
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function aboutAction(): \Symfony\Component\HttpFoundation\Response
+    public function aboutAction(): Response
     {
         return $this->render('Default/about.html.twig');
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function onlineAction(): \Symfony\Component\HttpFoundation\Response
+    public function onlineAction(): Response
     {
         return $this->render(
             'Default/online.html.twig',
@@ -37,57 +39,57 @@ class DefaultController extends Controller
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function utilitiesAction(): \Symfony\Component\HttpFoundation\Response
+    public function utilitiesAction(): Response
     {
         return $this->render('Default/utilities.html.twig');
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function programmingAction(): \Symfony\Component\HttpFoundation\Response
+    public function programmingAction(): Response
     {
         return $this->render('Default/programming.html.twig');
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function openSourceAction(): \Symfony\Component\HttpFoundation\Response
+    public function openSourceAction(): Response
     {
         return $this->render('Default/open_source.html.twig');
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
-    public function gmanagerAction(): \Symfony\Component\HttpFoundation\Response
+    public function gmanagerAction(): RedirectResponse
     {
         return $this->redirect('https://github.com/Gemorroj/gmanager', 301);
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function downloadsAction(): \Symfony\Component\HttpFoundation\Response
+    public function downloadsAction(): Response
     {
         return $this->render('Default/downloads.html.twig');
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function textbookAction(): \Symfony\Component\HttpFoundation\Response
+    public function textbookAction(): Response
     {
         return $this->render('Default/textbook.html.twig');
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function videoCoursesAction(): \Symfony\Component\HttpFoundation\Response
+    public function videoCoursesAction(): Response
     {
         return $this->render('Default/video_courses.html.twig');
     }

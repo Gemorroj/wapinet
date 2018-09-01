@@ -23,9 +23,9 @@ class PanelController extends Controller
      */
     public function editAction(Request $request)
     {
-        /** @var User $user */
-        $user = $this->container->get('security.token_storage')->getToken()->getUser();
-        if (!\is_object($user) || !$user instanceof User) {
+        /** @var User|null $user */
+        $user = $this->getUser();
+        if (!$user || !$user instanceof User) {
             throw $this->createAccessDeniedException('Вы должны быть авторизованы');
         }
 

@@ -65,7 +65,7 @@ class AudioTagsController extends Controller
     {
         /** @var UploadedFile $file */
         $file = $data['file'];
-        $tempDirectory = $this->get('kernel')->getTmpDir();
+        $tempDirectory = $this->getParameter('kernel.tmp_dir');
         $tempName = \tempnam($tempDirectory, 'audio_file');
         if (false === $tempName) {
             throw new \RuntimeException('Не удалось создать временный файл');
@@ -307,8 +307,8 @@ class AudioTagsController extends Controller
      *
      * @return string
      */
-    protected function getFilePath(string $fileName)
+    protected function getFilePath(string $fileName): string
     {
-        return $this->get('kernel')->getTmpDir().\DIRECTORY_SEPARATOR.$fileName;
+        return $this->getParameter('kernel.tmp_dir').\DIRECTORY_SEPARATOR.$fileName;
     }
 }

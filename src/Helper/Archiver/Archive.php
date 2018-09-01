@@ -3,7 +3,7 @@
 namespace App\Helper\Archiver;
 
 use App\Exception\ArchiverException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
@@ -12,16 +12,16 @@ use Symfony\Component\HttpFoundation\File\File;
 abstract class Archive
 {
     /**
-     * @var ContainerInterface
+     * @var ParameterBagInterface
      */
-    protected $container;
+    protected $parameterBag;
 
     /**
-     * @param ContainerInterface $container
+     * @param ParameterBagInterface $parameterBag
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ParameterBagInterface $parameterBag)
     {
-        $this->container = $container;
+        $this->parameterBag = $parameterBag;
     }
 
     /**

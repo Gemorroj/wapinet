@@ -27,7 +27,7 @@ class ArchiveZip extends Archive
             throw new ArchiverException('Не удалось создать ZIP архив', $result);
         }
 
-        if (false === $zip->setArchiveComment($this->container->getParameter('wapinet_archiver_comment'))) {
+        if (false === $zip->setArchiveComment($this->parameterBag->get('wapinet_archiver_comment'))) {
             throw new ArchiverException('Не удалось добавить комментарий к ZIP архиву');
         }
 

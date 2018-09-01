@@ -123,7 +123,7 @@ class TranslateController extends Controller
      */
     private function getLangs()
     {
-        $cacheDir = $this->get('kernel')->getCacheDir();
+        $cacheDir = $this->getParameter('kernel.cache_dir');
         $langsFileName = $cacheDir.\DIRECTORY_SEPARATOR.'yandex-langs.json';
 
         if (false === \file_exists($langsFileName)) {

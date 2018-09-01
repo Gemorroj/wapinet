@@ -6,7 +6,7 @@ use App\Entity\Event;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -15,7 +15,7 @@ use Twig\Environment;
 /**
  * Subscriber.
  */
-class SubscriberCommand extends ContainerAwareCommand
+class SubscriberCommand extends Command
 {
     /**
      * @var EntityManagerInterface

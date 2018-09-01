@@ -264,14 +264,6 @@ class ArchiverController extends Controller
     }
 
     /**
-     * @return string
-     */
-    protected function getTmpDir()
-    {
-        return $this->get('kernel')->getTmpArchiverDir();
-    }
-
-    /**
      * @param string $archive
      *
      * @throws FileException
@@ -280,7 +272,7 @@ class ArchiverController extends Controller
      */
     protected function checkArchiveDirectory($archive)
     {
-        $directory = $this->getTmpDir().\DIRECTORY_SEPARATOR.$archive;
+        $directory = $this->getParameter('kernel.tmp_archiver_dir').\DIRECTORY_SEPARATOR.$archive;
 
         if (false === \is_dir($directory)) {
             throw new FileException('Не удалось найти временную директорию');
@@ -302,7 +294,7 @@ class ArchiverController extends Controller
      */
     protected function createArchiveDirectory()
     {
-        $directory = $this->getTmpDir().\DIRECTORY_SEPARATOR.$this->generateArchiveName();
+        $directory = $this->getParameter('kernel.tmp_archiver_dir').\DIRECTORY_SEPARATOR.$this->generateArchiveName();
         $this->get('filesystem')->mkdir($directory);
 
         return $directory;

@@ -3,16 +3,16 @@
 namespace App\Twig\Extension;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class Forum extends \Twig_Extension
 {
-    protected $container;
+    protected $parameterBag;
     protected $em;
 
-    public function __construct(ContainerInterface $container, EntityManagerInterface $em)
+    public function __construct(ParameterBagInterface $parameterBag, EntityManagerInterface $em)
     {
-        $this->container = $container;
+        $this->parameterBag = $parameterBag;
         $this->em = $em;
     }
 
@@ -34,7 +34,7 @@ class Forum extends \Twig_Extension
      */
     public function getTopicsCount()
     {
-        $database = $this->container->getParameter('wapinet_forum_database_name');
+        $database = $this->parameterBag->get('wapinet_forum_database_name');
         $query = $this->em->getConnection()->executeQuery("SELECT COUNT(1) FROM `{$database}`.`topics`");
         $query->execute();
 
@@ -46,7 +46,7 @@ class Forum extends \Twig_Extension
      */
     public function getPostsCount()
     {
-        $database = $this->container->getParameter('wapinet_forum_database_name');
+        $database = $this->parameterBag->get('wapinet_forum_database_name');
         $query = $this->em->getConnection()->executeQuery("SELECT COUNT(1) FROM `{$database}`.`posts`");
         $query->execute();
 

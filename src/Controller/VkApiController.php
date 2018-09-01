@@ -2,21 +2,22 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Helper\Curl;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class VkApiController extends Controller
+class VkApiController extends AbstractController
 {
-    public function getAction(Request $request, string $method)
+    public function getAction(Request $request, string $method, Curl $curl)
     {
         $params = $request->request->all();
         $params['access_token'] = $this->getParameter('wapinet_vk_access_token');
 
         $query = \http_build_query($params);
 
-        $curl = $this->get('curl')->init('https://api.vk.com/method/'.$method.'?'.$query);
+        $curl->init('https://api.vk.com/method/'.$method.'?'.$query);
         $curl->addCompression();
 
         $response = $curl->exec();

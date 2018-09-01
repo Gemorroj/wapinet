@@ -3,8 +3,8 @@
 namespace App\Exception;
 
 use App\Entity\File;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Thrown whenever a client process fails.
@@ -16,18 +16,18 @@ class FileDuplicatedException extends \RuntimeException
      */
     protected $existingFile;
     /**
-     * @var ContainerInterface
+     * @var RouterInterface
      */
-    protected $container;
+    protected $router;
 
     /**
-     * @param File               $existingFile
-     * @param ContainerInterface $container
+     * @param File            $existingFile
+     * @param RouterInterface $router
      */
-    public function __construct(File $existingFile, ContainerInterface $container)
+    public function __construct(File $existingFile, RouterInterface $router)
     {
         $this->existingFile = $existingFile;
-        $this->container = $container;
+        $this->router = $router;
 
         parent::__construct('Такой файл уже существует: '.$this->getPath());
     }
@@ -35,25 +35,17 @@ class FileDuplicatedException extends \RuntimeException
     /**
      * @return File
      */
-    public function getExistingFile()
+    public function getExistingFile(): File
     {
         return $this->existingFile;
     }
 
     /**
-     * @return ContainerInterface
-     */
-    protected function getContainer()
-    {
-        return $this->container;
-    }
-
-    /**
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
-        return $this->getContainer()->get('router')->generate('file_view', [
+        return $this->router->generate('file_view', [
                 'id' => $this->getExistingFile()->getId(),
             ], Router::ABSOLUTE_URL
         );

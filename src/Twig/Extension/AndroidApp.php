@@ -151,7 +151,7 @@ class AndroidApp extends \Twig_Extension
      */
     protected function getPublicDir(): string
     {
-        return $this->container->get('kernel')->getPublicDir();
+        return $this->container->getParameter('kernel.public_dir');
     }
 
     /**
@@ -159,6 +159,6 @@ class AndroidApp extends \Twig_Extension
      */
     protected function getTmpDir(): string
     {
-        return $this->container->get('kernel')->getTmpFileDir();
+        return $this->container->getParameter('kernel.tmp_file_dir');
     }
 }

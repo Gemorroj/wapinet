@@ -3,7 +3,7 @@
 namespace App\Helper;
 
 use App\Exception\RequestException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\LengthRequiredHttpException;
 
@@ -13,9 +13,9 @@ use Symfony\Component\HttpKernel\Exception\LengthRequiredHttpException;
 class Curl
 {
     /**
-     * @var ContainerInterface
+     * @var ParameterBagInterface
      */
-    protected $container;
+    protected $parameterBag;
 
     /**
      * @var resource
@@ -35,11 +35,11 @@ class Curl
     protected $postData = [];
 
     /**
-     * @param ContainerInterface $container
+     * @param ParameterBagInterface $parameterBag
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ParameterBagInterface $parameterBag)
     {
-        $this->container = $container;
+        $this->parameterBag = $parameterBag;
     }
 
     /**
@@ -139,7 +139,7 @@ class Curl
             $length = \end($length);
         }
 
-        $maxLength = $this->container->getParameter('wapinet_max_download_filesize');
+        $maxLength = $this->parameterBag->get('wapinet_max_download_filesize');
         if ($length > $maxLength) {
             throw new \LengthException('Размер файла превышает максимально допустимый');
         }

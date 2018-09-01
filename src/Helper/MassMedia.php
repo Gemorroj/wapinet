@@ -2,24 +2,22 @@
 
 namespace App\Helper;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 /**
  * MassMedia хэлпер
  */
 class MassMedia
 {
     /**
-     * @var ContainerInterface
+     * @var Curl
      */
-    protected $container;
+    protected $curl;
 
     /**
-     * @param ContainerInterface $container
+     * @param Curl $curl
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Curl $curl)
     {
-        $this->container = $container;
+        $this->curl = $curl;
     }
 
     /**
@@ -27,11 +25,10 @@ class MassMedia
      */
     public function getRt()
     {
-        $curl = $this->container->get('curl');
-        $curl->init('https://russian.rt.com/rss');
-        $curl->addCompression();
+        $this->curl->init('https://russian.rt.com/rss');
+        $this->curl->addCompression();
 
-        $response = $curl->exec();
+        $response = $this->curl->exec();
 
         if (!$response->isSuccessful()) {
             throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
@@ -75,11 +72,10 @@ class MassMedia
      */
     public function getInotv()
     {
-        $curl = $this->container->get('curl');
-        $curl->init('https://russian.rt.com/inotv/s/rss/inotv_main.rss');
-        $curl->addCompression();
+        $this->curl->init('https://russian.rt.com/inotv/s/rss/inotv_main.rss');
+        $this->curl->addCompression();
 
-        $response = $curl->exec();
+        $response = $this->curl->exec();
 
         if (!$response->isSuccessful()) {
             throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
@@ -123,7 +119,7 @@ class MassMedia
      *
      * @return string
      */
-    private function stripDescription($str)
+    private function stripDescription(string $str): string
     {
         return \strip_tags($str);
     }

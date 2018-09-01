@@ -4,19 +4,22 @@ namespace App\Controller;
 
 use App\Entity\Guestbook;
 use App\Form\Type\Guestbook\MessageType;
+use App\Helper\Paginate;
 use App\Repository\GuestbookRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-class GuestbookController extends Controller
+class GuestbookController extends AbstractController
 {
     /**
-     * @param Request $request
+     * @param Request  $request
+     * @param Paginate $paginate
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, Paginate $paginate): Response
     {
         $form = $this->createForm(MessageType::class);
 
@@ -24,7 +27,7 @@ class GuestbookController extends Controller
         /** @var GuestbookRepository $guestbookRepository */
         $guestbookRepository = $this->getDoctrine()->getRepository(Guestbook::class);
         $query = $guestbookRepository->getListQuery();
-        $pagerfanta = $this->get('paginate')->paginate($query, $page);
+        $pagerfanta = $paginate->paginate($query, $page);
 
         return $this->render('Guestbook/index.html.twig', [
             'form' => $form->createView(),
@@ -37,7 +40,7 @@ class GuestbookController extends Controller
      *
      * @return RedirectResponse
      */
-    public function addAction(Request $request)
+    public function addAction(Request $request): RedirectResponse
     {
         $form = $this->createForm(MessageType::class);
         $flashBag = $this->get('session')->getFlashBag();
