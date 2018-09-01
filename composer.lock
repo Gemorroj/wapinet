@@ -1973,12 +1973,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/phpwhois.git",
-                "reference": "f46f3bf1c0d9b613bcec2ca1b13a4481b2b03c32"
+                "reference": "5de2015ec28cc93a489b70e5c8ee53a05fa9edfb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/f46f3bf1c0d9b613bcec2ca1b13a4481b2b03c32",
-                "reference": "f46f3bf1c0d9b613bcec2ca1b13a4481b2b03c32",
+                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/5de2015ec28cc93a489b70e5c8ee53a05fa9edfb",
+                "reference": "5de2015ec28cc93a489b70e5c8ee53a05fa9edfb",
                 "shasum": ""
             },
             "require": {
@@ -1996,7 +1996,7 @@
                 "GPL-2.0-only"
             ],
             "description": "This package contains a Whois (RFC954) library for PHP. It allows a PHP program to create a Whois object, and obtain the output of a whois query with the Lookup function.",
-            "time": "2018-04-15T22:26:20+00:00"
+            "time": "2018-09-01T18:16:08+00:00"
         },
         {
             "name": "gemorroj/stop-spam",
@@ -9129,16 +9129,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.3.2",
+            "version": "7.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "34705f81bddc3f505b9599a2ef96e2b4315ba9b8"
+                "reference": "1bd5629cccfb2c0a9ef5474b4ff772349e1ec898"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/34705f81bddc3f505b9599a2ef96e2b4315ba9b8",
-                "reference": "34705f81bddc3f505b9599a2ef96e2b4315ba9b8",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1bd5629cccfb2c0a9ef5474b4ff772349e1ec898",
+                "reference": "1bd5629cccfb2c0a9ef5474b4ff772349e1ec898",
                 "shasum": ""
             },
             "require": {
@@ -9209,7 +9209,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-08-22T06:39:21+00:00"
+            "time": "2018-09-01T15:49:55+00:00"
         },
         {
             "name": "roave/security-advisories",
