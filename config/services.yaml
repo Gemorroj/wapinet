@@ -83,11 +83,6 @@ services:
         arguments: ["@service_container"]
         public: true
 
-    file_meta:
-        class: App\Helper\File\Meta
-        arguments: ["@service_container"]
-        public: true
-
     curl:
         class: App\Helper\Curl
         arguments: ["@parameter_bag"]
@@ -109,14 +104,6 @@ services:
 
     getid3:
         class: App\Helper\Getid3
-        public: true
-
-    bot_checker:
-        class: App\Helper\BotChecker
-        public: true
-
-    stop_spam:
-        class: App\Helper\StopSpam
         public: true
 
     hash:

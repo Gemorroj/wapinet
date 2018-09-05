@@ -7,6 +7,7 @@ use App\Event\GistEvent;
 use App\Form\Type\Gist\AddType;
 use App\Form\Type\Gist\EditType;
 use App\Form\Type\Gist\SearchType;
+use App\Helper\BotChecker;
 use App\Repository\GistRepository;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Pagerfanta\Pagerfanta;
@@ -74,13 +75,14 @@ class GistController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param Request    $request
+     * @param BotChecker $botChecker
      *
      * @throws AccessDeniedException
      *
      * @return RedirectResponse
      */
-    public function addAction(Request $request)
+    public function addAction(Request $request, BotChecker $botChecker)
     {
         $user = $this->getUser();
         if (null === $user) {
@@ -95,7 +97,7 @@ class GistController extends Controller
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
-                    $this->get('bot_checker')->checkRequest($request);
+                    $botChecker->checkRequest($request);
 
                     $gist = $form->getData();
 

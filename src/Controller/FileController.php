@@ -12,6 +12,8 @@ use App\Form\Type\File\EditType;
 use App\Form\Type\File\PasswordType;
 use App\Form\Type\File\SearchType;
 use App\Form\Type\File\UploadType;
+use App\Helper\BotChecker;
+use App\Helper\File\Meta;
 use App\Helper\Mime;
 use App\Helper\Timezone;
 use App\Repository\FileRepository;
@@ -295,13 +297,14 @@ class FileController extends Controller
     /**
      * @param File                    $file
      * @param EncoderFactoryInterface $encoderFactory
+     * @param Meta                    $fileMeta
      *
      * @return Response
      */
-    public function viewAction(File $file, EncoderFactoryInterface $encoderFactory): Response
+    public function viewAction(File $file, EncoderFactoryInterface $encoderFactory, Meta $fileMeta): Response
     {
         if (null !== $file->getPassword() && !$this->isGranted('ROLE_ADMIN') && (!($this->getUser() instanceof User) || !($file->getUser() instanceof User) || $file->getUser()->getId() !== $this->getUser()->getId())) {
-            return $this->passwordAction($file, $encoderFactory);
+            return $this->passwordAction($file, $encoderFactory, $fileMeta);
         }
 
         if ($file->isHidden()) {
@@ -313,7 +316,7 @@ class FileController extends Controller
             }
         }
 
-        return $this->viewFile($file);
+        return $this->viewFile($file, $fileMeta);
     }
 
     /**
@@ -327,12 +330,13 @@ class FileController extends Controller
 
     /**
      * @param File $file
+     * @param Meta $fileMeta
      *
      * @return Response
      */
-    protected function viewFile(File $file)
+    protected function viewFile(File $file, Meta $fileMeta): Response
     {
-        $this->checkMeta($file);
+        $this->checkMeta($file, $fileMeta);
         $response = $this->render('File/view.html.twig', ['file' => $file]);
         $this->incrementViews($file);
 
@@ -345,8 +349,9 @@ class FileController extends Controller
 
     /**
      * @param File $file
+     * @param Meta $fileMeta
      */
-    protected function checkMeta(File $file)
+    protected function checkMeta(File $file, Meta $fileMeta): void
     {
         if (null !== $file->getMeta()) {
             return;
@@ -354,7 +359,7 @@ class FileController extends Controller
 
         $meta = null;
         try {
-            $meta = $this->get('file_meta')->setFile($file)->getFileMeta();
+            $meta = $fileMeta->setFile($file)->getFileMeta();
         } catch (\Exception $e) {
             $this->get('logger')->warning('Не удалось получить мета-информацию из файла.', [$e]);
         }
@@ -365,10 +370,11 @@ class FileController extends Controller
     /**
      * @param File                    $file
      * @param EncoderFactoryInterface $encoderFactory
+     * @param Meta                    $fileMeta
      *
      * @return Response
      */
-    public function passwordAction(File $file, EncoderFactoryInterface $encoderFactory): Response
+    public function passwordAction(File $file, EncoderFactoryInterface $encoderFactory, Meta $fileMeta): Response
     {
         $encoder = $encoderFactory->getEncoder($file);
         $form = $this->createForm(PasswordType::class);
@@ -384,7 +390,7 @@ class FileController extends Controller
                         throw $this->createAccessDeniedException('Неверный пароль');
                     }
 
-                    return $this->viewFile($file);
+                    return $this->viewFile($file, $fileMeta);
                 }
             }
         } catch (\Exception $e) {
@@ -605,10 +611,11 @@ class FileController extends Controller
      * @param Request                 $request
      * @param Mime                    $mimeHelper
      * @param EncoderFactoryInterface $encoderFactory
+     * @param BotChecker              $botChecker
      *
      * @return RedirectResponse|Response
      */
-    public function uploadAction(Request $request, Mime $mimeHelper, EncoderFactoryInterface $encoderFactory): Response
+    public function uploadAction(Request $request, Mime $mimeHelper, EncoderFactoryInterface $encoderFactory, BotChecker $botChecker): Response
     {
         $form = $this->createForm(UploadType::class);
 
@@ -617,7 +624,7 @@ class FileController extends Controller
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
-                    $this->get('bot_checker')->checkRequest($request);
+                    $botChecker->checkRequest($request);
 
                     $file = $this->saveFileData($request, $form->getData(), $mimeHelper, $encoderFactory);
 

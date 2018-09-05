@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Guestbook;
 use App\Form\Type\Guestbook\MessageType;
+use App\Helper\BotChecker;
 use App\Helper\Paginate;
+use App\Helper\StopSpam;
 use App\Repository\GuestbookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -36,11 +38,13 @@ class GuestbookController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request    $request
+     * @param BotChecker $botChecker
+     * @param StopSpam   $stopSpam
      *
      * @return RedirectResponse
      */
-    public function addAction(Request $request): RedirectResponse
+    public function addAction(Request $request, BotChecker $botChecker, StopSpam $stopSpam): RedirectResponse
     {
         $form = $this->createForm(MessageType::class);
         $flashBag = $this->get('session')->getFlashBag();
@@ -50,8 +54,8 @@ class GuestbookController extends AbstractController
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
-                    $this->get('bot_checker')->checkRequest($request);
-                    $this->get('stop_spam')->checkRequest($request);
+                    $botChecker->checkRequest($request);
+                    $stopSpam->checkRequest($request);
 
                     /** @var Guestbook $data */
                     $guestbook = $form->getData();
