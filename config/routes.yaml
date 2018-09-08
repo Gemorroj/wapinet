@@ -160,13 +160,6 @@ vk_api:
     resource: "../src/Resources/config/routes/vk_api.yml"
     prefix:   /vk_api
 
-forum_index:
-    path: /forum/
-    defaults:
-        _controller: FrameworkBundle:Redirect:urlRedirect
-        path: "%wapinet_forum_url%"
-        permanent: true
-
 monitoring:
     path: /admin/monitoring
     defaults:
