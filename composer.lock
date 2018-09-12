@@ -1674,12 +1674,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "44b626e503d29193b338ad672f7fc63018f27245"
+                "reference": "10cbdc1e79169d7dafd3b284a5103cc840747791"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/44b626e503d29193b338ad672f7fc63018f27245",
-                "reference": "44b626e503d29193b338ad672f7fc63018f27245",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/10cbdc1e79169d7dafd3b284a5103cc840747791",
+                "reference": "10cbdc1e79169d7dafd3b284a5103cc840747791",
                 "shasum": ""
             },
             "require": {
@@ -1742,7 +1742,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2018-08-30T11:39:52+00:00"
+            "time": "2018-09-10T09:39:54+00:00"
         },
         {
             "name": "gemorroj/archive7z",
@@ -2578,12 +2578,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JamesHeinrich/getID3.git",
-                "reference": "0f3db1af9ec0f0218e0f2fb29cd12be535201fdf"
+                "reference": "db9d3a409ac025de7af633040f32cbfd61baf12d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/0f3db1af9ec0f0218e0f2fb29cd12be535201fdf",
-                "reference": "0f3db1af9ec0f0218e0f2fb29cd12be535201fdf",
+                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/db9d3a409ac025de7af633040f32cbfd61baf12d",
+                "reference": "db9d3a409ac025de7af633040f32cbfd61baf12d",
                 "shasum": ""
             },
             "require": {
@@ -2633,7 +2633,7 @@
                 "php",
                 "tags"
             ],
-            "time": "2018-08-16T19:54:12+00:00"
+            "time": "2018-09-11T10:53:35+00:00"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -4078,16 +4078,16 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v6.1.2",
+            "version": "v6.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "7d760881d266d63c5e7a1155cbcf2ac656a31ca8"
+                "reference": "8ddcb66ac10c392d3beb54829eef8ac1438595f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/7d760881d266d63c5e7a1155cbcf2ac656a31ca8",
-                "reference": "7d760881d266d63c5e7a1155cbcf2ac656a31ca8",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/8ddcb66ac10c392d3beb54829eef8ac1438595f4",
+                "reference": "8ddcb66ac10c392d3beb54829eef8ac1438595f4",
                 "shasum": ""
             },
             "require": {
@@ -4133,7 +4133,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2018-07-13T07:04:35+00:00"
+            "time": "2018-09-11T07:12:52+00:00"
         },
         {
             "name": "symfony/asset",
@@ -9129,16 +9129,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.3.4",
+            "version": "7.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "0356331bf62896dc56e3a15030b23b73f38b2935"
+                "reference": "7b331efabbb628c518c408fdfcaf571156775de2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0356331bf62896dc56e3a15030b23b73f38b2935",
-                "reference": "0356331bf62896dc56e3a15030b23b73f38b2935",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7b331efabbb628c518c408fdfcaf571156775de2",
+                "reference": "7b331efabbb628c518c408fdfcaf571156775de2",
                 "shasum": ""
             },
             "require": {
@@ -9209,7 +9209,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-09-05T09:58:53+00:00"
+            "time": "2018-09-08T15:14:29+00:00"
         },
         {
             "name": "roave/security-advisories",
