@@ -27,7 +27,7 @@
         <env name="FFMPEG_PATH" value="c:\_SOFT_\ffmpeg\bin\ffmpeg.exe"/>
         <env name="FFPROBE_PATH" value="c:\_SOFT_\ffmpeg\bin\ffprobe.exe"/>
         <env name="GEOIP2_COUNTRY_PATH" value="s:\GeoLite2-Country.mmdb"/>
-        <env name="PHP_PATH" value="s:\OpenServer\modules\php\PHP-7.2-x64\php.exe"/>
+        <env name="PHP_PATH" value="s:\OSPanel\modules\php\PHP-7.2-x64\php.exe"/>
         <env name="P7Z_PATH" value="c:\Program Files\7-Zip\7z.exe"/>
         <env name="CONTACT_EMAIL" value="support@localhost"/>
         <env name="ROBOT_EMAIL" value="robot@localhost"/>
