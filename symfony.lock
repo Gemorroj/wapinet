@@ -1,4 +1,7 @@
 {
+    "alchemy/binary-driver": {
+        "version": "v2.0.0"
+    },
     "behat/transliterator": {
         "version": "v1.2.0"
     },
@@ -259,9 +262,6 @@
     },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
-    },
-    "php-ffmpeg/binary-driver": {
-        "version": "dev-master"
     },
     "php-ffmpeg/php-ffmpeg": {
         "version": "v0.11.1-pl-1"
