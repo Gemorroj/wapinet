@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f8755ba5bc5e6c5519036b143d8e4806",
+    "content-hash": "8b61cea5c92b65de52668458e0dc7808",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -2641,12 +2641,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JamesHeinrich/getID3.git",
-                "reference": "17461949907103a68d0390103c50962618d318a4"
+                "reference": "dd1099bcef91ee9d750bba4eb3a0c93a73edebb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/17461949907103a68d0390103c50962618d318a4",
-                "reference": "17461949907103a68d0390103c50962618d318a4",
+                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/dd1099bcef91ee9d750bba4eb3a0c93a73edebb8",
+                "reference": "dd1099bcef91ee9d750bba4eb3a0c93a73edebb8",
                 "shasum": ""
             },
             "require": {
@@ -2696,7 +2696,7 @@
                 "php",
                 "tags"
             ],
-            "time": "2018-09-22T16:42:14+00:00"
+            "time": "2018-09-28T23:48:50+00:00"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -10734,6 +10734,7 @@
         "ext-curl": "*",
         "ext-zip": "*",
         "ext-json": "*",
+        "ext-apcu": "*",
         "ext-simplexml": "*"
     },
     "platform-dev": []

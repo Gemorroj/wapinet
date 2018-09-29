@@ -7,6 +7,7 @@
         "ext-curl": "*",
         "ext-zip": "*",
         "ext-json": "*",
+        "ext-apcu": "*",
         "ext-simplexml": "*",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "^4.1",
