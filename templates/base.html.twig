@@ -1,6 +1,6 @@
 {% set title %}{% block title %}{{ wapinet_title }}{% endblock %}{% endset %}
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <title>{{ title == wapinet_title ? title : wapinet_title ~ ' - ' ~ title }}</title>
 
@@ -54,7 +54,7 @@
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 </head>
 <body>
-<noscript><div><img src="https://mc.yandex.ru/watch/26376855" style="position:absolute; left:-9999px;" /></div></noscript>
+<noscript><div><img src="https://mc.yandex.ru/watch/26376855" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 {% block body %}
 <div data-role="page" id="{{ app.request.attributes.get('_route') }}">
     {% block page %}
