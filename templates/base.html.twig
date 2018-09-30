@@ -10,6 +10,9 @@
 
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
+    {# bbcode #}
+    <link rel="stylesheet" type="text/css" href="{{ asset('build/resources/xbbcode/resources/style.css') }}" />
+
     {# jquery #}
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
@@ -29,6 +32,13 @@
     {# яндекс метрика #}
     <script src="https://mc.yandex.ru/metrika/watch.js" async="async"></script>
 
+    {# fos js routing #}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('build/css/app.css') }}" />
+    <script src="{{ asset('build/js/app.js') }}"></script>
+
     {% if app.user %}
         {# todo:bug #}
         <style type="text/css">{% autoescape 'css' %}
@@ -36,7 +46,7 @@
                 background-image: url("{{ wapinet_user_get_avatar_url(app.user, 18) }}");
                 background-size: 18px 18px;
             }
-        {% endautoescape %}</style>
+            {% endautoescape %}</style>
     {% endif %}
 
     {# jquery mobile #}
@@ -103,15 +113,5 @@
     {% endblock page %}
 </div>
 {% endblock body %}
-
-{# bbcode #}
-<link rel="stylesheet" type="text/css" href="{{ asset('build/resources/xbbcode/resources/style.css') }}" />
-
-{# fos js routing #}
-<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
-<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-
-<link rel="stylesheet" type="text/css" href="{{ asset('build/css/app.css') }}" />
-<script src="{{ asset('build/js/app.js') }}"></script>
 </body>
 </html>
