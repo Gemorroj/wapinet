@@ -10,16 +10,24 @@
 
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
-    {# bbcode #}
-    <link rel="stylesheet" type="text/css" href="{{ asset('build/resources/xbbcode/resources/style.css') }}" />
+    {# jquery #}
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+    {# FileSaver #}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js" async="async"></script>
+    {# jqm.autoComplete #}
+    <script src="https://cdn.rawgit.com/commadelimited/autoComplete.js/master/jqm.autoComplete-1.5.2-min.js" async="async"></script>
+
 
     {# jplayer #}
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/skin/blue.monday/css/jplayer.blue.monday.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.min.js" async="async"></script>
 
-    {# jquery mobile #}
-    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    {# vk comments #}
+    <script src="https://vk.com/js/api/openapi.js?154" async="async"></script>
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('build/css/app.css') }}" />
+    {# яндекс метрика #}
+    <script src="https://mc.yandex.ru/metrika/watch.js" async="async"></script>
 
     {% if app.user %}
         {# todo:bug #}
@@ -30,92 +38,80 @@
             }
         {% endautoescape %}</style>
     {% endif %}
+
+    {# jquery mobile #}
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 </head>
 <body>
 <noscript><div><img src="https://mc.yandex.ru/watch/26376855" style="position:absolute; left:-9999px;" /></div></noscript>
 {% block body %}
-    <div data-role="page" id="{{ app.request.attributes.get('_route') }}">
-        {% block page %}
-            {% block panel %}
-                <div data-role="panel" data-display="overlay" id="panel">
-                    <ul data-role="listview" data-inset="true" data-divider-theme="b">
-                        {% if is_granted('ROLE_USER') %}
-                            {% set wapinet_user_count_online_friends = wapinet_user_count_online_friends(app.user) %}
+<div data-role="page" id="{{ app.request.attributes.get('_route') }}">
+    {% block page %}
+        {% block panel %}
+            <div data-role="panel" data-display="overlay" id="panel">
+                <ul data-role="listview" data-inset="true" data-divider-theme="b">
+                    {% if is_granted('ROLE_USER') %}
+                        {% set wapinet_user_count_online_friends = wapinet_user_count_online_friends(app.user) %}
 
-                            <li data-icon="calendar"><a href="{{ path('wapinet_user_events') }}">События</a></li>
-                            <li data-icon="user"><a href="{{ path('wapinet_user_friends', {'username': app.user.username}) }}">Друзья{% if wapinet_user_count_online_friends > 0 %} <span class="ui-li-count">{{ wapinet_user_count_online_friends|wapinet_count }}</span>{% endif %}</a></li>
-                        {% endif %}
-                        <li data-role="list-divider">Закладки</li>
-                        {% for item in wapinet_panel() %}
-                            {% if item.enabled %}
-                                <li>
-                                    {% if item.route == 'forum_index' %}
-                                        <a data-ajax="false" href="{{ wapinet_forum_url|escape('html_attr') }}">{{ item.name }}</a>
-                                    {% else %}
-                                        <a href="{{ path(item.route) }}">{{ item.name }}</a>
-                                    {% endif %}
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endblock %}
-
-            <div data-theme="b" data-role="header" data-position="fixed">
-                {% block header %}
-                    <a href="#panel" class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext">Меню</a>
-                    <h2 id="header-title">{{ title }}</h2>
-                    {% if app.user %}
-                        <a href="{{ path('fos_user_profile_show') }}" class="ui-btn ui-shadow ui-corner-all ui-icon-wapinet-user ui-btn-icon-notext">{{ app.user.username }}</a>
-                    {% else %}
-                        <a href="{{ path('fos_user_security_login') }}" class="ui-btn ui-shadow ui-corner-all ui-icon-lock ui-btn-icon-notext">Вход</a>
+                        <li data-icon="calendar"><a href="{{ path('wapinet_user_events') }}">События</a></li>
+                        <li data-icon="user"><a href="{{ path('wapinet_user_friends', {'username': app.user.username}) }}">Друзья{% if wapinet_user_count_online_friends > 0 %} <span class="ui-li-count">{{ wapinet_user_count_online_friends|wapinet_count }}</span>{% endif %}</a></li>
                     {% endif %}
-                {% endblock %}
+                    <li data-role="list-divider">Закладки</li>
+                    {% for item in wapinet_panel() %}
+                        {% if item.enabled %}
+                            <li>
+                                {% if item.route == 'forum_index' %}
+                                    <a data-ajax="false" href="{{ wapinet_forum_url|escape('html_attr') }}">{{ item.name }}</a>
+                                {% else %}
+                                    <a href="{{ path(item.route) }}">{{ item.name }}</a>
+                                {% endif %}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
             </div>
+        {% endblock %}
 
-            <div data-role="main" class="ui-content center-container">
-                {% block logo %}<a class="wapinet-logo" href="{{ path('index') }}"></a>{% endblock %}
-                {% block breadcrumbs %}{% endblock %}
-                {% block navbar %}{% endblock %}
-                <fieldset>{% block content %}{% endblock %}</fieldset>
-            </div>
+        <div data-theme="b" data-role="header" data-position="fixed">
+            {% block header %}
+                <a href="#panel" class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext">Меню</a>
+                <h2 id="header-title">{{ title }}</h2>
+                {% if app.user %}
+                    <a href="{{ path('fos_user_profile_show') }}" class="ui-btn ui-shadow ui-corner-all ui-icon-wapinet-user ui-btn-icon-notext">{{ app.user.username }}</a>
+                {% else %}
+                    <a href="{{ path('fos_user_security_login') }}" class="ui-btn ui-shadow ui-corner-all ui-icon-lock ui-btn-icon-notext">Вход</a>
+                {% endif %}
+            {% endblock %}
+        </div>
 
-            <div data-theme="b" data-role="footer" data-position="fixed">
-                {% block footer %}
-                    <p class="footer-right"><a href="{{ path('about') }}">О сайте</a></p>
-                    <p class="footer"><a href="{{ path('online') }}">Онлайн: {{ wapinet_online() }}</a></p>
-                {% endblock footer %}
-            </div>
+        <div data-role="main" class="ui-content center-container">
+            {% block logo %}<a class="wapinet-logo" href="{{ path('index') }}"></a>{% endblock %}
+            {% block breadcrumbs %}{% endblock %}
+            {% block navbar %}{% endblock %}
+            <fieldset>{% block content %}{% endblock %}</fieldset>
+        </div>
 
-            {% block popup %}{% endblock %}
-        {% endblock page %}
-    </div>
+        <div data-theme="b" data-role="footer" data-position="fixed">
+            {% block footer %}
+                <p class="footer-right"><a href="{{ path('about') }}">О сайте</a></p>
+                <p class="footer"><a href="{{ path('online') }}">Онлайн: {{ wapinet_online() }}</a></p>
+            {% endblock footer %}
+        </div>
+
+        {% block popup %}{% endblock %}
+    {% endblock page %}
+</div>
 {% endblock body %}
 
-{# jquery #}
-<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-{# jquery mobile #}
-<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+{# bbcode #}
+<link rel="stylesheet" type="text/css" href="{{ asset('build/resources/xbbcode/resources/style.css') }}" />
 
 {# fos js routing #}
 <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
 <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
+<link rel="stylesheet" type="text/css" href="{{ asset('build/css/app.css') }}" />
 <script src="{{ asset('build/js/app.js') }}"></script>
-
-{# jplayer #}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.min.js" async="async"></script>
-
-{# FileSaver #}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js" async="async"></script>
-{# jqm.autoComplete #}
-<script src="https://cdn.rawgit.com/commadelimited/autoComplete.js/master/jqm.autoComplete-1.5.2-min.js" async="async"></script>
-
-{# vk comments #}
-<script src="https://vk.com/js/api/openapi.js?154" async="async"></script>
-
-{# яндекс метрика #}
-<script src="https://mc.yandex.ru/metrika/watch.js" async="async"></script>
 </body>
 </html>
