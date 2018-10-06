@@ -63,7 +63,7 @@
         "symfony/phpunit-bridge": "^4.1",
         "symfony/profiler-pack": "*",
         "symfony/web-server-bundle": "^4.1",
-        "phpunit/phpunit": "^7.3",
+        "phpunit/phpunit": "^7.4",
         "phpstan/phpstan-symfony": "^0.10",
         "phpstan/phpstan-phpunit": "^0.10",
         "friendsofphp/php-cs-fixer": "^2.13"
