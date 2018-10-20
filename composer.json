@@ -33,7 +33,7 @@
         "friendsofsymfony/user-bundle": "^2.1@dev",
         "friendsofsymfony/jsrouting-bundle": "^2.2",
         "white-october/pagerfanta-bundle": "^1.2",
-        "james-heinrich/getid3": "^1.9@dev",
+        "james-heinrich/getid3": "^1.9.16",
         "vich/uploader-bundle": "^1.8",
         "liip/imagine-bundle": "^2.1",
         "gregwar/captcha-bundle": "^2.0",
