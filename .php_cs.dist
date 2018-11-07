@@ -1,10 +1,10 @@
-    <?php
+<?php
 
-        $finder = PhpCsFixer\Finder::create()
-        ->in(['src', 'tests', 'config']);
+$finder = PhpCsFixer\Finder::create()
+    ->in(['src', 'tests', 'config']);
 
-        return PhpCsFixer\Config::create()
-        ->setRules([
+return PhpCsFixer\Config::create()
+    ->setRules([
         '@Symfony' => true,
         '@Symfony:risky' => true,
         '@DoctrineAnnotation' => true,
@@ -22,7 +22,7 @@
         'ordered_imports' => ['sortAlgorithm' => 'alpha'],
         'phpdoc_order' => true,
         'strict_comparison' => true,
-        ])
-        ->setRiskyAllowed(true)
-        ->setFinder($finder)
-        ;
+    ])
+    ->setRiskyAllowed(true)
+    ->setFinder($finder)
+;
