@@ -1,1 +1,12 @@
-{"entrypoints":{"app":{"css":["build/app.css"],"js":["build/app.js"]}}}
+{
+  "entrypoints": {
+    "app": {
+      "css": [
+        "/build/app.css"
+      ],
+      "js": [
+        "/build/app.js"
+      ]
+    }
+  }
+}
