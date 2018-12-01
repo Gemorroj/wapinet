@@ -7,9 +7,11 @@ framework:
     # Enables session support. Note that the session will ONLY be started if you read or write from it.
     # Remove or comment this section to explicitly disable session support.
     session:
-        name: 'wapinet'
-        cookie_httponly: true
+        handler_id: ~
         cookie_secure: true
+        cookie_samesite: lax
+        cookie_httponly: true
+        name: 'wapinet'
 
     #esi: true
     #fragments: true

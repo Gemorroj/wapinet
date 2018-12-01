@@ -1,6 +1,6 @@
 {
     "devDependencies": {
-        "@symfony/webpack-encore": "^0.22.1"
+        "@symfony/webpack-encore": "^0.22.2"
     },
     "license": "GPL-3.0-or-later",
     "scripts": {

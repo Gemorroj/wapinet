@@ -1,5 +1,3 @@
 framework:
     validation:
         email_validation_mode: html5
-        enabled: true
-        enable_annotations: false
