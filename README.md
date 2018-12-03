@@ -283,6 +283,7 @@ server {
 ```
 
 ### TODO:
+- использовать новую систему конфигураций https://symfony.com/blog/improvements-to-the-handling-of-env-files-for-all-symfony-versions
 - заменить свою curl прослойку на guzzle
 - Перевести на mysql 8
 - Переделать интерфейс на vue/react (огромная задача)
