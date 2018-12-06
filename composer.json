@@ -1,4 +1,6 @@
 {
+    "name": "gemorroj/wapinet",
+    "description": "wapinet.ru website",
     "type": "project",
     "license": "GPL-3.0-or-later",
     "require": {
