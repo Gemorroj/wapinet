@@ -422,7 +422,7 @@ class FileController extends Controller
 
         $filesystem = $this->get('filesystem');
 
-        if (!$filesystem->exists($entry)) {
+        if (!$filesystem->exists($entry)) { // распаковываем архив
             /** @var File|null $file */
             $file = $this->getDoctrine()->getRepository(File::class)->find($id);
             if (null === $file) {
@@ -432,6 +432,9 @@ class FileController extends Controller
             $archive = $this->get('archive_7z');
 
             $archive->extractEntry($file->getFile(), $path, $tmpDir);
+            if (!$filesystem->exists($entry)) {
+                throw $this->createNotFoundException('Файл не найден.');
+            }
             $filesystem->chmod($entry, 0644);
         }
 
