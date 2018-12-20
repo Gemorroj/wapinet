@@ -19,7 +19,7 @@ easy_admin:
             - Guestbook
         assets:
             css:
-                - 'build/css/app.css'
+                - 'build/app.css'
     site_name: '%wapinet_title%'
     entities:
         Files:

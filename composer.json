@@ -32,7 +32,7 @@
         "symfony/web-link": "4.2.*",
         "symfony/yaml": "4.2.*",
         "symfony/webpack-encore-bundle": "^1.0",
-        "easycorp/easyadmin-bundle": "^1.17.17",
+        "easycorp/easyadmin-bundle": "^2.0.2",
         "friendsofsymfony/user-bundle": "^2.1@dev",
         "friendsofsymfony/jsrouting-bundle": "^2.2.2",
         "white-october/pagerfanta-bundle": "^1.2",
@@ -55,7 +55,7 @@
         "gemorroj/htmlvalidator": "^1.1",
         "gemorroj/cssvalidator": "^1.1",
         "gemorroj/xbbcode": "^2.2",
-        "gemorroj/ginfo": "^5.0.6"
+        "gemorroj/ginfo": "^5.0.7"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",

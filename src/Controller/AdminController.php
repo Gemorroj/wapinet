@@ -7,18 +7,20 @@ use App\Entity\File;
 use App\Entity\News;
 use App\Entity\User;
 use App\Helper\Ginfo;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController as BaseAdminController;
 use FOS\UserBundle\Doctrine\UserManager as UserManagerDoctrine;
+use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdminController extends BaseAdminController
 {
     /**
      * @param Ginfo $ginfo
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function monitoringAction(Ginfo $ginfo)
+    public function monitoringAction(Ginfo $ginfo): Response
     {
         $info = $ginfo->getInfo();
 
@@ -28,9 +30,9 @@ class AdminController extends BaseAdminController
                 'php' => $info->getPhp(),
                 'selinux' => $info->getSelinux(),
                 'cpu' => $info->getCpu(),
-                'network' => $info->getNetwork(),
+                'network' => $info->getNetwork() ?: [],
                 'disk' => $info->getDisk(),
-                'services' => $info->getServices(),
+                'services' => $info->getServices() ?: [],
                 'memory' => $info->getMemory(),
             ],
         ]);
@@ -39,9 +41,9 @@ class AdminController extends BaseAdminController
     /**
      * @param UserManagerInterface $userManager
      *
-     * @return \FOS\UserBundle\Model\UserInterface
+     * @return UserInterface
      */
-    public function createNewUserEntity(UserManagerInterface $userManager)
+    public function createNewUserEntity(UserManagerInterface $userManager): UserInterface
     {
         return $userManager->createUser();
     }
@@ -50,7 +52,7 @@ class AdminController extends BaseAdminController
      * @param User                 $user
      * @param UserManagerInterface $userManage
      */
-    public function prePersistUserEntity(User $user, UserManagerInterface $userManage)
+    public function prePersistUserEntity(User $user, UserManagerInterface $userManage): void
     {
         if ($userManage instanceof UserManagerDoctrine) {
             $userManage->updateUser($user, false);
@@ -62,7 +64,7 @@ class AdminController extends BaseAdminController
     /**
      * @param News $news
      */
-    public function persistNewsEntity(News $news)
+    public function persistNewsEntity(News $news): void
     {
         $news->setCreatedBy($this->getUser());
         parent::persistEntity($news);
@@ -74,7 +76,7 @@ class AdminController extends BaseAdminController
      *
      * @param News $news
      */
-    private function newsSubscriber(News $news)
+    private function newsSubscriber(News $news): void
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -104,7 +106,7 @@ class AdminController extends BaseAdminController
     /**
      * @param object $entity
      */
-    protected function preRemoveEntity($entity)
+    protected function preRemoveEntity($entity): void
     {
         switch (true) {
             case $entity instanceof File:
