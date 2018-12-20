@@ -25,7 +25,7 @@
                         <dt class="col-4">Ядро:</dt>
                         <dd class="col-8">{{ info.general.kernel }}</dd>
                         <dt class="col-4">Uptime:</dt>
-                        <dd class="col-8">{{ info.general.uptime|date('d дней h часов i минут') }}</dd>
+                        <dd class="col-8">{{ info.general.uptime ? info.general.uptime|date('d дней h часов i минут') : 'Неизвестно' }}</dd>
                         <dt class="col-4">Selinux:</dt>
                         <dd class="col-8">{{ info.selinux ? (info.selinux.enabled ? 'Вкл.' : 'Выкл.') : 'Отсутствует' }}</dd>
                         <dt class="col-4">PHP:</dt>
