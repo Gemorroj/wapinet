@@ -20,6 +20,10 @@ easy_admin:
         assets:
             css:
                 - 'build/app.css'
+                - 'bundles/easyadmin/bootstrap-all.css'
+            js:
+                - 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js'
+                - 'bundles/easyadmin/bootstrap-all.js'
     site_name: '%wapinet_title%'
     entities:
         Files:

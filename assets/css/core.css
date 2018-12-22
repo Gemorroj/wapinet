@@ -150,3 +150,12 @@ div.file-md5-hash {
     bottom: 7px;
     margin: 0;
 }
+
+/* мониторинг easyadmin */
+
+dt.monitoring-label {
+    padding: 0;
+}
+dd.monitoring-value {
+    padding-right: 0;
+}
