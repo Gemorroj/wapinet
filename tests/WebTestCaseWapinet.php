@@ -12,7 +12,7 @@ abstract class WebTestCaseWapinet extends WebTestCase
      */
     protected function getFixturesPath(): string
     {
-        return \dirname(static::$kernel->getRootDir()).'/tests/fixtures';
+        return \dirname(static::$kernel->getProjectDir()).'/tests/fixtures';
     }
 
     /**
