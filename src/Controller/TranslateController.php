@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Form\Type\Translate\TranslateType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Helper\Curl;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class TranslateController extends Controller
+class TranslateController extends AbstractController
 {
     /**
      * @param Request $request
@@ -70,7 +71,7 @@ class TranslateController extends Controller
 
         $response = $curl->exec();
         if (!$response->isSuccessful()) {
-            throw new HttpException($response->getStatusCode());
+            throw new HttpException($response->getStatusCode(), 'Api error');
         }
 
         $json = \json_decode($response->getContent());
@@ -96,7 +97,7 @@ class TranslateController extends Controller
 
         $response = $curl->exec();
         if (!$response->isSuccessful()) {
-            throw new HttpException($response->getStatusCode());
+            throw new HttpException($response->getStatusCode(), 'Api error');
         }
 
         $json = \json_decode($response->getContent());
@@ -113,13 +114,13 @@ class TranslateController extends Controller
     {
         $json = $this->getLangs();
 
-        return (string) $json->langs->{$code};
+        return (string) $json['langs'][$code];
     }
 
     /**
      * @throws \RuntimeException
      *
-     * @return \stdClass
+     * @return array
      */
     private function getLangs()
     {
@@ -136,7 +137,7 @@ class TranslateController extends Controller
 
             $response = $curl->exec();
             if (!$response->isSuccessful()) {
-                throw new HttpException($response->getStatusCode());
+                throw new HttpException($response->getStatusCode(), 'Api error');
             }
 
             $langs = $response->getContent();
@@ -152,6 +153,13 @@ class TranslateController extends Controller
             }
         }
 
-        return \json_decode($langs);
+        return \json_decode($langs, true);
+    }
+
+    public static function getSubscribedServices()
+    {
+        $services = parent::getSubscribedServices();
+        $services['curl'] = '?'.Curl::class;
+        return $services;
     }
 }
