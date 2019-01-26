@@ -23,7 +23,7 @@ class Rates
     /**
      * @param string $country
      *
-     * @return null|string
+     * @return string|null
      */
     public function getName($country)
     {

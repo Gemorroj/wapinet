@@ -210,7 +210,7 @@ class FileRepository extends EntityRepository
 
     /**
      * @param QueryBuilder $q
-     * @param null|string  $mimeType
+     * @param string|null  $mimeType
      */
     private function addCategoryMime(QueryBuilder $q, ?string $mimeType): void
     {

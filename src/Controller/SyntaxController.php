@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 class SyntaxController extends AbstractController
 {
     /**
-     * @var null|array
+     * @var array|null
      */
     protected $data;
 

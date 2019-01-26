@@ -91,7 +91,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
     /**
      * @param array $fileDataFromForm
      *
-     * @return null|FileUrl|UploadedFile
+     * @return FileUrl|UploadedFile|null
      */
     protected function getUploadedFile(array $fileDataFromForm)
     {
@@ -120,7 +120,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
             if (false === $temp) {
                 throw new TransformationFailedException('Не удалось создать временный файл');
             }
-            $f = \fopen($temp, 'wb');
+            $f = \fopen($temp, 'w');
             if (false === $f) {
                 throw new TransformationFailedException('Не удалось открыть временный файл на запись');
             }

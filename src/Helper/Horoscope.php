@@ -23,7 +23,7 @@ class Horoscope
     /**
      * @param string $zodiac
      *
-     * @return null|string
+     * @return string|null
      */
     public function getName(string $zodiac): ?string
     {

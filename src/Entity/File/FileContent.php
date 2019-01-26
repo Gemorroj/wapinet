@@ -27,9 +27,9 @@ class FileContent
     protected $size;
 
     /**
-     * @param null|string $content
-     * @param null|string $mimeType
-     * @param null|string $basename
+     * @param string|null $content
+     * @param string|null $mimeType
+     * @param string|null $basename
      */
     public function __construct($content, $mimeType = null, $basename = null)
     {
@@ -40,7 +40,7 @@ class FileContent
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getContent()
     {
@@ -48,7 +48,7 @@ class FileContent
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getMimeType()
     {
@@ -56,7 +56,7 @@ class FileContent
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getBasename()
     {

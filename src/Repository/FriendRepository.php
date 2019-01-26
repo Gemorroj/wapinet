@@ -54,7 +54,7 @@ class FriendRepository extends EntityRepository
      * @param User $user
      * @param User $friend
      *
-     * @return null|Friend
+     * @return Friend|null
      */
     public function getFriend(User $user, User $friend): ?Friend
     {

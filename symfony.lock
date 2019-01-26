@@ -275,6 +275,9 @@
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
     },
+    "phpoption/phpoption": {
+        "version": "1.5.0"
+    },
     "phpspec/prophecy": {
         "version": "1.7.6"
     },

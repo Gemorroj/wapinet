@@ -160,6 +160,7 @@ class TranslateController extends AbstractController
     {
         $services = parent::getSubscribedServices();
         $services['curl'] = '?'.Curl::class;
+
         return $services;
     }
 }
