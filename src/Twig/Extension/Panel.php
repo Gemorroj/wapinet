@@ -4,9 +4,12 @@ namespace App\Twig\Extension;
 
 use App\Entity\Panel as UserPanel;
 use App\Entity\User;
+use ArrayIterator;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class Panel extends \Twig_Extension
+class Panel extends AbstractExtension
 {
     /**
      * @var TokenStorageInterface
@@ -26,14 +29,14 @@ class Panel extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('wapinet_panel', [$this, 'getPanel']),
+            new TwigFunction('wapinet_panel', [$this, 'getPanel']),
         ];
     }
 
     /**
      * @param array $options
      *
-     * @return \ArrayIterator
+     * @return ArrayIterator
      */
     public function getPanel(array $options = [])
     {

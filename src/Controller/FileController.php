@@ -18,9 +18,13 @@ use App\Helper\Mime;
 use App\Helper\Timezone;
 use App\Repository\FileRepository;
 use App\Repository\TagRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
 use FOS\UserBundle\Model\UserManagerInterface;
+use InvalidArgumentException;
 use Pagerfanta\Pagerfanta;
+use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -35,6 +39,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use function end;
+use function explode;
+use function ltrim;
+use function md5_file;
+use function str_replace;
+use function trim;
+use function uniqid;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * @see http://wap4file.org
@@ -88,7 +100,7 @@ class FileController extends Controller
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    $key = \uniqid('', false);
+                    $key = uniqid('', false);
                     $session->set('file_search', [
                         'key' => $key,
                         'data' => $data,
@@ -105,7 +117,7 @@ class FileController extends Controller
                     $pagerfanta = $this->searchSphinx($search['data'], $page);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -120,7 +132,7 @@ class FileController extends Controller
      * @param array $data
      * @param int   $page
      *
-     * @throws \RuntimeException
+     * @throws RuntimeException
      *
      * @return Pagerfanta
      */
@@ -269,12 +281,12 @@ class FileController extends Controller
         $datetimeEnd = null;
         switch ($date) {
             case 'today':
-                $datetimeStart = new \DateTime('today', $timezoneHelper->getTimezone());
+                $datetimeStart = new DateTime('today', $timezoneHelper->getTimezone());
                 break;
 
             case 'yesterday':
-                $datetimeStart = new \DateTime('yesterday', $timezoneHelper->getTimezone());
-                $datetimeEnd = new \DateTime('today', $timezoneHelper->getTimezone());
+                $datetimeStart = new DateTime('yesterday', $timezoneHelper->getTimezone());
+                $datetimeEnd = new DateTime('today', $timezoneHelper->getTimezone());
                 break;
         }
 
@@ -325,7 +337,7 @@ class FileController extends Controller
     protected function incrementViews(File $file): void
     {
         $file->setCountViews($file->getCountViews() + 1);
-        $file->setLastViewAt(new \DateTime());
+        $file->setLastViewAt(new DateTime());
     }
 
     /**
@@ -337,6 +349,7 @@ class FileController extends Controller
     protected function viewFile(File $file, Meta $fileMeta): Response
     {
         $this->checkMeta($file, $fileMeta);
+
         $response = $this->render('File/view.html.twig', ['file' => $file]);
         $this->incrementViews($file);
 
@@ -360,7 +373,7 @@ class FileController extends Controller
         $meta = null;
         try {
             $meta = $fileMeta->setFile($file)->getFileMeta();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->get('logger')->warning('Не удалось получить мета-информацию из файла.', [$e]);
         }
 
@@ -393,7 +406,7 @@ class FileController extends Controller
                     return $this->viewFile($file, $fileMeta);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -412,13 +425,13 @@ class FileController extends Controller
      */
     public function archiveDownloadFileAction(Request $request, int $id, string $name): BinaryFileResponse
     {
-        $path = \str_replace('\\', '/', $request->get('path'));
+        $path = str_replace('\\', '/', $request->get('path'));
         if (null === $path) {
             throw $this->createNotFoundException('Не указан файл для скачивания.');
         }
 
         $tmpDir = $this->getParameter('kernel.tmp_file_dir');
-        $entry = $tmpDir.\DIRECTORY_SEPARATOR.$path;
+        $entry = $tmpDir. DIRECTORY_SEPARATOR.$path;
 
         $filesystem = $this->get('filesystem');
 
@@ -541,7 +554,7 @@ class FileController extends Controller
                     return $this->redirect($url);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -566,7 +579,7 @@ class FileController extends Controller
         /** @var UploadedFile|null $file */
         $file = $data->getFile();
         if (null !== $file) {
-            $hash = \md5_file($file->getPathname());
+            $hash = md5_file($file->getPathname());
 
             $existingFile = $this->getDoctrine()->getRepository(File::class)->findOneBy(['hash' => $hash]);
             if (null !== $existingFile) {
@@ -652,7 +665,7 @@ class FileController extends Controller
                     return $this->redirect($url);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -676,7 +689,7 @@ class FileController extends Controller
         /** @var UploadedFile $file */
         $file = $data->getFile();
 
-        $hash = \md5_file($file->getPathname());
+        $hash = md5_file($file->getPathname());
 
         $existingFile = $this->getDoctrine()->getRepository(File::class)->findOneBy(['hash' => $hash]);
         if (null !== $existingFile) {
@@ -787,13 +800,13 @@ class FileController extends Controller
      */
     public function tagsSearchAction(Request $request)
     {
-        $term = \trim($request->get('term', ''));
+        $term = trim($request->get('term', ''));
         if ('' === $term) {
             return new JsonResponse([]);
         }
 
-        $exTerm = \explode(',', $term);
-        $term = \ltrim(\end($exTerm));
+        $exTerm = explode(',', $term);
+        $term = ltrim(end($exTerm));
         if ('' === $term) {
             return new JsonResponse([]);
         }
@@ -821,15 +834,15 @@ class FileController extends Controller
         $repository = $this->getDoctrine()->getRepository(File::class);
 
         if (!$file->isImage()) {
-            throw new \InvalidArgumentException('Просмотр возможен только для картинок.');
+            throw new InvalidArgumentException('Просмотр возможен только для картинок.');
         }
 
         if (null !== $file->getPassword()) {
-            throw new \InvalidArgumentException('Просмотр файлов защищенных паролем не поддерживается.');
+            throw new InvalidArgumentException('Просмотр файлов защищенных паролем не поддерживается.');
         }
 
         if ($file->isHidden()) {
-            throw new \InvalidArgumentException('Файл скрыт и не доступен для просмотра.');
+            throw new InvalidArgumentException('Файл скрыт и не доступен для просмотра.');
         }
 
         $prevFile = $repository->getPrevFile($file->getId(), 'image');

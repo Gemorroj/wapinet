@@ -3,8 +3,11 @@
 namespace App\Twig\Extension;
 
 use App\Helper\Timezone;
+use DateTime;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
-class Date extends \Twig_Extension
+class Date extends AbstractExtension
 {
     /**
      * @var Timezone
@@ -27,32 +30,32 @@ class Date extends \Twig_Extension
     public function getFilters(): array
     {
         return [
-            new \Twig_SimpleFilter('wapinet_date', [$this, 'getDate']),
-            new \Twig_SimpleFilter('wapinet_time', [$this, 'getTime']),
-            new \Twig_SimpleFilter('wapinet_datetime', [$this, 'getDateTime']),
-            new \Twig_SimpleFilter('wapinet_length', [$this, 'getLength']),
+            new TwigFilter('wapinet_date', [$this, 'getDate']),
+            new TwigFilter('wapinet_time', [$this, 'getTime']),
+            new TwigFilter('wapinet_datetime', [$this, 'getDateTime']),
+            new TwigFilter('wapinet_length', [$this, 'getLength']),
         ];
     }
 
     /**
-     * @param \DateTime|mixed $date
+     * @param DateTime|mixed $date
      *
      * @return string
      */
     public function getDate($date): string
     {
-        if ($date instanceof \DateTime) {
+        if ($date instanceof DateTime) {
             $timezone = $this->timezone->getTimezone();
 
             if (null !== $timezone) {
                 $date->setTimezone($timezone);
             }
 
-            $today = new \DateTime('today', $timezone);
-            $yesterday = new \DateTime('yesterday', $timezone);
-            $dayBeforeYesterday = new \DateTime('yesterday - 1 day', $timezone);
-            $tomorrow = new \DateTime('tomorrow', $timezone);
-            $dayAfterTomorrow = new \DateTime('tomorrow + 1 day', $timezone);
+            $today = new DateTime('today', $timezone);
+            $yesterday = new DateTime('yesterday', $timezone);
+            $dayBeforeYesterday = new DateTime('yesterday - 1 day', $timezone);
+            $tomorrow = new DateTime('tomorrow', $timezone);
+            $dayAfterTomorrow = new DateTime('tomorrow + 1 day', $timezone);
 
             if ($date->format('Ymd') === $today->format('Ymd')) {
                 return 'Сегодня';
@@ -77,24 +80,24 @@ class Date extends \Twig_Extension
     }
 
     /**
-     * @param \DateTime|mixed $datetime
+     * @param DateTime|mixed $datetime
      *
      * @return string
      */
     public function getDateTime($datetime): string
     {
-        if ($datetime instanceof \DateTime) {
+        if ($datetime instanceof DateTime) {
             $timezone = $this->timezone->getTimezone();
 
             if (null !== $timezone) {
                 $datetime->setTimezone($timezone);
             }
 
-            $today = new \DateTime('today', $timezone);
-            $yesterday = new \DateTime('yesterday', $timezone);
-            $dayBeforeYesterday = new \DateTime('yesterday - 1 day', $timezone);
-            $tomorrow = new \DateTime('tomorrow', $timezone);
-            $dayAfterTomorrow = new \DateTime('tomorrow + 1 day', $timezone);
+            $today = new DateTime('today', $timezone);
+            $yesterday = new DateTime('yesterday', $timezone);
+            $dayBeforeYesterday = new DateTime('yesterday - 1 day', $timezone);
+            $tomorrow = new DateTime('tomorrow', $timezone);
+            $dayAfterTomorrow = new DateTime('tomorrow + 1 day', $timezone);
 
             if ($datetime->format('Ymd') === $today->format('Ymd')) {
                 return 'Сегодня в '.$datetime->format('H:i');
@@ -120,13 +123,13 @@ class Date extends \Twig_Extension
     }
 
     /**
-     * @param \DateTime|mixed $datetime
+     * @param DateTime|mixed $datetime
      *
      * @return string
      */
     public function getTime($datetime): string
     {
-        if ($datetime instanceof \DateTime) {
+        if ($datetime instanceof DateTime) {
             $timezone = $this->timezone->getTimezone();
 
             if (null !== $timezone) {
@@ -147,8 +150,8 @@ class Date extends \Twig_Extension
     public function getLength(int $seconds): string
     {
         $length = '';
-        $d1 = new \DateTime();
-        $d2 = new \DateTime('- '.$seconds.' seconds');
+        $d1 = new DateTime();
+        $d2 = new DateTime('- '.$seconds.' seconds');
 
         $iv = $d2->diff($d1);
 

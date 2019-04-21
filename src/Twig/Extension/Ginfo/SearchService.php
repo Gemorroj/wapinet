@@ -4,13 +4,15 @@ namespace App\Twig\Extension\Ginfo;
 
 use Ginfo\Common;
 use Ginfo\Info\Service;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
-class SearchService extends \Twig_Extension
+class SearchService extends AbstractExtension
 {
     public function getFilters(): array
     {
         return [
-            new \Twig_SimpleFilter('wapinet_ginfo_search_service', [$this, 'searchService']),
+            new TwigFilter('wapinet_ginfo_search_service', [$this, 'searchService']),
         ];
     }
 

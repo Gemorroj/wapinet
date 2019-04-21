@@ -2,7 +2,11 @@
 
 namespace App\Twig\Extension;
 
-class Count extends \Twig_Extension
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use function number_format;
+
+class Count extends AbstractExtension
 {
     /**
      * Returns a list of global functions to add to the existing list.
@@ -12,7 +16,7 @@ class Count extends \Twig_Extension
     public function getFilters(): array
     {
         return [
-            new \Twig_SimpleFilter('wapinet_count', [$this, 'getCount']),
+            new TwigFilter('wapinet_count', [$this, 'getCount']),
         ];
     }
 
@@ -23,6 +27,6 @@ class Count extends \Twig_Extension
      */
     public function getCount($count): string
     {
-        return \number_format($count, 0, ',', ' ');
+        return number_format($count, 0, ',', ' ');
     }
 }

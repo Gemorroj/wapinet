@@ -7,6 +7,7 @@ use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use function in_array;
 
 class GistVoter extends Voter
 {
@@ -22,7 +23,7 @@ class GistVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        if (!\in_array($attribute, [self::DELETE, self::EDIT])) {
+        if (!in_array($attribute, [self::DELETE, self::EDIT], true)) {
             return false;
         }
 

@@ -2,13 +2,21 @@
 
 namespace App\Twig\Extension;
 
+use Exception;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\Format\Video\DefaultVideo;
 use FFMpeg\Format\Video\X264;
 use FFMpeg\Media\Video as FFmpegVideo;
+use RuntimeException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use function ceil;
+use function file_exists;
+use function filesize;
+use function floor;
 
-class Video extends \Twig_Extension
+class Video extends AbstractExtension
 {
     /**
      * @var ContainerInterface
@@ -31,8 +39,8 @@ class Video extends \Twig_Extension
     public function getFilters(): array
     {
         return [
-            new \Twig_SimpleFilter('wapinet_video_screenshot', [$this, 'getScreenshot']),
-            new \Twig_SimpleFilter('wapinet_video_to_mp4', [$this, 'convertToMp4']),
+            new TwigFilter('wapinet_video_screenshot', [$this, 'getScreenshot']),
+            new TwigFilter('wapinet_video_to_mp4', [$this, 'convertToMp4']),
         ];
     }
 
@@ -45,7 +53,7 @@ class Video extends \Twig_Extension
     {
         $mp4File = $path.'.mp4';
 
-        if (false === \file_exists($this->getPublicDir().$mp4File)) {
+        if (false === file_exists($this->getPublicDir().$mp4File)) {
             $ffmpeg = $this->container->get('ffmpeg')->getFfmpeg();
             try {
                 $media = $ffmpeg->open($this->getPublicDir().$path);
@@ -55,10 +63,10 @@ class Video extends \Twig_Extension
 
                 $media->save($format, $this->getPublicDir().$mp4File);
 
-                if (false === \file_exists($this->getPublicDir().$mp4File)) {
-                    throw new \RuntimeException('Не удалось создать MP4 файл');
+                if (false === file_exists($this->getPublicDir().$mp4File)) {
+                    throw new RuntimeException('Не удалось создать MP4 файл');
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->container->get('logger')->warning('Ошибка при конвертировании видео в MP4.', [$e]);
 
                 return null;
@@ -84,7 +92,7 @@ class Video extends \Twig_Extension
             // https://trac.ffmpeg.org/wiki/Encode/MPEG-4
             // bitrate = file size / duration
 
-            $filesize = @\filesize($media->getPathfile());
+            $filesize = @filesize($media->getPathfile());
             $filesize *= 3.3; // увеличиваем предположительный размер mp4 файла по сравнению с оригиналом
             $filesize /= 1024; // переводим байты в килобайты
             $duration = $videoStream->has('duration') ? $videoStream->get('duration') : 0;
@@ -97,7 +105,7 @@ class Video extends \Twig_Extension
                     $audioBitrate /= 1000;
                     $bitrate -= $audioBitrate;
                 }*/
-                $bitrate = \floor($bitrate);
+                $bitrate = floor($bitrate);
 
                 if ($bitrate < $format->getKiloBitrate()) {
                     $format->setKiloBitrate($bitrate);
@@ -117,7 +125,7 @@ class Video extends \Twig_Extension
     {
         $screenshot = $path.'.jpg';
 
-        if (false === \file_exists($this->getPublicDir().$screenshot)) {
+        if (false === file_exists($this->getPublicDir().$screenshot)) {
             $ffmpeg = $this->container->get('ffmpeg')->getFfmpeg();
 
             try {
@@ -126,13 +134,13 @@ class Video extends \Twig_Extension
                     $second = $this->getScreenshotSecond($media);
                     $frame = $media->frame(TimeCode::fromSeconds($second));
                     $frame->save($this->getPublicDir().$screenshot);
-                    if (false === \file_exists($this->getPublicDir().$screenshot)) {
-                        throw new \RuntimeException('Не удалось создать скриншот');
+                    if (false === file_exists($this->getPublicDir().$screenshot)) {
+                        throw new RuntimeException('Не удалось создать скриншот');
                     }
                 } else {
-                    throw new \RuntimeException('Не найден видео поток');
+                    throw new RuntimeException('Не найден видео поток');
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->container->get('logger')->warning('Ошибка при создании скриншота видео.', [$e]);
 
                 return null;
@@ -156,7 +164,7 @@ class Video extends \Twig_Extension
             $duration = $video->get('duration');
 
             if ($duration && $duration < $second) {
-                $second = \ceil($duration / 2);
+                $second = ceil($duration / 2);
             }
         }
 
@@ -168,6 +176,6 @@ class Video extends \Twig_Extension
      */
     protected function getPublicDir(): string
     {
-        return $this->container->getParameter('kernel.public_dir');
+        return $this->container->getParameter('kernel.project_dir').'/public';
     }
 }

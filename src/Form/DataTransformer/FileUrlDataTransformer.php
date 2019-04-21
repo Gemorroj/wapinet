@@ -6,6 +6,7 @@ use App\Entity\File\FileContent;
 use App\Entity\File\FileUrl;
 use App\Helper\Curl;
 use Riverline\MultiPartParser\Part;
+use RuntimeException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
@@ -13,6 +14,17 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use function base64_encode;
+use function fclose;
+use function fopen;
+use function mb_strlen;
+use function mb_substr;
+use function parse_url;
+use function str_replace;
+use function tempnam;
+use const CURLOPT_FILE;
+use const CURLOPT_HEADER;
+use const PHP_URL_PATH;
 
 class FileUrlDataTransformer implements DataTransformerInterface
 {
@@ -52,13 +64,13 @@ class FileUrlDataTransformer implements DataTransformerInterface
     {
         if ($fileDataFromDb instanceof File) {
             return [
-                'web_path' => \str_replace('\\', '//', \mb_substr($fileDataFromDb->getPathname(), \mb_strlen($this->parameterBag->get('kernel.public_dir')))),
+                'web_path' => str_replace('\\', '//', mb_substr($fileDataFromDb->getPathname(), mb_strlen($this->parameterBag->get('kernel.project_dir').'/public'))),
                 'file_url' => $fileDataFromDb,
             ];
         }
         if ($fileDataFromDb instanceof FileContent) {
             return [
-                'web_path' => 'data:'.$fileDataFromDb->getMimeType().';base64,'.\base64_encode($fileDataFromDb->getContent()),
+                'web_path' => 'data:'.$fileDataFromDb->getMimeType().';base64,'. base64_encode($fileDataFromDb->getContent()),
                 'file_url' => $fileDataFromDb,
             ];
         }
@@ -113,24 +125,24 @@ class FileUrlDataTransformer implements DataTransformerInterface
             $responseHead = $this->curl->checkFileSize(false);
 
             if (!$responseHead->isSuccessful() && !$responseHead->isRedirection()) {
-                throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$responseHead->getStatusCode().')');
+                throw new RuntimeException('Не удалось получить данные (HTTP код: '.$responseHead->getStatusCode().')');
             }
 
-            $temp = \tempnam($this->parameterBag->get('kernel.tmp_dir'), 'file_url');
+            $temp = tempnam($this->parameterBag->get('kernel.tmp_dir'), 'file_url');
             if (false === $temp) {
                 throw new TransformationFailedException('Не удалось создать временный файл');
             }
-            $f = \fopen($temp, 'w');
+            $f = fopen($temp, 'w');
             if (false === $f) {
                 throw new TransformationFailedException('Не удалось открыть временный файл на запись');
             }
 
-            $this->curl->setOpt(\CURLOPT_HEADER, false);
-            $this->curl->setOpt(\CURLOPT_FILE, $f);
+            $this->curl->setOpt(CURLOPT_HEADER, false);
+            $this->curl->setOpt(CURLOPT_FILE, $f);
 
             $responseBody = $this->curl->exec();
             $this->curl->close();
-            \fclose($f);
+            fclose($f);
 
             if (!$responseBody->isSuccessful()) {
                 throw new TransformationFailedException('Не удалось скачать файл по ссылке (HTTP код: '.$responseBody->getStatusCode().')');
@@ -164,14 +176,14 @@ class FileUrlDataTransformer implements DataTransformerInterface
             }
         }
 
-        $path = \parse_url($url, \PHP_URL_PATH);
+        $path = parse_url($url, PHP_URL_PATH);
         if (null !== $path && '/' !== $path) {
             return $path;
         }
 
         $location = $headers->get('Location');
         if ($location) {
-            $locationPath = \parse_url($location, \PHP_URL_PATH);
+            $locationPath = parse_url($location, PHP_URL_PATH);
             if (null !== $locationPath && '/' !== $locationPath) {
                 return $locationPath;
             }

@@ -12,13 +12,13 @@ abstract class WebTestCaseWapinet extends WebTestCase
      */
     protected function getFixturesPath(): string
     {
-        return \dirname(static::$kernel->getProjectDir()).'/tests/fixtures';
+        return __DIR__.'/fixtures';
     }
 
     /**
      * @return Client
      */
-    protected function loginAdmin(): Client
+    protected static function loginAdmin(): Client
     {
         return static::createClient([], [
             'PHP_AUTH_USER' => 'admin',

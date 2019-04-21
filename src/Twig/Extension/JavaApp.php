@@ -3,10 +3,19 @@
 namespace App\Twig\Extension;
 
 use App\Exception\ArchiverException;
+use Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use function explode;
+use function file_exists;
+use function mb_strtolower;
+use function pathinfo;
+use function preg_match;
+use function trim;
 
-class JavaApp extends \Twig_Extension
+class JavaApp extends AbstractExtension
 {
     /**
      * @var ContainerInterface
@@ -26,7 +35,7 @@ class JavaApp extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('wapinet_java_app_screenshot', [$this, 'getScreenshot']),
+            new TwigFilter('wapinet_java_app_screenshot', [$this, 'getScreenshot']),
         ];
     }
 
@@ -39,7 +48,7 @@ class JavaApp extends \Twig_Extension
     {
         $screenshot = $path.'.png';
 
-        if (false === \file_exists($this->getPublicDir().$screenshot)) {
+        if (false === file_exists($this->getPublicDir().$screenshot)) {
             $manifestContent = $this->getManifestContent($path);
 
             $issetIcon = false;
@@ -66,13 +75,13 @@ class JavaApp extends \Twig_Extension
     {
         $issetIcon = false;
 
-        \preg_match('/MIDlet\-Icon:[\s*](.*)/iux', $manifestContent, $arr);
+        preg_match('/MIDlet\-Icon:[\s*](.*)/iux', $manifestContent, $arr);
         if (true === isset($arr[1])) {
             $issetIcon = $this->extractManifestIcon($arr[1], $path, $screenshot);
         }
 
         if (false === $issetIcon) {
-            \preg_match('/MIDlet\-1:[\s*](.*)/iux', $manifestContent, $arr);
+            preg_match('/MIDlet\-1:[\s*](.*)/iux', $manifestContent, $arr);
             if (true === isset($arr[1])) {
                 $issetIcon = $this->extractManifestIcon($arr[1], $path, $screenshot);
             }
@@ -111,7 +120,7 @@ class JavaApp extends \Twig_Extension
             while (!$reader->eof()) {
                 $content .= $reader->fgets();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $content = null;
         }
 
@@ -127,9 +136,9 @@ class JavaApp extends \Twig_Extension
      */
     protected function extractManifestIcon($content, $path, $screenshot)
     {
-        foreach (\explode(',', $content) as $v) {
-            $v = \trim(\trim($v), '/');
-            if ('png' === \mb_strtolower(\pathinfo($v, PATHINFO_EXTENSION))) {
+        foreach (explode(',', $content) as $v) {
+            $v = trim(trim($v), '/');
+            if ('png' === mb_strtolower(pathinfo($v, PATHINFO_EXTENSION))) {
                 try {
                     $this->container->get('archive_zip')->extractEntry(
                         new BaseFile($this->getPublicDir().$path, false),
@@ -143,7 +152,7 @@ class JavaApp extends \Twig_Extension
 
                     return true;
                     break;
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                 }
             }
         }
@@ -156,7 +165,7 @@ class JavaApp extends \Twig_Extension
      */
     protected function getPublicDir(): string
     {
-        return $this->container->getParameter('kernel.public_dir');
+        return $this->container->getParameter('kernel.project_dir').'/public';
     }
 
     /**

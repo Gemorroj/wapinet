@@ -3,8 +3,10 @@
 namespace App\Twig\Extension;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class Online extends \Twig_Extension
+class Online extends AbstractExtension
 {
     /**
      * @var EntityManagerInterface
@@ -24,7 +26,7 @@ class Online extends \Twig_Extension
     public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('wapinet_online', function () {
+            new TwigFunction('wapinet_online', function () {
                 return $this->em->createQuery('SELECT COUNT(o.id) FROM App\Entity\Online o')->getSingleScalarResult();
             }),
         ];

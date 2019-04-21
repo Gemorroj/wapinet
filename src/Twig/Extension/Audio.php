@@ -2,12 +2,17 @@
 
 namespace App\Twig\Extension;
 
+use Exception;
 use FFMpeg\Format\Audio\DefaultAudio;
 use FFMpeg\Format\Audio\Mp3;
 use FFMpeg\Media\Audio as FFmpegAudio;
+use RuntimeException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use function file_exists;
 
-class Audio extends \Twig_Extension
+class Audio extends AbstractExtension
 {
     /**
      * @var ContainerInterface
@@ -30,7 +35,7 @@ class Audio extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('wapinet_audio_to_mp3', [$this, 'convertToMp3']),
+            new TwigFilter('wapinet_audio_to_mp3', [$this, 'convertToMp3']),
         ];
     }
 
@@ -43,7 +48,7 @@ class Audio extends \Twig_Extension
     {
         $mp3File = $path.'.mp3';
 
-        if (false === \file_exists($this->getPublicDir().$mp3File)) {
+        if (false === file_exists($this->getPublicDir().$mp3File)) {
             $ffmpeg = $this->container->get('ffmpeg')->getFfmpeg();
             try {
                 $media = $ffmpeg->open($this->getPublicDir().$path);
@@ -53,10 +58,10 @@ class Audio extends \Twig_Extension
 
                 $media->save($format, $this->getPublicDir().$mp3File);
 
-                if (false === \file_exists($this->getPublicDir().$mp3File)) {
-                    throw new \RuntimeException('Не удалось создать MP3 файл');
+                if (false === file_exists($this->getPublicDir().$mp3File)) {
+                    throw new RuntimeException('Не удалось создать MP3 файл');
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->container->get('logger')->warning('Ошибка при конвертировании аудио в MP3.', [$e]);
 
                 return null;
@@ -92,6 +97,6 @@ class Audio extends \Twig_Extension
      */
     protected function getPublicDir(): string
     {
-        return $this->container->getParameter('kernel.public_dir');
+        return $this->container->getParameter('kernel.project_dir').'/public';
     }
 }

@@ -2,9 +2,12 @@
 
 namespace App\Twig\Extension;
 
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class News extends \Twig_Extension
+class News extends AbstractExtension
 {
     protected $em;
 
@@ -21,12 +24,12 @@ class News extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('news_last_date', [$this, 'getLastDate']),
+            new TwigFunction('news_last_date', [$this, 'getLastDate']),
         ];
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
     public function getLastDate()
     {

@@ -5,8 +5,10 @@ namespace App\Twig\Extension;
 use App\Entity\User;
 use App\Repository\GistRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class Gist extends \Twig_Extension
+class Gist extends AbstractExtension
 {
     /**
      * @var GistRepository
@@ -26,15 +28,15 @@ class Gist extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('gist_count_all', [$this, 'getCountAll']),
-            new \Twig_SimpleFunction('gist_count', [$this, 'getCount']),
+            new TwigFunction('gist_count_all', [$this, 'getCountAll']),
+            new TwigFunction('gist_count', [$this, 'getCount']),
         ];
     }
 
     /**
      * @return int
      */
-    public function getCountAll()
+    public function getCountAll(): int
     {
         return $this->gistRepository->countAll();
     }
@@ -44,7 +46,7 @@ class Gist extends \Twig_Extension
      *
      * @return int
      */
-    public function getCount(User $user = null)
+    public function getCount(User $user = null): int
     {
         return $this->gistRepository->countUser($user);
     }

@@ -4,8 +4,10 @@ namespace App\Twig\Extension;
 
 use App\Repository\GuestbookRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class Guestbook extends \Twig_Extension
+class Guestbook extends AbstractExtension
 {
     /**
      * @var GuestbookRepository
@@ -28,7 +30,7 @@ class Guestbook extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('guestbook_count_all', function () {
+            new TwigFunction('guestbook_count_all', function () {
                 return $this->guestbookRepository->countAll();
             }),
         ];

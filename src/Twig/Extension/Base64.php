@@ -2,7 +2,10 @@
 
 namespace App\Twig\Extension;
 
-class Base64 extends \Twig_Extension
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+
+class Base64 extends AbstractExtension
 {
     /**
      * Returns a list of global functions to add to the existing list.
@@ -12,8 +15,8 @@ class Base64 extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('base64_encode', 'base64_encode'),
-            new \Twig_SimpleFilter('base64_decode', 'base64_decode'),
+            new TwigFunction('base64_encode', 'base64_encode'),
+            new TwigFunction('base64_decode', 'base64_decode'),
         ];
     }
 }

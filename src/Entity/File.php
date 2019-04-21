@@ -3,13 +3,27 @@
 namespace App\Entity;
 
 use App\Entity\File\Meta;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Serializable;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
+use function base_convert;
+use function get_object_vars;
+use function in_array;
+use function mb_strpos;
+use function mt_rand;
+use function pathinfo;
+use function serialize;
+use function sha1;
+use function uniqid;
+use function unserialize;
+use const PATHINFO_FILENAME;
 
 /**
  * File.
  */
-class File implements \Serializable
+class File implements Serializable
 {
     /**
      * @var int
@@ -28,15 +42,15 @@ class File implements \Serializable
      */
     protected $browser;
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $createdAt;
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      */
     protected $updatedAt;
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      */
     protected $lastViewAt;
     /**
@@ -88,11 +102,11 @@ class File implements \Serializable
      */
     protected $meta;
     /**
-     * @var ArrayCollection
+     * @var Collection
      */
     protected $fileTags;
     /**
-     * @var ArrayCollection
+     * @var Collection
      */
     protected $tags;
     /**
@@ -112,20 +126,20 @@ class File implements \Serializable
     /**
      * @return string
      */
-    public function serialize()
+    public function serialize(): string
     {
-        $vars = \get_object_vars($this);
+        $vars = get_object_vars($this);
         $vars['file'] = $this->getFile()->getPathname();
 
-        return \serialize($vars);
+        return serialize($vars);
     }
 
     /**
      * @param string $serialized
      */
-    public function unserialize($serialized)
+    public function unserialize($serialized): void
     {
-        $vars = \unserialize($serialized);
+        $vars = unserialize($serialized, ['allowed_classes' => true]); // true для полного соответствия с поведением doctrine
         $this->file = new BaseFile($vars['file'], false); //fix события (файлы могут быть удалены)
         unset($vars['file']);
 
@@ -155,7 +169,7 @@ class File implements \Serializable
      *
      * @return File
      */
-    public function setHidden($hidden)
+    public function setHidden($hidden): self
     {
         $this->hidden = (bool) $hidden;
 
@@ -179,7 +193,7 @@ class File implements \Serializable
      *
      * @return File
      */
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
 
@@ -203,7 +217,7 @@ class File implements \Serializable
      *
      * @return File
      */
-    public function setMeta(Meta $meta = null)
+    public function setMeta(Meta $meta = null): self
     {
         $this->meta = $meta;
 
@@ -213,7 +227,7 @@ class File implements \Serializable
     /**
      * Get fileTags.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getFileTags()
     {
@@ -223,11 +237,11 @@ class File implements \Serializable
     /**
      * Set fileTags.
      *
-     * @param ArrayCollection $fileTags
+     * @param Collection $fileTags
      *
      * @return File
      */
-    public function setFileTags(ArrayCollection $fileTags)
+    public function setFileTags(Collection $fileTags): self
     {
         $this->fileTags = $fileTags;
 
@@ -238,7 +252,7 @@ class File implements \Serializable
      * Get Tags
      * Использовать только для отображения. В БД этого поля нет.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getTags()
     {
@@ -249,11 +263,11 @@ class File implements \Serializable
      * Set Tags
      * Использовать только для отображения. В БД этого поля нет.
      *
-     * @param ArrayCollection $tags
+     * @param Collection $tags
      *
      * @return File
      */
-    public function setTags(ArrayCollection $tags = null)
+    public function setTags(Collection $tags = null): self
     {
         $this->tags = $tags;
 
@@ -277,7 +291,7 @@ class File implements \Serializable
      *
      * @return File
      */
-    public function setUser(User $user = null)
+    public function setUser(User $user = null): self
     {
         $this->user = $user;
 
@@ -297,7 +311,7 @@ class File implements \Serializable
      *
      * @return File
      */
-    public function setIp($ip)
+    public function setIp($ip): self
     {
         $this->ip = $ip;
 
@@ -317,7 +331,7 @@ class File implements \Serializable
      *
      * @return File
      */
-    public function setBrowser($browser)
+    public function setBrowser($browser): self
     {
         $this->browser = $browser;
 
@@ -325,7 +339,7 @@ class File implements \Serializable
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCreatedAt()
     {
@@ -335,15 +349,15 @@ class File implements \Serializable
     /**
      * @return File
      */
-    public function setCreatedAtValue()
+    public function setCreatedAtValue(): self
     {
-        $this->createdAt = new \DateTime();
+        $this->createdAt = new DateTime();
 
         return $this;
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
     public function getUpdatedAt()
     {
@@ -353,15 +367,15 @@ class File implements \Serializable
     /**
      * @return File
      */
-    public function setUpdatedAtValue()
+    public function setUpdatedAtValue(): self
     {
-        $this->updatedAt = new \DateTime();
+        $this->updatedAt = new DateTime();
 
         return $this;
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
     public function getLastViewAt()
     {
@@ -369,11 +383,11 @@ class File implements \Serializable
     }
 
     /**
-     * @param \DateTime $lastViewAt
+     * @param DateTime $lastViewAt
      *
      * @return File
      */
-    public function setLastViewAt(\DateTime $lastViewAt)
+    public function setLastViewAt(DateTime $lastViewAt): self
     {
         $this->lastViewAt = $lastViewAt;
 
@@ -393,7 +407,7 @@ class File implements \Serializable
      *
      * @return File
      */
-    public function setCountViews($countViews)
+    public function setCountViews($countViews): self
     {
         $this->countViews = $countViews;
 
@@ -411,7 +425,7 @@ class File implements \Serializable
     /**
      * @return File
      */
-    public function removeSalt()
+    public function removeSalt(): self
     {
         $this->salt = null;
 
@@ -421,9 +435,9 @@ class File implements \Serializable
     /**
      * @return File
      */
-    public function setSaltValue()
+    public function setSaltValue(): self
     {
-        $this->salt = \base_convert(\sha1(\uniqid(\mt_rand(), true)), 16, 36);
+        $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
 
         return $this;
     }
@@ -441,7 +455,7 @@ class File implements \Serializable
      *
      * @return File
      */
-    public function setPlainPassword($plainPassword = null)
+    public function setPlainPassword($plainPassword = null): self
     {
         $this->plainPassword = $plainPassword;
 
@@ -461,7 +475,7 @@ class File implements \Serializable
      *
      * @return File
      */
-    public function setPassword($password = null)
+    public function setPassword($password = null): self
     {
         $this->password = $password;
 
@@ -481,7 +495,7 @@ class File implements \Serializable
      *
      * @return File
      */
-    public function setMimeType($mimeType)
+    public function setMimeType($mimeType): self
     {
         // по mime определять принадлежность к категории
         $this->mimeType = $mimeType;
@@ -502,7 +516,7 @@ class File implements \Serializable
      *
      * @return File
      */
-    public function setFileSize($fileSize)
+    public function setFileSize($fileSize): self
     {
         $this->fileSize = $fileSize;
 
@@ -522,7 +536,7 @@ class File implements \Serializable
      *
      * @return File
      */
-    public function setFileName($fileName)
+    public function setFileName($fileName): self
     {
         $this->fileName = $fileName;
 
@@ -542,7 +556,7 @@ class File implements \Serializable
      *
      * @return File
      */
-    public function setOriginalFileName($originalFileName)
+    public function setOriginalFileName($originalFileName): self
     {
         $this->originalFileName = $originalFileName;
 
@@ -554,7 +568,7 @@ class File implements \Serializable
      */
     public function getOriginalFileNameWithoutExtension()
     {
-        return \pathinfo($this->getOriginalFileName(), \PATHINFO_FILENAME);
+        return pathinfo($this->getOriginalFileName(), PATHINFO_FILENAME);
     }
 
     /**
@@ -570,7 +584,7 @@ class File implements \Serializable
      *
      * @return File
      */
-    public function setFile(BaseFile $file = null)
+    public function setFile(BaseFile $file = null): self
     {
         $this->file = $file;
 
@@ -590,7 +604,7 @@ class File implements \Serializable
      *
      * @return File
      */
-    public function setDescription($description)
+    public function setDescription($description): self
     {
         $this->description = $description;
 
@@ -614,7 +628,7 @@ class File implements \Serializable
      *
      * @return File
      */
-    public function setHash($hash)
+    public function setHash($hash): self
     {
         $this->hash = $hash;
 
@@ -626,7 +640,7 @@ class File implements \Serializable
      */
     public function isImage()
     {
-        return 0 === \mb_strpos($this->getMimeType(), 'image/') || 'application/postscript' === $this->getMimeType() || 'application/illustrator' === $this->getMimeType();
+        return 0 === mb_strpos($this->getMimeType(), 'image/') || 'application/postscript' === $this->getMimeType() || 'application/illustrator' === $this->getMimeType();
     }
 
     /**
@@ -634,7 +648,7 @@ class File implements \Serializable
      */
     public function isVideo()
     {
-        return 0 === \mb_strpos($this->getMimeType(), 'video/') || 'application/vnd.rn-realmedia' === $this->getMimeType();
+        return 0 === mb_strpos($this->getMimeType(), 'video/') || 'application/vnd.rn-realmedia' === $this->getMimeType();
     }
 
     /**
@@ -642,7 +656,7 @@ class File implements \Serializable
      */
     public function isAudio()
     {
-        return 0 === \mb_strpos($this->getMimeType(), 'audio/') && 'audio/x-mpegurl' !== $this->getMimeType();
+        return 0 === mb_strpos($this->getMimeType(), 'audio/') && 'audio/x-mpegurl' !== $this->getMimeType();
     }
 
     /**
@@ -650,7 +664,7 @@ class File implements \Serializable
      */
     public function isText()
     {
-        return 0 === \mb_strpos($this->getMimeType(), 'text/');
+        return 0 === mb_strpos($this->getMimeType(), 'text/');
     }
 
     /**
@@ -658,7 +672,7 @@ class File implements \Serializable
      */
     public function isXml()
     {
-        return 'application/xml' === $this->getMimeType() || false !== \mb_strpos($this->getMimeType(), '+xml');
+        return 'application/xml' === $this->getMimeType() || false !== mb_strpos($this->getMimeType(), '+xml');
     }
 
     /**
@@ -666,7 +680,7 @@ class File implements \Serializable
      */
     public function isArchive()
     {
-        return \in_array($this->getMimeType(), [
+        return in_array($this->getMimeType(), [
             'application/zip', // zip
             'application/x-rar-compressed', // rar
             'application/x-bzip', // bz

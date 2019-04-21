@@ -2,7 +2,12 @@
 
 namespace App\Twig\Extension;
 
-class Size extends \Twig_Extension
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use function max;
+use function round;
+
+class Size extends AbstractExtension
 {
     /**
      * Returns a list of global functions to add to the existing list.
@@ -12,7 +17,7 @@ class Size extends \Twig_Extension
     public function getFilters(): array
     {
         return [
-            new \Twig_SimpleFilter('wapinet_size', [$this, 'getSize']),
+            new TwigFilter('wapinet_size', [$this, 'getSize']),
         ];
     }
 
@@ -34,6 +39,6 @@ class Size extends \Twig_Extension
             ++$i;
         } while ($fileSizeInBytes > 1024);
 
-        return \round(\max($fileSizeInBytes, 0.1), 1).$byteUnits[$i];
+        return round(max($fileSizeInBytes, 0.1), 1).$byteUnits[$i];
     }
 }

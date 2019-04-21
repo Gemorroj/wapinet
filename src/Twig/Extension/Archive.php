@@ -2,10 +2,14 @@
 
 namespace App\Twig\Extension;
 
+use Archive7z\Entry;
+use Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\File;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class Archive extends \Twig_Extension
+class Archive extends AbstractExtension
 {
     /**
      * @var ContainerInterface
@@ -30,14 +34,14 @@ class Archive extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('wapinet_archive_list', [$this, 'getList']),
+            new TwigFunction('wapinet_archive_list', [$this, 'getList']),
         ];
     }
 
     /**
      * @param File $file
      *
-     * @return \Archive7z\Entry[]|null
+     * @return Entry[]|null
      */
     public function getList(File $file)
     {
@@ -45,7 +49,7 @@ class Archive extends \Twig_Extension
 
         try {
             $entries = $archive->getEntries($file);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->container->get('logger')->warning($e->getMessage());
             $entries = null;
         }

@@ -2,10 +2,14 @@
 
 namespace App\Twig\Extension;
 
+use Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use function file_exists;
 
-class AndroidApp extends \Twig_Extension
+class AndroidApp extends AbstractExtension
 {
     /**
      * @var ContainerInterface
@@ -30,7 +34,7 @@ class AndroidApp extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('wapinet_android_app_screenshot', [$this, 'getScreenshot']),
+            new TwigFilter('wapinet_android_app_screenshot', [$this, 'getScreenshot']),
         ];
     }
 
@@ -43,7 +47,7 @@ class AndroidApp extends \Twig_Extension
     {
         $screenshot = $path.'.png';
 
-        if (false === \file_exists($this->getPublicDir().$screenshot)) {
+        if (false === file_exists($this->getPublicDir().$screenshot)) {
             $issetIcon = $this->findIcon($path, $screenshot);
 
             if (true !== $issetIcon) {
@@ -70,7 +74,7 @@ class AndroidApp extends \Twig_Extension
             if ($icon && $this->extractIcon($icon, $path, $screenshot)) {
                 return true;
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->container->get('logger')->warning('Не удалось прочитать APK файл.', [$e]);
         }
 
@@ -140,7 +144,7 @@ class AndroidApp extends \Twig_Extension
             );
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         }
 
         return false;
@@ -151,7 +155,7 @@ class AndroidApp extends \Twig_Extension
      */
     protected function getPublicDir(): string
     {
-        return $this->container->getParameter('kernel.public_dir');
+        return $this->container->getParameter('kernel.project_dir').'/public';
     }
 
     /**

@@ -3,9 +3,12 @@
 namespace App\Twig\Extension;
 
 use Symfony\Component\Routing\RequestContext;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Xbbcode\Tag\Spoiler;
 use Xbbcode\Xbbcode;
 
-class Bbcode extends \Twig_Extension
+class Bbcode extends AbstractExtension
 {
     /**
      * @var RequestContext
@@ -26,7 +29,7 @@ class Bbcode extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('wapinet_bbcode_parse', function (string $text): string {
+            new TwigFilter('wapinet_bbcode_parse', function (string $text): string {
                 // хост нужен для email
                 $host = $this->requestContext->getHost();
                 $xbbcode = new Xbbcode('//'.$host.'/build/resources/xbbcode');
@@ -39,7 +42,7 @@ class Bbcode extends \Twig_Extension
     }
 }
 
-class WapinetSpoiler extends \Xbbcode\Tag\Spoiler
+class WapinetSpoiler extends Spoiler
 {
     /**
      * {@inheritdoc}

@@ -2,11 +2,14 @@
 
 namespace App\Twig\Extension;
 
+use Exception;
 use M3uParser\M3uData;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\File;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class Playlist extends \Twig_Extension
+class Playlist extends AbstractExtension
 {
     /**
      * @var ContainerInterface
@@ -24,7 +27,7 @@ class Playlist extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('wapinet_playlist_list', [$this, 'getList']),
+            new TwigFunction('wapinet_playlist_list', [$this, 'getList']),
         ];
     }
 
@@ -39,7 +42,7 @@ class Playlist extends \Twig_Extension
 
         try {
             return $playlist->parseFile($file);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->container->get('logger')->warning($e->getMessage());
 
             return null;

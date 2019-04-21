@@ -2,10 +2,14 @@
 
 namespace App\Twig\Extension;
 
+use Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\File;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+use function implode;
 
-class Torrent extends \Twig_Extension
+class Torrent extends AbstractExtension
 {
     /**
      * @var ContainerInterface
@@ -25,7 +29,7 @@ class Torrent extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('wapinet_torrent_list', [$this, 'getList']),
+            new TwigFunction('wapinet_torrent_list', [$this, 'getList']),
         ];
     }
 
@@ -40,7 +44,7 @@ class Torrent extends \Twig_Extension
 
         try {
             $data = $torrent->decodeFile($file);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->container->get('logger')->warning($e->getMessage(), [$e]);
 
             return null;
@@ -50,7 +54,7 @@ class Torrent extends \Twig_Extension
         if (isset($data['info']['files'])) {
             foreach ($data['info']['files'] as $entry) {
                 $list[] = [
-                    'path' => \implode('/', $entry['path']),
+                    'path' => implode('/', $entry['path']),
                     'size' => $entry['length'],
                 ];
             }

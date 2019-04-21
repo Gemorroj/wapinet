@@ -3,8 +3,11 @@
 namespace App\Twig\Extension\User;
 
 use App\Entity\User;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+use function md5;
 
-class Avatar extends \Twig_Extension
+class Avatar extends AbstractExtension
 {
     /**
      * Returns a list of global functions to add to the existing list.
@@ -14,7 +17,7 @@ class Avatar extends \Twig_Extension
     public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('wapinet_user_get_avatar_url', [$this, 'getAvatarUrl']),
+            new TwigFunction('wapinet_user_get_avatar_url', [$this, 'getAvatarUrl']),
         ];
     }
 
@@ -26,6 +29,6 @@ class Avatar extends \Twig_Extension
      */
     public function getAvatarUrl(User $user = null, ?int $size = 80): string
     {
-        return '//gravatar.com/avatar/'.($user ? \md5($user->getEmailCanonical()) : '').'?d=mm'.($size ? '&s='.$size : '');
+        return '//gravatar.com/avatar/'.($user ? md5($user->getEmailCanonical()) : '').'?d=mm'.($size ? '&s='.$size : '');
     }
 }

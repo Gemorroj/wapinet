@@ -4,7 +4,10 @@ namespace App\Helper\File;
 
 use App\Entity\File as EntityFile;
 use App\Entity\File\Meta as FileMeta;
+use DateTime;
+use RuntimeException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use function trim;
 
 /**
  * Meta хэлпер
@@ -50,14 +53,14 @@ class Meta
     /**
      * Получаем мета-информацию файла.
      *
-     * @throws \RuntimeException
+     * @throws RuntimeException
      *
      * @return FileMeta
      */
     public function getFileMeta()
     {
         if (null === $this->file) {
-            throw new \RuntimeException('Не указан файл, мета-информацию которого нужно получить.');
+            throw new RuntimeException('Не указан файл, мета-информацию которого нужно получить.');
         }
 
         if ($this->file->isAndroidApp()) {
@@ -78,7 +81,7 @@ class Meta
     /**
      * @return Meta
      */
-    protected function setAndroidMeta()
+    protected function setAndroidMeta(): self
     {
         $apk = $this->container->get('apk');
         $apk->init($this->file->getFile()->getPathname());
@@ -102,7 +105,7 @@ class Meta
     /**
      * @return Meta
      */
-    protected function setAudioMeta()
+    protected function setAudioMeta(): self
     {
         $ffprobe = $this->container->get('ffmpeg')->getFfprobe();
         $info = $ffprobe->streams($this->file->getFile()->getPathname())->audios()->first();
@@ -128,7 +131,7 @@ class Meta
     /**
      * @return Meta
      */
-    protected function setVideoMeta()
+    protected function setVideoMeta(): self
     {
         $ffprobe = $this->container->get('ffmpeg')->getFfprobe();
         $streams = $ffprobe->streams($this->file->getFile()->getPathname());
@@ -168,7 +171,7 @@ class Meta
     /**
      * @return Meta
      */
-    protected function setImageMeta()
+    protected function setImageMeta(): self
     {
         $imagine = $this->container->get('liip_imagine');
         $info = $imagine->open($this->file->getFile()->getPathname());
@@ -209,12 +212,12 @@ class Meta
         }
 
         if ($infoMetadata->offsetExists('exif.COMMENT')) {
-            $commentTrimed = \trim($infoMetadata->offsetGet('exif.COMMENT'));
+            $commentTrimed = trim($infoMetadata->offsetGet('exif.COMMENT'));
             if ('' !== $commentTrimed) {
                 $this->fileMeta->set('comment', $infoMetadata->offsetGet('exif.COMMENT'));
             }
         } elseif ($infoMetadata->offsetExists('exif.UserComment')) {
-            $commentTrimed = \trim($infoMetadata->offsetGet('exif.UserComment'));
+            $commentTrimed = trim($infoMetadata->offsetGet('exif.UserComment'));
             if ('' !== $commentTrimed) {
                 $this->fileMeta->set('comment', $infoMetadata->offsetGet('exif.UserComment'));
             }
@@ -226,7 +229,7 @@ class Meta
     /**
      * @return Meta
      */
-    protected function setTorrentMeta()
+    protected function setTorrentMeta(): self
     {
         $torrent = $this->container->get('torrent');
 
@@ -250,7 +253,7 @@ class Meta
             $this->fileMeta->set('name', $data['info']['name']);
         }
         if (isset($data['creation date'])) {
-            $this->fileMeta->set('datetime', new \DateTime('@'.$data['creation date']));
+            $this->fileMeta->set('datetime', new DateTime('@'.$data['creation date']));
         }
         if (isset($data['comment'])) {
             $this->fileMeta->set('comment', $data['comment']);

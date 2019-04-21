@@ -4,8 +4,10 @@ namespace App\Twig\Extension;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class Forum extends \Twig_Extension
+class Forum extends AbstractExtension
 {
     protected $parameterBag;
     protected $em;
@@ -24,8 +26,8 @@ class Forum extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('wapinet_forum_topics_count', [$this, 'getTopicsCount']),
-            new \Twig_SimpleFunction('wapinet_forum_posts_count', [$this, 'getPostsCount']),
+            new TwigFunction('wapinet_forum_topics_count', [$this, 'getTopicsCount']),
+            new TwigFunction('wapinet_forum_posts_count', [$this, 'getPostsCount']),
         ];
     }
 

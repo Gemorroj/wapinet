@@ -4,9 +4,12 @@ namespace App\Twig\Extension\User;
 
 use App\Entity\User;
 use App\Repository\FriendRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class Friend extends \Twig_Extension
+class Friend extends AbstractExtension
 {
     /**
      * @var EntityManagerInterface
@@ -29,9 +32,9 @@ class Friend extends \Twig_Extension
     public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('wapinet_user_is_friends', [$this, 'isFriends']),
-            new \Twig_SimpleFunction('wapinet_user_count_friends', [$this, 'countFriends']),
-            new \Twig_SimpleFunction('wapinet_user_count_online_friends', [$this, 'countOnlineFriends']),
+            new TwigFunction('wapinet_user_is_friends', [$this, 'isFriends']),
+            new TwigFunction('wapinet_user_count_friends', [$this, 'countFriends']),
+            new TwigFunction('wapinet_user_count_online_friends', [$this, 'countOnlineFriends']),
         ];
     }
 
@@ -73,6 +76,6 @@ class Friend extends \Twig_Extension
         /** @var FriendRepository $friendRepository */
         $friendRepository = $this->em->getRepository(\App\Entity\Friend::class);
 
-        return $friendRepository->getFriendsCount($user, new \DateTime('now -'.User::LIFETIME));
+        return $friendRepository->getFriendsCount($user, new DateTime('now -'.User::LIFETIME));
     }
 }
