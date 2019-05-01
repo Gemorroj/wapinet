@@ -61,17 +61,11 @@ class File extends AbstractExtension
         ];
     }
 
-    /**
-     * @return int
-     */
     public function getCountAll(): int
     {
         return $this->fileRepository->countAll();
     }
 
-    /**
-     * @return int
-     */
     public function getCountToday(): int
     {
         return $this->fileRepository->countDate(
@@ -79,9 +73,6 @@ class File extends AbstractExtension
         );
     }
 
-    /**
-     * @return int
-     */
     public function getCountYesterday(): int
     {
         return $this->fileRepository->countDate(
@@ -90,29 +81,16 @@ class File extends AbstractExtension
         );
     }
 
-    /**
-     * @return int
-     */
     public function getCountHidden(): int
     {
         return $this->fileRepository->countHidden();
     }
 
-    /**
-     * @param string $category
-     *
-     * @return int
-     */
     public function getCountCategory(string $category): int
     {
         return $this->fileRepository->countCategory($category);
     }
 
-    /**
-     * @param User $user
-     *
-     * @return int
-     */
     public function getCountUser(User $user): int
     {
         return $this->fileRepository->countUser($user);

@@ -5,7 +5,9 @@ namespace App\Helper;
 use App\Pagerfanta\Sphinx\Bridge;
 use Foolz\SphinxQL\Drivers\Pdo\Connection;
 use Foolz\SphinxQL\SphinxQL;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Pagerfanta\Pagerfanta;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * Sphinx хэлпер
@@ -13,36 +15,33 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class Sphinx
 {
     /**
-     * @var ContainerInterface
+     * @var RegistryInterface
      */
-    protected $container;
+    private $doctrine;
     /**
      * @var Connection
      */
-    protected $connection;
+    private $connection;
     /**
      * @var int
      */
-    protected $maxPerPage;
+    private $maxPerPage;
     /**
      * @var int
      */
     private $page = 1;
 
-    /**
-     * @param ContainerInterface $container
-     */
-    public function __construct(ContainerInterface $container)
+    public function __construct(RegistryInterface $doctrine, ParameterBagInterface $parameterBag)
     {
+        $this->doctrine = $doctrine;
+
         $this->connection = new Connection();
         $this->connection->setParams([
-            'host' => $container->getParameter('sphinx_host'),
-            'port' => $container->getParameter('sphinx_port'),
+            'host' => $parameterBag->get('sphinx_host'),
+            'port' => $parameterBag->get('sphinx_port'),
             'charset' => 'utf8',
         ]);
-        $this->maxPerPage = $container->getParameter('wapinet_paginate_maxperpage');
-
-        $this->container = $container;
+        $this->maxPerPage = $parameterBag->get('wapinet_paginate_maxperpage');
     }
 
     /**
@@ -60,15 +59,9 @@ class Sphinx
         return (new SphinxQL($this->connection))->select()->limit($offset, $limit);
     }
 
-    /**
-     * @param SphinxQL $sphinxQl
-     * @param string   $entityClass
-     *
-     * @return \Pagerfanta\Pagerfanta
-     */
-    public function getPagerfanta(SphinxQL $sphinxQl, string $entityClass): \Pagerfanta\Pagerfanta
+    public function getPagerfanta(SphinxQL $sphinxQl, string $entityClass): Pagerfanta
     {
-        $bridge = new Bridge($this->container->get('doctrine'));
+        $bridge = new Bridge($this->doctrine);
         $bridge->setRepositoryClass($entityClass);
         $bridge->setPkColumn('id');
 

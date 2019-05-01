@@ -12,10 +12,14 @@ use App\Form\Type\File\EditType;
 use App\Form\Type\File\PasswordType;
 use App\Form\Type\File\SearchType;
 use App\Form\Type\File\UploadType;
+use App\Helper\Archiver\Archive7z;
 use App\Helper\BotChecker;
 use App\Helper\File\Meta;
 use App\Helper\Mime;
+use App\Helper\Paginate;
+use App\Helper\Sphinx;
 use App\Helper\Timezone;
+use App\Helper\Translit;
 use App\Repository\FileRepository;
 use App\Repository\TagRepository;
 use DateTime;
@@ -24,8 +28,11 @@ use Exception;
 use FOS\UserBundle\Model\UserManagerInterface;
 use InvalidArgumentException;
 use Pagerfanta\Pagerfanta;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -51,28 +58,19 @@ use const DIRECTORY_SEPARATOR;
 /**
  * @see http://wap4file.org
  */
-class FileController extends Controller
+class FileController extends AbstractController
 {
-    /**
-     * @return Response
-     */
-    public function indexAction()
+    public function indexAction(): Response
     {
         return $this->render('File/index.html.twig');
     }
 
-    /**
-     * @return Response
-     */
-    public function informationAction()
+    public function informationAction(): Response
     {
         return $this->render('File/information.html.twig');
     }
 
-    /**
-     * @return Response
-     */
-    public function statisticAction()
+    public function statisticAction(): Response
     {
         /** @var FileRepository $repository */
         $repository = $this->getDoctrine()->getRepository(File::class);
@@ -88,7 +86,7 @@ class FileController extends Controller
      *
      * @return Response|RedirectResponse
      */
-    public function searchAction(Request $request, SessionInterface $session, $key = null)
+    public function searchAction(Request $request, SessionInterface $session, ?string $key = null): Response
     {
         $page = $request->get('page', 1);
         $form = $this->createForm(SearchType::class);
@@ -136,9 +134,11 @@ class FileController extends Controller
      *
      * @return Pagerfanta
      */
-    protected function searchSphinx(array $data, $page = 1)
+    protected function searchSphinx(array $data, int $page = 1): Pagerfanta
     {
-        $client = $this->get('sphinx');
+        /** @var Sphinx $client */
+        $client = $this->get(Sphinx::class);
+
         $sphinxQl = $client->select($page)
             ->from('files')
             ->match(['original_file_name', 'description', 'tag_name'], $data['search'])
@@ -156,7 +156,7 @@ class FileController extends Controller
     /**
      * @return Response
      */
-    public function categoriesAction()
+    public function categoriesAction(): Response
     {
         return $this->render('File/categories.html.twig');
     }
@@ -166,7 +166,7 @@ class FileController extends Controller
      *
      * @return Response
      */
-    public function hiddenAction(Request $request)
+    public function hiddenAction(Request $request): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -179,7 +179,7 @@ class FileController extends Controller
         /** @var FileRepository $repository */
         $repository = $this->getDoctrine()->getRepository(File::class);
         $query = $repository->getHiddenQuery();
-        $pagerfanta = $this->get('paginate')->paginate($query, $page);
+        $pagerfanta = $this->get(Paginate::class)->paginate($query, $page);
 
         return $this->render('File/list.html.twig', [
             'pagerfanta' => $pagerfanta,
@@ -191,14 +191,14 @@ class FileController extends Controller
      *
      * @return Response
      */
-    public function tagsAction(Request $request)
+    public function tagsAction(Request $request): Response
     {
         $page = $request->get('page', 1);
         /** @var TagRepository $tagRepository */
         $tagRepository = $this->getDoctrine()->getRepository(Tag::class);
         $query = $tagRepository->getTagsQuery();
 
-        $pagerfanta = $this->get('paginate')->paginate($query, $page);
+        $pagerfanta = $this->get(Paginate::class)->paginate($query, $page);
 
         return $this->render('File/tags.html.twig', [
             'pagerfanta' => $pagerfanta,
@@ -213,7 +213,7 @@ class FileController extends Controller
      *
      * @return Response
      */
-    public function tagAction(Request $request, $tagName)
+    public function tagAction(Request $request, string $tagName): Response
     {
         $page = $request->get('page', 1);
         /** @var TagRepository $tagRepository */
@@ -228,7 +228,7 @@ class FileController extends Controller
         $fileRepository = $this->getDoctrine()->getRepository(File::class);
         $query = $fileRepository->getTagFilesQuery($tag);
 
-        $pagerfanta = $this->get('paginate')->paginate($query, $page);
+        $pagerfanta = $this->get(Paginate::class)->paginate($query, $page);
 
         return $this->render('File/tag.html.twig', [
             'pagerfanta' => $pagerfanta,
@@ -245,7 +245,7 @@ class FileController extends Controller
      *
      * @return Response
      */
-    public function userAction(Request $request, $username, UserManagerInterface $userManager)
+    public function userAction(Request $request, string $username, UserManagerInterface $userManager): Response
     {
         $page = $request->get('page', 1);
         $user = $userManager->findUserByUsername($username);
@@ -257,7 +257,7 @@ class FileController extends Controller
         $fileRepository = $this->getDoctrine()->getRepository(File::class);
         $query = $fileRepository->getUserFilesQuery($user);
 
-        $pagerfanta = $this->get('paginate')->paginate($query, $page);
+        $pagerfanta = $this->get(Paginate::class)->paginate($query, $page);
 
         return $this->render('File/user.html.twig', [
             'pagerfanta' => $pagerfanta,
@@ -265,15 +265,7 @@ class FileController extends Controller
         ]);
     }
 
-    /**
-     * @param Request     $request
-     * @param string|null $date
-     * @param string|null $category
-     * @param Timezone    $timezoneHelper
-     *
-     * @return Response
-     */
-    public function listAction(Request $request, $date = null, $category = null, Timezone $timezoneHelper)
+    public function listAction(Request $request, Timezone $timezoneHelper, ?string $date = null, ?string $category = null): Response
     {
         $page = $request->get('page', 1);
 
@@ -297,7 +289,7 @@ class FileController extends Controller
             $datetimeEnd,
             $category
         );
-        $pagerfanta = $this->get('paginate')->paginate($query, $page);
+        $pagerfanta = $this->get(Paginate::class)->paginate($query, $page);
 
         return $this->render('File/list.html.twig', [
             'pagerfanta' => $pagerfanta,
@@ -331,9 +323,6 @@ class FileController extends Controller
         return $this->viewFile($file, $fileMeta);
     }
 
-    /**
-     * @param File $file
-     */
     protected function incrementViews(File $file): void
     {
         $file->setCountViews($file->getCountViews() + 1);
@@ -374,7 +363,7 @@ class FileController extends Controller
         try {
             $meta = $fileMeta->setFile($file)->getFileMeta();
         } catch (Exception $e) {
-            $this->get('logger')->warning('Не удалось получить мета-информацию из файла.', [$e]);
+            $this->get(LoggerInterface::class)->warning('Не удалось получить мета-информацию из файла.', [$e]);
         }
 
         $file->setMeta($meta);
@@ -416,14 +405,7 @@ class FileController extends Controller
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @param int     $id
-     * @param string  $name
-     *
-     * @return BinaryFileResponse
-     */
-    public function archiveDownloadFileAction(Request $request, int $id, string $name): BinaryFileResponse
+    public function archiveDownloadFileAction(Request $request, Filesystem $filesystem, int $id, string $name): BinaryFileResponse
     {
         $path = str_replace('\\', '/', $request->get('path'));
         if (null === $path) {
@@ -433,8 +415,6 @@ class FileController extends Controller
         $tmpDir = $this->getParameter('kernel.tmp_file_dir');
         $entry = $tmpDir. DIRECTORY_SEPARATOR.$path;
 
-        $filesystem = $this->get('filesystem');
-
         if (!$filesystem->exists($entry)) { // распаковываем архив
             /** @var File|null $file */
             $file = $this->getDoctrine()->getRepository(File::class)->find($id);
@@ -442,7 +422,7 @@ class FileController extends Controller
                 throw $this->createNotFoundException('Файл не найден.');
             }
 
-            $archive = $this->get('archive_7z');
+            $archive = $this->get(Archive7z::class);
 
             $archive->extractEntry($file->getFile(), $path, $tmpDir);
             if (!$filesystem->exists($entry)) {
@@ -452,27 +432,26 @@ class FileController extends Controller
         }
 
         $file = new BinaryFileResponse(
-            $this->get('file')->checkFile($tmpDir, $path, true)
+            $this->get(\App\Helper\File\File::class)->checkFile($tmpDir, $path, true)
         );
 
         $file->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             $name,
-            $this->get('translit')->toAscii($name)
+            $this->get(Translit::class)->toAscii($name)
         );
 
         return $file;
     }
 
     /**
-     * @param Request $request
-     * @param File    $file
+     * @param File $file
      *
      * @throws AccessDeniedException|NotFoundHttpException
      *
      * @return RedirectResponse|JsonResponse
      */
-    public function acceptAction(Request $request, File $file)
+    public function acceptAction(File $file): Response
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException('Доступ запрещен.');
@@ -498,7 +477,7 @@ class FileController extends Controller
      *
      * @return RedirectResponse|JsonResponse
      */
-    public function deleteAction(Request $request, File $file)
+    public function deleteAction(Request $request, File $file): Response
     {
         if (!$this->isGranted('DELETE', $file) && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException('Доступ запрещен.');
@@ -509,7 +488,7 @@ class FileController extends Controller
         $em->remove($file);
 
         // кэш
-        $this->get('file')->cleanupFile($file);
+        $this->get(\App\Helper\File\File::class)->cleanupFile($file);
 
         // сам файл и сброс в БД
         $em->flush();
@@ -533,11 +512,11 @@ class FileController extends Controller
      *
      * @return RedirectResponse|Response
      */
-    public function editAction(Request $request, File $file, Mime $mimeHelper)
+    public function editAction(Request $request, File $file, Mime $mimeHelper): Response
     {
         $this->denyAccessUnlessGranted('EDIT', $file);
 
-        $this->get('file')->copyFileTagsToTags($file);
+        $this->get(\App\Helper\File\File::class)->copyFileTagsToTags($file);
 
         $oldFile = clone $file;
         $form = $this->createForm(EditType::class, $file);
@@ -574,7 +553,7 @@ class FileController extends Controller
      *
      * @return File
      */
-    protected function editFileData(Request $request, File $data, File $oldData, Mime $mimeHelper)
+    protected function editFileData(Request $request, File $data, File $oldData, Mime $mimeHelper): File
     {
         /** @var UploadedFile|null $file */
         $file = $data->getFile();
@@ -583,7 +562,7 @@ class FileController extends Controller
 
             $existingFile = $this->getDoctrine()->getRepository(File::class)->findOneBy(['hash' => $hash]);
             if (null !== $existingFile) {
-                throw new FileDuplicatedException($existingFile, $this->container->get('router'));
+                throw new FileDuplicatedException($existingFile, $this->get('router'));
             }
 
             $data->setHash($hash);
@@ -602,10 +581,10 @@ class FileController extends Controller
         $data->setUpdatedAtValue();
 
         if (null !== $data->getPlainPassword()) {
-            $this->get('file')->setPassword($data, $data->getPlainPassword());
+            $this->get(\App\Helper\File\File::class)->setPassword($data, $data->getPlainPassword());
             $data->setTags(new ArrayCollection());
         } else {
-            $this->get('file')->removePassword($data);
+            $this->get(\App\Helper\File\File::class)->removePassword($data);
         }
         $this->makeEditFileTags($data);
 
@@ -615,7 +594,7 @@ class FileController extends Controller
         // если заменен файл
         if (null !== $file) {
             // чистим старый файл и кэш
-            $this->get('file')->cleanupFile($oldData);
+            $this->get(\App\Helper\File\File::class)->cleanupFile($oldData);
         }
 
         $entityManager->flush();
@@ -684,7 +663,7 @@ class FileController extends Controller
      *
      * @return File
      */
-    protected function saveFileData(Request $request, File $data, Mime $mimeHelper, EncoderFactoryInterface $encoderFactory)
+    protected function saveFileData(Request $request, File $data, Mime $mimeHelper, EncoderFactoryInterface $encoderFactory): File
     {
         /** @var UploadedFile $file */
         $file = $data->getFile();
@@ -693,7 +672,7 @@ class FileController extends Controller
 
         $existingFile = $this->getDoctrine()->getRepository(File::class)->findOneBy(['hash' => $hash]);
         if (null !== $existingFile) {
-            throw new FileDuplicatedException($existingFile, $this->container->get('router'));
+            throw new FileDuplicatedException($existingFile, $this->get('router'));
         }
 
         $data->setHash($hash);
@@ -724,7 +703,7 @@ class FileController extends Controller
 
         $entityManager->flush();
 
-        $this->get('event_dispatcher')->dispatch(
+        $this->get(EventDispatcherInterface::class)->dispatch(
             FileEvent::FILE_ADD,
             new FileEvent($data->getUser(), $data)
         );
@@ -737,7 +716,7 @@ class FileController extends Controller
      *
      * @param File $file
      */
-    private function makeEditFileTags(File $file)
+    private function makeEditFileTags(File $file): void
     {
         $manager = $this->getDoctrine()->getManager();
 
@@ -775,10 +754,7 @@ class FileController extends Controller
         }
     }
 
-    /**
-     * @param File $file
-     */
-    private function makeFileTags(File $file)
+    private function makeFileTags(File $file): void
     {
         $tags = $file->getTags();
 
@@ -793,22 +769,17 @@ class FileController extends Controller
         $file->setFileTags($fileTags);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function tagsSearchAction(Request $request)
+    public function tagsSearchAction(Request $request): JsonResponse
     {
         $term = trim($request->get('term', ''));
         if ('' === $term) {
-            return new JsonResponse([]);
+            return $this->json([]);
         }
 
         $exTerm = explode(',', $term);
         $term = ltrim(end($exTerm));
         if ('' === $term) {
-            return new JsonResponse([]);
+            return $this->json([]);
         }
 
         /** @var TagRepository $repository */
@@ -820,15 +791,10 @@ class FileController extends Controller
             $result[] = $tag->getName();
         }
 
-        return new JsonResponse($result);
+        return $this->json($result);
     }
 
-    /**
-     * @param File $file
-     *
-     * @return Response
-     */
-    public function swiperAction(File $file)
+    public function swiperAction(File $file): Response
     {
         /** @var FileRepository $repository */
         $repository = $this->getDoctrine()->getRepository(File::class);
@@ -861,5 +827,19 @@ class FileController extends Controller
         $entityManager->flush();
 
         return $response;
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        $services = parent::getSubscribedServices();
+        $services[Translit::class] = '?'.Translit::class;
+        $services[Sphinx::class] = '?'.Sphinx::class;
+        $services[LoggerInterface::class] = '?'.LoggerInterface::class;
+        $services[Archive7z::class] = '?'.Archive7z::class;
+        $services[\App\Helper\File\File::class] = '?'.\App\Helper\File\File::class;
+        $services[EventDispatcherInterface::class] = '?'.EventDispatcherInterface::class;
+        $services[Paginate::class] = Paginate::class;
+
+        return $services;
     }
 }

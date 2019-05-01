@@ -30,7 +30,7 @@ class CssValidator
     /**
      * @return W3CServiceOptions
      */
-    public function getOptions()
+    public function getOptions(): W3CServiceOptions
     {
         return $this->cssValidator->getOptions();
     }
@@ -42,7 +42,7 @@ class CssValidator
      *
      * @return W3CServiceResponse
      */
-    public function validateFragment($css)
+    public function validateFragment(string $css): W3CServiceResponse
     {
         return $this->cssValidator->validateFragment($css);
     }
@@ -54,7 +54,7 @@ class CssValidator
      *
      * @return W3CServiceResponse
      */
-    public function validateFile(File $file)
+    public function validateFile(File $file): W3CServiceResponse
     {
         return $this->cssValidator->validateFile($file->getPathname());
     }

@@ -2,6 +2,7 @@
 
 namespace App\Helper;
 
+use Exception;
 use StopSpam\Query as StopSpamQuery;
 use StopSpam\Request as StopSpamRequest;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,9 +17,6 @@ class StopSpam
         $this->request = new StopSpamRequest();
     }
 
-    /**
-     * @param Request $request
-     */
     public function checkRequest(Request $request): void
     {
         $query = new StopSpamQuery();
@@ -26,7 +24,7 @@ class StopSpam
 
         try {
             $response = $this->request->send($query);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // игнорируем проблемы с сетью или неработоспособность апи
             return;
         }

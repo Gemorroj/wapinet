@@ -4,12 +4,12 @@ namespace App\Controller\User;
 
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
-class ProfileController extends Controller
+class ProfileController extends AbstractController
 {
     /**
      * Show custom user.

@@ -4,16 +4,20 @@ namespace App\Controller\User;
 
 use App\Entity\User;
 use App\Form\Type\User\SearchType;
+use App\Helper\Paginate;
+use App\Helper\Sphinx;
 use App\Repository\UserRepository;
+use Exception;
 use Pagerfanta\Pagerfanta;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use function uniqid;
 
-class UsersController extends Controller
+class UsersController extends AbstractController
 {
     /**
      * @param Request          $request
@@ -22,7 +26,7 @@ class UsersController extends Controller
      *
      * @return Response|RedirectResponse
      */
-    public function indexAction(Request $request, SessionInterface $session, $key = null)
+    public function indexAction(Request $request, SessionInterface $session, ?string $key = null): Response
     {
         $page = $request->get('page', 1);
         $form = $this->createForm(SearchType::class);
@@ -34,7 +38,7 @@ class UsersController extends Controller
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    $key = \uniqid('', false);
+                    $key = uniqid('', false);
                     $session->set('users_search', [
                         'key' => $key,
                         'data' => $data,
@@ -53,7 +57,7 @@ class UsersController extends Controller
             } else {
                 $pagerfanta = $this->online($page);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -64,36 +68,33 @@ class UsersController extends Controller
         ]);
     }
 
-    /**
-     * @param int $page
-     *
-     * @return Pagerfanta
-     */
-    protected function online($page = 1)
+    private function online(int $page = 1): Pagerfanta
     {
         /** @var UserRepository $userRepository */
         $userRepository = $this->getDoctrine()->getRepository(User::class);
         $query = $userRepository->getOnlineUsersQuery();
 
-        return $this->get('paginate')->paginate($query, $page);
+        return $this->get(Paginate::class)->paginate($query, $page);
     }
 
-    /**
-     * @param array $data
-     * @param int   $page
-     *
-     * @throws \RuntimeException
-     *
-     * @return Pagerfanta
-     */
-    protected function searchSphinx(array $data, $page = 1)
+    private function searchSphinx(array $data, int $page = 1): Pagerfanta
     {
-        $client = $this->get('sphinx');
+        /** @var Sphinx $client */
+        $client = $this->get(Sphinx::class);
         $sphinxQl = $client->select($page)
             ->from('users')
             ->match(['username', 'email', 'info'], $data['search'])
         ;
 
         return $client->getPagerfanta($sphinxQl, User::class);
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        $services = parent::getSubscribedServices();
+        $services[Sphinx::class] = '?'.Sphinx::class;
+        $services[Paginate::class] = Paginate::class;
+
+        return $services;
     }
 }

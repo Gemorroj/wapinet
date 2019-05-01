@@ -2,12 +2,14 @@
 
 namespace App\Twig\Extension;
 
+use App\Helper\Ffmpeg as FfmpegHelper;
 use Exception;
 use FFMpeg\Format\Audio\DefaultAudio;
 use FFMpeg\Format\Audio\Mp3;
 use FFMpeg\Media\Audio as FFmpegAudio;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use function file_exists;
@@ -15,16 +17,23 @@ use function file_exists;
 class Audio extends AbstractExtension
 {
     /**
-     * @var ContainerInterface
+     * @var FfmpegHelper
      */
-    protected $container;
-
+    private $ffmpegHelper;
     /**
-     * @param ContainerInterface $container
+     * @var LoggerInterface
      */
-    public function __construct(ContainerInterface $container)
+    private $logger;
+    /**
+     * @var ParameterBagInterface
+     */
+    private $parameterBag;
+
+    public function __construct(FfmpegHelper $ffmpegHelper, LoggerInterface $logger, ParameterBagInterface $parameterBag)
     {
-        $this->container = $container;
+        $this->ffmpegHelper = $ffmpegHelper;
+        $this->logger = $logger;
+        $this->parameterBag = $parameterBag;
     }
 
     /**
@@ -32,24 +41,19 @@ class Audio extends AbstractExtension
      *
      * @return array An array of global functions
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('wapinet_audio_to_mp3', [$this, 'convertToMp3']),
         ];
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string|null
-     */
     public function convertToMp3(string $path): ?string
     {
         $mp3File = $path.'.mp3';
 
         if (false === file_exists($this->getPublicDir().$mp3File)) {
-            $ffmpeg = $this->container->get('ffmpeg')->getFfmpeg();
+            $ffmpeg = $this->ffmpegHelper->getFfmpeg();
             try {
                 $media = $ffmpeg->open($this->getPublicDir().$path);
 
@@ -62,7 +66,7 @@ class Audio extends AbstractExtension
                     throw new RuntimeException('Не удалось создать MP3 файл');
                 }
             } catch (Exception $e) {
-                $this->container->get('logger')->warning('Ошибка при конвертировании аудио в MP3.', [$e]);
+                $this->logger->warning('Ошибка при конвертировании аудио в MP3.', [$e]);
 
                 return null;
             }
@@ -71,13 +75,7 @@ class Audio extends AbstractExtension
         return $mp3File;
     }
 
-    /**
-     * @param DefaultAudio $format
-     * @param FFmpegAudio  $media
-     *
-     * @return $this
-     */
-    protected function setOptions(DefaultAudio $format, FFmpegAudio $media): self
+    private function setOptions(DefaultAudio $format, FFmpegAudio $media): self
     {
         $streams = $media->getStreams();
         $audioStream = $streams->audios()->first();
@@ -92,11 +90,8 @@ class Audio extends AbstractExtension
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    protected function getPublicDir(): string
+    private function getPublicDir(): string
     {
-        return $this->container->getParameter('kernel.project_dir').'/public';
+        return $this->parameterBag->get('kernel.project_dir').'/public';
     }
 }

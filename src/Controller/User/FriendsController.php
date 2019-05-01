@@ -5,25 +5,19 @@ namespace App\Controller\User;
 use App\Entity\Friend;
 use App\Entity\User;
 use App\Event\FriendEvent;
+use App\Helper\Paginate;
 use App\Repository\FriendRepository;
 use FOS\UserBundle\Model\UserManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use LogicException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class FriendsController extends Controller
+class FriendsController extends AbstractController
 {
-    /**
-     * @param Request              $request
-     * @param string               $username
-     * @param UserManagerInterface $userManager
-     *
-     * @return Response
-     */
-    public function indexAction(Request $request, $username, UserManagerInterface $userManager)
+    public function indexAction(Request $request, string $username, UserManagerInterface $userManager, Paginate $paginate): Response
     {
         $page = $request->get('page', 1);
 
@@ -35,7 +29,7 @@ class FriendsController extends Controller
         /** @var FriendRepository $friendRepository */
         $friendRepository = $this->getDoctrine()->getRepository(Friend::class);
         $friends = $friendRepository->getFriendsQuery($user);
-        $pagerfanta = $this->get('paginate')->paginate($friends, $page);
+        $pagerfanta = $paginate->paginate($friends, $page);
 
         return $this->render('User/Friends/index.html.twig', [
             'pagerfanta' => $pagerfanta,
@@ -43,15 +37,6 @@ class FriendsController extends Controller
         ]);
     }
 
-    /**
-     * @param string                   $username
-     * @param UserManagerInterface     $userManager
-     * @param EventDispatcherInterface $eventDispatcher
-     *
-     * @throws \LogicException|AccessDeniedException
-     *
-     * @return RedirectResponse
-     */
     public function addAction(string $username, UserManagerInterface $userManager, EventDispatcherInterface $eventDispatcher): RedirectResponse
     {
         /** @var User $user */
@@ -70,7 +55,7 @@ class FriendsController extends Controller
         $objFriend = $friendRepository->getFriend($user, $friend);
 
         if (null !== $objFriend) {
-            throw new \LogicException($user->getUsername().' уже в друзьях.');
+            throw new LogicException($user->getUsername().' уже в друзьях.');
         }
 
         $objFriend = new Friend();
@@ -89,16 +74,7 @@ class FriendsController extends Controller
         return $this->redirectToRoute('wapinet_user_profile', ['username' => $friend->getUsername()]);
     }
 
-    /**
-     * @param string                   $username
-     * @param UserManagerInterface     $userManager
-     * @param EventDispatcherInterface $eventDispatcher
-     *
-     * @throws \LogicException|AccessDeniedException
-     *
-     * @return RedirectResponse
-     */
-    public function deleteAction(string $username, UserManagerInterface $userManager, EventDispatcherInterface $eventDispatcher)
+    public function deleteAction(string $username, UserManagerInterface $userManager, EventDispatcherInterface $eventDispatcher): RedirectResponse
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -116,7 +92,7 @@ class FriendsController extends Controller
         $objFriend = $friendRepository->getFriend($user, $friend);
 
         if (null === $objFriend) {
-            throw new \LogicException($user->getUsername().' не в друзьях.');
+            throw new LogicException($user->getUsername().' не в друзьях.');
         }
 
         $user->getFriends()->removeElement($objFriend);

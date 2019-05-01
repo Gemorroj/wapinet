@@ -2,28 +2,46 @@
 
 namespace App\Twig\Extension;
 
+use App\Helper\Apk;
+use App\Helper\Archiver\ArchiveZip;
 use Exception;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
-use function file_exists;
 
 class AndroidApp extends AbstractExtension
 {
     /**
-     * @var ContainerInterface
+     * @var ArchiveZip
      */
-    protected $container;
-
+    private $archiveZip;
     /**
-     * AndroidApp constructor.
-     *
-     * @param ContainerInterface $container
+     * @var Apk
      */
-    public function __construct(ContainerInterface $container)
+    private $apk;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+    /**
+     * @var Filesystem
+     */
+    private $filesystem;
+    /**
+     * @var ParameterBagInterface
+     */
+    private $parameterBag;
+
+    public function __construct(ArchiveZip $archiveZip, Apk $apk, LoggerInterface $logger, Filesystem $filesystem, ParameterBagInterface $parameterBag)
     {
-        $this->container = $container;
+        $this->archiveZip = $archiveZip;
+        $this->apk = $apk;
+        $this->logger = $logger;
+        $this->filesystem = $filesystem;
+        $this->parameterBag = $parameterBag;
     }
 
     /**
@@ -31,23 +49,18 @@ class AndroidApp extends AbstractExtension
      *
      * @return array An array of global functions
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('wapinet_android_app_screenshot', [$this, 'getScreenshot']),
         ];
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string|null
-     */
-    public function getScreenshot($path)
+    public function getScreenshot(string $path): ?string
     {
         $screenshot = $path.'.png';
 
-        if (false === file_exists($this->getPublicDir().$screenshot)) {
+        if (!$this->filesystem->exists($this->getPublicDir().$screenshot)) {
             $issetIcon = $this->findIcon($path, $screenshot);
 
             if (true !== $issetIcon) {
@@ -58,24 +71,17 @@ class AndroidApp extends AbstractExtension
         return $screenshot;
     }
 
-    /**
-     * @param string $path
-     * @param string $screenshot
-     *
-     * @return bool
-     */
-    protected function findIcon($path, $screenshot)
+    private function findIcon(string $path, string $screenshot): bool
     {
         try {
-            $apk = $this->container->get('apk');
-            $apk->init($this->getPublicDir().$path);
-            $icon = $apk->getIcon();
+            $this->apk->init($this->getPublicDir().$path);
+            $icon = $this->apk->getIcon();
 
             if ($icon && $this->extractIcon($icon, $path, $screenshot)) {
                 return true;
             }
         } catch (Exception $e) {
-            $this->container->get('logger')->warning('Не удалось прочитать APK файл.', [$e]);
+            $this->logger->warning('Не удалось прочитать APK файл.', [$e]);
         }
 
         $icons = [
@@ -130,15 +136,15 @@ class AndroidApp extends AbstractExtension
      *
      * @return bool
      */
-    protected function extractIcon($icon, $path, $screenshot)
+    private function extractIcon(string $icon, string $path, string $screenshot): bool
     {
         try {
-            $this->container->get('archive_zip')->extractEntry(
+            $this->archiveZip->extractEntry(
                 new BaseFile($this->getPublicDir().$path, false),
                 $icon,
                 $this->getTmpDir()
             );
-            $this->container->get('filesystem')->rename(
+            $this->filesystem->rename(
                 $this->getTmpDir().'/'.$icon,
                 $this->getPublicDir().$screenshot
             );
@@ -150,19 +156,13 @@ class AndroidApp extends AbstractExtension
         return false;
     }
 
-    /**
-     * @return string
-     */
-    protected function getPublicDir(): string
+    private function getPublicDir(): string
     {
-        return $this->container->getParameter('kernel.project_dir').'/public';
+        return $this->parameterBag->get('kernel.project_dir').'/public';
     }
 
-    /**
-     * @return string
-     */
-    protected function getTmpDir(): string
+    private function getTmpDir(): string
     {
-        return $this->container->getParameter('kernel.tmp_file_dir');
+        return $this->parameterBag->get('kernel.tmp_file_dir');
     }
 }

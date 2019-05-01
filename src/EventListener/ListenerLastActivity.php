@@ -3,6 +3,7 @@
 namespace App\EventListener;
 
 use App\Entity\User;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
@@ -10,17 +11,10 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class ListenerLastActivity
 {
-    protected $parameterBag;
-    protected $em;
-    protected $tokenStorage;
+    private $parameterBag;
+    private $em;
+    private $tokenStorage;
 
-    /**
-     * ListenerLastActivity constructor.
-     *
-     * @param ParameterBagInterface  $parameterBag
-     * @param TokenStorageInterface  $tokenStorage
-     * @param EntityManagerInterface $em
-     */
     public function __construct(ParameterBagInterface $parameterBag, TokenStorageInterface $tokenStorage, EntityManagerInterface $em)
     {
         $this->parameterBag = $parameterBag;
@@ -46,11 +40,11 @@ class ListenerLastActivity
             $user = $token->getUser();
             if ($user instanceof User) {
                 // We are using a delay during wich the user will be considered as still active, in order to avoid too much UPDATE in the database
-                $delay = new \DateTime($this->parameterBag->get('wapinet_user_last_activity_delay').' seconds ago');
+                $delay = new DateTime($this->parameterBag->get('wapinet_user_last_activity_delay').' seconds ago');
 
                 // We are checking the User class in order to be certain we can call "getLastActivity".
                 if ($user->getLastActivity() < $delay) {
-                    $user->setLastActivity(new \DateTime());
+                    $user->setLastActivity(new DateTime());
                     $this->em->flush($user);
                 }
             }

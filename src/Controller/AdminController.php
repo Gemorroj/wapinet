@@ -110,8 +110,15 @@ class AdminController extends BaseAdminController
     {
         switch (true) {
             case $entity instanceof File:
-                $this->get('file')->cleanupFile($entity);
+                $this->get(\App\Helper\File\File::class)->cleanupFile($entity);
                 break;
         }
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        return parent::getSubscribedServices() + [
+            \App\Helper\File\File::class,
+        ];
     }
 }

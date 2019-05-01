@@ -3,19 +3,17 @@
 namespace App\Controller;
 
 use App\Form\Type\Hash\HashType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Helper\Hash;
+use Exception;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Exception\ValidatorException;
 
-class HashController extends Controller
+class HashController extends AbstractController
 {
-    /**
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $hash = null;
         $form = $this->createForm(HashType::class);
@@ -29,7 +27,7 @@ class HashController extends Controller
                     $hash = $this->getHash($data);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -46,9 +44,11 @@ class HashController extends Controller
      *
      * @return string
      */
-    protected function getHash(array $data)
+    protected function getHash(array $data): string
     {
-        $hash = $this->get('hash');
+        /** @var Hash $hash */
+        $hash = $this->get(Hash::class);
+
         $algorithms = $hash->getAlgorithms();
         $algorithm = $algorithms[$data['algorithm']];
 
@@ -60,5 +60,13 @@ class HashController extends Controller
         }
 
         throw new ValidatorException('Не заполнено ни одного поля с хэшируемыми данными');
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        $services = parent::getSubscribedServices();
+        $services[Hash::class] = '?'.Hash::class;
+
+        return $services;
     }
 }

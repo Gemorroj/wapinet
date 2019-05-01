@@ -6,29 +6,38 @@ use App\Entity\File\FileContent;
 use App\Exception\AudioException;
 use App\Form\Type\AudioTags\AudioTagsEditType;
 use App\Form\Type\AudioTags\AudioTagsType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Helper\Getid3;
+use App\Helper\Translit;
+use Exception;
+use getid3_lib;
+use RuntimeException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use function file_get_contents;
+use function tempnam;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * @see https://github.com/JamesHeinrich/getID3/blob/master/demos/demo.audioinfo.class.php
  * @see https://github.com/JamesHeinrich/getID3/blob/master/demos/demo.write.php
  */
-class AudioTagsController extends Controller
+class AudioTagsController extends AbstractController
 {
     /**
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return RedirectResponse|Response
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $form = $this->createForm(AudioTagsType::class);
 
@@ -47,7 +56,7 @@ class AudioTagsController extends Controller
                     ]);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -56,32 +65,20 @@ class AudioTagsController extends Controller
         ]);
     }
 
-    /**
-     * @param array $data
-     *
-     * @return File
-     */
-    protected function saveFile(array $data)
+    protected function saveFile(array $data): File
     {
         /** @var UploadedFile $file */
         $file = $data['file'];
         $tempDirectory = $this->getParameter('kernel.tmp_dir');
-        $tempName = \tempnam($tempDirectory, 'audio_file');
+        $tempName = tempnam($tempDirectory, 'audio_file');
         if (false === $tempName) {
-            throw new \RuntimeException('Не удалось создать временный файл');
+            throw new RuntimeException('Не удалось создать временный файл');
         }
 
         return $file->move($tempDirectory, $tempName);
     }
 
-    /**
-     * @param Request $request
-     * @param string  $fileName
-     * @param string  $originalFileName
-     *
-     * @return Response
-     */
-    public function editAction(Request $request, string $fileName, string $originalFileName)
+    public function editAction(Request $request, string $fileName, string $originalFileName): Response
     {
         $form = $this->createForm(AudioTagsEditType::class);
 
@@ -108,7 +105,7 @@ class AudioTagsController extends Controller
             foreach ($e->getMessages() as $message) {
                 $form->addError(new FormError($message));
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -120,11 +117,7 @@ class AudioTagsController extends Controller
         ]);
     }
 
-    /**
-     * @param FormInterface $form
-     * @param array         $tags
-     */
-    protected function setFormData(FormInterface $form, array $tags)
+    protected function setFormData(FormInterface $form, array $tags): void
     {
         $data = [
             //'picture' => null,
@@ -150,16 +143,11 @@ class AudioTagsController extends Controller
         $form->setData($data);
     }
 
-    /**
-     * @param string $fileName
-     *
-     * @return array
-     */
     protected function getInfo(string $fileName): array
     {
-        $getid3 = $this->get('getid3')->getId3();
+        $getid3 = $this->get(Getid3::class)->getId3();
         $info = $getid3->analyze($this->getFilePath($fileName));
-        \getid3_lib::CopyTagsToComments($info);
+        getid3_lib::CopyTagsToComments($info);
 
         if (!isset($info['tags'])) {
             $info['tags'] = [];
@@ -175,10 +163,10 @@ class AudioTagsController extends Controller
      *
      * @throws AudioException
      */
-    protected function setTags(string $fileName, FormInterface $form, array $info)
+    protected function setTags(string $fileName, FormInterface $form, array $info): void
     {
         $data = $form->getData();
-        $writer = $this->get('getid3')->getId3Writer();
+        $writer = $this->get(Getid3::class)->getId3Writer();
         if ($data['remove_other_tags']) {
             $writer->remove_other_tags = true;
         }
@@ -219,7 +207,7 @@ class AudioTagsController extends Controller
 
         $picture = $data['picture'];
         if ($picture instanceof UploadedFile) {
-            $data = \file_get_contents($picture->getPathname());
+            $data = file_get_contents($picture->getPathname());
             if (false === $data) {
                 throw new IOException('Не удалось получить изображение.', 0, null, $picture->getPathname());
             }
@@ -242,7 +230,7 @@ class AudioTagsController extends Controller
      *
      * @return array
      */
-    protected function getAllowedTagFormats(array $info)
+    protected function getAllowedTagFormats(array $info): array
     {
         switch ($info['fileformat']) {
             case 'mp3':
@@ -289,26 +277,30 @@ class AudioTagsController extends Controller
      *
      * @return BinaryFileResponse
      */
-    public function downloadAction(string $fileName, string $originalFileName)
+    public function downloadAction(string $fileName, string $originalFileName): BinaryFileResponse
     {
         $file = new BinaryFileResponse($this->getFilePath($fileName));
 
         $file->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             $originalFileName,
-            $this->get('translit')->toAscii($originalFileName)
+            $this->get(Translit::class)->toAscii($originalFileName)
         );
 
         return $file;
     }
 
-    /**
-     * @param string $fileName
-     *
-     * @return string
-     */
     protected function getFilePath(string $fileName): string
     {
-        return $this->getParameter('kernel.tmp_dir').\DIRECTORY_SEPARATOR.$fileName;
+        return $this->getParameter('kernel.tmp_dir'). DIRECTORY_SEPARATOR.$fileName;
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        $services = parent::getSubscribedServices();
+        $services[Translit::class] = '?'.Translit::class;
+        $services[Getid3::class] = '?'.Getid3::class;
+
+        return $services;
     }
 }

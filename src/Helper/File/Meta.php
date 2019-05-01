@@ -4,9 +4,12 @@ namespace App\Helper\File;
 
 use App\Entity\File as EntityFile;
 use App\Entity\File\Meta as FileMeta;
+use App\Helper\Apk as ApkHelper;
+use App\Helper\Ffmpeg as FfmpegHelper;
+use App\Helper\Torrent as TorrentHelper;
 use DateTime;
+use Imagine\Image\AbstractImagine;
 use RuntimeException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use function trim;
 
 /**
@@ -18,32 +21,38 @@ class Meta
      * @var FileMeta
      */
     protected $fileMeta;
-
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
     /**
      * @var EntityFile|null
      */
     protected $file;
-
     /**
-     * @param ContainerInterface $container
+     * @var FfmpegHelper
      */
-    public function __construct(ContainerInterface $container)
+    private $ffmpegHelper;
+    /**
+     * @var ApkHelper
+     */
+    private $apkHelper;
+    /**
+     * @var TorrentHelper
+     */
+    private $torrentHelper;
+    /**
+     * @var AbstractImagine
+     */
+    private $imagine;
+
+    public function __construct(FfmpegHelper $ffmpegHelper, ApkHelper $apkHelper, TorrentHelper $torrentHelper, AbstractImagine $imagine)
     {
-        $this->container = $container;
+        $this->ffmpegHelper = $ffmpegHelper;
+        $this->apkHelper = $apkHelper;
+        $this->torrentHelper = $torrentHelper;
+        $this->imagine = $imagine;
+
         $this->fileMeta = new FileMeta();
     }
 
-    /**
-     * @param EntityFile $file
-     *
-     * @return Meta
-     */
-    public function setFile(EntityFile $file)
+    public function setFile(EntityFile $file): self
     {
         $this->file = $file;
 
@@ -57,7 +66,7 @@ class Meta
      *
      * @return FileMeta
      */
-    public function getFileMeta()
+    public function getFileMeta(): FileMeta
     {
         if (null === $this->file) {
             throw new RuntimeException('Не указан файл, мета-информацию которого нужно получить.');
@@ -78,15 +87,11 @@ class Meta
         return $this->fileMeta;
     }
 
-    /**
-     * @return Meta
-     */
-    protected function setAndroidMeta(): self
+    private function setAndroidMeta(): self
     {
-        $apk = $this->container->get('apk');
-        $apk->init($this->file->getFile()->getPathname());
+        $this->apkHelper->init($this->file->getFile()->getPathname());
 
-        $manifest = $apk->getManifest();
+        $manifest = $this->apkHelper->getManifest();
 
         $this->fileMeta->set('versionName', $manifest->getVersionName());
         $this->fileMeta->set('packageName', $manifest->getPackageName());
@@ -102,12 +107,9 @@ class Meta
         return $this;
     }
 
-    /**
-     * @return Meta
-     */
-    protected function setAudioMeta(): self
+    private function setAudioMeta(): self
     {
-        $ffprobe = $this->container->get('ffmpeg')->getFfprobe();
+        $ffprobe = $this->ffmpegHelper->getFfprobe();
         $info = $ffprobe->streams($this->file->getFile()->getPathname())->audios()->first();
 
         if (null !== $info) {
@@ -128,12 +130,9 @@ class Meta
         return $this;
     }
 
-    /**
-     * @return Meta
-     */
-    protected function setVideoMeta(): self
+    private function setVideoMeta(): self
     {
-        $ffprobe = $this->container->get('ffmpeg')->getFfprobe();
+        $ffprobe = $this->ffmpegHelper->getFfprobe();
         $streams = $ffprobe->streams($this->file->getFile()->getPathname());
         $videoInfo = $streams->videos()->first();
         $audioInfo = $streams->audios()->first();
@@ -168,13 +167,9 @@ class Meta
         return $this;
     }
 
-    /**
-     * @return Meta
-     */
-    protected function setImageMeta(): self
+    private function setImageMeta(): self
     {
-        $imagine = $this->container->get('liip_imagine');
-        $info = $imagine->open($this->file->getFile()->getPathname());
+        $info = $this->imagine->open($this->file->getFile()->getPathname());
 
         $this->fileMeta->set('width', $info->getSize()->getWidth());
         $this->fileMeta->set('height', $info->getSize()->getHeight());
@@ -226,14 +221,9 @@ class Meta
         return $this;
     }
 
-    /**
-     * @return Meta
-     */
-    protected function setTorrentMeta(): self
+    private function setTorrentMeta(): self
     {
-        $torrent = $this->container->get('torrent');
-
-        $data = $torrent->decodeFile($this->file->getFile());
+        $data = $this->torrentHelper->decodeFile($this->file->getFile());
 
         if (isset($data['info']['length'])) {
             $size = $data['info']['length'];

@@ -2,6 +2,8 @@
 
 namespace App\Helper;
 
+use function iconv;
+
 /**
  * Translit хэлпер
  */
@@ -12,9 +14,9 @@ class Translit
      *
      * @return string
      */
-    public function toAscii($str)
+    public function toAscii(string $str): string
     {
         // return \transliterator_transliterate('Any-Latin; Latin-ASCII; [\u0100-\u7fff] remove', $str);
-        return \iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $str);
+        return iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $str);
     }
 }

@@ -3,28 +3,40 @@
 namespace App\Twig\Extension;
 
 use App\Exception\ArchiverException;
+use App\Helper\Archiver\ArchiveZip;
 use Exception;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use function explode;
-use function file_exists;
 use function mb_strtolower;
 use function pathinfo;
 use function preg_match;
 use function trim;
+use const PATHINFO_EXTENSION;
 
 class JavaApp extends AbstractExtension
 {
     /**
-     * @var ContainerInterface
+     * @var ArchiveZip
      */
-    protected $container;
+    private $archiveZip;
+    /**
+     * @var Filesystem
+     */
+    private $filesystem;
+    /**
+     * @var ParameterBagInterface
+     */
+    private $parameterBag;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(ArchiveZip $archiveZip, Filesystem $filesystem, ParameterBagInterface $parameterBag)
     {
-        $this->container = $container;
+        $this->archiveZip = $archiveZip;
+        $this->filesystem = $filesystem;
+        $this->parameterBag = $parameterBag;
     }
 
     /**
@@ -32,23 +44,18 @@ class JavaApp extends AbstractExtension
      *
      * @return array An array of global functions
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('wapinet_java_app_screenshot', [$this, 'getScreenshot']),
         ];
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string|null
-     */
-    public function getScreenshot($path)
+    public function getScreenshot(string $path): ?string
     {
         $screenshot = $path.'.png';
 
-        if (false === file_exists($this->getPublicDir().$screenshot)) {
+        if (!$this->filesystem->exists($this->getPublicDir().$screenshot)) {
             $manifestContent = $this->getManifestContent($path);
 
             $issetIcon = false;
@@ -64,14 +71,7 @@ class JavaApp extends AbstractExtension
         return $screenshot;
     }
 
-    /**
-     * @param string $manifestContent
-     * @param string $path
-     * @param string $screenshot
-     *
-     * @return bool
-     */
-    protected function findManifestIcon($manifestContent, $path, $screenshot)
+    private function findManifestIcon(string $manifestContent, string $path, string $screenshot): bool
     {
         $issetIcon = false;
 
@@ -95,21 +95,16 @@ class JavaApp extends AbstractExtension
      *
      * @throws ArchiverException
      */
-    protected function extractManifest($path)
+    private function extractManifest(string $path): void
     {
-        $this->container->get('archive_zip')->extractEntry(
+        $this->archiveZip->extractEntry(
             new BaseFile($this->getPublicDir().$path, false),
             'META-INF/MANIFEST.MF',
             $this->getTmpDir()
         );
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string|null
-     */
-    protected function getManifestContent($path)
+    private function getManifestContent(string $path): ?string
     {
         try {
             $this->extractManifest($path);
@@ -127,25 +122,18 @@ class JavaApp extends AbstractExtension
         return $content;
     }
 
-    /**
-     * @param string $content
-     * @param string $path
-     * @param string $screenshot
-     *
-     * @return bool
-     */
-    protected function extractManifestIcon($content, $path, $screenshot)
+    private function extractManifestIcon(string $content, string $path, string $screenshot): bool
     {
         foreach (explode(',', $content) as $v) {
             $v = trim(trim($v), '/');
             if ('png' === mb_strtolower(pathinfo($v, PATHINFO_EXTENSION))) {
                 try {
-                    $this->container->get('archive_zip')->extractEntry(
+                    $this->archiveZip->extractEntry(
                         new BaseFile($this->getPublicDir().$path, false),
                         $v,
                         $this->getTmpDir()
                     );
-                    $this->container->get('filesystem')->rename(
+                    $this->filesystem->rename(
                         $this->getTmpDir().'/'.$v,
                         $this->getPublicDir().$screenshot
                     );
@@ -160,19 +148,13 @@ class JavaApp extends AbstractExtension
         return false;
     }
 
-    /**
-     * @return string
-     */
-    protected function getPublicDir(): string
+    private function getPublicDir(): string
     {
-        return $this->container->getParameter('kernel.project_dir').'/public';
+        return $this->parameterBag->get('kernel.project_dir').'/public';
     }
 
-    /**
-     * @return string
-     */
-    protected function getTmpDir(): string
+    private function getTmpDir(): string
     {
-        return $this->container->getParameter('kernel.tmp_file_dir');
+        return $this->parameterBag->get('kernel.tmp_file_dir');
     }
 }

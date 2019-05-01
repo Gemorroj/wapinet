@@ -2,24 +2,21 @@
 
 namespace App\Helper;
 
+use utils;
+use Whois;
+
 /**
  * Phpwhois хэлпер
  */
 class Phpwhois
 {
-    /**
-     * @return \Whois
-     */
-    public function getWhois()
+    public function getWhois(): Whois
     {
-        return new \Whois();
+        return new Whois();
     }
 
-    /**
-     * @return \utils
-     */
-    public function getUtils()
+    public function getUtils(): utils
     {
-        return new \utils();
+        return new utils();
     }
 }

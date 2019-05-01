@@ -38,12 +38,6 @@ class Friend extends AbstractExtension
         ];
     }
 
-    /**
-     * @param User $user
-     * @param User $friend
-     *
-     * @return bool
-     */
     public function isFriends(User $user, User $friend): bool
     {
         /** @var FriendRepository $friendRepository */
@@ -53,11 +47,6 @@ class Friend extends AbstractExtension
         return null !== $objFriend;
     }
 
-    /**
-     * @param User $user
-     *
-     * @return int
-     */
     public function countFriends(User $user): int
     {
         /** @var FriendRepository $friendRepository */
@@ -66,11 +55,6 @@ class Friend extends AbstractExtension
         return $friendRepository->getFriendsCount($user);
     }
 
-    /**
-     * @param User $user
-     *
-     * @return int
-     */
     public function countOnlineFriends(User $user): int
     {
         /** @var FriendRepository $friendRepository */

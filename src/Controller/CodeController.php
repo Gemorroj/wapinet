@@ -3,19 +3,17 @@
 namespace App\Controller;
 
 use App\Form\Type\Code\CodeType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Helper\Code;
+use Exception;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Exception\ValidatorException;
 
-class CodeController extends Controller
+class CodeController extends AbstractController
 {
-    /**
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $hash = null;
         $form = $this->createForm(CodeType::class);
@@ -29,7 +27,7 @@ class CodeController extends Controller
                     $hash = $this->getCode($data);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -39,24 +37,26 @@ class CodeController extends Controller
         ]);
     }
 
-    /**
-     * @param array $data
-     *
-     * @throws ValidatorException
-     *
-     * @return string
-     */
-    protected function getCode(array $data)
+    protected function getCode(array $data): string
     {
-        $hash = $this->get('code');
+        /** @var Code $code */
+        $code = $this->get(Code::class);
 
         if (null !== $data['text']) {
-            return $hash->convertString($data['algorithm'], $data['text']);
+            return $code->convertString($data['algorithm'], $data['text']);
         }
         //if (null !== $data['file']) {
-        //    return $hash->convertFile($algorithm, $data['file']);
+        //    return $code->convertFile($algorithm, $data['file']);
         //}
 
         throw new ValidatorException('Не заполнено ни одного поля с конвертируемыми данными');
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        $services = parent::getSubscribedServices();
+        $services[Code::class] = '?'.Code::class;
+
+        return $services;
     }
 }

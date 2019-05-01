@@ -4,19 +4,24 @@ namespace App\Controller;
 
 use App\Form\Type\Translate\TranslateType;
 use App\Helper\Curl;
+use Exception;
+use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use function file_exists;
+use function file_get_contents;
+use function file_put_contents;
+use function implode;
+use function json_decode;
+use function urlencode;
+use const DIRECTORY_SEPARATOR;
 
 class TranslateController extends AbstractController
 {
-    /**
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $result = null;
         $detectLangName = null;
@@ -39,7 +44,7 @@ class TranslateController extends AbstractController
                     $result = $this->translate($langFrom, $data['lang_to'], $data['text']);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -50,23 +55,15 @@ class TranslateController extends AbstractController
         ]);
     }
 
-    /**
-     * @param string $langFrom
-     * @param string $langTo
-     * @param string $text
-     *
-     * @throws HttpException
-     *
-     * @return string
-     */
-    private function translate($langFrom, $langTo, $text): string
+    private function translate(string $langFrom, string $langTo, string $text): string
     {
-        $curl = $this->get('curl');
+        /** @var Curl $curl */
+        $curl = $this->get(Curl::class);
         $curl->init(
             'https://translate.yandex.net/api/v1.5/tr.json/translate?key='.
             $this->getParameter('wapinet_yandex_translate_key').
             '&lang='.$langFrom.'-'.$langTo.
-            '&text='.\urlencode($text)
+            '&text='. urlencode($text)
         );
 
         $response = $curl->exec();
@@ -74,25 +71,19 @@ class TranslateController extends AbstractController
             throw new HttpException($response->getStatusCode(), 'Api error');
         }
 
-        $json = \json_decode($response->getContent());
+        $json = json_decode($response->getContent());
 
-        return \implode('', $json->text);
+        return implode('', $json->text);
     }
 
-    /**
-     * @param string $text
-     *
-     * @throws HttpException
-     *
-     * @return string
-     */
-    private function detectLang($text)
+    private function detectLang(string $text): string
     {
-        $curl = $this->get('curl');
+        /** @var Curl $curl */
+        $curl = $this->get(Curl::class);
         $curl->init(
             'https://translate.yandex.net/api/v1.5/tr.json/detect?key='.
             $this->getParameter('wapinet_yandex_translate_key').
-            '&text='.\urlencode($text)
+            '&text='. urlencode($text)
         );
 
         $response = $curl->exec();
@@ -100,35 +91,26 @@ class TranslateController extends AbstractController
             throw new HttpException($response->getStatusCode(), 'Api error');
         }
 
-        $json = \json_decode($response->getContent());
+        $json = json_decode($response->getContent(), false);
 
         return $json->lang ?: 'en';
     }
 
-    /**
-     * @param string $code
-     *
-     * @return string
-     */
-    private function getLangName($code)
+    private function getLangName(string $code): string
     {
         $json = $this->getLangs();
 
         return (string) $json['langs'][$code];
     }
 
-    /**
-     * @throws \RuntimeException
-     *
-     * @return array
-     */
-    private function getLangs()
+    private function getLangs(): array
     {
         $cacheDir = $this->getParameter('kernel.cache_dir');
-        $langsFileName = $cacheDir.\DIRECTORY_SEPARATOR.'yandex-langs.json';
+        $langsFileName = $cacheDir. DIRECTORY_SEPARATOR.'yandex-langs.json';
 
-        if (false === \file_exists($langsFileName)) {
-            $curl = $this->get('curl');
+        if (false === file_exists($langsFileName)) {
+            /** @var Curl $curl */
+            $curl = $this->get(Curl::class);
             $curl->init(
                 'https://translate.yandex.net/api/v1.5/tr.json/getLangs?key='.
                 $this->getParameter('wapinet_yandex_translate_key').
@@ -142,24 +124,24 @@ class TranslateController extends AbstractController
 
             $langs = $response->getContent();
 
-            $result = \file_put_contents($langsFileName, $langs);
+            $result = file_put_contents($langsFileName, $langs);
             if (false === $result) {
-                throw new \RuntimeException('Не удалось записать языки перевода');
+                throw new RuntimeException('Не удалось записать языки перевода');
             }
         } else {
-            $langs = \file_get_contents($langsFileName);
+            $langs = file_get_contents($langsFileName);
             if (false === $langs) {
-                throw new \RuntimeException('Не удалось прочитать языки перевода');
+                throw new RuntimeException('Не удалось прочитать языки перевода');
             }
         }
 
-        return \json_decode($langs, true);
+        return json_decode($langs, true);
     }
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         $services = parent::getSubscribedServices();
-        $services['curl'] = '?'.Curl::class;
+        $services[Curl::class] = '?'.Curl::class;
 
         return $services;
     }

@@ -11,7 +11,9 @@ use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Adapter\FixedAdapter;
 use Pagerfanta\Pagerfanta;
+use RuntimeException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use function is_array;
 
 class Paginate
 {
@@ -33,22 +35,22 @@ class Paginate
      * @param int                                               $page
      * @param int|null                                          $maxPerPage
      *
-     * @throws \RuntimeException
+     * @throws RuntimeException
      *
      * @return Pagerfanta
      */
-    public function paginate($data, $page = 1, $maxPerPage = null)
+    public function paginate($data, int $page = 1, ?int $maxPerPage = null): Pagerfanta
     {
         if ($data instanceof Collection) {
             $adapter = new DoctrineCollectionAdapter($data);
         } elseif ($data instanceof Query || $data instanceof QueryBuilder) {
             $adapter = new DoctrineORMAdapter($data, false);
-        } elseif (\is_array($data)) {
+        } elseif (is_array($data)) {
             $adapter = new ArrayAdapter($data);
         } elseif ($data instanceof FixedPaginate) {
             $adapter = new FixedAdapter($data->getNbResults(), $data->getResults());
         } else {
-            throw new \RuntimeException('Неизвестный тип данных для постраничной навигации');
+            throw new RuntimeException('Неизвестный тип данных для постраничной навигации');
         }
 
         $pagerfanta = new Pagerfanta($adapter);
@@ -66,7 +68,7 @@ class Paginate
      *
      * @return int
      */
-    protected function normalizePage(Pagerfanta $pagerfanta, $page)
+    protected function normalizePage(Pagerfanta $pagerfanta, int $page): int
     {
         $maxPage = $pagerfanta->getNbPages();
         $minPage = 1;

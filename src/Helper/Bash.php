@@ -5,7 +5,6 @@ namespace App\Helper;
 use App\Pagerfanta\FixedPaginate;
 use Pagerfanta\Pagerfanta;
 use RuntimeException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use function preg_match;
 use function preg_match_all;
 use function str_replace;
@@ -18,30 +17,27 @@ use const PREG_SET_ORDER;
 class Bash
 {
     /**
-     * @var ContainerInterface
+     * @var Curl
      */
-    protected $container;
-
+    private $curl;
     /**
-     * @param ContainerInterface $container
+     * @var Paginate
      */
-    public function __construct(ContainerInterface $container)
+    private $paginate;
+
+    public function __construct(Curl $curl, Paginate $paginate)
     {
-        $this->container = $container;
+        $this->curl = $curl;
+        $this->paginate = $paginate;
     }
 
-    /**
-     * @param int|null $page
-     *
-     * @return Pagerfanta
-     */
-    public function getPage($page = null)
+    public function getPage(?int $page = null): Pagerfanta
     {
-        $curl = $this->container->get('curl');
-        $curl->init('https://bash.im/index/'.$page);
-        $curl->addBrowserHeaders();
-        $curl->addCompression();
-        $response = $curl->exec();
+        $this->curl->init('https://bash.im/index/'.$page);
+        $this->curl->addBrowserHeaders();
+        $this->curl->addCompression();
+        $response = $this->curl->exec();
+        $this->curl->close();
 
         if (!$response->isSuccessful()) {
             throw new RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
@@ -57,7 +53,7 @@ class Bash
         $allPages = $matchPage[1];
 
         // текущая страница
-        $currentPage = null === $page ? $allPages : $page;
+        $currentPage = $page ?? $allPages;
 
         // вырезаем цитаты
         preg_match_all('/(?:<div class="quote__body">+)(.*?)(?:<\/div>+)/is', $content, $matchItems, PREG_SET_ORDER);
@@ -72,6 +68,6 @@ class Bash
         // создаем фиксированный пагинатор
         $paginate = new FixedPaginate($allPages * $maxPerPage, $items);
 
-        return $this->container->get('paginate')->paginate($paginate, $currentPage, $maxPerPage);
+        return $this->paginate->paginate($paginate, $currentPage, $maxPerPage);
     }
 }

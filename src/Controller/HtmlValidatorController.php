@@ -3,19 +3,18 @@
 namespace App\Controller;
 
 use App\Form\Type\HtmlValidator\HtmlValidatorType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Helper\HtmlValidator;
+use Exception;
+use HTMLValidator\Response as HTMLValidatorResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Exception\ValidatorException;
 
-class HtmlValidatorController extends Controller
+class HtmlValidatorController extends AbstractController
 {
-    /**
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $result = null;
         $form = $this->createForm(HtmlValidatorType::class);
@@ -29,7 +28,7 @@ class HtmlValidatorController extends Controller
                     $result = $this->getHtmlValidator($data);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -39,16 +38,11 @@ class HtmlValidatorController extends Controller
         ]);
     }
 
-    /**
-     * @param array $data
-     *
-     * @throws ValidatorException
-     *
-     * @return \HTMLValidator\Response
-     */
-    protected function getHtmlValidator(array $data)
+    protected function getHtmlValidator(array $data): HTMLValidatorResponse
     {
-        $htmlValidator = $this->get('html_validator');
+        /** @var HtmlValidator $htmlValidator */
+        $htmlValidator = $this->get(HtmlValidator::class);
+
         if (null !== $data['html']) {
             return $htmlValidator->validateFragment($data['html']);
         }
@@ -56,5 +50,13 @@ class HtmlValidatorController extends Controller
             return $htmlValidator->validateFile($data['file']);
         }
         throw new ValidatorException('Не заполнено ни одного поля с HTML кодом ');
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        $services = parent::getSubscribedServices();
+        $services[HtmlValidator::class] = '?'.HtmlValidator::class;
+
+        return $services;
     }
 }

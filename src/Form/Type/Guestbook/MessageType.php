@@ -4,12 +4,13 @@ namespace App\Form\Type\Guestbook;
 
 use App\Entity\Guestbook;
 use Gregwar\CaptchaBundle\Type\CaptchaType;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Message.
@@ -17,16 +18,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class MessageType extends AbstractType
 {
     /**
-     * @var ContainerInterface
+     * @var AuthorizationCheckerInterface
      */
-    protected $container;
-
+    private $authorizationChecker;
     /**
-     * @param ContainerInterface $container
+     * @var ParameterBagInterface
      */
-    public function __construct(ContainerInterface $container)
+    private $parameterBag;
+
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, ParameterBagInterface $parameterBag)
     {
-        $this->container = $container;
+        $this->authorizationChecker = $authorizationChecker;
+        $this->parameterBag = $parameterBag;
     }
 
     /**
@@ -37,7 +40,7 @@ class MessageType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        if (false === $this->container->get('security.authorization_checker')->isGranted($this->container->getParameter('wapinet_role_nocaptcha'))) {
+        if (!$this->authorizationChecker->isGranted($this->parameterBag->get('wapinet_role_nocaptcha'))) {
             $builder->add('captcha', CaptchaType::class, ['required' => true, 'label' => 'Код']);
         }
         $builder->add('message', TextareaType::class, ['attr' => ['placeholder' => 'Сообщение'], 'required' => true, 'label' => false]);

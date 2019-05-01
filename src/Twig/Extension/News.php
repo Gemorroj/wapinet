@@ -28,10 +28,7 @@ class News extends AbstractExtension
         ];
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getLastDate()
+    public function getLastDate(): ?DateTime
     {
         $result = $this->em->getRepository(\App\Entity\News::class)->getLastDate()->getOneOrNullResult();
 

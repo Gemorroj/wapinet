@@ -29,7 +29,7 @@ class Torrent
      *
      * @return array
      */
-    public function decodeFile(File $file)
+    public function decodeFile(File $file): array
     {
         return $this->decoder->decodeFile($file->getPathname());
     }

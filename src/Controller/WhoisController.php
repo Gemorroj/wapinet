@@ -4,13 +4,18 @@ namespace App\Controller;
 
 use App\Exception\WhoisException;
 use App\Form\Type\Whois\WhoisType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Helper\Phpwhois;
+use Exception;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use function htmlspecialchars;
+use function str_replace;
 
-class WhoisController extends Controller
+class WhoisController extends AbstractController
 {
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $resultHtml = null;
         $form = $this->createForm(WhoisType::class);
@@ -29,7 +34,7 @@ class WhoisController extends Controller
 
                 $resultHtml = $this->getWhois($data);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -46,22 +51,22 @@ class WhoisController extends Controller
      *
      * @return string HTML текст
      */
-    protected function getWhois(array $data)
+    protected function getWhois(array $data): string
     {
-        $phpwhois = $this->get('phpwhois');
+        $phpwhois = $this->get(Phpwhois::class);
         $whois = $phpwhois->getWhois();
 
         //$whois->non_icann = true;
         $result = $whois->Lookup($data['query']);
 
         if (!empty($result['rawdata'])) {
-            $result['rawdata'] = \str_replace('{query}', \htmlspecialchars($data['query']), $result['rawdata']);
+            $result['rawdata'] = str_replace('{query}', htmlspecialchars($data['query']), $result['rawdata']);
             $utils = $phpwhois->getUtils();
             $resultHtml = $utils->showHTML($result);
 
-            $resultHtml = \str_replace($_SERVER['PHP_SELF'], '', $resultHtml);
+            $resultHtml = str_replace($_SERVER['PHP_SELF'], '', $resultHtml);
 
-            $resultHtml = \str_replace('<a href=', '<a rel="external" href=', $resultHtml);
+            $resultHtml = str_replace('<a href=', '<a rel="external" href=', $resultHtml);
 
             return $resultHtml;
         }
@@ -71,5 +76,13 @@ class WhoisController extends Controller
         }
 
         throw new WhoisException(['Не найдено данных']);
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        $services = parent::getSubscribedServices();
+        $services[Phpwhois::class] = '?'.Phpwhois::class;
+
+        return $services;
     }
 }

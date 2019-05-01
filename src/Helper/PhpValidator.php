@@ -2,6 +2,7 @@
 
 namespace App\Helper;
 
+use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
 use Syntax\Php;
@@ -27,11 +28,11 @@ class PhpValidator
     /**
      * @param BaseFile $file
      *
-     * @throws \Exception
+     * @throws Exception
      *
      * @return array
      */
-    public function validateFile(BaseFile $file)
+    public function validateFile(BaseFile $file): array
     {
         $cli = $this->parameterBag->get('wapinet_php_path');
 
@@ -44,11 +45,11 @@ class PhpValidator
     /**
      * @param string $source
      *
-     * @throws \Exception
+     * @throws Exception
      *
      * @return array
      */
-    public function validateFragment($source)
+    public function validateFragment(string $source): array
     {
         $cli = $this->parameterBag->get('wapinet_php_path');
 

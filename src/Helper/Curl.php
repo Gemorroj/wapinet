@@ -154,9 +154,9 @@ class Curl
     /**
      * @param bool $strict Исключение если не удалось определить размер файла (не найден Content-Length)
      *
-     * @return Response
      *@throws LengthRequiredHttpException|LengthException
      *
+     * @return Response
      */
     public function checkFileSize(bool $strict = true): Response
     {
@@ -190,7 +190,7 @@ class Curl
      */
     protected function parseHeaders(string $rawHeaders): array
     {
-        if (function_exists('http_parse_headers')) {
+        if (function_exists('\http_parse_headers')) {
             return http_parse_headers($rawHeaders);
         }
 

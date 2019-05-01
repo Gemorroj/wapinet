@@ -3,19 +3,18 @@
 namespace App\Controller;
 
 use App\Form\Type\CssValidator\CssValidatorType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Helper\CssValidator;
+use CSSValidator\Response as CSSValidatorResponse;
+use Exception;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Exception\ValidatorException;
 
-class CssValidatorController extends Controller
+class CssValidatorController extends AbstractController
 {
-    /**
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $result = null;
         $form = $this->createForm(CssValidatorType::class);
@@ -30,7 +29,7 @@ class CssValidatorController extends Controller
                     $result = $this->getCssValidator($data);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -40,16 +39,10 @@ class CssValidatorController extends Controller
         ]);
     }
 
-    /**
-     * @param array $data
-     *
-     * @throws ValidatorException
-     *
-     * @return \CSSValidator\Response
-     */
-    protected function getCssValidator(array $data)
+    protected function getCssValidator(array $data): CSSValidatorResponse
     {
-        $cssValidator = $this->get('css_validator');
+        /** @var CssValidator $cssValidator */
+        $cssValidator = $this->get(CssValidator::class);
         $options = $cssValidator->getOptions();
 
         $options->setProfile($data['profile']);
@@ -63,5 +56,13 @@ class CssValidatorController extends Controller
             return $cssValidator->validateFile($data['file']);
         }
         throw new ValidatorException('Не заполнено ни одного поля с CSS кодом ');
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        $services = parent::getSubscribedServices();
+        $services[CssValidator::class] = '?'.CssValidator::class;
+
+        return $services;
     }
 }

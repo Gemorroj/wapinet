@@ -2,13 +2,15 @@
 
 namespace App\Twig\Extension;
 
+use App\Helper\Ffmpeg as FfmpegHelper;
 use Exception;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\Format\Video\DefaultVideo;
 use FFMpeg\Format\Video\X264;
 use FFMpeg\Media\Video as FFmpegVideo;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use function ceil;
@@ -19,16 +21,23 @@ use function floor;
 class Video extends AbstractExtension
 {
     /**
-     * @var ContainerInterface
+     * @var FfmpegHelper
      */
-    protected $container;
-
+    private $ffmpegHelper;
     /**
-     * @param ContainerInterface $container
+     * @var LoggerInterface
      */
-    public function __construct(ContainerInterface $container)
+    private $logger;
+    /**
+     * @var ParameterBagInterface
+     */
+    private $parameterBag;
+
+    public function __construct(FfmpegHelper $ffmpegHelper, LoggerInterface $logger, ParameterBagInterface $parameterBag)
     {
-        $this->container = $container;
+        $this->ffmpegHelper = $ffmpegHelper;
+        $this->logger = $logger;
+        $this->parameterBag = $parameterBag;
     }
 
     /**
@@ -44,17 +53,12 @@ class Video extends AbstractExtension
         ];
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string|null
-     */
     public function convertToMp4(string $path): ?string
     {
         $mp4File = $path.'.mp4';
 
         if (false === file_exists($this->getPublicDir().$mp4File)) {
-            $ffmpeg = $this->container->get('ffmpeg')->getFfmpeg();
+            $ffmpeg = $this->ffmpegHelper->getFfmpeg();
             try {
                 $media = $ffmpeg->open($this->getPublicDir().$path);
 
@@ -67,7 +71,7 @@ class Video extends AbstractExtension
                     throw new RuntimeException('Не удалось создать MP4 файл');
                 }
             } catch (Exception $e) {
-                $this->container->get('logger')->warning('Ошибка при конвертировании видео в MP4.', [$e]);
+                $this->logger->warning('Ошибка при конвертировании видео в MP4.', [$e]);
 
                 return null;
             }
@@ -76,12 +80,6 @@ class Video extends AbstractExtension
         return $mp4File;
     }
 
-    /**
-     * @param DefaultVideo $format
-     * @param FFmpegVideo  $media
-     *
-     * @return $this
-     */
     protected function setOptions(DefaultVideo $format, FFmpegVideo $media): self
     {
         $streams = $media->getStreams();
@@ -116,17 +114,12 @@ class Video extends AbstractExtension
         return $this;
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string|null
-     */
     public function getScreenshot(string $path): ?string
     {
         $screenshot = $path.'.jpg';
 
         if (false === file_exists($this->getPublicDir().$screenshot)) {
-            $ffmpeg = $this->container->get('ffmpeg')->getFfmpeg();
+            $ffmpeg = $this->ffmpegHelper->getFfmpeg();
 
             try {
                 $media = $ffmpeg->open($this->getPublicDir().$path);
@@ -141,7 +134,7 @@ class Video extends AbstractExtension
                     throw new RuntimeException('Не найден видео поток');
                 }
             } catch (Exception $e) {
-                $this->container->get('logger')->warning('Ошибка при создании скриншота видео.', [$e]);
+                $this->logger->warning('Ошибка при создании скриншота видео.', [$e]);
 
                 return null;
             }
@@ -150,14 +143,9 @@ class Video extends AbstractExtension
         return $screenshot;
     }
 
-    /**
-     * @param FFmpegVideo $media
-     *
-     * @return int
-     */
-    protected function getScreenshotSecond(FFmpegVideo $media): int
+    private function getScreenshotSecond(FFmpegVideo $media): int
     {
-        $second = $this->container->getParameter('wapinet_video_screenshot_second');
+        $second = $this->parameterBag->get('wapinet_video_screenshot_second');
         $video = $media->getStreams()->videos()->first();
 
         if ($video && $video->has('duration')) {
@@ -171,11 +159,8 @@ class Video extends AbstractExtension
         return $second;
     }
 
-    /**
-     * @return string
-     */
-    protected function getPublicDir(): string
+    private function getPublicDir(): string
     {
-        return $this->container->getParameter('kernel.project_dir').'/public';
+        return $this->parameterBag->get('kernel.project_dir').'/public';
     }
 }

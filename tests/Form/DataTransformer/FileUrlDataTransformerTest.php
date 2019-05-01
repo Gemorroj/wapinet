@@ -3,7 +3,9 @@
 namespace App\Tests\Form\DataTransformer;
 
 use App\Form\DataTransformer\FileUrlDataTransformer;
+use App\Helper\Curl;
 use App\Tests\WebTestCaseWapinet;
+use ReflectionMethod;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class FileUrlDataTransformerTest extends WebTestCaseWapinet
@@ -72,9 +74,9 @@ class FileUrlDataTransformerTest extends WebTestCaseWapinet
         static::bootKernel();
         $obj = new FileUrlDataTransformer(
             static::$container->get('parameter_bag'),
-            static::$container->get('curl')
+            static::$container->get(Curl::class)
         );
-        $method = new \ReflectionMethod($obj, 'getOriginalName');
+        $method = new ReflectionMethod($obj, 'getOriginalName');
         $method->setAccessible(true);
 
         $result = $method->invoke($obj, $headerBag, $url);

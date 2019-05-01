@@ -3,22 +3,15 @@
 namespace App\Controller\User;
 
 use App\Entity\Event;
+use App\Helper\Paginate;
 use App\Repository\EventRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class EventsController extends Controller
+class EventsController extends AbstractController
 {
-    /**
-     * @param Request $request
-     *
-     * @throws AccessDeniedException
-     *
-     * @return Response
-     */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, Paginate $paginate): Response
     {
         $page = $request->get('page', 1);
         $user = $this->getUser();
@@ -30,7 +23,7 @@ class EventsController extends Controller
         $repository = $this->getDoctrine()->getRepository(Event::class);
         $events = $repository->findEventsQuery($user);
 
-        $pagerfanta = $this->get('paginate')->paginate($events, $page);
+        $pagerfanta = $paginate->paginate($events, $page);
 
         return $this->render('User/Events/index.html.twig', [
             'user' => $user,

@@ -32,7 +32,7 @@ class HtmlValidator
      *
      * @return W3CServiceResponse
      */
-    public function validateFragment($html)
+    public function validateFragment(string $html): W3CServiceResponse
     {
         return $this->htmlValidator->validateFragment($html);
     }
@@ -44,7 +44,7 @@ class HtmlValidator
      *
      * @return W3CServiceResponse
      */
-    public function validateFile(File $file)
+    public function validateFile(File $file): W3CServiceResponse
     {
         return $this->htmlValidator->validateFile($file->getPathname());
     }

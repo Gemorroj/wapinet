@@ -2,8 +2,9 @@
 
 namespace App\Twig\Extension;
 
+use App\Helper\Torrent as TorrentHelper;
 use Exception;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -12,13 +13,18 @@ use function implode;
 class Torrent extends AbstractExtension
 {
     /**
-     * @var ContainerInterface
+     * @var TorrentHelper
      */
-    protected $container;
+    private $torrentHelper;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(TorrentHelper $torrentHelper, LoggerInterface $logger)
     {
-        $this->container = $container;
+        $this->torrentHelper = $torrentHelper;
+        $this->logger = $logger;
     }
 
     /**
@@ -26,7 +32,7 @@ class Torrent extends AbstractExtension
      *
      * @return array An array of global functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('wapinet_torrent_list', [$this, 'getList']),
@@ -38,14 +44,12 @@ class Torrent extends AbstractExtension
      *
      * @return array|null
      */
-    public function getList(File $file)
+    public function getList(File $file): ?array
     {
-        $torrent = $this->container->get('torrent');
-
         try {
-            $data = $torrent->decodeFile($file);
+            $data = $this->torrentHelper->decodeFile($file);
         } catch (Exception $e) {
-            $this->container->get('logger')->warning($e->getMessage(), [$e]);
+            $this->logger->warning($e->getMessage(), [$e]);
 
             return null;
         }

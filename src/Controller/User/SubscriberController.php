@@ -5,14 +5,15 @@ namespace App\Controller\User;
 use App\Entity\Subscriber;
 use App\Entity\User;
 use App\Form\Type\User\SubscriberType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Exception;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class SubscriberController extends Controller
+class SubscriberController extends AbstractController
 {
     /**
      * @param Request $request
@@ -49,7 +50,7 @@ class SubscriberController extends Controller
                     return $this->redirectToRoute('fos_user_profile_show');
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 

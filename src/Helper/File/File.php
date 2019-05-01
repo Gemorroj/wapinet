@@ -4,10 +4,17 @@ namespace App\Helper\File;
 
 use App\Entity\File as DataFile;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
+use function is_dir;
+use function mb_strpos;
+use function realpath;
+use function str_replace;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * File хэлпер
@@ -15,34 +22,35 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class File
 {
     /**
-     * @var ContainerInterface
+     * @var UploaderHelper
      */
-    protected $container;
+    private $uploaderHelper;
     /**
      * @var EncoderFactoryInterface
      */
-    protected $encoderFactory;
-
+    private $encoderFactory;
     /**
-     * File constructor.
-     *
-     * @param ContainerInterface      $container
-     * @param EncoderFactoryInterface $encoderFactory
+     * @var Filesystem
      */
-    public function __construct(ContainerInterface $container, EncoderFactoryInterface $encoderFactory)
+    private $filesystem;
+    /**
+     * @var CacheManager
+     */
+    private $cacheManager;
+
+    public function __construct(UploaderHelper $uploaderHelper, CacheManager $cacheManager, EncoderFactoryInterface $encoderFactory, Filesystem $filesystem)
     {
-        $this->container = $container;
+        $this->uploaderHelper = $uploaderHelper;
         $this->encoderFactory = $encoderFactory;
+        $this->filesystem = $filesystem;
+        $this->cacheManager = $cacheManager;
     }
 
-    /**
-     * @param DataFile $file
-     */
-    public function cleanupFile(DataFile $file)
+    public function cleanupFile(DataFile $file): void
     {
         // скриншоты и сконвертированные видео
         $realPath = $file->getFile()->getRealPath();
-        $this->container->get('filesystem')->remove([
+        $this->filesystem->remove([
             // $realPath, // сам файл удаляется entity менеджером
             $realPath.'.png',
             $realPath.'.jpg',
@@ -53,8 +61,8 @@ class File
         ]);
 
         // кэш картинок
-        $path = $this->container->get('vich_uploader.templating.helper.uploader_helper')->asset($file, 'file');
-        $this->container->get('liip_imagine.cache.manager')->remove([
+        $path = $this->uploaderHelper->asset($file, 'file');
+        $this->cacheManager->remove([
             $path,
             $path.'.png',
             $path.'.jpg',
@@ -65,10 +73,7 @@ class File
         ], 'thumbnail');
     }
 
-    /**
-     * @param DataFile $file
-     */
-    public function copyFileTagsToTags(DataFile $file)
+    public function copyFileTagsToTags(DataFile $file): void
     {
         $tagsCollection = new ArrayCollection();
 
@@ -79,11 +84,7 @@ class File
         $file->setTags($tagsCollection);
     }
 
-    /**
-     * @param DataFile $file
-     * @param string   $password
-     */
-    public function setPassword(DataFile $file, string $password)
+    public function setPassword(DataFile $file, string $password): void
     {
         $file->setSaltValue();
 
@@ -92,10 +93,7 @@ class File
         $file->setPassword($encodedPassword);
     }
 
-    /**
-     * @param DataFile $file
-     */
-    public function removePassword(DataFile $file)
+    public function removePassword(DataFile $file): void
     {
         $file->removeSalt();
         $file->setPassword(null);
@@ -111,21 +109,21 @@ class File
      *
      * @return string
      */
-    public function checkFile($directory, $path, $allowDirectory = false)
+    public function checkFile(string $directory, string $path, bool $allowDirectory = false): string
     {
-        $path = \str_replace('\\', '/', $path);
+        $path = str_replace('\\', '/', $path);
 
-        if (false !== \mb_strpos($path, '../')) {
+        if (false !== mb_strpos($path, '../')) {
             throw new AccessDeniedException('Запрещен доступ: "'.$path.'"".');
         }
 
-        $file = \realpath($directory.\DIRECTORY_SEPARATOR.$path);
+        $file = realpath($directory. DIRECTORY_SEPARATOR.$path);
 
         if (false === $file) {
             throw new NotFoundHttpException('Файл не найден: "'.$path.'"".');
         }
 
-        if (true !== $allowDirectory && true === \is_dir($allowDirectory)) {
+        if (true !== $allowDirectory && true === is_dir($allowDirectory)) {
             throw new AccessDeniedException('Запрещен доступ: "'.$path.'"".');
         }
 

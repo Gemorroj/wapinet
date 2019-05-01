@@ -3,19 +3,20 @@
 namespace App\Controller;
 
 use App\Form\Type\Email\EmailType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Exception;
+use Swift_Attachment;
+use Swift_Mailer;
+use Swift_Message;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use function implode;
 
-class EmailController extends Controller
+class EmailController extends AbstractController
 {
-    /**
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, Swift_Mailer $mailer): Response
     {
         $result = null;
         $form = $this->createForm(EmailType::class);
@@ -27,11 +28,16 @@ class EmailController extends Controller
                 if ($form->isValid()) {
                     $data = $form->getData();
 
-                    $message = $this->getMessage($data);
-                    $result = (bool) $this->get('mailer')->send($message);
+                    $message = $this->makeMessage($data);
+                    $message->getHeaders()->addTextHeader(
+                        'Received',
+                        'from user ['. implode(', ', $request->getClientIps()).']'
+                    );
+
+                    $result = (bool) $mailer->send($message);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -41,22 +47,14 @@ class EmailController extends Controller
         ]);
     }
 
-    /**
-     * @return string
-     */
-    protected function getEmailFooter()
+    protected function getEmailFooter(): string
     {
         return "\r\n\r\n---\r\n".$this->getParameter('wapinet_email_footer');
     }
 
-    /**
-     * @param array $data
-     *
-     * @return \Swift_Message
-     */
-    protected function getMessage(array $data)
+    protected function makeMessage(array $data): Swift_Message
     {
-        $message = new \Swift_Message(
+        $message = new Swift_Message(
             $data['subject'],
             $data['message'].$this->getEmailFooter(),
             'text/plain',
@@ -66,15 +64,10 @@ class EmailController extends Controller
         $message->setTo($data['to']);
 
         if ($data['file'] instanceof UploadedFile) {
-            $attach = \Swift_Attachment::fromPath($data['file']->getPathname(), $data['file']->getClientMimeType());
+            $attach = Swift_Attachment::fromPath($data['file']->getPathname(), $data['file']->getClientMimeType());
             $attach->setFilename($data['file']->getClientOriginalName());
             $message->attach($attach);
         }
-
-        $request = $this->get('request_stack')->getCurrentRequest();
-        $ip = \implode(', ', $request->getClientIps());
-
-        $message->getHeaders()->addTextHeader('Received', 'from user ['.$ip.']');
 
         return $message;
     }

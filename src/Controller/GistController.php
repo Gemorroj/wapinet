@@ -8,10 +8,15 @@ use App\Form\Type\Gist\AddType;
 use App\Form\Type\Gist\EditType;
 use App\Form\Type\Gist\SearchType;
 use App\Helper\BotChecker;
+use App\Helper\Paginate;
+use App\Helper\Sphinx;
 use App\Repository\GistRepository;
+use Exception;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Pagerfanta\Pagerfanta;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use RuntimeException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -21,15 +26,11 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use function uniqid;
 
-class GistController extends Controller
+class GistController extends AbstractController
 {
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $form = $this->createForm(AddType::class);
         $page = $request->get('page', 1);
@@ -37,7 +38,7 @@ class GistController extends Controller
         /** @var GistRepository $gistRepository */
         $gistRepository = $this->getDoctrine()->getRepository(Gist::class);
         $query = $gistRepository->getListQuery();
-        $pagerfanta = $this->get('paginate')->paginate($query, $page);
+        $pagerfanta = $this->get(Paginate::class)->paginate($query, $page);
 
         return $this->render('Gist/index.html.twig', [
             'form' => $form->createView(),
@@ -52,7 +53,7 @@ class GistController extends Controller
      *
      * @return Response
      */
-    public function userAction(Request $request, $username, UserManagerInterface $userManager)
+    public function userAction(Request $request, string $username, UserManagerInterface $userManager): Response
     {
         $form = $this->createForm(AddType::class);
         $page = $request->get('page', 1);
@@ -65,7 +66,7 @@ class GistController extends Controller
         /** @var GistRepository $gistRepository */
         $gistRepository = $this->getDoctrine()->getRepository(Gist::class);
         $query = $gistRepository->getListQuery($user);
-        $pagerfanta = $this->get('paginate')->paginate($query, $page);
+        $pagerfanta = $this->get(Paginate::class)->paginate($query, $page);
 
         return $this->render('Gist/index.html.twig', [
             'form' => $form->createView(),
@@ -82,7 +83,7 @@ class GistController extends Controller
      *
      * @return RedirectResponse
      */
-    public function addAction(Request $request, BotChecker $botChecker)
+    public function addAction(Request $request, BotChecker $botChecker): RedirectResponse
     {
         $user = $this->getUser();
         if (null === $user) {
@@ -109,7 +110,7 @@ class GistController extends Controller
                     $entityManager->persist($gist);
                     $entityManager->flush();
 
-                    $this->get('event_dispatcher')->dispatch(
+                    $this->get(EventDispatcherInterface::class)->dispatch(
                         GistEvent::GIST_ADD,
                         new GistEvent($user, $gist)
                     );
@@ -120,19 +121,14 @@ class GistController extends Controller
                     }
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $flashBag->add('notice', $e->getMessage());
         }
 
         return $this->redirectToRoute('gist_index');
     }
 
-    /**
-     * @param Gist $gist
-     *
-     * @return Response
-     */
-    public function viewAction(Gist $gist)
+    public function viewAction(Gist $gist): Response
     {
         return $this->render('Gist/view.html.twig', [
             'gist' => $gist,
@@ -146,7 +142,7 @@ class GistController extends Controller
      *
      * @return RedirectResponse|JsonResponse
      */
-    public function deleteAction(Gist $gist)
+    public function deleteAction(Gist $gist): Response
     {
         $this->denyAccessUnlessGranted('DELETE', $gist);
 
@@ -168,7 +164,7 @@ class GistController extends Controller
      *
      * @return Response|RedirectResponse
      */
-    public function searchAction(Request $request, SessionInterface $session, $key = null)
+    public function searchAction(Request $request, SessionInterface $session, $key = null): Response
     {
         $page = $request->get('page', 1);
         $form = $this->createForm(SearchType::class);
@@ -180,7 +176,7 @@ class GistController extends Controller
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    $key = \uniqid('', false);
+                    $key = uniqid('', false);
                     $session->set('gist_search', [
                         'key' => $key,
                         'data' => $data,
@@ -197,7 +193,7 @@ class GistController extends Controller
                     $pagerfanta = $this->searchSphinx($search['data'], $page);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -212,13 +208,14 @@ class GistController extends Controller
      * @param array $data
      * @param int   $page
      *
-     * @throws \RuntimeException
+     * @throws RuntimeException
      *
      * @return Pagerfanta
      */
-    protected function searchSphinx(array $data, $page = 1)
+    private function searchSphinx(array $data, int $page = 1): Pagerfanta
     {
-        $client = $this->get('sphinx');
+        /** @var Sphinx $client */
+        $client = $this->get(Sphinx::class);
         $sphinxQl = $client->select($page)
             ->from('gist')
             ->match(['subject', 'body'], $data['search'])
@@ -241,7 +238,7 @@ class GistController extends Controller
      *
      * @return RedirectResponse|JsonResponse|Response
      */
-    public function editAction(Request $request, Gist $gist)
+    public function editAction(Request $request, Gist $gist): Response
     {
         $this->denyAccessUnlessGranted('EDIT', $gist);
 
@@ -262,7 +259,7 @@ class GistController extends Controller
                     return $this->redirect($url);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -272,14 +269,7 @@ class GistController extends Controller
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @param Gist    $data
-     * @param Gist    $newData
-     *
-     * @return Gist
-     */
-    protected function editGistData(Request $request, Gist $data, Gist $newData)
+    private function editGistData(Request $request, Gist $data, Gist $newData): Gist
     {
         $data->setSubject($newData->getSubject());
         $data->setBody($newData->getBody());
@@ -296,5 +286,15 @@ class GistController extends Controller
         $entityManager->flush();
 
         return $data;
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        $services = parent::getSubscribedServices();
+        $services[Sphinx::class] = '?'.Sphinx::class;
+        $services[EventDispatcherInterface::class] = '?'.EventDispatcherInterface::class;
+        $services[Paginate::class] = Paginate::class;
+
+        return $services;
     }
 }
