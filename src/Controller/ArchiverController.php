@@ -178,7 +178,7 @@ class ArchiverController extends AbstractController
             throw $this->createAccessDeniedException('Запрещен доступ: "'.$path.'"".');
         }
 
-        $file = realpath($archiveDirectory. DIRECTORY_SEPARATOR.$path);
+        $file = realpath($archiveDirectory.DIRECTORY_SEPARATOR.$path);
 
         if (false === $file) {
             throw $this->createNotFoundException('Файл не найден: "'.$path.'"".');
@@ -273,7 +273,7 @@ class ArchiverController extends AbstractController
      */
     protected function checkArchiveDirectory(string $archive): string
     {
-        $directory = $this->getParameter('kernel.tmp_archiver_dir'). DIRECTORY_SEPARATOR.$archive;
+        $directory = $this->getParameter('kernel.tmp_archiver_dir').DIRECTORY_SEPARATOR.$archive;
 
         if (false === is_dir($directory)) {
             throw new FileException('Не удалось найти временную директорию');
@@ -295,7 +295,7 @@ class ArchiverController extends AbstractController
      */
     protected function createArchiveDirectory(): string
     {
-        $directory = $this->getParameter('kernel.tmp_archiver_dir'). DIRECTORY_SEPARATOR.$this->generateArchiveName();
+        $directory = $this->getParameter('kernel.tmp_archiver_dir').DIRECTORY_SEPARATOR.$this->generateArchiveName();
         $this->get(Filesystem::class)->mkdir($directory);
 
         return $directory;

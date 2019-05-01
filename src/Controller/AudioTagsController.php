@@ -292,7 +292,7 @@ class AudioTagsController extends AbstractController
 
     protected function getFilePath(string $fileName): string
     {
-        return $this->getParameter('kernel.tmp_dir'). DIRECTORY_SEPARATOR.$fileName;
+        return $this->getParameter('kernel.tmp_dir').DIRECTORY_SEPARATOR.$fileName;
     }
 
     public static function getSubscribedServices(): array

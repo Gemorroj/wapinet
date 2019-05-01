@@ -413,7 +413,7 @@ class FileController extends AbstractController
         }
 
         $tmpDir = $this->getParameter('kernel.tmp_file_dir');
-        $entry = $tmpDir. DIRECTORY_SEPARATOR.$path;
+        $entry = $tmpDir.DIRECTORY_SEPARATOR.$path;
 
         if (!$filesystem->exists($entry)) { // распаковываем архив
             /** @var File|null $file */

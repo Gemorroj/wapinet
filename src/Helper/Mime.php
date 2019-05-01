@@ -85,7 +85,7 @@ class Mime
     private function getMimeArray(): array
     {
         $cacheDir = $this->parameterBag->get('kernel.cache_dir');
-        $mimeFileName = $cacheDir. DIRECTORY_SEPARATOR.'mime.types.php';
+        $mimeFileName = $cacheDir.DIRECTORY_SEPARATOR.'mime.types.php';
 
         if (true === file_exists($mimeFileName)) {
             return include $mimeFileName;

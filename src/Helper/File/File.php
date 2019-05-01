@@ -117,7 +117,7 @@ class File
             throw new AccessDeniedException('Запрещен доступ: "'.$path.'"".');
         }
 
-        $file = realpath($directory. DIRECTORY_SEPARATOR.$path);
+        $file = realpath($directory.DIRECTORY_SEPARATOR.$path);
 
         if (false === $file) {
             throw new NotFoundHttpException('Файл не найден: "'.$path.'"".');
