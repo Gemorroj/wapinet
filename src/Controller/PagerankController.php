@@ -4,22 +4,22 @@ namespace App\Controller;
 
 use App\Form\Type\Pagerank\PagerankType;
 use App\Helper\Curl;
+use const CURLOPT_POST;
+use const CURLOPT_POSTFIELDS;
+use const ENT_XML1;
 use Exception;
-use SEOstats\Services\Social;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use function htmlspecialchars;
 use function mb_strpos;
 use function preg_match;
 use function preg_replace;
 use function rawurlencode;
+use SEOstats\Services\Social;
 use function str_ireplace;
 use function str_replace;
-use const CURLOPT_POST;
-use const CURLOPT_POSTFIELDS;
-use const ENT_XML1;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PagerankController extends AbstractController
 {

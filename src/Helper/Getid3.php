@@ -2,8 +2,8 @@
 
 namespace App\Helper;
 
-use getid3_writetags;
 use function defined;
+use getid3_writetags;
 
 /**
  * Getid3 хэлпер

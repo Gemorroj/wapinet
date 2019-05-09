@@ -6,12 +6,12 @@ use App\Exception\WhoisException;
 use App\Form\Type\Whois\WhoisType;
 use App\Helper\Phpwhois;
 use Exception;
+use function htmlspecialchars;
+use function str_replace;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use function htmlspecialchars;
-use function str_replace;
 
 class WhoisController extends AbstractController
 {

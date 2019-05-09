@@ -5,17 +5,17 @@ namespace App\Twig\Extension;
 use App\Exception\ArchiverException;
 use App\Helper\Archiver\ArchiveZip;
 use Exception;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\File\File as BaseFile;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
 use function explode;
 use function mb_strtolower;
 use function pathinfo;
-use function preg_match;
-use function trim;
 use const PATHINFO_EXTENSION;
+use function preg_match;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\File as BaseFile;
+use function trim;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
 class JavaApp extends AbstractExtension
 {

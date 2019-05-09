@@ -2,9 +2,9 @@
 
 namespace App\Twig\Extension;
 
+use function number_format;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
-use function number_format;
 
 class Count extends AbstractExtension
 {

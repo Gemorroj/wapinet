@@ -7,8 +7,8 @@ use App\Entity\User;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use function mt_rand;
+use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 class OnlineListener
 {

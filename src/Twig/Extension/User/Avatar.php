@@ -3,9 +3,9 @@
 namespace App\Twig\Extension\User;
 
 use App\Entity\User;
+use function md5;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use function md5;
 
 class Avatar extends AbstractExtension
 {

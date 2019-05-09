@@ -2,10 +2,10 @@
 
 namespace App\Twig\Extension;
 
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
 use function max;
 use function round;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
 class Size extends AbstractExtension
 {

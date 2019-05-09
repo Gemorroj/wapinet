@@ -3,20 +3,20 @@
 namespace App\Twig\Extension;
 
 use App\Helper\Ffmpeg as FfmpegHelper;
+use function ceil;
 use Exception;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\Format\Video\DefaultVideo;
 use FFMpeg\Format\Video\X264;
 use FFMpeg\Media\Video as FFmpegVideo;
+use function file_exists;
+use function filesize;
+use function floor;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
-use function ceil;
-use function file_exists;
-use function filesize;
-use function floor;
 
 class Video extends AbstractExtension
 {

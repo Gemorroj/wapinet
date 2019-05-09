@@ -4,16 +4,16 @@ namespace App\Controller;
 
 use App\Form\Type\Http\HttpType;
 use App\Helper\Curl;
+use const CURLOPT_CUSTOMREQUEST;
+use const CURLOPT_POSTFIELDS;
 use Exception;
+use function explode;
+use function str_replace;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use function explode;
-use function str_replace;
 use function trim;
-use const CURLOPT_CUSTOMREQUEST;
-use const CURLOPT_POSTFIELDS;
 
 class HttpController extends AbstractController
 {

@@ -2,12 +2,12 @@
 
 namespace App\Twig\Extension;
 
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
+use const ENT_NOQUOTES;
 use function htmlspecialchars;
 use function ksort;
-use const ENT_NOQUOTES;
 use const SORT_NUMERIC;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 class Breadcrumbs extends AbstractExtension
 {

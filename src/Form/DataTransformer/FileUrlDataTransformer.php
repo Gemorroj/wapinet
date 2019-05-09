@@ -5,8 +5,18 @@ namespace App\Form\DataTransformer;
 use App\Entity\File\FileContent;
 use App\Entity\File\FileUrl;
 use App\Helper\Curl;
+use function base64_encode;
+use const CURLOPT_FILE;
+use const CURLOPT_HEADER;
+use function fclose;
+use function fopen;
+use function mb_strlen;
+use function mb_substr;
+use function parse_url;
+use const PHP_URL_PATH;
 use Riverline\MultiPartParser\Part;
 use RuntimeException;
+use function str_replace;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
@@ -14,17 +24,7 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use function base64_encode;
-use function fclose;
-use function fopen;
-use function mb_strlen;
-use function mb_substr;
-use function parse_url;
-use function str_replace;
 use function tempnam;
-use const CURLOPT_FILE;
-use const CURLOPT_HEADER;
-use const PHP_URL_PATH;
 
 class FileUrlDataTransformer implements DataTransformerInterface
 {

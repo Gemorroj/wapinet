@@ -3,18 +3,18 @@
 namespace App;
 
 use App\DependencyInjection\Compiler\FileUrlCompilerPass;
+use function dirname;
+use function is_dir;
+use function is_writable;
+use function mkdir;
 use RuntimeException;
+use function sprintf;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
-use function dirname;
-use function is_dir;
-use function is_writable;
-use function mkdir;
-use function sprintf;
 
 class Kernel extends BaseKernel
 {

@@ -4,10 +4,10 @@ namespace App\Security;
 
 use App\Entity\Gist;
 use App\Entity\User;
+use function in_array;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use function in_array;
 
 class GistVoter extends Voter
 {

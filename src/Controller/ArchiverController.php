@@ -8,7 +8,15 @@ use App\Helper\Archiver\Archive7z;
 use App\Helper\Archiver\ArchiveRar;
 use App\Helper\Archiver\ArchiveZip;
 use App\Helper\Translit;
+use function basename;
+use const DIRECTORY_SEPARATOR;
 use Exception;
+use function is_dir;
+use function is_readable;
+use function is_writable;
+use function mb_strpos;
+use function realpath;
+use function str_replace;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
@@ -22,15 +30,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use function basename;
-use function is_dir;
-use function is_readable;
-use function is_writable;
-use function mb_strpos;
-use function realpath;
-use function str_replace;
 use function uniqid;
-use const DIRECTORY_SEPARATOR;
 
 class ArchiverController extends AbstractController
 {

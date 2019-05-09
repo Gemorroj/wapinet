@@ -4,12 +4,12 @@ namespace App\Helper;
 
 use App\Pagerfanta\FixedPaginate;
 use Pagerfanta\Pagerfanta;
-use RuntimeException;
 use function preg_match;
 use function preg_match_all;
+use const PREG_SET_ORDER;
+use RuntimeException;
 use function str_replace;
 use function strip_tags;
-use const PREG_SET_ORDER;
 
 /**
  * Bash хэлпер

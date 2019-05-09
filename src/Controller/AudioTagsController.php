@@ -8,7 +8,9 @@ use App\Form\Type\AudioTags\AudioTagsEditType;
 use App\Form\Type\AudioTags\AudioTagsType;
 use App\Helper\Getid3;
 use App\Helper\Translit;
+use const DIRECTORY_SEPARATOR;
 use Exception;
+use function file_get_contents;
 use getid3_lib;
 use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,9 +24,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use function file_get_contents;
 use function tempnam;
-use const DIRECTORY_SEPARATOR;
 
 /**
  * @see https://github.com/JamesHeinrich/getID3/blob/master/demos/demo.audioinfo.class.php

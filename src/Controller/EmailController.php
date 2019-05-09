@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\Type\Email\EmailType;
 use Exception;
+use function implode;
 use Swift_Attachment;
 use Swift_Mailer;
 use Swift_Message;
@@ -12,7 +13,6 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use function implode;
 
 class EmailController extends AbstractController
 {

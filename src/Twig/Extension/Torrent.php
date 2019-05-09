@@ -4,11 +4,11 @@ namespace App\Twig\Extension;
 
 use App\Helper\Torrent as TorrentHelper;
 use Exception;
+use function implode;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use function implode;
 
 class Torrent extends AbstractExtension
 {

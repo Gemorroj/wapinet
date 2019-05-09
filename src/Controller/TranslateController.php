@@ -4,20 +4,20 @@ namespace App\Controller;
 
 use App\Form\Type\Translate\TranslateType;
 use App\Helper\Curl;
+use const DIRECTORY_SEPARATOR;
 use Exception;
+use function file_exists;
+use function file_get_contents;
+use function file_put_contents;
+use function implode;
+use function json_decode;
 use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use function file_exists;
-use function file_get_contents;
-use function file_put_contents;
-use function implode;
-use function json_decode;
 use function urlencode;
-use const DIRECTORY_SEPARATOR;
 
 class TranslateController extends AbstractController
 {

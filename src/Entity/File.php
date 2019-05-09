@@ -3,22 +3,22 @@
 namespace App\Entity;
 
 use App\Entity\File\Meta;
+use function base_convert;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Serializable;
-use Symfony\Component\HttpFoundation\File\File as BaseFile;
-use function base_convert;
 use function get_object_vars;
 use function in_array;
 use function mb_strpos;
 use function mt_rand;
 use function pathinfo;
+use const PATHINFO_FILENAME;
+use Serializable;
 use function serialize;
 use function sha1;
+use Symfony\Component\HttpFoundation\File\File as BaseFile;
 use function uniqid;
 use function unserialize;
-use const PATHINFO_FILENAME;
 
 /**
  * File.

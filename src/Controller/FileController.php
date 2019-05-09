@@ -23,13 +23,19 @@ use App\Helper\Translit;
 use App\Repository\FileRepository;
 use App\Repository\TagRepository;
 use DateTime;
+use const DIRECTORY_SEPARATOR;
 use Doctrine\Common\Collections\ArrayCollection;
+use function end;
 use Exception;
+use function explode;
 use FOS\UserBundle\Model\UserManagerInterface;
 use InvalidArgumentException;
+use function ltrim;
+use function md5_file;
 use Pagerfanta\Pagerfanta;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
+use function str_replace;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -46,14 +52,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use function end;
-use function explode;
-use function ltrim;
-use function md5_file;
-use function str_replace;
 use function trim;
 use function uniqid;
-use const DIRECTORY_SEPARATOR;
 
 /**
  * @see http://wap4file.org

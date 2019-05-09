@@ -3,10 +3,6 @@
 namespace App\Helper;
 
 use App\Exception\RequestException;
-use LengthException;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\LengthRequiredHttpException;
 use function array_merge;
 use function curl_close;
 use function curl_errno;
@@ -15,15 +11,6 @@ use function curl_exec;
 use function curl_getinfo;
 use function curl_init;
 use function curl_setopt;
-use function end;
-use function explode;
-use function function_exists;
-use function http_parse_headers;
-use function is_array;
-use function mb_substr;
-use function rawurlencode;
-use function rtrim;
-use function trim;
 use const CURLINFO_HEADER_SIZE;
 use const CURLINFO_HTTP_CODE;
 use const CURLOPT_ENCODING;
@@ -38,6 +25,19 @@ use const CURLOPT_RETURNTRANSFER;
 use const CURLOPT_SSL_VERIFYHOST;
 use const CURLOPT_SSL_VERIFYPEER;
 use const CURLOPT_URL;
+use function end;
+use function explode;
+use function function_exists;
+use function http_parse_headers;
+use function is_array;
+use LengthException;
+use function mb_substr;
+use function rawurlencode;
+use function rtrim;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\LengthRequiredHttpException;
+use function trim;
 
 /**
  * CURL хэлпер

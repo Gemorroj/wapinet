@@ -3,18 +3,18 @@
 namespace App\Helper\File;
 
 use App\Entity\File as DataFile;
+use const DIRECTORY_SEPARATOR;
 use Doctrine\Common\Collections\ArrayCollection;
+use function is_dir;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+use function mb_strpos;
+use function realpath;
+use function str_replace;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
-use function is_dir;
-use function mb_strpos;
-use function realpath;
-use function str_replace;
-use const DIRECTORY_SEPARATOR;
 
 /**
  * File хэлпер
