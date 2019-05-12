@@ -6,8 +6,6 @@ use App\Exception\WhoisException;
 use App\Form\Type\Whois\WhoisType;
 use App\Helper\Phpwhois;
 use Exception;
-use function htmlspecialchars;
-use function str_replace;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,13 +58,13 @@ class WhoisController extends AbstractController
         $result = $whois->Lookup($data['query']);
 
         if (!empty($result['rawdata'])) {
-            $result['rawdata'] = str_replace('{query}', htmlspecialchars($data['query']), $result['rawdata']);
+            $result['rawdata'] = \str_replace('{query}', \htmlspecialchars($data['query']), $result['rawdata']);
             $utils = $phpwhois->getUtils();
             $resultHtml = $utils->showHTML($result);
 
-            $resultHtml = str_replace($_SERVER['PHP_SELF'], '', $resultHtml);
+            $resultHtml = \str_replace($_SERVER['PHP_SELF'], '', $resultHtml);
 
-            $resultHtml = str_replace('<a href=', '<a rel="external" href=', $resultHtml);
+            $resultHtml = \str_replace('<a href=', '<a rel="external" href=', $resultHtml);
 
             return $resultHtml;
         }

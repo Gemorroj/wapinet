@@ -2,7 +2,6 @@
 
 namespace App\Helper;
 
-use function defined;
 use getid3_writetags;
 
 /**
@@ -20,7 +19,7 @@ class Getid3
 
     public function getId3Writer(): getid3_writetags
     {
-        if (!defined('GETID3_INCLUDEPATH')) {
+        if (!\defined('GETID3_INCLUDEPATH')) {
             $this->getId3();
         }
         include_once GETID3_INCLUDEPATH.'write.php';

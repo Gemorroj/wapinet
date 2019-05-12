@@ -3,15 +3,11 @@
 namespace App\Twig\Extension;
 
 use App\Helper\Ffmpeg as FfmpegHelper;
-use function ceil;
 use Exception;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\Format\Video\DefaultVideo;
 use FFMpeg\Format\Video\X264;
 use FFMpeg\Media\Video as FFmpegVideo;
-use function file_exists;
-use function filesize;
-use function floor;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -57,7 +53,7 @@ class Video extends AbstractExtension
     {
         $mp4File = $path.'.mp4';
 
-        if (false === file_exists($this->getPublicDir().$mp4File)) {
+        if (false === \file_exists($this->getPublicDir().$mp4File)) {
             $ffmpeg = $this->ffmpegHelper->getFfmpeg();
             try {
                 $media = $ffmpeg->open($this->getPublicDir().$path);
@@ -67,7 +63,7 @@ class Video extends AbstractExtension
 
                 $media->save($format, $this->getPublicDir().$mp4File);
 
-                if (false === file_exists($this->getPublicDir().$mp4File)) {
+                if (false === \file_exists($this->getPublicDir().$mp4File)) {
                     throw new RuntimeException('Не удалось создать MP4 файл');
                 }
             } catch (Exception $e) {
@@ -90,7 +86,7 @@ class Video extends AbstractExtension
             // https://trac.ffmpeg.org/wiki/Encode/MPEG-4
             // bitrate = file size / duration
 
-            $filesize = @filesize($media->getPathfile());
+            $filesize = @\filesize($media->getPathfile());
             $filesize *= 3.3; // увеличиваем предположительный размер mp4 файла по сравнению с оригиналом
             $filesize /= 1024; // переводим байты в килобайты
             $duration = $videoStream->has('duration') ? $videoStream->get('duration') : 0;
@@ -103,7 +99,7 @@ class Video extends AbstractExtension
                     $audioBitrate /= 1000;
                     $bitrate -= $audioBitrate;
                 }*/
-                $bitrate = floor($bitrate);
+                $bitrate = \floor($bitrate);
 
                 if ($bitrate < $format->getKiloBitrate()) {
                     $format->setKiloBitrate($bitrate);
@@ -118,7 +114,7 @@ class Video extends AbstractExtension
     {
         $screenshot = $path.'.jpg';
 
-        if (false === file_exists($this->getPublicDir().$screenshot)) {
+        if (false === \file_exists($this->getPublicDir().$screenshot)) {
             $ffmpeg = $this->ffmpegHelper->getFfmpeg();
 
             try {
@@ -127,7 +123,7 @@ class Video extends AbstractExtension
                     $second = $this->getScreenshotSecond($media);
                     $frame = $media->frame(TimeCode::fromSeconds($second));
                     $frame->save($this->getPublicDir().$screenshot);
-                    if (false === file_exists($this->getPublicDir().$screenshot)) {
+                    if (false === \file_exists($this->getPublicDir().$screenshot)) {
                         throw new RuntimeException('Не удалось создать скриншот');
                     }
                 } else {
@@ -152,7 +148,7 @@ class Video extends AbstractExtension
             $duration = $video->get('duration');
 
             if ($duration && $duration < $second) {
-                $second = ceil($duration / 2);
+                $second = \ceil($duration / 2);
             }
         }
 

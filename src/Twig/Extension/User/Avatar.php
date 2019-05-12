@@ -3,7 +3,6 @@
 namespace App\Twig\Extension\User;
 
 use App\Entity\User;
-use function md5;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -29,6 +28,6 @@ class Avatar extends AbstractExtension
      */
     public function getAvatarUrl(User $user = null, ?int $size = 80): string
     {
-        return '//gravatar.com/avatar/'.($user ? md5($user->getEmailCanonical()) : '').'?d=mm'.($size ? '&s='.$size : '');
+        return '//gravatar.com/avatar/'.($user ? \md5($user->getEmailCanonical()) : '').'?d=mm'.($size ? '&s='.$size : '');
     }
 }

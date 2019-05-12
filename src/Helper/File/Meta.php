@@ -10,7 +10,6 @@ use App\Helper\Torrent as TorrentHelper;
 use DateTime;
 use Imagine\Image\AbstractImagine;
 use RuntimeException;
-use function trim;
 
 /**
  * Meta хэлпер
@@ -207,12 +206,12 @@ class Meta
         }
 
         if ($infoMetadata->offsetExists('exif.COMMENT')) {
-            $commentTrimed = trim($infoMetadata->offsetGet('exif.COMMENT'));
+            $commentTrimed = \trim($infoMetadata->offsetGet('exif.COMMENT'));
             if ('' !== $commentTrimed) {
                 $this->fileMeta->set('comment', $infoMetadata->offsetGet('exif.COMMENT'));
             }
         } elseif ($infoMetadata->offsetExists('exif.UserComment')) {
-            $commentTrimed = trim($infoMetadata->offsetGet('exif.UserComment'));
+            $commentTrimed = \trim($infoMetadata->offsetGet('exif.UserComment'));
             if ('' !== $commentTrimed) {
                 $this->fileMeta->set('comment', $infoMetadata->offsetGet('exif.UserComment'));
             }

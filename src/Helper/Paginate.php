@@ -6,7 +6,6 @@ use App\Pagerfanta\FixedPaginate;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
-use function is_array;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
@@ -45,7 +44,7 @@ class Paginate
             $adapter = new DoctrineCollectionAdapter($data);
         } elseif ($data instanceof Query || $data instanceof QueryBuilder) {
             $adapter = new DoctrineORMAdapter($data, false);
-        } elseif (is_array($data)) {
+        } elseif (\is_array($data)) {
             $adapter = new ArrayAdapter($data);
         } elseif ($data instanceof FixedPaginate) {
             $adapter = new FixedAdapter($data->getNbResults(), $data->getResults());

@@ -2,7 +2,6 @@
 
 namespace App\Twig\Extension;
 
-use function number_format;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -27,6 +26,6 @@ class Count extends AbstractExtension
      */
     public function getCount($count): string
     {
-        return number_format($count, 0, ',', ' ');
+        return \number_format($count, 0, ',', ' ');
     }
 }

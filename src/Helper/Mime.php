@@ -2,18 +2,10 @@
 
 namespace App\Helper;
 
-use function count;
 use const DIRECTORY_SEPARATOR;
-use function explode;
-use function file_exists;
-use function file_put_contents;
-use function mb_strtolower;
-use function pathinfo;
 use const PATHINFO_EXTENSION;
-use function preg_match_all;
 use RuntimeException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use function var_export;
 
 /**
  * Mime хэлпер
@@ -66,8 +58,8 @@ class Mime
             'tgz' => 'application/gzip',
             'gz' => 'application/gzip',
         ];
-        foreach (explode("\n", $response->getContent()) as $x) {
-            if (isset($x[0]) && '#' !== $x[0] && preg_match_all('#([^\s]+)#', $x, $out) && isset($out[1]) && ($c = count($out[1])) > 1) {
+        foreach (\explode("\n", $response->getContent()) as $x) {
+            if (isset($x[0]) && '#' !== $x[0] && \preg_match_all('#([^\s]+)#', $x, $out) && isset($out[1]) && ($c = \count($out[1])) > 1) {
                 for ($i = 1; $i < $c; ++$i) {
                     $mime[$out[1][$i]] = $out[1][0];
                 }
@@ -87,12 +79,12 @@ class Mime
         $cacheDir = $this->parameterBag->get('kernel.cache_dir');
         $mimeFileName = $cacheDir.DIRECTORY_SEPARATOR.'mime.types.php';
 
-        if (true === file_exists($mimeFileName)) {
+        if (true === \file_exists($mimeFileName)) {
             return include $mimeFileName;
         }
 
         $mimeArray = $this->generateMime();
-        $result = file_put_contents($mimeFileName, '<?php return '. var_export($mimeArray, true).';'."\n");
+        $result = \file_put_contents($mimeFileName, '<?php return '.\var_export($mimeArray, true).';'."\n");
         if (false === $result) {
             throw new RuntimeException('Не удалось записать MIME типы');
         }
@@ -107,7 +99,7 @@ class Mime
      */
     public function getMimeType(string $path): string
     {
-        $extension = mb_strtolower(pathinfo($path, PATHINFO_EXTENSION));
+        $extension = \mb_strtolower(\pathinfo($path, PATHINFO_EXTENSION));
         $mimeArray = $this->getMimeArray();
 
         if (true === isset($mimeArray[$extension])) {

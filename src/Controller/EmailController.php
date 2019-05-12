@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Form\Type\Email\EmailType;
 use Exception;
-use function implode;
 use Swift_Attachment;
 use Swift_Mailer;
 use Swift_Message;
@@ -31,7 +30,7 @@ class EmailController extends AbstractController
                     $message = $this->makeMessage($data);
                     $message->getHeaders()->addTextHeader(
                         'Received',
-                        'from user ['. implode(', ', $request->getClientIps()).']'
+                        'from user ['.\implode(', ', $request->getClientIps()).']'
                     );
 
                     $result = (bool) $mailer->send($message);

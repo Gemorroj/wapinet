@@ -25,17 +25,12 @@ use App\Repository\TagRepository;
 use DateTime;
 use const DIRECTORY_SEPARATOR;
 use Doctrine\Common\Collections\ArrayCollection;
-use function end;
 use Exception;
-use function explode;
 use FOS\UserBundle\Model\UserManagerInterface;
 use InvalidArgumentException;
-use function ltrim;
-use function md5_file;
 use Pagerfanta\Pagerfanta;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
-use function str_replace;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -52,8 +47,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use function trim;
-use function uniqid;
 
 /**
  * @see http://wap4file.org
@@ -98,7 +91,7 @@ class FileController extends AbstractController
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    $key = uniqid('', false);
+                    $key = \uniqid('', false);
                     $session->set('file_search', [
                         'key' => $key,
                         'data' => $data,
@@ -407,7 +400,7 @@ class FileController extends AbstractController
 
     public function archiveDownloadFileAction(Request $request, Filesystem $filesystem, int $id, string $name): BinaryFileResponse
     {
-        $path = str_replace('\\', '/', $request->get('path'));
+        $path = \str_replace('\\', '/', $request->get('path'));
         if (null === $path) {
             throw $this->createNotFoundException('Не указан файл для скачивания.');
         }
@@ -558,7 +551,7 @@ class FileController extends AbstractController
         /** @var UploadedFile|null $file */
         $file = $data->getFile();
         if (null !== $file) {
-            $hash = md5_file($file->getPathname());
+            $hash = \md5_file($file->getPathname());
 
             $existingFile = $this->getDoctrine()->getRepository(File::class)->findOneBy(['hash' => $hash]);
             if (null !== $existingFile) {
@@ -668,7 +661,7 @@ class FileController extends AbstractController
         /** @var UploadedFile $file */
         $file = $data->getFile();
 
-        $hash = md5_file($file->getPathname());
+        $hash = \md5_file($file->getPathname());
 
         $existingFile = $this->getDoctrine()->getRepository(File::class)->findOneBy(['hash' => $hash]);
         if (null !== $existingFile) {
@@ -771,13 +764,13 @@ class FileController extends AbstractController
 
     public function tagsSearchAction(Request $request): JsonResponse
     {
-        $term = trim($request->get('term', ''));
+        $term = \trim($request->get('term', ''));
         if ('' === $term) {
             return $this->json([]);
         }
 
-        $exTerm = explode(',', $term);
-        $term = ltrim(end($exTerm));
+        $exTerm = \explode(',', $term);
+        $term = \ltrim(\end($exTerm));
         if ('' === $term) {
             return $this->json([]);
         }

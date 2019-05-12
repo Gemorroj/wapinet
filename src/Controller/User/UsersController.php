@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use function uniqid;
 
 class UsersController extends AbstractController
 {
@@ -38,7 +37,7 @@ class UsersController extends AbstractController
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    $key = uniqid('', false);
+                    $key = \uniqid('', false);
                     $session->set('users_search', [
                         'key' => $key,
                         'data' => $data,

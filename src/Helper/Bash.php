@@ -4,12 +4,8 @@ namespace App\Helper;
 
 use App\Pagerfanta\FixedPaginate;
 use Pagerfanta\Pagerfanta;
-use function preg_match;
-use function preg_match_all;
 use const PREG_SET_ORDER;
 use RuntimeException;
-use function str_replace;
-use function strip_tags;
 
 /**
  * Bash хэлпер
@@ -43,26 +39,26 @@ class Bash
             throw new RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
         }
 
-        $content = str_replace(["\n", "\r", "\t", '<br>'], ['', '', '', "\r\n"], $response->getContent());
+        $content = \str_replace(["\n", "\r", "\t", '<br>'], ['', '', '', "\r\n"], $response->getContent());
 
         // количество цитат на странице
         $maxPerPage = 25;
 
         // получаем общее количество страниц
-        preg_match('/data-page numeric="integer" min="1" max="(\d+)" data-path="index"/', $content, $matchPage);
+        \preg_match('/data-page numeric="integer" min="1" max="(\d+)" data-path="index"/', $content, $matchPage);
         $allPages = $matchPage[1];
 
         // текущая страница
         $currentPage = $page ?? $allPages;
 
         // вырезаем цитаты
-        preg_match_all('/(?:<div class="quote__body">+)(.*?)(?:<\/div>+)/is', $content, $matchItems, PREG_SET_ORDER);
+        \preg_match_all('/(?:<div class="quote__body">+)(.*?)(?:<\/div>+)/is', $content, $matchItems, PREG_SET_ORDER);
         unset($matchItems[0]); // <span>Утверждено <b>73394</b> цитаты, </span>
 
         // заносим цитаты в массив
         $items = [];
         foreach ($matchItems as $v) {
-            $items[] = strip_tags($v[1]);
+            $items[] = \strip_tags($v[1]);
         }
 
         // создаем фиксированный пагинатор

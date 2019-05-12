@@ -7,7 +7,6 @@ use Exception;
 use FFMpeg\Format\Audio\DefaultAudio;
 use FFMpeg\Format\Audio\Mp3;
 use FFMpeg\Media\Audio as FFmpegAudio;
-use function file_exists;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -52,7 +51,7 @@ class Audio extends AbstractExtension
     {
         $mp3File = $path.'.mp3';
 
-        if (false === file_exists($this->getPublicDir().$mp3File)) {
+        if (false === \file_exists($this->getPublicDir().$mp3File)) {
             $ffmpeg = $this->ffmpegHelper->getFfmpeg();
             try {
                 $media = $ffmpeg->open($this->getPublicDir().$path);
@@ -62,7 +61,7 @@ class Audio extends AbstractExtension
 
                 $media->save($format, $this->getPublicDir().$mp3File);
 
-                if (false === file_exists($this->getPublicDir().$mp3File)) {
+                if (false === \file_exists($this->getPublicDir().$mp3File)) {
                     throw new RuntimeException('Не удалось создать MP3 файл');
                 }
             } catch (Exception $e) {

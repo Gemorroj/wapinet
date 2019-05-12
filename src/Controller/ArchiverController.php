@@ -8,15 +8,8 @@ use App\Helper\Archiver\Archive7z;
 use App\Helper\Archiver\ArchiveRar;
 use App\Helper\Archiver\ArchiveZip;
 use App\Helper\Translit;
-use function basename;
 use const DIRECTORY_SEPARATOR;
 use Exception;
-use function is_dir;
-use function is_readable;
-use function is_writable;
-use function mb_strpos;
-use function realpath;
-use function str_replace;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
@@ -30,7 +23,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use function uniqid;
 
 class ArchiverController extends AbstractController
 {
@@ -57,7 +49,7 @@ class ArchiverController extends AbstractController
                     $archiveDirectory = $this->createArchiveDirectory();
                     $this->addFile($archiveDirectory, $data['file']);
 
-                    $archive = basename($archiveDirectory);
+                    $archive = \basename($archiveDirectory);
 
                     return $this->redirectToRoute('archiver_edit', ['archive' => $archive]);
                 }
@@ -172,19 +164,19 @@ class ArchiverController extends AbstractController
      */
     protected function checkFile(string $archiveDirectory, string $path, bool $allowDirectory = false): string
     {
-        $path = str_replace('\\', '/', $path);
+        $path = \str_replace('\\', '/', $path);
 
-        if (false !== mb_strpos($path, '../')) {
+        if (false !== \mb_strpos($path, '../')) {
             throw $this->createAccessDeniedException('Запрещен доступ: "'.$path.'"".');
         }
 
-        $file = realpath($archiveDirectory.DIRECTORY_SEPARATOR.$path);
+        $file = \realpath($archiveDirectory.DIRECTORY_SEPARATOR.$path);
 
         if (false === $file) {
             throw $this->createNotFoundException('Файл не найден: "'.$path.'"".');
         }
 
-        if (true !== $allowDirectory && true === is_dir($allowDirectory)) {
+        if (true !== $allowDirectory && true === \is_dir($allowDirectory)) {
             throw $this->createAccessDeniedException('Запрещен доступ: "'.$path.'"".');
         }
 
@@ -209,7 +201,7 @@ class ArchiverController extends AbstractController
 
                     $archiveDirectory = $this->extractArchive($data['file']);
 
-                    $archive = basename($archiveDirectory);
+                    $archive = \basename($archiveDirectory);
 
                     return $this->redirectToRoute('archiver_edit', ['archive' => $archive]);
                 }
@@ -261,7 +253,7 @@ class ArchiverController extends AbstractController
      */
     protected function generateArchiveName(): string
     {
-        return uniqid('archive', false);
+        return \uniqid('archive', false);
     }
 
     /**
@@ -275,13 +267,13 @@ class ArchiverController extends AbstractController
     {
         $directory = $this->getParameter('kernel.tmp_archiver_dir').DIRECTORY_SEPARATOR.$archive;
 
-        if (false === is_dir($directory)) {
+        if (false === \is_dir($directory)) {
             throw new FileException('Не удалось найти временную директорию');
         }
-        if (false === is_readable($directory)) {
+        if (false === \is_readable($directory)) {
             throw new FileException('Нет доступа на чтение временной директории');
         }
-        if (false === is_writable($directory)) {
+        if (false === \is_writable($directory)) {
             throw new FileException('Нет доступа на запись во временную директорию');
         }
 

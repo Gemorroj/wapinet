@@ -10,7 +10,6 @@ use App\Helper\Getid3;
 use App\Helper\Translit;
 use const DIRECTORY_SEPARATOR;
 use Exception;
-use function file_get_contents;
 use getid3_lib;
 use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,7 +23,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use function tempnam;
 
 /**
  * @see https://github.com/JamesHeinrich/getID3/blob/master/demos/demo.audioinfo.class.php
@@ -70,7 +68,7 @@ class AudioTagsController extends AbstractController
         /** @var UploadedFile $file */
         $file = $data['file'];
         $tempDirectory = $this->getParameter('kernel.tmp_dir');
-        $tempName = tempnam($tempDirectory, 'audio_file');
+        $tempName = \tempnam($tempDirectory, 'audio_file');
         if (false === $tempName) {
             throw new RuntimeException('Не удалось создать временный файл');
         }
@@ -207,7 +205,7 @@ class AudioTagsController extends AbstractController
 
         $picture = $data['picture'];
         if ($picture instanceof UploadedFile) {
-            $data = file_get_contents($picture->getPathname());
+            $data = \file_get_contents($picture->getPathname());
             if (false === $data) {
                 throw new IOException('Не удалось получить изображение.', 0, null, $picture->getPathname());
             }

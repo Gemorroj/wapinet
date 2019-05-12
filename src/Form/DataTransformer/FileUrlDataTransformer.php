@@ -5,18 +5,11 @@ namespace App\Form\DataTransformer;
 use App\Entity\File\FileContent;
 use App\Entity\File\FileUrl;
 use App\Helper\Curl;
-use function base64_encode;
 use const CURLOPT_FILE;
 use const CURLOPT_HEADER;
-use function fclose;
-use function fopen;
-use function mb_strlen;
-use function mb_substr;
-use function parse_url;
 use const PHP_URL_PATH;
 use Riverline\MultiPartParser\Part;
 use RuntimeException;
-use function str_replace;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
@@ -24,7 +17,6 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use function tempnam;
 
 class FileUrlDataTransformer implements DataTransformerInterface
 {
@@ -64,13 +56,13 @@ class FileUrlDataTransformer implements DataTransformerInterface
     {
         if ($fileDataFromDb instanceof File) {
             return [
-                'web_path' => str_replace('\\', '//', mb_substr($fileDataFromDb->getPathname(), mb_strlen($this->parameterBag->get('kernel.project_dir').'/public'))),
+                'web_path' => \str_replace('\\', '//', \mb_substr($fileDataFromDb->getPathname(), \mb_strlen($this->parameterBag->get('kernel.project_dir').'/public'))),
                 'file_url' => $fileDataFromDb,
             ];
         }
         if ($fileDataFromDb instanceof FileContent) {
             return [
-                'web_path' => 'data:'.$fileDataFromDb->getMimeType().';base64,'. base64_encode($fileDataFromDb->getContent()),
+                'web_path' => 'data:'.$fileDataFromDb->getMimeType().';base64,'.\base64_encode($fileDataFromDb->getContent()),
                 'file_url' => $fileDataFromDb,
             ];
         }
@@ -128,11 +120,11 @@ class FileUrlDataTransformer implements DataTransformerInterface
                 throw new RuntimeException('Не удалось получить данные (HTTP код: '.$responseHead->getStatusCode().')');
             }
 
-            $temp = tempnam($this->parameterBag->get('kernel.tmp_dir'), 'file_url');
+            $temp = \tempnam($this->parameterBag->get('kernel.tmp_dir'), 'file_url');
             if (false === $temp) {
                 throw new TransformationFailedException('Не удалось создать временный файл');
             }
-            $f = fopen($temp, 'w');
+            $f = \fopen($temp, 'w');
             if (false === $f) {
                 throw new TransformationFailedException('Не удалось открыть временный файл на запись');
             }
@@ -142,7 +134,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
 
             $responseBody = $this->curl->exec();
             $this->curl->close();
-            fclose($f);
+            \fclose($f);
 
             if (!$responseBody->isSuccessful()) {
                 throw new TransformationFailedException('Не удалось скачать файл по ссылке (HTTP код: '.$responseBody->getStatusCode().')');
@@ -176,14 +168,14 @@ class FileUrlDataTransformer implements DataTransformerInterface
             }
         }
 
-        $path = parse_url($url, PHP_URL_PATH);
+        $path = \parse_url($url, PHP_URL_PATH);
         if (null !== $path && '/' !== $path) {
             return $path;
         }
 
         $location = $headers->get('Location');
         if ($location) {
-            $locationPath = parse_url($location, PHP_URL_PATH);
+            $locationPath = \parse_url($location, PHP_URL_PATH);
             if (null !== $locationPath && '/' !== $locationPath) {
                 return $locationPath;
             }

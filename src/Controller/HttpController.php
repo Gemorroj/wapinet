@@ -7,13 +7,10 @@ use App\Helper\Curl;
 use const CURLOPT_CUSTOMREQUEST;
 use const CURLOPT_POSTFIELDS;
 use Exception;
-use function explode;
-use function str_replace;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use function trim;
 
 class HttpController extends AbstractController
 {
@@ -49,8 +46,8 @@ class HttpController extends AbstractController
         $curl->setOpt(CURLOPT_CUSTOMREQUEST, $data['type']);
 
         if (null !== $data['header']) {
-            foreach (explode("\n", str_replace("\r", '', trim($data['header']))) as $header) {
-                [$key, $value] = explode(':', $header, 2);
+            foreach (\explode("\n", \str_replace("\r", '', \trim($data['header']))) as $header) {
+                [$key, $value] = \explode(':', $header, 2);
                 $curl->addHeader($key, $value);
             }
         }

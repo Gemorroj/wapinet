@@ -4,7 +4,6 @@ namespace App\Security;
 
 use App\Entity\Gist;
 use App\Entity\User;
-use function in_array;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -23,7 +22,7 @@ class GistVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, [self::DELETE, self::EDIT], true)) {
+        if (!\in_array($attribute, [self::DELETE, self::EDIT], true)) {
             return false;
         }
 

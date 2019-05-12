@@ -4,7 +4,6 @@ namespace App\Twig\Extension;
 
 use App\Helper\Torrent as TorrentHelper;
 use Exception;
-use function implode;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Twig\Extension\AbstractExtension;
@@ -58,7 +57,7 @@ class Torrent extends AbstractExtension
         if (isset($data['info']['files'])) {
             foreach ($data['info']['files'] as $entry) {
                 $list[] = [
-                    'path' => implode('/', $entry['path']),
+                    'path' => \implode('/', $entry['path']),
                     'size' => $entry['length'],
                 ];
             }

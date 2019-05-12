@@ -5,11 +5,8 @@ namespace App\Helper\File;
 use App\Entity\File as DataFile;
 use const DIRECTORY_SEPARATOR;
 use Doctrine\Common\Collections\ArrayCollection;
-use function is_dir;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
-use function mb_strpos;
 use function realpath;
-use function str_replace;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
@@ -111,19 +108,19 @@ class File
      */
     public function checkFile(string $directory, string $path, bool $allowDirectory = false): string
     {
-        $path = str_replace('\\', '/', $path);
+        $path = \str_replace('\\', '/', $path);
 
-        if (false !== mb_strpos($path, '../')) {
+        if (false !== \mb_strpos($path, '../')) {
             throw new AccessDeniedException('Запрещен доступ: "'.$path.'"".');
         }
 
-        $file = realpath($directory.DIRECTORY_SEPARATOR.$path);
+        $file = \realpath($directory.DIRECTORY_SEPARATOR.$path);
 
         if (false === $file) {
             throw new NotFoundHttpException('Файл не найден: "'.$path.'"".');
         }
 
-        if (true !== $allowDirectory && true === is_dir($allowDirectory)) {
+        if (true !== $allowDirectory && true === \is_dir($allowDirectory)) {
             throw new AccessDeniedException('Запрещен доступ: "'.$path.'"".');
         }
 

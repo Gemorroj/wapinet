@@ -7,7 +7,6 @@ use App\Entity\User;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use function mt_rand;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 class OnlineListener
@@ -26,7 +25,7 @@ class OnlineListener
         }
 
         // чистим случайным образом, чтобы разгрузить БД
-        if (1 === mt_rand(1, 10)) {
+        if (1 === \mt_rand(1, 10)) {
             $this->cleanupOnline();
         }
 

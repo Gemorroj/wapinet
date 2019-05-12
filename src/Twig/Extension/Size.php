@@ -2,8 +2,6 @@
 
 namespace App\Twig\Extension;
 
-use function max;
-use function round;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -39,6 +37,6 @@ class Size extends AbstractExtension
             ++$i;
         } while ($fileSizeInBytes > 1024);
 
-        return round(max($fileSizeInBytes, 0.1), 1).$byteUnits[$i];
+        return \round(\max($fileSizeInBytes, 0.1), 1).$byteUnits[$i];
     }
 }

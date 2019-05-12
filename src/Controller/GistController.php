@@ -26,7 +26,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use function uniqid;
 
 class GistController extends AbstractController
 {
@@ -176,7 +175,7 @@ class GistController extends AbstractController
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    $key = uniqid('', false);
+                    $key = \uniqid('', false);
                     $session->set('gist_search', [
                         'key' => $key,
                         'data' => $data,

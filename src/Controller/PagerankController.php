@@ -8,14 +8,7 @@ use const CURLOPT_POST;
 use const CURLOPT_POSTFIELDS;
 use const ENT_XML1;
 use Exception;
-use function htmlspecialchars;
-use function mb_strpos;
-use function preg_match;
-use function preg_replace;
-use function rawurlencode;
 use SEOstats\Services\Social;
-use function str_ireplace;
-use function str_replace;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,7 +48,7 @@ class PagerankController extends AbstractController
     private function getPagerank(array $data): array
     {
         $url = $data['url'];
-        $domain = str_ireplace(['http://', 'https://'], '', $url);
+        $domain = \str_ireplace(['http://', 'https://'], '', $url);
 
         return [
             'domain' => $domain,
@@ -78,13 +71,13 @@ class PagerankController extends AbstractController
         $curl = $this->get(Curl::class);
         $curl->init('https://yandex.ru/search/xml?user=gemorwapinet&key='.$this->getParameter('wapinet_yandex_search_key'));
         $curl->setOpt(CURLOPT_POST, true);
-        $curl->setOpt(CURLOPT_POSTFIELDS, '<?xml version="1.0" encoding="UTF-8"?><request><query>'. htmlspecialchars($domain, ENT_XML1).'</query><groupings><groupby groups-on-page="1"/></groupings></request>');
+        $curl->setOpt(CURLOPT_POSTFIELDS, '<?xml version="1.0" encoding="UTF-8"?><request><query>'.\htmlspecialchars($domain, ENT_XML1).'</query><groupings><groupby groups-on-page="1"/></groupings></request>');
 
         $out = 'n.a.';
         try {
             $response = $curl->exec();
 
-            if (preg_match('/<found priority="all">(.*)<\/found>/U', $response->getContent(), $match)) {
+            if (\preg_match('/<found priority="all">(.*)<\/found>/U', $response->getContent(), $match)) {
                 $out = $match[1];
             }
         } catch (Exception $e) {
@@ -104,7 +97,7 @@ class PagerankController extends AbstractController
         try {
             $response = $curl->exec();
 
-            if (preg_match("/value=\"(.\d*)\"/", $response, $match)) {
+            if (\preg_match("/value=\"(.\d*)\"/", $response, $match)) {
                 $out = $match[1];
             }
         } catch (Exception $e) {
@@ -119,7 +112,7 @@ class PagerankController extends AbstractController
 
         /** @var Curl $curl */
         $curl = $this->get(Curl::class);
-        $curl->init('https://www.google.com/search?hl=en&q='. rawurlencode('site:'.$domain));
+        $curl->init('https://www.google.com/search?hl=en&q='.\rawurlencode('site:'.$domain));
         $curl->acceptRedirects();
         $curl->addCompression();
         $curl->addHeader('Accept-Language', 'en-US,en');
@@ -133,15 +126,15 @@ class PagerankController extends AbstractController
             <div class="sd" id="resultStats">About 120,000 results</div>
              */
 
-            if (mb_strpos($response->getContent(), 'did not match any documents')) {
+            if (\mb_strpos($response->getContent(), 'did not match any documents')) {
                 $out = '0';
             } else {
-                preg_match('/<div(?:.+)id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
+                \preg_match('/<div(?:.+)id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
                 if (isset($match[1])) {
-                    $match[1] = str_replace('About ', '', $match[1]);
-                    $match[1] = str_replace(' results', '', $match[1]);
+                    $match[1] = \str_replace('About ', '', $match[1]);
+                    $match[1] = \str_replace(' results', '', $match[1]);
 
-                    $match[1] = preg_replace('/<nobr>(?:.*)<\/nobr>/', '', $match[1]);
+                    $match[1] = \preg_replace('/<nobr>(?:.*)<\/nobr>/', '', $match[1]);
 
                     $out = $match[1];
                 }
@@ -158,7 +151,7 @@ class PagerankController extends AbstractController
 
         /** @var Curl $curl */
         $curl = $this->get(Curl::class);
-        $curl->init('https://www.google.com/search?hl=en&q='. rawurlencode('"'.$domain.'" -inurl:"'.$domain.'"'));
+        $curl->init('https://www.google.com/search?hl=en&q='.\rawurlencode('"'.$domain.'" -inurl:"'.$domain.'"'));
         $curl->acceptRedirects();
         $curl->addCompression();
         $curl->addHeader('Accept-Language', 'en-US,en');
@@ -172,15 +165,15 @@ class PagerankController extends AbstractController
             <div class="sd" id="resultStats">About 7,720 results</div>
              */
 
-            if (mb_strpos($response->getContent(), 'did not match any documents')) {
+            if (\mb_strpos($response->getContent(), 'did not match any documents')) {
                 $out = '0';
             } else {
-                preg_match('/<div(?:.+)id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
+                \preg_match('/<div(?:.+)id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
                 if (isset($match[1])) {
-                    $match[1] = str_replace('About ', '', $match[1]);
-                    $match[1] = str_replace(' results', '', $match[1]);
+                    $match[1] = \str_replace('About ', '', $match[1]);
+                    $match[1] = \str_replace(' results', '', $match[1]);
 
-                    $match[1] = preg_replace('/<nobr>(?:.*)<\/nobr>/', '', $match[1]);
+                    $match[1] = \preg_replace('/<nobr>(?:.*)<\/nobr>/', '', $match[1]);
 
                     $out = $match[1];
                 }

@@ -3,21 +3,13 @@
 namespace App\Entity;
 
 use App\Entity\File\Meta;
-use function base_convert;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use function get_object_vars;
-use function in_array;
-use function mb_strpos;
-use function mt_rand;
-use function pathinfo;
 use const PATHINFO_FILENAME;
 use Serializable;
 use function serialize;
-use function sha1;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
-use function uniqid;
 use function unserialize;
 
 /**
@@ -128,10 +120,10 @@ class File implements Serializable
      */
     public function serialize(): string
     {
-        $vars = get_object_vars($this);
+        $vars = \get_object_vars($this);
         $vars['file'] = $this->getFile()->getPathname();
 
-        return serialize($vars);
+        return \serialize($vars);
     }
 
     /**
@@ -139,7 +131,7 @@ class File implements Serializable
      */
     public function unserialize($serialized): void
     {
-        $vars = unserialize($serialized, ['allowed_classes' => true]); // true для полного соответствия с поведением doctrine
+        $vars = \unserialize($serialized, ['allowed_classes' => true]); // true для полного соответствия с поведением doctrine
         $this->file = new BaseFile($vars['file'], false); //fix события (файлы могут быть удалены)
         unset($vars['file']);
 
@@ -437,7 +429,7 @@ class File implements Serializable
      */
     public function setSaltValue(): self
     {
-        $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->salt = \base_convert(\sha1(\uniqid(\mt_rand(), true)), 16, 36);
 
         return $this;
     }
@@ -568,7 +560,7 @@ class File implements Serializable
      */
     public function getOriginalFileNameWithoutExtension()
     {
-        return pathinfo($this->getOriginalFileName(), PATHINFO_FILENAME);
+        return \pathinfo($this->getOriginalFileName(), PATHINFO_FILENAME);
     }
 
     /**
@@ -640,7 +632,7 @@ class File implements Serializable
      */
     public function isImage()
     {
-        return 0 === mb_strpos($this->getMimeType(), 'image/') || 'application/postscript' === $this->getMimeType() || 'application/illustrator' === $this->getMimeType();
+        return 0 === \mb_strpos($this->getMimeType(), 'image/') || 'application/postscript' === $this->getMimeType() || 'application/illustrator' === $this->getMimeType();
     }
 
     /**
@@ -648,7 +640,7 @@ class File implements Serializable
      */
     public function isVideo()
     {
-        return 0 === mb_strpos($this->getMimeType(), 'video/') || 'application/vnd.rn-realmedia' === $this->getMimeType();
+        return 0 === \mb_strpos($this->getMimeType(), 'video/') || 'application/vnd.rn-realmedia' === $this->getMimeType();
     }
 
     /**
@@ -656,7 +648,7 @@ class File implements Serializable
      */
     public function isAudio()
     {
-        return 0 === mb_strpos($this->getMimeType(), 'audio/') && 'audio/x-mpegurl' !== $this->getMimeType();
+        return 0 === \mb_strpos($this->getMimeType(), 'audio/') && 'audio/x-mpegurl' !== $this->getMimeType();
     }
 
     /**
@@ -664,7 +656,7 @@ class File implements Serializable
      */
     public function isText()
     {
-        return 0 === mb_strpos($this->getMimeType(), 'text/');
+        return 0 === \mb_strpos($this->getMimeType(), 'text/');
     }
 
     /**
@@ -672,7 +664,7 @@ class File implements Serializable
      */
     public function isXml()
     {
-        return 'application/xml' === $this->getMimeType() || false !== mb_strpos($this->getMimeType(), '+xml');
+        return 'application/xml' === $this->getMimeType() || false !== \mb_strpos($this->getMimeType(), '+xml');
     }
 
     /**
@@ -680,7 +672,7 @@ class File implements Serializable
      */
     public function isArchive()
     {
-        return in_array($this->getMimeType(), [
+        return \in_array($this->getMimeType(), [
             'application/zip', // zip
             'application/x-rar-compressed', // rar
             'application/x-bzip', // bz

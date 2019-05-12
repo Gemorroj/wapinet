@@ -6,18 +6,12 @@ use App\Form\Type\Translate\TranslateType;
 use App\Helper\Curl;
 use const DIRECTORY_SEPARATOR;
 use Exception;
-use function file_exists;
-use function file_get_contents;
-use function file_put_contents;
-use function implode;
-use function json_decode;
 use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use function urlencode;
 
 class TranslateController extends AbstractController
 {
@@ -63,7 +57,7 @@ class TranslateController extends AbstractController
             'https://translate.yandex.net/api/v1.5/tr.json/translate?key='.
             $this->getParameter('wapinet_yandex_translate_key').
             '&lang='.$langFrom.'-'.$langTo.
-            '&text='. urlencode($text)
+            '&text='.\urlencode($text)
         );
 
         $response = $curl->exec();
@@ -71,9 +65,9 @@ class TranslateController extends AbstractController
             throw new HttpException($response->getStatusCode(), 'Api error');
         }
 
-        $json = json_decode($response->getContent());
+        $json = \json_decode($response->getContent());
 
-        return implode('', $json->text);
+        return \implode('', $json->text);
     }
 
     private function detectLang(string $text): string
@@ -83,7 +77,7 @@ class TranslateController extends AbstractController
         $curl->init(
             'https://translate.yandex.net/api/v1.5/tr.json/detect?key='.
             $this->getParameter('wapinet_yandex_translate_key').
-            '&text='. urlencode($text)
+            '&text='.\urlencode($text)
         );
 
         $response = $curl->exec();
@@ -91,7 +85,7 @@ class TranslateController extends AbstractController
             throw new HttpException($response->getStatusCode(), 'Api error');
         }
 
-        $json = json_decode($response->getContent(), false);
+        $json = \json_decode($response->getContent(), false);
 
         return $json->lang ?: 'en';
     }
@@ -108,7 +102,7 @@ class TranslateController extends AbstractController
         $cacheDir = $this->getParameter('kernel.cache_dir');
         $langsFileName = $cacheDir.DIRECTORY_SEPARATOR.'yandex-langs.json';
 
-        if (false === file_exists($langsFileName)) {
+        if (false === \file_exists($langsFileName)) {
             /** @var Curl $curl */
             $curl = $this->get(Curl::class);
             $curl->init(
@@ -124,18 +118,18 @@ class TranslateController extends AbstractController
 
             $langs = $response->getContent();
 
-            $result = file_put_contents($langsFileName, $langs);
+            $result = \file_put_contents($langsFileName, $langs);
             if (false === $result) {
                 throw new RuntimeException('Не удалось записать языки перевода');
             }
         } else {
-            $langs = file_get_contents($langsFileName);
+            $langs = \file_get_contents($langsFileName);
             if (false === $langs) {
                 throw new RuntimeException('Не удалось прочитать языки перевода');
             }
         }
 
-        return json_decode($langs, true);
+        return \json_decode($langs, true);
     }
 
     public static function getSubscribedServices(): array

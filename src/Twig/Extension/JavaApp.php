@@ -5,15 +5,10 @@ namespace App\Twig\Extension;
 use App\Exception\ArchiverException;
 use App\Helper\Archiver\ArchiveZip;
 use Exception;
-use function explode;
-use function mb_strtolower;
-use function pathinfo;
 use const PATHINFO_EXTENSION;
-use function preg_match;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
-use function trim;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -75,13 +70,13 @@ class JavaApp extends AbstractExtension
     {
         $issetIcon = false;
 
-        preg_match('/MIDlet\-Icon:[\s*](.*)/iux', $manifestContent, $arr);
+        \preg_match('/MIDlet\-Icon:[\s*](.*)/iux', $manifestContent, $arr);
         if (true === isset($arr[1])) {
             $issetIcon = $this->extractManifestIcon($arr[1], $path, $screenshot);
         }
 
         if (false === $issetIcon) {
-            preg_match('/MIDlet\-1:[\s*](.*)/iux', $manifestContent, $arr);
+            \preg_match('/MIDlet\-1:[\s*](.*)/iux', $manifestContent, $arr);
             if (true === isset($arr[1])) {
                 $issetIcon = $this->extractManifestIcon($arr[1], $path, $screenshot);
             }
@@ -124,9 +119,9 @@ class JavaApp extends AbstractExtension
 
     private function extractManifestIcon(string $content, string $path, string $screenshot): bool
     {
-        foreach (explode(',', $content) as $v) {
-            $v = trim(trim($v), '/');
-            if ('png' === mb_strtolower(pathinfo($v, PATHINFO_EXTENSION))) {
+        foreach (\explode(',', $content) as $v) {
+            $v = \trim(\trim($v), '/');
+            if ('png' === \mb_strtolower(\pathinfo($v, PATHINFO_EXTENSION))) {
                 try {
                     $this->archiveZip->extractEntry(
                         new BaseFile($this->getPublicDir().$path, false),
