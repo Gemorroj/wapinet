@@ -3,9 +3,9 @@
 ##### Лицензия GPL v3
 
 ##### Используются:
-- Symfony 4.1
+- Symfony 4.x
 - Jquery Mobile
-- PHP 7.2
+- PHP 7.3
 - Mariadb 10.3
 - Sphinx
 - p7zip
@@ -17,7 +17,7 @@
 - Установить дополнительные репозитории `epel`, `remi`, `nginx`, `mysql`/`mariadb`
 - Установить Mariadb 10.3 `yum install mysql mysql-community-server`
 - Установить Nginx `yum install nginx`
-- Установить php 7.2 `yum install php-fpm php-cli php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-pecl-apcu php-pecl-zip php-process php-xml`
+- Установить php 7.3 `yum install php-fpm php-cli php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-pecl-apcu php-pecl-zip php-process php-xml`
 - Установить cron, если не установлен `yum install cronie`
 - Установить sphinx `yum install sphinx`
 
@@ -66,10 +66,10 @@ make all3
 Дополнительно ставим `theora`, `amr`. Не забываем указать в конфиге `--prefix="$build_directory"`, а для `theora` еще и `--with-ogg="$HOME/ffmpeg_build" --disable-shared`.
 В конце проверить что на всех директориях выше и самих бинарниках есть права на выполнение.
 ```bash
-yum install autoconf automake cmake freetype-devel gcc gcc-c++ git libtool make nasm yasm pkgconfig zlib-devel
+yum install autoconf automake bzip2 bzip2-devel cmake freetype-devel gcc gcc-c++ git libtool make nasm yasm pkgconfig zlib-devel
 
-build_directory="/root/ffmpeg_2018-04-14_build"
-source_directory="/root/ffmpeg_2018-04-14_source"
+build_directory="/root/ffmpeg_2019-05-30_build"
+source_directory="/root/ffmpeg_2019-05-30_source"
 PATH="$build_directory/bin:$PATH"
 
 cd $source_directory
@@ -83,24 +83,24 @@ make distclean
 cd $source_directory
 git clone git://github.com/videolan/x265.git
 cd x265
-git checkout tags/2.8
+git checkout tags/3.0
 cd build/linux
-cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$build_directory" -DENABLE_SHARED=OFF ../../source
+cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$build_directory" -DENABLE_SHARED:bool=off ../../source
 make
 make install
 make clean
 
 cd $source_directory
-curl -O -L https://downloads.xiph.org/releases/opus/opus-1.3-rc.tar.gz
-tar xzvf opus-1.3-rc.tar.gz
-cd opus-1.3-rc
+curl -O -L https://archive.mozilla.org/pub/opus/opus-1.3.1.tar.gz
+tar xzvf opus-1.3.1.tar.gz
+cd opus-1.3.1
 ./configure --prefix="$build_directory" --disable-shared
 make
 make install
 make distclean
 
 cd $source_directory
-curl -O -L https://downloads.xiph.org/releases/ogg/libogg-1.3.3.tar.gz
+curl -O -L https://ftp.osuosl.org/pub/xiph/releases/ogg/libogg-1.3.3.tar.gz
 tar xzvf libogg-1.3.3.tar.gz
 cd libogg-1.3.3
 ./configure --prefix="$build_directory" --disable-shared
@@ -109,7 +109,7 @@ make install
 make distclean
 
 cd $source_directory
-curl -O -L https://downloads.xiph.org/releases/vorbis/libvorbis-1.3.6.tar.gz
+curl -O -L https://ftp.osuosl.org/pub/xiph/releases/vorbis/libvorbis-1.3.6.tar.gz
 tar xzvf libvorbis-1.3.6.tar.gz
 cd libvorbis-1.3.6
 LDFLAGS="-L$build_directory/lib" CPPFLAGS="-I$build_directory/include" ./configure --prefix="$build_directory" --with-ogg="$build_directory" --disable-shared
@@ -118,7 +118,7 @@ make install
 make distclean
 
 cd $source_directory
-curl -O -L https://downloads.xiph.org/releases/theora/libtheora-1.1.1.tar.gz
+curl -O -L https://ftp.osuosl.org/pub/xiph/releases/theora/libtheora-1.1.1.tar.gz
 tar xzvf libtheora-1.1.1.tar.gz
 cd libtheora-1.1.1
 ./configure --prefix="$build_directory" --with-ogg="$build_directory" --disable-examples --disable-shared --disable-sdltest --disable-vorbistest
@@ -138,7 +138,7 @@ make distclean
 cd $source_directory
 git clone https://chromium.googlesource.com/webm/libvpx.git 
 cd libvpx
-git checkout tags/v1.7.0
+git checkout tags/v1.8.0
 ./configure --prefix="$build_directory" --disable-examples --disable-unit-tests --enable-vp9-highbitdepth --as=yasm
 make
 make install
@@ -157,7 +157,7 @@ make clean
 make distclean
 
 cd $source_directory
-git clone --depth 1 -b release/3.4 https://github.com/FFmpeg/FFmpeg.git
+git clone --depth 1 -b release/4.1 https://github.com/FFmpeg/FFmpeg.git
 cd FFmpeg
 PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure \
     --prefix="$build_directory" \
@@ -284,9 +284,9 @@ server {
 
 ### TODO:
 - использовать новую систему конфигураций https://symfony.com/blog/improvements-to-the-handling-of-env-files-for-all-symfony-versions
-- заменить свою curl прослойку на guzzle
+- заменить свою curl прослойку на guzzle (уже на https://github.com/symfony/http-client)
 - Перевести на mysql 8
-- Переделать интерфейс на vue/react (огромная задача)
+- Переделать интерфейс на vue/react/angular (огромная задача)
 - переделать редактор аудиотегов на https://github.com/duncan3dc/meta-audio/issues/3 (когда будут картинки)
 - Сделать возможность в переводчике и обфускаторе загружать файлы
 - Актуализировать мобильные коды. Найти новые для разных андроидов.
