@@ -48,7 +48,7 @@
         "php-ffmpeg/php-ffmpeg": "^0.13",
         "riverline/multipart-parser": "^1.2",
         "gemorroj/phpwhois": "dev-master",
-        "gemorroj/stop-spam": "^2.0",
+        "gemorroj/stop-spam": "^3.0",
         "gemorroj/archive7z": "^4.0",
         "gemorroj/m3u-parser": "^4.0",
         "gemorroj/syntax": "^3.0",

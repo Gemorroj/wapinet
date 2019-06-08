@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6389054c286031d6677e2d84183cd8d3",
+    "content-hash": "aa894bb9209604a668ee29199c54eff9",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -2101,24 +2101,25 @@
         },
         {
             "name": "gemorroj/stop-spam",
-            "version": "2.0.0",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/StopSpam.git",
-                "reference": "274126b4f7c682bd37694c247bcccd3628d7d728"
+                "reference": "c02f244a0726742059ef009473b589873dd9ed0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/StopSpam/zipball/274126b4f7c682bd37694c247bcccd3628d7d728",
-                "reference": "274126b4f7c682bd37694c247bcccd3628d7d728",
+                "url": "https://api.github.com/repos/Gemorroj/StopSpam/zipball/c02f244a0726742059ef009473b589873dd9ed0a",
+                "reference": "c02f244a0726742059ef009473b589873dd9ed0a",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/guzzle": "^6.3",
-                "php": ">=5.6"
+                "php": "^7.1.3",
+                "symfony/http-client": "^4.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.7"
+                "friendsofphp/php-cs-fixer": "^2.14",
+                "phpunit/phpunit": "^7.5"
             },
             "type": "library",
             "autoload": {
@@ -2144,7 +2145,7 @@
                 "spam-protection",
                 "stopforumspam"
             ],
-            "time": "2018-04-15T06:54:26+00:00"
+            "time": "2019-06-08T08:23:17+00:00"
         },
         {
             "name": "gemorroj/syntax",
@@ -2433,189 +2434,6 @@
                 "visual"
             ],
             "time": "2018-11-20T10:41:34+00:00"
-        },
-        {
-            "name": "guzzlehttp/guzzle",
-            "version": "6.3.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/407b0cb880ace85c9b63c5f9551db498cb2d50ba",
-                "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/promises": "^1.0",
-                "guzzlehttp/psr7": "^1.4",
-                "php": ">=5.5"
-            },
-            "require-dev": {
-                "ext-curl": "*",
-                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4 || ^7.0",
-                "psr/log": "^1.0"
-            },
-            "suggest": {
-                "psr/log": "Required for using the Log middleware"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "6.3-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/functions_include.php"
-                ],
-                "psr-4": {
-                    "GuzzleHttp\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "Guzzle is a PHP HTTP client library",
-            "homepage": "http://guzzlephp.org/",
-            "keywords": [
-                "client",
-                "curl",
-                "framework",
-                "http",
-                "http client",
-                "rest",
-                "web service"
-            ],
-            "time": "2018-04-22T15:46:56+00:00"
-        },
-        {
-            "name": "guzzlehttp/promises",
-            "version": "v1.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/promises.git",
-                "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/a59da6cf61d80060647ff4d3eb2c03a2bc694646",
-                "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Promise\\": "src/"
-                },
-                "files": [
-                    "src/functions_include.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "Guzzle promises library",
-            "keywords": [
-                "promise"
-            ],
-            "time": "2016-12-20T10:07:11+00:00"
-        },
-        {
-            "name": "guzzlehttp/psr7",
-            "version": "1.5.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/psr7.git",
-                "reference": "9f83dded91781a01c63574e387eaa769be769115"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/9f83dded91781a01c63574e387eaa769be769115",
-                "reference": "9f83dded91781a01c63574e387eaa769be769115",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0",
-                "psr/http-message": "~1.0",
-                "ralouphie/getallheaders": "^2.0.5"
-            },
-            "provide": {
-                "psr/http-message-implementation": "1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.8.36 || ^5.7.27 || ^6.5.8"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Psr7\\": "src/"
-                },
-                "files": [
-                    "src/functions_include.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                },
-                {
-                    "name": "Tobias Schultze",
-                    "homepage": "https://github.com/Tobion"
-                }
-            ],
-            "description": "PSR-7 message implementation that also provides common utility methods",
-            "keywords": [
-                "http",
-                "message",
-                "psr-7",
-                "request",
-                "response",
-                "stream",
-                "uri",
-                "url"
-            ],
-            "time": "2018-12-04T20:46:45+00:00"
         },
         {
             "name": "imagine/imagine",
@@ -3736,56 +3554,6 @@
             "time": "2017-02-14T16:28:37+00:00"
         },
         {
-            "name": "psr/http-message",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/http-message.git",
-                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
-                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Http\\Message\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
-            "description": "Common interface for HTTP messages",
-            "homepage": "https://github.com/php-fig/http-message",
-            "keywords": [
-                "http",
-                "http-message",
-                "psr",
-                "psr-7",
-                "request",
-                "response"
-            ],
-            "time": "2016-08-06T14:39:51+00:00"
-        },
-        {
             "name": "psr/link",
             "version": "1.0.0",
             "source": {
@@ -3928,46 +3696,6 @@
                 "simple-cache"
             ],
             "time": "2017-10-23T01:57:42+00:00"
-        },
-        {
-            "name": "ralouphie/getallheaders",
-            "version": "2.0.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ralouphie/getallheaders.git",
-                "reference": "5601c8a83fbba7ef674a7369456d12f1e0d0eafa"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ralouphie/getallheaders/zipball/5601c8a83fbba7ef674a7369456d12f1e0d0eafa",
-                "reference": "5601c8a83fbba7ef674a7369456d12f1e0d0eafa",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~3.7.0",
-                "satooshi/php-coveralls": ">=1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "src/getallheaders.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ralph Khattar",
-                    "email": "ralph.khattar@gmail.com"
-                }
-            ],
-            "description": "A polyfill for getallheaders.",
-            "time": "2016-02-11T07:05:27+00:00"
         },
         {
             "name": "riverline/multipart-parser",
@@ -5314,6 +5042,68 @@
             "time": "2019-05-22T18:38:35+00:00"
         },
         {
+            "name": "symfony/http-client",
+            "version": "v4.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/http-client.git",
+                "reference": "c453b1bb8e8a8b79c9db65a1bd86822f8c6e2bb7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/c453b1bb8e8a8b79c9db65a1bd86822f8c6e2bb7",
+                "reference": "c453b1bb8e8a8b79c9db65a1bd86822f8c6e2bb7",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "psr/log": "^1.0",
+                "symfony/http-client-contracts": "^1.1.3",
+                "symfony/polyfill-php73": "^1.11"
+            },
+            "provide": {
+                "psr/http-client-implementation": "1.0",
+                "symfony/http-client-implementation": "1.1"
+            },
+            "require-dev": {
+                "nyholm/psr7": "^1.0",
+                "psr/http-client": "^1.0",
+                "symfony/http-kernel": "^4.3",
+                "symfony/process": "^4.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\HttpClient\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony HttpClient component",
+            "homepage": "https://symfony.com",
+            "time": "2019-06-05T13:19:12+00:00"
+        },
+        {
             "name": "symfony/http-foundation",
             "version": "v4.2.9",
             "source": {
@@ -6027,6 +5817,64 @@
                 }
             ],
             "description": "Symfony polyfill backporting some PHP 7.2+ features to lower PHP versions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "time": "2019-02-06T07:57:58+00:00"
+        },
+        {
+            "name": "symfony/polyfill-php73",
+            "version": "v1.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-php73.git",
+                "reference": "d1fb4abcc0c47be136208ad9d68bf59f1ee17abd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/d1fb4abcc0c47be136208ad9d68bf59f1ee17abd",
+                "reference": "d1fb4abcc0c47be136208ad9d68bf59f1ee17abd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.11-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php73\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ],
+                "classmap": [
+                    "Resources/stubs"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill backporting some PHP 7.3+ features to lower PHP versions",
             "homepage": "https://symfony.com",
             "keywords": [
                 "compatibility",
@@ -10661,68 +10509,6 @@
             "time": "2019-02-23T15:17:42+00:00"
         },
         {
-            "name": "symfony/http-client",
-            "version": "v4.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/http-client.git",
-                "reference": "c453b1bb8e8a8b79c9db65a1bd86822f8c6e2bb7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client/zipball/c453b1bb8e8a8b79c9db65a1bd86822f8c6e2bb7",
-                "reference": "c453b1bb8e8a8b79c9db65a1bd86822f8c6e2bb7",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1.3",
-                "psr/log": "^1.0",
-                "symfony/http-client-contracts": "^1.1.3",
-                "symfony/polyfill-php73": "^1.11"
-            },
-            "provide": {
-                "psr/http-client-implementation": "1.0",
-                "symfony/http-client-implementation": "1.1"
-            },
-            "require-dev": {
-                "nyholm/psr7": "^1.0",
-                "psr/http-client": "^1.0",
-                "symfony/http-kernel": "^4.3",
-                "symfony/process": "^4.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\HttpClient\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony HttpClient component",
-            "homepage": "https://symfony.com",
-            "time": "2019-06-05T13:19:12+00:00"
-        },
-        {
             "name": "symfony/maker-bundle",
             "version": "v1.11.6",
             "source": {
@@ -10923,64 +10709,6 @@
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
             "time": "2019-05-30T08:57:55+00:00"
-        },
-        {
-            "name": "symfony/polyfill-php73",
-            "version": "v1.11.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-php73.git",
-                "reference": "d1fb4abcc0c47be136208ad9d68bf59f1ee17abd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/d1fb4abcc0c47be136208ad9d68bf59f1ee17abd",
-                "reference": "d1fb4abcc0c47be136208ad9d68bf59f1ee17abd",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.11-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php73\\": ""
-                },
-                "files": [
-                    "bootstrap.php"
-                ],
-                "classmap": [
-                    "Resources/stubs"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill backporting some PHP 7.3+ features to lower PHP versions",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "time": "2019-02-06T07:57:58+00:00"
         },
         {
             "name": "symfony/profiler-pack",

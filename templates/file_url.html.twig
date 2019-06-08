@@ -1,5 +1,5 @@
 {% block file_url_widget %}
-    {% spaceless %}
+    {% apply spaceless %}
         <fieldset class="file-url ui-field-contain" {{ block('widget_container_attributes') }}>
             <legend>Файл или ссылка</legend>
             {{ form_row(form.file) }}
@@ -23,5 +23,5 @@
                 {% endif %}
             {% endif %}
         </fieldset>
-    {% endspaceless %}
+    {% endapply %}
 {% endblock %}
