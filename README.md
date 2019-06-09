@@ -284,7 +284,7 @@ server {
 
 ### TODO:
 - использовать новую систему конфигураций https://symfony.com/blog/improvements-to-the-handling-of-env-files-for-all-symfony-versions
-- заменить свою curl прослойку на guzzle (уже на https://github.com/symfony/http-client)
+- заменить свою curl прослойку на https://github.com/symfony/http-client
 - Перевести на mysql 8
 - Переделать интерфейс на vue/react/angular (огромная задача)
 - переделать редактор аудиотегов на https://github.com/duncan3dc/meta-audio/issues/3 (когда будут картинки)

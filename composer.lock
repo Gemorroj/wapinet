@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aa894bb9209604a668ee29199c54eff9",
+    "content-hash": "eb63be3c45fe52b15823d2850af1a786",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -2080,16 +2080,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/phpwhois.git",
-                "reference": "5de2015ec28cc93a489b70e5c8ee53a05fa9edfb"
+                "reference": "07a61e97bdef9801e6f8e31d62da09501fa6fc8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/5de2015ec28cc93a489b70e5c8ee53a05fa9edfb",
-                "reference": "5de2015ec28cc93a489b70e5c8ee53a05fa9edfb",
+                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/07a61e97bdef9801e6f8e31d62da09501fa6fc8a",
+                "reference": "07a61e97bdef9801e6f8e31d62da09501fa6fc8a",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.15"
             },
             "type": "library",
             "autoload": {
@@ -2103,7 +2106,7 @@
                 "GPL-2.0-only"
             ],
             "description": "This package contains a Whois (RFC954) library for PHP. It allows a PHP program to create a Whois object, and obtain the output of a whois query with the Lookup function.",
-            "time": "2018-09-01T18:16:08+00:00"
+            "time": "2019-06-09T04:55:56+00:00"
         },
         {
             "name": "gemorroj/stop-spam",

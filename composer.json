@@ -31,13 +31,13 @@
         "symfony/validator": "4.2.*",
         "symfony/web-link": "4.2.*",
         "symfony/yaml": "4.2.*",
-        "symfony/webpack-encore-bundle": "^1.0",
-        "easycorp/easyadmin-bundle": "^2.0.2",
+        "symfony/webpack-encore-bundle": "^1.6",
+        "easycorp/easyadmin-bundle": "^2.1.4",
         "friendsofsymfony/user-bundle": "^2.1@dev",
-        "friendsofsymfony/jsrouting-bundle": "^2.2.2",
+        "friendsofsymfony/jsrouting-bundle": "^2.3",
         "white-october/pagerfanta-bundle": "^1.2",
-        "james-heinrich/getid3": "^1.9.16",
-        "vich/uploader-bundle": "^1.8",
+        "james-heinrich/getid3": "^1.9.17",
+        "vich/uploader-bundle": "^1.9",
         "liip/imagine-bundle": "^2.1",
         "gregwar/captcha-bundle": "^2.0",
         "tufanbarisyildirim/php-apk-parser": "dev-master",
@@ -54,7 +54,7 @@
         "gemorroj/syntax": "^3.0",
         "gemorroj/htmlvalidator": "^1.1",
         "gemorroj/cssvalidator": "^1.1",
-        "gemorroj/xbbcode": "^2.2",
+        "gemorroj/xbbcode": "^2.3",
         "gemorroj/ginfo": "^5.0.7"
     },
     "require-dev": {
@@ -63,10 +63,10 @@
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*",
         "symfony/web-server-bundle": "4.2.*",
-        "phpunit/phpunit": "^7.4",
+        "phpunit/phpunit": "^7.5",
         "phpstan/phpstan-symfony": "^0.10",
         "phpstan/phpstan-phpunit": "^0.10",
-        "friendsofphp/php-cs-fixer": "^2.13"
+        "friendsofphp/php-cs-fixer": "^2.15"
     },
     "config": {
         "preferred-install": {
