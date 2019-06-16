@@ -286,6 +286,7 @@ server {
 - использовать новую систему конфигураций https://symfony.com/blog/improvements-to-the-handling-of-env-files-for-all-symfony-versions
 - заменить свою curl прослойку на https://github.com/symfony/http-client
 - Перевести на mysql 8
+- Избавится от pagefanta - https://github.com/symfony/demo/commit/65872cde5cb3dc7bdbb163a79a7ea8f96acb132f
 - Переделать интерфейс на vue/react/angular (огромная задача)
 - переделать редактор аудиотегов на https://github.com/duncan3dc/meta-audio/issues/3 (когда будут картинки)
 - Сделать возможность в переводчике и обфускаторе загружать файлы
