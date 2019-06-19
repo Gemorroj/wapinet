@@ -21,11 +21,12 @@ class Count extends AbstractExtension
 
     /**
      * @param float $count
+     * @param int   $decimals
      *
      * @return string
      */
-    public function getCount($count): string
+    public function getCount($count, int $decimals = 0): string
     {
-        return \number_format($count, 0, ',', ' ');
+        return \number_format($count, $decimals, ',', ' ');
     }
 }

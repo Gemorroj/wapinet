@@ -107,7 +107,7 @@
                                 <div class="col">
                                     <dl class="row">
                                         <dt class="col-7 text-right monitoring-label">CPU:</dt>
-                                        <dd class="col-5 monitoring-value">{{ process.lastRequestCpu|round(2) }}</dd>
+                                        <dd class="col-5 monitoring-value">{{ process.lastRequestCpu|wapinet_count(2) }}</dd>
                                     </dl>
                                 </div>
                             </div>
