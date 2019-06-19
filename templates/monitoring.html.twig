@@ -81,7 +81,7 @@
                             <div class="row">
                                 <div class="col">
                                     <dl class="row">
-                                        <dd class="col">{{ process.script }}</dd>
+                                        <dd class="col">{{ process.requestUri }}</dd>
                                     </dl>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
                                 <div class="col">
                                     <dl class="row">
                                         <dt class="col-7 text-right monitoring-label">CPU:</dt>
-                                        <dd class="col-5 monitoring-value">{{ process.lastRequestCpu }}</dd>
+                                        <dd class="col-5 monitoring-value">{{ process.lastRequestCpu|round(2) }}</dd>
                                     </dl>
                                 </div>
                             </div>
