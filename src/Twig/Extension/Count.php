@@ -20,7 +20,7 @@ class Count extends AbstractExtension
     }
 
     /**
-     * @param int $count
+     * @param float $count
      *
      * @return string
      */

@@ -1,6 +1,9 @@
 # PHPStorm
 .idea/
 
+# OpenServer
+public/Nginx_1.14_vhost.conf
+
 # Assets
 /public/static/file/*
 !public/static/file/index.html

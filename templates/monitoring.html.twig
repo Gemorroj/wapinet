@@ -12,6 +12,113 @@
 
 {% block main %}
 <div class="container">
+    {% if info.php.fpm.enabled %}
+        <div class="row">
+            <div class="col">
+                <dl class="row">
+                    <dt class="col-5 text-right monitoring-label">PHP-FPM process manager:</dt>
+                    <dd class="col-7 monitoring-value">{{ info.php.fpm.processManager }}</dd>
+                </dl>
+            </div>
+            <div class="col">
+                <dl class="row">
+                    <dt class="col-5 text-right monitoring-label">PHP-FPM start time:</dt>
+                    <dd class="col-7 monitoring-value">{{ info.php.fpm.startTime|wapinet_datetime }}</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <dl class="row">
+                    <dt class="col-7 text-right monitoring-label">Принято соединений:</dt>
+                    <dd class="col-5 monitoring-value">{{ info.php.fpm.acceptedConnections|wapinet_count }}</dd>
+                </dl>
+            </div>
+            <div class="col">
+                <dl class="row">
+                    <dt class="col-7 text-right monitoring-label">Активных процессов:</dt>
+                    <dd class="col-5 monitoring-value">{{ info.php.fpm.activeProcesses|wapinet_count }}</dd>
+                </dl>
+            </div>
+            <div class="col">
+                <dl class="row">
+                    <dt class="col-7 text-right monitoring-label">Простаивающих процессов:</dt>
+                    <dd class="col-5 monitoring-value">{{ info.php.fpm.idleProcesses|wapinet_count }}</dd>
+                </dl>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <dl class="row">
+                    <dt class="col-7 text-right monitoring-label">Max активных процессов:</dt>
+                    <dd class="col-5 monitoring-value">{{ info.php.fpm.maxActiveProcesses|wapinet_count }}</dd>
+                </dl>
+            </div>
+            <div class="col">
+                <dl class="row">
+                    <dt class="col-7 text-right monitoring-label">Max потомков:</dt>
+                    <dd class="col-5 monitoring-value">{{ info.php.fpm.maxChildrenReached|wapinet_count }}</dd>
+                </dl>
+            </div>
+            <div class="col">
+                <dl class="row">
+                    <dt class="col-7 text-right monitoring-label">Медленных запросов:</dt>
+                    <dd class="col-5 monitoring-value">{{ info.php.fpm.slowRequests|wapinet_count }}</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#collapseProcesses" aria-expanded="false" aria-controls="collapseProcesses">
+                    Processes ({{ info.php.fpm.processes|length|wapinet_count }})
+                </button>
+
+                <div class="collapse" id="collapseProcesses">
+                    {% for process in info.php.fpm.processes %}
+                        <div class="card card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <dl class="row">
+                                        <dd class="col">{{ process.script }}</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <dl class="row">
+                                        <dt class="col-5 text-right monitoring-label">Start time:</dt>
+                                        <dd class="col-7 monitoring-value">{{ process.startTime|wapinet_datetime }}</dd>
+                                    </dl>
+                                </div>
+                                <div class="col">
+                                    <dl class="row">
+                                        <dt class="col-7 text-right monitoring-label">Состояние:</dt>
+                                        <dd class="col-5 monitoring-value">{{ process.state }}</dd>
+                                    </dl>
+                                </div>
+                                <div class="col">
+                                    <dl class="row">
+                                        <dt class="col-7 text-right monitoring-label">Memory:</dt>
+                                        <dd class="col-5 monitoring-value">{{ process.lastRequestMemory|wapinet_size }}</dd>
+                                    </dl>
+                                </div>
+                                <div class="col">
+                                    <dl class="row">
+                                        <dt class="col-7 text-right monitoring-label">CPU:</dt>
+                                        <dd class="col-5 monitoring-value">{{ process.lastRequestCpu }}</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <br />
+    {% endif %}
+
     <div class="row justify-content-between">
         <div class="col-4">
             <div class="card mb-3">
@@ -25,7 +132,7 @@
                         <dt class="col-5 text-right monitoring-label">Ядро:</dt>
                         <dd class="col-7 monitoring-value">{{ info.general.kernel }}</dd>
                         <dt class="col-5 text-right monitoring-label">Uptime:</dt>
-                        <dd class="col-7 monitoring-value">{{ info.general.uptime ? info.general.uptime|date('d дней h часов i минут') : 'Неизвестно' }}</dd>
+                        <dd class="col-7 monitoring-value">{{ info.general.uptime ? info.general.uptime|date('%a дней %h часов %i минут') : 'Неизвестно' }}</dd>
                         <dt class="col-5 text-right monitoring-label">Selinux:</dt>
                         <dd class="col-7 monitoring-value">{{ info.selinux ? (info.selinux.enabled ? 'Вкл.' : 'Выкл.') : 'Отсутствует' }}</dd>
                         <dt class="col-5 text-right monitoring-label">PHP:</dt>

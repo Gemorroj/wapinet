@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eb63be3c45fe52b15823d2850af1a786",
+    "content-hash": "0ff896a3fe5a6f49580e2116b40718af",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -1935,16 +1935,16 @@
         },
         {
             "name": "gemorroj/ginfo",
-            "version": "5.0.7",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/ginfo.git",
-                "reference": "5ba62044a246a892837c4f889cc675b68ee1738a"
+                "reference": "99c94e10039b1444ba67e7cef4174d8fdadcba8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/5ba62044a246a892837c4f889cc675b68ee1738a",
-                "reference": "5ba62044a246a892837c4f889cc675b68ee1738a",
+                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/99c94e10039b1444ba67e7cef4174d8fdadcba8b",
+                "reference": "99c94e10039b1444ba67e7cef4174d8fdadcba8b",
                 "shasum": ""
             },
             "require": {
@@ -1955,9 +1955,9 @@
                 "symfony/process": "^3.3|^4.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.13",
-                "phpstan/phpstan": "^0.10",
-                "phpunit/phpunit": "^7.1.2"
+                "friendsofphp/php-cs-fixer": "^2.15",
+                "phpstan/phpstan": "^0.11",
+                "phpunit/phpunit": "^7.5"
             },
             "type": "library",
             "autoload": {
@@ -1991,7 +1991,7 @@
                 "specs",
                 "system"
             ],
-            "time": "2018-12-20T15:18:02+00:00"
+            "time": "2019-06-19T07:11:59+00:00"
         },
         {
             "name": "gemorroj/htmlvalidator",
@@ -11023,7 +11023,8 @@
         "friendsofsymfony/user-bundle": 20,
         "tufanbarisyildirim/php-apk-parser": 20,
         "seostats/seostats": 20,
-        "gemorroj/phpwhois": 20
+        "gemorroj/phpwhois": 20,
+        "gemorroj/ginfo": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

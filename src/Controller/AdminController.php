@@ -67,7 +67,7 @@ class AdminController extends BaseAdminController
     public function persistNewsEntity(News $news): void
     {
         $news->setCreatedBy($this->getUser());
-        parent::persistEntity($news);
+        $this->persistEntity($news);
         $this->newsSubscriber($news);
     }
 
