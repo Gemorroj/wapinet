@@ -80,14 +80,9 @@ class Horoscope
         return null;
     }
 
-    /**
-     * @param string $zodiac
-     *
-     * @return array
-     */
     public function getHoroscope(string $zodiac): array
     {
-        $this->curl->init('http://hyrax.ru/rss_daily_common_'.$zodiac.'.xml');
+        $this->curl->init('https://hyrax.ru/rss_daily_common_'.$zodiac.'.xml');
         $this->curl->addCompression();
         $response = $this->curl->exec();
 
@@ -103,12 +98,9 @@ class Horoscope
         ];
     }
 
-    /**
-     * @return array
-     */
     public function getHoroscopeDay(): array
     {
-        $this->curl->init('http://hyrax.ru/rss_daily_common.xml');
+        $this->curl->init('https://hyrax.ru/rss_daily_common.xml');
         $this->curl->addCompression();
 
         $response = $this->curl->exec();

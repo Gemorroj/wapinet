@@ -4,24 +4,16 @@ namespace App\Controller;
 
 use App\Helper\Horoscope;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 
 class HoroscopeController extends AbstractController
 {
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function indexAction()
+    public function indexAction(): Response
     {
         return $this->render('Horoscope/index.html.twig');
     }
 
-    /**
-     * @param string    $zodiac
-     * @param Horoscope $horoscopeHelper
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function showAction($zodiac, Horoscope $horoscopeHelper)
+    public function showAction(string $zodiac, Horoscope $horoscopeHelper): Response
     {
         $horoscope = $horoscopeHelper->getHoroscope($zodiac);
 
@@ -33,12 +25,7 @@ class HoroscopeController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Horoscope $horoscopeHelper
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function dayAction(Horoscope $horoscopeHelper)
+    public function dayAction(Horoscope $horoscopeHelper): Response
     {
         $horoscope = $horoscopeHelper->getHoroscopeDay();
 
