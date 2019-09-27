@@ -60,24 +60,12 @@ class Guestbook
         return $this;
     }
 
-    /**
-     * Get user.
-     *
-     * @return User|null
-     */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    /**
-     * Set user.
-     *
-     * @param User $user
-     *
-     * @return Guestbook
-     */
-    public function setUser(User $user = null)
+    public function setUser(?User $user = null): self
     {
         $this->user = $user;
 
