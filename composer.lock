@@ -7531,16 +7531,16 @@
         },
         {
             "name": "vich/uploader-bundle",
-            "version": "1.10.1",
+            "version": "1.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dustin10/VichUploaderBundle.git",
-                "reference": "0df4b3c88f5470aad2faa187fea29ba74809a53d"
+                "reference": "5526f985991235b12aa1ae014962118df04fff47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dustin10/VichUploaderBundle/zipball/0df4b3c88f5470aad2faa187fea29ba74809a53d",
-                "reference": "0df4b3c88f5470aad2faa187fea29ba74809a53d",
+                "url": "https://api.github.com/repos/dustin10/VichUploaderBundle/zipball/5526f985991235b12aa1ae014962118df04fff47",
+                "reference": "5526f985991235b12aa1ae014962118df04fff47",
                 "shasum": ""
             },
             "require": {
@@ -7563,11 +7563,12 @@
                 "doctrine/mongodb-odm": "^1.2",
                 "doctrine/orm": "^2.5",
                 "ext-sqlite3": "*",
-                "knplabs/knp-gaufrette-bundle": "^0.5",
+                "knplabs/knp-gaufrette-bundle": "^0.6",
                 "matthiasnoback/symfony-dependency-injection-test": "^4.0",
                 "mikey179/vfsstream": "^1.6",
                 "oneup/flysystem-bundle": "^3.0",
                 "phpunit/phpunit": "^8.0",
+                "symfony/asset": "^3.4 || ^4.0",
                 "symfony/browser-kit": "^3.4 || ^4.0",
                 "symfony/css-selector": "^3.4 || ^4.0",
                 "symfony/doctrine-bridge": "^3.4 || ^4.0",
@@ -7591,6 +7592,7 @@
                 "liip/imagine-bundle": "To generate image thumbnails",
                 "ocramius/proxy-manager": "To use lazy services",
                 "oneup/flysystem-bundle": "For integration with Flysystem",
+                "symfony/asset": "To generate better links",
                 "symfony/yaml": "To use YAML mapping",
                 "willdurand/propel-eventdispatcher-bundle": "For integration with Propel"
             },
@@ -7621,7 +7623,7 @@
                 "file uploads",
                 "upload"
             ],
-            "time": "2019-07-11T13:00:05+00:00"
+            "time": "2019-10-11T13:37:44+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
