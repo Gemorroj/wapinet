@@ -21,8 +21,6 @@ class Size extends AbstractExtension
 
     /**
      * @param int|float|null $fileSizeInBytes
-     *
-     * @return string
      */
     public function getSize($fileSizeInBytes): string
     {

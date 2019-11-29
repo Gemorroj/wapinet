@@ -12,19 +12,11 @@ class Horoscope
      */
     protected $curl;
 
-    /**
-     * @param Curl $curl
-     */
     public function __construct(Curl $curl)
     {
         $this->curl = $curl;
     }
 
-    /**
-     * @param string $zodiac
-     *
-     * @return string|null
-     */
     public function getName(string $zodiac): ?string
     {
         switch ($zodiac) {

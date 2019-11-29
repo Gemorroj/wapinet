@@ -15,9 +15,6 @@ class FriendEvent extends Event
 
     /**
      * Constructs an event.
-     *
-     * @param User $user
-     * @param User $friend
      */
     public function __construct(User $user, User $friend)
     {
@@ -27,8 +24,6 @@ class FriendEvent extends Event
 
     /**
      * Returns the user for this event.
-     *
-     * @return User
      */
     public function getUser(): User
     {
@@ -37,8 +32,6 @@ class FriendEvent extends Event
 
     /**
      * Returns the friend for this event.
-     *
-     * @return User
      */
     public function getFriend(): User
     {

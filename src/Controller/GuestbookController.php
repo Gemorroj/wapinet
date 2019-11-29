@@ -15,12 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class GuestbookController extends AbstractController
 {
-    /**
-     * @param Request  $request
-     * @param Paginate $paginate
-     *
-     * @return Response
-     */
     public function indexAction(Request $request, Paginate $paginate): Response
     {
         $form = $this->createForm(MessageType::class);
@@ -37,13 +31,6 @@ class GuestbookController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Request    $request
-     * @param BotChecker $botChecker
-     * @param StopSpam   $stopSpam
-     *
-     * @return RedirectResponse
-     */
     public function addAction(Request $request, BotChecker $botChecker, StopSpam $stopSpam): RedirectResponse
     {
         $form = $this->createForm(MessageType::class);

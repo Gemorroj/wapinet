@@ -129,13 +129,6 @@ class AndroidApp extends AbstractExtension
         return false;
     }
 
-    /**
-     * @param string $icon
-     * @param string $path
-     * @param string $screenshot
-     *
-     * @return bool
-     */
     private function extractIcon(string $icon, string $path, string $screenshot): bool
     {
         try {

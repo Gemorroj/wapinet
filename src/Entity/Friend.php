@@ -73,8 +73,6 @@ class Friend
     }
 
     /**
-     * @param User $user
-     *
      * @return $this
      */
     public function setUser(User $user)
@@ -93,8 +91,6 @@ class Friend
     }
 
     /**
-     * @param User $friend
-     *
      * @return $this
      */
     public function setFriend(User $friend)

@@ -40,8 +40,6 @@ class Archive extends AbstractExtension
     }
 
     /**
-     * @param File $file
-     *
      * @return Entry[]|null
      */
     public function getList(File $file): ?array

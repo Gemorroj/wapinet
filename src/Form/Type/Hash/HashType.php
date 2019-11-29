@@ -19,8 +19,6 @@ class HashType extends AbstractType
 
     /**
      * HashType constructor.
-     *
-     * @param Hash $hash
      */
     public function __construct(Hash $hash)
     {

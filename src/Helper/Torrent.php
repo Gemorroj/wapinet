@@ -24,11 +24,6 @@ class Torrent
         $this->decoder = new Decoder(new Encoder());
     }
 
-    /**
-     * @param File $file
-     *
-     * @return array
-     */
     public function decodeFile(File $file): array
     {
         return $this->decoder->decodeFile($file->getPathname());

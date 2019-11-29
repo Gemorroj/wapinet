@@ -12,9 +12,6 @@ class Rates
      */
     protected $curl;
 
-    /**
-     * @param Curl $curl
-     */
     public function __construct(Curl $curl)
     {
         $this->curl = $curl;

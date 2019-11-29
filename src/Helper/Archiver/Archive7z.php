@@ -24,8 +24,6 @@ class Archive7z extends Archive
     }
 
     /**
-     * @param File $file
-     *
      * @throws ArchiverException
      *
      * @return bool
@@ -39,7 +37,6 @@ class Archive7z extends Archive
 
     /**
      * @param string $directory
-     * @param File   $file
      *
      * @throws ArchiverException
      */
@@ -51,8 +48,6 @@ class Archive7z extends Archive
     }
 
     /**
-     * @param File $file
-     *
      * @throws ArchiverException
      *
      * @return \Archive7z\Entry[]
@@ -65,7 +60,6 @@ class Archive7z extends Archive
     }
 
     /**
-     * @param File   $file
      * @param string $entry
      * @param string $directory
      *

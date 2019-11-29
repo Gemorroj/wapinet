@@ -32,8 +32,6 @@ class ArchiverController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     *
      * @return RedirectResponse|Response
      */
     public function createAction(Request $request): Response
@@ -108,13 +106,7 @@ class ArchiverController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param string  $archive
-     * @param string  $name
-     *
      * @throws AccessDeniedException
-     *
-     * @return BinaryFileResponse
      */
     public function downloadFileAction(Request $request, string $archive, string $name): BinaryFileResponse
     {
@@ -135,11 +127,7 @@ class ArchiverController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param string  $archive
-     * @param string  $name
-     *
-     * @return RedirectResponse
+     * @param string $name
      */
     public function deleteFileAction(Request $request, string $archive, $name): RedirectResponse
     {
@@ -154,13 +142,7 @@ class ArchiverController extends AbstractController
     }
 
     /**
-     * @param string $archiveDirectory
-     * @param string $path
-     * @param bool   $allowDirectory
-     *
      * @throws AccessDeniedException
-     *
-     * @return string
      */
     protected function checkFile(string $archiveDirectory, string $path, bool $allowDirectory = false): string
     {
@@ -184,8 +166,6 @@ class ArchiverController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     *
      * @return RedirectResponse|Response
      */
     public function extractAction(Request $request): Response
@@ -216,11 +196,7 @@ class ArchiverController extends AbstractController
     }
 
     /**
-     * @param File $file
-     *
      * @throws ArchiverException
-     *
-     * @return string
      */
     protected function extractArchive(File $file): string
     {
@@ -248,20 +224,13 @@ class ArchiverController extends AbstractController
         throw new ArchiverException('Неподдерживаемый тип архива');
     }
 
-    /**
-     * @return string
-     */
     protected function generateArchiveName(): string
     {
         return \uniqid('archive', false);
     }
 
     /**
-     * @param string $archive
-     *
      * @throws FileException
-     *
-     * @return string
      */
     protected function checkArchiveDirectory(string $archive): string
     {
@@ -282,8 +251,6 @@ class ArchiverController extends AbstractController
 
     /**
      * @throws IOException
-     *
-     * @return string
      */
     protected function createArchiveDirectory(): string
     {
@@ -294,12 +261,7 @@ class ArchiverController extends AbstractController
     }
 
     /**
-     * @param string       $directory
-     * @param UploadedFile $file
-     *
      * @throws FileException
-     *
-     * @return File
      */
     protected function addFile(string $directory, UploadedFile $file): File
     {

@@ -16,9 +16,6 @@ abstract class Archive
      */
     protected $parameterBag;
 
-    /**
-     * @param ParameterBagInterface $parameterBag
-     */
     public function __construct(ParameterBagInterface $parameterBag)
     {
         $this->parameterBag = $parameterBag;
@@ -53,8 +50,6 @@ abstract class Archive
     }
 
     /**
-     * @param \RecursiveIteratorIterator $objects
-     *
      * @return \SplFileObject[]
      */
     private function sortFiles(\RecursiveIteratorIterator $objects)
@@ -92,8 +87,6 @@ abstract class Archive
     abstract public function create($directory);
 
     /**
-     * @param File $file
-     *
      * @throws ArchiverException
      *
      * @return bool
@@ -102,14 +95,12 @@ abstract class Archive
 
     /**
      * @param string $directory
-     * @param File   $file
      *
      * @throws ArchiverException
      */
     abstract public function extract($directory, File $file);
 
     /**
-     * @param File   $file
      * @param string $entry
      * @param string $directory
      *

@@ -66,17 +66,12 @@ class Bridge
 
     /**
      * Bridge constructor.
-     *
-     * @param RegistryInterface $doctrine
      */
     public function __construct(RegistryInterface $doctrine)
     {
         $this->doctrine = $doctrine;
     }
 
-    /**
-     * @return EntityManagerInterface
-     */
     protected function getEntityManager(): EntityManagerInterface
     {
         if (null === $this->em) {
@@ -117,8 +112,6 @@ class Bridge
 
     /**
      * Sets the exact instance of entity manager which should be used to transform Sphinx results to entities.
-     *
-     * @param EntityManagerInterface $em
      *
      * @return Bridge
      */
@@ -191,8 +184,6 @@ class Bridge
     }
 
     /**
-     * @param array $repositories
-     *
      * @return Bridge
      */
     public function setDiscriminatorRepositories(array $repositories)
@@ -220,9 +211,6 @@ class Bridge
     /**
      * setSphinxResults.
      *
-     * @param ResultSetInterface $result
-     * @param ResultSetInterface $resultMeta
-     *
      * @return Bridge
      */
     public function setSphinxResult(ResultSetInterface $result, ResultSetInterface $resultMeta)
@@ -236,8 +224,6 @@ class Bridge
     }
 
     /**
-     * @param ResultSetInterface $resultMeta
-     *
      * @return array
      */
     private function parseMeta(ResultSetInterface $resultMeta)
@@ -391,8 +377,6 @@ class Bridge
     }
 
     /**
-     * @param QueryBuilder|null $query
-     *
      * @return Bridge
      */
     public function setQuery(QueryBuilder $query = null)

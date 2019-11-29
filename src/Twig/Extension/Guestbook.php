@@ -14,9 +14,6 @@ class Guestbook extends AbstractExtension
      */
     protected $guestbookRepository;
 
-    /**
-     * @param EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->guestbookRepository = $em->getRepository(\App\Entity\Guestbook::class);

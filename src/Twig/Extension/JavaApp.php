@@ -86,8 +86,6 @@ class JavaApp extends AbstractExtension
     }
 
     /**
-     * @param string $path
-     *
      * @throws ArchiverException
      */
     private function extractManifest(string $path): void

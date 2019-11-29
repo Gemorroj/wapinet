@@ -21,9 +21,6 @@ class Paginate
      */
     protected $parameterBag;
 
-    /**
-     * @param ParameterBagInterface $parameterBag
-     */
     public function __construct(ParameterBagInterface $parameterBag)
     {
         $this->parameterBag = $parameterBag;
@@ -31,12 +28,8 @@ class Paginate
 
     /**
      * @param Query|QueryBuilder|Collection|array|FixedPaginate $data
-     * @param int                                               $page
-     * @param int|null                                          $maxPerPage
      *
      * @throws RuntimeException
-     *
-     * @return Pagerfanta
      */
     public function paginate($data, int $page = 1, ?int $maxPerPage = null): Pagerfanta
     {
@@ -61,12 +54,6 @@ class Paginate
         return $pagerfanta;
     }
 
-    /**
-     * @param Pagerfanta $pagerfanta
-     * @param int        $page
-     *
-     * @return int
-     */
     protected function normalizePage(Pagerfanta $pagerfanta, int $page): int
     {
         $maxPage = $pagerfanta->getNbPages();

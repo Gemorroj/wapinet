@@ -15,8 +15,6 @@ class TagsType extends AbstractType
 
     /**
      * TagsType constructor.
-     *
-     * @param EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
     {

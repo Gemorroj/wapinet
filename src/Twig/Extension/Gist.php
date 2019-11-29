@@ -33,19 +33,11 @@ class Gist extends AbstractExtension
         ];
     }
 
-    /**
-     * @return int
-     */
     public function getCountAll(): int
     {
         return $this->gistRepository->countAll();
     }
 
-    /**
-     * @param User|null $user
-     *
-     * @return int
-     */
     public function getCount(User $user = null): int
     {
         return $this->gistRepository->countUser($user);

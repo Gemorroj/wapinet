@@ -48,8 +48,6 @@ class Adapter implements AdapterInterface
     }
 
     /**
-     * @param array $array
-     *
      * @return Adapter
      */
     public function setArray(array $array)

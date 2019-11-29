@@ -21,9 +21,6 @@ class Count extends AbstractExtension
 
     /**
      * @param float $count
-     * @param int   $decimals
-     *
-     * @return string
      */
     public function getCount($count, int $decimals = 0): string
     {

@@ -191,8 +191,6 @@ class User extends BaseUser
     }
 
     /**
-     * @param Panel $panel
-     *
      * @return User
      */
     public function setPanel(Panel $panel)
@@ -218,8 +216,6 @@ class User extends BaseUser
     }
 
     /**
-     * @param Subscriber $subscriber
-     *
      * @return User
      */
     public function setSubscriber(Subscriber $subscriber)
@@ -347,8 +343,6 @@ class User extends BaseUser
     }
 
     /**
-     * @param \DateTime $lastActivity
-     *
      * @return User
      */
     public function setLastActivity(\DateTime $lastActivity)

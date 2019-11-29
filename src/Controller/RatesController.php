@@ -17,7 +17,6 @@ class RatesController extends AbstractController
 
     /**
      * @param string $country
-     * @param Rates  $ratesHelper
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

@@ -17,20 +17,13 @@ class PhpValidator
      */
     protected $parameterBag;
 
-    /**
-     * @param ParameterBagInterface $parameterBag
-     */
     public function __construct(ParameterBagInterface $parameterBag)
     {
         $this->parameterBag = $parameterBag;
     }
 
     /**
-     * @param BaseFile $file
-     *
      * @throws Exception
-     *
-     * @return array
      */
     public function validateFile(BaseFile $file): array
     {
@@ -43,11 +36,7 @@ class PhpValidator
     }
 
     /**
-     * @param string $source
-     *
      * @throws Exception
-     *
-     * @return array
      */
     public function validateFragment(string $source): array
     {

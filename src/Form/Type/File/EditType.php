@@ -37,9 +37,6 @@ class EditType extends AbstractType
         $builder->add('submit', SubmitType::class, ['label' => 'Загрузить']);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

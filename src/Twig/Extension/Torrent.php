@@ -38,11 +38,6 @@ class Torrent extends AbstractExtension
         ];
     }
 
-    /**
-     * @param File $file
-     *
-     * @return array|null
-     */
     public function getList(File $file): ?array
     {
         try {

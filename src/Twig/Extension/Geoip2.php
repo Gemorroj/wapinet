@@ -15,9 +15,6 @@ class Geoip2 extends AbstractExtension
      */
     protected $geoip2;
 
-    /**
-     * @param Geoip2Helper $geoip2
-     */
     public function __construct(Geoip2Helper $geoip2)
     {
         $this->geoip2 = $geoip2;

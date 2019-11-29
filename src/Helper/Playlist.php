@@ -27,8 +27,6 @@ class Playlist
     }
 
     /**
-     * @param File $file
-     *
      * @return M3uData
      */
     public function parseFile(File $file)

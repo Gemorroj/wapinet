@@ -45,13 +45,6 @@ class GistController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Request              $request
-     * @param string               $username
-     * @param UserManagerInterface $userManager
-     *
-     * @return Response
-     */
     public function userAction(Request $request, string $username, UserManagerInterface $userManager): Response
     {
         $form = $this->createForm(AddType::class);
@@ -75,12 +68,7 @@ class GistController extends AbstractController
     }
 
     /**
-     * @param Request    $request
-     * @param BotChecker $botChecker
-     *
      * @throws AccessDeniedException
-     *
-     * @return RedirectResponse
      */
     public function addAction(Request $request, BotChecker $botChecker): RedirectResponse
     {
@@ -135,8 +123,6 @@ class GistController extends AbstractController
     }
 
     /**
-     * @param Gist $gist
-     *
      * @throws AccessDeniedException|NotFoundHttpException
      *
      * @return RedirectResponse|JsonResponse
@@ -157,9 +143,7 @@ class GistController extends AbstractController
     }
 
     /**
-     * @param Request          $request
-     * @param SessionInterface $session
-     * @param string|null      $key
+     * @param string|null $key
      *
      * @return Response|RedirectResponse
      */
@@ -204,12 +188,7 @@ class GistController extends AbstractController
     }
 
     /**
-     * @param array $data
-     * @param int   $page
-     *
      * @throws RuntimeException
-     *
-     * @return Pagerfanta
      */
     private function searchSphinx(array $data, int $page = 1): Pagerfanta
     {
@@ -230,9 +209,6 @@ class GistController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Gist    $gist
-     *
      * @throws AccessDeniedException|NotFoundHttpException
      *
      * @return RedirectResponse|JsonResponse|Response

@@ -18,8 +18,6 @@ class FixedPaginate
     }
 
     /**
-     * @param int $nbResults
-     *
      * @return FixedPaginate
      */
     public function setNbResults(int $nbResults): self
@@ -29,17 +27,12 @@ class FixedPaginate
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getNbResults(): int
     {
         return $this->nbResults;
     }
 
     /**
-     * @param array $results
-     *
      * @return FixedPaginate
      */
     public function setResults(array $results): self
@@ -49,9 +42,6 @@ class FixedPaginate
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getResults(): array
     {
         return $this->results;

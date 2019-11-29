@@ -16,8 +16,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class PanelController extends AbstractController
 {
     /**
-     * @param Request $request
-     *
      * @throws AccessDeniedException
      *
      * @return RedirectResponse|Response

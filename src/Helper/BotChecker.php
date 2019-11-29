@@ -11,8 +11,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class BotChecker
 {
     /**
-     * @param Request $request
-     *
      * @throws AccessDeniedException
      */
     public function checkRequest(Request $request): void

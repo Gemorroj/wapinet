@@ -57,8 +57,6 @@ class FileTags
     /**
      * Set file.
      *
-     * @param File $file
-     *
      * @return FileTags
      */
     public function setFile(File $file)
@@ -80,8 +78,6 @@ class FileTags
 
     /**
      * Set tag.
-     *
-     * @param Tag $tag
      *
      * @return FileTags
      */

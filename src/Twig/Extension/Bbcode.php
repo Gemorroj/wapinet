@@ -15,9 +15,6 @@ class Bbcode extends AbstractExtension
      */
     protected $requestContext;
 
-    /**
-     * @param RequestContext $requestContext
-     */
     public function __construct(RequestContext $requestContext)
     {
         $this->requestContext = $requestContext;

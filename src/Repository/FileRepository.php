@@ -10,11 +10,6 @@ use Doctrine\ORM\QueryBuilder;
 
 class FileRepository extends EntityRepository
 {
-    /**
-     * @param int $maxUsers
-     *
-     * @return array
-     */
     public function getStatistic(int $maxUsers = 10): array
     {
         $em = $this->getEntityManager();
@@ -40,9 +35,6 @@ class FileRepository extends EntityRepository
         ];
     }
 
-    /**
-     * @return int
-     */
     public function countHidden(): int
     {
         return $this->getEntityManager()->createQuery(
@@ -50,9 +42,6 @@ class FileRepository extends EntityRepository
         )->getSingleScalarResult();
     }
 
-    /**
-     * @return int
-     */
     public function countAll(): int
     {
         return $this->getEntityManager()->createQuery(
@@ -60,12 +49,6 @@ class FileRepository extends EntityRepository
         )->getSingleScalarResult();
     }
 
-    /**
-     * @param \DateTime      $datetimeStart
-     * @param \DateTime|null $datetimeEnd
-     *
-     * @return int
-     */
     public function countDate(\DateTime $datetimeStart, ?\DateTime $datetimeEnd = null): int
     {
         $queryBuilder = $this->createQueryBuilder('f')
@@ -86,11 +69,6 @@ class FileRepository extends EntityRepository
         return $q->getSingleScalarResult();
     }
 
-    /**
-     * @param string $category
-     *
-     * @return int
-     */
     public function countCategory(string $category): int
     {
         $q = $this->createQueryBuilder('f')
@@ -104,11 +82,6 @@ class FileRepository extends EntityRepository
         return $q->getSingleScalarResult();
     }
 
-    /**
-     * @param User $user
-     *
-     * @return int
-     */
     public function countUser(User $user): int
     {
         $q = $this->createQueryBuilder('f')
@@ -122,13 +95,6 @@ class FileRepository extends EntityRepository
         return $q->getSingleScalarResult();
     }
 
-    /**
-     * @param \DateTime|null $datetimeStart
-     * @param \DateTime|null $datetimeEnd
-     * @param string|null    $category
-     *
-     * @return \Doctrine\ORM\Query
-     */
     public function getListQuery(?\DateTime $datetimeStart = null, ?\DateTime $datetimeEnd = null, ?string $category = null): \Doctrine\ORM\Query
     {
         $q = $this->createQueryBuilder('f')
@@ -150,9 +116,6 @@ class FileRepository extends EntityRepository
         return $q->getQuery();
     }
 
-    /**
-     * @return \Doctrine\ORM\Query
-     */
     public function getHiddenQuery(): \Doctrine\ORM\Query
     {
         $q = $this->createQueryBuilder('f')
@@ -163,12 +126,7 @@ class FileRepository extends EntityRepository
     }
 
     /**
-     * @param int         $id
-     * @param string|null $category
-     *
      * @throws \Doctrine\ORM\NonUniqueResultException
-     *
-     * @return File|null
      */
     public function getPrevFile(int $id, ?string $category = null): ?File
     {
@@ -186,12 +144,7 @@ class FileRepository extends EntityRepository
     }
 
     /**
-     * @param int         $id
-     * @param string|null $category
-     *
      * @throws \Doctrine\ORM\NonUniqueResultException
-     *
-     * @return File|null
      */
     public function getNextFile(int $id, ?string $category = null): ?File
     {
@@ -208,10 +161,6 @@ class FileRepository extends EntityRepository
         return $q->getQuery()->getOneOrNullResult();
     }
 
-    /**
-     * @param QueryBuilder $q
-     * @param string|null  $mimeType
-     */
     private function addCategoryMime(QueryBuilder $q, ?string $mimeType): void
     {
         switch ($mimeType) {
@@ -258,11 +207,6 @@ class FileRepository extends EntityRepository
         }
     }
 
-    /**
-     * @param User $user
-     *
-     * @return \Doctrine\ORM\Query
-     */
     public function getUserFilesQuery(User $user): \Doctrine\ORM\Query
     {
         $q = $this->createQueryBuilder('f')
@@ -281,11 +225,6 @@ class FileRepository extends EntityRepository
         return $q;
     }
 
-    /**
-     * @param Tag $tag
-     *
-     * @return \Doctrine\ORM\Query
-     */
     public function getTagFilesQuery(Tag $tag): \Doctrine\ORM\Query
     {
         $q = $this->createQueryBuilder('f')

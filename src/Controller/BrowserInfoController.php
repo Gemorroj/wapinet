@@ -8,8 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 class BrowserInfoController extends AbstractController
 {
     /**
-     * @param Request $request
-     *
      * @return string|null
      */
     protected function getPhoneNumber(Request $request)
@@ -37,8 +35,6 @@ class BrowserInfoController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     *
      * @return string|null
      */
     protected function getProxy(Request $request)
@@ -54,8 +50,6 @@ class BrowserInfoController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     *
      * @return string|null
      */
     protected function getProxyHost(Request $request)
@@ -74,8 +68,6 @@ class BrowserInfoController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     *
      * @return string|null
      */
     protected function getEncoding(Request $request)
@@ -91,8 +83,6 @@ class BrowserInfoController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)

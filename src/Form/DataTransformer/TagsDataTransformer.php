@@ -14,8 +14,6 @@ class TagsDataTransformer implements DataTransformerInterface
 
     /**
      * TagsType constructor.
-     *
-     * @param EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
     {

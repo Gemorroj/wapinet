@@ -25,10 +25,6 @@ class FileUrlType extends AbstractType
      */
     protected $curl;
 
-    /**
-     * @param ParameterBagInterface $parameterBag
-     * @param Curl                  $curl
-     */
     public function __construct(ParameterBagInterface $parameterBag, Curl $curl)
     {
         $this->parameterBag = $parameterBag;

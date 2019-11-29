@@ -9,9 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 class BashController extends AbstractController
 {
     /**
-     * @param Request $request
-     * @param Bash    $bashHelper
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request, Bash $bashHelper)

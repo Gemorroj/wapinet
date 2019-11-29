@@ -22,8 +22,6 @@ class Breadcrumbs extends AbstractExtension
     }
 
     /**
-     * @param array $options
-     *
      * @return string
      */
     public function getBreadcrumbs(array $options = [])

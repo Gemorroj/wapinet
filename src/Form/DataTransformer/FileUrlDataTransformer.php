@@ -33,11 +33,6 @@ class FileUrlDataTransformer implements DataTransformerInterface
      */
     protected $curl;
 
-    /**
-     * @param ParameterBagInterface $parameterBag
-     * @param Curl                  $curl
-     * @param bool                  $required
-     */
     public function __construct(ParameterBagInterface $parameterBag, Curl $curl, bool $required = true)
     {
         $this->parameterBag = $parameterBag;
@@ -47,8 +42,6 @@ class FileUrlDataTransformer implements DataTransformerInterface
 
     /**
      * @param File|null $fileDataFromDb
-     *
-     * @return array|null
      *
      * @see https://github.com/dustin10/VichUploaderBundle/issues/27
      */
@@ -93,8 +86,6 @@ class FileUrlDataTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param array $fileDataFromForm
-     *
      * @return FileUrl|UploadedFile|null
      */
     protected function getUploadedFile(array $fileDataFromForm)
@@ -151,13 +142,6 @@ class FileUrlDataTransformer implements DataTransformerInterface
         return $uploadedFile;
     }
 
-    /**
-     * @param ResponseHeaderBag $headers
-     * @param string            $url
-     * @param string            $default
-     *
-     * @return string
-     */
     protected function getOriginalName(ResponseHeaderBag $headers, string $url, string $default = 'index.html'): string
     {
         $contentDisposition = $headers->get('Content-Disposition');

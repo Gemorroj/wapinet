@@ -26,11 +26,7 @@ class HtmlValidator
     }
 
     /**
-     * @param string $html
-     *
      * @throws W3CServiceException
-     *
-     * @return W3CServiceResponse
      */
     public function validateFragment(string $html): W3CServiceResponse
     {
@@ -38,11 +34,7 @@ class HtmlValidator
     }
 
     /**
-     * @param File $file
-     *
      * @throws W3CServiceException
-     *
-     * @return W3CServiceResponse
      */
     public function validateFile(File $file): W3CServiceResponse
     {

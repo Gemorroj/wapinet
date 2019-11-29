@@ -24,8 +24,6 @@ class ListenerLastActivity
 
     /**
      * Update the user "lastActivity" on each request.
-     *
-     * @param FilterControllerEvent $event
      */
     public function onCoreController(FilterControllerEvent $event): void
     {

@@ -47,9 +47,6 @@ class MessageType extends AbstractType
         $builder->add('submit', SubmitType::class, ['label' => 'Написать']);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

@@ -83,8 +83,6 @@ class Online
     /**
      * Set datetime.
      *
-     * @param \DateTime $datetime
-     *
      * @return Online
      */
     public function setDatetime(\DateTime $datetime)

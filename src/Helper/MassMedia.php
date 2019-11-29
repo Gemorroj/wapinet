@@ -12,9 +12,6 @@ class MassMedia
      */
     protected $curl;
 
-    /**
-     * @param Curl $curl
-     */
     public function __construct(Curl $curl)
     {
         $this->curl = $curl;
@@ -114,11 +111,6 @@ class MassMedia
         return $news;
     }
 
-    /**
-     * @param string $str
-     *
-     * @return string
-     */
     private function stripDescription(string $str): string
     {
         return \strip_tags($str);

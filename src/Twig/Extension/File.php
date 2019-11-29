@@ -22,10 +22,6 @@ class File extends AbstractExtension
      */
     protected $timezoneHelper;
 
-    /**
-     * @param EntityManagerInterface $em
-     * @param Timezone               $timezoneHelper
-     */
     public function __construct(EntityManagerInterface $em, Timezone $timezoneHelper)
     {
         $this->fileRepository = $em->getRepository(\App\Entity\File::class);

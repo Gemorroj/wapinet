@@ -17,8 +17,6 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class RenameController extends AbstractController
 {
     /**
-     * @param Request $request
-     *
      * @return Response|BinaryFileResponse
      */
     public function indexAction(Request $request): Response

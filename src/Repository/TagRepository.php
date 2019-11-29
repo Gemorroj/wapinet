@@ -9,9 +9,6 @@ use Doctrine\ORM\EntityRepository;
 class TagRepository extends EntityRepository
 {
     /**
-     * @param string $search
-     * @param int    $limit
-     *
      * @return Tag[]
      */
     public function findLikeName(string $search, int $limit = 10): array
@@ -31,9 +28,6 @@ class TagRepository extends EntityRepository
         return $qb->getQuery()->execute();
     }
 
-    /**
-     * @return \Doctrine\ORM\Query
-     */
     public function getTagsQuery(): \Doctrine\ORM\Query
     {
         return $this->createQueryBuilder('t')
@@ -42,11 +36,6 @@ class TagRepository extends EntityRepository
             ->getQuery();
     }
 
-    /**
-     * @param string $name
-     *
-     * @return Tag|null
-     */
     public function getTagByName(string $name): ?Tag
     {
         return $this->createQueryBuilder('t')
@@ -60,8 +49,6 @@ class TagRepository extends EntityRepository
 
     /**
      * @param array $names Array of tag names
-     *
-     * @return ArrayCollection|null
      */
     public function makeTags(array $names): ?ArrayCollection
     {

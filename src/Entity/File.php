@@ -115,9 +115,6 @@ class File implements Serializable
         $this->tags = new ArrayCollection();
     }
 
-    /**
-     * @return string
-     */
     public function serialize(): string
     {
         $vars = \get_object_vars($this);
@@ -228,8 +225,6 @@ class File implements Serializable
 
     /**
      * Set fileTags.
-     *
-     * @param Collection $fileTags
      *
      * @return File
      */
@@ -375,8 +370,6 @@ class File implements Serializable
     }
 
     /**
-     * @param DateTime $lastViewAt
-     *
      * @return File
      */
     public function setLastViewAt(DateTime $lastViewAt): self

@@ -43,8 +43,6 @@ class WhoisController extends AbstractController
     }
 
     /**
-     * @param array $data
-     *
      * @throws WhoisException
      *
      * @return string HTML текст

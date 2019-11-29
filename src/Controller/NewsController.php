@@ -16,11 +16,6 @@ class NewsController extends AbstractController
 {
     /**
      * Lists all News entities.
-     *
-     * @param Request  $request
-     * @param Paginate $paginate
-     *
-     * @return Response
      */
     public function indexAction(Request $request, Paginate $paginate): Response
     {
@@ -39,10 +34,6 @@ class NewsController extends AbstractController
 
     /**
      * Finds and displays a News entity.
-     *
-     * @param News $news
-     *
-     * @return Response
      */
     public function showAction(News $news): Response
     {

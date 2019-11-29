@@ -63,8 +63,6 @@ class News
     }
 
     /**
-     * @param User $createdBy
-     *
      * @return News
      */
     public function setCreatedBy(User $createdBy)

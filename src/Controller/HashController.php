@@ -38,11 +38,7 @@ class HashController extends AbstractController
     }
 
     /**
-     * @param array $data
-     *
      * @throws ValidatorException
-     *
-     * @return string
      */
     protected function getHash(array $data): string
     {

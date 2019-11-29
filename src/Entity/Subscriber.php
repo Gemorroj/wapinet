@@ -41,8 +41,6 @@ class Subscriber extends \ArrayObject
     }
 
     /**
-     * @param User $user
-     *
      * @return Subscriber
      */
     public function setUser(User $user)

@@ -18,8 +18,6 @@ class CodeType extends AbstractType
 
     /**
      * CodeType constructor.
-     *
-     * @param Code $code
      */
     public function __construct(Code $code)
     {

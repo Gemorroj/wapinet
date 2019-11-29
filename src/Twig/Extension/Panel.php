@@ -34,8 +34,6 @@ class Panel extends AbstractExtension
     }
 
     /**
-     * @param array $options
-     *
      * @return ArrayIterator
      */
     public function getPanel(array $options = [])

@@ -18,9 +18,6 @@ class SearchService extends AbstractExtension
 
     /**
      * @param Service[] $services
-     * @param string    $serviceName
-     *
-     * @return Service|null
      */
     public function searchService(array $services, string $serviceName): ?Service
     {

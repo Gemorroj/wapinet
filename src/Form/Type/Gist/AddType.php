@@ -28,9 +28,6 @@ class AddType extends AbstractType
         $builder->add('submit', SubmitType::class, ['label' => 'Добавить']);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

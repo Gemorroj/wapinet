@@ -87,11 +87,6 @@ class SubscriberCommand extends Command
         $output->writeln('All Emails sended.');
     }
 
-    /**
-     * @param Event $event
-     *
-     * @return bool
-     */
     protected function sendEmail(Event $event): bool
     {
         $siteTitle = $this->parameterBag->get('wapinet_title');

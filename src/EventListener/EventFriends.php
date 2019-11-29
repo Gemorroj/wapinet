@@ -14,9 +14,6 @@ class EventFriends implements EventSubscriberInterface
 {
     private $em;
 
-    /**
-     * @param EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
@@ -35,9 +32,6 @@ class EventFriends implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param FriendEvent $event
-     */
     public function friendAdd(FriendEvent $event): void
     {
         // Уведомление о добавлении  в друзья
@@ -77,9 +71,6 @@ class EventFriends implements EventSubscriberInterface
         $this->em->flush();
     }
 
-    /**
-     * @param FriendEvent $event
-     */
     public function friendDelete(FriendEvent $event): void
     {
         // Уведомление об удалении из друзей
@@ -119,9 +110,6 @@ class EventFriends implements EventSubscriberInterface
         $this->em->flush();
     }
 
-    /**
-     * @param FileEvent $event
-     */
     public function fileAdd(FileEvent $event): void
     {
         $user = $event->getUser();
@@ -151,9 +139,6 @@ class EventFriends implements EventSubscriberInterface
         $this->em->flush();
     }
 
-    /**
-     * @param GistEvent $event
-     */
     public function gistAdd(GistEvent $event): void
     {
         $user = $event->getUser();

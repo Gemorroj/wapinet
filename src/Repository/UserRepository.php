@@ -8,9 +8,6 @@ use Doctrine\ORM\Query;
 
 class UserRepository extends EntityRepository
 {
-    /**
-     * @return Query
-     */
     public function getOnlineUsersQuery(): Query
     {
         return $this->createQueryBuilder('u')

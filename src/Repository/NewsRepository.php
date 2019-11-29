@@ -7,9 +7,6 @@ use Doctrine\ORM\EntityRepository;
 
 class NewsRepository extends EntityRepository
 {
-    /**
-     * @return \Doctrine\ORM\Query
-     */
     public function getAllBuilder(): \Doctrine\ORM\Query
     {
         return $this->getEntityManager()->createQueryBuilder()
@@ -19,9 +16,6 @@ class NewsRepository extends EntityRepository
             ->getQuery();
     }
 
-    /**
-     * @return \Doctrine\ORM\Query
-     */
     public function getLastDate(): \Doctrine\ORM\Query
     {
         return $this->getEntityManager()->createQueryBuilder()

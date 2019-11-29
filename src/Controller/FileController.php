@@ -73,10 +73,6 @@ class FileController extends AbstractController
     }
 
     /**
-     * @param Request          $request
-     * @param SessionInterface $session
-     * @param string|null      $key
-     *
      * @return Response|RedirectResponse
      */
     public function searchAction(Request $request, SessionInterface $session, ?string $key = null): Response
@@ -120,12 +116,7 @@ class FileController extends AbstractController
     }
 
     /**
-     * @param array $data
-     * @param int   $page
-     *
      * @throws RuntimeException
-     *
-     * @return Pagerfanta
      */
     protected function searchSphinx(array $data, int $page = 1): Pagerfanta
     {
@@ -146,19 +137,11 @@ class FileController extends AbstractController
         return $client->getPagerfanta($sphinxQl, File::class);
     }
 
-    /**
-     * @return Response
-     */
     public function categoriesAction(): Response
     {
         return $this->render('File/categories.html.twig');
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
     public function hiddenAction(Request $request): Response
     {
         /** @var User $user */
@@ -179,11 +162,6 @@ class FileController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
     public function tagsAction(Request $request): Response
     {
         $page = $request->get('page', 1);
@@ -199,12 +177,7 @@ class FileController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param string  $tagName
-     *
      * @throws NotFoundHttpException
-     *
-     * @return Response
      */
     public function tagAction(Request $request, string $tagName): Response
     {
@@ -230,13 +203,7 @@ class FileController extends AbstractController
     }
 
     /**
-     * @param Request              $request
-     * @param string               $username
-     * @param UserManagerInterface $userManager
-     *
      * @throws NotFoundHttpException
-     *
-     * @return Response
      */
     public function userAction(Request $request, string $username, UserManagerInterface $userManager): Response
     {
@@ -291,13 +258,6 @@ class FileController extends AbstractController
         ]);
     }
 
-    /**
-     * @param File                    $file
-     * @param EncoderFactoryInterface $encoderFactory
-     * @param Meta                    $fileMeta
-     *
-     * @return Response
-     */
     public function viewAction(File $file, EncoderFactoryInterface $encoderFactory, Meta $fileMeta): Response
     {
         if (null !== $file->getPassword() && !$this->isGranted('ROLE_ADMIN') && (!($this->getUser() instanceof User) || !($file->getUser() instanceof User) || $file->getUser()->getId() !== $this->getUser()->getId())) {
@@ -322,12 +282,6 @@ class FileController extends AbstractController
         $file->setLastViewAt(new DateTime());
     }
 
-    /**
-     * @param File $file
-     * @param Meta $fileMeta
-     *
-     * @return Response
-     */
     protected function viewFile(File $file, Meta $fileMeta): Response
     {
         $this->checkMeta($file, $fileMeta);
@@ -342,10 +296,6 @@ class FileController extends AbstractController
         return $response;
     }
 
-    /**
-     * @param File $file
-     * @param Meta $fileMeta
-     */
     protected function checkMeta(File $file, Meta $fileMeta): void
     {
         if (null !== $file->getMeta()) {
@@ -362,13 +312,6 @@ class FileController extends AbstractController
         $file->setMeta($meta);
     }
 
-    /**
-     * @param File                    $file
-     * @param EncoderFactoryInterface $encoderFactory
-     * @param Meta                    $fileMeta
-     *
-     * @return Response
-     */
     public function passwordAction(File $file, EncoderFactoryInterface $encoderFactory, Meta $fileMeta): Response
     {
         $encoder = $encoderFactory->getEncoder($file);
@@ -438,8 +381,6 @@ class FileController extends AbstractController
     }
 
     /**
-     * @param File $file
-     *
      * @throws AccessDeniedException|NotFoundHttpException
      *
      * @return RedirectResponse|JsonResponse
@@ -463,9 +404,6 @@ class FileController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param File    $file
-     *
      * @throws AccessDeniedException|NotFoundHttpException
      *
      * @return RedirectResponse|JsonResponse
@@ -497,10 +435,6 @@ class FileController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param File    $file
-     * @param Mime    $mimeHelper
-     *
      * @throws AccessDeniedException|NotFoundHttpException
      *
      * @return RedirectResponse|Response
@@ -537,14 +471,7 @@ class FileController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param File    $data
-     * @param File    $oldData
-     * @param Mime    $mimeHelper
-     *
      * @throws FileDuplicatedException
-     *
-     * @return File
      */
     protected function editFileData(Request $request, File $data, File $oldData, Mime $mimeHelper): File
     {
@@ -596,11 +523,6 @@ class FileController extends AbstractController
     }
 
     /**
-     * @param Request                 $request
-     * @param Mime                    $mimeHelper
-     * @param EncoderFactoryInterface $encoderFactory
-     * @param BotChecker              $botChecker
-     *
      * @return RedirectResponse|Response
      */
     public function uploadAction(Request $request, Mime $mimeHelper, EncoderFactoryInterface $encoderFactory, BotChecker $botChecker): Response
@@ -647,14 +569,7 @@ class FileController extends AbstractController
     }
 
     /**
-     * @param Request                 $request
-     * @param File                    $data
-     * @param Mime                    $mimeHelper
-     * @param EncoderFactoryInterface $encoderFactory
-     *
      * @throws FileDuplicatedException
-     *
-     * @return File
      */
     protected function saveFileData(Request $request, File $data, Mime $mimeHelper, EncoderFactoryInterface $encoderFactory): File
     {
@@ -706,8 +621,6 @@ class FileController extends AbstractController
 
     /**
      * TODO: отрефакторить.
-     *
-     * @param File $file
      */
     private function makeEditFileTags(File $file): void
     {

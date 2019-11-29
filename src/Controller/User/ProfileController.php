@@ -14,9 +14,6 @@ class ProfileController extends AbstractController
     /**
      * Show custom user.
      *
-     * @param string|null          $username
-     * @param UserManagerInterface $userManager
-     *
      * @throws AccessDeniedException|UsernameNotFoundException
      *
      * @return Response

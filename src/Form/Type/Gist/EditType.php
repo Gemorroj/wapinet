@@ -28,9 +28,6 @@ class EditType extends AbstractType
         $builder->add('submit', SubmitType::class, ['label' => 'Изменить']);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

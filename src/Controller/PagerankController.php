@@ -40,11 +40,6 @@ class PagerankController extends AbstractController
         ]);
     }
 
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
     private function getPagerank(array $data): array
     {
         $url = $data['url'];

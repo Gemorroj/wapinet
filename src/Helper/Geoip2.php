@@ -16,21 +16,14 @@ class Geoip2
      */
     protected $reader;
 
-    /**
-     * @param ParameterBagInterface $parameterBag
-     */
     public function __construct(ParameterBagInterface $parameterBag)
     {
         $this->reader = new Reader($parameterBag->get('wapinet_geoip2_country_path'), ['ru']);
     }
 
     /**
-     * @param string $ip
-     *
      * @throws \GeoIp2\Exception\AddressNotFoundException
      * @throws \MaxMind\Db\Reader\InvalidDatabaseException
-     *
-     * @return Country
      */
     public function getCountry(string $ip): Country
     {

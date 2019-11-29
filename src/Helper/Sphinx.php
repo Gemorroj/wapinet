@@ -44,11 +44,6 @@ class Sphinx
         $this->maxPerPage = $parameterBag->get('wapinet_paginate_maxperpage');
     }
 
-    /**
-     * @param int $page
-     *
-     * @return SphinxQL
-     */
     public function select(int $page = 1): SphinxQL
     {
         $this->page = $page;

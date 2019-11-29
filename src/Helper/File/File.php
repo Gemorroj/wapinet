@@ -98,13 +98,7 @@ class File
     }
 
     /**
-     * @param string $directory
-     * @param string $path
-     * @param bool   $allowDirectory
-     *
      * @throws AccessDeniedException|NotFoundHttpException
-     *
-     * @return string
      */
     public function checkFile(string $directory, string $path, bool $allowDirectory = false): string
     {

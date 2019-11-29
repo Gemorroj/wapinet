@@ -59,9 +59,6 @@ class UploadType extends AbstractType
         $builder->add('submit', SubmitType::class, ['label' => 'Загрузить']);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -71,8 +68,6 @@ class UploadType extends AbstractType
 
     /**
      * Уникальное имя формы.
-     *
-     * @return string
      */
     public function getBlockPrefix(): string
     {

@@ -21,17 +21,11 @@ class Ffmpeg
      */
     private $ffprobe;
 
-    /**
-     * @param ParameterBagInterface $parameterBag
-     */
     public function __construct(ParameterBagInterface $parameterBag)
     {
         $this->parameterBag = $parameterBag;
     }
 
-    /**
-     * @return FFProbe
-     */
     private function createFfprobe(): FFProbe
     {
         return FFProbe::create([
@@ -41,9 +35,6 @@ class Ffmpeg
         ]);
     }
 
-    /**
-     * @return FFmpegOriginal
-     */
     private function createFfmpeg(): FFmpegOriginal
     {
         return FFmpegOriginal::create([
@@ -53,17 +44,11 @@ class Ffmpeg
         ]);
     }
 
-    /**
-     * @return FFmpegOriginal
-     */
     public function getFfmpeg(): FFmpegOriginal
     {
         return $this->ffmpeg ?: $this->createFfmpeg();
     }
 
-    /**
-     * @return FFProbe
-     */
     public function getFfprobe(): FFProbe
     {
         return $this->ffprobe ?: $this->createFfprobe();

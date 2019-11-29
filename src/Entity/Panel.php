@@ -47,8 +47,6 @@ class Panel extends \ArrayObject
     }
 
     /**
-     * @param User $user
-     *
      * @return Panel
      */
     public function setUser(User $user)

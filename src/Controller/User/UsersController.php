@@ -19,10 +19,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class UsersController extends AbstractController
 {
     /**
-     * @param Request          $request
-     * @param SessionInterface $session
-     * @param string|null      $key
-     *
      * @return Response|RedirectResponse
      */
     public function indexAction(Request $request, SessionInterface $session, ?string $key = null): Response

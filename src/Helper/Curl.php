@@ -50,9 +50,6 @@ class Curl
     protected $headers = [];
     protected $postData = [];
 
-    /**
-     * @param ParameterBagInterface $parameterBag
-     */
     public function __construct(ParameterBagInterface $parameterBag)
     {
         $this->parameterBag = $parameterBag;
@@ -60,8 +57,6 @@ class Curl
 
     /**
      * Инициализация.
-     *
-     * @param string|null $url
      *
      * @return Curl
      */
@@ -92,7 +87,6 @@ class Curl
     /**
      * Задаем опцию.
      *
-     * @param int   $key
      * @param mixed $value
      *
      * @return Curl
@@ -106,8 +100,6 @@ class Curl
 
     /**
      * Задаем url.
-     *
-     * @param string $value
      *
      * @return Curl
      */
@@ -139,8 +131,6 @@ class Curl
      * @param bool $strict Исключение если не удалось определить размер файла (не найден Content-Length)
      *
      *@throws LengthRequiredHttpException|LengthException
-     *
-     * @return Response
      */
     public function checkFileSize(bool $strict = true): Response
     {
@@ -166,11 +156,7 @@ class Curl
     }
 
     /**
-     * @param string $rawHeaders
-     *
      * @see http://php.net/manual/ru/function.http-parse-headers.php#112986
-     *
-     * @return array
      */
     protected function parseHeaders(string $rawHeaders): array
     {
@@ -251,8 +237,6 @@ class Curl
      * Получаем результат
      *
      * @throws RequestException
-     *
-     * @return Response
      */
     public function exec(): Response
     {
@@ -317,9 +301,6 @@ class Curl
     }
 
     /**
-     * @param string $key
-     * @param string $value
-     *
      * @return Curl
      */
     public function addHeader(string $key, string $value): self
@@ -340,9 +321,6 @@ class Curl
     }
 
     /**
-     * @param string $key
-     * @param string $value
-     *
      * @return Curl
      */
     public function addPostData(string $key, string $value): self

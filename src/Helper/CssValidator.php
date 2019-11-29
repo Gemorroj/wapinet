@@ -27,20 +27,13 @@ class CssValidator
         $this->getOptions()->setLang('ru');
     }
 
-    /**
-     * @return W3CServiceOptions
-     */
     public function getOptions(): W3CServiceOptions
     {
         return $this->cssValidator->getOptions();
     }
 
     /**
-     * @param string $css
-     *
      * @throws W3CServiceException
-     *
-     * @return W3CServiceResponse
      */
     public function validateFragment(string $css): W3CServiceResponse
     {
@@ -48,11 +41,7 @@ class CssValidator
     }
 
     /**
-     * @param File $file
-     *
      * @throws W3CServiceException
-     *
-     * @return W3CServiceResponse
      */
     public function validateFile(File $file): W3CServiceResponse
     {

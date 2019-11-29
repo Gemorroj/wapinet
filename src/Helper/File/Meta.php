@@ -62,8 +62,6 @@ class Meta
      * Получаем мета-информацию файла.
      *
      * @throws RuntimeException
-     *
-     * @return FileMeta
      */
     public function getFileMeta(): FileMeta
     {

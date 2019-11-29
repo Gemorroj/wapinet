@@ -15,11 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminController extends BaseAdminController
 {
-    /**
-     * @param Ginfo $ginfo
-     *
-     * @return Response
-     */
     public function monitoringAction(Ginfo $ginfo): Response
     {
         $info = $ginfo->getInfo();
@@ -38,20 +33,11 @@ class AdminController extends BaseAdminController
         ]);
     }
 
-    /**
-     * @param UserManagerInterface $userManager
-     *
-     * @return UserInterface
-     */
     public function createNewUserEntity(UserManagerInterface $userManager): UserInterface
     {
         return $userManager->createUser();
     }
 
-    /**
-     * @param User                 $user
-     * @param UserManagerInterface $userManage
-     */
     public function prePersistUserEntity(User $user, UserManagerInterface $userManage): void
     {
         if ($userManage instanceof UserManagerDoctrine) {
@@ -61,9 +47,6 @@ class AdminController extends BaseAdminController
         }
     }
 
-    /**
-     * @param News $news
-     */
     public function persistNewsEntity(News $news): void
     {
         $news->setCreatedBy($this->getUser());
@@ -73,8 +56,6 @@ class AdminController extends BaseAdminController
 
     /**
      * Подписка на новости.
-     *
-     * @param News $news
      */
     private function newsSubscriber(News $news): void
     {

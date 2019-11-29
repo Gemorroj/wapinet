@@ -23,8 +23,6 @@ class ArchiveRar extends Archive
     }
 
     /**
-     * @param File $file
-     *
      * @throws ArchiverException
      *
      * @return bool
@@ -49,7 +47,6 @@ class ArchiveRar extends Archive
 
     /**
      * @param string $directory
-     * @param File   $file
      *
      * @throws ArchiverException
      */
@@ -77,7 +74,6 @@ class ArchiveRar extends Archive
     }
 
     /**
-     * @param File   $file
      * @param string $entry
      * @param string $directory
      *

@@ -31,8 +31,6 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class AudioTagsController extends AbstractController
 {
     /**
-     * @param Request $request
-     *
      * @return RedirectResponse|Response
      */
     public function indexAction(Request $request): Response
@@ -155,10 +153,6 @@ class AudioTagsController extends AbstractController
     }
 
     /**
-     * @param string        $fileName
-     * @param FormInterface $form
-     * @param array         $info
-     *
      * @throws AudioException
      */
     protected function setTags(string $fileName, FormInterface $form, array $info): void
@@ -225,8 +219,6 @@ class AudioTagsController extends AbstractController
 
     /**
      * @param array $info (поддерживаются mp3, mp2, mp1, riff, mpc, flac, real, ogg)
-     *
-     * @return array
      */
     protected function getAllowedTagFormats(array $info): array
     {
@@ -269,12 +261,6 @@ class AudioTagsController extends AbstractController
         return [];
     }
 
-    /**
-     * @param string $fileName
-     * @param string $originalFileName
-     *
-     * @return BinaryFileResponse
-     */
     public function downloadAction(string $fileName, string $originalFileName): BinaryFileResponse
     {
         $file = new BinaryFileResponse($this->getFilePath($fileName));

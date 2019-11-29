@@ -21,11 +21,6 @@ class EventRepository extends EntityRepository
             ->getResult();
     }
 
-    /**
-     * @param User $user
-     *
-     * @return Query
-     */
     public function findEventsQuery(User $user): Query
     {
         return $this->createQueryBuilder('e')

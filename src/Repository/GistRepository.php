@@ -7,19 +7,11 @@ use Doctrine\ORM\EntityRepository;
 
 class GistRepository extends EntityRepository
 {
-    /**
-     * @return int
-     */
     public function countAll(): int
     {
         return $this->getEntityManager()->createQuery('SELECT COUNT(g.id) FROM App\Entity\Gist g')->getSingleScalarResult();
     }
 
-    /**
-     * @param User|null $user
-     *
-     * @return int
-     */
     public function countUser(?User $user = null): int
     {
         if (null !== $user) {
@@ -32,11 +24,6 @@ class GistRepository extends EntityRepository
         return $q->getSingleScalarResult();
     }
 
-    /**
-     * @param User|null $user
-     *
-     * @return \Doctrine\ORM\Query
-     */
     public function getListQuery(?User $user = null): \Doctrine\ORM\Query
     {
         $qb = $this->createQueryBuilder('g');

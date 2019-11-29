@@ -28,10 +28,6 @@ class Mime
     }
 
     /**
-     * @param string $url
-     *
-     * @return array
-     *
      * @see http://www.php.net/manual/ru/function.mime-content-type.php#107798
      */
     private function generateMime(string $url = 'http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types'): array
@@ -71,8 +67,6 @@ class Mime
 
     /**
      * @throws RuntimeException
-     *
-     * @return array
      */
     private function getMimeArray(): array
     {
@@ -92,11 +86,6 @@ class Mime
         return $mimeArray;
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
     public function getMimeType(string $path): string
     {
         $extension = \mb_strtolower(\pathinfo($path, PATHINFO_EXTENSION));

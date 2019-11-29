@@ -12,17 +12,11 @@ class ArchiveFileInfo extends \SplFileInfo
      */
     protected static $archiveDirectory;
 
-    /**
-     * @param string $archiveDirectory
-     */
     public static function setArchiveDirectory(string $archiveDirectory): void
     {
         self::$archiveDirectory = $archiveDirectory;
     }
 
-    /**
-     * @return string
-     */
     public function getArchiveName(): string
     {
         $explodePath = \explode(self::$archiveDirectory, $this->getPathname(), 2);

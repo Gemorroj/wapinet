@@ -141,8 +141,6 @@ class Event
     }
 
     /**
-     * @param User $user
-     *
      * @return Event
      */
     public function setUser(User $user)

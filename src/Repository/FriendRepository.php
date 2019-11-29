@@ -10,11 +10,6 @@ use Doctrine\ORM\Query\Expr\Join;
 
 class FriendRepository extends EntityRepository
 {
-    /**
-     * @param User $user
-     *
-     * @return Query
-     */
     public function getFriendsQuery(User $user): Query
     {
         return $this->createQueryBuilder('f')
@@ -26,12 +21,6 @@ class FriendRepository extends EntityRepository
             ->getQuery();
     }
 
-    /**
-     * @param User           $user
-     * @param \DateTime|null $lastActivity
-     *
-     * @return int
-     */
     public function getFriendsCount(User $user, ?\DateTime $lastActivity = null): int
     {
         $queryBuilder = $this->createQueryBuilder('f')
@@ -50,12 +39,6 @@ class FriendRepository extends EntityRepository
         return $q->getSingleScalarResult();
     }
 
-    /**
-     * @param User $user
-     * @param User $friend
-     *
-     * @return Friend|null
-     */
     public function getFriend(User $user, User $friend): ?Friend
     {
         return $this->findOneBy([

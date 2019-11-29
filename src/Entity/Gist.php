@@ -77,8 +77,6 @@ class Gist
     /**
      * Set user.
      *
-     * @param User $user
-     *
      * @return Gist
      */
     public function setUser(User $user)

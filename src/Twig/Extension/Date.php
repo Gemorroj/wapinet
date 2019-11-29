@@ -14,9 +14,6 @@ class Date extends AbstractExtension
      */
     protected $timezone;
 
-    /**
-     * @param Timezone $timezone
-     */
     public function __construct(Timezone $timezone)
     {
         $this->timezone = $timezone;
@@ -39,8 +36,6 @@ class Date extends AbstractExtension
 
     /**
      * @param DateTime|mixed $date
-     *
-     * @return string
      */
     public function getDate($date): string
     {
@@ -81,8 +76,6 @@ class Date extends AbstractExtension
 
     /**
      * @param DateTime|mixed $datetime
-     *
-     * @return string
      */
     public function getDateTime($datetime): string
     {
@@ -124,8 +117,6 @@ class Date extends AbstractExtension
 
     /**
      * @param DateTime|mixed $datetime
-     *
-     * @return string
      */
     public function getTime($datetime): string
     {
@@ -142,11 +133,6 @@ class Date extends AbstractExtension
         return '';
     }
 
-    /**
-     * @param int $seconds
-     *
-     * @return string
-     */
     public function getLength(int $seconds): string
     {
         $length = '';

@@ -10,8 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 class UnicodeController extends AbstractController
 {
     /**
-     * @param Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
@@ -47,8 +45,6 @@ class UnicodeController extends AbstractController
     }
 
     /**
-     * @param array $data
-     *
      * @return string
      */
     protected function getUnicode(array $data)
