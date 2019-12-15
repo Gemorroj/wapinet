@@ -193,7 +193,9 @@ const _commentsLoader = function ($pageContainer, xid) {
     const id = 'vkcomments_widget-' + new Date().getTime();
     $commentsContainer.attr('id', id); // заменяем id на уникальный для API вконтакте
 
+    let i = 0;
     let vkCommentsInterval = window.setInterval(function () {
+        i++;
         if ("VK" in window) {
             window.clearInterval(vkCommentsInterval);
             VK.init({
@@ -201,6 +203,9 @@ const _commentsLoader = function ($pageContainer, xid) {
                 onlyWidgets: true
             });
             VK.Widgets.Comments(id, {}, xid);
+        } else if (i > 100) {
+            window.clearInterval(vkCommentsInterval);
+            console.log('Can\'t initialize VK');
         }
     }, 100);
 };
