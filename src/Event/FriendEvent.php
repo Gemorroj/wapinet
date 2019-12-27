@@ -3,7 +3,7 @@
 namespace App\Event;
 
 use App\Entity\User;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class FriendEvent extends Event
 {
@@ -13,9 +13,6 @@ class FriendEvent extends Event
     private $user;
     private $friend;
 
-    /**
-     * Constructs an event.
-     */
     public function __construct(User $user, User $friend)
     {
         $this->user = $user;

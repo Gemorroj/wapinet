@@ -42,7 +42,7 @@ EOT
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $fixedCounts = 0;
         /** @var TagRepository $repositoryTag */
@@ -64,5 +64,7 @@ EOT
         $this->entityManager->flush();
 
         $output->writeln('Fixed '.$fixedCounts.' tags count.');
+
+        return 0;
     }
 }

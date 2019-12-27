@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Foolz\SphinxQL\Drivers\ResultSetInterface;
 use Pagerfanta\Pagerfanta;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * Pagerfanta Bridge.
@@ -60,14 +60,11 @@ class Bridge
     protected $discriminatorRepositories = [];
 
     /**
-     * @var RegistryInterface
+     * @var ManagerRegistry
      */
     protected $doctrine;
 
-    /**
-     * Bridge constructor.
-     */
-    public function __construct(RegistryInterface $doctrine)
+    public function __construct(ManagerRegistry $doctrine)
     {
         $this->doctrine = $doctrine;
     }
@@ -105,7 +102,7 @@ class Bridge
      *
      * @return Bridge
      */
-    public function setEntityManagerByName($name)
+    public function setEntityManagerByName(string $name)
     {
         return $this->setEntityManager($this->doctrine->getManager($name));
     }

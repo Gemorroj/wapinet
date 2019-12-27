@@ -67,7 +67,7 @@ class SubscriberCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var EventRepository $repository */
         $repository = $this->entityManager->getRepository(Event::class);
@@ -85,6 +85,8 @@ class SubscriberCommand extends Command
         $this->entityManager->commit();
 
         $output->writeln('All Emails sended.');
+
+        return 0;
     }
 
     protected function sendEmail(Event $event): bool

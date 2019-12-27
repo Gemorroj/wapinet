@@ -3,10 +3,16 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class GistRepository extends EntityRepository
+class GistRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, User::class);
+    }
+
     public function countAll(): int
     {
         return $this->getEntityManager()->createQuery('SELECT COUNT(g.id) FROM App\Entity\Gist g')->getSingleScalarResult();

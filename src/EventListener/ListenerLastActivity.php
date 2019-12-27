@@ -6,7 +6,7 @@ use App\Entity\User;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ListenerLastActivity
@@ -25,7 +25,7 @@ class ListenerLastActivity
     /**
      * Update the user "lastActivity" on each request.
      */
-    public function onCoreController(FilterControllerEvent $event): void
+    public function onCoreController(ControllerEvent $event): void
     {
         // Here we are checking that the current request is a "MASTER_REQUEST", and ignore any subrequest in the process (for example when doing a render() in a twig template)
         if (!$event->isMasterRequest()) {

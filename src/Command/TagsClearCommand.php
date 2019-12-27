@@ -41,7 +41,7 @@ EOT
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var TagRepository $repository */
         $repository = $this->entityManager->getRepository(Tag::class);
@@ -54,5 +54,7 @@ EOT
         $this->entityManager->flush();
 
         $output->writeln('Deleted '.\count($rows).' tags.');
+
+        return 0;
     }
 }

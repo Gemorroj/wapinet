@@ -4,7 +4,7 @@ namespace App\Event;
 
 use App\Entity\Gist;
 use App\Entity\User;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class GistEvent extends Event
 {
@@ -13,10 +13,7 @@ class GistEvent extends Event
     private $user;
     private $gist;
 
-    /**
-     * Constructs an event.
-     */
-    public function __construct(?User $user = null, Gist $gist)
+    public function __construct(?User $user, Gist $gist)
     {
         $this->user = $user;
         $this->gist = $gist;

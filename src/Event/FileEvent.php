@@ -4,7 +4,7 @@ namespace App\Event;
 
 use App\Entity\File;
 use App\Entity\User;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class FileEvent extends Event
 {
@@ -13,10 +13,7 @@ class FileEvent extends Event
     private $user;
     private $file;
 
-    /**
-     * Constructs an event.
-     */
-    public function __construct(?User $user = null, File $file)
+    public function __construct(?User $user, File $file)
     {
         $this->user = $user;
         $this->file = $file;

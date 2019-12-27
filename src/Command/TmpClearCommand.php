@@ -50,7 +50,7 @@ EOT
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $lifetime = $input->getArgument('lifetime');
         $tmpDir = $this->parameterBag->get('kernel.tmp_dir');
@@ -60,5 +60,7 @@ EOT
         $this->filesystem->remove($oldFiles);
 
         $output->writeln(\sprintf('Files over "%s" are removed. Removed "%d" files.', $lifetime, $oldFileCount));
+
+        return 0;
     }
 }

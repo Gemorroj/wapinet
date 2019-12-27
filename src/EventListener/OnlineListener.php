@@ -7,7 +7,7 @@ use App\Entity\User;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 class OnlineListener
 {
@@ -18,7 +18,7 @@ class OnlineListener
         $this->em = $em;
     }
 
-    public function onCoreController(FilterControllerEvent $event): void
+    public function onCoreController(ControllerEvent $event): void
     {
         if (!$event->isMasterRequest()) {
             return;

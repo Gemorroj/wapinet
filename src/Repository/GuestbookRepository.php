@@ -2,10 +2,17 @@
 
 namespace App\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use App\Entity\User;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class GuestbookRepository extends EntityRepository
+class GuestbookRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, User::class);
+    }
+
     public function countAll(): int
     {
         return $this->getEntityManager()->createQuery('SELECT COUNT(g.id) FROM App\Entity\Guestbook g')->getSingleScalarResult();

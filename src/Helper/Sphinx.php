@@ -6,7 +6,7 @@ use App\Pagerfanta\Sphinx\Bridge;
 use Foolz\SphinxQL\Drivers\Pdo\Connection;
 use Foolz\SphinxQL\SphinxQL;
 use Pagerfanta\Pagerfanta;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 class Sphinx
 {
     /**
-     * @var RegistryInterface
+     * @var ManagerRegistry
      */
     private $doctrine;
     /**
@@ -31,7 +31,7 @@ class Sphinx
      */
     private $page = 1;
 
-    public function __construct(RegistryInterface $doctrine, ParameterBagInterface $parameterBag)
+    public function __construct(ManagerRegistry $doctrine, ParameterBagInterface $parameterBag)
     {
         $this->doctrine = $doctrine;
 
