@@ -13,7 +13,7 @@ class FriendRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, User::class);
+        parent::__construct($registry, Friend::class);
     }
 
     public function getFriendsQuery(User $user): Query
