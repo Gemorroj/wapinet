@@ -3,10 +3,10 @@
 namespace App\Helper;
 
 use App\Pagerfanta\Sphinx\Bridge;
+use Doctrine\Persistence\ManagerRegistry;
 use Foolz\SphinxQL\Drivers\Pdo\Connection;
 use Foolz\SphinxQL\SphinxQL;
 use Pagerfanta\Pagerfanta;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**

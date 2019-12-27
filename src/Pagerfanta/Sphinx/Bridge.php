@@ -4,9 +4,9 @@ namespace App\Pagerfanta\Sphinx;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 use Foolz\SphinxQL\Drivers\ResultSetInterface;
 use Pagerfanta\Pagerfanta;
-use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * Pagerfanta Bridge.
@@ -95,8 +95,6 @@ class Bridge
 
     /**
      * Sets the name of the entity manager which should be used to transform Sphinx results to entities.
-     *
-     * @param string $name
      *
      * @throws \LogicException
      *
