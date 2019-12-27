@@ -6,11 +6,13 @@ use App\Entity\Event;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Twig\Environment;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
 
 /**
  * Subscriber.
@@ -22,13 +24,9 @@ class SubscriberCommand extends Command
      */
     private $entityManager;
     /**
-     * @var \Swift_Mailer
+     * @var MailerInterface
      */
     private $mailer;
-    /**
-     * @var Environment
-     */
-    private $twig;
     /**
      * @var LoggerInterface
      */
@@ -40,15 +38,13 @@ class SubscriberCommand extends Command
 
     public function __construct(
         EntityManagerInterface $entityManager,
-        \Swift_Mailer $mailer,
-        Environment $twig,
+        MailerInterface $mailer,
         LoggerInterface $logger,
         ParameterBagInterface $parameterBag,
         ?string $name = null)
     {
         $this->entityManager = $entityManager;
         $this->mailer = $mailer;
-        $this->twig = $twig;
         $this->logger = $logger;
         $this->parameterBag = $parameterBag;
         parent::__construct($name);
@@ -91,26 +87,25 @@ class SubscriberCommand extends Command
 
     protected function sendEmail(Event $event): bool
     {
-        $siteTitle = $this->parameterBag->get('wapinet_title');
-        $robotEmail = $this->parameterBag->get('wapinet_robot_email');
-
-        $variables = $event->getVariables();
-        $variables['subject'] = $event->getSubject();
-
-        $body = $this->twig->render('User/Subscriber/Email/'.$event->getTemplate().'.html.twig', $variables);
-
         try {
-            $message = new \Swift_Message(
-                $siteTitle.' - '.$event->getSubject(),
-                $body,
-                'text/html',
-                'UTF-8'
-            );
-            $message->setFrom($robotEmail);
-            $message->setTo($event->getUser()->getEmail());
+            $siteTitle = $this->parameterBag->get('wapinet_title');
+            $robotEmail = $this->parameterBag->get('wapinet_robot_email');
 
-            return $this->mailer->send($message) > 0;
-        } catch (\Swift_RfcComplianceException $e) {
+            $variables = $event->getVariables();
+            $variables['subject'] = $event->getSubject();
+
+            $email = (new TemplatedEmail())
+                ->from($robotEmail)
+                ->to($event->getUser()->getEmail())
+                ->subject($siteTitle.' - '.$event->getSubject())
+                ->htmlTemplate('User/Subscriber/Email/'.$event->getTemplate().'.html.twig')
+                ->context($variables)
+            ;
+
+            $this->mailer->send($email);
+
+            return true;
+        } catch (TransportExceptionInterface $e) {
             $this->logger->warning($e->getMessage(), [$e]);
 
             $event->getUser()->getSubscriber()->setEmailNews(false);
@@ -120,6 +115,6 @@ class SubscriberCommand extends Command
             $this->logger->critical($e->getMessage(), [$e]);
         }
 
-        return true;
+        return false;
     }
 }
