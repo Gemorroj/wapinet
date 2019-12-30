@@ -67,8 +67,8 @@ class FriendsController extends AbstractController
         $this->getDoctrine()->getManager()->flush();
 
         $eventDispatcher->dispatch(
-            FriendEvent::FRIEND_ADD,
-            new FriendEvent($user, $friend)
+            new FriendEvent($user, $friend),
+            FriendEvent::FRIEND_ADD
         );
 
         return $this->redirectToRoute('wapinet_user_profile', ['username' => $friend->getUsername()]);
@@ -100,8 +100,8 @@ class FriendsController extends AbstractController
         $this->getDoctrine()->getManager()->flush();
 
         $eventDispatcher->dispatch(
-            FriendEvent::FRIEND_DELETE,
-            new FriendEvent($user, $friend)
+            new FriendEvent($user, $friend),
+            FriendEvent::FRIEND_DELETE
         );
 
         return $this->redirectToRoute('wapinet_user_profile', ['username' => $friend->getUsername()]);

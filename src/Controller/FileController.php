@@ -487,7 +487,6 @@ class FileController extends AbstractController
 
             $data->setHash($hash);
             $data->setMimeType($mimeHelper->getMimeType($file->getClientOriginalName()));
-            $data->setFileSize($file->getSize());
             $data->setOriginalFileName($file->getClientOriginalName());
         }
 
@@ -585,7 +584,6 @@ class FileController extends AbstractController
 
         $data->setHash($hash);
         $data->setMimeType($mimeHelper->getMimeType($file->getClientOriginalName()));
-        $data->setFileSize($file->getSize());
         $data->setOriginalFileName($file->getClientOriginalName());
 
         $data->setUser($this->getUser());
@@ -612,8 +610,8 @@ class FileController extends AbstractController
         $entityManager->flush();
 
         $this->get(EventDispatcherInterface::class)->dispatch(
-            FileEvent::FILE_ADD,
-            new FileEvent($data->getUser(), $data)
+            new FileEvent($data->getUser(), $data),
+            FileEvent::FILE_ADD
         );
 
         return $data;

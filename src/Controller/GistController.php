@@ -98,8 +98,8 @@ class GistController extends AbstractController
                     $entityManager->flush();
 
                     $this->get(EventDispatcherInterface::class)->dispatch(
-                        GistEvent::GIST_ADD,
-                        new GistEvent($user, $gist)
+                        new GistEvent($user, $gist),
+                        GistEvent::GIST_ADD
                     );
                     $flashBag->add('notice', 'Сообщение успешно добавлено');
                 } else {

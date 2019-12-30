@@ -10,9 +10,10 @@ use const PATHINFO_FILENAME;
 use Serializable;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * File.
+ * @Vich\Uploadable
  */
 class File implements Serializable
 {
@@ -75,6 +76,7 @@ class File implements Serializable
     /**
      * @var BaseFile
      * @Assert\File
+     * @Vich\UploadableField(mapping="file", fileNameProperty="fileName", size="fileSize")
      */
     protected $file;
     /**
