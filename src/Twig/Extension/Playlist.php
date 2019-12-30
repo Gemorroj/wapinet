@@ -2,7 +2,7 @@
 
 namespace App\Twig\Extension;
 
-use App\Helper\Playlist as PlaylistHelper;
+use App\Service\Playlist as PlaylistHelper;
 use Exception;
 use M3uParser\M3uData;
 use Psr\Log\LoggerInterface;

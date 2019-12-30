@@ -2,7 +2,7 @@
 
 namespace App\Twig\Extension;
 
-use App\Helper\Torrent as TorrentHelper;
+use App\Service\Torrent as TorrentHelper;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\File;

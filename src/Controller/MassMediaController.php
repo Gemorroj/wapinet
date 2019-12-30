@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Helper\MassMedia;
+use App\Service\MassMedia;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MassMediaController extends AbstractController

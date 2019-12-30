@@ -3,8 +3,8 @@
 namespace App\Twig\Extension;
 
 use App\Entity\User;
-use App\Helper\Timezone;
 use App\Repository\FileRepository;
+use App\Service\Timezone;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Twig\Extension\AbstractExtension;

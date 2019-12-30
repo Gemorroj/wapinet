@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Form\Type\Http\HttpType;
-use App\Helper\Curl;
+use App\Service\Curl;
 use const CURLOPT_CUSTOMREQUEST;
 use const CURLOPT_POSTFIELDS;
 use Exception;

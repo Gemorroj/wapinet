@@ -12,16 +12,16 @@ use App\Form\Type\File\EditType;
 use App\Form\Type\File\PasswordType;
 use App\Form\Type\File\SearchType;
 use App\Form\Type\File\UploadType;
-use App\Helper\Archiver\Archive7z;
-use App\Helper\BotChecker;
-use App\Helper\File\Meta;
-use App\Helper\Mime;
-use App\Helper\Paginate;
-use App\Helper\Sphinx;
-use App\Helper\Timezone;
-use App\Helper\Translit;
 use App\Repository\FileRepository;
 use App\Repository\TagRepository;
+use App\Service\Archiver\Archive7z;
+use App\Service\BotChecker;
+use App\Service\File\Meta;
+use App\Service\Mime;
+use App\Service\Paginate;
+use App\Service\Sphinx;
+use App\Service\Timezone;
+use App\Service\Translit;
 use DateTime;
 use const DIRECTORY_SEPARATOR;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -368,7 +368,7 @@ class FileController extends AbstractController
         }
 
         $file = new BinaryFileResponse(
-            $this->get(\App\Helper\File\File::class)->checkFile($tmpDir, $path, true)
+            $this->get(\App\Service\File\File::class)->checkFile($tmpDir, $path, true)
         );
 
         $file->setContentDisposition(
@@ -419,7 +419,7 @@ class FileController extends AbstractController
         $em->remove($file);
 
         // кэш
-        $this->get(\App\Helper\File\File::class)->cleanupFile($file);
+        $this->get(\App\Service\File\File::class)->cleanupFile($file);
 
         // сам файл и сброс в БД
         $em->flush();
@@ -443,7 +443,7 @@ class FileController extends AbstractController
     {
         $this->denyAccessUnlessGranted('EDIT', $file);
 
-        $this->get(\App\Helper\File\File::class)->copyFileTagsToTags($file);
+        $this->get(\App\Service\File\File::class)->copyFileTagsToTags($file);
 
         $oldFile = clone $file;
         $form = $this->createForm(EditType::class, $file);
@@ -501,10 +501,10 @@ class FileController extends AbstractController
         $data->setUpdatedAtValue();
 
         if (null !== $data->getPlainPassword()) {
-            $this->get(\App\Helper\File\File::class)->setPassword($data, $data->getPlainPassword());
+            $this->get(\App\Service\File\File::class)->setPassword($data, $data->getPlainPassword());
             $data->setTags(new ArrayCollection());
         } else {
-            $this->get(\App\Helper\File\File::class)->removePassword($data);
+            $this->get(\App\Service\File\File::class)->removePassword($data);
         }
         $this->makeEditFileTags($data);
 
@@ -514,7 +514,7 @@ class FileController extends AbstractController
         // если заменен файл
         if (null !== $file) {
             // чистим старый файл и кэш
-            $this->get(\App\Helper\File\File::class)->cleanupFile($oldData);
+            $this->get(\App\Service\File\File::class)->cleanupFile($oldData);
         }
 
         $entityManager->flush();
@@ -742,7 +742,7 @@ class FileController extends AbstractController
         $services[Sphinx::class] = '?'.Sphinx::class;
         $services[LoggerInterface::class] = '?'.LoggerInterface::class;
         $services[Archive7z::class] = '?'.Archive7z::class;
-        $services[\App\Helper\File\File::class] = '?'.\App\Helper\File\File::class;
+        $services[\App\Service\File\File::class] = '?'.\App\Service\File\File::class;
         $services[EventDispatcherInterface::class] = '?'.EventDispatcherInterface::class;
         $services[Paginate::class] = Paginate::class;
 

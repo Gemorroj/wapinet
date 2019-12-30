@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Helper\Horoscope;
+use App\Service\Horoscope;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 

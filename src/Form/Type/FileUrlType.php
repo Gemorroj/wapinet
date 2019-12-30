@@ -3,7 +3,7 @@
 namespace App\Form\Type;
 
 use App\Form\DataTransformer\FileUrlDataTransformer;
-use App\Helper\Curl;
+use App\Service\Curl;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;

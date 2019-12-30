@@ -3,7 +3,7 @@
 namespace App\Tests\Form\DataTransformer;
 
 use App\Form\DataTransformer\FileUrlDataTransformer;
-use App\Helper\Curl;
+use App\Service\Curl;
 use App\Tests\WebTestCaseWapinet;
 use ReflectionMethod;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;

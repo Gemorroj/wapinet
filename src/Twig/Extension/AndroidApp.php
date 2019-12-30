@@ -2,8 +2,8 @@
 
 namespace App\Twig\Extension;
 
-use App\Helper\Apk;
-use App\Helper\Archiver\ArchiveZip;
+use App\Service\Apk;
+use App\Service\Archiver\ArchiveZip;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;

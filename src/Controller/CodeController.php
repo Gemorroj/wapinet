@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Form\Type\Code\CodeType;
-use App\Helper\Code;
+use App\Service\Code;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;

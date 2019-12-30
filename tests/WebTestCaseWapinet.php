@@ -2,7 +2,7 @@
 
 namespace App\Tests;
 
-use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 abstract class WebTestCaseWapinet extends WebTestCase
@@ -12,11 +12,11 @@ abstract class WebTestCaseWapinet extends WebTestCase
         return __DIR__.'/fixtures';
     }
 
-    protected static function loginAdmin(): Client
+    protected static function loginAdmin(): KernelBrowser
     {
         return static::createClient([], [
-            'PHP_AUTH_USER' => 'admin',
-            'PHP_AUTH_PW' => 'admin',
+            'PHP_AUTH_USER' => $_ENV['APP_USER'],
+            'PHP_AUTH_PW' => $_ENV['APP_PASSWD'],
         ]);
     }
 }

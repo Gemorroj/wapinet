@@ -10,16 +10,20 @@
     <php>
         <ini name="error_reporting" value="-1" />
         <server name="APP_ENV" value="test" force="true" />
+        <server name="KERNEL_CLASS" value="App\Kernel" />
         <server name="SHELL_VERBOSITY" value="-1" />
         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
         <server name="SYMFONY_PHPUNIT_VERSION" value="7.5" />
+
+        <env name="APP_USER" value="admin"/>
+        <env name="APP_PASSWD" value="1234"/>
 
 
         <!-- ###+ symfony/framework-bundle ### -->
         <env name="APP_ENV" value="test"/>
         <env name="APP_SECRET" value="1234"/>
-        <!-- env name="TRUSTED_PROXIES" value="127.0.0.1,127.0.0.2" -->
-        <!-- env name="TRUSTED_HOSTS" value="localhost,example.com" -->
+        <!-- env name="TRUSTED_PROXIES" value="127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16" -->
+        <!-- env name="TRUSTED_HOSTS" value="^localhost|example\.com$" -->
         <!-- ###- symfony/framework-bundle ### -->
 
         <env name="YANDEX_SEARCH_KEY" value="null"/>
@@ -37,18 +41,11 @@
         <!-- Format described at http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url -->
         <!-- For an SQLite database, use: "sqlite:///%kernel.project_dir%/var/data.db" -->
         <!-- Configure your db driver and server_version in config/packages/doctrine.yaml -->
-        <env name="DATABASE_URL" value="mysql://root:@127.0.0.1:3306/wapinet"/>
+        <env name="DATABASE_URL" value="mysql://root:@127.0.0.1:3306/wapinet?serverVersion=8.0"/>
         <!-- ###- doctrine/doctrine-bundle ### -->
 
-        <!-- ###+ symfony/swiftmailer-bundle ### -->
-        <!-- For Gmail as a transport, use: "gmail://username:password@localhost" -->
-        <!-- For a generic SMTP server, use: "smtp://localhost:25?encryption=&auth_mode=" -->
-        <!-- Delivery is disabled by default via "null://localhost" -->
-        <env name="MAILER_URL" value="null://localhost"/>
-        <!-- ###- symfony/swiftmailer-bundle ### -->
-
         <!-- ###+ symfony/mailer ### -->
-        <!-- MAILER_DSN=smtp://localhost -->
+        <env name="MAILER_DSN" value="smtp://localhost"/>
         <!-- ###- symfony/mailer ### -->
     </php>
 

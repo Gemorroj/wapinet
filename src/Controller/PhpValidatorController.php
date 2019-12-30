@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Form\Type\PhpValidator\PhpValidatorType;
-use App\Helper\PhpValidator;
+use App\Service\PhpValidator;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;

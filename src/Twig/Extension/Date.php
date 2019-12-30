@@ -2,7 +2,7 @@
 
 namespace App\Twig\Extension;
 
-use App\Helper\Timezone;
+use App\Service\Timezone;
 use DateTime;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;

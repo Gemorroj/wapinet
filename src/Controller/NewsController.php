@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\News;
-use App\Helper\Paginate;
 use App\Repository\NewsRepository;
+use App\Service\Paginate;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

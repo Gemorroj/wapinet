@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Form\Type\Hash\HashType;
-use App\Helper\Hash;
+use App\Service\Hash;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;

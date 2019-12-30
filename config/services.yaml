@@ -72,5 +72,5 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
 
-    App\Helper\File\Meta:
+    App\Service\File\Meta:
         $imagine: '@liip_imagine'

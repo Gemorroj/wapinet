@@ -2,7 +2,7 @@
 
 namespace App\Twig\Extension;
 
-use App\Helper\Archiver\Archive7z;
+use App\Service\Archiver\Archive7z;
 use Archive7z\Entry;
 use Exception;
 use Psr\Log\LoggerInterface;

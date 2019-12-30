@@ -2,7 +2,7 @@
 
 namespace App\Twig\Extension;
 
-use App\Helper\Ffmpeg as FfmpegHelper;
+use App\Service\Ffmpeg as FfmpegHelper;
 use Exception;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\Format\Video\DefaultVideo;

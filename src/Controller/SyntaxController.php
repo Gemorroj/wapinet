@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Helper\PhpValidator;
+use App\Service\PhpValidator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

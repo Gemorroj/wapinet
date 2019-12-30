@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Helper\Curl;
+use App\Service\Curl;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

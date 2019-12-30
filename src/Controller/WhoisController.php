@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Exception\WhoisException;
 use App\Form\Type\Whois\WhoisType;
-use App\Helper\Phpwhois;
+use App\Service\Phpwhois;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;

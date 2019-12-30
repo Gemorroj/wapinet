@@ -3,7 +3,7 @@
 namespace App\Twig\Extension;
 
 use App\Exception\ArchiverException;
-use App\Helper\Archiver\ArchiveZip;
+use App\Service\Archiver\ArchiveZip;
 use Exception;
 use const PATHINFO_EXTENSION;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;

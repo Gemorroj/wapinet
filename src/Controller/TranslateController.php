@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Form\Type\Translate\TranslateType;
-use App\Helper\Curl;
+use App\Service\Curl;
 use const DIRECTORY_SEPARATOR;
 use Exception;
 use RuntimeException;

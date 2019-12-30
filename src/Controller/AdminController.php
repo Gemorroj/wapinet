@@ -6,7 +6,7 @@ use App\Entity\Event;
 use App\Entity\File;
 use App\Entity\News;
 use App\Entity\User;
-use App\Helper\Ginfo;
+use App\Service\Ginfo;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController as BaseAdminController;
 use FOS\UserBundle\Doctrine\UserManager as UserManagerDoctrine;
 use FOS\UserBundle\Model\UserInterface;
@@ -91,7 +91,7 @@ class AdminController extends BaseAdminController
     {
         switch (true) {
             case $entity instanceof File:
-                $this->get(\App\Helper\File\File::class)->cleanupFile($entity);
+                $this->get(\App\Service\File\File::class)->cleanupFile($entity);
                 break;
         }
     }
@@ -99,7 +99,7 @@ class AdminController extends BaseAdminController
     public static function getSubscribedServices(): array
     {
         return parent::getSubscribedServices() + [
-            \App\Helper\File\File::class,
+            \App\Service\File\File::class,
         ];
     }
 }

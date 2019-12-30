@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Helper\Rates;
+use App\Service\Rates;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RatesController extends AbstractController

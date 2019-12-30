@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Helper\Bash;
+use App\Service\Bash;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 

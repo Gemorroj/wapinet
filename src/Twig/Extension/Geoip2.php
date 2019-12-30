@@ -2,7 +2,7 @@
 
 namespace App\Twig\Extension;
 
-use App\Helper\Geoip2 as Geoip2Helper;
+use App\Service\Geoip2 as Geoip2Helper;
 use Exception;
 use GeoIp2\Model\Country;
 use Twig\Extension\AbstractExtension;

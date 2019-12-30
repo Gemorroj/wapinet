@@ -4,7 +4,7 @@ namespace App\Form\DataTransformer;
 
 use App\Entity\File\FileContent;
 use App\Entity\File\FileUrl;
-use App\Helper\Curl;
+use App\Service\Curl;
 use const CURLOPT_FILE;
 use const CURLOPT_HEADER;
 use const PHP_URL_PATH;

@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Form\Type\HtmlValidator\HtmlValidatorType;
-use App\Helper\HtmlValidator;
+use App\Service\HtmlValidator;
 use Exception;
 use HTMLValidator\Response as HTMLValidatorResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Form\Type\Pagerank\PagerankType;
-use App\Helper\Curl;
+use App\Service\Curl;
 use const CURLOPT_POST;
 use const CURLOPT_POSTFIELDS;
 use const ENT_XML1;

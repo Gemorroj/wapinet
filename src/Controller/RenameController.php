@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Form\Type\Rename\RenameType;
-use App\Helper\Translit;
+use App\Service\Translit;
 use Exception;
 use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

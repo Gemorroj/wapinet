@@ -4,10 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Guestbook;
 use App\Form\Type\Guestbook\MessageType;
-use App\Helper\BotChecker;
-use App\Helper\Paginate;
-use App\Helper\StopSpam;
 use App\Repository\GuestbookRepository;
+use App\Service\BotChecker;
+use App\Service\Paginate;
+use App\Service\StopSpam;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

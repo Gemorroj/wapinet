@@ -4,10 +4,10 @@ namespace App\Controller;
 
 use App\Exception\ArchiverException;
 use App\Form\Type\Archiver\AddType;
-use App\Helper\Archiver\Archive7z;
-use App\Helper\Archiver\ArchiveRar;
-use App\Helper\Archiver\ArchiveZip;
-use App\Helper\Translit;
+use App\Service\Archiver\Archive7z;
+use App\Service\Archiver\ArchiveRar;
+use App\Service\Archiver\ArchiveZip;
+use App\Service\Translit;
 use const DIRECTORY_SEPARATOR;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -114,7 +114,7 @@ class ArchiverController extends AbstractController
         $archiveDirectory = $this->checkArchiveDirectory($archive);
 
         $file = new BinaryFileResponse(
-            $this->get(\App\Helper\File\File::class)->checkFile($archiveDirectory, $path, false)
+            $this->get(\App\Service\File\File::class)->checkFile($archiveDirectory, $path, false)
         );
 
         $file->setContentDisposition(
@@ -134,7 +134,7 @@ class ArchiverController extends AbstractController
         $path = $request->get('path');
         $archiveDirectory = $this->checkArchiveDirectory($archive);
 
-        $file = $this->get(\App\Helper\File\File::class)->checkFile($archiveDirectory, $path, true);
+        $file = $this->get(\App\Service\File\File::class)->checkFile($archiveDirectory, $path, true);
 
         $this->get(Filesystem::class)->remove($file);
 
@@ -276,7 +276,7 @@ class ArchiverController extends AbstractController
         $services[ArchiveZip::class] = '?'.ArchiveZip::class;
         $services[ArchiveRar::class] = '?'.ArchiveRar::class;
         $services[Filesystem::class] = '?'.Filesystem::class;
-        $services[\App\Helper\File\File::class] = '?'.\App\Helper\File\File::class;
+        $services[\App\Service\File\File::class] = '?'.\App\Service\File\File::class;
 
         return $services;
     }

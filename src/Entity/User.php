@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
-use Symfony\Component\Intl\Intl;
+use Symfony\Component\Intl\Countries;
 
 /**
  * User.
@@ -143,13 +143,10 @@ class User extends BaseUser
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getCountryName()
+    public function getCountryName(): ?string
     {
         if (null !== $this->getCountry()) {
-            return Intl::getRegionBundle()->getCountryName($this->getCountry());
+            return Countries::getName($this->getCountry());
         }
 
         return null;

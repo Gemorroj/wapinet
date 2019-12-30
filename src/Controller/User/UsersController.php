@@ -4,9 +4,9 @@ namespace App\Controller\User;
 
 use App\Entity\User;
 use App\Form\Type\User\SearchType;
-use App\Helper\Paginate;
-use App\Helper\Sphinx;
 use App\Repository\UserRepository;
+use App\Service\Paginate;
+use App\Service\Sphinx;
 use Exception;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

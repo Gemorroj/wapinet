@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Form\Type\CssValidator\CssValidatorType;
-use App\Helper\CssValidator;
+use App\Service\CssValidator;
 use CSSValidator\Response as CSSValidatorResponse;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
