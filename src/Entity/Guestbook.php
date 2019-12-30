@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Guestbook.
  */
@@ -33,6 +35,7 @@ class Guestbook
     protected $updatedAt;
     /**
      * @var string
+     * @Assert\Length(max=5000, allowEmptyString="false")
      */
     protected $message;
 

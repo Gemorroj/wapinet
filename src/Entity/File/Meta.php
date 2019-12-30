@@ -14,10 +14,8 @@ class Meta
 
     /**
      * @param string $key
-     *
-     * @return bool
      */
-    public function has($key)
+    public function has($key): bool
     {
         return isset($this->meta[$key]);
     }
@@ -29,7 +27,7 @@ class Meta
      */
     public function get($key)
     {
-        return isset($this->meta[$key]) ? $this->meta[$key] : null;
+        return $this->meta[$key] ?? null;
     }
 
     /**

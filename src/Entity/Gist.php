@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Gist.
  */
@@ -33,10 +35,12 @@ class Gist
     protected $updatedAt;
     /**
      * @var string
+     * @Assert\Length(max=4294967295, allowEmptyString="false")
      */
     protected $body;
     /**
      * @var string
+     * @Assert\Length(max=5000, allowEmptyString="false")
      */
     protected $subject;
 

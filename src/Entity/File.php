@@ -8,9 +8,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use const PATHINFO_FILENAME;
 use Serializable;
-use function serialize;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
-use function unserialize;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * File.
@@ -75,6 +74,7 @@ class File implements Serializable
     protected $fileName;
     /**
      * @var BaseFile
+     * @Assert\File
      */
     protected $file;
     /**
@@ -83,6 +83,7 @@ class File implements Serializable
     protected $originalFileName;
     /**
      * @var string
+     * @Assert\Length(max=5000, allowEmptyString="false")
      */
     protected $description;
     /**
