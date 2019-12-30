@@ -181,7 +181,7 @@ class Curl
 
                 $key = $h[0];
             } else {
-                if ("\t" === \mb_substr($h[0], 0, 1)) {
+                if (0 === \mb_strpos($h[0], "\t")) {
                     $headers[$key] .= "\r\n\t".\trim($h[0]);
                 } elseif (!$key) {
                     $headers[0] = \trim($h[0]);

@@ -41,9 +41,9 @@ class MassMedia
             if ($v->enclosure) {
                 foreach ($v->enclosure as $enclosure) {
                     $type = (string) $enclosure->attributes()->type;
-                    if ('image/' === \mb_substr($type, 0, 6)) {
+                    if (0 === \mb_strpos($type, 'image/')) {
                         $photo = (string) $enclosure->attributes()->url;
-                    } elseif ('video/' === \mb_substr($type, 0, 6)) {
+                    } elseif (0 === \mb_strpos($type, 'video/')) {
                         $video = (string) $enclosure->attributes()->url;
                     }
                 }
@@ -88,9 +88,9 @@ class MassMedia
             if ($v->enclosure) {
                 foreach ($v->enclosure as $enclosure) {
                     $type = (string) $enclosure->attributes()->type;
-                    if ('image/' === \mb_substr($type, 0, 6)) {
+                    if (0 === \mb_strpos($type, 'image/')) {
                         $photo = (string) $enclosure->attributes()->url;
-                    } elseif ('video/' === \mb_substr($type, 0, 6)) {
+                    } elseif (0 === \mb_strpos($type, 'video/')) {
                         $video = (string) $enclosure->attributes()->url;
                     }
                 }

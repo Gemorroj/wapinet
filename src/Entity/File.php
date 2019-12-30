@@ -628,7 +628,7 @@ class File implements Serializable
      */
     public function isImage()
     {
-        return 0 === \mb_strpos($this->getMimeType(), 'image/') || 'application/postscript' === $this->getMimeType() || 'application/illustrator' === $this->getMimeType();
+        return 0 === \strpos($this->getMimeType(), 'image/') || 'application/postscript' === $this->getMimeType() || 'application/illustrator' === $this->getMimeType();
     }
 
     /**
@@ -636,7 +636,7 @@ class File implements Serializable
      */
     public function isVideo()
     {
-        return 0 === \mb_strpos($this->getMimeType(), 'video/') || 'application/vnd.rn-realmedia' === $this->getMimeType();
+        return 0 === \strpos($this->getMimeType(), 'video/') || 'application/vnd.rn-realmedia' === $this->getMimeType();
     }
 
     /**
@@ -644,7 +644,7 @@ class File implements Serializable
      */
     public function isAudio()
     {
-        return 0 === \mb_strpos($this->getMimeType(), 'audio/') && 'audio/x-mpegurl' !== $this->getMimeType();
+        return 0 === \strpos($this->getMimeType(), 'audio/') && 'audio/x-mpegurl' !== $this->getMimeType();
     }
 
     /**
@@ -652,7 +652,7 @@ class File implements Serializable
      */
     public function isText()
     {
-        return 0 === \mb_strpos($this->getMimeType(), 'text/');
+        return 0 === \strpos($this->getMimeType(), 'text/');
     }
 
     /**
@@ -660,7 +660,7 @@ class File implements Serializable
      */
     public function isXml()
     {
-        return 'application/xml' === $this->getMimeType() || false !== \mb_strpos($this->getMimeType(), '+xml');
+        return 'application/xml' === $this->getMimeType() || false !== \strpos($this->getMimeType(), '+xml');
     }
 
     /**

@@ -15,7 +15,7 @@ return PhpCsFixer\Config::create()
         'compact_nullable_typehint' => true,
         'linebreak_after_opening_tag' => true,
         'list_syntax' => ['syntax' => 'short'],
-        'mb_str_functions' => true,
+        //'mb_str_functions' => true,
         'native_function_invocation' => true,
         'no_null_property_initialization' => true,
         'no_useless_else' => true,

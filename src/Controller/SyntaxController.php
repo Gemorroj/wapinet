@@ -54,7 +54,7 @@ class SyntaxController extends AbstractController
 
     protected function codeSize(string $source): string
     {
-        $size = \mb_strlen($source);
+        $size = \strlen($source);
 
         if ($size < 1024) {
             return $size.' b';

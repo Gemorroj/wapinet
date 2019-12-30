@@ -121,7 +121,7 @@ class PagerankController extends AbstractController
             <div class="sd" id="resultStats">About 120,000 results</div>
              */
 
-            if (\mb_strpos($response->getContent(), 'did not match any documents')) {
+            if (\strpos($response->getContent(), 'did not match any documents')) {
                 $out = '0';
             } else {
                 \preg_match('/<div(?:.+)id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);
@@ -160,7 +160,7 @@ class PagerankController extends AbstractController
             <div class="sd" id="resultStats">About 7,720 results</div>
              */
 
-            if (\mb_strpos($response->getContent(), 'did not match any documents')) {
+            if (\strpos($response->getContent(), 'did not match any documents')) {
                 $out = '0';
             } else {
                 \preg_match('/<div(?:.+)id="resultStats">(.+?)<\/div>/', $response->getContent(), $match);

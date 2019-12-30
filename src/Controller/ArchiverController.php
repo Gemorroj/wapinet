@@ -148,7 +148,7 @@ class ArchiverController extends AbstractController
     {
         $path = \str_replace('\\', '/', $path);
 
-        if (false !== \mb_strpos($path, '../')) {
+        if (false !== \strpos($path, '../')) {
             throw $this->createAccessDeniedException('Запрещен доступ: "'.$path.'"".');
         }
 

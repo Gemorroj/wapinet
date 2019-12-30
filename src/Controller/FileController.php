@@ -17,7 +17,6 @@ use App\Repository\TagRepository;
 use App\Service\Archiver\Archive7z;
 use App\Service\BotChecker;
 use App\Service\File\Meta;
-use App\Service\Mime;
 use App\Service\Paginate;
 use App\Service\Sphinx;
 use App\Service\Timezone;
@@ -44,6 +43,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Mime\MimeTypes;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -439,7 +439,7 @@ class FileController extends AbstractController
      *
      * @return RedirectResponse|Response
      */
-    public function editAction(Request $request, File $file, Mime $mimeHelper): Response
+    public function editAction(Request $request, File $file): Response
     {
         $this->denyAccessUnlessGranted('EDIT', $file);
 
@@ -453,7 +453,7 @@ class FileController extends AbstractController
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
-                    $this->editFileData($request, $form->getData(), $oldFile, $mimeHelper);
+                    $this->editFileData($request, $form->getData(), $oldFile);
 
                     $url = $this->generateUrl('file_view', ['id' => $file->getId()], Router::ABSOLUTE_URL);
 
@@ -473,7 +473,7 @@ class FileController extends AbstractController
     /**
      * @throws FileDuplicatedException
      */
-    protected function editFileData(Request $request, File $data, File $oldData, Mime $mimeHelper): File
+    protected function editFileData(Request $request, File $data, File $oldData): File
     {
         /** @var UploadedFile|null $file */
         $file = $data->getFile();
@@ -486,8 +486,13 @@ class FileController extends AbstractController
             }
 
             $data->setHash($hash);
-            $data->setMimeType($mimeHelper->getMimeType($file->getClientOriginalName()));
             $data->setOriginalFileName($file->getClientOriginalName());
+
+            /*
+            $mimes = (new MimeTypes())->getMimeTypes($file->getClientOriginalExtension());
+            $data->setMimeType($mimes ? $mimes[0] : 'application/octet-stream');
+            */
+            $data->setMimeType((new MimeTypes())->guessMimeType($file->getPathname()) ?: 'application/octet-stream');
         }
 
         // обновляем ip и браузер только если файл редактирует владелец
@@ -524,7 +529,7 @@ class FileController extends AbstractController
     /**
      * @return RedirectResponse|Response
      */
-    public function uploadAction(Request $request, Mime $mimeHelper, EncoderFactoryInterface $encoderFactory, BotChecker $botChecker): Response
+    public function uploadAction(Request $request, EncoderFactoryInterface $encoderFactory, BotChecker $botChecker): Response
     {
         $form = $this->createForm(UploadType::class);
 
@@ -535,7 +540,7 @@ class FileController extends AbstractController
                 if ($form->isValid()) {
                     $botChecker->checkRequest($request);
 
-                    $file = $this->saveFileData($request, $form->getData(), $mimeHelper, $encoderFactory);
+                    $file = $this->saveFileData($request, $form->getData(), $encoderFactory);
 
                     // просмотр файла авторизованными пользователями
                     if ($this->isGranted('ROLE_USER')) {
@@ -570,7 +575,7 @@ class FileController extends AbstractController
     /**
      * @throws FileDuplicatedException
      */
-    protected function saveFileData(Request $request, File $data, Mime $mimeHelper, EncoderFactoryInterface $encoderFactory): File
+    protected function saveFileData(Request $request, File $data, EncoderFactoryInterface $encoderFactory): File
     {
         /** @var UploadedFile $file */
         $file = $data->getFile();
@@ -583,8 +588,13 @@ class FileController extends AbstractController
         }
 
         $data->setHash($hash);
-        $data->setMimeType($mimeHelper->getMimeType($file->getClientOriginalName()));
         $data->setOriginalFileName($file->getClientOriginalName());
+
+        /*
+        $mimes = (new MimeTypes())->getMimeTypes($file->getClientOriginalExtension());
+        $data->setMimeType($mimes ? $mimes[0] : 'application/octet-stream');
+        */
+        $data->setMimeType((new MimeTypes())->guessMimeType($file->getPathname()) ?: 'application/octet-stream');
 
         $data->setUser($this->getUser());
         $data->setIp($request->getClientIp());
