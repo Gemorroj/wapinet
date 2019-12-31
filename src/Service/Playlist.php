@@ -7,9 +7,6 @@ use M3uParser\M3uParser;
 use M3uParser\Tag\ExtInf;
 use Symfony\Component\HttpFoundation\File\File;
 
-/**
- * Playlist хэлпер
- */
 class Playlist
 {
     /**
@@ -17,19 +14,13 @@ class Playlist
      */
     protected $m3uParser;
 
-    /**
-     * Конструктор
-     */
     public function __construct()
     {
         $this->m3uParser = new M3uParser();
         $this->m3uParser->addTag(ExtInf::class);
     }
 
-    /**
-     * @return M3uData
-     */
-    public function parseFile(File $file)
+    public function parseFile(File $file): M3uData
     {
         return $this->m3uParser->parseFile($file->getPathname());
     }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1edc34f931d5ee80742d3c7cae8ccde4",
+    "content-hash": "c9670e1f8543b193e16ec60fcdabdad1",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -1734,24 +1734,25 @@
         },
         {
             "name": "gemorroj/archive7z",
-            "version": "4.0.0",
+            "version": "5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/Archive7z.git",
-                "reference": "301a0d0733e503236127020f42e4d533c078008e"
+                "reference": "daa6442d96820fb27a6671996a381036d7909786"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/Archive7z/zipball/301a0d0733e503236127020f42e4d533c078008e",
-                "reference": "301a0d0733e503236127020f42e4d533c078008e",
+                "url": "https://api.github.com/repos/Gemorroj/Archive7z/zipball/daa6442d96820fb27a6671996a381036d7909786",
+                "reference": "daa6442d96820fb27a6671996a381036d7909786",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6",
-                "symfony/process": "^3.3|^4.0"
+                "php": "^7.1.3",
+                "symfony/process": "^4.0|^5.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.7"
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "phpunit/phpunit": "^7.5"
             },
             "type": "library",
             "autoload": {
@@ -1776,27 +1777,29 @@
                 "archive",
                 "p7zip"
             ],
-            "time": "2018-02-26T11:02:04+00:00"
+            "time": "2019-12-31T09:55:56+00:00"
         },
         {
             "name": "gemorroj/cssvalidator",
-            "version": "1.1.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/CSSValidator.git",
-                "reference": "dce2a0c826c7d042176934ca9499ec4abeeb12f6"
+                "reference": "6e68787690fb8804c8549cf21c9fa2f234e4e456"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/CSSValidator/zipball/dce2a0c826c7d042176934ca9499ec4abeeb12f6",
-                "reference": "dce2a0c826c7d042176934ca9499ec4abeeb12f6",
+                "url": "https://api.github.com/repos/Gemorroj/CSSValidator/zipball/6e68787690fb8804c8549cf21c9fa2f234e4e456",
+                "reference": "6e68787690fb8804c8549cf21c9fa2f234e4e456",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "ext-dom": "*",
+                "php": "^7.1.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.8|~5.0"
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "phpunit/phpunit": "^7.5"
             },
             "type": "library",
             "autoload": {
@@ -1814,20 +1817,20 @@
                 }
             ],
             "description": "W3C CSS Validator service.",
-            "time": "2017-06-20T15:08:52+00:00"
+            "time": "2019-12-31T10:04:13+00:00"
         },
         {
             "name": "gemorroj/ginfo",
-            "version": "dev-master",
+            "version": "5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/ginfo.git",
-                "reference": "513b4ad39d8b627df12845abcbd830e45709604e"
+                "reference": "e5af6016534368f1adb88efe8eaac0f27a4a2a07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/513b4ad39d8b627df12845abcbd830e45709604e",
-                "reference": "513b4ad39d8b627df12845abcbd830e45709604e",
+                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/e5af6016534368f1adb88efe8eaac0f27a4a2a07",
+                "reference": "e5af6016534368f1adb88efe8eaac0f27a4a2a07",
                 "shasum": ""
             },
             "require": {
@@ -1835,11 +1838,11 @@
                 "ext-mbstring": "*",
                 "ext-pcre": "*",
                 "php": "^7.1.3",
-                "symfony/process": "^4.0|^5.0"
+                "symfony/process": "^4.2|^5.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.16",
-                "phpstan/phpstan": "^0.11",
+                "phpstan/phpstan": "^0.12",
                 "phpunit/phpunit": "^7.5"
             },
             "type": "library",
@@ -1874,27 +1877,29 @@
                 "specs",
                 "system"
             ],
-            "time": "2019-11-29T11:29:48+00:00"
+            "time": "2019-12-31T12:26:23+00:00"
         },
         {
             "name": "gemorroj/htmlvalidator",
-            "version": "1.1.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/HTMLValidator.git",
-                "reference": "47dc992018bb8194afa77b925601b84623c33090"
+                "reference": "56465991a74eec40a4eb5d61bb227f171d557619"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/HTMLValidator/zipball/47dc992018bb8194afa77b925601b84623c33090",
-                "reference": "47dc992018bb8194afa77b925601b84623c33090",
+                "url": "https://api.github.com/repos/Gemorroj/HTMLValidator/zipball/56465991a74eec40a4eb5d61bb227f171d557619",
+                "reference": "56465991a74eec40a4eb5d61bb227f171d557619",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "ext-dom": "*",
+                "php": "^7.1.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.8|~5.0"
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "phpunit/phpunit": "^7.5"
             },
             "type": "library",
             "autoload": {
@@ -1912,27 +1917,28 @@
                 }
             ],
             "description": "W3C HTML Validator service.",
-            "time": "2017-06-20T15:07:34+00:00"
+            "time": "2019-12-31T10:48:51+00:00"
         },
         {
             "name": "gemorroj/m3u-parser",
-            "version": "4.0.0",
+            "version": "5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/M3uParser.git",
-                "reference": "2dcd4eaa7aaf1c4970ab472bbaacaa7a2838235b"
+                "reference": "ff03a37231ba54f16dc6eb1ac6fbe80be9f9840b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/M3uParser/zipball/2dcd4eaa7aaf1c4970ab472bbaacaa7a2838235b",
-                "reference": "2dcd4eaa7aaf1c4970ab472bbaacaa7a2838235b",
+                "url": "https://api.github.com/repos/Gemorroj/M3uParser/zipball/ff03a37231ba54f16dc6eb1ac6fbe80be9f9840b",
+                "reference": "ff03a37231ba54f16dc6eb1ac6fbe80be9f9840b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6"
+                "php": "^7.1.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.7"
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "phpunit/phpunit": "^7.5"
             },
             "type": "library",
             "autoload": {
@@ -1955,7 +1961,7 @@
                 "m3u8",
                 "playlist"
             ],
-            "time": "2018-02-26T12:04:40+00:00"
+            "time": "2019-11-29T13:43:18+00:00"
         },
         {
             "name": "gemorroj/phpwhois",
@@ -1993,24 +1999,24 @@
         },
         {
             "name": "gemorroj/stop-spam",
-            "version": "3.0.0",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/StopSpam.git",
-                "reference": "c02f244a0726742059ef009473b589873dd9ed0a"
+                "reference": "096eec516717c7d09e4e7df2232b3c69ed82b827"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/StopSpam/zipball/c02f244a0726742059ef009473b589873dd9ed0a",
-                "reference": "c02f244a0726742059ef009473b589873dd9ed0a",
+                "url": "https://api.github.com/repos/Gemorroj/StopSpam/zipball/096eec516717c7d09e4e7df2232b3c69ed82b827",
+                "reference": "096eec516717c7d09e4e7df2232b3c69ed82b827",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1.3",
-                "symfony/http-client": "^4.3"
+                "symfony/http-client": "^4.4"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.14",
+                "friendsofphp/php-cs-fixer": "^2.16",
                 "phpunit/phpunit": "^7.5"
             },
             "type": "library",
@@ -2037,28 +2043,29 @@
                 "spam-protection",
                 "stopforumspam"
             ],
-            "time": "2019-06-08T08:23:17+00:00"
+            "time": "2019-12-31T11:16:16+00:00"
         },
         {
             "name": "gemorroj/syntax",
-            "version": "3.0.0",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/Syntax.git",
-                "reference": "e1dc3d89eff340f79de3f4d82a9d5b07665c440c"
+                "reference": "6ef3d4be02bd2e3917056bc57d5d7c4ceb22974b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/Syntax/zipball/e1dc3d89eff340f79de3f4d82a9d5b07665c440c",
-                "reference": "e1dc3d89eff340f79de3f4d82a9d5b07665c440c",
+                "url": "https://api.github.com/repos/Gemorroj/Syntax/zipball/6ef3d4be02bd2e3917056bc57d5d7c4ceb22974b",
+                "reference": "6ef3d4be02bd2e3917056bc57d5d7c4ceb22974b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6",
-                "symfony/process": "^3.3|^4.0"
+                "php": "^7.1.3",
+                "symfony/process": "^4.2|5.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.7"
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "phpunit/phpunit": "^7.5"
             },
             "type": "library",
             "autoload": {
@@ -2076,28 +2083,29 @@
                 }
             ],
             "description": "PHP code syntax checker.",
-            "time": "2018-04-09T17:07:04+00:00"
+            "time": "2019-12-31T11:29:07+00:00"
         },
         {
             "name": "gemorroj/xbbcode",
-            "version": "2.3.0",
+            "version": "2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/xBBCode.git",
-                "reference": "c8e64cd80110dfc5c76ea84e8dd67600596442f7"
+                "reference": "7f26dd796339cf08e98e192d60a602ad5c7f7724"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/xBBCode/zipball/c8e64cd80110dfc5c76ea84e8dd67600596442f7",
-                "reference": "c8e64cd80110dfc5c76ea84e8dd67600596442f7",
+                "url": "https://api.github.com/repos/Gemorroj/xBBCode/zipball/7f26dd796339cf08e98e192d60a602ad5c7f7724",
+                "reference": "7f26dd796339cf08e98e192d60a602ad5c7f7724",
                 "shasum": ""
             },
             "require": {
                 "geshi/geshi": "^1.0.9",
-                "php": ">=5.6"
+                "php": "^7.1.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.7"
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "phpunit/phpunit": "^7.5"
             },
             "type": "library",
             "autoload": {
@@ -2126,7 +2134,7 @@
                 "bbcode",
                 "xbbcode"
             ],
-            "time": "2019-03-08T11:26:09+00:00"
+            "time": "2019-12-31T12:05:38+00:00"
         },
         {
             "name": "geoip2/geoip2",
@@ -9269,8 +9277,7 @@
         "friendsofsymfony/user-bundle": 20,
         "tufanbarisyildirim/php-apk-parser": 20,
         "seostats/seostats": 20,
-        "gemorroj/phpwhois": 20,
-        "gemorroj/ginfo": 20
+        "gemorroj/phpwhois": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
