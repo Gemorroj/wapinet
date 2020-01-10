@@ -3,10 +3,10 @@
 ##### Лицензия GPL v3
 
 ##### Используются:
-- Symfony 4.x
+- Symfony 4.4
 - Jquery Mobile
 - PHP 7.3
-- Mariadb 10.3
+- MySQL 8.0
 - Sphinx
 - p7zip
 - ffmpeg
@@ -14,8 +14,8 @@
 
 ### Базовая установка (актуально для Centos 7)
 - Отключить `selinux`
-- Установить дополнительные репозитории `epel`, `remi`, `nginx`, `mysql`/`mariadb`
-- Установить Mariadb 10.3 `yum install mysql mysql-community-server`
+- Установить дополнительные репозитории `epel`, `remi`, `nginx`, `mysql`
+- Установить MySQL 8.0 `yum install mysql-server`
 - Установить Nginx `yum install nginx`
 - Установить php 7.3 `yum install php-fpm php-cli php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-pecl-apcu php-pecl-zip php-process php-xml`
 - Установить cron, если не установлен `yum install cronie`
@@ -285,7 +285,6 @@ server {
 ### TODO:
 - использовать новую систему конфигураций https://symfony.com/blog/improvements-to-the-handling-of-env-files-for-all-symfony-versions
 - заменить свою curl прослойку на https://github.com/symfony/http-client
-- Перевести на mysql 8
 - Избавится от pagefanta - https://github.com/symfony/demo/commit/65872cde5cb3dc7bdbb163a79a7ea8f96acb132f
 - Переделать интерфейс на vue/react/angular (огромная задача)
 - переделать редактор аудиотегов на https://github.com/duncan3dc/meta-audio/issues/3 (когда будут картинки)
