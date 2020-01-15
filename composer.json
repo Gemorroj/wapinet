@@ -43,7 +43,7 @@
         "james-heinrich/getid3": "^1.9.19",
         "vich/uploader-bundle": "^1.13",
         "liip/imagine-bundle": "^2.3",
-        "gregwar/captcha-bundle": "2.0.*",
+        "gregwar/captcha-bundle": "^2.1.1",
         "tufanbarisyildirim/php-apk-parser": "dev-master",
         "geoip2/geoip2": "^2.10",
         "christeredvartsen/php-bittorrent": "^1.1",
