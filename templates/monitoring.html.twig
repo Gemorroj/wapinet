@@ -234,8 +234,8 @@
                         <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('nginx.service')) }}</dd>
                         <dt class="col-5 text-right monitoring-label">PHP-Fpm:</dt>
                         <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('php-fpm.service')) }}</dd>
-                        <dt class="col-5 text-right monitoring-label">MariaDB:</dt>
-                        <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('mariadb.service')) }}</dd>
+                        <dt class="col-5 text-right monitoring-label">MySQL:</dt>
+                        <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('mysqld.service')) }}</dd>
                         <dt class="col-5 text-right monitoring-label">Cron:</dt>
                         <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('crond.service')) }}</dd>
                         <dt class="col-5 text-right monitoring-label">Sphinx:</dt>
