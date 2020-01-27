@@ -39,7 +39,7 @@ class TagsDataTransformer implements DataTransformerInterface
     {
         $tags = \explode($this->separator, $tagsDataFromForm);
         $tags = \array_map('trim', $tags);
-        $tags = \array_filter($tags, function ($value) {
+        $tags = \array_filter($tags, static function ($value) {
             return !empty($value);
         });
 

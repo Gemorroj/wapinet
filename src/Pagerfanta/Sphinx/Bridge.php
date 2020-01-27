@@ -185,16 +185,11 @@ class Bridge
     {
         foreach ($repositories as $discriminatorColumn => $data) {
             if (\is_array($data)) {
-                $params = [
-                    'discriminatorValue' => $discriminatorColumn,
-                    'class' => $data['class'],
-                ];
-
                 if (\array_key_exists('em', $data)) {
-                    $params['em'] = $data['em'];
+                    $this->setDiscriminatorRepository($discriminatorColumn, $data['class'], $data['em']);
+                } else {
+                    $this->setDiscriminatorRepository($discriminatorColumn, $data['class']);
                 }
-
-                \call_user_func_array([$this, 'setDiscriminatorRepository'], $params);
             } else {
                 $this->setDiscriminatorRepository($discriminatorColumn, $data);
             }

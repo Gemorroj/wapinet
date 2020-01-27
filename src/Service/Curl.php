@@ -141,9 +141,6 @@ class Curl
         if (null === $length && true === $strict) {
             throw new LengthRequiredHttpException('Не удалось определить размер файла');
         }
-        if (\is_array($length)) {
-            $length = \end($length);
-        }
 
         $maxLength = $this->parameterBag->get('wapinet_max_download_filesize');
         if ($length > $maxLength) {

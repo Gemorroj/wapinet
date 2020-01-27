@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Gist;
+use App\Entity\User;
 use App\Event\GistEvent;
 use App\Form\Type\Gist\AddType;
 use App\Form\Type\Gist\EditType;
@@ -50,6 +51,7 @@ class GistController extends AbstractController
         $form = $this->createForm(AddType::class);
         $page = $request->get('page', 1);
 
+        /** @var User|null $user */
         $user = $userManager->findUserByUsername($username);
         if (null === $user) {
             throw $this->createNotFoundException('Пользователь не найден');
@@ -195,7 +197,7 @@ class GistController extends AbstractController
         /** @var Sphinx $client */
         $client = $this->get(Sphinx::class);
         $sphinxQl = $client->select($page)
-            ->from('gist')
+            ->from(['gist'])
             ->match(['subject', 'body'], $data['search'])
         ;
 

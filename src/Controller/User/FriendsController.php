@@ -8,7 +8,6 @@ use App\Event\FriendEvent;
 use App\Repository\FriendRepository;
 use App\Service\Paginate;
 use FOS\UserBundle\Model\UserManagerInterface;
-use LogicException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -21,6 +20,7 @@ class FriendsController extends AbstractController
     {
         $page = $request->get('page', 1);
 
+        /** @var User|null $user */
         $user = $userManager->findUserByUsername($username);
         if (null === $user) {
             throw $this->createNotFoundException('Пользователь не найден');
@@ -39,12 +39,13 @@ class FriendsController extends AbstractController
 
     public function addAction(string $username, UserManagerInterface $userManager, EventDispatcherInterface $eventDispatcher): RedirectResponse
     {
-        /** @var User $user */
+        /** @var User|null $user */
         $user = $this->getUser();
         if (null === $user) {
             throw $this->createAccessDeniedException('Вы не авторизованы');
         }
 
+        /** @var User|null $friend */
         $friend = $userManager->findUserByUsername($username);
         if (null === $friend) {
             throw $this->createNotFoundException('Пользователь не найден.');
@@ -55,7 +56,7 @@ class FriendsController extends AbstractController
         $objFriend = $friendRepository->getFriend($user, $friend);
 
         if (null !== $objFriend) {
-            throw new LogicException($user->getUsername().' уже в друзьях.');
+            throw new \LogicException($user->getUsername().' уже в друзьях.');
         }
 
         $objFriend = new Friend();
@@ -76,12 +77,13 @@ class FriendsController extends AbstractController
 
     public function deleteAction(string $username, UserManagerInterface $userManager, EventDispatcherInterface $eventDispatcher): RedirectResponse
     {
-        /** @var User $user */
+        /** @var User|null $user */
         $user = $this->getUser();
         if (null === $user) {
             throw $this->createAccessDeniedException('Вы не авторизованы');
         }
 
+        /** @var User|null $friend */
         $friend = $userManager->findUserByUsername($username);
         if (null === $friend) {
             throw $this->createNotFoundException('Пользователь не найден.');
@@ -92,7 +94,7 @@ class FriendsController extends AbstractController
         $objFriend = $friendRepository->getFriend($user, $friend);
 
         if (null === $objFriend) {
-            throw new LogicException($user->getUsername().' не в друзьях.');
+            throw new \LogicException($user->getUsername().' не в друзьях.');
         }
 
         $user->getFriends()->removeElement($objFriend);

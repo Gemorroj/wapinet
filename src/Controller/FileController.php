@@ -124,7 +124,7 @@ class FileController extends AbstractController
         $client = $this->get(Sphinx::class);
 
         $sphinxQl = $client->select($page)
-            ->from('files')
+            ->from(['files'])
             ->match(['original_file_name', 'description', 'tag_name'], $data['search'])
         ;
 
@@ -146,7 +146,7 @@ class FileController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
-        if (!$user || (!$user->hasRole('ROLE_ADMIN') && !$user->hasRole('ROLE_SUPER_ADMIN'))) {
+        if (!$user || !($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_SUPER_ADMIN'))) {
             throw $this->createAccessDeniedException('Доступ запрещен.');
         }
 
@@ -208,6 +208,7 @@ class FileController extends AbstractController
     public function userAction(Request $request, string $username, UserManagerInterface $userManager): Response
     {
         $page = $request->get('page', 1);
+        /** @var User|null $user */
         $user = $userManager->findUserByUsername($username);
         if (null === $user) {
             throw $this->createNotFoundException('Пользователь не найден');
@@ -343,8 +344,8 @@ class FileController extends AbstractController
 
     public function archiveDownloadFileAction(Request $request, Filesystem $filesystem, int $id, string $name): BinaryFileResponse
     {
-        $path = \str_replace('\\', '/', $request->get('path'));
-        if (null === $path) {
+        $path = (string) \str_replace('\\', '/', $request->get('path', ''));
+        if ('' === $path) {
             throw $this->createNotFoundException('Не указан файл для скачивания.');
         }
 
@@ -635,7 +636,7 @@ class FileController extends AbstractController
         $manager = $this->getDoctrine()->getManager();
 
         // удаляем из коллекции устаревшие тэги
-        $removedFileTagsCollection = $file->getFileTags()->filter(function (FileTags $oldFileTags) use ($file) {
+        $removedFileTagsCollection = $file->getFileTags()->filter(static function (FileTags $oldFileTags) use ($file) {
             foreach ($file->getTags() as $newTag) {
                 if ($newTag === $oldFileTags->getTag()) {
                     return false;
@@ -651,7 +652,7 @@ class FileController extends AbstractController
         }
 
         // Находим добавленные тэги, которых не было в коллекции
-        $newTagsCollection = $file->getTags()->filter(function (Tag $newTag) use ($file) {
+        $newTagsCollection = $file->getTags()->filter(static function (Tag $newTag) use ($file) {
             foreach ($file->getFileTags() as $fileTags) {
                 if ($newTag === $fileTags->getTag()) {
                     return false;

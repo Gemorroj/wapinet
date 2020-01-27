@@ -114,7 +114,7 @@ class File
             throw new NotFoundHttpException('Файл не найден: "'.$path.'"".');
         }
 
-        if (true !== $allowDirectory && true === \is_dir($allowDirectory)) {
+        if (true !== $allowDirectory && true === \is_dir($path)) {
             throw new AccessDeniedException('Запрещен доступ: "'.$path.'"".');
         }
 

@@ -142,30 +142,6 @@ class ArchiverController extends AbstractController
     }
 
     /**
-     * @throws AccessDeniedException
-     */
-    protected function checkFile(string $archiveDirectory, string $path, bool $allowDirectory = false): string
-    {
-        $path = \str_replace('\\', '/', $path);
-
-        if (false !== \strpos($path, '../')) {
-            throw $this->createAccessDeniedException('Запрещен доступ: "'.$path.'"".');
-        }
-
-        $file = \realpath($archiveDirectory.DIRECTORY_SEPARATOR.$path);
-
-        if (false === $file) {
-            throw $this->createNotFoundException('Файл не найден: "'.$path.'"".');
-        }
-
-        if (true !== $allowDirectory && true === \is_dir($allowDirectory)) {
-            throw $this->createAccessDeniedException('Запрещен доступ: "'.$path.'"".');
-        }
-
-        return $file;
-    }
-
-    /**
      * @return RedirectResponse|Response
      */
     public function extractAction(Request $request): Response

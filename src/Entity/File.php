@@ -425,7 +425,7 @@ class File implements Serializable
      */
     public function setSaltValue(): self
     {
-        $this->salt = \base_convert(\sha1(\uniqid(\mt_rand(), true)), 16, 36);
+        $this->salt = \base_convert(\sha1(\uniqid((string) \mt_rand(), true)), 16, 36);
 
         return $this;
     }

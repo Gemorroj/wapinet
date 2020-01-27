@@ -7,6 +7,7 @@ use Exception;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\Format\Video\DefaultVideo;
 use FFMpeg\Format\Video\X264;
+use FFMpeg\Media\AbstractStreamableMedia;
 use FFMpeg\Media\Video as FFmpegVideo;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
@@ -63,7 +64,7 @@ class Video extends AbstractExtension
 
                 $media->save($format, $this->getPublicDir().$mp4File);
 
-                if (false === \file_exists($this->getPublicDir().$mp4File)) {
+                if (!\file_exists($this->getPublicDir().$mp4File)) {
                     throw new RuntimeException('Не удалось создать MP4 файл');
                 }
             } catch (Exception $e) {
@@ -76,7 +77,7 @@ class Video extends AbstractExtension
         return $mp4File;
     }
 
-    protected function setOptions(DefaultVideo $format, FFmpegVideo $media): self
+    protected function setOptions(DefaultVideo $format, AbstractStreamableMedia $media): self
     {
         $streams = $media->getStreams();
 
@@ -123,7 +124,7 @@ class Video extends AbstractExtension
                     $second = $this->getScreenshotSecond($media);
                     $frame = $media->frame(TimeCode::fromSeconds($second));
                     $frame->save($this->getPublicDir().$screenshot);
-                    if (false === \file_exists($this->getPublicDir().$screenshot)) {
+                    if (!\file_exists($this->getPublicDir().$screenshot)) {
                         throw new RuntimeException('Не удалось создать скриншот');
                     }
                 } else {

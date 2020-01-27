@@ -1,6 +1,7 @@
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-doctrine/extension.neon
 
 parameters:
     level: 5
@@ -8,4 +9,8 @@ parameters:
         - src
         - tests
     symfony:
-        container_xml_path: %rootDir%/../../../var/cache/dev/srcDevDebugProjectContainer.xml
+        container_xml_path: '%rootDir%/../../../var/cache/dev/srcApp_KernelDevDebugContainer.xml'
+    autoload_files:
+        - bin/.phpunit/phpunit-7.5-0/vendor/autoload.php
+    doctrine:
+        objectManagerLoader: tests/object-manager.php

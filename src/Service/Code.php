@@ -55,7 +55,7 @@ class Code
     }
 
     /**
-     * @param string $result
+     * @param string|null $result
      *
      * @throws CodeException
      */

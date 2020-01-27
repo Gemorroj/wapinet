@@ -77,7 +77,7 @@ class UsersController extends AbstractController
         /** @var Sphinx $client */
         $client = $this->get(Sphinx::class);
         $sphinxQl = $client->select($page)
-            ->from('users')
+            ->from(['users'])
             ->match(['username', 'email', 'info'], $data['search'])
         ;
 

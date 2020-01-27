@@ -6,13 +6,11 @@ use App\Form\Type\Unicode\UnicodeType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class UnicodeController extends AbstractController
 {
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $result = null;
         $form = $this->createForm(UnicodeType::class);
@@ -36,18 +34,12 @@ class UnicodeController extends AbstractController
         ]);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function iconsAction()
+    public function iconsAction(): Response
     {
         return $this->render('Unicode/icons.html.twig');
     }
 
-    /**
-     * @return string
-     */
-    protected function getUnicode(array $data)
+    protected function getUnicode(array $data): string
     {
         $out = $data['text'];
         if ($data['html']) {
@@ -61,7 +53,7 @@ class UnicodeController extends AbstractController
         $out = \json_encode($out, JSON_THROW_ON_ERROR);
 
         $that = $this;
-        $out = \preg_replace_callback('/\\\u([0-9a-z]{4})/', function (array $matches) use ($that, $data) {
+        $out = \preg_replace_callback('/\\\u([0-9a-z]{4})/', static function (array $matches) use ($that, $data) {
             $key = $matches[1];
             if ($data['zerofill']) {
                 $key = $that->getZeroFill($key);
@@ -77,12 +69,7 @@ class UnicodeController extends AbstractController
         return $out;
     }
 
-    /**
-     * @param string $str
-     *
-     * @return string
-     */
-    protected function getLatin($str)
+    protected function getLatin(string $str): string
     {
         return \strtr($str, [
             'А' => 'A', 'В' => 'B', 'Е' => 'E', 'К' => 'K', 'М' => 'M',
@@ -92,23 +79,13 @@ class UnicodeController extends AbstractController
         ]);
     }
 
-    /**
-     * @param string $str
-     *
-     * @return string
-     */
-    protected function getHtmlSpecialChars($str)
+    protected function getHtmlSpecialChars(string $str): string
     {
         return \htmlspecialchars($str, \ENT_QUOTES);
     }
 
-    /**
-     * @param string $str
-     *
-     * @return string
-     */
-    protected function getZeroFill($str)
+    protected function getZeroFill(string $str): string
     {
-        return \ltrim($str, 0);
+        return \ltrim($str, '0');
     }
 }

@@ -41,7 +41,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param File|null $fileDataFromDb
+     * @param File|FileContent|null $fileDataFromDb
      *
      * @see https://github.com/dustin10/VichUploaderBundle/issues/27
      */
@@ -135,7 +135,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
                 $temp,
                 $this->getOriginalName($responseHead->headers, $fileDataFromForm['url']),
                 $responseHead->headers->get('Content-Type'),
-                $responseHead->headers->get('Content-Length')
+                $responseHead->headers->has('Content-Length') ? (int) $responseHead->headers->get('Content-Length') : null
             );
         }
 

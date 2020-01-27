@@ -44,7 +44,7 @@ class GuestbookController extends AbstractController
                     $botChecker->checkRequest($request);
                     $stopSpam->checkRequest($request);
 
-                    /** @var Guestbook $data */
+                    /** @var Guestbook $guestbook */
                     $guestbook = $form->getData();
 
                     $guestbook->setUser($this->getUser());
