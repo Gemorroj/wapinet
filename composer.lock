@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "517562b540eb605b1f15e2de5f018b21",
+    "content-hash": "677f07fc5f73efb894f45c4c7950375e",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -7798,7 +7798,7 @@
         },
         {
             "name": "tufanbarisyildirim/php-apk-parser",
-            "version": "dev-master",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tufanbarisyildirim/php-apk-parser.git",
@@ -9492,7 +9492,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "friendsofsymfony/user-bundle": 20,
-        "tufanbarisyildirim/php-apk-parser": 20,
         "seostats/seostats": 20,
         "gemorroj/phpwhois": 20
     },
