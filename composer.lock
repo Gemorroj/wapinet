@@ -2240,16 +2240,16 @@
         },
         {
             "name": "gregwar/captcha-bundle",
-            "version": "v2.1.1",
+            "version": "v2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gregwar/CaptchaBundle.git",
-                "reference": "d4475118d080e764c5cddec766b0cd0b12813bef"
+                "reference": "cdbe566accded9086e6c91af45920505ae871c2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gregwar/CaptchaBundle/zipball/d4475118d080e764c5cddec766b0cd0b12813bef",
-                "reference": "d4475118d080e764c5cddec766b0cd0b12813bef",
+                "url": "https://api.github.com/repos/Gregwar/CaptchaBundle/zipball/cdbe566accded9086e6c91af45920505ae871c2f",
+                "reference": "cdbe566accded9086e6c91af45920505ae871c2f",
                 "shasum": ""
             },
             "require": {
@@ -2264,7 +2264,7 @@
             "require-dev": {
                 "symplify/easy-coding-standard": "^6.1"
             },
-            "type": "captcha-bundle",
+            "type": "symfony-bundle",
             "autoload": {
                 "psr-4": {
                     "Gregwar\\CaptchaBundle\\": "/"
@@ -2297,7 +2297,7 @@
                 "symfony",
                 "visual"
             ],
-            "time": "2020-01-14T10:15:40+00:00"
+            "time": "2020-03-02T10:00:37+00:00"
         },
         {
             "name": "imagine/imagine",
@@ -8736,16 +8736,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.12",
+            "version": "0.12.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "aa7877f4240a92bdd51524b4305c380df0e73a83"
+                "reference": "37bdd26a80235d0f9045b49f4151102b7831cbe2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/aa7877f4240a92bdd51524b4305c380df0e73a83",
-                "reference": "aa7877f4240a92bdd51524b4305c380df0e73a83",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/37bdd26a80235d0f9045b49f4151102b7831cbe2",
+                "reference": "37bdd26a80235d0f9045b49f4151102b7831cbe2",
                 "shasum": ""
             },
             "require": {
@@ -8771,7 +8771,21 @@
                 "MIT"
             ],
             "description": "PHPStan - PHP Static Analysis Tool",
-            "time": "2020-03-01T22:09:42+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/phpstan",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-03-02T22:29:43+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
@@ -9234,16 +9248,16 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.14.3",
+            "version": "v1.14.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "c864e7f9b8d1e1f5f60acc3beda11299f637aded"
+                "reference": "bc4df88792fbaaeb275167101dc714218475db5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/c864e7f9b8d1e1f5f60acc3beda11299f637aded",
-                "reference": "c864e7f9b8d1e1f5f60acc3beda11299f637aded",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/bc4df88792fbaaeb275167101dc714218475db5f",
+                "reference": "bc4df88792fbaaeb275167101dc714218475db5f",
                 "shasum": ""
             },
             "require": {
@@ -9298,7 +9312,21 @@
                 "scaffold",
                 "scaffolding"
             ],
-            "time": "2019-11-07T00:56:03+00:00"
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-03-04T13:57:29+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",
@@ -9508,5 +9536,6 @@
         "ext-apcu": "*",
         "ext-simplexml": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
