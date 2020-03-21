@@ -54,7 +54,7 @@ class Video extends AbstractExtension
     {
         $mp4File = $path.'.mp4';
 
-        if (false === \file_exists($this->getPublicDir().$mp4File)) {
+        if (!\file_exists($this->getPublicDir().$mp4File)) {
             $ffmpeg = $this->ffmpegHelper->getFfmpeg();
             try {
                 $media = $ffmpeg->open($this->getPublicDir().$path);
@@ -115,7 +115,7 @@ class Video extends AbstractExtension
     {
         $screenshot = $path.'.jpg';
 
-        if (false === \file_exists($this->getPublicDir().$screenshot)) {
+        if (!\file_exists($this->getPublicDir().$screenshot)) {
             $ffmpeg = $this->ffmpegHelper->getFfmpeg();
 
             try {
