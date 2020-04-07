@@ -4,7 +4,7 @@
     "type": "project",
     "license": "GPL-3.0-or-later",
     "require": {
-        "php": "^7.3",
+        "php": "^7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-curl": "*",
@@ -13,6 +13,7 @@
         "ext-json": "*",
         "ext-apcu": "*",
         "ext-simplexml": "*",
+        "ext-sodium": "*",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/asset": "4.4.*",
         "symfony/console": "4.4.*",
@@ -62,7 +63,8 @@
         "gemorroj/ginfo": "^5.1"
     },
     "require-dev": {
-        "symfony/debug-pack": "*",
+        "symfony/debug-bundle": "4.4.*",
+        "symfony/var-dumper": "4.4.*",
         "symfony/maker-bundle": "^1.14",
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*",
