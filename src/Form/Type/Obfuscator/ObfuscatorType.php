@@ -15,7 +15,7 @@ class ObfuscatorType extends AbstractType
 {
     /**
      * @var FormBuilderInterface
-     * @var array                $options
+     * @var array
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
