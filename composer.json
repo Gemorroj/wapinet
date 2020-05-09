@@ -65,7 +65,7 @@
     "require-dev": {
         "symfony/debug-bundle": "4.4.*",
         "symfony/var-dumper": "4.4.*",
-        "symfony/maker-bundle": "^1.14",
+        "symfony/maker-bundle": "^1.17",
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*",
         "phpstan/phpstan": "^0.12",
