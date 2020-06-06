@@ -9,7 +9,6 @@ use App\Service\Ffmpeg as FfmpegHelper;
 use App\Service\Torrent as TorrentHelper;
 use DateTime;
 use Imagine\Image\AbstractImagine;
-use RuntimeException;
 
 /**
  * Meta хэлпер
@@ -61,12 +60,12 @@ class Meta
     /**
      * Получаем мета-информацию файла.
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     public function getFileMeta(): FileMeta
     {
         if (null === $this->file) {
-            throw new RuntimeException('Не указан файл, мета-информацию которого нужно получить.');
+            throw new \RuntimeException('Не указан файл, мета-информацию которого нужно получить.');
         }
 
         if ($this->file->isAndroidApp()) {

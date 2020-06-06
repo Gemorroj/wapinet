@@ -10,7 +10,6 @@ use FFMpeg\Format\Video\X264;
 use FFMpeg\Media\AbstractStreamableMedia;
 use FFMpeg\Media\Video as FFmpegVideo;
 use Psr\Log\LoggerInterface;
-use RuntimeException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -54,7 +53,7 @@ class Video extends AbstractExtension
     {
         $mp4File = $path.'.mp4';
 
-        if (!\file_exists($this->getPublicDir().$mp4File)) {
+        if (!\is_file($this->getPublicDir().$mp4File)) {
             $ffmpeg = $this->ffmpegHelper->getFfmpeg();
             try {
                 $media = $ffmpeg->open($this->getPublicDir().$path);
@@ -64,8 +63,8 @@ class Video extends AbstractExtension
 
                 $media->save($format, $this->getPublicDir().$mp4File);
 
-                if (!\file_exists($this->getPublicDir().$mp4File)) {
-                    throw new RuntimeException('Не удалось создать MP4 файл');
+                if (!\is_file($this->getPublicDir().$mp4File)) {
+                    throw new \RuntimeException('Не удалось создать MP4 файл');
                 }
             } catch (Exception $e) {
                 $this->logger->warning('Ошибка при конвертировании видео в MP4.', [$e]);
@@ -115,7 +114,7 @@ class Video extends AbstractExtension
     {
         $screenshot = $path.'.jpg';
 
-        if (!\file_exists($this->getPublicDir().$screenshot)) {
+        if (!\is_file($this->getPublicDir().$screenshot)) {
             $ffmpeg = $this->ffmpegHelper->getFfmpeg();
 
             try {
@@ -124,11 +123,11 @@ class Video extends AbstractExtension
                     $second = $this->getScreenshotSecond($media);
                     $frame = $media->frame(TimeCode::fromSeconds($second));
                     $frame->save($this->getPublicDir().$screenshot);
-                    if (!\file_exists($this->getPublicDir().$screenshot)) {
-                        throw new RuntimeException('Не удалось создать скриншот');
+                    if (!\is_file($this->getPublicDir().$screenshot)) {
+                        throw new \RuntimeException('Не удалось создать скриншот');
                     }
                 } else {
-                    throw new RuntimeException('Не найден видео поток');
+                    throw new \RuntimeException('Не найден видео поток');
                 }
             } catch (Exception $e) {
                 $this->logger->warning('Ошибка при создании скриншота видео.', [$e]);

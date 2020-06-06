@@ -32,6 +32,6 @@ class FileUrl extends UploadedFile
      */
     public function isValid()
     {
-        return \file_exists($this->getPathname());
+        return \is_file($this->getPathname());
     }
 }

@@ -102,7 +102,7 @@ class TranslateController extends AbstractController
         $cacheDir = $this->getParameter('kernel.cache_dir');
         $langsFileName = $cacheDir.DIRECTORY_SEPARATOR.'yandex-langs.json';
 
-        if (false === \file_exists($langsFileName)) {
+        if (false === \is_file($langsFileName)) {
             /** @var Curl $curl */
             $curl = $this->get(Curl::class);
             $curl->init(

@@ -11,7 +11,6 @@ use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Adapter\FixedAdapter;
 use Pagerfanta\Pagerfanta;
-use RuntimeException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class Paginate
@@ -29,7 +28,7 @@ class Paginate
     /**
      * @param Query|QueryBuilder|Collection|array|FixedPaginate $data
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     public function paginate($data, int $page = 1, ?int $maxPerPage = null): Pagerfanta
     {
@@ -42,7 +41,7 @@ class Paginate
         } elseif ($data instanceof FixedPaginate) {
             $adapter = new FixedAdapter($data->getNbResults(), $data->getResults());
         } else {
-            throw new RuntimeException('Неизвестный тип данных для постраничной навигации');
+            throw new \RuntimeException('Неизвестный тип данных для постраничной навигации');
         }
 
         $pagerfanta = new Pagerfanta($adapter);

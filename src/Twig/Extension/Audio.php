@@ -8,7 +8,6 @@ use FFMpeg\Format\Audio\DefaultAudio;
 use FFMpeg\Format\Audio\Mp3;
 use FFMpeg\Media\Audio as FFmpegAudio;
 use Psr\Log\LoggerInterface;
-use RuntimeException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -51,7 +50,7 @@ class Audio extends AbstractExtension
     {
         $mp3File = $path.'.mp3';
 
-        if (false === \file_exists($this->getPublicDir().$mp3File)) {
+        if (false === \is_file($this->getPublicDir().$mp3File)) {
             $ffmpeg = $this->ffmpegHelper->getFfmpeg();
             try {
                 $media = $ffmpeg->open($this->getPublicDir().$path);
@@ -61,8 +60,8 @@ class Audio extends AbstractExtension
 
                 $media->save($format, $this->getPublicDir().$mp3File);
 
-                if (false === \file_exists($this->getPublicDir().$mp3File)) {
-                    throw new RuntimeException('Не удалось создать MP3 файл');
+                if (false === \is_file($this->getPublicDir().$mp3File)) {
+                    throw new \RuntimeException('Не удалось создать MP3 файл');
                 }
             } catch (Exception $e) {
                 $this->logger->warning('Ошибка при конвертировании аудио в MP3.', [$e]);

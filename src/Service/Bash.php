@@ -4,8 +4,6 @@ namespace App\Service;
 
 use App\Pagerfanta\FixedPaginate;
 use Pagerfanta\Pagerfanta;
-use const PREG_SET_ORDER;
-use RuntimeException;
 
 /**
  * Bash хэлпер
@@ -36,7 +34,7 @@ class Bash
         $this->curl->close();
 
         if (!$response->isSuccessful()) {
-            throw new RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
+            throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
         }
 
         $content = \str_replace(["\n", "\r", "\t", '<br>'], ['', '', '', "\r\n"], $response->getContent());
@@ -52,7 +50,7 @@ class Bash
         $currentPage = $page ?? $allPages;
 
         // вырезаем цитаты
-        \preg_match_all('/(?:<div class="quote__body">+)(.*?)(?:<\/div>+)/is', $content, $matchItems, PREG_SET_ORDER);
+        \preg_match_all('/(?:<div class="quote__body">+)(.*?)(?:<\/div>+)/is', $content, $matchItems, \PREG_SET_ORDER);
         unset($matchItems[0]); // <span>Утверждено <b>73394</b> цитаты, </span>
 
         // заносим цитаты в массив

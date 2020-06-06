@@ -3,7 +3,6 @@
 namespace App\Service\File;
 
 use App\Entity\File as DataFile;
-use const DIRECTORY_SEPARATOR;
 use Doctrine\Common\Collections\ArrayCollection;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Symfony\Component\Filesystem\Filesystem;
@@ -107,7 +106,7 @@ class File
             throw new AccessDeniedException('Запрещен доступ: "'.$path.'"".');
         }
 
-        $file = \realpath($directory.DIRECTORY_SEPARATOR.$path);
+        $file = \realpath($directory.\DIRECTORY_SEPARATOR.$path);
 
         if (false === $file) {
             throw new NotFoundHttpException('Файл не найден: "'.$path.'"".');

@@ -3,7 +3,6 @@
 namespace App;
 
 use App\DependencyInjection\Compiler\FileUrlCompilerPass;
-use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
@@ -68,10 +67,10 @@ class Kernel extends BaseKernel
 
             if (!\is_dir($fullPathDir)) {
                 if (false === @\mkdir($fullPathDir, 0777, true) && !\is_dir($fullPathDir)) {
-                    throw new RuntimeException(\sprintf("Unable to create the var/%s directory\n", $dir));
+                    throw new \RuntimeException(\sprintf("Unable to create the var/%s directory\n", $dir));
                 }
             } elseif (!\is_writable($fullPathDir)) {
-                throw new RuntimeException(\sprintf("Unable to write in the var/%s directory\n", $dir));
+                throw new \RuntimeException(\sprintf("Unable to write in the var/%s directory\n", $dir));
             }
         }
 

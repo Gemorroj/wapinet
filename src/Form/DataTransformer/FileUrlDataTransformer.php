@@ -5,11 +5,7 @@ namespace App\Form\DataTransformer;
 use App\Entity\File\FileContent;
 use App\Entity\File\FileUrl;
 use App\Service\Curl;
-use const CURLOPT_FILE;
-use const CURLOPT_HEADER;
-use const PHP_URL_PATH;
 use Riverline\MultiPartParser\Part;
-use RuntimeException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
@@ -108,7 +104,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
             $responseHead = $this->curl->checkFileSize(false);
 
             if (!$responseHead->isSuccessful() && !$responseHead->isRedirection()) {
-                throw new RuntimeException('Не удалось получить данные (HTTP код: '.$responseHead->getStatusCode().')');
+                throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$responseHead->getStatusCode().')');
             }
 
             $temp = \tempnam($this->parameterBag->get('kernel.tmp_dir'), 'file_url');
@@ -120,8 +116,8 @@ class FileUrlDataTransformer implements DataTransformerInterface
                 throw new TransformationFailedException('Не удалось открыть временный файл на запись');
             }
 
-            $this->curl->setOpt(CURLOPT_HEADER, false);
-            $this->curl->setOpt(CURLOPT_FILE, $f);
+            $this->curl->setOpt(\CURLOPT_HEADER, false);
+            $this->curl->setOpt(\CURLOPT_FILE, $f);
 
             $responseBody = $this->curl->exec();
             $this->curl->close();
@@ -152,14 +148,14 @@ class FileUrlDataTransformer implements DataTransformerInterface
             }
         }
 
-        $path = \parse_url($url, PHP_URL_PATH);
+        $path = \parse_url($url, \PHP_URL_PATH);
         if (null !== $path && '/' !== $path) {
             return $path;
         }
 
         $location = $headers->get('Location');
         if ($location) {
-            $locationPath = \parse_url($location, PHP_URL_PATH);
+            $locationPath = \parse_url($location, \PHP_URL_PATH);
             if (null !== $locationPath && '/' !== $locationPath) {
                 return $locationPath;
             }
