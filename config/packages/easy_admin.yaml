@@ -88,8 +88,8 @@ easy_admin:
                     - { property: 'username', label: 'Логин' }
                     - { property: 'enabled', label: 'Активен', type_options: {required: false} }
                     - { property: 'email', label: 'Email', type: 'email' }
-                    - { property: 'roles', label: 'Роли', type: 'choice', type_options: { expanded: true, multiple: true, choices: {ROLE_SUPER_ADMIN: 'Админ', ROLE_ADMIN: 'Модератор', ROLE_USER: 'Пользователь'} } }
-                    - { property: 'sex', label: 'Пол', type: 'choice', type_options: {choices: {m: 'Мужской', f: 'Женский'}, required: false} }
+                    - { property: 'roles', label: 'Роли', type: 'choice', type_options: { expanded: true, multiple: true, choices: {'Админ': 'ROLE_SUPER_ADMIN', 'Модератор': 'ROLE_ADMIN', 'Пользователь': 'ROLE_USER'} } }
+                    - { property: 'sex', label: 'Пол', type: 'choice', type_options: {choices: {'Мужской': 'm', 'Женский': 'f'}, required: false} }
                     - { property: 'birthday', label: 'День рождения', type: 'birthday', type_options: {required: false} }
                     - { property: 'timezone', label: 'Временная зона', type: 'timezone', type_options: {required: false} }
                     - { property: 'info', label: 'Дополнительная информация', type: 'textarea', type_options: {required: false} }

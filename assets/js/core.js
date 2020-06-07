@@ -268,9 +268,8 @@ $document.one("pagecreate", "#gist_view", function () {
     Gist.pageCreate();
 });
 
-
 // vk в профиле пользователя
-$document.one("pagecreate", "#fos_user_profile_show", function () {
+$document.one("pagecreate", "#wapinet_user_profile", function () {
     let vkId = $(":mobile-pagecontainer").find("#user-vk").data("id");
 
     if (vkId) {

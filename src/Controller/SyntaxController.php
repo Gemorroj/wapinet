@@ -33,7 +33,7 @@ class SyntaxController extends AbstractController
             $page .= '<div class="red">'.$this->data['errors'][0]['type'].': '.$this->data['errors'][0]['message'].'<br/>Ошибка в '.$this->data['errors'][0]['line'].' строке<br/></div>';
         }
 
-        $page .= $this->highlightCode($this->toUtf8Encoding($code, $charset), $this->data['errors'][0]['line']);
+        $page .= $this->highlightCode($this->toUtf8Encoding($code, $charset), $this->data['errors'][0]['line'] ?? null);
 
         return new Response($page);
     }

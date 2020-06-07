@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Редактирование подписок{% endblock %}
+{% block title %}Редактирование профиля{% endblock %}
 {% block breadcrumbs %}
     {{wapinet_breadcrumbs({
     1: {'uri': path('wapinet_users'), 'title': 'Пользователи'},
@@ -10,9 +10,11 @@
 
 
 {% block content %}
-
-    {{ form_start(form, {'action': path('wapinet_user_subscriber_edit'), 'method': 'POST'}) }}
+    {{ form_start(form, {'action': path('wapinet_user_edit'), 'method': 'POST'}) }}
     {{ form_widget(form) }}
+    <div>
+        <input type="submit" value="Изменить" />
+    </div>
     {{ form_end(form) }}
-
 {% endblock content %}
+

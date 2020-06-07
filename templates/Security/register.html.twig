@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Регистрация{% endblock %}
+{% block breadcrumbs %}
+    {{ wapinet_breadcrumbs() }}
+{% endblock %}
+
+
+{% block content %}
+    <p><a href="{{ path('wapinet_login') }}">Авторизация</a> | Регистрация</p>
+
+    {{ form_start(form, {'method': 'post', 'action': path('wapinet_register')}) }}
+        {{ form_widget(form) }}
+        <div>
+            <input type="submit" value="Зарегистрироваться" />
+        </div>
+    {{ form_end(form) }}
+{% endblock content %}

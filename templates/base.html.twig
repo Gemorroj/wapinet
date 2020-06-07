@@ -88,9 +88,9 @@
                 <a href="#panel" class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext">Меню</a>
                 <h2 id="header-title">{{ title }}</h2>
                 {% if app.user %}
-                    <a href="{{ path('fos_user_profile_show') }}" class="ui-btn ui-shadow ui-corner-all ui-icon-wapinet-user ui-btn-icon-notext">{{ app.user.username }}</a>
+                    <a href="{{ path('wapinet_user_profile', {'username': app.user.username}) }}" class="ui-btn ui-shadow ui-corner-all ui-icon-wapinet-user ui-btn-icon-notext">{{ app.user.username }}</a>
                 {% else %}
-                    <a href="{{ path('fos_user_security_login') }}" class="ui-btn ui-shadow ui-corner-all ui-icon-lock ui-btn-icon-notext">Вход</a>
+                    <a href="{{ path('wapinet_login') }}" class="ui-btn ui-shadow ui-corner-all ui-icon-lock ui-btn-icon-notext">Вход</a>
                 {% endif %}
             {% endblock %}
         </div>

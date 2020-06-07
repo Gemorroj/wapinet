@@ -116,9 +116,6 @@
             "ref": "370bcf99b04c0dfd0b545745aad622d757af5e1b"
         }
     },
-    "friendsofsymfony/user-bundle": {
-        "version": "v2.1.2"
-    },
     "gemorroj/archive7z": {
         "version": "4.0.0"
     },
@@ -439,6 +436,9 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.11.0"
+    },
+    "symfony/polyfill-php80": {
+        "version": "v1.17.0"
     },
     "symfony/process": {
         "version": "v4.0.8"

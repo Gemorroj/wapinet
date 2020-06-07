@@ -136,7 +136,9 @@ class File implements Serializable
         unset($vars['file']);
 
         foreach ($vars as $key => $value) {
-            $this->{$key} = $value;
+            if (\property_exists($this, $key)) {
+                $this->{$key} = $value;
+            }
         }
     }
 

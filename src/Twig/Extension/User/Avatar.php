@@ -22,6 +22,6 @@ class Avatar extends AbstractExtension
 
     public function getAvatarUrl(User $user = null, ?int $size = 80): string
     {
-        return '//gravatar.com/avatar/'.($user ? \md5($user->getEmailCanonical()) : '').'?d=mm'.($size ? '&s='.$size : '');
+        return '//gravatar.com/avatar/'.($user ? \md5($user->getEmail()) : '').'?d=mm'.($size ? '&s='.$size : '');
     }
 }

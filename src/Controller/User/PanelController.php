@@ -45,7 +45,7 @@ class PanelController extends AbstractController
 
                     $this->addFlash('success', 'Меню успешно обновлено');
 
-                    return $this->redirectToRoute('fos_user_profile_show');
+                    return $this->redirectToRoute('wapinet_user_profile', ['username' => $user->getUsername()]);
                 }
             }
         } catch (Exception $e) {

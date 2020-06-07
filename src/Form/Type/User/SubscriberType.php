@@ -11,10 +11,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SubscriberType extends AbstractType
 {
-    /**
-     * @var FormBuilderInterface
-     * @var array
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);

@@ -5,7 +5,7 @@
 ##### Используются:
 - Symfony 4.4
 - Jquery Mobile
-- PHP 7.3
+- PHP 7.4
 - MySQL 8.0
 - Sphinx
 - p7zip
@@ -17,7 +17,7 @@
 - Установить дополнительные репозитории `epel`, `remi`, `nginx`, `mysql`
 - Установить MySQL 8.0 `yum install mysql-server`
 - Установить Nginx `yum install nginx`
-- Установить php 7.3 `yum install php-fpm php-cli php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-pecl-apcu php-pecl-zip php-process php-xml`
+- Установить php 7.4 `yum install php-fpm php-cli php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-pecl-apcu php-pecl-zip php-process php-xml php-sodium`
 - Установить cron, если не установлен `yum install cronie`
 - Установить sphinx `yum install sphinx`
 
@@ -283,13 +283,14 @@ server {
 ```
 
 ### TODO:
-- использовать новую систему конфигураций https://symfony.com/blog/improvements-to-the-handling-of-env-files-for-all-symfony-versions
-- заменить свою curl прослойку на https://github.com/symfony/http-client
-- Избавится от pagefanta - https://github.com/symfony/demo/commit/65872cde5cb3dc7bdbb163a79a7ea8f96acb132f
-- Переделать интерфейс на vue/react/angular (огромная задача)
+- !!! добавить конфигурацию на docker-compose
+- !!! использовать новую систему конфигураций https://symfony.com/blog/improvements-to-the-handling-of-env-files-for-all-symfony-versions
+- !!! заменить свою curl прослойку на https://github.com/symfony/http-client
+- ! Избавится от pagefanta - https://github.com/symfony/demo/commit/65872cde5cb3dc7bdbb163a79a7ea8f96acb132f
+- !!! Переделать интерфейс на vue/react/angular (огромная задача)
 - переделать редактор аудиотегов на https://github.com/duncan3dc/meta-audio/issues/3 (когда будут картинки)
-- Сделать возможность в переводчике и обфускаторе загружать файлы
-- Актуализировать мобильные коды. Найти новые для разных андроидов.
+- ! Сделать возможность в переводчике и обфускаторе загружать файлы
+- !! Актуализировать мобильные коды. Найти новые для разных андроидов.
 - Данные о видео на youtube и др. https://github.com/essence/essence
 - Оболочка над nmap https://github.com/willdurand/nmap (работает медленно и выдает мало информации)
 - Прокси https://github.com/Athlon1600/php-proxy

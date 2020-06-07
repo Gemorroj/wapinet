@@ -45,7 +45,7 @@ class SubscriberController extends AbstractController
 
                     $this->addFlash('success', 'Подписки успешно обновлены');
 
-                    return $this->redirectToRoute('fos_user_profile_show');
+                    return $this->redirectToRoute('wapinet_user_profile', ['username' => $user->getUsername()]);
                 }
             }
         } catch (Exception $e) {

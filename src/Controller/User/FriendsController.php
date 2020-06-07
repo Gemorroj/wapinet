@@ -7,7 +7,6 @@ use App\Entity\User;
 use App\Event\FriendEvent;
 use App\Repository\FriendRepository;
 use App\Service\Paginate;
-use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,12 +15,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FriendsController extends AbstractController
 {
-    public function indexAction(Request $request, string $username, UserManagerInterface $userManager, Paginate $paginate): Response
+    public function indexAction(Request $request, string $username, Paginate $paginate): Response
     {
         $page = $request->get('page', 1);
 
         /** @var User|null $user */
-        $user = $userManager->findUserByUsername($username);
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $username]);
         if (null === $user) {
             throw $this->createNotFoundException('Пользователь не найден');
         }
@@ -37,7 +36,7 @@ class FriendsController extends AbstractController
         ]);
     }
 
-    public function addAction(string $username, UserManagerInterface $userManager, EventDispatcherInterface $eventDispatcher): RedirectResponse
+    public function addAction(string $username, EventDispatcherInterface $eventDispatcher): RedirectResponse
     {
         /** @var User|null $user */
         $user = $this->getUser();
@@ -46,7 +45,7 @@ class FriendsController extends AbstractController
         }
 
         /** @var User|null $friend */
-        $friend = $userManager->findUserByUsername($username);
+        $friend = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $username]);
         if (null === $friend) {
             throw $this->createNotFoundException('Пользователь не найден.');
         }
@@ -75,7 +74,7 @@ class FriendsController extends AbstractController
         return $this->redirectToRoute('wapinet_user_profile', ['username' => $friend->getUsername()]);
     }
 
-    public function deleteAction(string $username, UserManagerInterface $userManager, EventDispatcherInterface $eventDispatcher): RedirectResponse
+    public function deleteAction(string $username, EventDispatcherInterface $eventDispatcher): RedirectResponse
     {
         /** @var User|null $user */
         $user = $this->getUser();
@@ -84,7 +83,7 @@ class FriendsController extends AbstractController
         }
 
         /** @var User|null $friend */
-        $friend = $userManager->findUserByUsername($username);
+        $friend = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $username]);
         if (null === $friend) {
             throw $this->createNotFoundException('Пользователь не найден.');
         }

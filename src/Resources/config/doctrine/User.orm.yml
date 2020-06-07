@@ -8,6 +8,11 @@ App\Entity\User:
             generator:
                 strategy: AUTO
     fields:
+        enabled:
+            type: boolean
+            nullable: false
+            options:
+                default: true
         createdAt:
             type: datetime
             nullable: false
@@ -16,6 +21,26 @@ App\Entity\User:
             type: datetime
             nullable: true
             column: updated_at
+        username:
+            unique: true
+            type: string
+            length: 180
+            nullable: false
+        email:
+            unique: true
+            type: string
+            length: 180
+            nullable: false
+        salt:
+            type: string
+            length: 255
+            nullable: true
+        password:
+            type: string
+            length: 255
+            nullable: false
+        roles:
+            type: array
         lastActivity:
             type: datetime
             nullable: true

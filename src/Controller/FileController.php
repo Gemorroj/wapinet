@@ -25,7 +25,6 @@ use DateTime;
 use const DIRECTORY_SEPARATOR;
 use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
-use FOS\UserBundle\Model\UserManagerInterface;
 use InvalidArgumentException;
 use Pagerfanta\Pagerfanta;
 use Psr\Log\LoggerInterface;
@@ -205,11 +204,11 @@ class FileController extends AbstractController
     /**
      * @throws NotFoundHttpException
      */
-    public function userAction(Request $request, string $username, UserManagerInterface $userManager): Response
+    public function userAction(Request $request, string $username): Response
     {
         $page = $request->get('page', 1);
         /** @var User|null $user */
-        $user = $userManager->findUserByUsername($username);
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $username]);
         if (null === $user) {
             throw $this->createNotFoundException('Пользователь не найден');
         }

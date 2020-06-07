@@ -1,5 +1,10 @@
+wapinet_user_edit:
+    path:  /edit
+    defaults: { _controller: App\Controller\User\ProfileController::editUserAction }
+    methods: [GET, POST]
+
 wapinet_user_profile:
-    path:  /profile/user/{username}
+    path:  /profile/{username}
     defaults: { _controller: App\Controller\User\ProfileController::showUserAction, username: null }
     requirements:
         username: ".+"

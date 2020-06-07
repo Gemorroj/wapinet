@@ -39,6 +39,28 @@ video_courses:
     defaults: { _controller: App\Controller\DefaultController::videoCoursesAction }
 
 
+wapinet_login:
+    path:  /login
+    defaults: { _controller: App\Controller\DefaultController::loginAction }
+    methods: [GET, POST]
+
+wapinet_register:
+    path:  /registration
+    defaults: { _controller: App\Controller\DefaultController::registerAction }
+    methods: [GET, POST]
+
+wapinet_check:
+    path:  /login_check
+    defaults: { _controller: App\Controller\DefaultController::checkAction }
+    methods: [POST]
+
+wapinet_logout:
+    path:  /logout
+    defaults: { _controller: App\Controller\DefaultController::logoutAction }
+    methods: [GET, POST]
+
+
+
 # Проверка синтаксиса для Gmanager
 syntax:
     path:  /syntax

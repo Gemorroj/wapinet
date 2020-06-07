@@ -54,9 +54,6 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    App\Form\Type\User\ProfileType:
-        $class: '%fos_user.model.user.class%'
-
     pagerfanta.view.default:
         class: App\Pagerfanta\View
         tags: [{ name: pagerfanta.view, alias: default }]

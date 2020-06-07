@@ -1,19 +1,18 @@
-{% extends "@FOSUser/layout.html.twig" %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Редактирование меню{% endblock %}
 {% block breadcrumbs %}
     {{wapinet_breadcrumbs({
     1: {'uri': path('wapinet_users'), 'title': 'Пользователи'},
-    2: {'uri': path('fos_user_profile_show'), 'title': 'Профиль'}
+    2: {'uri': path('wapinet_user_profile', {'username': app.user.username}), 'title': 'Профиль'}
     })}}
 {% endblock %}
 
 
-{% block fos_user_content %}
+{% block content %}
 
     {{ form_start(form, {'action': path('wapinet_user_panel_edit'), 'method': 'POST'}) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
 
-{% endblock fos_user_content %}
-
+{% endblock content %}

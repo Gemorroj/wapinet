@@ -35,4 +35,14 @@ class EventRepository extends ServiceEntityRepository
             ->orderBy('e.id', 'DESC')
             ->getQuery();
     }
+
+    public function removeEvents(\DateTimeInterface $dateTime): int
+    {
+        return $this->getEntityManager()->createQueryBuilder()
+            ->delete($this->getEntityName(), 'e')
+            ->where('e.createdAt <= :date')
+            ->setParameter('date', $dateTime)
+            ->getQuery()
+            ->execute();
+    }
 }

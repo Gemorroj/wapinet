@@ -3,17 +3,25 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Intl\Countries;
+use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * User.
- */
-class User extends BaseUser
+class User implements UserInterface, EquatableInterface, \Serializable
 {
     const LIFETIME = '5 minutes';
     const SEX_MALE = 'm';
     const SEX_FEMALE = 'f';
+
+    /**
+     * @var int
+     */
+    protected $id;
+
+    /**
+     * @var bool
+     */
+    protected $enabled = true;
 
     /**
      * @var \DateTime
@@ -79,12 +87,55 @@ class User extends BaseUser
      * @var string|null
      */
     protected $vk;
+    /**
+     * @var array
+     */
+    protected $roles = [];
+    /**
+     * Encrypted password. Must be persisted.
+     *
+     * @var string
+     */
+    protected $password;
+
+    /**
+     * Plain password. Used for model validation. Must not be persisted.
+     *
+     * @var string
+     */
+    protected $plainPassword;
+    /**
+     * The salt to use for hashing.
+     *
+     * @var string
+     */
+    protected $salt;
+    /**
+     * @var string
+     */
+    protected $username;
+    /**
+     * @var string
+     */
+    protected $email;
 
     public function __construct()
     {
-        parent::__construct();
         $this->friends = new ArrayCollection();
         $this->friended = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->getUsername();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     /**
@@ -358,17 +409,6 @@ class User extends BaseUser
     }
 
     /**
-     * @return array
-     */
-    public static function getSexChoices()
-    {
-        return [
-            self::SEX_MALE => 'Мужской',
-            self::SEX_FEMALE => 'Женский',
-        ];
-    }
-
-    /**
      * @return bool
      */
     public function isMale()
@@ -382,5 +422,163 @@ class User extends BaseUser
     public function isFemale()
     {
         return self::SEX_FEMALE === $this->getSex();
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return \array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getPassword(): string
+    {
+        return (string) $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    public function setSalt(?string $salt): self
+    {
+        $this->salt = $salt;
+
+        return $this;
+    }
+
+    public function getSalt(): ?string
+    {
+        return $this->salt;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function eraseCredentials(): void
+    {
+        $this->plainPassword = null;
+    }
+
+    public function isEqualTo(UserInterface $user)
+    {
+        if (!$user instanceof self) {
+            return false;
+        }
+
+        if ($this->password !== $user->getPassword()) {
+            return false;
+        }
+
+        if ($this->salt !== $user->getSalt()) {
+            return false;
+        }
+
+        if ($this->username !== $user->getUsername()) {
+            return false;
+        }
+
+        if ($this->email !== $user->getEmail()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function serialize(): string
+    {
+        $data = \get_object_vars($this);
+        $data['friends'] = null;
+        $data['friended'] = null;
+        $data['subscriber'] = null;
+        $data['panel'] = null;
+
+        return \serialize($data);
+    }
+
+    /**
+     * @param string $serialized
+     */
+    public function unserialize($serialized): void
+    {
+        $data = \unserialize($serialized, ['allowed_classes' => true]);  // true для полного соответствия с поведением doctrine
+
+        if (8 === \count($data)) {
+            // Original FOSUser
+            $this->password = $data[0];
+            $this->salt = $data[1];
+            $this->username = $data[3];
+            $this->enabled = $data[4];
+            $this->id = $data[5];
+            $this->email = $data[6];
+
+            return;
+        }
+
+        foreach ($data as $key => $value) {
+            if (\property_exists($this, $key)) {
+                $this->{$key} = $value;
+            }
+        }
     }
 }

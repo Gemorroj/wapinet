@@ -14,10 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class PanelType extends AbstractType
 {
-    /**
-     * @var FormBuilderInterface
-     * @var array
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -41,11 +37,6 @@ class PanelType extends AbstractType
         ]);
     }
 
-    /**
-     * Уникальное имя формы.
-     *
-     * @return string
-     */
     public function getBlockPrefix()
     {
         return 'wapinet_user_panel';

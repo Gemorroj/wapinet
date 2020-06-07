@@ -10,7 +10,15 @@ class ProfileControllerTest extends WebTestCaseWapinet
     {
         $client = static::loginAdmin();
 
-        $crawler = $client->request('GET', '/profile/');
+        $crawler = $client->request('GET', '/user/profile');
+        self::assertSame(200, $client->getResponse()->getStatusCode());
+    }
+
+    public function testEdit()
+    {
+        $client = static::loginAdmin();
+
+        $crawler = $client->request('GET', '/user/edit');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }
