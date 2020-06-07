@@ -2,8 +2,8 @@
 
 namespace App\Service;
 
-use PHP\BitTorrent\Decoder;
-use PHP\BitTorrent\Encoder;
+use BitTorrent\Decoder;
+use BitTorrent\Encoder;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**

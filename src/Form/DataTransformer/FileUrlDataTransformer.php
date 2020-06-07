@@ -5,7 +5,7 @@ namespace App\Form\DataTransformer;
 use App\Entity\File\FileContent;
 use App\Entity\File\FileUrl;
 use App\Service\Curl;
-use Riverline\MultiPartParser\Part;
+use Riverline\MultiPartParser\StreamedPart;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
@@ -142,7 +142,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
     {
         $contentDisposition = $headers->get('Content-Disposition');
         if ($contentDisposition) {
-            $tmpName = Part::getHeaderOption($contentDisposition, 'filename');
+            $tmpName = StreamedPart::getHeaderOption($contentDisposition, 'filename');
             if ($tmpName) {
                 return $tmpName;
             }

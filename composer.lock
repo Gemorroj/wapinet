@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "35538b3e463801a680d7cae2c60627c2",
+    "content-hash": "1858065a1d3e90a38f0a100694690d91",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -70,28 +70,30 @@
         },
         {
             "name": "christeredvartsen/php-bittorrent",
-            "version": "1.1.0",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/christeredvartsen/php-bittorrent.git",
-                "reference": "a9315b6f93b45872667875668423cdb823f615d0"
+                "reference": "1e4f17ef840cd56b10e9c507df0064048fc91778"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/christeredvartsen/php-bittorrent/zipball/a9315b6f93b45872667875668423cdb823f615d0",
-                "reference": "a9315b6f93b45872667875668423cdb823f615d0",
+                "url": "https://api.github.com/repos/christeredvartsen/php-bittorrent/zipball/1e4f17ef840cd56b10e9c507df0064048fc91778",
+                "reference": "1e4f17ef840cd56b10e9c507df0064048fc91778",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2"
+                "php": ">=7.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "3.7.*"
+                "phploc/phploc": "^5.0",
+                "phpstan/phpstan": "^0.12",
+                "phpunit/phpunit": "^8.5"
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "PHP\\BitTorrent": ""
+                "psr-4": {
+                    "BitTorrent\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -101,18 +103,16 @@
             "authors": [
                 {
                     "name": "Christer Edvartsen",
-                    "email": "cogo@starzinger.net",
-                    "homepage": "http://cogo.wordpress.com",
-                    "role": "Project lead"
+                    "email": "cogo@starzinger.net"
                 }
             ],
-            "description": "PHP\\BitTorrent is a set of components that can be used to interact with torrent files (read+write) and classes that can encode/decode to/from the BitTorrent format.",
+            "description": "A set of components that can be used to interact with torrent files (read+write) and classes that can encode/decode to/from the BitTorrent format.",
             "homepage": "https://github.com/christeredvartsen/php-bittorrent",
             "keywords": [
                 "bittorrent",
                 "torrent"
             ],
-            "time": "2013-01-11T12:12:20+00:00"
+            "time": "2020-01-21T19:12:01+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -3820,28 +3820,32 @@
         },
         {
             "name": "riverline/multipart-parser",
-            "version": "1.2.0",
+            "version": "2.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Riverline/multipart-parser.git",
-                "reference": "e6dbac2ddfec1b938423d24c6627586f4444ccb8"
+                "reference": "2fe9026789754c1ff07c06047f0acc113e90933a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Riverline/multipart-parser/zipball/e6dbac2ddfec1b938423d24c6627586f4444ccb8",
-                "reference": "e6dbac2ddfec1b938423d24c6627586f4444ccb8",
+                "url": "https://api.github.com/repos/Riverline/multipart-parser/zipball/2fe9026789754c1ff07c06047f0acc113e90933a",
+                "reference": "2fe9026789754c1ff07c06047f0acc113e90933a",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3"
+                "ext-mbstring": "*",
+                "php": ">=5.6.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.7 || ^5.2"
+                "laminas/laminas-diactoros": "^1.8.7",
+                "phpunit/phpunit": "^5.2 || ^6.0 || ^7.0",
+                "psr/http-message": "^1.0",
+                "symfony/psr-http-message-bridge": "^1.1"
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Riverline\\MultiPartParser": "src/"
+                "psr-4": {
+                    "Riverline\\MultiPartParser\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3851,7 +3855,7 @@
             "authors": [
                 {
                     "name": "Romain Cambien",
-                    "email": "romain@riverline.fr"
+                    "email": "romain@cambien.net"
                 },
                 {
                     "name": "Riverline",
@@ -3864,7 +3868,7 @@
                 "multipart",
                 "parser"
             ],
-            "time": "2018-04-18T12:05:41+00:00"
+            "time": "2020-01-24T09:39:24+00:00"
         },
         {
             "name": "sensio/framework-extra-bundle",
