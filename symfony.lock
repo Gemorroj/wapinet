@@ -152,6 +152,9 @@
     "geshi/geshi": {
         "version": "v1.0.9.0"
     },
+    "graham-campbell/result-type": {
+        "version": "v1.0.1"
+    },
     "gregwar/captcha": {
         "version": "v1.1.5"
     },
