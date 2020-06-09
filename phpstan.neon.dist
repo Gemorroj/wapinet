@@ -10,7 +10,7 @@ parameters:
         - tests
     symfony:
         container_xml_path: '%rootDir%/../../../var/cache/dev/srcApp_KernelDevDebugContainer.xml'
-    autoload_files:
+    bootstrapFiles:
         - bin/.phpunit/phpunit-8.3-0/vendor/autoload.php
     doctrine:
         objectManagerLoader: object-manager.php
