@@ -143,11 +143,12 @@ class FileController extends AbstractController
 
     public function hiddenAction(Request $request): Response
     {
-        /** @var User $user */
+        /** @var User|null $user */
         $user = $this->getUser();
-        if (!$user || !($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_SUPER_ADMIN'))) {
-            throw $this->createAccessDeniedException('Доступ запрещен.');
+        if (!$user) {
+            $this->createAccessDeniedException();
         }
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', $user);
 
         $page = $request->get('page', 1);
 
@@ -260,13 +261,13 @@ class FileController extends AbstractController
 
     public function viewAction(File $file, EncoderFactoryInterface $encoderFactory, Meta $fileMeta): Response
     {
-        if (null !== $file->getPassword() && !$this->isGranted('ROLE_ADMIN') && (!($this->getUser() instanceof User) || !($file->getUser() instanceof User) || $file->getUser()->getId() !== $this->getUser()->getId())) {
+        if (null !== $file->getPassword() && !$this->isGranted('ROLE_ADMIN') && (!($this->getUser() instanceof User) || !($file->getUser() instanceof User) || !$file->getUser()->isEqualTo($this->getUser()))) {
             return $this->passwordAction($file, $encoderFactory, $fileMeta);
         }
 
         if ($file->isHidden()) {
-            $isAdmin = ($this->getUser() instanceof User) && ($this->getUser()->hasRole('ROLE_ADMIN') || $this->getUser()->hasRole('ROLE_SUPER_ADMIN'));
-            $isFileUser = ($this->getUser() instanceof User) && ($file->getUser() instanceof User) && ($file->getUser()->getId() === $this->getUser()->getId());
+            $isAdmin = ($this->getUser() instanceof User) && ($this->isGranted('ROLE_ADMIN', $this->getUser()));
+            $isFileUser = ($this->getUser() instanceof User) && ($file->getUser() instanceof User) && ($file->getUser()->isEqualTo($this->getUser()));
 
             if (!$isAdmin && !$isFileUser) {
                 throw $this->createNotFoundException('Файл скрыт и не доступен для просмотра');
@@ -496,7 +497,7 @@ class FileController extends AbstractController
         }
 
         // обновляем ip и браузер только если файл редактирует владелец
-        if ($data->getUser() && $data->getUser()->getId() === $this->getUser()->getId()) {
+        if ($data->getUser() && $data->getUser()->isEqualTo($this->getUser())) {
             //$data->setUser($this->getUser());
             $data->setIp($request->getClientIp());
             $data->setBrowser($request->headers->get('User-Agent', ''));
