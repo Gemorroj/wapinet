@@ -443,6 +443,11 @@ class User implements UserInterface, EquatableInterface, \Serializable
         return $this;
     }
 
+    public function hasRole(string $role): bool
+    {
+        return \in_array($role, $this->roles, true);
+    }
+
     public function getPassword(): string
     {
         return (string) $this->password;
