@@ -283,7 +283,7 @@ server {
 ```
 
 ### TODO:
-- !!! добавить конфигурацию на docker-compose
+- !!! добавить конфигурацию на docker-compose. see https://github.com/linuxserver/docker-ffmpeg/blob/bin/Dockerfile
 - !!! использовать новую систему конфигураций https://symfony.com/blog/improvements-to-the-handling-of-env-files-for-all-symfony-versions
 - !!! заменить свою curl прослойку на https://github.com/symfony/http-client
 - ! Избавится от pagefanta - https://github.com/symfony/demo/commit/65872cde5cb3dc7bdbb163a79a7ea8f96acb132f

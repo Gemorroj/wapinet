@@ -3,19 +3,22 @@
 namespace App\Twig\Extension;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class Forum extends AbstractExtension
 {
-    protected $parameterBag;
-    protected $em;
+    protected ParameterBagInterface $parameterBag;
+    protected EntityManagerInterface $em;
+    protected LoggerInterface $logger;
 
-    public function __construct(ParameterBagInterface $parameterBag, EntityManagerInterface $em)
+    public function __construct(ParameterBagInterface $parameterBag, EntityManagerInterface $em, LoggerInterface $logger)
     {
         $this->parameterBag = $parameterBag;
         $this->em = $em;
+        $this->logger = $logger;
     }
 
     /**
@@ -23,7 +26,7 @@ class Forum extends AbstractExtension
      *
      * @return array An array of global functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('wapinet_forum_topics_count', [$this, 'getTopicsCount']),
@@ -31,27 +34,33 @@ class Forum extends AbstractExtension
         ];
     }
 
-    /**
-     * @return int
-     */
-    public function getTopicsCount()
+    public function getTopicsCount(): ?int
     {
-        $database = $this->parameterBag->get('wapinet_forum_database_name');
-        $query = $this->em->getConnection()->executeQuery("SELECT COUNT(1) FROM `{$database}`.`topics`");
-        $query->execute();
+        try {
+            $database = $this->parameterBag->get('wapinet_forum_database_name');
+            $query = $this->em->getConnection()->executeQuery("SELECT COUNT(1) FROM `{$database}`.`topics`");
+            $query->execute();
 
-        return $query->fetchColumn(0);
+            return $query->fetchColumn(0);
+        } catch (\Throwable $e) {
+            $this->logger->warning('Can\'t execute query', ['exception' => $e]);
+
+            return null;
+        }
     }
 
-    /**
-     * @return int
-     */
-    public function getPostsCount()
+    public function getPostsCount(): ?int
     {
-        $database = $this->parameterBag->get('wapinet_forum_database_name');
-        $query = $this->em->getConnection()->executeQuery("SELECT COUNT(1) FROM `{$database}`.`posts`");
-        $query->execute();
+        try {
+            $database = $this->parameterBag->get('wapinet_forum_database_name');
+            $query = $this->em->getConnection()->executeQuery("SELECT COUNT(1) FROM `{$database}`.`posts`");
+            $query->execute();
 
-        return $query->fetchColumn(0);
+            return $query->fetchColumn(0);
+        } catch (\Throwable $e) {
+            $this->logger->warning('Can\'t execute query', ['exception' => $e]);
+
+            return null;
+        }
     }
 }

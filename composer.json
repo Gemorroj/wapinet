@@ -11,6 +11,8 @@
         "ext-zip": "*",
         "ext-zlib": "*",
         "ext-json": "*",
+        "ext-pdo_mysql": "*",
+        "ext-intl": "*",
         "ext-apcu": "*",
         "ext-simplexml": "*",
         "ext-sodium": "*",

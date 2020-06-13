@@ -1,0 +1,29 @@
+[mysqld]
+
+default-authentication-plugin=mysql_native_password
+
+skip-log-bin
+skip-external-locking
+skip-name-resolve
+#thread_cache_size=8
+innodb_thread_concurrency=28
+
+#bind-address		= 127.0.0.1
+
+innodb-use-native-aio=0
+innodb_file_per_table=1
+max_connections=10
+innodb_flush_log_at_trx_commit=2
+innodb_buffer_pool_size=76M
+innodb_buffer_pool_instances=1
+innodb_log_file_size=9M
+key_buffer_size=1M
+# innodb_flush_method = O_DIRECT
+
+
+#table_open_cache=1024
+#tmp_table_size=96M
+#max_heap_table_size=96M
+#join_buffer_size = 6M #myisam
+
+innodb_fast_shutdown = 0

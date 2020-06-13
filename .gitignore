@@ -1,8 +1,9 @@
 # PHPStorm
 .idea/
 
-# OpenServer
-public/Nginx_1.14_vhost.conf
+### docker
+.docker/mysql/data/*
+!.docker/mysql/data/.gitkeep
 
 # Assets
 /public/static/file/*
