@@ -61,7 +61,7 @@ RUN set -xe \
 
 # utilites
 RUN set -xe \
-    && apk --no-cache add htop unzip gzip p7zip
+    && apk --no-cache add htop unzip gzip p7zip git
 
 
 # GeoIP
