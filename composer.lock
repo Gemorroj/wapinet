@@ -2108,16 +2108,16 @@
         },
         {
             "name": "gemorroj/m3u-parser",
-            "version": "5.0.0",
+            "version": "5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/M3uParser.git",
-                "reference": "ff03a37231ba54f16dc6eb1ac6fbe80be9f9840b"
+                "reference": "ea5ae1ca3df7110ed04af1d84e03691af9d30933"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/M3uParser/zipball/ff03a37231ba54f16dc6eb1ac6fbe80be9f9840b",
-                "reference": "ff03a37231ba54f16dc6eb1ac6fbe80be9f9840b",
+                "url": "https://api.github.com/repos/Gemorroj/M3uParser/zipball/ea5ae1ca3df7110ed04af1d84e03691af9d30933",
+                "reference": "ea5ae1ca3df7110ed04af1d84e03691af9d30933",
                 "shasum": ""
             },
             "require": {
@@ -2148,7 +2148,7 @@
                 "m3u8",
                 "playlist"
             ],
-            "time": "2019-11-29T13:43:18+00:00"
+            "time": "2020-06-25T07:51:51+00:00"
         },
         {
             "name": "gemorroj/phpwhois",
