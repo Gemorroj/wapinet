@@ -5,6 +5,9 @@
     "algo26-matthias/idna-convert": {
         "version": "v3.0.4"
     },
+    "babdev/pagerfanta-bundle": {
+        "version": "v2.4.3"
+    },
     "christeredvartsen/php-bittorrent": {
         "version": "1.1.0"
     },
@@ -601,9 +604,6 @@
     },
     "webmozart/assert": {
         "version": "1.3.0"
-    },
-    "white-october/pagerfanta-bundle": {
-        "version": "v1.1.2"
     },
     "willdurand/jsonp-callback-validator": {
         "version": "v1.1.0"
