@@ -2,7 +2,7 @@
 
 $finder = PhpCsFixer\Finder::create()
     ->exclude('fixtures')
-    ->in(['src', 'tests', 'config']);
+    ->in(['src', 'tests', 'config', 'migrations', 'public']);
 
 return PhpCsFixer\Config::create()
     ->setRules([
