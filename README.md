@@ -283,13 +283,12 @@ server {
 ```
 
 ### TODO:
-- !!! добавить конфигурацию на docker-compose. see https://github.com/linuxserver/docker-ffmpeg/blob/bin/Dockerfile
+- !!! удалить переводчик, или найти замену yandex translate. закрывают api
 - !!! использовать новую систему конфигураций https://symfony.com/blog/improvements-to-the-handling-of-env-files-for-all-symfony-versions
 - !!! заменить свою curl прослойку на https://github.com/symfony/http-client
-- ! Избавится от pagefanta - https://github.com/symfony/demo/commit/65872cde5cb3dc7bdbb163a79a7ea8f96acb132f
 - !!! Переделать интерфейс на vue/react/angular (огромная задача)
 - переделать редактор аудиотегов на https://github.com/duncan3dc/meta-audio/issues/3 (когда будут картинки)
-- ! Сделать возможность в переводчике и обфускаторе загружать файлы
+- ! Сделать возможность в обфускаторе загружать файлы
 - !! Актуализировать мобильные коды. Найти новые для разных андроидов.
 - Данные о видео на youtube и др. https://github.com/essence/essence
 - Оболочка над nmap https://github.com/willdurand/nmap (работает медленно и выдает мало информации)
