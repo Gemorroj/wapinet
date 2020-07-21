@@ -24,10 +24,10 @@
 
 ### Установка крон заданий:
 ##### Каждый день в 1 час ночи от пользователя php-fpm
-`php /var/www/wapinet/bin/console wapinet:tmp:clear "1 day"`    
-`php /var/www/wapinet/bin/console wapinet:tags:clear`
+`php /var/www/wapinet/bin/console app:tmp-clear "1 day"`    
+`php /var/www/wapinet/bin/console app:tags-clear`
 ##### Каждые пол часа от пользователя php-fpm
-`php /var/www/wapinet/bin/console wapinet:user:subscriber`
+`php /var/www/wapinet/bin/console app:subscriber-send`
 ##### Каждый день в 2 часа ночи от рута
 `indexer --rotate --all`  
 

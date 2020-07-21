@@ -8,14 +8,11 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class SubscriberClear extends Command
+class SubscriberClearCommand extends Command
 {
-    /**
-     * @var EventRepository
-     */
-    private $eventRepository;
+    private EventRepository $eventRepository;
 
-    public function __construct(EventRepository $eventRepository, ?string $name = null)
+    public function __construct(EventRepository $eventRepository, string $name = null)
     {
         $this->eventRepository = $eventRepository;
         parent::__construct($name);
@@ -24,18 +21,18 @@ class SubscriberClear extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('wapinet:subscriber:clear')
+            ->setName('app:subscriber-clear')
             ->setDescription('Clean events')
             ->setDefinition([
                 new InputArgument('lifetime', InputArgument::OPTIONAL, 'The lifetime timeout', '30 days'),
             ])
             ->setHelp(<<<EOT
-The <info>wapinet:subscriber:clear</info> command removes old events:
+The <info>app:subscriber-clear</info> command removes old events:
 
-  <info>php app/console wapinet:subscriber:clear "30 days"</info>
+  <info>php bin/console app:subscriber-clear "30 days"</info>
 EOT
             );
     }

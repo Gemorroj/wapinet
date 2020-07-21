@@ -12,12 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class TagsCountCommand extends Command
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager, ?string $name = null)
+    public function __construct(EntityManagerInterface $entityManager, string $name = null)
     {
         $this->entityManager = $entityManager;
         parent::__construct($name);
@@ -26,15 +23,15 @@ class TagsCountCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('wapinet:tags:count')
+            ->setName('app:tags-count')
             ->setDescription('Fix tags counts')
             ->setHelp(<<<EOT
-The <info>wapinet:tags:count</info> command fix tags counts:
+The <info>app:tags-count</info> command fix tags counts:
 
-  <info>php app/console wapinet:tags:count</info>
+  <info>php bin/console app:tags-count</info>
 EOT
             );
     }

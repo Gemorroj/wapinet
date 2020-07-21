@@ -11,12 +11,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class TagsClearCommand extends Command
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager, ?string $name = null)
+    public function __construct(EntityManagerInterface $entityManager, string $name = null)
     {
         $this->entityManager = $entityManager;
         parent::__construct($name);
@@ -25,15 +22,15 @@ class TagsClearCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('wapinet:tags:clear')
+            ->setName('app:tags-clear')
             ->setDescription('Clean tags')
             ->setHelp(<<<EOT
-The <info>wapinet:tags:clear</info> command removes old tags:
+The <info>app:tags-clear</info> command removes old tags:
 
-  <info>php app/console wapinet:tags:clear</info>
+  <info>php bin/console app:tags-clear</info>
 EOT
             );
     }

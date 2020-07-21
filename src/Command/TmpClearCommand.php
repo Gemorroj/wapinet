@@ -12,16 +12,10 @@ use Symfony\Component\Finder\Finder;
 
 class TmpClearCommand extends Command
 {
-    /**
-     * @var ParameterBagInterface
-     */
-    private $parameterBag;
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
+    private ParameterBagInterface $parameterBag;
+    private Filesystem $filesystem;
 
-    public function __construct(ParameterBagInterface $parameterBag, Filesystem $filesystem, ?string $name = null)
+    public function __construct(ParameterBagInterface $parameterBag, Filesystem $filesystem, string $name = null)
     {
         $this->parameterBag = $parameterBag;
         $this->filesystem = $filesystem;
@@ -31,18 +25,18 @@ class TmpClearCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('wapinet:tmp:clear')
+            ->setName('app:tmp-clear')
             ->setDescription('Clean tmp files')
             ->setDefinition([
                 new InputArgument('lifetime', InputArgument::OPTIONAL, 'The lifetime timeout', '1 day'),
             ])
             ->setHelp(<<<EOT
-The <info>wapinet:tmp:clear</info> command removes old tmp files:
+The <info>app:tmp-clear</info> command removes old tmp files:
 
-  <info>php app/console wapinet:tmp:clear "1 day"</info>
+  <info>php bin/console app:tmp-clear "1 day"</info>
 EOT
             );
     }

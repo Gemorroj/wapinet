@@ -12,8 +12,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
-use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
-use Symfony\Component\Security\Core\Encoder\SelfSaltingEncoderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -82,7 +80,7 @@ class DefaultController extends AbstractController
                 goto render;
             }
 
-            $this->hashUserPassword($user, $encoderFactory);
+            $user->makeEncodedPassword($encoderFactory);
 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -99,28 +97,6 @@ class DefaultController extends AbstractController
         return $this->render('Security/register.html.twig', [
             'form' => $form->createView(),
         ]);
-    }
-
-    private function hashUserPassword(User $user, EncoderFactoryInterface $encoderFactory): void
-    {
-        $plainPassword = $user->getPlainPassword();
-
-        if (null === $plainPassword || '' === $plainPassword) {
-            return;
-        }
-
-        $encoder = $encoderFactory->getEncoder($user);
-
-        if ($encoder instanceof NativePasswordEncoder || $encoder instanceof SelfSaltingEncoderInterface) {
-            $user->setSalt(null);
-        } else {
-            $salt = \rtrim(\str_replace('+', '.', \base64_encode(\random_bytes(32))), '=');
-            $user->setSalt($salt);
-        }
-
-        $hashedPassword = $encoder->encodePassword($plainPassword, $user->getSalt());
-        $user->setPassword($hashedPassword);
-        $user->eraseCredentials();
     }
 
     public function indexAction(): Response

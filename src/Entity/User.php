@@ -4,6 +4,9 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Intl\Countries;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\SelfSaltingEncoderInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -580,5 +583,26 @@ class User implements UserInterface, EquatableInterface, \Serializable
                 $this->{$key} = $value;
             }
         }
+    }
+
+    public function makeEncodedPassword(EncoderFactoryInterface $encoderFactory): void
+    {
+        $plainPassword = $this->getPlainPassword();
+        if (null === $plainPassword || '' === $plainPassword) {
+            return;
+        }
+
+        $encoder = $encoderFactory->getEncoder($this);
+
+        if ($encoder instanceof NativePasswordEncoder || $encoder instanceof SelfSaltingEncoderInterface) {
+            $this->setSalt(null);
+        } else {
+            $salt = \rtrim(\str_replace('+', '.', \base64_encode(\random_bytes(32))), '=');
+            $this->setSalt($salt);
+        }
+
+        $hashedPassword = $encoder->encodePassword($plainPassword, $this->getSalt());
+        $this->setPassword($hashedPassword);
+        $this->eraseCredentials();
     }
 }

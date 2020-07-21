@@ -14,34 +14,19 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 
-/**
- * Subscriber.
- */
-class SubscriberCommand extends Command
+class SubscriberSendCommand extends Command
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-    /**
-     * @var MailerInterface
-     */
-    private $mailer;
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-    /**
-     * @var ParameterBagInterface
-     */
-    private $parameterBag;
+    private EntityManagerInterface $entityManager;
+    private MailerInterface $mailer;
+    private LoggerInterface $logger;
+    private ParameterBagInterface $parameterBag;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         MailerInterface $mailer,
         LoggerInterface $logger,
         ParameterBagInterface $parameterBag,
-        ?string $name = null)
+        string $name = null)
     {
         $this->entityManager = $entityManager;
         $this->mailer = $mailer;
@@ -53,11 +38,11 @@ class SubscriberCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('wapinet:user:subscriber')
-            ->setDescription('Send email to subscribers');
+            ->setName('app:subscriber-send')
+            ->setDescription('Send emails to subscribers');
     }
 
     /**
