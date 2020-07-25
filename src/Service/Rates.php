@@ -7,22 +7,14 @@ namespace App\Service;
  */
 class Rates
 {
-    /**
-     * @var Curl
-     */
-    protected $curl;
+    private Curl $curl;
 
     public function __construct(Curl $curl)
     {
         $this->curl = $curl;
     }
 
-    /**
-     * @param string $country
-     *
-     * @return string|null
-     */
-    public function getName($country)
+    public function getName(string $country): ?string
     {
         switch ($country) {
             case 'ru':
@@ -45,14 +37,7 @@ class Rates
         return null;
     }
 
-    /**
-     * @param string $country
-     *
-     * @throws \RuntimeException
-     *
-     * @return array
-     */
-    public function getRates($country)
+    public function getRates(string $country): array
     {
         $method = 'get'.\ucfirst($country);
         if (\method_exists($this, $method)) {
@@ -61,10 +46,7 @@ class Rates
         throw new \RuntimeException('Указанная страна не поддерживается');
     }
 
-    /**
-     * @return array
-     */
-    protected function getRu()
+    protected function getRu(): array
     {
         $this->curl->init('http://www.cbr.ru/scripts/XML_daily.asp');
         $this->curl->addCompression();
@@ -86,15 +68,12 @@ class Rates
         }
 
         return [
-            'date' => new \DateTime((string) $obj->attributes()->Date),
+            'date' => new \DateTime((string) $obj->attributes()->Date, new \DateTimeZone('Europe/Moscow')),
             'rates' => $rates,
         ];
     }
 
-    /**
-     * @return array
-     */
-    protected function getBy()
+    protected function getBy(): array
     {
         $this->curl->init('http://nbrb.by/Services/XmlExRates.aspx');
         $this->curl->addCompression();
@@ -116,17 +95,14 @@ class Rates
         }
 
         return [
-            'date' => new \DateTime((string) $obj->attributes()->Date),
+            'date' => new \DateTime((string) $obj->attributes()->Date, new \DateTimeZone('Europe/Minsk')),
             'rates' => $rates,
         ];
     }
 
-    /**
-     * @return array
-     */
-    protected function getUa()
+    protected function getUa(): array
     {
-        $this->curl->init('http://bank-ua.com/export/currrate.xml');
+        $this->curl->init('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json');
         $this->curl->addCompression();
 
         $response = $this->curl->exec();
@@ -135,28 +111,25 @@ class Rates
             throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
         }
 
-        $obj = \simplexml_load_string($response->getContent());
+        $arr = \json_decode($response->getContent(), true, 512, \JSON_THROW_ON_ERROR);
         $rates = [];
-        foreach ($obj->item as $v) {
+        foreach ($arr as $v) {
             $rates[] = [
-                'name' => (string) $v->name,
-                'code' => (string) $v->char3,
-                'rate' => (string) $v->change,
+                'name' => $v['txt'],
+                'code' => $v['cc'],
+                'rate' => $v['rate'],
             ];
         }
 
         return [
-            'date' => new \DateTime((string) $obj->item[0]->date),
+            'date' => new \DateTime($arr[0]['exchangedate'], new \DateTimeZone('Europe/Kiev')),
             'rates' => $rates,
         ];
     }
 
-    /**
-     * @return array
-     */
-    protected function getKz()
+    protected function getKz(): array
     {
-        $this->curl->init('http://www.nationalbank.kz/rss/rates_all.xml');
+        $this->curl->init('https://www.nationalbank.kz/rss/rates_all.xml');
         $this->curl->addCompression();
 
         $response = $this->curl->exec();
@@ -176,17 +149,12 @@ class Rates
         }
 
         return [
-            'date' => new \DateTime((string) $obj->channel->item[0]->pubDate),
+            'date' => new \DateTime((string) $obj->channel->item[0]->pubDate, new \DateTimeZone('Asia/Almaty')),
             'rates' => $rates,
         ];
     }
 
-    /**
-     * @param string $code
-     *
-     * @return string|null
-     */
-    private function getKzRateName($code)
+    private function getKzRateName(string $code): ?string
     {
         static $ruRates = null;
         $ruRates = $ruRates ?: $this->getRu()['rates'];

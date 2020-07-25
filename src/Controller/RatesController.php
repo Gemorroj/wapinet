@@ -4,23 +4,16 @@ namespace App\Controller;
 
 use App\Service\Rates;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 
 class RatesController extends AbstractController
 {
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function indexAction()
+    public function indexAction(): Response
     {
         return $this->render('Rates/index.html.twig');
     }
 
-    /**
-     * @param string $country
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function showAction($country, Rates $ratesHelper)
+    public function showAction(string $country, Rates $ratesHelper): Response
     {
         $rates = $ratesHelper->getRates($country);
 
