@@ -1,6 +1,5 @@
 "use strict";
 
-import Translate from "./module/translate";
 import PhpObfuscator from "./module/php_obfuscator";
 import Http from "./module/http";
 import Guestbook from "./module/guestbook";
@@ -250,10 +249,6 @@ $document.one("pagecreate", "#archiver_edit", function () {
 
 $document.one("pagecreate", "#php_obfuscator_index", function () {
     PhpObfuscator.pageCreate();
-});
-
-$document.one("pagecreate", "#translate_index", function () {
-    Translate.pageCreate();
 });
 
 $document.one("pagecreate", "#http_index", function () {

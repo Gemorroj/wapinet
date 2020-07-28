@@ -27,7 +27,6 @@
         <!-- ###- symfony/framework-bundle ### -->
 
         <env name="YANDEX_SEARCH_KEY" value="null"/>
-        <env name="YANDEX_TRANSLATE_KEY" value="null"/>
 
         <env name="FFMPEG_PATH" value="c:\_SOFT_\ffmpeg\bin\ffmpeg.exe"/>
         <env name="FFPROBE_PATH" value="c:\_SOFT_\ffmpeg\bin\ffprobe.exe"/>

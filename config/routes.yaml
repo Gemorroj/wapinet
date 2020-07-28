@@ -94,10 +94,6 @@ email:
     resource: "../src/Resources/config/routes/email.yml"
     prefix:   /email
 
-translate:
-    resource: "../src/Resources/config/routes/translate.yml"
-    prefix:   /translate
-
 pagerank:
     resource: "../src/Resources/config/routes/pagerank.yml"
     prefix:   /pagerank

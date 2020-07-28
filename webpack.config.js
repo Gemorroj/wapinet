@@ -25,7 +25,6 @@ Encore
      */
     .addEntry('app', [
         './assets/js/core.js',
-        './assets/js/module/translate.js',
         './assets/js/module/php_obfuscator.js',
         './assets/js/module/http.js',
         './assets/js/module/guestbook.js',
