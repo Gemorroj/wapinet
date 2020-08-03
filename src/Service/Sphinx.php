@@ -9,27 +9,12 @@ use Foolz\SphinxQL\SphinxQL;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-/**
- * Sphinx хэлпер
- */
 class Sphinx
 {
-    /**
-     * @var ManagerRegistry
-     */
-    private $doctrine;
-    /**
-     * @var Connection
-     */
-    private $connection;
-    /**
-     * @var int
-     */
-    private $maxPerPage;
-    /**
-     * @var int
-     */
-    private $page = 1;
+    private ManagerRegistry $doctrine;
+    private Connection $connection;
+    private int $maxPerPage = 10;
+    private int $page = 1;
 
     public function __construct(ManagerRegistry $doctrine, ParameterBagInterface $parameterBag)
     {
@@ -41,17 +26,19 @@ class Sphinx
             'port' => $parameterBag->get('sphinx_port'),
             'charset' => 'utf8',
         ]);
-        $this->maxPerPage = $parameterBag->get('wapinet_paginate_maxperpage');
+        if ($parameterBag->has('wapinet_paginate_maxperpage')) {
+            $this->maxPerPage = (int) $parameterBag->get('wapinet_paginate_maxperpage');
+        }
     }
 
     public function select(int $page = 1): SphinxQL
     {
         $this->page = $page;
 
-        $offset = ($this->page - 1) * $this->maxPerPage;
-        $limit = $this->maxPerPage;
-
-        return (new SphinxQL($this->connection))->select()->limit($offset, $limit);
+        return (new SphinxQL($this->connection))->select()->limit(
+            ($this->page - 1) * $this->maxPerPage,
+            $this->maxPerPage
+        );
     }
 
     public function getPagerfanta(SphinxQL $sphinxQl, string $entityClass): Pagerfanta

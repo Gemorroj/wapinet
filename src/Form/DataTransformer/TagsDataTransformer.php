@@ -9,12 +9,9 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class TagsDataTransformer implements DataTransformerInterface
 {
-    private $separator = ',';
-    private $entityManager;
+    private string $separator = ',';
+    private EntityManagerInterface $entityManager;
 
-    /**
-     * TagsType constructor.
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;

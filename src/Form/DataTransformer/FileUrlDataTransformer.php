@@ -16,18 +16,9 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class FileUrlDataTransformer implements DataTransformerInterface
 {
-    /**
-     * @var ParameterBagInterface
-     */
-    protected $parameterBag;
-    /**
-     * @var bool
-     */
-    protected $required;
-    /**
-     * @var Curl
-     */
-    protected $curl;
+    private ParameterBagInterface $parameterBag;
+    private bool $required;
+    private Curl $curl;
 
     public function __construct(ParameterBagInterface $parameterBag, Curl $curl, bool $required = true)
     {

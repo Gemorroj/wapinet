@@ -15,15 +15,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FileUrlType extends AbstractType
 {
-    public $builder;
-    /**
-     * @var ParameterBagInterface
-     */
-    protected $parameterBag;
-    /**
-     * @var Curl
-     */
-    protected $curl;
+    private ParameterBagInterface $parameterBag;
+    private Curl $curl;
 
     public function __construct(ParameterBagInterface $parameterBag, Curl $curl)
     {
@@ -49,8 +42,16 @@ class FileUrlType extends AbstractType
             $attrFile = \array_merge($attrFile, ['accept' => $options['accept']]);
         }
 
-        $builder->add('file', FileType::class, ['attr' => $attrFile, 'label' => false, 'required' => false]);
-        $builder->add('url', UrlType::class, ['attr' => ['placeholder' => 'Ссылка'], 'label' => false, 'required' => false]);
+        $builder->add('file', FileType::class, [
+            'attr' => $attrFile,
+            'label' => false,
+            'required' => false,
+        ]);
+        $builder->add('url', UrlType::class, [
+            'attr' => ['placeholder' => 'Ссылка'],
+            'label' => false,
+            'required' => false,
+        ]);
 
         if ($options['delete_button']) {
             $builder->add('file_url_delete', CheckboxType::class, [
@@ -61,7 +62,6 @@ class FileUrlType extends AbstractType
         }
 
         $builder->addViewTransformer($transformer);
-        $this->builder = $builder->getData();
     }
 
     /**

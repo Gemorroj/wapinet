@@ -11,6 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class TagsClearCommand extends Command
 {
+    protected static $defaultName = 'app:tags-clear';
     private EntityManagerInterface $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager, string $name = null)
@@ -25,7 +26,6 @@ class TagsClearCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('app:tags-clear')
             ->setDescription('Clean tags')
             ->setHelp(<<<EOT
 The <info>app:tags-clear</info> command removes old tags:

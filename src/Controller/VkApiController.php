@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class VkApiController extends AbstractController
 {
-    public function getAction(Request $request, string $method, Curl $curl)
+    public function getAction(Request $request, string $method, Curl $curl): JsonResponse
     {
         $params = $request->request->all();
         $params['access_token'] = $this->getParameter('wapinet_vk_access_token');
@@ -25,7 +25,7 @@ class VkApiController extends AbstractController
             throw new HttpException($response->getStatusCode());
         }
 
-        $json = \json_decode($response->getContent(), true);
+        $json = \json_decode($response->getContent(), true, 512, \JSON_THROW_ON_ERROR);
 
         return new JsonResponse($json);
     }

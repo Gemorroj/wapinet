@@ -12,6 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class TagsCountCommand extends Command
 {
+    protected static $defaultName = 'app:tags-count';
     private EntityManagerInterface $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager, string $name = null)
@@ -26,7 +27,6 @@ class TagsCountCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('app:tags-count')
             ->setDescription('Fix tags counts')
             ->setHelp(<<<EOT
 The <info>app:tags-count</info> command fix tags counts:

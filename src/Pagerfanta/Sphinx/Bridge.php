@@ -242,7 +242,7 @@ class Bridge
         }
 
         if (null === $this->results) {
-            throw new \RuntimeException('You should define sphinx results on '.__CLASS__);
+            throw new \RuntimeException('You should define sphinx results on '.self::class);
         }
 
         $results = $hasDiscriminator ? $this->getDiscriminatorResults() : $this->getResults();

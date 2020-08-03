@@ -3,20 +3,16 @@
 namespace App\Twig\Extension;
 
 use App\Repository\GuestbookRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class Guestbook extends AbstractExtension
 {
-    /**
-     * @var GuestbookRepository
-     */
-    protected $guestbookRepository;
+    private GuestbookRepository $guestbookRepository;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(GuestbookRepository $guestbookRepository)
     {
-        $this->guestbookRepository = $em->getRepository(\App\Entity\Guestbook::class);
+        $this->guestbookRepository = $guestbookRepository;
     }
 
     /**

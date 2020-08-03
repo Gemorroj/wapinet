@@ -4,20 +4,16 @@ namespace App\Twig\Extension;
 
 use App\Entity\User;
 use App\Repository\GistRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class Gist extends AbstractExtension
 {
-    /**
-     * @var GistRepository
-     */
-    protected $gistRepository;
+    private GistRepository $gistRepository;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(GistRepository $gistRepository)
     {
-        $this->gistRepository = $em->getRepository(\App\Entity\Gist::class);
+        $this->gistRepository = $gistRepository;
     }
 
     /**

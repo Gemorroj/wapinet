@@ -28,10 +28,7 @@ use Symfony\Component\HttpKernel\Exception\LengthRequiredHttpException;
  */
 class Curl
 {
-    /**
-     * @var ParameterBagInterface
-     */
-    protected $parameterBag;
+    protected ParameterBagInterface $parameterBag;
 
     /**
      * @var resource
@@ -41,14 +38,14 @@ class Curl
     /**
      * @var string[]
      */
-    protected static $browserHeaders = [
+    protected static array $browserHeaders = [
         'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Connection: Close',
         'Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3',
         'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0',
     ];
-    protected $headers = [];
-    protected $postData = [];
+    protected array $headers = [];
+    protected array $postData = [];
 
     public function __construct(ParameterBagInterface $parameterBag)
     {
@@ -171,9 +168,9 @@ class Curl
                 if (!isset($headers[$h[0]])) {
                     $headers[$h[0]] = \trim($h[1]);
                 } elseif (\is_array($headers[$h[0]])) {
-                    $headers[$h[0]] = \array_merge($headers[$h[0]], [\trim($h[1])]);
+                    $headers[$h[0]] = [...$headers[$h[0]], ...[\trim($h[1])]];
                 } else {
-                    $headers[$h[0]] = \array_merge([$headers[$h[0]]], [\trim($h[1])]);
+                    $headers[$h[0]] = [...[$headers[$h[0]]], ...[\trim($h[1])]];
                 }
 
                 $key = $h[0];

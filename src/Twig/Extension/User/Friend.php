@@ -5,20 +5,16 @@ namespace App\Twig\Extension\User;
 use App\Entity\User;
 use App\Repository\FriendRepository;
 use DateTime;
-use Doctrine\ORM\EntityManagerInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class Friend extends AbstractExtension
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $em;
+    private FriendRepository $friendRepository;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(FriendRepository $friendRepository)
     {
-        $this->em = $em;
+        $this->friendRepository = $friendRepository;
     }
 
     /**
@@ -37,26 +33,18 @@ class Friend extends AbstractExtension
 
     public function isFriends(User $user, User $friend): bool
     {
-        /** @var FriendRepository $friendRepository */
-        $friendRepository = $this->em->getRepository(\App\Entity\Friend::class);
-        $objFriend = $friendRepository->getFriend($user, $friend);
+        $objFriend = $this->friendRepository->getFriend($user, $friend);
 
         return null !== $objFriend;
     }
 
     public function countFriends(User $user): int
     {
-        /** @var FriendRepository $friendRepository */
-        $friendRepository = $this->em->getRepository(\App\Entity\Friend::class);
-
-        return $friendRepository->getFriendsCount($user);
+        return $this->friendRepository->getFriendsCount($user);
     }
 
     public function countOnlineFriends(User $user): int
     {
-        /** @var FriendRepository $friendRepository */
-        $friendRepository = $this->em->getRepository(\App\Entity\Friend::class);
-
-        return $friendRepository->getFriendsCount($user, new DateTime('now -'.User::LIFETIME));
+        return $this->friendRepository->getFriendsCount($user, new DateTime('now -'.User::LIFETIME));
     }
 }

@@ -10,12 +10,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class TagsType extends AbstractType
 {
-    public $builder;
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
-    /**
-     * TagsType constructor.
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -29,7 +25,6 @@ class TagsType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder->addViewTransformer(new TagsDataTransformer($this->entityManager));
-        $this->builder = $builder->getData();
     }
 
     /**

@@ -6,25 +6,18 @@ use App\Entity\User;
 use App\Repository\FileRepository;
 use App\Service\Timezone;
 use DateTime;
-use Doctrine\ORM\EntityManagerInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class File extends AbstractExtension
 {
-    /**
-     * @var FileRepository
-     */
-    protected $fileRepository;
-    /**
-     * @var Timezone
-     */
-    protected $timezoneHelper;
+    private FileRepository $fileRepository;
+    private Timezone $timezoneHelper;
 
-    public function __construct(EntityManagerInterface $em, Timezone $timezoneHelper)
+    public function __construct(FileRepository $fileRepository, Timezone $timezoneHelper)
     {
-        $this->fileRepository = $em->getRepository(\App\Entity\File::class);
+        $this->fileRepository = $fileRepository;
         $this->timezoneHelper = $timezoneHelper;
     }
 

@@ -16,6 +16,7 @@ use Symfony\Component\Mailer\MailerInterface;
 
 class SubscriberSendCommand extends Command
 {
+    protected static $defaultName = 'app:subscriber-send';
     private EntityManagerInterface $entityManager;
     private MailerInterface $mailer;
     private LoggerInterface $logger;
@@ -40,9 +41,7 @@ class SubscriberSendCommand extends Command
      */
     protected function configure(): void
     {
-        $this
-            ->setName('app:subscriber-send')
-            ->setDescription('Send emails to subscribers');
+        $this->setDescription('Send emails to subscribers');
     }
 
     /**

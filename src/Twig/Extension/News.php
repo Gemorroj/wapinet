@@ -2,18 +2,18 @@
 
 namespace App\Twig\Extension;
 
+use App\Repository\NewsRepository;
 use DateTime;
-use Doctrine\ORM\EntityManagerInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class News extends AbstractExtension
 {
-    protected $em;
+    private NewsRepository $newsRepository;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(NewsRepository $newsRepository)
     {
-        $this->em = $em;
+        $this->newsRepository = $newsRepository;
     }
 
     /**
@@ -30,7 +30,7 @@ class News extends AbstractExtension
 
     public function getLastDate(): ?DateTime
     {
-        $result = $this->em->getRepository(\App\Entity\News::class)->getLastDate()->getOneOrNullResult();
+        $result = $this->newsRepository->getLastDate()->getOneOrNullResult();
 
         return null === $result ? null : $result['createdAt'];
     }

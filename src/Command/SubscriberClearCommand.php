@@ -10,6 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SubscriberClearCommand extends Command
 {
+    protected static $defaultName = 'app:subscriber-clear';
     private EventRepository $eventRepository;
 
     public function __construct(EventRepository $eventRepository, string $name = null)
@@ -24,7 +25,6 @@ class SubscriberClearCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('app:subscriber-clear')
             ->setDescription('Clean events')
             ->setDefinition([
                 new InputArgument('lifetime', InputArgument::OPTIONAL, 'The lifetime timeout', '30 days'),

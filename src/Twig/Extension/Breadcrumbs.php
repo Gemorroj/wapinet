@@ -33,7 +33,7 @@ class Breadcrumbs extends AbstractExtension
         \ksort($options, SORT_NUMERIC);
 
         $out = '<div data-role="navbar" data-iconpos="left"><ul>';
-        foreach ($options as $key => $value) {
+        foreach ($options as $value) {
             $out .= '<li><a class="ui-corner-all" data-icon="arrow-l" href="'.\htmlspecialchars($value['uri']).'">'.\htmlspecialchars($value['title'], ENT_NOQUOTES).'</a></li>';
         }
         $out .= '</ul></div>';

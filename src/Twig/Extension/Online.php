@@ -8,10 +8,7 @@ use Twig\TwigFunction;
 
 class Online extends AbstractExtension
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $em;
+    private EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $em)
     {

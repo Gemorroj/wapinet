@@ -12,6 +12,7 @@ use Symfony\Component\Finder\Finder;
 
 class TmpClearCommand extends Command
 {
+    protected static $defaultName = 'app:tmp-clear';
     private ParameterBagInterface $parameterBag;
     private Filesystem $filesystem;
 
@@ -28,7 +29,6 @@ class TmpClearCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('app:tmp-clear')
             ->setDescription('Clean tmp files')
             ->setDefinition([
                 new InputArgument('lifetime', InputArgument::OPTIONAL, 'The lifetime timeout', '1 day'),

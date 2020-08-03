@@ -9,11 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SyntaxController extends AbstractController
 {
-    /**
-     * @var array|null
-     */
-    protected $data;
-
     public function indexAction(Request $request, PhpValidator $phpValidator): Response
     {
         $code = $request->get('f');
@@ -22,18 +17,18 @@ class SyntaxController extends AbstractController
             return new Response('<div class="red">Не передан PHP код</div>');
         }
 
-        $this->data = $phpValidator->validateFragment($code);
+        $data = $phpValidator->validateFragment($code);
         $charset = $this->detectEncoding($code);
 
         $page = '<div class="border">Кодировка: '.$charset.'<br/></div><div class="border">Размер: '.$this->codeSize($code).'<br/></div>';
 
-        if ($this->data['validity']) {
+        if ($data['validity']) {
             $page .= '<div class="green">Синтаксических ошибок не найдено<br/></div>';
         } else {
-            $page .= '<div class="red">'.$this->data['errors'][0]['type'].': '.$this->data['errors'][0]['message'].'<br/>Ошибка в '.$this->data['errors'][0]['line'].' строке<br/></div>';
+            $page .= '<div class="red">'.$data['errors'][0]['type'].': '.$data['errors'][0]['message'].'<br/>Ошибка в '.$data['errors'][0]['line'].' строке<br/></div>';
         }
 
-        $page .= $this->highlightCode($this->toUtf8Encoding($code, $charset), $this->data['errors'][0]['line'] ?? null);
+        $page .= $this->highlightCode($this->toUtf8Encoding($code, $charset), $data['errors'][0]['line'] ?? null);
 
         return new Response($page);
     }

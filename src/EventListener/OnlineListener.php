@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 class OnlineListener
 {
-    private $em;
+    private EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $em)
     {
@@ -35,7 +35,10 @@ class OnlineListener
         $requestBrowser = $request->headers->get('User-Agent', '');
 
         /** @var Online|null $online */
-        $online = $this->em->getRepository(Online::class)->findOneBy(['ip' => $requestIp, 'browser' => $requestBrowser]);
+        $online = $this->em->getRepository(Online::class)->findOneBy([
+            'ip' => $requestIp,
+            'browser' => $requestBrowser,
+        ]);
 
         if (null === $online) {
             $online = new Online();
