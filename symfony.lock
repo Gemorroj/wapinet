@@ -14,6 +14,9 @@
     "composer/ca-bundle": {
         "version": "1.1.1"
     },
+    "composer/package-versions-deprecated": {
+        "version": "1.11.99"
+    },
     "composer/semver": {
         "version": "1.4.2"
     },
@@ -175,6 +178,12 @@
     },
     "jms/metadata": {
         "version": "1.6.0"
+    },
+    "laminas/laminas-code": {
+        "version": "3.4.1"
+    },
+    "laminas/laminas-eventmanager": {
+        "version": "3.3.0"
     },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.3"

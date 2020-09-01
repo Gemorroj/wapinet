@@ -16,7 +16,7 @@
         "ext-apcu": "*",
         "ext-simplexml": "*",
         "ext-sodium": "*",
-        "sensio/framework-extra-bundle": "^5.5",
+        "sensio/framework-extra-bundle": "^5.6",
         "symfony/asset": "4.4.*",
         "symfony/console": "4.4.*",
         "symfony/dotenv": "4.4.*",
