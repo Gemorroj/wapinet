@@ -61,7 +61,7 @@
         "gemorroj/htmlvalidator": "^2.0",
         "gemorroj/cssvalidator": "^2.0",
         "gemorroj/xbbcode": "^2.4",
-        "gemorroj/ginfo": "^5.1"
+        "gemorroj/ginfo": "^5.2"
     },
     "require-dev": {
         "symfony/debug-bundle": "4.4.*",
