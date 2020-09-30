@@ -2,47 +2,79 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Gist.
+ *
+ * @ORM\Table(name="gist")
+ * @ORM\Entity(repositoryClass="App\Repository\GistRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Gist
 {
     /**
      * @var int
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $id;
-    /**
-     * @var User
-     */
-    protected $user;
+
     /**
      * @var string
+     *
+     * @ORM\Column(name="ip", type="string", nullable=false)
      */
-    protected $ip;
+    private $ip;
+
     /**
      * @var string
+     *
+     * @ORM\Column(name="browser", type="string", nullable=false)
      */
-    protected $browser;
+    private $browser;
+
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    protected $createdAt;
+    private $createdAt;
+
     /**
      * @var \DateTime|null
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    protected $updatedAt;
+    private $updatedAt;
+
     /**
      * @var string
+     *
+     * @ORM\Column(name="body", type="text", nullable=false)
      * @Assert\Length(max=4294967295, allowEmptyString="false")
      */
-    protected $body;
+    private $body;
+
     /**
      * @var string
+     *
+     * @ORM\Column(name="subject", type="string", length=5000, nullable=false)
      * @Assert\Length(max=5000, allowEmptyString="false")
      */
-    protected $subject;
+    private $subject;
+
+    /**
+     * @var \App\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumns({
+     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     * })
+     */
+    private $user;
 
     /**
      * Get id.
@@ -139,7 +171,7 @@ class Gist
     }
 
     /**
-     * @return Gist
+     * @ORM\PrePersist
      */
     public function setCreatedAtValue()
     {
@@ -157,7 +189,7 @@ class Gist
     }
 
     /**
-     * @return Gist
+     * @ORM\PreUpdate
      */
     public function setUpdatedAtValue()
     {

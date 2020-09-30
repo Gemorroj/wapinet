@@ -2,27 +2,47 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Subscriber.
+ *
+ * @ORM\Table(name="user_subscriber")
+ * @ORM\Entity
  */
 class Subscriber extends \ArrayObject
 {
-    protected $id;
+    /**
+     * @var int
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $id;
 
     /**
      * @var bool
+     *
+     * @ORM\Column(name="email_news", type="boolean", nullable=false)
      */
-    protected $emailNews = true;
+    private $emailNews = true;
 
     /**
      * @var bool
+     *
+     * @ORM\Column(name="email_friends", type="boolean", nullable=false)
      */
-    protected $emailFriends = false;
+    private $emailFriends = true;
 
     /**
-     * @var User
+     * @var \App\Entity\User
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="subscriber", cascade={"persist"})
+     * @ORM\JoinColumns({
+     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", unique=true, nullable=false)
+     * })
      */
-    protected $user;
+    private $user;
 
     /**
      * @return int

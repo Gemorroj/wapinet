@@ -2,8 +2,13 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Panel.
+ *
+ * @ORM\Table(name="user_panel")
+ * @ORM\Entity
  */
 class Panel extends \ArrayObject
 {
@@ -16,19 +21,79 @@ class Panel extends \ArrayObject
     const ROUTE_UTILITIES = 'utilities';
     const ROUTE_PROGRAMMING = 'programming';
 
-    protected $id;
-    protected $forum = true;
-    protected $guestbook = false;
-    protected $gist = true;
-    protected $file = true;
-    protected $archiver = false;
-    protected $downloads = true;
-    protected $utilities = true;
-    protected $programming = true;
     /**
-     * @var User
+     * @var int
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer", nullable=false)
      */
-    protected $user;
+    private $id;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="forum", type="boolean", nullable=false)
+     */
+    private $forum = true;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="guestbook", type="boolean", nullable=false)
+     */
+    private $guestbook = false;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="gist", type="boolean", nullable=false)
+     */
+    private $gist = true;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="file", type="boolean", nullable=false)
+     */
+    private $file = true;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="archiver", type="boolean", nullable=false)
+     */
+    private $archiver = false;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="downloads", type="boolean", nullable=false)
+     */
+    private $downloads = true;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="utilities", type="boolean", nullable=false)
+     */
+    private $utilities = true;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="programming", type="boolean", nullable=false)
+     */
+    private $programming = true;
+
+    /**
+     * @var \App\Entity\User
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="panel", cascade={"persist"})
+     * @ORM\JoinColumns({
+     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", unique=true, nullable=false)
+     * })
+     */
+    private $user;
 
     /**
      * @return int

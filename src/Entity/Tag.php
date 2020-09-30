@@ -2,31 +2,52 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Tag.
+ *
+ * @ORM\Table(name="tag", uniqueConstraints={@ORM\UniqueConstraint(name="name_idx", columns={"name"})})
+ * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Tag
 {
     /**
      * @var int
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $id;
+
     /**
      * @var string
+     *
+     * @ORM\Column(name="name", type="string", nullable=false)
      */
-    protected $name;
+    private $name;
+
     /**
      * @var int
+     *
+     * @ORM\Column(name="count", type="integer", nullable=false)
      */
-    protected $count = 0;
+    private $count = 0;
+
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    protected $createdAt;
+    private $createdAt;
+
     /**
      * @var \DateTime|null
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    protected $updatedAt;
+    private $updatedAt;
 
     /**
      * Get id.
@@ -109,7 +130,7 @@ class Tag
     }
 
     /**
-     * @return $this
+     * @ORM\PrePersist
      */
     public function setCreatedAtValue()
     {
@@ -127,7 +148,7 @@ class Tag
     }
 
     /**
-     * @return $this
+     * @ORM\PreUpdate
      */
     public function setUpdatedAtValue()
     {

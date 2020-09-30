@@ -2,40 +2,62 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * News.
+ *
+ * @ORM\Table(name="news")
+ * @ORM\Entity(repositoryClass="App\Repository\NewsRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class News
 {
     /**
      * @var int
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer", nullable=false)
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="subject", type="string", nullable=false)
      */
-    protected $subject;
+    private $subject;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="body", type="text", nullable=false)
      */
-    protected $body;
-
-    /**
-     * @var User
-     */
-    protected $createdBy;
+    private $body;
 
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    protected $createdAt;
+    private $createdAt;
 
     /**
      * @var \DateTime|null
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    protected $updatedAt;
+    private $updatedAt;
+
+    /**
+     * @var \App\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumns({
+     *     @ORM\JoinColumn(name="created_by_id", referencedColumnName="id")
+     * })
+     */
+    private $createdBy;
 
     public function getId()
     {
@@ -105,6 +127,9 @@ class News
         return $this->createdAt;
     }
 
+    /**
+     * @ORM\PrePersist
+     */
     public function setCreatedAtValue()
     {
         $this->createdAt = new \DateTime();
@@ -117,6 +142,9 @@ class News
         return $this->updatedAt;
     }
 
+    /**
+     * @ORM\PreUpdate
+     */
     public function setUpdatedAtValue()
     {
         $this->updatedAt = new \DateTime();

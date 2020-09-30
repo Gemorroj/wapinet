@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Intl\Countries;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
@@ -10,6 +11,13 @@ use Symfony\Component\Security\Core\Encoder\SelfSaltingEncoderInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * User.
+ *
+ * @ORM\Table(name="user")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks
+ */
 class User implements UserInterface, EquatableInterface, \Serializable
 {
     const LIFETIME = '5 minutes';
@@ -18,88 +26,150 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * @var int
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer", nullable=false)
      */
-    protected $id;
+    private $id;
 
     /**
      * @var bool
+     *
+     * @ORM\Column(name="enabled", type="boolean", nullable=false, options={"default": "1"})
      */
-    protected $enabled = true;
+    private $enabled = true;
 
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    protected $createdAt;
+    private $createdAt;
 
     /**
      * @var \DateTime|null
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    protected $updatedAt;
-
-    /**
-     * @var \DateTime|null
-     */
-    protected $lastActivity;
-
-    /**
-     * @var string|null
-     */
-    protected $sex;
-
-    /**
-     * @var \DateTime|null
-     */
-    protected $birthday;
-
-    /**
-     * @var Panel
-     */
-    protected $panel;
-
-    /**
-     * @var Subscriber
-     */
-    protected $subscriber;
-
-    /**
-     * @var ArrayCollection
-     */
-    protected $friends;
-
-    /**
-     * @var ArrayCollection
-     */
-    protected $friended;
+    private $updatedAt;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=180, nullable=false, unique=true)
      */
-    protected $info;
+    private $username;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=180, nullable=false, unique=true)
+     */
+    private $email;
 
     /**
      * @var string|null
+     *
+     * @ORM\Column(name="salt", type="string", length=255, nullable=true)
      */
-    protected $timezone;
+    private $salt;
 
     /**
-     * @var string|null
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=255, nullable=false)
      */
-    protected $country;
+    private $password;
 
-    /**
-     * @var string|null
-     */
-    protected $vk;
     /**
      * @var array
-     */
-    protected $roles = [];
-    /**
-     * Encrypted password. Must be persisted.
      *
-     * @var string
+     * @ORM\Column(name="roles", type="array")
      */
-    protected $password;
+    private $roles;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="last_activity", type="datetime", nullable=true)
+     */
+    private $lastActivity;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="sex", type="string", nullable=true, columnDefinition="ENUM('m', 'f') DEFAULT NULL")
+     */
+    private $sex;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="birthday", type="date", nullable=true)
+     */
+    private $birthday;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="info", type="string", length=5000, nullable=true)
+     */
+    private $info;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="timezone", type="string", nullable=true)
+     */
+    private $timezone;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="country", type="string", nullable=true)
+     */
+    private $country;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="vk", type="string", nullable=true)
+     */
+    private $vk;
+
+    /**
+     * @var \App\Entity\Panel
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\Panel", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $panel;
+
+    /**
+     * @var \App\Entity\Subscriber
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\Subscriber", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $subscriber;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Friend", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({
+     *     "id": "DESC"
+     * })
+     */
+    private $friends;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Friend", mappedBy="friend")
+     * @ORM\OrderBy({
+     *     "id": "DESC"
+     * })
+     */
+    private $friended;
 
     /**
      * Plain password. Used for model validation. Must not be persisted.
@@ -107,20 +177,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
      * @var string
      */
     protected $plainPassword;
-    /**
-     * The salt to use for hashing.
-     *
-     * @var string
-     */
-    protected $salt;
-    /**
-     * @var string
-     */
-    protected $username;
-    /**
-     * @var string
-     */
-    protected $email;
 
     public function __construct()
     {
@@ -366,7 +422,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @return User
+     * @ORM\PrePersist
      */
     public function setCreatedAtValue()
     {
@@ -384,7 +440,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @return User
+     * @ORM\PreUpdate
      */
     public function setUpdatedAtValue()
     {

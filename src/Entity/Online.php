@@ -2,33 +2,49 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Online.
+ *
+ * @ORM\Table(name="online", options={"engine": "MEMORY"}, uniqueConstraints={@ORM\UniqueConstraint(name="unique_idx", columns={"ip", "browser"})})
+ * @ORM\Entity
  */
 class Online
 {
     /**
      * @var int
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $id;
 
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="datetime", type="datetime")
      */
     private $datetime;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="ip", type="string", length=255)
      */
     private $ip;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="browser", type="string", length=255)
      */
     private $browser;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="path", type="string", length=255)
      */
     private $path;
 

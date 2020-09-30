@@ -3,114 +3,180 @@
 namespace App\Entity;
 
 use App\Entity\File\Meta;
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use const PATHINFO_FILENAME;
-use Serializable;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
+ * File.
+ *
  * @Vich\Uploadable
+ * @ORM\Table(name="file", indexes={@ORM\Index(name="hash_idx", columns={"hash"})})
+ * @ORM\Entity(repositoryClass="App\Repository\FileRepository")
+ * @ORM\HasLifecycleCallbacks
  */
-class File implements Serializable
+class File implements \Serializable
 {
     /**
      * @var int
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $id;
-    /**
-     * @var User|null
-     */
-    protected $user;
+
     /**
      * @var string
+     *
+     * @ORM\Column(name="ip", type="string", nullable=false)
      */
-    protected $ip;
+    private $ip;
+
     /**
      * @var string
+     *
+     * @ORM\Column(name="browser", type="string", nullable=false)
      */
-    protected $browser;
+    private $browser;
+
     /**
-     * @var DateTime
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    protected $createdAt;
+    private $createdAt;
+
     /**
-     * @var DateTime|null
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    protected $updatedAt;
+    private $updatedAt;
+
     /**
-     * @var DateTime|null
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="last_view_at", type="datetime", nullable=true)
      */
-    protected $lastViewAt;
+    private $lastViewAt;
+
     /**
      * @var int
+     *
+     * @ORM\Column(name="count_views", type="integer", nullable=false)
      */
-    protected $countViews = 0;
+    private $countViews = 0;
+
     /**
      * @var string|null
+     *
+     * @ORM\Column(name="salt", type="string", nullable=true)
      */
-    protected $salt;
+    private $salt;
+
     /**
      * @var string|null
+     *
+     * @ORM\Column(name="password", type="string", nullable=true)
      */
-    protected $password;
+    private $password;
+
     /**
      * @var string|null
      */
     protected $plainPassword;
+
     /**
-     * @var string
+     * @var string|null
+     *
+     * @ORM\Column(name="mime_type", type="string", nullable=true)
      */
-    protected $mimeType;
+    private $mimeType;
+
     /**
      * @var int
+     *
+     * @ORM\Column(name="file_size", type="integer", nullable=false)
      */
-    protected $fileSize;
+    private $fileSize;
+
     /**
      * @var string
+     *
+     * @ORM\Column(name="file_name", type="string", nullable=false)
      */
-    protected $fileName;
+    private $fileName;
+
     /**
      * @var BaseFile
      * @Assert\File
      * @Vich\UploadableField(mapping="file", fileNameProperty="fileName", size="fileSize")
      */
     protected $file;
+
     /**
      * @var string
+     *
+     * @ORM\Column(name="original_file_name", type="string", nullable=false)
      */
-    protected $originalFileName;
+    private $originalFileName;
+
     /**
      * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=5000, nullable=false)
      * @Assert\Length(max=5000, allowEmptyString="false")
      */
-    protected $description;
+    private $description;
+
     /**
      * @var string
+     *
+     * @ORM\Column(name="hash", type="string", nullable=false)
      */
-    protected $hash;
+    private $hash;
+
     /**
      * @var Meta|null
+     *
+     * @ORM\Column(name="meta", type="object", nullable=true)
      */
-    protected $meta;
+    private $meta;
+
     /**
-     * @var Collection
+     * @var bool
+     *
+     * @ORM\Column(name="hidden", type="boolean", nullable=false, options={"default": "1"})
      */
-    protected $fileTags;
+    private $hidden = true;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\FileTags", mappedBy="file", cascade={"persist", "remove"})
+     */
+    private $fileTags;
+
     /**
      * @var Collection
      */
     protected $tags;
-    /**
-     * @var bool
-     */
-    protected $hidden = true;
 
     /**
-     * Конструктор
+     * @var \App\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumns({
+     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
+     * })
+     */
+    private $user;
+
+    /**
+     * Constructor.
      */
     public function __construct()
     {
@@ -331,7 +397,7 @@ class File implements Serializable
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -339,17 +405,17 @@ class File implements Serializable
     }
 
     /**
-     * @return File
+     * @ORM\PrePersist
      */
     public function setCreatedAtValue(): self
     {
-        $this->createdAt = new DateTime();
+        $this->createdAt = new \DateTime();
 
         return $this;
     }
 
     /**
-     * @return DateTime|null
+     * @return \DateTime|null
      */
     public function getUpdatedAt()
     {
@@ -361,13 +427,13 @@ class File implements Serializable
      */
     public function setUpdatedAtValue(): self
     {
-        $this->updatedAt = new DateTime();
+        $this->updatedAt = new \DateTime();
 
         return $this;
     }
 
     /**
-     * @return DateTime|null
+     * @return \DateTime|null
      */
     public function getLastViewAt()
     {
@@ -377,7 +443,7 @@ class File implements Serializable
     /**
      * @return File
      */
-    public function setLastViewAt(DateTime $lastViewAt): self
+    public function setLastViewAt(\DateTime $lastViewAt): self
     {
         $this->lastViewAt = $lastViewAt;
 
@@ -558,7 +624,7 @@ class File implements Serializable
      */
     public function getOriginalFileNameWithoutExtension()
     {
-        return \pathinfo($this->getOriginalFileName(), PATHINFO_FILENAME);
+        return \pathinfo($this->getOriginalFileName(), \PATHINFO_FILENAME);
     }
 
     /**

@@ -2,23 +2,44 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * File.
+ * FileTags.
+ *
+ * @ORM\Table(name="file_tags")
+ * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class FileTags
 {
     /**
      * @var int
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $id;
+
     /**
-     * @var File
+     * @var \App\Entity\File
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\File", inversedBy="fileTags", cascade={"persist"})
+     * @ORM\JoinColumns({
+     *     @ORM\JoinColumn(name="file_id", referencedColumnName="id", nullable=false)
+     * })
      */
-    protected $file;
+    private $file;
+
     /**
-     * @var Tag
+     * @var \App\Entity\Tag
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tag", cascade={"persist"})
+     * @ORM\JoinColumns({
+     *     @ORM\JoinColumn(name="tag_id", referencedColumnName="id", nullable=false)
+     * })
      */
-    protected $tag;
+    private $tag;
 
     /**
      * Get id.
@@ -96,6 +117,9 @@ class FileTags
         return $this->getTag()->getName();
     }
 
+    /**
+     * @ORM\PrePersist
+     */
     public function setPrePersistValue()
     {
         $tag = $this->getTag();
@@ -104,6 +128,9 @@ class FileTags
         return $this;
     }
 
+    /**
+     * @ORM\PreUpdate
+     */
     public function setPreUpdateValue()
     {
         $tag = $this->getTag();
@@ -112,6 +139,9 @@ class FileTags
         return $this;
     }
 
+    /**
+     * @ORM\PreRemove
+     */
     public function setPreRemoveValue()
     {
         $tag = $this->getTag();

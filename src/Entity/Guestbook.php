@@ -2,42 +2,71 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Guestbook.
+ *
+ * @ORM\Table(name="guestbook")
+ * @ORM\Entity(repositoryClass="App\Repository\GuestbookRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Guestbook
 {
     /**
      * @var int
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $id;
-    /**
-     * @var User|null
-     */
-    protected $user;
+
     /**
      * @var string
+     *
+     * @ORM\Column(name="ip", type="string", nullable=false)
      */
-    protected $ip;
+    private $ip;
+
     /**
      * @var string
+     *
+     * @ORM\Column(name="browser", type="string", nullable=false)
      */
-    protected $browser;
+    private $browser;
+
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    protected $createdAt;
+    private $createdAt;
+
     /**
      * @var \DateTime|null
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    protected $updatedAt;
+    private $updatedAt;
+
     /**
      * @var string
+     *
      * @Assert\Length(max=5000, allowEmptyString="false")
+     * @ORM\Column(name="message", type="string", length=5000, nullable=false)
      */
-    protected $message;
+    private $message;
+
+    /**
+     * @var \App\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumns({
+     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
+     * })
+     */
+    private $user;
 
     /**
      * Get id.
@@ -124,7 +153,7 @@ class Guestbook
     }
 
     /**
-     * @return Guestbook
+     * @ORM\PrePersist
      */
     public function setCreatedAtValue()
     {
@@ -142,7 +171,7 @@ class Guestbook
     }
 
     /**
-     * @return Guestbook
+     * @ORM\PreUpdate
      */
     public function setUpdatedAtValue()
     {

@@ -2,31 +2,58 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Friend.
+ *
+ * @ORM\Table(name="user_friend")
+ * @ORM\Entity(repositoryClass="App\Repository\FriendRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Friend
 {
     /**
      * @var int
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer", nullable=false)
      */
-    protected $id;
+    private $id;
+
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    protected $createdAt;
+    private $createdAt;
+
     /**
      * @var \DateTime|null
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    protected $updatedAt;
+    private $updatedAt;
+
     /**
-     * @var User
+     * @var \App\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="friends")
+     * @ORM\JoinColumns({
+     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
      */
-    protected $user;
+    private $user;
+
     /**
-     * @var User
+     * @var \App\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="friended")
+     * @ORM\JoinColumns({
+     *     @ORM\JoinColumn(name="friend_id", referencedColumnName="id")
+     * })
      */
-    protected $friend;
+    private $friend;
 
     /**
      * @return int
@@ -45,7 +72,7 @@ class Friend
     }
 
     /**
-     * @return $this
+     * @ORM\PrePersist
      */
     public function setCreatedAtValue()
     {
@@ -63,7 +90,7 @@ class Friend
     }
 
     /**
-     * @return $this
+     * @ORM\PreUpdate
      */
     public function setUpdatedAtValue()
     {

@@ -2,45 +2,69 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Event.
+ *
+ * @ORM\Table(name="event")
+ * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Event
 {
     /**
      * @var int
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $id;
 
     /**
-     * @var User
-     */
-    private $user;
-
-    /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="subject", type="string", nullable=false)
      */
     private $subject;
 
     /**
-     * @var string
-     */
-    private $template;
-
-    /**
      * @var array|null
+     *
+     * @ORM\Column(name="variables", type="array", nullable=true)
      */
     private $variables;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="template", type="string")
+     */
+    private $template;
+
+    /**
      * @var bool
+     *
+     * @ORM\Column(name="need_email", type="boolean", nullable=false)
      */
     private $needEmail = false;
+
+    /**
+     * @var \App\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumns({
+     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     * })
+     */
+    private $user;
 
     /**
      * @param int $id
@@ -71,7 +95,7 @@ class Event
     }
 
     /**
-     * @return Event
+     * @ORM\PrePersist
      */
     public function setCreatedAtValue()
     {
