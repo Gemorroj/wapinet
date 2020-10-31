@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
@@ -18,16 +19,25 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class DefaultController extends AbstractController
 {
+    /**
+     * @Route("/login_check", methods={"POST"}, name="wapinet_check")
+     */
     public function checkAction()
     {
         throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
     }
 
+    /**
+     * @Route("/logout", name="wapinet_logout")
+     */
     public function logoutAction()
     {
         throw new \RuntimeException('You must activate the logout in your security firewall configuration.');
     }
 
+    /**
+     * @Route("/login", name="wapinet_login")
+     */
     public function loginAction(Request $request, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         $session = $request->getSession();
@@ -61,6 +71,9 @@ class DefaultController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/registration", name="wapinet_register")
+     */
     public function registerAction(Request $request, EncoderFactoryInterface $encoderFactory, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(RegistrationType::class, new User());
@@ -99,16 +112,25 @@ class DefaultController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("", name="index")
+     */
     public function indexAction(): Response
     {
         return $this->render('Default/index.html.twig');
     }
 
+    /**
+     * @Route("/about", name="about")
+     */
     public function aboutAction(): Response
     {
         return $this->render('Default/about.html.twig');
     }
 
+    /**
+     * @Route("/online", name="online")
+     */
     public function onlineAction(): Response
     {
         return $this->render(
@@ -119,36 +141,57 @@ class DefaultController extends AbstractController
         );
     }
 
+    /**
+     * @Route("/utilities", name="utilities")
+     */
     public function utilitiesAction(): Response
     {
         return $this->render('Default/utilities.html.twig');
     }
 
+    /**
+     * @Route("/programming", name="programming")
+     */
     public function programmingAction(): Response
     {
         return $this->render('Default/programming.html.twig');
     }
 
+    /**
+     * @Route("/open_source", name="open_source")
+     */
     public function openSourceAction(): Response
     {
         return $this->render('Default/open_source.html.twig');
     }
 
+    /**
+     * @Route("/gmanager", name="gmanager")
+     */
     public function gmanagerAction(): RedirectResponse
     {
         return $this->redirect('https://github.com/Gemorroj/gmanager', 301);
     }
 
+    /**
+     * @Route("/downloads", name="downloads")
+     */
     public function downloadsAction(): Response
     {
         return $this->render('Default/downloads.html.twig');
     }
 
+    /**
+     * @Route("/textbook", name="textbook")
+     */
     public function textbookAction(): Response
     {
         return $this->render('Default/textbook.html.twig');
     }
 
+    /**
+     * @Route("/video_courses", name="video_courses")
+     */
     public function videoCoursesAction(): Response
     {
         return $this->render('Default/video_courses.html.twig');

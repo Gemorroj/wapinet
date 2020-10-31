@@ -8,11 +8,18 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
+/**
+ * @Route("/user")
+ */
 class ProfileController extends AbstractController
 {
-    public function showUserAction(?string $username): Response
+    /**
+     * @Route("/profile/{username}", name="wapinet_user_profile", defaults={"username": null}, requirements={"username": ".+"})
+     */
+    public function showUserAction(?string $username = null): Response
     {
         $currentUser = $this->getUser();
         if (!$currentUser || !$currentUser instanceof User) {
@@ -31,6 +38,9 @@ class ProfileController extends AbstractController
         return $this->render('User/Profile/show.html.twig', ['user' => $user]);
     }
 
+    /**
+     * @Route("/edit", name="wapinet_user_edit")
+     */
     public function editUserAction(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();

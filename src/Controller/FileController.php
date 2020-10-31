@@ -36,32 +36,41 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Mime\MimeTypes;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
+ * @Route("/file")
+ *
  * @see http://wap4file.org
  */
 class FileController extends AbstractController
 {
+    /**
+     * @Route("", name="file_index", options={"expose": true})
+     */
     public function indexAction(): Response
     {
         return $this->render('File/index.html.twig');
     }
 
+    /**
+     * @Route("/information", name="file_information")
+     */
     public function informationAction(): Response
     {
         return $this->render('File/information.html.twig');
     }
 
+    /**
+     * @Route("/statistic", name="file_statistic")
+     */
     public function statisticAction(): Response
     {
         /** @var FileRepository $repository */
@@ -72,7 +81,7 @@ class FileController extends AbstractController
     }
 
     /**
-     * @return Response|RedirectResponse
+     * @Route("/search/{key}", name="file_search", defaults={"key": null}, requirements={"key": "[a-zA-Z0-9]+"})
      */
     public function searchAction(Request $request, SessionInterface $session, ?string $key = null): Response
     {
@@ -136,11 +145,17 @@ class FileController extends AbstractController
         return $client->getPagerfanta($sphinxQl, File::class);
     }
 
+    /**
+     * @Route("/categories", name="file_categories")
+     */
     public function categoriesAction(): Response
     {
         return $this->render('File/categories.html.twig');
     }
 
+    /**
+     * @Route("/hidden", name="file_hidden")
+     */
     public function hiddenAction(Request $request): Response
     {
         /** @var User|null $user */
@@ -162,6 +177,9 @@ class FileController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/tags", name="file_tags")
+     */
     public function tagsAction(Request $request): Response
     {
         $page = $request->get('page', 1);
@@ -177,7 +195,7 @@ class FileController extends AbstractController
     }
 
     /**
-     * @throws NotFoundHttpException
+     * @Route("/tags/{tagName}", name="file_tag", requirements={"tagName": ".+"})
      */
     public function tagAction(Request $request, string $tagName): Response
     {
@@ -203,7 +221,7 @@ class FileController extends AbstractController
     }
 
     /**
-     * @throws NotFoundHttpException
+     * @Route("/users/{username}", name="file_user", requirements={"username": ".+"})
      */
     public function userAction(Request $request, string $username): Response
     {
@@ -226,7 +244,10 @@ class FileController extends AbstractController
         ]);
     }
 
-    public function listAction(Request $request, Timezone $timezoneHelper, ?string $date = null, ?string $category = null): Response
+    /**
+     * @Route("/list/{date}/{category}", name="file_list", defaults={"date": "all", "category": null}, requirements={"date": "all|today|yesterday", "category": "video|audio|image|text|office|archive|android|java"})
+     */
+    public function listAction(Request $request, Timezone $timezoneHelper, string $date = 'all', ?string $category = null): Response
     {
         $page = $request->get('page', 1);
 
@@ -259,6 +280,9 @@ class FileController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{id}", name="file_view", requirements={"id": "\d+"})
+     */
     public function viewAction(File $file, EncoderFactoryInterface $encoderFactory, Meta $fileMeta): Response
     {
         if (null !== $file->getPassword() && !$this->isGranted('ROLE_ADMIN') && (!($this->getUser() instanceof User) || !($file->getUser() instanceof User) || !$file->getUser()->isEqualTo($this->getUser()))) {
@@ -342,6 +366,9 @@ class FileController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{id}/download/{name}", name="file_archive_download_file", requirements={"id": "\d+"})
+     */
     public function archiveDownloadFileAction(Request $request, Filesystem $filesystem, int $id, string $name): BinaryFileResponse
     {
         $path = (string) \str_replace('\\', '/', $request->get('path', ''));
@@ -382,9 +409,7 @@ class FileController extends AbstractController
     }
 
     /**
-     * @throws AccessDeniedException|NotFoundHttpException
-     *
-     * @return RedirectResponse|JsonResponse
+     * @Route("/accept/{id}", name="file_accept", requirements={"id": "\d+"})
      */
     public function acceptAction(File $file): Response
     {
@@ -405,9 +430,7 @@ class FileController extends AbstractController
     }
 
     /**
-     * @throws AccessDeniedException|NotFoundHttpException
-     *
-     * @return RedirectResponse|JsonResponse
+     * @Route("/delete/{id}", name="file_delete", methods={"POST"}, requirements={"id": "\d+"}, options={"expose": true})
      */
     public function deleteAction(Request $request, File $file): Response
     {
@@ -436,9 +459,7 @@ class FileController extends AbstractController
     }
 
     /**
-     * @throws AccessDeniedException|NotFoundHttpException
-     *
-     * @return RedirectResponse|Response
+     * @Route("/edit/{id}", name="file_edit", requirements={"id": "\d+"})
      */
     public function editAction(Request $request, File $file): Response
     {
@@ -528,7 +549,7 @@ class FileController extends AbstractController
     }
 
     /**
-     * @return RedirectResponse|Response
+     * @Route("/upload", name="file_upload")
      */
     public function uploadAction(Request $request, EncoderFactoryInterface $encoderFactory, BotChecker $botChecker): Response
     {
@@ -684,6 +705,9 @@ class FileController extends AbstractController
         $file->setFileTags($fileTags);
     }
 
+    /**
+     * @Route("/tags_search", name="file_tags_search", defaults={"_format": "json"}, options={"expose": true})
+     */
     public function tagsSearchAction(Request $request): JsonResponse
     {
         $term = \trim($request->get('term', ''));
@@ -709,6 +733,9 @@ class FileController extends AbstractController
         return $this->json($result);
     }
 
+    /**
+     * @Route("/swiper/{id}", name="file_swiper", requirements={"id": "\d+"})
+     */
     public function swiperAction(File $file): Response
     {
         /** @var FileRepository $repository */

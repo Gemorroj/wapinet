@@ -6,13 +6,18 @@ use App\Form\Type\Obfuscator\ObfuscatorType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/php_obfuscator")
+ */
 class PhpObfuscatorController extends AbstractController
 {
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("", name="php_obfuscator_index")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $result = null;
         $form = $this->createForm(ObfuscatorType::class);

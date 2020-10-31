@@ -4,21 +4,26 @@ namespace App\Controller;
 
 use App\Service\MassMedia;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/mass_media")
+ */
 class MassMediaController extends AbstractController
 {
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("", name="mass_media_index")
      */
-    public function indexAction()
+    public function indexAction(): Response
     {
         return $this->render('MassMedia/index.html.twig');
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/rt", name="mass_media_rt")
      */
-    public function rtAction(MassMedia $massMediaHelper)
+    public function rtAction(MassMedia $massMediaHelper): Response
     {
         return $this->render('MassMedia/news.html.twig', [
             'name' => 'RT',
@@ -27,9 +32,9 @@ class MassMediaController extends AbstractController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/inotv", name="mass_media_inotv")
      */
-    public function inotvAction(MassMedia $massMediaHelper)
+    public function inotvAction(MassMedia $massMediaHelper): Response
     {
         return $this->render('MassMedia/news.html.twig', [
             'name' => 'Ино ТВ',

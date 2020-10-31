@@ -15,7 +15,6 @@ use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -23,16 +22,23 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/archiver")
+ */
 class ArchiverController extends AbstractController
 {
+    /**
+     * @Route("", name="archiver_index")
+     */
     public function indexAction(): Response
     {
         return $this->render('Archiver/index.html.twig');
     }
 
     /**
-     * @return RedirectResponse|Response
+     * @Route("/create", name="archiver_create")
      */
     public function createAction(Request $request): Response
     {
@@ -61,6 +67,9 @@ class ArchiverController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/edit/{archive}", name="archiver_edit", requirements={"archive": "archive[a-z0-9]+"})
+     */
     public function editAction(Request $request, string $archive): Response
     {
         $form = $this->createForm(AddType::class);
@@ -87,6 +96,9 @@ class ArchiverController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/download/{archive}.zip", name="archiver_download", requirements={"archive": "archive[a-z0-9]+"})
+     */
     public function downloadAction(string $archive): BinaryFileResponse
     {
         $archiveDirectory = $this->checkArchiveDirectory($archive);
@@ -106,7 +118,7 @@ class ArchiverController extends AbstractController
     }
 
     /**
-     * @throws AccessDeniedException
+     * @Route("/download/{archive}/{name}", name="archiver_download_file", requirements={"archive": "archive[a-z0-9]+"})
      */
     public function downloadFileAction(Request $request, string $archive, string $name): BinaryFileResponse
     {
@@ -127,7 +139,7 @@ class ArchiverController extends AbstractController
     }
 
     /**
-     * @param string $name
+     * @Route("/delete/{archive}/{name}", name="archiver_delete_file", methods={"POST"}, requirements={"archive": "archive[a-z0-9]+"}, options={"expose": true})
      */
     public function deleteFileAction(Request $request, string $archive, $name): RedirectResponse
     {
@@ -142,7 +154,7 @@ class ArchiverController extends AbstractController
     }
 
     /**
-     * @return RedirectResponse|Response
+     * @Route("/extract", name="archiver_extract")
      */
     public function extractAction(Request $request): Response
     {

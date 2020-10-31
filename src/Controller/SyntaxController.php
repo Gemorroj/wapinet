@@ -6,9 +6,16 @@ use App\Service\PhpValidator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class SyntaxController extends AbstractController
 {
+    /**
+     * Check syntax for Gmanager.
+     *
+     * @Route("/syntax", name="syntax")
+     * @Route("/syntax2/index.php", name="syntax_old")
+     */
     public function indexAction(Request $request, PhpValidator $phpValidator): Response
     {
         $code = $request->get('f');

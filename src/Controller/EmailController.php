@@ -11,9 +11,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/email")
+ */
 class EmailController extends AbstractController
 {
+    /**
+     * @Route("", name="email_index")
+     */
     public function indexAction(Request $request, MailerInterface $mailer): Response
     {
         $result = null;

@@ -1,9 +1,0 @@
-news_index:
-    path:  /
-    defaults: { _controller: App\Controller\NewsController::indexAction }
-
-news_show:
-    path:  /{id}
-    defaults: { _controller: App\Controller\NewsController::showAction }
-    requirements:
-        id: \d+

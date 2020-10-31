@@ -11,9 +11,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/http")
+ */
 class HttpController extends AbstractController
 {
+    /**
+     * @Route("", name="http_index")
+     */
     public function indexAction(Request $request): Response
     {
         $result = null;

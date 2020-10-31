@@ -9,9 +9,13 @@ use App\Entity\User;
 use App\Service\Ginfo;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController as BaseAdminController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends BaseAdminController
 {
+    /**
+     * @Route("/admin/monitoring", name="monitoring")
+     */
     public function monitoringAction(Ginfo $ginfo): Response
     {
         $info = $ginfo->getInfo();

@@ -8,14 +8,15 @@ use App\Service\Paginate;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * News controller.
+ * @Route("/news")
  */
 class NewsController extends AbstractController
 {
     /**
-     * Lists all News entities.
+     * @Route("", name="news_index")
      */
     public function indexAction(Request $request, Paginate $paginate): Response
     {
@@ -33,7 +34,7 @@ class NewsController extends AbstractController
     }
 
     /**
-     * Finds and displays a News entity.
+     * @Route("/{id}", name="news_show", requirements={"id": "\d+"})
      */
     public function showAction(News $news): Response
     {

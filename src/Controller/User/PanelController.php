@@ -8,19 +8,19 @@ use App\Form\Type\User\PanelType;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/user")
+ */
 class PanelController extends AbstractController
 {
     /**
-     * @throws AccessDeniedException
-     *
-     * @return RedirectResponse|Response
+     * @Route("/panel/edit", name="wapinet_user_panel_edit")
      */
-    public function editAction(Request $request)
+    public function editAction(Request $request): Response
     {
         /** @var User|null $user */
         $user = $this->getUser();

@@ -18,17 +18,21 @@ use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormError;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Router;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+/**
+ * @Route("/gist")
+ */
 class GistController extends AbstractController
 {
+    /**
+     * @Route("", name="gist_index", methods={"GET", "HEAD"}, options={"expose": true})
+     */
     public function indexAction(Request $request): Response
     {
         $form = $this->createForm(AddType::class);
@@ -45,6 +49,9 @@ class GistController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/users/{username}", name="gist_user", requirements={"username": ".+"})
+     */
     public function userAction(Request $request, string $username): Response
     {
         $form = $this->createForm(AddType::class);
@@ -69,7 +76,7 @@ class GistController extends AbstractController
     }
 
     /**
-     * @throws AccessDeniedException
+     * @Route("", name="gist_add", methods={"POST"})
      */
     public function addAction(Request $request, BotChecker $botChecker): RedirectResponse
     {
@@ -116,6 +123,9 @@ class GistController extends AbstractController
         return $this->redirectToRoute('gist_index');
     }
 
+    /**
+     * @Route("/view/{id}", name="gist_view", requirements={"id": "\d+"})
+     */
     public function viewAction(Gist $gist): Response
     {
         return $this->render('Gist/view.html.twig', [
@@ -124,9 +134,7 @@ class GistController extends AbstractController
     }
 
     /**
-     * @throws AccessDeniedException|NotFoundHttpException
-     *
-     * @return RedirectResponse|JsonResponse
+     * @Route("/delete/{id}", name="gist_delete", methods={"POST"}, requirements={"id": "\d+"}, options={"expose": true})
      */
     public function deleteAction(Gist $gist): Response
     {
@@ -144,11 +152,9 @@ class GistController extends AbstractController
     }
 
     /**
-     * @param string|null $key
-     *
-     * @return Response|RedirectResponse
+     * @Route("/search/{key}", name="gist_edit", requirements={"key": "[a-zA-Z0-9]+"}, defaults={"key": null})
      */
-    public function searchAction(Request $request, SessionInterface $session, $key = null): Response
+    public function searchAction(Request $request, SessionInterface $session, ?string $key = null): Response
     {
         $page = $request->get('page', 1);
         $form = $this->createForm(SearchType::class);
@@ -210,9 +216,7 @@ class GistController extends AbstractController
     }
 
     /**
-     * @throws AccessDeniedException|NotFoundHttpException
-     *
-     * @return RedirectResponse|JsonResponse|Response
+     * @Route("/edit/{id}", name="gist_edit", requirements={"id": "\d+"})
      */
     public function editAction(Request $request, Gist $gist): Response
     {

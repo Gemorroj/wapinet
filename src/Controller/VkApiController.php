@@ -7,9 +7,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/vk_api")
+ */
 class VkApiController extends AbstractController
 {
+    /**
+     * @Route("/get/{method}", name="vk_api_get", defaults={"_format": "json"}, methods={"POST"}, requirements={"method": ".+"}, options={"expose": true})
+     */
     public function getAction(Request $request, string $method, Curl $curl): JsonResponse
     {
         $params = $request->request->all();

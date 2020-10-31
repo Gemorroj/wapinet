@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class BrowserInfoController extends AbstractController
 {
@@ -83,9 +85,9 @@ class BrowserInfoController extends AbstractController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/browser_info", name="browser_info")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $headers = clone $request->headers;
         $headers->remove('X-Php-Ob-Level');

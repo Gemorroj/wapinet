@@ -11,15 +11,18 @@ use Exception;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/user")
+ */
 class UsersController extends AbstractController
 {
     /**
-     * @return Response|RedirectResponse
+     * @Route("/users/{key}", name="wapinet_users", defaults={"key": null}, requirements={"key": "[a-zA-Z0-9]+"})
      */
     public function indexAction(Request $request, SessionInterface $session, ?string $key = null): Response
     {

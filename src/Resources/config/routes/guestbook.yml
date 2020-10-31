@@ -1,9 +1,0 @@
-guestbook_index:
-    path: /
-    defaults: { _controller: App\Controller\GuestbookController::indexAction }
-    methods:  [GET, HEAD]
-
-guestbook_add:
-    path: /
-    defaults: { _controller: App\Controller\GuestbookController::addAction }
-    methods: [POST]

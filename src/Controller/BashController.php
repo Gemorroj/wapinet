@@ -5,13 +5,18 @@ namespace App\Controller;
 use App\Service\Bash;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/bash")
+ */
 class BashController extends AbstractController
 {
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("", name="bash_index")
      */
-    public function indexAction(Request $request, Bash $bashHelper)
+    public function indexAction(Request $request, Bash $bashHelper): Response
     {
         $page = $request->get('page');
         $items = $bashHelper->getPage($page);

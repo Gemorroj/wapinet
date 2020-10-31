@@ -12,9 +12,16 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/user")
+ */
 class FriendsController extends AbstractController
 {
+    /**
+     * @Route("/friends/list/{username}", name="wapinet_user_friends", requirements={"username": ".+"})
+     */
     public function indexAction(Request $request, string $username, Paginate $paginate): Response
     {
         $page = $request->get('page', 1);
@@ -36,6 +43,9 @@ class FriendsController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/friends/add/{username}", name="wapinet_user_friends_add", requirements={"username": ".+"})
+     */
     public function addAction(string $username, EventDispatcherInterface $eventDispatcher): RedirectResponse
     {
         /** @var User|null $user */
@@ -74,6 +84,9 @@ class FriendsController extends AbstractController
         return $this->redirectToRoute('wapinet_user_profile', ['username' => $friend->getUsername()]);
     }
 
+    /**
+     * @Route("/friends/delete/{username}", name="wapinet_user_friends_delete", requirements={"username": ".+"})
+     */
     public function deleteAction(string $username, EventDispatcherInterface $eventDispatcher): RedirectResponse
     {
         /** @var User|null $user */

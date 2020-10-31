@@ -47,7 +47,6 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
             - '../src/Tests/'
-            - '../src/Resources/'
             - '../src/Exception/'
 
     # controllers are imported separately to make sure services can be injected

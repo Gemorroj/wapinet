@@ -19,19 +19,21 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @see https://github.com/JamesHeinrich/getID3/blob/master/demos/demo.audioinfo.class.php
  * @see https://github.com/JamesHeinrich/getID3/blob/master/demos/demo.write.php
+ *
+ * @Route("/audio_tags")
  */
 class AudioTagsController extends AbstractController
 {
     /**
-     * @return RedirectResponse|Response
+     * @Route("", name="audio_tags_index")
      */
     public function indexAction(Request $request): Response
     {
@@ -74,6 +76,9 @@ class AudioTagsController extends AbstractController
         return $file->move($tempDirectory, $tempName);
     }
 
+    /**
+     * @Route("/edit/{fileName}/{originalFileName}", name="audio_tags_edit")
+     */
     public function editAction(Request $request, string $fileName, string $originalFileName): Response
     {
         $form = $this->createForm(AudioTagsEditType::class);
@@ -261,6 +266,9 @@ class AudioTagsController extends AbstractController
         return [];
     }
 
+    /**
+     * @Route("/download/{fileName}/{originalFileName}", name="audio_tags_download")
+     */
     public function downloadAction(string $fileName, string $originalFileName): BinaryFileResponse
     {
         $file = new BinaryFileResponse($this->getFilePath($fileName));
