@@ -75,7 +75,7 @@ class Rates
 
     protected function getBy(): array
     {
-        $this->curl->init('http://nbrb.by/Services/XmlExRates.aspx');
+        $this->curl->init('https://nbrb.by/Services/XmlExRates.aspx');
         $this->curl->addCompression();
 
         $response = $this->curl->exec();
