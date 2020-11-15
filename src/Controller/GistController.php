@@ -152,7 +152,7 @@ class GistController extends AbstractController
     }
 
     /**
-     * @Route("/search/{key}", name="gist_edit", requirements={"key": "[a-zA-Z0-9]+"}, defaults={"key": null})
+     * @Route("/search/{key}", name="gist_search", requirements={"key": "[a-zA-Z0-9]+"}, defaults={"key": null})
      */
     public function searchAction(Request $request, SessionInterface $session, ?string $key = null): Response
     {
