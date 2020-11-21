@@ -21,14 +21,9 @@ use App\Service\Paginate;
 use App\Service\Sphinx;
 use App\Service\Timezone;
 use App\Service\Translit;
-use DateTime;
-use const DIRECTORY_SEPARATOR;
 use Doctrine\Common\Collections\ArrayCollection;
-use Exception;
-use InvalidArgumentException;
 use Pagerfanta\Pagerfanta;
 use Psr\Log\LoggerInterface;
-use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -112,7 +107,7 @@ class FileController extends AbstractController
                     $pagerfanta = $this->searchSphinx($search['data'], $page);
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -123,9 +118,6 @@ class FileController extends AbstractController
         ]);
     }
 
-    /**
-     * @throws RuntimeException
-     */
     protected function searchSphinx(array $data, int $page = 1): Pagerfanta
     {
         /** @var Sphinx $client */
@@ -255,12 +247,12 @@ class FileController extends AbstractController
         $datetimeEnd = null;
         switch ($date) {
             case 'today':
-                $datetimeStart = new DateTime('today', $timezoneHelper->getTimezone());
+                $datetimeStart = new \DateTime('today', $timezoneHelper->getTimezone());
                 break;
 
             case 'yesterday':
-                $datetimeStart = new DateTime('yesterday', $timezoneHelper->getTimezone());
-                $datetimeEnd = new DateTime('today', $timezoneHelper->getTimezone());
+                $datetimeStart = new \DateTime('yesterday', $timezoneHelper->getTimezone());
+                $datetimeEnd = new \DateTime('today', $timezoneHelper->getTimezone());
                 break;
         }
 
@@ -304,7 +296,7 @@ class FileController extends AbstractController
     protected function incrementViews(File $file): void
     {
         $file->setCountViews($file->getCountViews() + 1);
-        $file->setLastViewAt(new DateTime());
+        $file->setLastViewAt(new \DateTime());
     }
 
     protected function viewFile(File $file, Meta $fileMeta): Response
@@ -330,7 +322,7 @@ class FileController extends AbstractController
         $meta = null;
         try {
             $meta = $fileMeta->setFile($file)->getFileMeta();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->get(LoggerInterface::class)->warning('Не удалось получить мета-информацию из файла.', [$e]);
         }
 
@@ -356,7 +348,7 @@ class FileController extends AbstractController
                     return $this->viewFile($file, $fileMeta);
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -377,7 +369,7 @@ class FileController extends AbstractController
         }
 
         $tmpDir = $this->getParameter('kernel.tmp_file_dir');
-        $entry = $tmpDir.DIRECTORY_SEPARATOR.$path;
+        $entry = $tmpDir.\DIRECTORY_SEPARATOR.$path;
 
         if (!$filesystem->exists($entry)) { // распаковываем архив
             /** @var File|null $file */
@@ -482,7 +474,7 @@ class FileController extends AbstractController
                     return $this->redirect($url);
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -492,9 +484,6 @@ class FileController extends AbstractController
         ]);
     }
 
-    /**
-     * @throws FileDuplicatedException
-     */
     protected function editFileData(Request $request, File $data, File $oldData): File
     {
         /** @var UploadedFile|null $file */
@@ -585,7 +574,7 @@ class FileController extends AbstractController
                     return $this->redirect($url);
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -594,9 +583,6 @@ class FileController extends AbstractController
         ]);
     }
 
-    /**
-     * @throws FileDuplicatedException
-     */
     protected function saveFileData(Request $request, File $data, EncoderFactoryInterface $encoderFactory): File
     {
         /** @var UploadedFile $file */
@@ -742,15 +728,15 @@ class FileController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(File::class);
 
         if (!$file->isImage()) {
-            throw new InvalidArgumentException('Просмотр возможен только для картинок.');
+            throw new \InvalidArgumentException('Просмотр возможен только для картинок.');
         }
 
         if (null !== $file->getPassword()) {
-            throw new InvalidArgumentException('Просмотр файлов защищенных паролем не поддерживается.');
+            throw new \InvalidArgumentException('Просмотр файлов защищенных паролем не поддерживается.');
         }
 
         if ($file->isHidden()) {
-            throw new InvalidArgumentException('Файл скрыт и не доступен для просмотра.');
+            throw new \InvalidArgumentException('Файл скрыт и не доступен для просмотра.');
         }
 
         $prevFile = $repository->getPrevFile($file->getId(), 'image');

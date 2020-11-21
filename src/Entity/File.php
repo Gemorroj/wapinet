@@ -691,279 +691,258 @@ class File implements \Serializable
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isImage()
+    public function isImage(): bool
     {
-        return 0 === \strpos($this->getMimeType(), 'image/') || 'application/postscript' === $this->getMimeType() || 'application/illustrator' === $this->getMimeType();
+        return 0 === \strpos($this->getMimeType(), 'image/') || 'application/postscript' === $this->getMimeType() || 'application/illustrator' === $this->getMimeType() || 'application/vnd.adobe.illustrator' === $this->getMimeType();
     }
 
-    /**
-     * @return bool
-     */
-    public function isVideo()
+    public function isVideo(): bool
     {
-        return 0 === \strpos($this->getMimeType(), 'video/') || 'application/vnd.rn-realmedia' === $this->getMimeType();
+        return 0 === \strpos($this->getMimeType(), 'video/') || 'application/vnd.rn-realmedia' === $this->getMimeType() || 'application/vnd.rn-realmedia-vbr' === $this->getMimeType();
     }
 
-    /**
-     * @return bool
-     */
-    public function isAudio()
+    public function isAudio(): bool
     {
-        return 0 === \strpos($this->getMimeType(), 'audio/') && 'audio/x-mpegurl' !== $this->getMimeType();
+        return 0 === \strpos($this->getMimeType(), 'audio/') && !$this->isPlaylist();
     }
 
-    /**
-     * @return bool
-     */
-    public function isText()
+    public function isText(): bool
     {
         return 0 === \strpos($this->getMimeType(), 'text/');
     }
 
-    /**
-     * @return bool
-     */
-    public function isXml()
+    public function isXml(): bool
     {
         return 'application/xml' === $this->getMimeType() || false !== \strpos($this->getMimeType(), '+xml');
     }
 
-    /**
-     * @return bool
-     */
-    public function isArchive()
+    public function isArchive(): bool
     {
         return \in_array($this->getMimeType(), [
-            'application/zip', // zip
-            'application/x-rar-compressed', // rar
+            'application/zip', 'application/x-zip', 'application/x-zip-compressed', // zip
+            'application/x-rar-compressed', 'application/x-rar', 'application/vnd.rar', // rar
             'application/x-bzip', // bz
-            'application/x-bzip2', // bz2
+            'application/x-bzip2', 'application/x-bz2', // bz2
             'application/x-7z-compressed', // 7z
             'application/x-tar', // tar
-            'application/vnd.ms-cab-compressed', // cab
-            'application/x-iso9660-image', // iso
-            'application/x-gzip', // gz
-            'application/gzip', // gz
-            'application/x-ace-compressed', // ace
-            'application/x-lzh-compressed', // lzh
+            'application/vnd.ms-cab-compressed', 'zz-application/zz-winassoc-cab', // cab
+            'application/x-cd-image', 'application/x-gamecube-iso-image', 'application/x-gamecube-rom', 'application/x-iso9660-image', 'application/x-saturn-rom', 'application/x-sega-cd-rom', 'application/x-wbfs', 'application/x-wia', 'application/x-wii-iso-image', 'application/x-wii-rom', // iso
+            'application/x-gzip', 'application/gzip', // gz
+            'application/x-ace', 'application/x-ace-compressed', // ace
+            'application/x-lha', 'application/x-lzh-compressed', // lzh
         ], true);
     }
 
-    /**
-     * @return bool
-     */
-    public function isFlash()
+    public function isFlash(): bool
     {
-        return 'application/x-shockwave-flash' === $this->getMimeType();
+        return 'application/x-shockwave-flash' === $this->getMimeType() ||
+            'application/futuresplash' === $this->getMimeType() ||
+            'application/vnd.adobe.flash.movie' === $this->getMimeType();
     }
 
-    /**
-     * @return bool
-     */
-    public function isJavaApp()
+    public function isJavaApp(): bool
     {
-        return 'application/java-archive' === $this->getMimeType();
+        return 'application/java-archive' === $this->getMimeType() ||
+            'application/x-java-archive' === $this->getMimeType() ||
+            'application/x-jar' === $this->getMimeType();
     }
 
-    /**
-     * @return bool
-     */
-    public function isAndroidApp()
+    public function isAndroidApp(): bool
     {
         return 'application/vnd.android.package-archive' === $this->getMimeType();
     }
 
-    /**
-     * @return bool
-     */
-    public function isSymbianApp()
+    public function isSymbianApp(): bool
     {
         return 'application/vnd.symbian.install' === $this->getMimeType() || 'x-epoc/x-sisx-app' === $this->getMimeType();
     }
 
-    /**
-     * @return bool
-     */
-    public function isWindowsApp()
+    public function isWindowsApp(): bool
     {
-        return 'application/x-msdownload' === $this->getMimeType();
+        return 'application/x-msdownload' === $this->getMimeType() || 'application/x-ms-dos-executable' === $this->getMimeType();
     }
 
-    /**
-     * @return bool
-     */
-    public function isPdf()
+    public function isPdf(): bool
     {
-        return 'application/pdf' === $this->getMimeType();
+        return \in_array($this->getMimeType(), [
+            'application/pdf',
+            'application/acrobat',
+            'application/nappdf',
+            'application/x-pdf',
+            'image/pdf',
+        ], true);
     }
 
-    /**
-     * @return bool
-     */
-    public function isWord()
+    public function isWord(): bool
     {
-        return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' === $this->getMimeType() || 'application/msword' === $this->getMimeType();
+        return \in_array($this->getMimeType(), [
+            'application/msword', 'application/vnd.ms-word', 'application/x-msword', 'zz-application/zz-winassoc-doc', // doc
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // docx
+        ], true);
     }
 
-    /**
-     * @return bool
-     */
-    public function isRtf()
+    public function isRtf(): bool
     {
-        return 'application/rtf' === $this->getMimeType();
+        return 'application/rtf' === $this->getMimeType() || 'text/rtf' === $this->getMimeType();
     }
 
-    /**
-     * @return bool
-     */
-    public function isExcel()
+    public function isExcel(): bool
     {
-        return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' === $this->getMimeType() || 'application/vnd.ms-excel' === $this->getMimeType();
+        return \in_array($this->getMimeType(), [
+            'application/vnd.ms-excel', 'application/msexcel', 'application/x-msexcel', 'zz-application/zz-winassoc-xls', // xls
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // xlsx
+        ], true);
     }
 
-    /**
-     * @return bool
-     */
-    public function is3gp()
+    public function is3gp(): bool
     {
-        return 'video/3gpp' === $this->getMimeType() || 'video/3gpp2' === $this->getMimeType();
+        return \in_array($this->getMimeType(), [
+            'audio/3gpp',
+            'audio/3gpp-encrypted',
+            'audio/x-rn-3gpp-amr',
+            'audio/x-rn-3gpp-amr-encrypted',
+            'audio/x-rn-3gpp-amr-wb',
+            'audio/x-rn-3gpp-amr-wb-encrypted',
+            'video/3gp',
+            'video/3gpp',
+            'video/3gpp-encrypted',
+
+            'audio/3gpp2', 'video/3gpp2', // 3gpp2
+        ], true);
     }
 
-    /**
-     * @return bool
-     */
-    public function isAvi()
+    public function isAvi(): bool
     {
-        return 'video/x-msvideo' === $this->getMimeType();
+        return \in_array($this->getMimeType(), [
+            'video/avi',
+            'video/divx',
+            'video/msvideo',
+            'video/vnd.divx',
+            'video/x-avi',
+            'video/x-msvideo',
+        ], true);
     }
 
-    /**
-     * @return bool
-     */
-    public function isWmv()
+    public function isWmv(): bool
     {
-        return 'video/x-ms-wmv' === $this->getMimeType();
+        return 'video/x-ms-wmv' === $this->getMimeType() || 'audio/x-ms-wmv' === $this->getMimeType();
     }
 
-    /**
-     * @return bool
-     */
-    public function isMp3()
+    public function isMp3(): bool
     {
-        return 'audio/mpeg' === $this->getMimeType();
+        return \in_array($this->getMimeType(), [
+            'audio/mpeg',
+            'audio/mp3',
+            'audio/x-mp3',
+            'audio/x-mpeg',
+            'audio/x-mpg',
+        ], true);
     }
 
-    /**
-     * @return bool
-     */
-    public function isM4a()
+    public function isM4a(): bool
     {
-        return 'audio/mp4' === $this->getMimeType() || 'audio/x-m4a' === $this->getMimeType();
+        return \in_array($this->getMimeType(), [
+            'audio/mp4',
+            'audio/m4a',
+            'audio/x-m4a',
+        ], true);
     }
 
-    /**
-     * @return bool
-     */
-    public function isM4v()
+    public function isM4v(): bool
     {
-        return 'video/mp4' === $this->getMimeType() || 'video/x-m4v' === $this->getMimeType();
+        return \in_array($this->getMimeType(), [
+            'video/mp4',
+            'video/mp4v-es',
+            'video/x-m4v',
+        ], true);
     }
 
-    /**
-     * @return bool
-     */
-    public function isOga()
+    public function isOga(): bool
     {
-        return 'audio/ogg' === $this->getMimeType();
+        return \in_array($this->getMimeType(), [
+            'audio/ogg',
+            'audio/vorbis',
+            'audio/x-flac+ogg',
+            'audio/x-ogg',
+            'audio/x-oggflac',
+            'audio/x-speex+ogg',
+            'audio/x-vorbis',
+            'audio/x-vorbis+ogg',
+        ], true);
     }
 
-    /**
-     * @return bool
-     */
-    public function isOgv()
+    public function isOgv(): bool
     {
-        return 'video/ogg' === $this->getMimeType();
+        return 'video/ogg' === $this->getMimeType() || 'video/x-ogg' === $this->getMimeType();
     }
 
-    /**
-     * @return bool
-     */
-    public function isWebma()
+    public function isWebma(): bool
     {
         return 'audio/webm' === $this->getMimeType();
     }
 
-    /**
-     * @return bool
-     */
-    public function isWebmv()
+    public function isWebmv(): bool
     {
         return 'video/webm' === $this->getMimeType();
     }
 
-    /**
-     * @return bool
-     */
-    public function isWav()
+    public function isWav(): bool
     {
-        return 'audio/x-wav' === $this->getMimeType();
+        return \in_array($this->getMimeType(), [
+            'audio/wav',
+            'audio/vnd.wave',
+            'audio/x-wav',
+        ], true);
     }
 
-    /**
-     * @return bool
-     */
-    public function isAmr()
+    public function isAmr(): bool
     {
-        return 'audio/3gpp' === $this->getMimeType();
+        return 'audio/amr' === $this->getMimeType() || 'audio/amr-encrypted' === $this->getMimeType();
     }
 
-    /**
-     * @return bool
-     */
-    public function isFla()
+    public function isFla(): bool
     {
-        return 'audio/x-flv' === $this->getMimeType();
+        return \in_array($this->getMimeType(), [
+            'audio/x-flv',
+            'application/x-flash-audio',
+            'audio/flv',
+        ], true);
     }
 
-    /**
-     * @return bool
-     */
-    public function isFlv()
+    public function isFlv(): bool
     {
-        return 'video/x-flv' === $this->getMimeType();
+        return \in_array($this->getMimeType(), [
+            'video/x-flv',
+            'application/x-flash-video',
+            'flv-application/octet-stream',
+            'video/flv',
+        ], true);
     }
 
-    /**
-     * @return bool
-     */
-    public function isFlac()
+    public function isFlac(): bool
     {
-        return 'audio/x-flac' === $this->getMimeType();
+        return 'audio/x-flac' === $this->getMimeType() || 'audio/flac' === $this->getMimeType();
     }
 
-    /**
-     * @return bool
-     */
-    public function isTorrent()
+    public function isTorrent(): bool
     {
         return 'application/x-bittorrent' === $this->getMimeType();
     }
 
-    /**
-     * @return bool
-     */
-    public function isPlaylist()
+    public function isPlaylist(): bool
     {
-        return 'audio/x-mpegurl' === $this->getMimeType();
+        return \in_array($this->getMimeType(), [
+            'audio/x-mpegurl',
+            'application/m3u',
+            'application/vnd.apple.mpegurl',
+            'audio/m3u',
+            'audio/mpegurl',
+            'audio/x-m3u',
+            'audio/x-mp3-playlist',
+        ], true);
     }
 
-    /**
-     * @return bool
-     */
-    public function isPlayableVideo()
+    public function isPlayableVideo(): bool
     {
         return $this->isVideo() && (
             $this->isM4v() ||
@@ -976,10 +955,7 @@ class File implements \Serializable
         );
     }
 
-    /**
-     * @return bool
-     */
-    public function isPlayableAudio()
+    public function isPlayableAudio(): bool
     {
         return $this->isAudio() && (
             $this->isMp3() ||
@@ -993,18 +969,12 @@ class File implements \Serializable
         );
     }
 
-    /**
-     * @return bool
-     */
-    public function isExtractableArchive()
+    public function isExtractableArchive(): bool
     {
         return $this->isArchive();
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getOriginalFileName();
     }
