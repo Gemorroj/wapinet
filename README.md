@@ -283,7 +283,7 @@ server {
 ```
 
 ### TODO:
-- !!! использовать новую систему конфигураций https://symfony.com/blog/improvements-to-the-handling-of-env-files-for-all-symfony-versions
+- ! проверка файлов на virustotal (возможно автоматическая) в файлообменнике
 - !!! заменить свою curl прослойку на https://github.com/symfony/http-client
 - !!! Переделать интерфейс на vue/react/angular (огромная задача)
 - переделать редактор аудиотегов на https://github.com/duncan3dc/meta-audio/issues/3 (когда будут картинки)
@@ -291,6 +291,4 @@ server {
 - !! Актуализировать мобильные коды. Найти новые для разных андроидов.
 - Данные о видео на youtube и др. https://github.com/essence/essence
 - Оболочка над nmap https://github.com/willdurand/nmap (работает медленно и выдает мало информации)
-- Прокси https://github.com/Athlon1600/php-proxy
 - Проверка на спамеров http://www.stopforumspam.com/usage (https://github.com/Gemorroj/StopSpam)
-- Проверка на вирусы https://www.virustotal.com/ru/documentation/public-api/
