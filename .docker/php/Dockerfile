@@ -36,8 +36,8 @@ RUN set -xe \
     && docker-php-ext-install -j${NPROC} gd \
     && docker-php-ext-enable gd \
 
-    # Xdebug
-    && pecl install xdebug \
+    # Xdebug (use latest 2.x)
+    && pecl install xdebug-2.9.8 \
     && docker-php-ext-enable xdebug \
 
     # APCU

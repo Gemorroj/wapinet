@@ -56,7 +56,7 @@
         "gemorroj/phpwhois": "dev-master",
         "gemorroj/stop-spam": "^3.1",
         "gemorroj/archive7z": "^5.0",
-        "gemorroj/m3u-parser": "^5.0",
+        "gemorroj/m3u-parser": "^5.2",
         "gemorroj/syntax": "^4.0",
         "gemorroj/htmlvalidator": "^2.0",
         "gemorroj/cssvalidator": "^2.0",
@@ -73,7 +73,7 @@
         "phpstan/phpstan-symfony": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
         "phpstan/phpstan-doctrine": "^0.12",
-        "friendsofphp/php-cs-fixer": "^2.16"
+        "friendsofphp/php-cs-fixer": "^2.17"
     },
     "config": {
         "preferred-install": {
