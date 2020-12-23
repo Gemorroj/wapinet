@@ -51,7 +51,7 @@
         "christeredvartsen/php-bittorrent": "^2.0",
         "seostats/seostats": "^2.5@dev",
         "foolz/sphinxql-query-builder": "^2.1",
-        "php-ffmpeg/php-ffmpeg": "^0.16",
+        "php-ffmpeg/php-ffmpeg": "^0.17",
         "riverline/multipart-parser": "^2.0",
         "gemorroj/phpwhois": "dev-master",
         "gemorroj/stop-spam": "^3.1",
