@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class GistEvent extends Event
 {
-    const GIST_ADD = 'wapinet.gist.add';
+    public const GIST_ADD = 'wapinet.gist.add';
 
     private $user;
     private $gist;

@@ -20,9 +20,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface, EquatableInterface, \Serializable
 {
-    const LIFETIME = '5 minutes';
-    const SEX_MALE = 'm';
-    const SEX_FEMALE = 'f';
+    public const LIFETIME = '5 minutes';
+    public const SEX_MALE = 'm';
+    public const SEX_FEMALE = 'f';
 
     /**
      * @var int

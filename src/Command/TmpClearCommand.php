@@ -34,10 +34,10 @@ class TmpClearCommand extends Command
                 new InputArgument('lifetime', InputArgument::OPTIONAL, 'The lifetime timeout', '1 day'),
             ])
             ->setHelp(<<<EOT
-The <info>app:tmp-clear</info> command removes old tmp files:
+                The <info>app:tmp-clear</info> command removes old tmp files:
 
-  <info>php bin/console app:tmp-clear "1 day"</info>
-EOT
+                  <info>php bin/console app:tmp-clear "1 day"</info>
+                EOT
             );
     }
 

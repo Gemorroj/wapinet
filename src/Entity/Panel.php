@@ -12,14 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Panel extends \ArrayObject
 {
-    const ROUTE_FORUM = 'forum_index';
-    const ROUTE_GUESTBOOK = 'guestbook_index';
-    const ROUTE_GIST = 'gist_index';
-    const ROUTE_FILE = 'file_index';
-    const ROUTE_ARCHIVER = 'archiver_index';
-    const ROUTE_DOWNLOADS = 'downloads';
-    const ROUTE_UTILITIES = 'utilities';
-    const ROUTE_PROGRAMMING = 'programming';
+    public const ROUTE_FORUM = 'forum_index';
+    public const ROUTE_GUESTBOOK = 'guestbook_index';
+    public const ROUTE_GIST = 'gist_index';
+    public const ROUTE_FILE = 'file_index';
+    public const ROUTE_ARCHIVER = 'archiver_index';
+    public const ROUTE_DOWNLOADS = 'downloads';
+    public const ROUTE_UTILITIES = 'utilities';
+    public const ROUTE_PROGRAMMING = 'programming';
 
     /**
      * @var int

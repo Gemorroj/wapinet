@@ -27,7 +27,7 @@ class Breadcrumbs extends AbstractExtension
     public function getBreadcrumbs(array $options = [])
     {
         if (!$options) {
-            return  '';
+            return '';
         }
 
         \ksort($options, SORT_NUMERIC);

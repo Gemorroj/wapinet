@@ -60,7 +60,7 @@ class UnicodeController extends AbstractController
             $out = $this->getLatin($out);
         }
 
-        $out = \json_encode($out, JSON_THROW_ON_ERROR);
+        $out = \json_encode($out, \JSON_THROW_ON_ERROR);
 
         $that = $this;
         $out = \preg_replace_callback('/\\\u([0-9a-z]{4})/', static function (array $matches) use ($that, $data) {

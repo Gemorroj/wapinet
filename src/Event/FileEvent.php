@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class FileEvent extends Event
 {
-    const FILE_ADD = 'wapinet.file.add';
+    public const FILE_ADD = 'wapinet.file.add';
 
     private $user;
     private $file;

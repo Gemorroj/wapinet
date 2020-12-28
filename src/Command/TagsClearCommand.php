@@ -28,10 +28,10 @@ class TagsClearCommand extends Command
         $this
             ->setDescription('Clean tags')
             ->setHelp(<<<EOT
-The <info>app:tags-clear</info> command removes old tags:
+                The <info>app:tags-clear</info> command removes old tags:
 
-  <info>php bin/console app:tags-clear</info>
-EOT
+                  <info>php bin/console app:tags-clear</info>
+                EOT
             );
     }
 

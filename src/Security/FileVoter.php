@@ -10,8 +10,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class FileVoter extends Voter
 {
-    const DELETE = 'DELETE';
-    const EDIT = 'EDIT';
+    public const DELETE = 'DELETE';
+    public const EDIT = 'EDIT';
 
     private $decisionManager;
 

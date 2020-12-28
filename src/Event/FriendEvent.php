@@ -7,8 +7,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class FriendEvent extends Event
 {
-    const FRIEND_ADD = 'wapinet_user.friend.add';
-    const FRIEND_DELETE = 'wapinet_user.friend.delete';
+    public const FRIEND_ADD = 'wapinet_user.friend.add';
+    public const FRIEND_DELETE = 'wapinet_user.friend.delete';
 
     private $user;
     private $friend;
