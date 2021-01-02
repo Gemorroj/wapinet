@@ -28,17 +28,26 @@
         "symfony/intl": "4.4.*",
         "symfony/mailer": "4.4.*",
         "symfony/monolog-bundle": "^3.5",
-        "symfony/orm-pack": "*",
         "symfony/process": "4.4.*",
         "symfony/security-bundle": "4.4.*",
-        "symfony/serializer-pack": "*",
         "symfony/translation": "4.4.*",
-        "symfony/twig-pack": "*",
         "symfony/validator": "4.4.*",
         "symfony/web-link": "4.4.*",
         "symfony/yaml": "4.4.*",
         "symfony/mime": "4.4.*",
+
+        "symfony/serializer-pack": "*",
+
+        "symfony/twig-bundle": "4.4.*",
+        "twig/twig": "^3.1",
+        "twig/extra-bundle": "^3.1",
+
+        "doctrine/orm": "^2.8",
+        "doctrine/doctrine-bundle": "^2.2",
+        "doctrine/doctrine-migrations-bundle": "^3.0",
+
         "symfony/webpack-encore-bundle": "^1.7",
+
         "easycorp/easyadmin-bundle": "^2.3",
         "friendsofsymfony/jsrouting-bundle": "^2.7",
         "babdev/pagerfanta-bundle": "^2.8",
@@ -53,6 +62,7 @@
         "foolz/sphinxql-query-builder": "^2.1",
         "php-ffmpeg/php-ffmpeg": "^0.17",
         "riverline/multipart-parser": "^2.0",
+
         "gemorroj/phpwhois": "dev-master",
         "gemorroj/stop-spam": "^3.1",
         "gemorroj/archive7z": "^5.0",

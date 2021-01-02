@@ -425,9 +425,6 @@
     "symfony/options-resolver": {
         "version": "v4.0.8"
     },
-    "symfony/orm-pack": {
-        "version": "v1.0.5"
-    },
     "symfony/phpunit-bridge": {
         "version": "4.1",
         "recipe": {
@@ -551,9 +548,6 @@
             "ref": "f75ac166398e107796ca94cc57fa1edaa06ec47f"
         }
     },
-    "symfony/twig-pack": {
-        "version": "v1.0.0"
-    },
     "symfony/validator": {
         "version": "v4.0.8"
     },
@@ -607,9 +601,6 @@
     },
     "vlucas/phpdotenv": {
         "version": "v2.4.0"
-    },
-    "webimpress/safe-writer": {
-        "version": "2.0.1"
     },
     "webmozart/assert": {
         "version": "1.3.0"
