@@ -48,12 +48,15 @@ yum install p7zip p7zip-plugins
 
 ##### Если версия в репозитории слишком старая, или нет поддержки rar (RHEL) то ставим из исходников
 ```bash
-cd /root/p7zip_16.02_sources
-curl -L https://downloads.sourceforge.net/project/p7zip/p7zip/16.02/p7zip_16.02_src_all.tar.bz2 > p7zip_16.02_src_all.tar.bz2
-tar xjvf p7zip_16.02_src_all.tar.bz2
-cd p7zip_16.02
-# изменить в файле install.sh переменную DEST_HOME на /root/p7zip_16.02_build
+cd /root
+mkdir p7zip_17.03_sources
+mkdir p7zip_17.03_build
+cd /root/p7zip_17.03_sources
+wget https://github.com/jinfeihan57/p7zip/archive/v17.03.tar.gz
+tar xzvf v17.03.tar.gz
+cd p7zip-17.03
 make all3
+# изменить в файле install.sh переменную DEST_HOME на /root/p7zip_17.03_build
 ./install.sh
 ```
 Проверить список поддерживаемых форматов можно так `7z i` или `7za i` 
