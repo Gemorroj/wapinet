@@ -25,14 +25,14 @@
         {% if file.dir %}
             <li class="directory">
                 <a href="#" class="no-link">{{ pathView }}</a>
-                <a data-path="{{ path|escape('url') }}" href="#delete-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
+                <a data-path="{{ path|escape('html_attr') }}" href="#delete-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
             </li>
         {% else %}
             <li>
                 <a data-ajax="false" href="{{ path('archiver_download_file', {'archive': archive, 'name': file.filename, 'path': path }) }}">{{ pathView }}
                     <span class="ui-li-count">{{ file.size|wapinet_size }}</span>
                 </a>
-                <a data-path="{{ path|escape('url') }}" href="#delete-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
+                <a data-path="{{ path|escape('html_attr') }}" href="#delete-popup" data-transition="flow" data-position-to="window" data-rel="popup" data-icon="delete">Удалить</a>
             </li>
         {% endif %}
     {% endfor %}
