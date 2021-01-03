@@ -42,4 +42,4 @@ security:
         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/admin, roles: ROLE_SUPER_ADMIN }

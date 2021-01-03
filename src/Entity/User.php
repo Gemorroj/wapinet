@@ -562,6 +562,11 @@ class User implements UserInterface, EquatableInterface, \Serializable
         return $this->email;
     }
 
+    public function getGravatarEmail(): ?string
+    {
+        return $this->getEmail();
+    }
+
     public function isEnabled(): bool
     {
         return $this->enabled;
