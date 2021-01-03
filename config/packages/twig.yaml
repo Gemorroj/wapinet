@@ -1,8 +1,5 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
-    debug: '%kernel.debug%'
-    strict_variables: '%kernel.debug%'
-    exception_controller: null
     globals:
         wapinet_title: '%wapinet_title%'
         wapinet_contact_email: '%wapinet_contact_email%'

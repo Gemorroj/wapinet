@@ -18,7 +18,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="App\Repository\FileRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class File implements \Serializable
+class File
 {
     /**
      * @var int
@@ -128,7 +128,8 @@ class File implements \Serializable
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=5000, nullable=false)
-     * @Assert\Length(max=5000, allowEmptyString="false")
+     * @Assert\Length(max=5000)
+     * @Assert\NotBlank
      */
     private $description;
 
@@ -166,9 +167,9 @@ class File implements \Serializable
     protected $tags;
 
     /**
-     * @var \App\Entity\User
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      * })
@@ -184,24 +185,20 @@ class File implements \Serializable
         $this->tags = new ArrayCollection();
     }
 
-    public function serialize(): string
+    public function __serialize(): array
     {
         $vars = \get_object_vars($this);
         $vars['file'] = $this->getFile()->getPathname();
 
-        return \serialize($vars);
+        return $vars;
     }
 
-    /**
-     * @param string $serialized
-     */
-    public function unserialize($serialized): void
+    public function __unserialize(array $data): void
     {
-        $vars = \unserialize($serialized, ['allowed_classes' => true]); // true для полного соответствия с поведением doctrine
-        $this->file = new BaseFile($vars['file'], false); //fix события (файлы могут быть удалены)
-        unset($vars['file']);
+        $this->file = new BaseFile($data['file'], false); //fix события (файлы могут быть удалены)
+        unset($data['file']);
 
-        foreach ($vars as $key => $value) {
+        foreach ($data as $key => $value) {
             if (\property_exists($this, $key)) {
                 $this->{$key} = $value;
             }

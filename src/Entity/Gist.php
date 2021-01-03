@@ -54,7 +54,8 @@ class Gist
      * @var string
      *
      * @ORM\Column(name="body", type="text", nullable=false)
-     * @Assert\Length(max=4294967295, allowEmptyString="false")
+     * @Assert\Length(max=4294967295)
+     * @Assert\NotBlank
      */
     private $body;
 
@@ -62,14 +63,15 @@ class Gist
      * @var string
      *
      * @ORM\Column(name="subject", type="string", length=5000, nullable=false)
-     * @Assert\Length(max=5000, allowEmptyString="false")
+     * @Assert\Length(max=5000)
+     * @Assert\NotBlank
      */
     private $subject;
 
     /**
-     * @var \App\Entity\User
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })

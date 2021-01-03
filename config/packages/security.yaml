@@ -26,6 +26,7 @@ security:
                 secret: '%kernel.secret%'
             logout: true
             anonymous: true
+            lazy: true
 
             # activate different ways to authenticate
 

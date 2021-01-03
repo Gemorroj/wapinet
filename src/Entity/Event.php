@@ -57,9 +57,9 @@ class Event
     private $needEmail = false;
 
     /**
-     * @var \App\Entity\User
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })

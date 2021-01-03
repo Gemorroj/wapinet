@@ -36,9 +36,9 @@ class Friend
     private $updatedAt;
 
     /**
-     * @var \App\Entity\User
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="friends")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="friends")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
@@ -46,9 +46,9 @@ class Friend
     private $user;
 
     /**
-     * @var \App\Entity\User
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="friended")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="friended")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="friend_id", referencedColumnName="id")
      * })

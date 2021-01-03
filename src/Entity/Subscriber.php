@@ -35,9 +35,9 @@ class Subscriber extends \ArrayObject
     private $emailFriends = true;
 
     /**
-     * @var \App\Entity\User
+     * @var User
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="subscriber", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="User", inversedBy="subscriber", cascade={"persist"})
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", unique=true, nullable=false)
      * })

@@ -86,9 +86,9 @@ class Panel extends \ArrayObject
     private $programming = true;
 
     /**
-     * @var \App\Entity\User
+     * @var User
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="panel", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="User", inversedBy="panel", cascade={"persist"})
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", unique=true, nullable=false)
      * })

@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class User implements UserInterface, EquatableInterface, \Serializable
+class User implements UserInterface, EquatableInterface
 {
     public const LIFETIME = '5 minutes';
     public const SEX_MALE = 'm';
@@ -609,7 +609,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
         return true;
     }
 
-    public function serialize(): string
+    public function __serialize(): array
     {
         $data = \get_object_vars($this);
         $data['friends'] = null;
@@ -617,16 +617,11 @@ class User implements UserInterface, EquatableInterface, \Serializable
         $data['subscriber'] = null;
         $data['panel'] = null;
 
-        return \serialize($data);
+        return $data;
     }
 
-    /**
-     * @param string $serialized
-     */
-    public function unserialize($serialized): void
+    public function __unserialize(array $data): void
     {
-        $data = \unserialize($serialized, ['allowed_classes' => true]);  // true для полного соответствия с поведением doctrine
-
         if (8 === \count($data)) {
             // Original FOSUser
             $this->password = $data[0];

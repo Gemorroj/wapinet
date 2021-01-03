@@ -22,8 +22,6 @@
         <!-- ###+ symfony/framework-bundle ### -->
         <env name="APP_ENV" value="test"/>
         <env name="APP_SECRET" value="1234"/>
-        <!-- env name="TRUSTED_PROXIES" value="127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16" -->
-        <!-- env name="TRUSTED_HOSTS" value="^localhost|example\.com$" -->
         <!-- ###- symfony/framework-bundle ### -->
 
         <env name="YANDEX_SEARCH_KEY" value="null"/>

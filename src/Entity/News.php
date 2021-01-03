@@ -50,9 +50,9 @@ class News
     private $updatedAt;
 
     /**
-     * @var \App\Entity\User
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="created_by_id", referencedColumnName="id")
      * })

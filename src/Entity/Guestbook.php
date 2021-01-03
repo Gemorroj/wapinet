@@ -53,15 +53,16 @@ class Guestbook
     /**
      * @var string
      *
-     * @Assert\Length(max=5000, allowEmptyString="false")
+     * @Assert\Length(max=5000)
      * @ORM\Column(name="message", type="string", length=5000, nullable=false)
+     * @Assert\NotBlank
      */
     private $message;
 
     /**
-     * @var \App\Entity\User
+     * @var User|null
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      * })

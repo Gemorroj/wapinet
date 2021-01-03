@@ -13,7 +13,7 @@ class FileUrl extends UploadedFile
     /**
      * {@inheritdoc}
      */
-    public function move($directory, $name = null)
+    public function move($directory, string $name = null)
     {
         $target = $this->getTargetFile($directory, $name);
 
@@ -30,7 +30,7 @@ class FileUrl extends UploadedFile
     /**
      * {@inheritdoc}
      */
-    public function isValid()
+    public function isValid(): bool
     {
         return \is_file($this->getPathname());
     }
