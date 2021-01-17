@@ -39,10 +39,10 @@ class Curl
      * @var string[]
      */
     protected static array $browserHeaders = [
-        'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
         'Connection: Close',
         'Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3',
-        'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0',
+        'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0',
     ];
     protected array $headers = [];
     protected array $postData = [];

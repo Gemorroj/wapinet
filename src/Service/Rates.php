@@ -75,7 +75,7 @@ class Rates
 
     protected function getBy(): array
     {
-        $this->curl->init('https://nbrb.by/Services/XmlExRates.aspx');
+        $this->curl->init('https://www.nbrb.by/Services/XmlExRates.aspx');
         $this->curl->addCompression();
 
         $response = $this->curl->exec();
@@ -131,6 +131,7 @@ class Rates
     {
         $this->curl->init('https://www.nationalbank.kz/rss/rates_all.xml');
         $this->curl->addCompression();
+        $this->curl->acceptRedirects(); // fix
 
         $response = $this->curl->exec();
 
