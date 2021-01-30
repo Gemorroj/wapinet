@@ -71,8 +71,8 @@ make all3
 ```bash
 yum install autoconf automake bzip2 bzip2-devel cmake freetype-devel gcc gcc-c++ git libtool make nasm yasm pkgconfig zlib-devel
 
-build_directory="/root/ffmpeg_2019-05-30_build"
-source_directory="/root/ffmpeg_2019-05-30_source"
+build_directory="/root/ffmpeg_2021-01-30_build"
+source_directory="/root/ffmpeg_2021-01-30_source"
 PATH="$build_directory/bin:$PATH"
 
 cd $source_directory
