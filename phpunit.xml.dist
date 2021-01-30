@@ -26,11 +26,11 @@
 
         <env name="YANDEX_SEARCH_KEY" value="null"/>
 
-        <env name="FFMPEG_PATH" value="c:\_SOFT_\ffmpeg\bin\ffmpeg.exe"/>
-        <env name="FFPROBE_PATH" value="c:\_SOFT_\ffmpeg\bin\ffprobe.exe"/>
-        <env name="GEOIP2_COUNTRY_PATH" value="s:\GeoLite2-Country.mmdb"/>
-        <env name="PHP_PATH" value="s:\OSPanel\modules\php\PHP_7.3-x64\php.exe"/>
-        <env name="P7Z_PATH" value="c:\Program Files\7-Zip\7z.exe"/>
+        <env name="FFMPEG_PATH" value="/ffmpeg/ffmpeg"/>
+        <env name="FFPROBE_PATH" value="/ffmpeg/ffprobe"/>
+        <env name="GEOIP2_COUNTRY_PATH" value="/GeoLite2-Country.mmdb"/>
+        <env name="PHP_PATH" value="/GeoLite2-Country.mmdb"/>
+        <env name="P7Z_PATH" value="/usr/bin/7z"/>
         <env name="CONTACT_EMAIL" value="support@localhost"/>
         <env name="ROBOT_EMAIL" value="robot@localhost"/>
 
