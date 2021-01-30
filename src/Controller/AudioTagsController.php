@@ -232,7 +232,7 @@ class AudioTagsController extends AbstractController
             case 'mp2':
             case 'mp1':
             case 'riff': // maybe not officially, but people do it anyway
-                return ['id3v1', /*'id3v2.2', */'id3v2.3', 'id3v2.4'/*'ape', 'lyrics3'*/];
+                return ['id3v1', /*'id3v2.2', */ 'id3v2.3', 'id3v2.4'/*'ape', 'lyrics3'*/];
                 break;
 
             case 'mpc':

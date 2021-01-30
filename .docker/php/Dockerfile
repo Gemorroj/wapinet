@@ -1,4 +1,5 @@
-FROM php:7.4-fpm-alpine
+# alpine3.13 is broken
+FROM php:7.4-fpm-alpine3.12
 
 RUN set -xe \
     && apk update \

@@ -76,7 +76,7 @@ source_directory="/root/ffmpeg_2019-05-30_source"
 PATH="$build_directory/bin:$PATH"
 
 cd $source_directory
-git clone --depth 1 -b stable git://git.videolan.org/x264
+git clone --depth 1 -b stable git@code.videolan.org:videolan/x264.git
 cd x264
 PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure --prefix="$build_directory" --bindir="$build_directory/bin" --enable-static
 make
@@ -86,7 +86,7 @@ make distclean
 cd $source_directory
 git clone git://github.com/videolan/x265.git
 cd x265
-git checkout tags/3.0
+git checkout tags/3.4
 cd build/linux
 cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$build_directory" -DENABLE_SHARED:bool=off ../../source
 make
@@ -103,18 +103,18 @@ make install
 make distclean
 
 cd $source_directory
-curl -O -L https://ftp.osuosl.org/pub/xiph/releases/ogg/libogg-1.3.3.tar.gz
-tar xzvf libogg-1.3.3.tar.gz
-cd libogg-1.3.3
+curl -O -L https://ftp.osuosl.org/pub/xiph/releases/ogg/libogg-1.3.4.tar.gz
+tar xzvf libogg-1.3.4.tar.gz
+cd libogg-1.3.4
 ./configure --prefix="$build_directory" --disable-shared
 make
 make install
 make distclean
 
 cd $source_directory
-curl -O -L https://ftp.osuosl.org/pub/xiph/releases/vorbis/libvorbis-1.3.6.tar.gz
-tar xzvf libvorbis-1.3.6.tar.gz
-cd libvorbis-1.3.6
+curl -O -L https://ftp.osuosl.org/pub/xiph/releases/vorbis/libvorbis-1.3.7.tar.gz
+tar xzvf libvorbis-1.3.7.tar.gz
+cd libvorbis-1.3.7
 LDFLAGS="-L$build_directory/lib" CPPFLAGS="-I$build_directory/include" ./configure --prefix="$build_directory" --with-ogg="$build_directory" --disable-shared
 make
 make install
@@ -141,7 +141,7 @@ make distclean
 cd $source_directory
 git clone https://chromium.googlesource.com/webm/libvpx.git 
 cd libvpx
-git checkout tags/v1.8.0
+git checkout tags/v1.9.0
 ./configure --prefix="$build_directory" --disable-examples --disable-unit-tests --enable-vp9-highbitdepth --as=yasm
 make
 make install
@@ -160,7 +160,7 @@ make clean
 make distclean
 
 cd $source_directory
-git clone --depth 1 -b release/4.1 https://github.com/FFmpeg/FFmpeg.git
+git clone --depth 1 -b release/4.3 https://github.com/FFmpeg/FFmpeg.git
 cd FFmpeg
 PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure \
     --prefix="$build_directory" \

@@ -1,4 +1,5 @@
-var Encore = require('@symfony/webpack-encore');
+const Encore = require('@symfony/webpack-encore');
+const CopyPlugin = require('copy-webpack-plugin');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -83,16 +84,18 @@ Encore
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
 
-    // uncomment if you use API Platform Admin (composer req api-admin)
-    //.enableReactPreset()
-    //.addEntry('admin', './assets/js/admin.js')
-
-    .copyFiles({
+    /*.copyFiles({
         from: './assets/resources/',
         to: 'resources/[path][name].[ext]',
-        // only copy files matching this pattern
-        //pattern: /\.(png|jpg|jpeg)$/
-    })
+    })*/
+    .addPlugin(
+        new CopyPlugin({
+            patterns: [{
+                from: './assets/resources/',
+                to: 'resources/[path][name].[ext]',
+            }],
+        })
+    )
 ;
 
 module.exports = Encore.getWebpackConfig();
