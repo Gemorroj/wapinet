@@ -76,7 +76,7 @@ source_directory="/root/ffmpeg_2021-01-30_source"
 PATH="$build_directory/bin:$PATH"
 
 cd $source_directory
-git clone --depth 1 -b stable git@code.videolan.org:videolan/x264.git
+git clone --depth 1 -b stable https://code.videolan.org/videolan/x264.git
 cd x264
 PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure --prefix="$build_directory" --bindir="$build_directory/bin" --enable-static
 make
