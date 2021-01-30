@@ -56,7 +56,7 @@
 
         "symfony/webpack-encore-bundle": "^1.9",
 
-        "easycorp/easyadmin-bundle": "^3.2",
+        "easycorp/easyadmin-bundle": "3.2.1",
         "friendsofsymfony/jsrouting-bundle": "^2.7",
         "babdev/pagerfanta-bundle": "^2.8",
         "james-heinrich/getid3": "^1.9.20",
