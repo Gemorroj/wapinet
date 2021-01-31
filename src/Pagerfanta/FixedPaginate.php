@@ -4,22 +4,15 @@ namespace App\Pagerfanta;
 
 class FixedPaginate
 {
-    protected $nbResults;
-    protected $results;
+    protected int $nbResults;
+    protected array $results;
 
-    /**
-     * @param int   $nbResults
-     * @param array $results
-     */
-    public function __construct($nbResults = null, array $results = null)
+    public function __construct(int $nbResults, array $results)
     {
         $this->setNbResults($nbResults);
         $this->setResults($results);
     }
 
-    /**
-     * @return FixedPaginate
-     */
     public function setNbResults(int $nbResults): self
     {
         $this->nbResults = $nbResults;
@@ -32,9 +25,6 @@ class FixedPaginate
         return $this->nbResults;
     }
 
-    /**
-     * @return FixedPaginate
-     */
     public function setResults(array $results): self
     {
         $this->results = $results;

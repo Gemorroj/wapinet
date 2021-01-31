@@ -7,18 +7,15 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\ArrayAdapter;
-use Pagerfanta\Adapter\DoctrineCollectionAdapter;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Adapter\FixedAdapter;
+use Pagerfanta\Doctrine\Collections\CollectionAdapter;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class Paginate
 {
-    /**
-     * @var ParameterBagInterface
-     */
-    protected $parameterBag;
+    private ParameterBagInterface $parameterBag;
 
     public function __construct(ParameterBagInterface $parameterBag)
     {
@@ -33,9 +30,9 @@ class Paginate
     public function paginate($data, int $page = 1, ?int $maxPerPage = null): Pagerfanta
     {
         if ($data instanceof Collection) {
-            $adapter = new DoctrineCollectionAdapter($data);
+            $adapter = new CollectionAdapter($data);
         } elseif ($data instanceof Query || $data instanceof QueryBuilder) {
-            $adapter = new DoctrineORMAdapter($data, false);
+            $adapter = new QueryAdapter($data, false);
         } elseif (\is_array($data)) {
             $adapter = new ArrayAdapter($data);
         } elseif ($data instanceof FixedPaginate) {

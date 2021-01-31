@@ -60,7 +60,8 @@ services:
 
     pagerfanta.view.default:
         class: App\Pagerfanta\View
-        tags: [{ name: pagerfanta.view, alias: default }]
+        tags:
+            - { name: pagerfanta.view, alias: default }
 
     App\EventListener\OnlineListener:
         tags:

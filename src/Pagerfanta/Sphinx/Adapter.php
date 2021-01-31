@@ -7,72 +7,37 @@ use Pagerfanta\Adapter\AdapterInterface;
 /**
  * Sphinx Adapter.
  *
- * @uses \AdapterInterface
- *
  * @author Stephane PY <py.stephane1@gmail.com>
  * @author Gemorroj <wapinet@mail.ru>
  */
 class Adapter implements AdapterInterface
 {
-    /**
-     * @var array
-     */
-    protected $array = [];
-    /**
-     * @var int
-     */
-    protected $nbResults = 0;
+    protected array $array = [];
+    protected int $nbResults = 0;
 
-    /**
-     * Constructor.
-     *
-     * @param array $array the array
-     *
-     * @api
-     */
-    public function __construct(array $array = null)
+    public function __construct(array $array)
     {
         $this->array = $array;
     }
 
-    /**
-     * Returns the array.
-     *
-     * @return array the array
-     *
-     * @api
-     */
-    public function getArray()
+    public function getArray(): array
     {
         return $this->array;
     }
 
-    /**
-     * @return Adapter
-     */
-    public function setArray(array $array)
+    public function setArray(array $array): self
     {
         $this->array = $array;
 
         return $this;
     }
 
-    /**
-     * get nb results.
-     */
-    public function getNbResults()
+    public function getNbResults(): int
     {
         return $this->nbResults;
     }
 
-    /**
-     * setNbResults.
-     *
-     * @param int $v nbOfResults
-     *
-     * @return Adapter
-     */
-    public function setNbResults($v)
+    public function setNbResults(int $v): self
     {
         $this->nbResults = $v;
 
@@ -80,10 +45,7 @@ class Adapter implements AdapterInterface
     }
 
     /**
-     * @param int $offset
-     * @param int $length
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getSlice($offset, $length)
     {

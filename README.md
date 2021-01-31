@@ -286,6 +286,7 @@ server {
 ```
 
 ### TODO:
+- Заменить sphinx на https://github.com/manticoresoftware/manticoresearch (https://github.com/manticoresoftware/manticoresearch-php) иил elasticsearch
 - ! проверка файлов на virustotal (возможно автоматическая) в файлообменнике
 - !!! заменить свою curl прослойку на https://github.com/symfony/http-client
 - !!! Переделать интерфейс на vue/react/angular (огромная задача)
