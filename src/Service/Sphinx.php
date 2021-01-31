@@ -42,12 +42,7 @@ class Sphinx
 
     public function getPagerfanta(SphinxQL $sphinxQl, string $entityClass): Pagerfanta
     {
-        try {
-            $result = $sphinxQl->execute();
-        } catch (\Throwable $e) {
-            \dump($e);
-            throw $e;
-        }
+        $result = $sphinxQl->execute();
         //$sphinxQl->reset();
         $meta = $sphinxQl->query('SHOW META')->execute();
 
