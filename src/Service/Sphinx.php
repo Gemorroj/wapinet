@@ -22,9 +22,8 @@ class Sphinx
 
         $this->connection = new Connection();
         $this->connection->setParams([
-            'host' => $parameterBag->get('sphinx_host'),
-            'port' => $parameterBag->get('sphinx_port'),
-            'charset' => 'utf8',
+            'host' => $parameterBag->get('manticore_host'),
+            'port' => $parameterBag->get('manticore_port'),
         ]);
         if ($parameterBag->has('wapinet_paginate_maxperpage')) {
             $this->maxPerPage = (int) $parameterBag->get('wapinet_paginate_maxperpage');
@@ -43,7 +42,12 @@ class Sphinx
 
     public function getPagerfanta(SphinxQL $sphinxQl, string $entityClass): Pagerfanta
     {
-        $result = $sphinxQl->execute();
+        try {
+            $result = $sphinxQl->execute();
+        } catch (\Throwable $e) {
+            \dump($e);
+            throw $e;
+        }
         //$sphinxQl->reset();
         $meta = $sphinxQl->query('SHOW META')->execute();
 

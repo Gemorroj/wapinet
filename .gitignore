@@ -4,6 +4,8 @@
 ### docker
 .docker/mysql/data/*
 !.docker/mysql/data/.gitkeep
+.docker/manticore/data/*
+!.docker/manticore/data/.gitkeep
 
 # Assets
 /public/static/file/*

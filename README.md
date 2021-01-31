@@ -7,7 +7,7 @@
 - Jquery Mobile
 - PHP 7.4
 - MySQL 8.0
-- Sphinx
+- Manticore
 - p7zip
 - ffmpeg
 
@@ -19,7 +19,7 @@
 - Установить Nginx `yum install nginx`
 - Установить php 7.4 `yum install php-fpm php-cli php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-pecl-apcu php-pecl-zip php-process php-xml php-sodium`
 - Установить cron, если не установлен `yum install cronie`
-- Установить sphinx `yum install sphinx`
+- Установить manticore `yum install https://repo.manticoresearch.com/manticore-repo.noarch.rpm && yum install manticore`
 
 
 ### Установка крон заданий:
@@ -286,7 +286,6 @@ server {
 ```
 
 ### TODO:
-- Заменить sphinx на https://github.com/manticoresoftware/manticoresearch (https://github.com/manticoresoftware/manticoresearch-php) иил elasticsearch
 - ! проверка файлов на virustotal (возможно автоматическая) в файлообменнике
 - !!! заменить свою curl прослойку на https://github.com/symfony/http-client
 - !!! Переделать интерфейс на vue/react/angular (огромная задача)

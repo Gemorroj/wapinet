@@ -1,6 +1,24 @@
 version: '3.8'
 
 services:
+  manticore:
+    build:
+      context: ./.docker/manticore
+      dockerfile: Dockerfile
+    container_name: wapinet-manticore
+    ports:
+      - "9306:9306" # mysql adapter
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 65535
+        hard: 65535
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - '.docker/manticore/manticore.conf:/etc/manticoresearch/manticore.conf'
+      - '.docker/manticore/data:/var/lib/manticore'
   mysql:
     build:
       context: ./.docker/mysql

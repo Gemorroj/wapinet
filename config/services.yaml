@@ -26,8 +26,8 @@ parameters:
     wapinet_email_footer: 'Сообщение отправлено через бесплатный сервис отправки E-mail https://wapinet.ru'
     wapinet_vk_access_token: '%env(VK_ACCESS_TOKEN)%'
 
-    sphinx_port: 9312
-    sphinx_host: 127.0.0.1
+    manticore_port: '%env(MANTICORE_PORT)%'
+    manticore_host: '%env(MANTICORE_HOST)%'
 
     router.request_context.host: wapinet.ru # для определения хоста в консольном режиме
 
