@@ -56,6 +56,7 @@ index files
         min_infix_len = 3
         min_word_len = 2
         expand_keywords = 1
+        index_exact_words = 1
         charset_table = 0..9, english, russian, _
 }
 
@@ -85,6 +86,7 @@ index users
         min_infix_len = 3
         min_word_len = 2
         expand_keywords = 1
+        index_exact_words = 1
         charset_table = 0..9, english, russian, _
 }
 
@@ -113,5 +115,6 @@ index gist
         min_infix_len = 3
         min_word_len = 2
         expand_keywords = 1
+        index_exact_words = 1
         charset_table = 0..9, english, russian, _
 }

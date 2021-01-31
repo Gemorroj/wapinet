@@ -28,7 +28,7 @@
 `php /var/www/wapinet/bin/console app:tags-clear`
 ##### Каждые пол часа от пользователя php-fpm
 `php /var/www/wapinet/bin/console app:subscriber-send`
-##### Каждый день в 2 часа ночи от рута
+##### Каждый день в 2 часа ночи от пользователя manticore
 `indexer --rotate --all`  
 
 
