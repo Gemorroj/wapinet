@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType as CoreSearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * Search.
@@ -23,10 +23,13 @@ class SearchType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder->add('search', CoreSearchType::class, [
-            'attr' => ['maxlength' => 5000, 'title' => 'Слова разделенные пробелами. Работает модификатор *, кавычки и др.'],
+            'attr' => [
+                'maxlength' => 5000,
+                'minlength' => 3,
+            ],
             'required' => true,
             'label' => false,
-            'constraints' => new NotBlank(),
+            'constraints' => [new Length(3, 5000)],
         ]);
 
         $builder->add('sort', ChoiceType::class, [

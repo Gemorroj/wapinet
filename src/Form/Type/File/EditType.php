@@ -26,7 +26,13 @@ class EditType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder->add('file', FileUrlType::class, ['required' => false, 'label' => false]);
-        $builder->add('description', TextareaType::class, ['required' => true, 'label' => 'Описание']);
+        $builder->add('description', TextareaType::class, [
+            'attr' => [
+                'maxlength' => 5000,
+            ],
+            'required' => true,
+            'label' => 'Описание',
+        ]);
 
         // http://view.jquerymobile.com/1.3.2/dist/demos/widgets/autocomplete/autocomplete-remote.html
         // тэги

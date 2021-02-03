@@ -23,8 +23,21 @@ class EditType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('subject', TextType::class, ['attr' => ['placeholder' => 'Тема'], 'required' => true, 'label' => false]);
-        $builder->add('body', TextareaType::class, ['attr' => ['placeholder' => 'Сообщение'], 'required' => true, 'label' => false]);
+        $builder->add('subject', TextType::class, [
+            'attr' => [
+                'placeholder' => 'Тема',
+                'maxlength' => 5000,
+            ],
+            'required' => true,
+            'label' => false,
+        ]);
+        $builder->add('body', TextareaType::class, [
+            'attr' => [
+                'placeholder' => 'Сообщение',
+            ],
+            'required' => true,
+            'label' => false,
+        ]);
         $builder->add('submit', SubmitType::class, ['label' => 'Изменить']);
     }
 

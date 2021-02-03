@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Intl\Countries;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
@@ -10,6 +11,7 @@ use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\SelfSaltingEncoderInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User.
@@ -113,6 +115,7 @@ class User implements UserInterface, EquatableInterface
      * @var string|null
      *
      * @ORM\Column(name="info", type="string", length=5000, nullable=true)
+     * @Assert\Length(max=5000)
      */
     private $info;
 
@@ -138,21 +141,21 @@ class User implements UserInterface, EquatableInterface
     private $vk;
 
     /**
-     * @var \App\Entity\Panel
+     * @var Panel
      *
      * @ORM\OneToOne(targetEntity="App\Entity\Panel", mappedBy="user", cascade={"persist", "remove"})
      */
     private $panel;
 
     /**
-     * @var \App\Entity\Subscriber
+     * @var Subscriber
      *
      * @ORM\OneToOne(targetEntity="App\Entity\Subscriber", mappedBy="user", cascade={"persist", "remove"})
      */
     private $subscriber;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Friend", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\OrderBy({
@@ -162,7 +165,7 @@ class User implements UserInterface, EquatableInterface
     private $friends;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Friend", mappedBy="friend")
      * @ORM\OrderBy({
@@ -184,10 +187,7 @@ class User implements UserInterface, EquatableInterface
         $this->friended = new ArrayCollection();
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->getUsername();
     }
@@ -197,56 +197,34 @@ class User implements UserInterface, EquatableInterface
         return $this->id;
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getFriends()
+    public function getFriends(): Collection
     {
         return $this->friends;
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getFriended()
+    public function getFriended(): Collection
     {
         return $this->friended;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getVk()
+    public function getVk(): ?string
     {
         return $this->vk;
     }
 
-    /**
-     * @param string|null $vk
-     *
-     * @return User
-     */
-    public function setVk($vk = null)
+    public function setVk(?string $vk = null): self
     {
         $this->vk = $vk;
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getCountry()
+    public function getCountry(): ?string
     {
         return $this->country;
     }
 
-    /**
-     * @param string|null $country
-     *
-     * @return User
-     */
-    public function setCountry($country = null)
+    public function setCountry(?string $country = null): self
     {
         $this->country = $country;
 
@@ -262,55 +240,33 @@ class User implements UserInterface, EquatableInterface
         return null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTimezone()
+    public function getTimezone(): ?string
     {
         return $this->timezone;
     }
 
-    /**
-     * @param string|null $timezone
-     *
-     * @return User
-     */
-    public function setTimezone($timezone = null)
+    public function setTimezone(?string $timezone = null): self
     {
         $this->timezone = $timezone;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isOnline()
+    public function isOnline(): bool
     {
         $lastActivity = $this->getLastActivity();
-        if (null !== $lastActivity) {
-            if ($lastActivity > new \DateTime('now -'.self::LIFETIME)) {
-                return true;
-            }
-        }
 
-        return false;
+        return $lastActivity && ($lastActivity > new \DateTime('now -'.self::LIFETIME));
     }
 
-    /**
-     * @return User
-     */
-    public function setPanel(Panel $panel)
+    public function setPanel(Panel $panel): self
     {
         $this->panel = $panel;
 
         return $this;
     }
 
-    /**
-     * @return Panel
-     */
-    public function getPanel()
+    public function getPanel(): Panel
     {
         if (null === $this->panel) {
             $panel = new Panel();
@@ -322,20 +278,14 @@ class User implements UserInterface, EquatableInterface
         return $this->panel;
     }
 
-    /**
-     * @return User
-     */
-    public function setSubscriber(Subscriber $subscriber)
+    public function setSubscriber(Subscriber $subscriber): self
     {
         $this->subscriber = $subscriber;
 
         return $this;
     }
 
-    /**
-     * @return Subscriber
-     */
-    public function getSubscriber()
+    public function getSubscriber(): Subscriber
     {
         if (null === $this->subscriber) {
             $subscriber = new Subscriber();
@@ -347,54 +297,31 @@ class User implements UserInterface, EquatableInterface
         return $this->subscriber;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getInfo()
+    public function getInfo(): ?string
     {
         return $this->info;
     }
 
-    /**
-     * @param string $info
-     *
-     * @return User
-     */
-    public function setInfo($info)
+    public function setInfo(?string $info): self
     {
         $this->info = $info;
 
         return $this;
     }
 
-    /**
-     * @param \DateTime $birthday
-     *
-     * @return User
-     */
-    public function setBirthday(\DateTime $birthday = null)
+    public function setBirthday(?\DateTime $birthday = null): self
     {
         $this->birthday = $birthday;
 
         return $this;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getBirthday()
+    public function getBirthday(): ?\DateTime
     {
         return $this->birthday;
     }
 
-    /**
-     * @param string $sex
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @return User
-     */
-    public function setSex($sex)
+    public function setSex(?string $sex): self
     {
         if (self::SEX_MALE !== $sex && self::SEX_FEMALE !== $sex) {
             throw new \InvalidArgumentException('Invalid sex');
@@ -405,18 +332,12 @@ class User implements UserInterface, EquatableInterface
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSex()
+    public function getSex(): ?string
     {
         return $this->sex;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -424,17 +345,14 @@ class User implements UserInterface, EquatableInterface
     /**
      * @ORM\PrePersist
      */
-    public function setCreatedAtValue()
+    public function setCreatedAtValue(): self
     {
         $this->createdAt = new \DateTime();
 
         return $this;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
@@ -442,49 +360,39 @@ class User implements UserInterface, EquatableInterface
     /**
      * @ORM\PreUpdate
      */
-    public function setUpdatedAtValue()
+    public function setUpdatedAtValue(): self
     {
         $this->updatedAt = new \DateTime();
 
         return $this;
     }
 
-    /**
-     * @return User
-     */
-    public function setLastActivity(\DateTime $lastActivity)
+    public function setLastActivity(?\DateTime $lastActivity): self
     {
         $this->lastActivity = $lastActivity;
 
         return $this;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getLastActivity()
+    public function getLastActivity(): ?\DateTime
     {
         return $this->lastActivity;
     }
 
-    /**
-     * @return bool
-     */
-    public function isMale()
+    public function isMale(): bool
     {
         return self::SEX_MALE === $this->getSex();
     }
 
-    /**
-     * @return bool
-     */
-    public function isFemale()
+    public function isFemale(): bool
     {
         return self::SEX_FEMALE === $this->getSex();
     }
 
     /**
      * @see UserInterface
+     *
+     * @return string[]
      */
     public function getRoles(): array
     {
@@ -495,6 +403,9 @@ class User implements UserInterface, EquatableInterface
         return \array_unique($roles);
     }
 
+    /**
+     * @param string[] $roles
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;

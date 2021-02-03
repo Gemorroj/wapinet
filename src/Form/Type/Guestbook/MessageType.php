@@ -43,7 +43,14 @@ class MessageType extends AbstractType
         if (!$this->authorizationChecker->isGranted($this->parameterBag->get('wapinet_role_nocaptcha'))) {
             $builder->add('captcha', CaptchaType::class, ['required' => true, 'label' => 'Код']);
         }
-        $builder->add('message', TextareaType::class, ['attr' => ['placeholder' => 'Сообщение'], 'required' => true, 'label' => false]);
+        $builder->add('message', TextareaType::class, [
+            'attr' => [
+                'placeholder' => 'Сообщение',
+                'maxlength' => 5000,
+            ],
+            'required' => true,
+            'label' => false,
+        ]);
         $builder->add('submit', SubmitType::class, ['label' => 'Написать']);
     }
 
