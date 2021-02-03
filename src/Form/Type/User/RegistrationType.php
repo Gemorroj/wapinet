@@ -18,18 +18,20 @@ class RegistrationType extends AbstractType
         $builder
             ->add('email', EmailType::class, ['label' => 'Email', 'required' => true])
             ->add('username', null, [
+                'attr' => [
+                    'minlength' => 3,
+                    'maxlength' => 180,
+                ],
                 'label' => 'Username',
                 'required' => true,
-                'constraints' => [new Length(['min' => 3])],
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'required' => true,
                 'constraints' => [new Length(['min' => 6])],
                 'type' => PasswordType::class,
-                'options' => [
-                    'attr' => [
-                        'autocomplete' => 'new-password',
-                    ],
+                'attr' => [
+                    'minlength' => 6,
+                    'autocomplete' => 'new-password',
                 ],
                 'first_options' => ['label' => 'Password'],
                 'second_options' => ['label' => 'Confirm password'],

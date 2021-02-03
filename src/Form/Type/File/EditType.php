@@ -38,7 +38,13 @@ class EditType extends AbstractType
         // тэги
         $builder->add('tags', TagsType::class, ['required' => false, 'label' => 'Тэги через запятую']);
 
-        $builder->add('plainPassword', CorePasswordType::class, ['required' => false, 'label' => 'Пароль', 'attr' => ['autocomplete' => 'off']]);
+        $builder->add('plainPassword', CorePasswordType::class, [
+            'required' => false,
+            'label' => 'Пароль',
+            'attr' => [
+                'autocomplete' => 'off',
+            ],
+        ]);
 
         $builder->add('submit', SubmitType::class, ['label' => 'Загрузить']);
     }

@@ -59,6 +59,7 @@ class User implements UserInterface, EquatableInterface
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=180, nullable=false, unique=true)
+     * @Assert\Length(min=3, max=180)
      */
     private $username;
 
