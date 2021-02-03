@@ -1,12 +1,12 @@
 {
     "devDependencies": {
-        "@symfony/stimulus-bridge": "^1.1.0",
-        "@symfony/webpack-encore": "^1.0.2",
+        "@symfony/stimulus-bridge": "^2.0.0",
+        "@symfony/webpack-encore": "^1.0.4",
         "copy-webpack-plugin": "^7.0.0",
         "core-js": "^3.8.3",
         "regenerator-runtime": "^0.13.7",
         "stimulus": "^2.0.0",
-        "webpack-notifier": "^1.12.0"
+        "webpack-notifier": "^1.13.0"
     },
     "license": "GPL-3.0-or-later",
     "scripts": {
