@@ -22,7 +22,8 @@ class GuestbookCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'ip', 'browser', 'message']);
+            ->setSearchFields(['id', 'ip', 'browser', 'message'])
+            ->setDefaultSort(['id' => 'DESC']);
     }
 
     public function configureActions(Actions $actions): Actions

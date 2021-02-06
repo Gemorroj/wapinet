@@ -30,7 +30,8 @@ class UsersCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'username', 'email', 'roles', 'sex', 'info', 'timezone', 'country', 'vk']);
+            ->setSearchFields(['id', 'username', 'email', 'roles', 'sex', 'info', 'timezone', 'country', 'vk'])
+            ->setDefaultSort(['id' => 'DESC']);
     }
 
     public function configureActions(Actions $actions): Actions

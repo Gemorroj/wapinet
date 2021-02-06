@@ -21,7 +21,8 @@ class TagsCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'name', 'count']);
+            ->setSearchFields(['id', 'name', 'count'])
+            ->setDefaultSort(['id' => 'DESC']);
     }
 
     public function configureActions(Actions $actions): Actions

@@ -22,7 +22,8 @@ class GistsCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'ip', 'browser', 'body', 'subject']);
+            ->setSearchFields(['id', 'ip', 'browser', 'body', 'subject'])
+            ->setDefaultSort(['id' => 'DESC']);
     }
 
     public function configureActions(Actions $actions): Actions

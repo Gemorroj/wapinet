@@ -23,7 +23,8 @@ class NewsCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'subject', 'body']);
+            ->setSearchFields(['id', 'subject', 'body'])
+            ->setDefaultSort(['id' => 'DESC']);
     }
 
     public function configureFields(string $pageName): iterable

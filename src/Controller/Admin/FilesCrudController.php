@@ -27,7 +27,8 @@ class FilesCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'ip', 'browser', 'countViews', 'mimeType', 'fileSize', 'fileName', 'originalFileName', 'description', 'hash']);
+            ->setSearchFields(['id', 'ip', 'browser', 'countViews', 'mimeType', 'fileSize', 'fileName', 'originalFileName', 'description', 'hash'])
+            ->setDefaultSort(['id' => 'DESC']);
     }
 
     public function configureActions(Actions $actions): Actions
