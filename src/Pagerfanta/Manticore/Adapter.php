@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Pagerfanta\Sphinx;
+namespace App\Pagerfanta\Manticore;
 
 use Pagerfanta\Adapter\AdapterInterface;
 
 /**
- * Sphinx Adapter.
+ * Manticore Adapter.
  *
  * @author Stephane PY <py.stephane1@gmail.com>
  * @author Gemorroj <wapinet@mail.ru>

@@ -238,8 +238,8 @@
                         <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('mysqld.service')) }}</dd>
                         <dt class="col-5 text-right monitoring-label">Cron:</dt>
                         <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('crond.service')) }}</dd>
-                        <dt class="col-5 text-right monitoring-label">Sphinx:</dt>
-                        <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('searchd.service')) }}</dd>
+                        <dt class="col-5 text-right monitoring-label">Manticore:</dt>
+                        <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('manticore.service')) }}</dd>
                         <dt class="col-5 text-right monitoring-label">OpenSSH:</dt>
                         <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('sshd.service')) }}</dd>
                     </dl>

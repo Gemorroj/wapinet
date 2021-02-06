@@ -2,14 +2,14 @@
 
 namespace App\Service;
 
-use App\Pagerfanta\Sphinx\Bridge;
+use App\Pagerfanta\Manticore\Bridge;
 use Doctrine\ORM\EntityManagerInterface;
 use Foolz\SphinxQL\Drivers\Pdo\Connection;
 use Foolz\SphinxQL\SphinxQL;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class Sphinx
+class Manticore
 {
     private EntityManagerInterface $entityManager;
     private Connection $connection;
@@ -47,7 +47,7 @@ class Sphinx
         $meta = $sphinxQl->query('SHOW META')->execute();
 
         $bridge = new Bridge($this->entityManager, $entityClass);
-        $bridge->setSphinxResult($result, $meta);
+        $bridge->setManticoreResult($result, $meta);
 
         $pager = $bridge->getPager();
         $pager->setMaxPerPage($this->maxPerPage);

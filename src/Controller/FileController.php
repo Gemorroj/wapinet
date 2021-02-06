@@ -17,8 +17,8 @@ use App\Repository\TagRepository;
 use App\Service\Archiver\Archive7z;
 use App\Service\BotChecker;
 use App\Service\File\Meta;
+use App\Service\Manticore;
 use App\Service\Paginate;
-use App\Service\Sphinx;
 use App\Service\Timezone;
 use App\Service\Translit;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -104,7 +104,7 @@ class FileController extends AbstractController
                 $search = $session->get('file_search');
                 if ($key === $search['key']) {
                     $form->setData($search['data']);
-                    $pagerfanta = $this->searchSphinx($search['data'], $page);
+                    $pagerfanta = $this->searchManticore($search['data'], $page);
                 }
             }
         } catch (\Exception $e) {
@@ -118,10 +118,10 @@ class FileController extends AbstractController
         ]);
     }
 
-    protected function searchSphinx(array $data, int $page = 1): Pagerfanta
+    protected function searchManticore(array $data, int $page = 1): Pagerfanta
     {
-        /** @var Sphinx $client */
-        $client = $this->get(Sphinx::class);
+        /** @var Manticore $client */
+        $client = $this->get(Manticore::class);
 
         $sphinxQl = $client->select($page)
             ->from(['files'])
@@ -761,7 +761,7 @@ class FileController extends AbstractController
     {
         $services = parent::getSubscribedServices();
         $services[Translit::class] = '?'.Translit::class;
-        $services[Sphinx::class] = '?'.Sphinx::class;
+        $services[Manticore::class] = '?'.Manticore::class;
         $services[LoggerInterface::class] = '?'.LoggerInterface::class;
         $services[Archive7z::class] = '?'.Archive7z::class;
         $services[\App\Service\File\File::class] = '?'.\App\Service\File\File::class;

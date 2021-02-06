@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Pagerfanta\Sphinx;
+namespace App\Pagerfanta\Manticore;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Foolz\SphinxQL\Drivers\ResultSetInterface;
@@ -18,7 +18,7 @@ class Bridge
     private EntityManagerInterface $entityManager;
     private string $entityClass;
     /**
-     * The results obtained from Sphinx.
+     * The results obtained from Manticore.
      */
     private ?array $results = null;
 
@@ -40,7 +40,7 @@ class Bridge
         return $pks;
     }
 
-    public function setSphinxResult(ResultSetInterface $result, ResultSetInterface $resultMeta): self
+    public function setManticoreResult(ResultSetInterface $result, ResultSetInterface $resultMeta): self
     {
         $this->results = [
             'matches' => $result->fetchAllAssoc(),
@@ -64,7 +64,7 @@ class Bridge
     public function getPager(): Pagerfanta
     {
         if (null === $this->results) {
-            throw new \RuntimeException('You should define sphinx results on '.self::class);
+            throw new \RuntimeException('You should define manticore results on '.self::class);
         }
 
         $adapter = new Adapter($this->getResults());

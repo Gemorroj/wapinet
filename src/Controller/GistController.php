@@ -10,8 +10,8 @@ use App\Form\Type\Gist\EditType;
 use App\Form\Type\Gist\SearchType;
 use App\Repository\GistRepository;
 use App\Service\BotChecker;
+use App\Service\Manticore;
 use App\Service\Paginate;
-use App\Service\Sphinx;
 use Exception;
 use Pagerfanta\Pagerfanta;
 use RuntimeException;
@@ -180,7 +180,7 @@ class GistController extends AbstractController
                 $search = $session->get('gist_search');
                 if ($key === $search['key']) {
                     $form->setData($search['data']);
-                    $pagerfanta = $this->searchSphinx($search['data'], $page);
+                    $pagerfanta = $this->searchManticore($search['data'], $page);
                 }
             }
         } catch (Exception $e) {
@@ -197,10 +197,10 @@ class GistController extends AbstractController
     /**
      * @throws RuntimeException
      */
-    private function searchSphinx(array $data, int $page = 1): Pagerfanta
+    private function searchManticore(array $data, int $page = 1): Pagerfanta
     {
-        /** @var Sphinx $client */
-        $client = $this->get(Sphinx::class);
+        /** @var Manticore $client */
+        $client = $this->get(Manticore::class);
         $sphinxQl = $client->select($page)
             ->from(['gist'])
             ->match(['subject', 'body'], $data['search'])
@@ -271,7 +271,7 @@ class GistController extends AbstractController
     public static function getSubscribedServices(): array
     {
         $services = parent::getSubscribedServices();
-        $services[Sphinx::class] = '?'.Sphinx::class;
+        $services[Manticore::class] = '?'.Manticore::class;
         $services[EventDispatcherInterface::class] = '?'.EventDispatcherInterface::class;
         $services[Paginate::class] = Paginate::class;
 

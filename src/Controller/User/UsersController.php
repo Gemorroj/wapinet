@@ -5,8 +5,8 @@ namespace App\Controller\User;
 use App\Entity\User;
 use App\Form\Type\User\SearchType;
 use App\Repository\UserRepository;
+use App\Service\Manticore;
 use App\Service\Paginate;
-use App\Service\Sphinx;
 use Exception;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -50,7 +50,7 @@ class UsersController extends AbstractController
                 $search = $session->get('users_search');
                 if ($key === $search['key']) {
                     $form->setData($search['data']);
-                    $pagerfanta = $this->searchSphinx($search['data'], $page);
+                    $pagerfanta = $this->searchManticore($search['data'], $page);
                 }
             } else {
                 $pagerfanta = $this->online($page);
@@ -75,10 +75,10 @@ class UsersController extends AbstractController
         return $this->get(Paginate::class)->paginate($query, $page);
     }
 
-    private function searchSphinx(array $data, int $page = 1): Pagerfanta
+    private function searchManticore(array $data, int $page = 1): Pagerfanta
     {
-        /** @var Sphinx $client */
-        $client = $this->get(Sphinx::class);
+        /** @var Manticore $client */
+        $client = $this->get(Manticore::class);
         $sphinxQl = $client->select($page)
             ->from(['users'])
             ->match(['username', 'email', 'info'], $data['search'])
@@ -90,7 +90,7 @@ class UsersController extends AbstractController
     public static function getSubscribedServices(): array
     {
         $services = parent::getSubscribedServices();
-        $services[Sphinx::class] = '?'.Sphinx::class;
+        $services[Manticore::class] = '?'.Manticore::class;
         $services[Paginate::class] = Paginate::class;
 
         return $services;
