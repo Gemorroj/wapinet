@@ -8,6 +8,9 @@
     "babdev/pagerfanta-bundle": {
         "version": "v2.4.3"
     },
+    "beberlei/doctrineextensions": {
+        "version": "v1.3.0"
+    },
     "christeredvartsen/php-bittorrent": {
         "version": "1.1.0"
     },

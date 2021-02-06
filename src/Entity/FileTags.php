@@ -24,9 +24,9 @@ class FileTags
     /**
      * @var \App\Entity\File
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\File", inversedBy="fileTags", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\File", inversedBy="fileTags", cascade={"persist", "remove"})
      * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="file_id", referencedColumnName="id", nullable=false)
+     *     @ORM\JoinColumn(name="file_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $file;
@@ -34,9 +34,9 @@ class FileTags
     /**
      * @var \App\Entity\Tag
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tag", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tag", cascade={"persist", "remove"})
      * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="tag_id", referencedColumnName="id", nullable=false)
+     *     @ORM\JoinColumn(name="tag_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $tag;

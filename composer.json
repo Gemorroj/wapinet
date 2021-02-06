@@ -53,6 +53,7 @@
         "doctrine/doctrine-bundle": "^2.2",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.8",
+        "beberlei/doctrineextensions": "^1.3",
 
         "symfony/webpack-encore-bundle": "^1.9",
 
