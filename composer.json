@@ -74,12 +74,12 @@
 
         "gemorroj/phpwhois": "dev-master",
         "gemorroj/stop-spam": "^3.2",
-        "gemorroj/archive7z": "^5.0",
+        "gemorroj/archive7z": "^5.1",
         "gemorroj/m3u-parser": "^5.2",
-        "gemorroj/syntax": "^4.1",
+        "gemorroj/syntax": "^4.1.1",
         "gemorroj/htmlvalidator": "^2.0",
-        "gemorroj/cssvalidator": "^2.0",
-        "gemorroj/xbbcode": "^2.4",
+        "gemorroj/cssvalidator": "^2.1",
+        "gemorroj/xbbcode": "^2.5",
         "gemorroj/ginfo": "^5.3"
     },
     "require-dev": {

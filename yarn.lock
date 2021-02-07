@@ -862,17 +862,17 @@
   resolved "https://registry.yarnpkg.com/@stimulus/webpack-helpers/-/webpack-helpers-2.0.0.tgz#54296d2a2dffd4f962d2e802d99a3fdd84b8845f"
   integrity sha512-D6tJWsAC024MwGEIKlUVYU8Ln87mlrmiwHvYAjipg+s8H4eLxUMQ3PZkWyPevfipH+oR3leuHsjYsK1gN5ViQA==
 
-"@symfony/stimulus-bridge@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@symfony/stimulus-bridge/-/stimulus-bridge-2.0.0.tgz#52cbf5c8524dec1a6c154a535bc82fedf1987b06"
-  integrity sha512-sq8FMQDmG5rtcmXwK+SQ2o5dEEqjaxpFjP/EYzl3qbGnED099XxOQDPnbrtVSIRRPlWEsuoTalD9B1fAdeFp0Q==
+"@symfony/stimulus-bridge@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@symfony/stimulus-bridge/-/stimulus-bridge-2.0.1.tgz#0e87cd53bf4bca5c4d6b058ff1b7ddb7b67f93c3"
+  integrity sha512-zidHaNsqSYOAWP0y7iB3eOv5t/jL2BRVjIOrr8ZvYYUbgO9lnztnFlC8cfIzcA/ITELvjg1aBA2qhgPW7INXug==
   dependencies:
     acorn "^8.0.5"
 
-"@symfony/webpack-encore@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@symfony/webpack-encore/-/webpack-encore-1.0.4.tgz#0248d7d19bec2b2ddd6f92ad88556deec8c90185"
-  integrity sha512-7zZHzDk/ZsBTM+c2a/wA0dZY2V+ZXEQk1VuNt5RL/P5/fpzNRagnVWFqk9iSBB6GHKfjymaB6xv8n1TP4sDlBA==
+"@symfony/webpack-encore@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@symfony/webpack-encore/-/webpack-encore-1.0.5.tgz#e6cfb196722cf3722e294923ff9b64f0515e62bb"
+  integrity sha512-HOnkVnZzS41QWhxeRvNvBMnfPOic2qOC4P/qCjZzgy9DEzeXCsL1Uu825NNBAdK4eZET6t2n/gRn3xQk9sljuw==
   dependencies:
     "@babel/core" "^7.7.0"
     "@babel/plugin-syntax-dynamic-import" "^7.0.0"
@@ -4100,9 +4100,9 @@ postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.27:
     supports-color "^6.1.0"
 
 postcss@^8.1.4:
-  version "8.2.4"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.2.4.tgz#20a98a39cf303d15129c2865a9ec37eda0031d04"
-  integrity sha512-kRFftRoExRVXZlwUuay9iC824qmXPcQQVzAjbCCgjpXnkdMCJYBu2gTwAaFBzv8ewND6O8xFb3aELmEkh9zTzg==
+  version "8.2.5"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.2.5.tgz#3c75149ada4e93db9521913654c0144517f77c9a"
+  integrity sha512-wMcb7BpDcm3gxQOQx46NDNT36Kk0Ao6PJLLI2ed5vehbbbxCEuslSQzbQ2sfSKy+gkYxhWcGWSeaK+gwm4KIZg==
   dependencies:
     colorette "^1.2.1"
     nanoid "^3.1.20"
