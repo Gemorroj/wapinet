@@ -54,7 +54,6 @@ class CssValidatorController extends AbstractController
 
         $options->setProfile($data['profile']);
         $options->setWarning($data['warning']);
-        $options->setUsermedium($data['usermedium']);
 
         if (null !== $data['css']) {
             return $cssValidator->validateFragment($data['css']);

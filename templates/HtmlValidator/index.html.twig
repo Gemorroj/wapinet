@@ -11,7 +11,10 @@
 {% block content %}
     {{ form_start(form, {'action': path('html_validator_index'), 'method': 'POST', 'attr': {'data-ajax': 'false'}}) }}
         {% if result is not null %}
-            {% if result.validity %}
+            {% if result.type %}
+                <strong>Тип</strong>: {{ result.type }}<br />
+            {% endif %}
+            {% if result.valid %}
                 <strong>Документ прошел валидацию</strong><br />
             {% endif %}
 
@@ -19,7 +22,10 @@
                 <strong>Ошибки</strong>
                 <ul>
                     {% for error in result.errors %}
-                        <li>Строка {{ error.line }}, колонка {{ error.col }}: {{ error.message }}<br /><code class="html-validator">{{ error.source|raw }}</code></li>
+                        <li>
+                            Строка {{ error.firstLine }}-{{ error.lastLine }}, колонка {{ error.firstColumn }}-{{ error.lastColumn }}: {{ error.message }}<br />
+                            <code>{{ error.extract }}</code>
+                        </li>
                     {% endfor %}
                 </ul>
             {% endif %}
@@ -27,7 +33,10 @@
                 <strong>Предупреждения</strong>
                 <ul>
                     {% for warning in result.warnings %}
-                        <li>Строка {{ warning.line }}, колонка {{ warning.col }}: {{ warning.message }}<br /><code class="html-validator">{{ warning.source|raw }}</code></li>
+                        <li>
+                            Строка {{ warning.firstLine }}-{{ warning.lastLine }}, колонка {{ warning.firstColumn }}-{{ warning.lastColumn }}: {{ warning.message }}<br />
+                            <code>{{ warning.extract }}</code>
+                        </li>
                     {% endfor %}
                 </ul>
             {% endif %}

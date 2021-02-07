@@ -61,9 +61,6 @@ div.http-type {
 div.http-url {
     width: 75% !important;
 }
-code.html-validator strong {
-    color: red;
-}
 p.long-description, h2.long-description {
     white-space: pre-wrap !important;
 }

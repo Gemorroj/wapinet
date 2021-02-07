@@ -12,7 +12,7 @@
     {{ form_start(form, {'action': path('css_validator_index'), 'method': 'POST', 'attr': {'data-ajax': 'false'}}) }}
 
     {% if result is not null %}
-        {% if result.validity %}
+        {% if result.valid %}
             <strong>Документ прошел валидацию</strong><br />
         {% endif %}
 
@@ -20,7 +20,7 @@
             <strong>Ошибки</strong>
             <ul>
             {% for error in result.errors %}
-                <li>Строка {{ error.line }}: [{{ error.errortype }}] - {{ error.message }}</li>
+                <li>Строка {{ error.line }}: [{{ error.errorType }}] - {{ error.message }}</li>
             {% endfor %}
             </ul>
         {% endif %}
@@ -38,10 +38,9 @@
 
     {{ form_row(form.css) }}
     {{ form_row(form.file) }}
-    <div class="ui-grid-b">
+    <div class="ui-grid-a">
         <div class="ui-block-a">{{ form_row(form.profile) }}</div>
-        <div class="ui-block-b">{{ form_row(form.usermedium) }}</div>
-        <div class="ui-block-c">{{ form_row(form.warning) }}</div>
+        <div class="ui-block-b">{{ form_row(form.warning) }}</div>
     </div>
 
     {{ form_rest(form) }}

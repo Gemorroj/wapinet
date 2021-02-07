@@ -3,6 +3,7 @@
 namespace App\Form\Type\CssValidator;
 
 use App\Form\Type\FileUrlType;
+use CSSValidator\Options;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -33,42 +34,26 @@ class CssValidatorType extends AbstractType
         $builder->add('profile', ChoiceType::class, [
             'label' => 'Профиль',
             'choices' => [
-                'CSS3' => 'css3',
-                'Мобильный' => 'mobile',
-                'CSS2.1' => 'css21',
-                'CSS2' => 'css2',
-                'CSS1' => 'css1',
-                'SVG' => 'svg',
-                'SVG Basic' => 'svgbasic',
-                'SVG tiny' => 'svgtiny',
-                'телевидение ATSC' => 'atsc-tv',
-                'телевидение' => 'tv',
-                'Без специальных настроек' => 'none',
+                'CSS3' => Options::PROFILE_CSS3,
+                'Мобильный' => Options::PROFILE_MOBILE,
+                'CSS2.1' => Options::PROFILE_CSS21,
+                'CSS2' => Options::PROFILE_CSS2,
+                'CSS1' => Options::PROFILE_CSS1,
+                'SVG' => Options::PROFILE_SVG,
+                'SVG Basic' => Options::PROFILE_SVG_BASIC,
+                'SVG Tiny' => Options::PROFILE_SVG_TINY,
+                'телевидение ATSC' => Options::PROFILE_ATSC_TV,
+                'телевидение' => Options::PROFILE_TV,
+                'Без специальных настроек' => Options::PROFILE_NONE,
             ],
         ]);
         $builder->add('warning', ChoiceType::class, [
             'label' => 'Предупреждения',
             'choices' => [
-                'Обычный отчет' => '1',
-                'Наиболее важные' => '0',
-                'Все' => '2',
-                'Без предупреждений' => 'no',
-            ],
-        ]);
-        $builder->add('usermedium', ChoiceType::class, [
-            'label' => 'Среда',
-            'choices' => [
-                'Все' => 'all',
-                'аудио (aural)' => 'aural',
-                'терминал Брайля (braille)' => 'braille',
-                'постраничный принтер Брайля (embossed)' => 'embossed',
-                'портативное устройство (handheld)' => 'handheld',
-                'печатная продукция (print)' => 'print',
-                'проектор (projection)' => 'projection',
-                'дисплей (screen)' => 'screen',
-                'телетайп (tty)' => 'tty',
-                'телевизор (tv)' => 'tv',
-                'презентация (presentation)' => 'presentation',
+                'Обычный отчет' => Options::WARNING_NORMAL,
+                'Наиболее важные' => Options::WARNING_IMPORTANT,
+                'Все' => Options::WARNING_ALL,
+                'Без предупреждений' => Options::WARNING_NONE,
             ],
         ]);
 
