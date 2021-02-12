@@ -710,7 +710,12 @@ class File
 
     public function isXml(): bool
     {
-        return 'application/xml' === $this->getMimeType() || false !== \strpos($this->getMimeType(), '+xml');
+        return 'application/xml' === $this->getMimeType() || 'text/xml' === $this->getMimeType() || false !== \strpos($this->getMimeType(), '+xml');
+    }
+
+    public function isJson(): bool
+    {
+        return 'application/json' === $this->getMimeType();
     }
 
     public function isArchive(): bool
@@ -746,7 +751,8 @@ class File
 
     public function isAndroidApp(): bool
     {
-        return 'application/vnd.android.package-archive' === $this->getMimeType();
+        return 'application/vnd.android.package-archive' === $this->getMimeType() ||
+            (\in_array($this->getMimeType(), ['application/zip', 'application/x-zip', 'application/x-zip-compressed'], true) && '.apk' === \substr($this->getFileName(), -4));
     }
 
     public function isSymbianApp(): bool

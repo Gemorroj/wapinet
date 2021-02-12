@@ -97,10 +97,6 @@
         {% if file.isPlayableAudio %}
             {% include 'audio.html.twig' with {'file': file} %}
         {% endif %}
-    {% elseif file.isArchive %}
-        {% if file.isExtractableArchive %}
-            {% include 'archive.html.twig' with {'file': file} %}
-        {% endif %}
     {% elseif file.isJavaApp %}
         {% if screenshot is not null %}
             {% include 'image.html.twig' with {'image': {'id': file.id, 'alt': file.originalFileName, 'src': screenshot, 'preview': screenshot|imagine_filter('thumbnail') } } %}
@@ -113,6 +109,10 @@
         {% include 'torrent.html.twig' with {'file': file} %}
     {% elseif file.isPlaylist %}
         {% include 'playlist.html.twig' with {'file': file} %}
+    {% elseif file.isArchive %} {# last position to avoid some problems with android apps #}
+        {% if file.isExtractableArchive %}
+            {% include 'archive.html.twig' with {'file': file} %}
+        {% endif %}
     {% endif %}
 
     {% include 'File/meta.html.twig' %}

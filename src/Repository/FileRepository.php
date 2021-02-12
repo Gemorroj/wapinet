@@ -171,44 +171,112 @@ class FileRepository extends ServiceEntityRepository
     {
         switch ($mimeType) {
             case 'video':
+                $q->andWhere('f.mimeType LIKE :video OR f.mimeType IN(:flash, :flv, :a3gpp, :a3gppencrypted, :axrn3gppamr, :axrn3gppamrencrypted, :axrn3gppamrwb, :axrn3gppamrwbencrypted, :a3gpp2, :awmv)');
+                $q->setParameter('video', 'video/%');
+                $q->setParameter('flash', 'application/x-flash-video');
+                $q->setParameter('flv', 'flv-application/octet-stream');
+                $q->setParameter('a3gpp', 'audio/3gpp');
+                $q->setParameter('a3gppencrypted', 'audio/3gpp-encrypted');
+                $q->setParameter('axrn3gppamr', 'audio/x-rn-3gpp-amr');
+                $q->setParameter('axrn3gppamrencrypted', 'audio/x-rn-3gpp-amr-encrypted');
+                $q->setParameter('axrn3gppamrwb', 'audio/x-rn-3gpp-amr-wb');
+                $q->setParameter('axrn3gppamrwbencrypted', 'audio/x-rn-3gpp-amr-wb-encrypted');
+                $q->setParameter('a3gpp2', 'audio/3gpp2');
+                $q->setParameter('awmv', 'audio/x-ms-wmv');
+                break;
             case 'audio':
+                $q->andWhere('f.mimeType LIKE :audio OR f.mimeType IN(:flash)');
+                $q->setParameter('audio', 'audio/%');
+                $q->setParameter('flash', 'application/x-flash-audio');
+                break;
             case 'image':
+                $q->andWhere('f.mimeType LIKE :image OR f.mimeType IN(:postscript, :illustrator, :adobeillustrator)');
+                $q->setParameter('image', 'image/%');
+                $q->setParameter('postscript', 'application/postscript');
+                $q->setParameter('illustrator', 'application/illustrator');
+                $q->setParameter('adobeillustrator', 'application/vnd.adobe.illustrator');
+                break;
             case 'text':
-                $mimeType = \addcslashes($mimeType, '%_').'/%';
-                $q->andWhere('f.mimeType LIKE :mime_type');
-                $q->setParameter('mime_type', $mimeType);
+                $q->andWhere('f.mimeType LIKE :text OR f.mimeType IN(:axml, :txml, :json, :xphp, :xhttpdphp, :xpython, :xpython3, :csv, :perl, :sql, :xsql, :yaml)');
+                $q->setParameter('text', 'text/%');
+                $q->setParameter('axml', 'application/xml');
+                $q->setParameter('txml', 'text/xml');
+                $q->setParameter('json', 'application/json');
+                $q->setParameter('xphp', 'application/x-php');
+                $q->setParameter('xhttpdphp', 'application/x-httpd-php');
+                $q->setParameter('xpython', 'text/x-python');
+                $q->setParameter('xpython3', 'text/x-python3');
+                $q->setParameter('csv', 'application/csv');
+                $q->setParameter('perl', 'application/x-perl');
+                $q->setParameter('sql', 'application/sql');
+                $q->setParameter('xsql', 'application/x-sql');
+                $q->setParameter('yaml', 'application/x-yaml');
                 break;
             case 'office':
-                $q->andWhere('f.mimeType IN(:pdf, :doc, :docx, :xls, :xlsx, :rtf)');
+                $q->andWhere('f.mimeType IN(:pdf, :acrobat, :nappdf, :xpdf, :ipdf, :msword, :vndmsword, :xmsword, :zzwinassocdoc, :docx, :vndmsexcel, :msexcel, :xmsexcel, :zzwinassocxls, :xlsx, :artf, :trtf)');
                 $q->setParameter('pdf', 'application/pdf');
-                $q->setParameter('doc', 'application/msword');
+                $q->setParameter('acrobat', 'application/acrobat');
+                $q->setParameter('nappdf', 'application/nappdf');
+                $q->setParameter('xpdf', 'application/x-pdf');
+                $q->setParameter('ipdf', 'image/pdf');
+                $q->setParameter('msword', 'application/msword');
+                $q->setParameter('vndmsword', 'application/vnd.ms-word');
+                $q->setParameter('xmsword', 'application/x-msword');
+                $q->setParameter('zzwinassocdoc', 'zz-application/zz-winassoc-doc');
                 $q->setParameter('docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-                $q->setParameter('xls', 'application/vnd.ms-excel');
+                $q->setParameter('vndmsexcel', 'application/vnd.ms-excel');
+                $q->setParameter('msexcel', 'application/msexcel');
+                $q->setParameter('xmsexcel', 'application/x-msexcel');
+                $q->setParameter('zzwinassocxls', 'zz-application/zz-winassoc-xls');
                 $q->setParameter('xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-                $q->setParameter('rtf', 'application/rtf');
+                $q->setParameter('artf', 'application/rtf');
+                $q->setParameter('trtf', 'text/rtf');
                 break;
             case 'archive':
-                $q->andWhere('f.mimeType IN(:zip, :rar, :bz, :bz2, :p7z, :tar, :cab, :iso, :gz_old, :gz_new, :ace, :lzh)');
-                $q->setParameter('zip', 'application/zip');
-                $q->setParameter('rar', 'application/x-rar-compressed');
-                $q->setParameter('bz', 'application/x-bzip');
-                $q->setParameter('bz2', 'application/x-bzip2');
-                $q->setParameter('p7z', 'application/x-7z-compressed'); //7z
+                $q->andWhere('f.fileName NOT LIKE \'%.apk\'');
+                $q->andWhere('f.mimeType IN(:zip, :xzip, :xzipcompressed, :xrarcompressed, :xrar, :vndrar, :xbzip, :xbzip2, :xbz2, :p7z, :mscab, :zzcab, :tar, :xgzip, :gzip, :xace, :xacecompressed, :xlha, :xlzhcompressed, :iso1, :iso2, :iso3, :iso4, :iso5, :iso6, :iso7, :iso8, :iso9, :iso10)');
+                $q->setParameter('zip', 'application/zip'); // zip
+                $q->setParameter('xzip', 'application/x-zip'); // zip
+                $q->setParameter('xzipcompressed', 'application/x-zip-compressed'); // zip
+                $q->setParameter('xrarcompressed', 'application/x-rar-compressed'); // rar
+                $q->setParameter('xrar', 'application/x-rar'); // rar
+                $q->setParameter('vndrar', 'application/vnd.rar'); // rar
+                $q->setParameter('xbzip', 'application/x-bzip'); // bz
+                $q->setParameter('xbzip2', 'application/x-bzip2'); // bz2
+                $q->setParameter('xbz2', 'application/x-bz2'); // bz2
+                $q->setParameter('p7z', 'application/x-7z-compressed'); // 7z
+                $q->setParameter('mscab', 'application/vnd.ms-cab-compressed'); // cab
+                $q->setParameter('zzcab', 'zz-application/zz-winassoc-cab'); // cab
                 $q->setParameter('tar', 'application/x-tar');
-                $q->setParameter('cab', 'application/vnd.ms-cab-compressed');
-                $q->setParameter('iso', 'application/x-iso9660-image');
-                $q->setParameter('gz_old', 'application/x-gzip');
-                $q->setParameter('gz_new', 'application/gzip');
-                $q->setParameter('ace', 'application/x-ace-compressed');
-                $q->setParameter('lzh', 'application/x-lzh-compressed');
+                $q->setParameter('xgzip', 'application/x-gzip'); // gz
+                $q->setParameter('gzip', 'application/gzip'); // gz
+                $q->setParameter('xace', 'application/x-ace'); // ace
+                $q->setParameter('xacecompressed', 'application/x-ace-compressed'); //ace
+                $q->setParameter('xlha', 'application/x-lha'); // lzh
+                $q->setParameter('xlzhcompressed', 'application/x-lzh-compressed'); // lzh
+                $q->setParameter('iso1', 'application/x-cd-image');
+                $q->setParameter('iso2', 'application/x-gamecube-iso-image');
+                $q->setParameter('iso3', 'application/x-gamecube-rom');
+                $q->setParameter('iso4', 'application/x-iso9660-image');
+                $q->setParameter('iso5', 'application/x-saturn-rom');
+                $q->setParameter('iso6', 'application/x-sega-cd-rom');
+                $q->setParameter('iso7', 'application/x-wbfs');
+                $q->setParameter('iso8', 'application/x-wia');
+                $q->setParameter('iso9', 'application/x-wii-iso-image');
+                $q->setParameter('iso10', 'application/x-wii-rom');
                 break;
             case 'android':
-                $q->andWhere('f.mimeType = :mime_type');
-                $q->setParameter('mime_type', 'application/vnd.android.package-archive');
+                $q->andWhere('f.mimeType = :android OR (f.mimeType IN(:zip, :xzip, :xzipcompressed) AND f.fileName LIKE \'%.apk\')');
+                $q->setParameter('android', 'application/vnd.android.package-archive');
+                $q->setParameter('zip', 'application/zip'); // zip
+                $q->setParameter('xzip', 'application/x-zip'); // zip
+                $q->setParameter('xzipcompressed', 'application/x-zip-compressed'); // zip
                 break;
             case 'java':
-                $q->andWhere('f.mimeType = :mime_type');
-                $q->setParameter('mime_type', 'application/java-archive');
+                $q->andWhere('f.mimeType IN(:java, :xjava, :jar)');
+                $q->setParameter('java', 'application/java-archive');
+                $q->setParameter('xjava', 'application/x-java-archive');
+                $q->setParameter('jar', 'application/x-jar');
                 break;
         }
     }
