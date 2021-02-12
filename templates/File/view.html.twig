@@ -27,7 +27,7 @@
 
 {% if file.isPlayableVideo %}
     {% set format %}{% apply spaceless %}
-        {% if file.isM4v or file.is3gp or file.isWmv or file.isAvi %}
+        {% if file.isM4v or file.is3gp or file.isWmv or file.isAvi or file.isMov %}
             m4v
         {% elseif file.isOgv %}
             ogv
@@ -39,7 +39,7 @@
     {% endapply %}{% endset %}
 
     {% set video %}{% apply spaceless %}
-        {% if file.is3gp or file.isAvi or file.isWmv %}
+        {% if file.is3gp or file.isAvi or file.isWmv or file.isMov %}
             {{ vich_uploader_asset(file, 'file')|wapinet_video_to_mp4 }}
         {% else %}
             {{ vich_uploader_asset(file, 'file') }}

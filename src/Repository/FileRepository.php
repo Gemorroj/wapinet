@@ -197,7 +197,7 @@ class FileRepository extends ServiceEntityRepository
                 $q->setParameter('adobeillustrator', 'application/vnd.adobe.illustrator');
                 break;
             case 'text':
-                $q->andWhere('f.mimeType LIKE :text OR f.mimeType IN(:axml, :txml, :json, :xphp, :xhttpdphp, :xpython, :xpython3, :csv, :perl, :sql, :xsql, :yaml)');
+                $q->andWhere('f.mimeType LIKE :text OR f.mimeType IN(:axml, :txml, :json, :xphp, :xhttpdphp, :xpython, :xpython3, :csv, :perl, :sql, :xsql, :yaml, :xsh, :xshellscript)');
                 $q->setParameter('text', 'text/%');
                 $q->setParameter('axml', 'application/xml');
                 $q->setParameter('txml', 'text/xml');
@@ -211,6 +211,8 @@ class FileRepository extends ServiceEntityRepository
                 $q->setParameter('sql', 'application/sql');
                 $q->setParameter('xsql', 'application/x-sql');
                 $q->setParameter('yaml', 'application/x-yaml');
+                $q->setParameter('xsh', 'application/x-sh');
+                $q->setParameter('xshellscript', 'application/x-shellscript');
                 break;
             case 'office':
                 $q->andWhere('f.mimeType IN(:pdf, :acrobat, :nappdf, :xpdf, :ipdf, :msword, :vndmsword, :xmsword, :zzwinassocdoc, :docx, :vndmsexcel, :msexcel, :xmsexcel, :zzwinassocxls, :xlsx, :artf, :trtf)');

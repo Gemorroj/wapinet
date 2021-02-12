@@ -954,8 +954,14 @@ class File
             $this->isFlv() ||
             $this->is3gp() ||
             $this->isAvi() ||
-            $this->isWmv()
+            $this->isWmv() ||
+            $this->isMov()
         );
+    }
+
+    public function isMov(): bool
+    {
+        return 'video/quicktime' === $this->getMimeType();
     }
 
     public function isPlayableAudio(): bool
