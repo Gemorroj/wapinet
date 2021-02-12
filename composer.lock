@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9732462066d0b81fe0733be5a1634e25",
+    "content-hash": "7fb3d1c7e2a13c9b66758ac1756990eb",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -1701,16 +1701,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v3.2.3",
+            "version": "v3.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "3a7a27475ed780de94b6c74d09458b70b9eb9880"
+                "reference": "6ad8ced39c8a2118c8f408e4ddef56b4daf04e1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/3a7a27475ed780de94b6c74d09458b70b9eb9880",
-                "reference": "3a7a27475ed780de94b6c74d09458b70b9eb9880",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/6ad8ced39c8a2118c8f408e4ddef56b4daf04e1d",
+                "reference": "6ad8ced39c8a2118c8f408e4ddef56b4daf04e1d",
                 "shasum": ""
             },
             "require": {
@@ -1788,7 +1788,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-01-30T18:09:44+00:00"
+            "time": "2021-02-11T18:36:34+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -2090,16 +2090,16 @@
         },
         {
             "name": "gemorroj/archive7z",
-            "version": "5.1.0",
+            "version": "5.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/Archive7z.git",
-                "reference": "7e50569129697c37d9080516bea2947d7aa3d256"
+                "reference": "bc240a9fdb0cf319ee9d8e174b6e7ebb46f16974"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/Archive7z/zipball/7e50569129697c37d9080516bea2947d7aa3d256",
-                "reference": "7e50569129697c37d9080516bea2947d7aa3d256",
+                "url": "https://api.github.com/repos/Gemorroj/Archive7z/zipball/bc240a9fdb0cf319ee9d8e174b6e7ebb46f16974",
+                "reference": "bc240a9fdb0cf319ee9d8e174b6e7ebb46f16974",
                 "shasum": ""
             },
             "require": {
@@ -2133,7 +2133,7 @@
                 "archive",
                 "p7zip"
             ],
-            "time": "2021-02-06T19:34:33+00:00"
+            "time": "2021-02-12T11:07:41+00:00"
         },
         {
             "name": "gemorroj/cssvalidator",
@@ -9727,16 +9727,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.74",
+            "version": "0.12.75",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "bc5f9483c8f461c86653dcbd040cf0d2778c91a2"
+                "reference": "2e4738cd67e0163861a065180eff7eb5c8417d6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/bc5f9483c8f461c86653dcbd040cf0d2778c91a2",
-                "reference": "bc5f9483c8f461c86653dcbd040cf0d2778c91a2",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/2e4738cd67e0163861a065180eff7eb5c8417d6e",
+                "reference": "2e4738cd67e0163861a065180eff7eb5c8417d6e",
                 "shasum": ""
             },
             "require": {
@@ -9779,7 +9779,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-08T15:00:25+00:00"
+            "time": "2021-02-11T13:58:47+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
@@ -9898,16 +9898,16 @@
         },
         {
             "name": "phpstan/phpstan-symfony",
-            "version": "0.12.16",
+            "version": "0.12.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-symfony.git",
-                "reference": "c50afb8f4e27d4ab3b47ac370838aefac3c15e9e"
+                "reference": "6f270710294b1b5a029464765bcb6d0f564ff3a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/c50afb8f4e27d4ab3b47ac370838aefac3c15e9e",
-                "reference": "c50afb8f4e27d4ab3b47ac370838aefac3c15e9e",
+                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/6f270710294b1b5a029464765bcb6d0f564ff3a1",
+                "reference": "6f270710294b1b5a029464765bcb6d0f564ff3a1",
                 "shasum": ""
             },
             "require": {
@@ -9924,6 +9924,7 @@
                 "phpstan/phpstan-phpunit": "^0.12.16",
                 "phpstan/phpstan-strict-rules": "^0.12.5",
                 "phpunit/phpunit": "^7.5.20",
+                "symfony/config": "^4.2",
                 "symfony/console": "^4.0",
                 "symfony/framework-bundle": "^4.0",
                 "symfony/http-foundation": "^4.0",
@@ -9959,7 +9960,7 @@
                 }
             ],
             "description": "Symfony Framework extensions and rules for PHPStan",
-            "time": "2021-01-25T12:30:55+00:00"
+            "time": "2021-02-11T18:45:32+00:00"
         },
         {
             "name": "symfony/browser-kit",
