@@ -215,7 +215,7 @@ class FileRepository extends ServiceEntityRepository
                 $q->setParameter('xshellscript', 'application/x-shellscript');
                 break;
             case 'office':
-                $q->andWhere('f.mimeType IN(:pdf, :acrobat, :nappdf, :xpdf, :ipdf, :msword, :vndmsword, :xmsword, :zzwinassocdoc, :docx, :vndmsexcel, :msexcel, :xmsexcel, :zzwinassocxls, :xlsx, :artf, :trtf)');
+                $q->andWhere('f.mimeType IN(:pdf, :acrobat, :nappdf, :xpdf, :ipdf, :msword, :vndmsword, :xmsword, :zzwinassocdoc, :docx, :vndmsexcel, :msexcel, :xmsexcel, :zzwinassocxls, :xlsx, :artf, :trtf, :vndmspowerpoint, :mspowerpoint, :powerpoint, :xmspowerpoint, :pptx, :xmsaccess, :mdb, :msaccess, :vndmsaccess1, :vndmsaccess2, :xmdb, :zzwinassocmdb)');
                 $q->setParameter('pdf', 'application/pdf');
                 $q->setParameter('acrobat', 'application/acrobat');
                 $q->setParameter('nappdf', 'application/nappdf');
@@ -233,6 +233,18 @@ class FileRepository extends ServiceEntityRepository
                 $q->setParameter('xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 $q->setParameter('artf', 'application/rtf');
                 $q->setParameter('trtf', 'text/rtf');
+                $q->setParameter('vndmspowerpoint', 'application/vnd.ms-powerpoint');
+                $q->setParameter('mspowerpoint', 'application/mspowerpoint');
+                $q->setParameter('powerpoint', 'application/powerpoint');
+                $q->setParameter('xmspowerpoint', 'application/x-mspowerpoint');
+                $q->setParameter('pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation');
+                $q->setParameter('xmsaccess', 'application/x-msaccess');
+                $q->setParameter('mdb', 'application/mdb');
+                $q->setParameter('msaccess', 'application/msaccess');
+                $q->setParameter('vndmsaccess1', 'application/vnd.ms-access');
+                $q->setParameter('vndmsaccess2', 'application/vnd.msaccess');
+                $q->setParameter('xmdb', 'application/x-mdb');
+                $q->setParameter('zzwinassocmdb', 'zz-application/zz-winassoc-mdb');
                 break;
             case 'archive':
                 $q->andWhere('f.fileName NOT LIKE \'%.apk\'');
