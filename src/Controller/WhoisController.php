@@ -67,8 +67,7 @@ class WhoisController extends AbstractController
             $utils = $phpwhois->getUtils();
             $resultHtml = $utils->showHTML($result);
 
-            $resultHtml = \str_replace($_SERVER['PHP_SELF'], '', $resultHtml);
-
+            $resultHtml = \str_replace($this->get('request_stack')->getCurrentRequest()->server->get('PHP_SELF'), '', $resultHtml);
             $resultHtml = \str_replace('<a href=', '<a rel="external" href=', $resultHtml);
 
             return $resultHtml;

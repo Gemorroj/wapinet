@@ -10,10 +10,7 @@ use Xbbcode\Xbbcode;
 
 class Bbcode extends AbstractExtension
 {
-    /**
-     * @var RequestContext
-     */
-    protected $requestContext;
+    private RequestContext $requestContext;
 
     public function __construct(RequestContext $requestContext)
     {

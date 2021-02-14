@@ -86,7 +86,7 @@ class Video extends AbstractExtension
             // https://trac.ffmpeg.org/wiki/Encode/MPEG-4
             // bitrate = file size / duration
 
-            $filesize = @\filesize($media->getPathfile());
+            $filesize = \filesize($media->getPathfile());
             $filesize *= 3.3; // увеличиваем предположительный размер mp4 файла по сравнению с оригиналом
             $filesize /= 1024; // переводим байты в килобайты
             $duration = $videoStream->has('duration') ? $videoStream->get('duration') : 0;

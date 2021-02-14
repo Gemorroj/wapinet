@@ -11,14 +11,12 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
  */
 class Geoip2
 {
-    /**
-     * @var Reader
-     */
-    protected $reader;
+    private ?Reader $reader = null;
+    private string $dbPath;
 
     public function __construct(ParameterBagInterface $parameterBag)
     {
-        $this->reader = new Reader($parameterBag->get('wapinet_geoip2_country_path'), ['ru']);
+        $this->dbPath = $parameterBag->get('wapinet_geoip2_country_path');
     }
 
     /**
@@ -27,6 +25,16 @@ class Geoip2
      */
     public function getCountry(string $ip): Country
     {
-        return $this->reader->country($ip);
+        return $this->getDbReader()->country($ip);
+    }
+
+    /**
+     * @throws \MaxMind\Db\Reader\InvalidDatabaseException
+     */
+    private function getDbReader(): Reader
+    {
+        $this->reader = $this->reader ?: new Reader($this->dbPath, ['ru']);
+
+        return $this->reader;
     }
 }
