@@ -1701,16 +1701,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v3.2.4",
+            "version": "v3.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "6ad8ced39c8a2118c8f408e4ddef56b4daf04e1d"
+                "reference": "b462eca45e71d53f090f036c51bb11fbe834c35a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/6ad8ced39c8a2118c8f408e4ddef56b4daf04e1d",
-                "reference": "6ad8ced39c8a2118c8f408e4ddef56b4daf04e1d",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/b462eca45e71d53f090f036c51bb11fbe834c35a",
+                "reference": "b462eca45e71d53f090f036c51bb11fbe834c35a",
                 "shasum": ""
             },
             "require": {
@@ -1788,7 +1788,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-02-11T18:36:34+00:00"
+            "time": "2021-02-13T14:44:23+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -2279,23 +2279,23 @@
         },
         {
             "name": "gemorroj/m3u-parser",
-            "version": "5.2.0",
+            "version": "5.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/M3uParser.git",
-                "reference": "7b542d13ae3bddc45577db2a6b6f879bc2930957"
+                "reference": "4f03ef6c0b1aa7eec1f75af00e817df713c6ccc9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/M3uParser/zipball/7b542d13ae3bddc45577db2a6b6f879bc2930957",
-                "reference": "7b542d13ae3bddc45577db2a6b6f879bc2930957",
+                "url": "https://api.github.com/repos/Gemorroj/M3uParser/zipball/4f03ef6c0b1aa7eec1f75af00e817df713c6ccc9",
+                "reference": "4f03ef6c0b1aa7eec1f75af00e817df713c6ccc9",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.3"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.16",
+                "friendsofphp/php-cs-fixer": "^2.18",
                 "phpunit/phpunit": "^9.5"
             },
             "type": "library",
@@ -2306,7 +2306,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-3.0"
+                "LGPL-3.0-or-later"
             ],
             "authors": [
                 {
@@ -2319,7 +2319,7 @@
                 "m3u8",
                 "playlist"
             ],
-            "time": "2020-12-05T12:45:00+00:00"
+            "time": "2021-02-14T15:53:12+00:00"
         },
         {
             "name": "gemorroj/phpwhois",
@@ -2327,12 +2327,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/phpwhois.git",
-                "reference": "944e0f12f6697359810a5fb48e0aa7db90b2b87c"
+                "reference": "7a3e6a3cd598d171e91901e102839938267c7729"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/944e0f12f6697359810a5fb48e0aa7db90b2b87c",
-                "reference": "944e0f12f6697359810a5fb48e0aa7db90b2b87c",
+                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/7a3e6a3cd598d171e91901e102839938267c7729",
+                "reference": "7a3e6a3cd598d171e91901e102839938267c7729",
                 "shasum": ""
             },
             "require": {
@@ -2357,7 +2357,7 @@
                 "GPL-2.0-only"
             ],
             "description": "This package contains a Whois (RFC954) library for PHP. It allows a PHP program to create a Whois object, and obtain the output of a whois query with the Lookup function.",
-            "time": "2021-02-06T22:29:23+00:00"
+            "time": "2021-02-14T14:58:17+00:00"
         },
         {
             "name": "gemorroj/stop-spam",
