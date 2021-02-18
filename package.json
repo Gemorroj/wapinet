@@ -2,7 +2,7 @@
     "devDependencies": {
         "@symfony/webpack-encore": "^1.1.0",
         "copy-webpack-plugin": "^7.0.0",
-        "core-js": "^3.8.3",
+        "core-js": "^3.9.0",
         "regenerator-runtime": "^0.13.7"
     },
     "license": "GPL-3.0-or-later",
