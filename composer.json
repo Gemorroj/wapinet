@@ -59,7 +59,7 @@
 
         "easycorp/easyadmin-bundle": "^3.2",
         "friendsofsymfony/jsrouting-bundle": "^2.7",
-        "babdev/pagerfanta-bundle": "^2.8",
+        "babdev/pagerfanta-bundle": "^2.9",
         "james-heinrich/getid3": "^1.9.20",
         "vich/uploader-bundle": "^1.16",
         "liip/imagine-bundle": "^2.5",
