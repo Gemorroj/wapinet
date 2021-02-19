@@ -70,10 +70,10 @@ class Meta
 
         if ($this->file->isAndroidApp()) {
             $this->setAndroidMeta();
-        } elseif ($this->file->isAudio()) {
-            $this->setAudioMeta();
         } elseif ($this->file->isVideo()) {
             $this->setVideoMeta();
+        } elseif ($this->file->isAudio()) {
+            $this->setAudioMeta();
         } elseif ($this->file->isImage()) {
             $this->setImageMeta();
         } elseif ($this->file->isTorrent()) {
