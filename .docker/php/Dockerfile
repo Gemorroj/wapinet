@@ -56,7 +56,7 @@ RUN set -xe \
 
 # Composer
 RUN set -xe \
-    && curl -L -o /composer.phar https://github.com/composer/composer/releases/download/1.10.20/composer.phar \
+    && curl -L -o /composer.phar https://github.com/composer/composer/releases/download/2.0.9/composer.phar \
     && chmod 755 /composer.phar
 
 
