@@ -1,10 +1,30 @@
-# alpine3.13 is broken
-FROM php:7.4-fpm-alpine3.12
+FROM php:7.4-fpm-alpine3.13
 
+# Update repo and install some utilites
 RUN set -xe \
     && apk update \
     && apk upgrade \
+    && apk --no-cache add htop unzip gzip p7zip git ffmpeg
+
+# Composer
+RUN set -xe \
+    && curl -L -o /composer.phar https://github.com/composer/composer/releases/download/2.0.11/composer.phar \
+    && chmod 755 /composer.phar
+
+# GeoIP
+RUN set -xe \
+    && curl -L -o /GeoLite2-Country.mmdb.gz https://raw.githubusercontent.com/wp-statistics/GeoLite2-Country/master/GeoLite2-Country.mmdb.gz \
+    && gzip -d /GeoLite2-Country.mmdb.gz \
+    && chmod 644 /GeoLite2-Country.mmdb
+
+# PHP
+RUN set -xe \
     && apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
+
+    # Xdebug, APCU
+    && pecl install apcu \
+    && pecl install xdebug \
+    && docker-php-ext-enable apcu xdebug \
 
     # ZIP
     && apk add --no-cache libzip libzip-dev \
@@ -33,43 +53,17 @@ RUN set -xe \
         --with-freetype \
         --with-webp \
         --with-jpeg \
-    && NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
-    && docker-php-ext-install -j${NPROC} gd \
-    && docker-php-ext-enable gd \
+    && docker-php-ext-install -j$(nproc) gd \
+    && docker-php-ext-enable gd
 
-    # Xdebug
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
-
-    # APCU
-    && pecl install apcu \
-    && docker-php-ext-enable apcu \
-
-    # Cleanup
+# Cleanup
+RUN set -xe \
     && apk del --no-cache .build-deps \
     && apk del --no-cache icu-dev \
     && apk del --no-cache libsodium-dev \
     && apk del --no-cache libzip-dev \
     && apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev libwebp-dev \
     && rm -rf /tmp/* /var/cache/apk/*
-
-
-# Composer
-RUN set -xe \
-    && curl -L -o /composer.phar https://github.com/composer/composer/releases/download/2.0.11/composer.phar \
-    && chmod 755 /composer.phar
-
-
-# utilites
-RUN set -xe \
-    && apk --no-cache add htop unzip gzip p7zip git ffmpeg
-
-
-# GeoIP
-RUN set -xe \
-    && curl -L -o /GeoLite2-Country.mmdb.gz https://raw.githubusercontent.com/wp-statistics/GeoLite2-Country/master/GeoLite2-Country.mmdb.gz \
-    && gzip -d /GeoLite2-Country.mmdb.gz \
-    && chmod 644 /GeoLite2-Country.mmdb
 
 
 WORKDIR /var/www/app
