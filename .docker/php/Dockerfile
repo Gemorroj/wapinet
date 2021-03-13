@@ -13,8 +13,7 @@ RUN set -xe \
 
 # GeoIP
 RUN set -xe \
-    && curl -L -o /GeoLite2-Country.mmdb.gz https://raw.githubusercontent.com/wp-statistics/GeoLite2-Country/master/GeoLite2-Country.mmdb.gz \
-    && gzip -d /GeoLite2-Country.mmdb.gz \
+    && curl -L -o /GeoLite2-Country.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-Country.mmdb \
     && chmod 644 /GeoLite2-Country.mmdb
 
 # PHP
