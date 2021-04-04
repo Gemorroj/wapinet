@@ -65,12 +65,9 @@ class WhoisController extends AbstractController
         if (!empty($result['rawdata'])) {
             $result['rawdata'] = \str_replace('{query}', \htmlspecialchars($data['query']), $result['rawdata']);
             $utils = $phpwhois->getUtils();
-            $resultHtml = $utils->showHTML($result);
+            $link = $this->generateUrl('whois_index');
 
-            $resultHtml = \str_replace($this->get('request_stack')->getCurrentRequest()->server->get('PHP_SELF'), '', $resultHtml);
-            $resultHtml = \str_replace('<a href=', '<a rel="external" href=', $resultHtml);
-
-            return $resultHtml;
+            return $utils->showHTML($result, $link);
         }
 
         if (isset($whois->Query['errstr'])) {

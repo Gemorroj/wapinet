@@ -2,8 +2,8 @@
 
 namespace App\Service;
 
-use utils;
 use Whois;
+use WhoisUtils;
 
 /**
  * Phpwhois хэлпер
@@ -15,8 +15,8 @@ class Phpwhois
         return new Whois();
     }
 
-    public function getUtils(): utils
+    public function getUtils(): WhoisUtils
     {
-        return new utils();
+        return new WhoisUtils();
     }
 }
