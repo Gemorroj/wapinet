@@ -46,17 +46,17 @@
 yum install p7zip p7zip-plugins
 ```
 
-##### Если версия в репозитории слишком старая, или нет поддержки rar (RHEL) то ставим из исходников
+##### Если версия в репозитории слишком старая или нет поддержки rar (RHEL), то ставим из исходников
 ```bash
 cd /root
-mkdir p7zip_17.03_sources
-mkdir p7zip_17.03_build
-cd /root/p7zip_17.03_sources
-wget https://github.com/jinfeihan57/p7zip/archive/v17.03.tar.gz
-tar xzvf v17.03.tar.gz
-cd p7zip-17.03
+mkdir p7zip_17.04_sources
+mkdir p7zip_17.04_build
+cd /root/p7zip_17.04_sources
+wget https://github.com/jinfeihan57/p7zip/archive/v17.04.tar.gz
+tar xzvf v17.04.tar.gz
+cd p7zip-17.04
 make all3
-# изменить в файле install.sh переменную DEST_HOME на /root/p7zip_17.03_build
+# изменить в файле install.sh переменную DEST_HOME на /root/p7zip_17.04_build
 ./install.sh
 ```
 Проверить список поддерживаемых форматов можно так `7z i` или `7za i` 
