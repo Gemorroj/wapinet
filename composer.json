@@ -6,7 +6,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^7.4",
+        "php": ">=7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-mbstring": "*",
@@ -63,12 +63,12 @@
         "james-heinrich/getid3": "^1.9.20",
         "vich/uploader-bundle": "^1.17",
         "liip/imagine-bundle": "^2.6",
-        "gregwar/captcha-bundle": "^2.1.4",
+        "gregwar/captcha-bundle": "^2.1.5",
         "tufanbarisyildirim/php-apk-parser": "^2.0.2",
         "geoip2/geoip2": "^2.11",
         "christeredvartsen/php-bittorrent": "^2.0",
         "seostats/seostats": "dev-master",
-        "foolz/sphinxql-query-builder": "^2.1",
+        "foolz/sphinxql-query-builder": "^3.0",
         "php-ffmpeg/php-ffmpeg": "^0.18",
         "riverline/multipart-parser": "^2.0",
 
