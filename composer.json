@@ -51,7 +51,7 @@
 
         "doctrine/annotations": "^1.12",
         "doctrine/doctrine-bundle": "^2.3",
-        "doctrine/doctrine-migrations-bundle": "^3.0",
+        "doctrine/doctrine-migrations-bundle": "^3.1",
         "doctrine/orm": "^2.8",
         "beberlei/doctrineextensions": "^1.3",
 
