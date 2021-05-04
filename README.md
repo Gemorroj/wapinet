@@ -76,7 +76,7 @@ source_directory="/root/ffmpeg_2021-01-30_source"
 PATH="$build_directory/bin:$PATH"
 
 cd $source_directory
-git clone --depth 1 -b stable https://code.videolan.org/videolan/x264.git
+git clone --depth 1 --branch stable https://code.videolan.org/videolan/x264.git
 cd x264
 PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure --prefix="$build_directory" --bindir="$build_directory/bin" --enable-static
 make
@@ -84,9 +84,8 @@ make install
 make distclean
 
 cd $source_directory
-git clone git://github.com/videolan/x265.git
+git clone --depth 1 --branch stable git://github.com/videolan/x265.git
 cd x265
-git checkout tags/3.4
 cd build/linux
 cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$build_directory" -DENABLE_SHARED:bool=off ../../source
 make
@@ -160,7 +159,7 @@ make clean
 make distclean
 
 cd $source_directory
-git clone --depth 1 -b release/4.3 https://github.com/FFmpeg/FFmpeg.git
+git clone --depth 1 --branch release/4.3 https://github.com/FFmpeg/FFmpeg.git
 cd FFmpeg
 PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure \
     --prefix="$build_directory" \
