@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "29f3e37c7199731c26a231fbe887de54",
+    "content-hash": "976b5f617b3a311a0b7f42476cbe812f",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -2483,21 +2483,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/phpwhois.git",
-                "reference": "6939cdd59d4e52e0027a69b80f7da272ffa1f995"
+                "reference": "6adce2fe1f65beaf2d0c9bbe9fd6fe55c42973ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/6939cdd59d4e52e0027a69b80f7da272ffa1f995",
-                "reference": "6939cdd59d4e52e0027a69b80f7da272ffa1f995",
+                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/6adce2fe1f65beaf2d0c9bbe9fd6fe55c42973ab",
+                "reference": "6adce2fe1f65beaf2d0c9bbe9fd6fe55c42973ab",
                 "shasum": ""
             },
             "require": {
                 "algo26-matthias/idna-convert": "^3.0.5",
-                "ext-pcre": "*",
                 "php": ">=7.3"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.18",
+                "friendsofphp/php-cs-fixer": "^2.19",
                 "phpunit/phpunit": "^9.5"
             },
             "default-branch": true,
@@ -2518,7 +2517,7 @@
                 "issues": "https://github.com/Gemorroj/phpwhois/issues",
                 "source": "https://github.com/Gemorroj/phpwhois/tree/master"
             },
-            "time": "2021-04-04T10:48:03+00:00"
+            "time": "2021-05-07T18:41:10+00:00"
         },
         {
             "name": "gemorroj/stop-spam",
@@ -3195,16 +3194,16 @@
         },
         {
             "name": "laminas/laminas-code",
-            "version": "4.2.1",
+            "version": "4.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-code.git",
-                "reference": "a1e7f8b6467ac7f277b8e027e8537fa13664a8d8"
+                "reference": "3cbdf2e23e6df1d1beecb5708560c8f6a8115bf9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-code/zipball/a1e7f8b6467ac7f277b8e027e8537fa13664a8d8",
-                "reference": "a1e7f8b6467ac7f277b8e027e8537fa13664a8d8",
+                "url": "https://api.github.com/repos/laminas/laminas-code/zipball/3cbdf2e23e6df1d1beecb5708560c8f6a8115bf9",
+                "reference": "3cbdf2e23e6df1d1beecb5708560c8f6a8115bf9",
                 "shasum": ""
             },
             "require": {
@@ -3262,7 +3261,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-04-23T11:54:51+00:00"
+            "time": "2021-05-07T14:09:12+00:00"
         },
         {
             "name": "laminas/laminas-eventmanager",
@@ -10022,16 +10021,16 @@
         },
         {
             "name": "composer/xdebug-handler",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/xdebug-handler.git",
-                "reference": "31d57697eb1971712a08031cfaff5a846d10bdf5"
+                "reference": "964adcdd3a28bf9ed5d9ac6450064e0d71ed7496"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/31d57697eb1971712a08031cfaff5a846d10bdf5",
-                "reference": "31d57697eb1971712a08031cfaff5a846d10bdf5",
+                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/964adcdd3a28bf9ed5d9ac6450064e0d71ed7496",
+                "reference": "964adcdd3a28bf9ed5d9ac6450064e0d71ed7496",
                 "shasum": ""
             },
             "require": {
@@ -10066,7 +10065,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/xdebug-handler/issues",
-                "source": "https://github.com/composer/xdebug-handler/tree/2.0.0"
+                "source": "https://github.com/composer/xdebug-handler/tree/2.0.1"
             },
             "funding": [
                 {
@@ -10082,7 +10081,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-09T19:40:06+00:00"
+            "time": "2021-05-05T19:37:51+00:00"
         },
         {
             "name": "friendsofphp/php-cs-fixer",
@@ -10433,16 +10432,16 @@
         },
         {
             "name": "phpstan/phpstan-symfony",
-            "version": "0.12.30",
+            "version": "0.12.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-symfony.git",
-                "reference": "8377e227368bdec99d4753a8a050e162450c2217"
+                "reference": "f3fb189151b3a2cd99dbc5e7ae2b493d99111bf7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/8377e227368bdec99d4753a8a050e162450c2217",
-                "reference": "8377e227368bdec99d4753a8a050e162450c2217",
+                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/f3fb189151b3a2cd99dbc5e7ae2b493d99111bf7",
+                "reference": "f3fb189151b3a2cd99dbc5e7ae2b493d99111bf7",
                 "shasum": ""
             },
             "require": {
@@ -10497,9 +10496,9 @@
             "description": "Symfony Framework extensions and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-symfony/issues",
-                "source": "https://github.com/phpstan/phpstan-symfony/tree/0.12.30"
+                "source": "https://github.com/phpstan/phpstan-symfony/tree/0.12.32"
             },
-            "time": "2021-05-03T09:17:26+00:00"
+            "time": "2021-05-04T17:47:30+00:00"
         },
         {
             "name": "symfony/browser-kit",
@@ -10791,16 +10790,16 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.30.2",
+            "version": "v1.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "a395a85aa4ded6c1fa3da118d60329b64b6c2acd"
+                "reference": "d01a475fb9a96a46d0c75dbc7fae6eb9a8c85ddb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/a395a85aa4ded6c1fa3da118d60329b64b6c2acd",
-                "reference": "a395a85aa4ded6c1fa3da118d60329b64b6c2acd",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/d01a475fb9a96a46d0c75dbc7fae6eb9a8c85ddb",
+                "reference": "d01a475fb9a96a46d0c75dbc7fae6eb9a8c85ddb",
                 "shasum": ""
             },
             "require": {
@@ -10820,7 +10819,7 @@
                 "composer/semver": "^3.0@dev",
                 "doctrine/doctrine-bundle": "^1.8|^2.0",
                 "doctrine/orm": "^2.3",
-                "friendsofphp/php-cs-fixer": "^2.8",
+                "friendsofphp/php-cs-fixer": "^3.0",
                 "friendsoftwig/twigcs": "^4.1.0|^5.0.0",
                 "symfony/http-client": "^4.3|^5.0",
                 "symfony/phpunit-bridge": "^4.3|^5.0",
@@ -10859,7 +10858,7 @@
             ],
             "support": {
                 "issues": "https://github.com/symfony/maker-bundle/issues",
-                "source": "https://github.com/symfony/maker-bundle/tree/v1.30.2"
+                "source": "https://github.com/symfony/maker-bundle/tree/v1.31.0"
             },
             "funding": [
                 {
@@ -10875,7 +10874,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-03-23T13:53:38+00:00"
+            "time": "2021-05-05T18:41:31+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",
