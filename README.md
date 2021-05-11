@@ -5,7 +5,7 @@
 ##### Используются:
 - Symfony 5.2
 - Jquery Mobile
-- PHP 7.4
+- PHP 8.0
 - MySQL 8.0
 - Manticore
 - p7zip
@@ -17,7 +17,7 @@
 - Установить дополнительные репозитории `epel`, `remi`, `nginx`, `mysql`
 - Установить MySQL 8.0 `yum install mysql-server`
 - Установить Nginx `yum install nginx`
-- Установить php 7.4 `yum install php-fpm php-cli php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-pecl-apcu php-pecl-zip php-process php-xml php-sodium`
+- Установить php 8.0 `yum install php-fpm php-cli php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-pecl-apcu php-pecl-zip php-process php-xml php-sodium`
 - Установить cron, если не установлен `yum install cronie`
 - Установить manticore `yum install https://repo.manticoresearch.com/manticore-repo.noarch.rpm && yum install manticore`
 

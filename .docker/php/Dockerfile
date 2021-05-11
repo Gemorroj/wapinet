@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine3.13
+FROM php:8.0-fpm-alpine3.13
 
 # Update repo and install some utilites
 RUN set -xe \
@@ -19,6 +19,10 @@ RUN set -xe \
 # PHP
 RUN set -xe \
     && apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
+
+    # Opcache
+    && docker-php-ext-install opcache \
+    && docker-php-ext-enable opcache \
 
     # Xdebug, APCU
     && pecl install apcu \
