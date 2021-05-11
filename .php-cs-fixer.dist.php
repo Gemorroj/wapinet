@@ -4,25 +4,23 @@ $finder = PhpCsFixer\Finder::create()
     ->exclude('fixtures')
     ->in(['src', 'tests', 'config', 'migrations', 'public']);
 
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config())
     ->setRules([
         '@Symfony' => true,
         '@Symfony:risky' => true,
         '@DoctrineAnnotation' => true,
         '@PHP74Migration' => true,
-        'array_syntax' => ['syntax' => 'short'],
+
         'combine_consecutive_issets' => true,
         'combine_consecutive_unsets' => true,
         'compact_nullable_typehint' => true,
         'linebreak_after_opening_tag' => true,
-        'list_syntax' => ['syntax' => 'short'],
-        //'mb_str_functions' => true,
-        'native_function_invocation' => true,
+        'native_function_invocation' => ['scope' => 'all', 'include' => ['@all']],
         'native_constant_invocation' => true,
         'no_null_property_initialization' => true,
         'no_useless_else' => true,
         'no_useless_return' => true,
-        'ordered_imports' => ['sortAlgorithm' => 'alpha'],
+        'ordered_imports' => ['sort_algorithm' => 'alpha'],
         'phpdoc_order' => true,
         'strict_comparison' => true,
         'combine_nested_dirname' => true,

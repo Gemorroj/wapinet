@@ -28,11 +28,12 @@ class TagsCountCommand extends Command
     {
         $this
             ->setDescription('Fix tags counts')
-            ->setHelp(<<<EOT
-                The <info>app:tags-count</info> command fix tags counts:
+            ->setHelp(
+                <<<EOT
+                    The <info>app:tags-count</info> command fix tags counts:
 
-                  <info>php bin/console app:tags-count</info>
-                EOT
+                      <info>php bin/console app:tags-count</info>
+                    EOT
             );
     }
 

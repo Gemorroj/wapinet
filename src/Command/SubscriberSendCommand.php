@@ -27,7 +27,8 @@ class SubscriberSendCommand extends Command
         MailerInterface $mailer,
         LoggerInterface $logger,
         ParameterBagInterface $parameterBag,
-        string $name = null)
+        string $name = null
+    )
     {
         $this->entityManager = $entityManager;
         $this->mailer = $mailer;

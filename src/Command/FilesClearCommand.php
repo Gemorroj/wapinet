@@ -37,11 +37,12 @@ class FilesClearCommand extends Command
             ->setDefinition([
                 new InputArgument('lifetime', InputArgument::OPTIONAL, 'The lifetime timeout', '1 year'),
             ])
-            ->setHelp(<<<EOT
-                The <info>app:files-clear</info> command removes old files:
+            ->setHelp(
+                <<<EOT
+                    The <info>app:files-clear</info> command removes old files:
 
-                  <info>php bin/console app:files-clear "1 year"</info>
-                EOT
+                      <info>php bin/console app:files-clear "1 year"</info>
+                    EOT
             );
     }
 

@@ -17,7 +17,6 @@ use const CURLOPT_RETURNTRANSFER;
 use const CURLOPT_SSL_VERIFYHOST;
 use const CURLOPT_SSL_VERIFYPEER;
 use const CURLOPT_URL;
-use function http_parse_headers;
 use LengthException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -155,7 +154,7 @@ class Curl
     protected function parseHeaders(string $rawHeaders): array
     {
         if (\function_exists('\http_parse_headers')) {
-            return http_parse_headers($rawHeaders);
+            return \http_parse_headers($rawHeaders);
         }
 
         $headers = [];

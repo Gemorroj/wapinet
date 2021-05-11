@@ -29,11 +29,12 @@ class SubscriberClearCommand extends Command
             ->setDefinition([
                 new InputArgument('lifetime', InputArgument::OPTIONAL, 'The lifetime timeout', '30 days'),
             ])
-            ->setHelp(<<<EOT
-                The <info>app:subscriber-clear</info> command removes old events:
+            ->setHelp(
+                <<<EOT
+                    The <info>app:subscriber-clear</info> command removes old events:
 
-                  <info>php bin/console app:subscriber-clear "30 days"</info>
-                EOT
+                      <info>php bin/console app:subscriber-clear "30 days"</info>
+                    EOT
             );
     }
 
