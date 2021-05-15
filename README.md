@@ -86,25 +86,6 @@ dnf install git htop mc tar unzip
 ```
 
 
-### Установка cron заданий:
-##### Каждый день в 1 час ночи от пользователя php-fpm
-`php /var/www/wapinet/bin/console app:tmp-clear "1 day"`    
-`php /var/www/wapinet/bin/console app:tags-clear`
-##### Каждые пол часа от пользователя php-fpm
-`php /var/www/wapinet/bin/console app:subscriber-send`
-##### Каждый день в 2 часа ночи от пользователя manticore
-`indexer --rotate --all`  
-
-
-### Установка прав доступа на запись:
-`var/log`  
-`var/tmp`  
-`var/cache`  
-`public/media/cache/resolve/thumbnail/static`  
-`public/media/cache/thumbnail/static`  
-`public/static/file`  
-
-
 ##### Установка p7zip
 ```bash
 dnf install make gcc gcc-c++
@@ -123,8 +104,7 @@ make all3
 
 
 ### Установка FFmpeg:
-Делаем все как указано по ссылке [https://trac.ffmpeg.org/wiki/CompilationGuide/Centos](https://trac.ffmpeg.org/wiki/CompilationGuide/Centos).  
-Дополнительно ставим `theora`, `amr`. Не забываем указать в конфиге `--prefix="$build_directory"`, а для `theora` еще и `--with-ogg="$HOME/ffmpeg_build" --disable-shared`.
+Базовая информация: [https://trac.ffmpeg.org/wiki/CompilationGuide/Centos](https://trac.ffmpeg.org/wiki/CompilationGuide/Centos).
 В конце проверить что на всех директориях выше и самих бинарниках есть права на выполнение.
 ```bash
 dnf install autoconf automake bzip2 bzip2-devel cmake freetype-devel gcc gcc-c++ libtool make nasm yasm pkgconfig zlib-devel
@@ -144,10 +124,10 @@ make install
 make distclean
 
 cd $source_directory
-git clone --depth 1 --branch stable git://github.com/videolan/x265.git
-cd x265
+git clone --depth 1 --branch stable https://bitbucket.org/multicoreware/x265_git.git
+cd x265_git
 cd build/linux
-cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$build_directory" -DENABLE_SHARED:bool=off ../../source
+cmake --pkg-config-flags="--static" -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$build_directory" -DENABLE_SHARED=OFF ../../source
 make
 make install
 make clean
@@ -247,7 +227,57 @@ make install
 make distclean
 hash -r
 ```
-Проверить что все директории к исполняемым файлам имеют права на выполнение.
+
+
+### Установка сайта
+```bash
+cd /var/www
+curl -L -o composer.phar https://github.com/composer/composer/releases/download/2.0.13/composer.phar
+chmod 755 composer.phar
+curl -L -o GeoLite2-Country.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-Country.mmdb
+
+git clone https://github.com/Gemorroj/wapinet.git
+cd wapinet
+cp .env.dist .env
+../composer.phar install --no-dev --optimize-autoloader --apcu-autoloader
+```
+
+
+### Установка прав доступа на запись:
+`var/log`  
+`var/tmp`  
+`var/cache`  
+`public/media/cache/resolve/thumbnail/static`  
+`public/media/cache/thumbnail/static`  
+`public/static/file`
+
+
+### Установка cron заданий:
+##### Каждый день в 1 час ночи от пользователя php-fpm
+`php /var/www/wapinet/bin/console app:tmp-clear "1 day"`    
+`php /var/www/wapinet/bin/console app:tags-clear`
+##### Каждые пол часа от пользователя php-fpm
+`php /var/www/wapinet/bin/console app:subscriber-send`
+##### Каждый день в 2 часа ночи от пользователя manticore
+`indexer --rotate --all`
+
+
+### SSL сертификаты
+##### Установка
+```bash
+dnf install socat
+curl https://get.acme.sh | sh -s email=wapinet@mail.ru
+systemctl nginx stop
+acme.sh --issue --standalone -d wapinet.ru
+systemctl nginx start
+```
+##### Обновление
+```bash
+acme.sh --upgrade
+service nginx stop
+acme.sh --renew-all --force
+service nginx start
+```
 
 
 ### Конфиг nginx:
