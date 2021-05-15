@@ -11,7 +11,7 @@ searchd
         query_log_format = sphinxql
         query_log = /var/log/manticore/query.log
         network_timeout = 5
-        pid_file = /var/run/manticore/searchd.pid
+        pid_file = /run/manticore/searchd.pid
 }
 
 source config
