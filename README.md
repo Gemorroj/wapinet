@@ -12,17 +12,74 @@
 - ffmpeg
 
 
-### Базовая установка (актуально для Centos 7)
+### Базовая установка (актуально для Centos 8 Stream)
 - Отключить `selinux`
-- Установить дополнительные репозитории `epel`, `remi`, `nginx`, `mysql`
-- Установить MySQL 8.0 `yum install mysql-server`
-- Установить Nginx `yum install nginx`
-- Установить php 8.0 `yum install php-fpm php-cli php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-pecl-apcu php-pecl-zip php-process php-xml php-sodium`
-- Установить cron, если не установлен `yum install cronie`
-- Установить manticore `yum install https://repo.manticoresearch.com/manticore-repo.noarch.rpm && yum install manticore`
+```bash
+sed -i 's/^SELINUX=.*/SELINUX=disabled/g' /etc/selinux/config
+reboot
+```
+- Перевести на Stream
+```bash
+dnf install centos-release-stream
+dnf swap centos-{linux,stream}-repos
+dnf distro-sync
+reboot
+```
+- Установить дополнительные репозитории `powertools`, `epel`, `remi`, `nginx`, `mysql`, `manticore`
+```bash
+dnf install dnf-plugins-core
+dnf config-manager --set-enabled powertools
+dnf install epel-release
+dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+dnf config-manager --set-enabled remi
+# https://nginx.org/ru/linux_packages.html#RHEL-CentOS
+dnf install https://dev.mysql.com/get/mysql80-community-release-el8-1.noarch.rpm
+dnf install https://repo.manticoresearch.com/manticore-repo.noarch.rpm
+```
+- Установить MySQL 8.0
+```bash
+dnf remove @mysql
+dnf module reset mysql
+dnf module disable mysql
+dnf config-manager --disable mysql57-community
+dnf config-manager --enable mysql80-community
+dnf install mysql-community-server
+systemctl enable --now mysqld.service
+grep 'A temporary password' /var/log/mysqld.log |tail -1
+mysql_secure_installation
+```
+- Установить Nginx
+```bash
+dnf config-manager --set-enabled nginx-mainline
+dnf config-manager --set-enabled nginx-stable
+dnf install nginx
+firewall-cmd --permanent --add-service=http
+firewall-cmd --permanent --add-service=https
+firewall-cmd --reload
+systemctl enable nginx
+```
+- Установить php 8.0
+```bash
+dnf module reset php
+dnf module install php:remi-8.0
+dnf config-manager --set-enabled remi
+dnf install php-fpm php-cli php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-pecl-apcu php-pecl-zip php-process php-xml php-sodium
+systemctl enable php-fpm
+```
+- Установить cron
+```bash
+dnf install crontabs
+systemctl enable crond
+```
+- Установить manticore
+```bash
+dnf config-manager --set-enabled manticore
+dnf install manticore
+systemctl enable manticore.service
+```
 
 
-### Установка крон заданий:
+### Установка cron заданий:
 ##### Каждый день в 1 час ночи от пользователя php-fpm
 `php /var/www/wapinet/bin/console app:tmp-clear "1 day"`    
 `php /var/www/wapinet/bin/console app:tags-clear`
@@ -41,12 +98,7 @@
 `public/static/file`  
 
 
-### Установка p7zip:
-```bash
-yum install p7zip p7zip-plugins
-```
-
-##### Если версия в репозитории слишком старая или нет поддержки rar (RHEL), то ставим из исходников
+##### Установка p7zip
 ```bash
 cd /root
 mkdir p7zip_17.04_sources
@@ -63,13 +115,11 @@ make all3
 
 
 ### Установка FFmpeg:
-Добавить репозиторий с актуальной версией nasm: https://www.nasm.us/nasm.repo
-
 Делаем все как указано по ссылке [https://trac.ffmpeg.org/wiki/CompilationGuide/Centos](https://trac.ffmpeg.org/wiki/CompilationGuide/Centos).  
 Дополнительно ставим `theora`, `amr`. Не забываем указать в конфиге `--prefix="$build_directory"`, а для `theora` еще и `--with-ogg="$HOME/ffmpeg_build" --disable-shared`.
 В конце проверить что на всех директориях выше и самих бинарниках есть права на выполнение.
 ```bash
-yum install autoconf automake bzip2 bzip2-devel cmake freetype-devel gcc gcc-c++ git libtool make nasm yasm pkgconfig zlib-devel
+dnf install autoconf automake bzip2 bzip2-devel cmake freetype-devel gcc gcc-c++ git libtool make nasm yasm pkgconfig zlib-devel
 
 build_directory="/root/ffmpeg_2021-01-30_build"
 source_directory="/root/ffmpeg_2021-01-30_source"
@@ -140,7 +190,7 @@ make distclean
 cd $source_directory
 git clone https://chromium.googlesource.com/webm/libvpx.git 
 cd libvpx
-git checkout tags/v1.9.0
+git checkout tags/v1.10.0
 ./configure --prefix="$build_directory" --disable-examples --disable-unit-tests --enable-vp9-highbitdepth --as=yasm
 make
 make install
@@ -159,7 +209,7 @@ make clean
 make distclean
 
 cd $source_directory
-git clone --depth 1 --branch release/4.3 https://github.com/FFmpeg/FFmpeg.git
+git clone --depth 1 --branch release/4.4 https://github.com/FFmpeg/FFmpeg.git
 cd FFmpeg
 PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure \
     --prefix="$build_directory" \
