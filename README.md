@@ -32,20 +32,19 @@ reboot
 dnf install dnf-plugins-core
 dnf config-manager --set-enabled powertools
 dnf install epel-release
-dnf upgrade
 dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm
 dnf config-manager --set-enabled remi
 # https://nginx.org/ru/linux_packages.html#RHEL-CentOS
 dnf install https://dev.mysql.com/get/mysql80-community-release-el8-1.noarch.rpm
 dnf install https://repo.manticoresearch.com/manticore-repo.noarch.rpm
+dnf upgrade
 ```
 - Установить MySQL 8.0
 ```bash
 dnf remove @mysql
 dnf module reset mysql
 dnf module disable mysql
-dnf config-manager --disable mysql57-community
-dnf config-manager --enable mysql80-community
+dnf config-manager --set-enabled mysql80-community
 dnf install mysql-community-server
 systemctl enable --now mysqld.service
 grep 'A temporary password' /var/log/mysqld.log |tail -1
@@ -53,7 +52,7 @@ mysql_secure_installation
 ```
 - Установить Nginx
 ```bash
-dnf config-manager --set-enabled nginx-mainline
+dnf config-manager --set-disabled nginx-mainline
 dnf config-manager --set-enabled nginx-stable
 dnf install nginx
 firewall-cmd --permanent --add-service=http
@@ -65,7 +64,6 @@ systemctl enable nginx
 ```bash
 dnf module reset php
 dnf module install php:remi-8.0
-dnf config-manager --set-enabled remi
 dnf install php-fpm php-cli php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-pecl-apcu php-pecl-zip php-process php-xml php-sodium
 systemctl enable php-fpm
 ```
@@ -78,8 +76,14 @@ systemctl enable crond
 ```bash
 dnf config-manager --set-enabled manticore
 dnf install manticore
-systemctl enable manticore.service
 ```
+
+
+#### Временная зона
+```bash
+timedatectl set-timezone Europe/Moscow
+```
+
 
 
 ### Установка cron заданий:
