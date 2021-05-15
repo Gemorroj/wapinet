@@ -262,6 +262,17 @@ cp .env.dist .env
 `indexer --rotate --all`
 
 
+### СУБД
+```bash
+mysql -u root -p
+CREATE USER 'wapinet'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL ON wapinet.* TO 'wapinet'@'localhost';
+GRANT SELECT ON forum.* TO 'wapinet'@'localhost';
+quit
+mysql -u wapinet -p wapinet < wapinet.sql
+```
+
+
 ### SSL сертификаты
 ##### Установка
 ```bash
@@ -270,6 +281,9 @@ curl https://get.acme.sh | sh -s email=wapinet@mail.ru
 systemctl nginx stop
 acme.sh --issue --standalone -d wapinet.ru
 systemctl nginx start
+
+# remove all jobs
+crontab -r
 ```
 ##### Обновление
 ```bash
