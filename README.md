@@ -79,11 +79,11 @@ dnf install manticore
 ```
 
 
-#### Временная зона
+#### Дополнительные настройки
 ```bash
 timedatectl set-timezone Europe/Moscow
+dnf install git htop mc
 ```
-
 
 
 ### Установка cron заданий:
