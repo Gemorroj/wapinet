@@ -82,7 +82,7 @@ dnf install manticore
 #### Дополнительные настройки
 ```bash
 timedatectl set-timezone Europe/Moscow
-dnf install git htop mc
+dnf install git htop mc tar unzip
 ```
 
 
@@ -107,18 +107,19 @@ dnf install git htop mc
 
 ##### Установка p7zip
 ```bash
-cd /root
+dnf install make gcc gcc-c++
+cd /opt
 mkdir p7zip_17.04_sources
 mkdir p7zip_17.04_build
-cd /root/p7zip_17.04_sources
-wget https://github.com/jinfeihan57/p7zip/archive/v17.04.tar.gz
+cd /opt/p7zip_17.04_sources
+curl -O -L https://github.com/jinfeihan57/p7zip/archive/v17.04.tar.gz
 tar xzvf v17.04.tar.gz
 cd p7zip-17.04
 make all3
-# изменить в файле install.sh переменную DEST_HOME на /root/p7zip_17.04_build
+# изменить в файле install.sh переменную DEST_HOME на /opt/p7zip_17.04_build
 ./install.sh
 ```
-Проверить список поддерживаемых форматов можно так `7z i` или `7za i` 
+Проверить список поддерживаемых форматов можно так `/opt/p7zip_17.04_build/bin/7z i` или `/opt/p7zip_17.04_build/bin/7za i` 
 
 
 ### Установка FFmpeg:
@@ -126,10 +127,12 @@ make all3
 Дополнительно ставим `theora`, `amr`. Не забываем указать в конфиге `--prefix="$build_directory"`, а для `theora` еще и `--with-ogg="$HOME/ffmpeg_build" --disable-shared`.
 В конце проверить что на всех директориях выше и самих бинарниках есть права на выполнение.
 ```bash
-dnf install autoconf automake bzip2 bzip2-devel cmake freetype-devel gcc gcc-c++ git libtool make nasm yasm pkgconfig zlib-devel
+dnf install autoconf automake bzip2 bzip2-devel cmake freetype-devel gcc gcc-c++ libtool make nasm yasm pkgconfig zlib-devel
 
-build_directory="/root/ffmpeg_2021-01-30_build"
-source_directory="/root/ffmpeg_2021-01-30_source"
+mkdir /opt/ffmpeg_2021-05-15_build
+mkdir /opt/ffmpeg_2021-05-15_source
+build_directory="/opt/ffmpeg_2021-05-15_build"
+source_directory="/opt/ffmpeg_2021-05-15_source"
 PATH="$build_directory/bin:$PATH"
 
 cd $source_directory
