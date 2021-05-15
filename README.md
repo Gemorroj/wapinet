@@ -20,6 +20,7 @@ reboot
 ```
 - Перевести на Stream
 ```bash
+dnf upgrade
 dnf install centos-release-stream
 dnf swap centos-{linux,stream}-repos
 dnf distro-sync
@@ -31,6 +32,7 @@ reboot
 dnf install dnf-plugins-core
 dnf config-manager --set-enabled powertools
 dnf install epel-release
+dnf upgrade
 dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm
 dnf config-manager --set-enabled remi
 # https://nginx.org/ru/linux_packages.html#RHEL-CentOS
