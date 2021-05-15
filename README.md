@@ -23,6 +23,7 @@ reboot
 dnf install centos-release-stream
 dnf swap centos-{linux,stream}-repos
 dnf distro-sync
+dnf autoremove
 reboot
 ```
 - Установить дополнительные репозитории `powertools`, `epel`, `remi`, `nginx`, `mysql`, `manticore`
