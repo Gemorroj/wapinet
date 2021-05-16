@@ -64,10 +64,10 @@ class Video extends AbstractExtension
                 $media->save($format, $this->getPublicDir().$mp4File);
 
                 if (!\is_file($this->getPublicDir().$mp4File)) {
-                    throw new \RuntimeException('Не удалось создать MP4 файл');
+                    throw new \RuntimeException('Не удалось создать MP4 файл. '.$path);
                 }
             } catch (Exception $e) {
-                $this->logger->warning('Ошибка при конвертировании видео в MP4.', [$e]);
+                $this->logger->warning('Ошибка при конвертировании видео в MP4. '.$path, [$e]);
 
                 return null;
             }
@@ -127,10 +127,12 @@ class Video extends AbstractExtension
                         throw new \RuntimeException('Не удалось создать скриншот');
                     }
                 } else {
-                    throw new \RuntimeException('Не найден видео поток');
+                    $this->logger->notice('Не найден видео поток. '.$path);
+
+                    return null;
                 }
             } catch (Exception $e) {
-                $this->logger->warning('Ошибка при создании скриншота видео.', [$e]);
+                $this->logger->warning('Ошибка при создании скриншота видео. '.$path, [$e]);
 
                 return null;
             }

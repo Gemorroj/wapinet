@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class EmailType extends AbstractType
 {
@@ -32,6 +33,7 @@ class EmailType extends AbstractType
         parent::buildForm($builder, $options);
 
         $request = $this->requestStack->getCurrentRequest();
+        $fromMessage = 'Укажите username без @. Адрес отправки будет вида username@'.($request ? $request->getHost() : 'localhost');
 
         $builder->add('to', CoreEmailType::class, [
             'label' => 'Кому',
@@ -45,7 +47,10 @@ class EmailType extends AbstractType
             'attr' => [
                 'placeholder' => 'username',
                 'pattern' => '^(?!.*@).*',
-                'title' => 'Укажите username без @. Адрес отправки будет вида username@'.($request ? $request->getHost() : 'localhost'),
+                'title' => $fromMessage,
+            ],
+            'constraints' => [
+                new Regex('/^(?!.*@).*/', $fromMessage),
             ],
         ]);
         $builder->add('subject', TextType::class, [
