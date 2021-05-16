@@ -331,7 +331,7 @@ server {
     }
 
     ssl on;
-    ssl_protocols TLSv1.1 TLSv1.2;
+    ssl_protocols TLSv1.2 TLSv1.3;
     ssl_certificate /path_to_fullchain.pem;
     ssl_certificate_key /path_to_key.pem;
     ssl_trusted_certificate /path_to_chain.pem;
