@@ -83,6 +83,7 @@ dnf install manticore
 ```bash
 timedatectl set-timezone Europe/Moscow
 dnf install git htop mc tar unzip
+# /etc/ssh/sshd_config change Port
 ```
 
 
