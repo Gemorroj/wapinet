@@ -258,6 +258,9 @@ git clone https://github.com/Gemorroj/wapinet.git
 cd wapinet
 cp .env.dist .env
 ../composer.phar install --no-dev --optimize-autoloader --apcu-autoloader
+rm -rf /var/www/wapinet/var/cache/*
+rm -rf /var/www/wapinet/var/log/*
+rm -rf /var/www/wapinet/var/tmp/*
 ```
 
 
