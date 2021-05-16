@@ -12,6 +12,7 @@ parameters:
     wapinet_ffprobe_path: '%env(FFPROBE_PATH)%'
     wapinet_max_download_filesize: 50000000 # 50 mb
     wapinet_yandex_search_key: '%env(YANDEX_SEARCH_KEY)%'
+    wapinet_yandex_search_user: '%env(YANDEX_SEARCH_USER)%'
     wapinet_threads_count: 3
     wapinet_geoip2_country_path: '%env(GEOIP2_COUNTRY_PATH)%'
     wapinet_forum_url: 'https://forum.wapinet.ru'

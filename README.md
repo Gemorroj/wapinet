@@ -127,10 +127,28 @@ cd $source_directory
 git clone --depth 1 --branch stable https://bitbucket.org/multicoreware/x265_git.git
 cd x265_git
 cd build/linux
-cmake --pkg-config-flags="--static" -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$build_directory" -DENABLE_SHARED=OFF ../../source
+cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$build_directory" -DENABLE_SHARED=OFF ../../source
 make
 make install
 make clean
+
+####
+# create by hand the fucking pc file
+# /opt/ffmpeg_2021-05-15_build/lib/pkgconfig/x265.pc
+#
+# prefix=/opt/ffmpeg_2021-05-15_build
+# exec_prefix=${prefix}
+# libdir=${exec_prefix}/lib
+# includedir=${prefix}/include
+#
+# Name: x265
+# Description: H.265/HEVC video encoder
+# Version: 3.5
+# Libs: -L${libdir} -lx265
+# Libs.private: -lstdc++ -lm -lrt -ldl
+# Cflags: -I${includedir}
+###
+
 
 cd $source_directory
 curl -O -L https://archive.mozilla.org/pub/opus/opus-1.3.1.tar.gz

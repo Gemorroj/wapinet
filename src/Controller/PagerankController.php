@@ -71,7 +71,7 @@ class PagerankController extends AbstractController
     {
         /** @var Curl $curl */
         $curl = $this->get(Curl::class);
-        $curl->init('https://yandex.ru/search/xml?user=gemorwapinet&key='.$this->getParameter('wapinet_yandex_search_key'));
+        $curl->init('https://yandex.ru/search/xml?user='.$this->getParameter('wapinet_yandex_search_user').'&key='.$this->getParameter('wapinet_yandex_search_key'));
         $curl->setOpt(CURLOPT_POST, true);
         $curl->setOpt(CURLOPT_POSTFIELDS, '<?xml version="1.0" encoding="UTF-8"?><request><query>'.\htmlspecialchars($domain, ENT_XML1).'</query><groupings><groupby groups-on-page="1"/></groupings></request>');
 

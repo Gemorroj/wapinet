@@ -124,6 +124,21 @@ const Templating = {
 };
 
 const Vk = {
+    /*
+{
+    "response": [
+        {
+            "first_name": "Lindsey",
+            "id": 210700286,
+            "last_name": "Stirling",
+            "can_access_closed": true,
+            "is_closed": false,
+            "online": 0,
+            "photo_200_orig": "https://example.com"
+        }
+    ]
+}
+     */
     data: null,
     show: function (data) {
         if (data && (data.response || data.error)) {
@@ -152,7 +167,15 @@ const Vk = {
 
         if (Vk.data.response && Vk.data.response[0]) {
             let user = Vk.data.response[0];
-            return '<a rel="external" href="https://vk.com/id' + user.id + '"><img src="' + user.photo_200_orig + '" /></a><br/><span>' + user.first_name + ' ' + user.last_name + '</span><br/>' + (user.online ? '<span class="green">Онлайн</span>' : '<span class="gray">Офлайн</span>');
+
+            let str = `
+                <a rel="external" href="https://vk.com/id${user.id}">
+                    <img src="${user.photo_200_orig}" />
+                </a><br />
+                <span>${user.first_name} ${user.last_name}</span><br />
+            `;
+
+            return str + (user.online ? '<span class="green">Онлайн</span>' : '<span class="gray">Офлайн</span>');
         }
 
         return 'No data';
@@ -269,7 +292,7 @@ $document.one("pagecreate", "#wapinet_user_profile", function () {
 
     if (vkId) {
         $.post(Routing.generate('vk_api_get', {"method": "users.get"}), {
-            'v': '5.74',
+            'v': '5.130',
             'fields': 'online,photo_200_orig',
             'user_ids': vkId
         }, Vk.show, 'json');
