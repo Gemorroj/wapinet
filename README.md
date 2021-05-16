@@ -330,7 +330,6 @@ server {
         deny all;
     }
 
-    ssl on;
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_certificate /path_to_fullchain.pem;
     ssl_certificate_key /path_to_key.pem;
