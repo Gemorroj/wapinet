@@ -24,8 +24,6 @@
         <env name="APP_SECRET" value="1234"/>
         <!-- ###- symfony/framework-bundle ### -->
 
-        <env name="YANDEX_SEARCH_KEY" value="null"/>
-
         <env name="FFMPEG_PATH" value="/usr/bin/ffmpeg"/>
         <env name="FFPROBE_PATH" value="/usr/bin/ffprobe"/>
         <env name="GEOIP2_COUNTRY_PATH" value="/GeoLite2-Country.mmdb"/>

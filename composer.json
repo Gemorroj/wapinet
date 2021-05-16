@@ -67,7 +67,6 @@
         "tufanbarisyildirim/php-apk-parser": "^2.0.2",
         "geoip2/geoip2": "^2.11",
         "christeredvartsen/php-bittorrent": "^2.0",
-        "seostats/seostats": "dev-master",
         "foolz/sphinxql-query-builder": "^3.0",
         "php-ffmpeg/php-ffmpeg": "^0.18",
         "riverline/multipart-parser": "^2.0",
