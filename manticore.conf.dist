@@ -12,6 +12,7 @@ searchd
         query_log = /var/log/manticore/query.log
         network_timeout = 5
         pid_file = /run/manticore/searchd.pid
+        # data_dir = /var/lib/manticore
 }
 
 source config

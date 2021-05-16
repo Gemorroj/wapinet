@@ -76,6 +76,9 @@ systemctl enable crond
 ```bash
 dnf config-manager --set-enabled manticore
 dnf install manticore
+### fix the manticore
+echo 'export MYSQL_LIB=/usr/lib64/mysql/libmysqlclient.so.21' > /etc/profile.d/mysql-manticore.csh
+systemctl enable manticore
 ```
 
 
