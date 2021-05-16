@@ -83,7 +83,11 @@ dnf install manticore
 ```bash
 timedatectl set-timezone Europe/Moscow
 dnf install git htop mc tar unzip
-# /etc/ssh/sshd_config change Port
+# /etc/ssh/sshd_config change Port to 2222
+firewall-cmd --permanent --remove-service=ssh
+firewall-cmd --permanent --add-port=2222/tcp
+firewall-cmd --reload
+systemctl restart sshd
 ```
 
 
@@ -300,9 +304,9 @@ mysql -u wapinet -p wapinet < wapinet.sql
 ```bash
 dnf install socat
 curl https://get.acme.sh | sh -s email=wapinet@mail.ru
-systemctl nginx stop
+systemctl stop nginx
 acme.sh --issue --standalone -d wapinet.ru
-systemctl nginx start
+systemctl start nginx
 
 # remove all jobs
 crontab -r
