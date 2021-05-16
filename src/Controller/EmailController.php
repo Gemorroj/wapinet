@@ -33,7 +33,7 @@ class EmailController extends AbstractController
                 if ($form->isValid()) {
                     $data = $form->getData();
 
-                    $message = $this->makeEmail($data);
+                    $message = $this->makeEmail($data, $request->getHost());
                     $message->getHeaders()->addTextHeader(
                         'Received',
                         'from user ['.\implode(', ', $request->getClientIps()).']'
@@ -59,10 +59,10 @@ class EmailController extends AbstractController
         return "\r\n\r\n---\r\n".$this->getParameter('wapinet_email_footer');
     }
 
-    private function makeEmail(array $data): Email
+    private function makeEmail(array $data, string $host): Email
     {
         $email = (new Email())
-            ->from($data['from'])
+            ->from($data['from'].'@'.$host)
             ->to($data['to'])
             ->subject($data['subject'])
             ->text($data['message'].$this->getEmailFooter());
