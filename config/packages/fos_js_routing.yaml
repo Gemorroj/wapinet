@@ -1,8 +1,8 @@
 fos_js_routing:
     cache_control:
         # All are optional, defaults shown
-        public: true   # can be true (public) or false (private)
-        maxage: null    # integer value, e.g. 300
-        smaxage: null   # integer value, e.g. 300
-        expires: '15 minutes'   # anything that can be fed to "new \DateTime($expires)", e.g. "5 minutes"
-        vary: [ 'Accept-Encoding', 'Cookie' ]        # string or array, e.g. "Cookie" or [ Cookie, Accept ]
+        #public: true   # can be true (public) or false (private)
+        maxage: 3600    # integer value, e.g. 300
+        #smaxage: null   # integer value, e.g. 300
+        #expires: '15 minutes'   # anything that can be fed to "new \DateTime($expires)", e.g. "5 minutes"
+        #vary: [ 'Accept-Encoding', 'Cookie' ]        # string or array, e.g. "Cookie" or [ Cookie, Accept ]
