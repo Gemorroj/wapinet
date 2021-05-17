@@ -66,8 +66,10 @@
                         <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('comment') }}</div></div>
                     {% endif %}
                 {% elseif file.isVideo %}
-                    <div class="ui-block-a"><div class="ui-body">Разрешение</div></div>
-                    <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('width') }}x{{ file.meta.get('height') }}</div></div>
+                    {% if file.meta.has('width') or file.meta.get('height') %}
+                        <div class="ui-block-a"><div class="ui-body">Разрешение</div></div>
+                        <div class="ui-block-b"><div class="ui-body">{{ file.meta.get('width') }}x{{ file.meta.get('height') }}</div></div>
+                    {% endif %}
 
                     {% if file.meta.has('duration') %}
                         <div class="ui-block-a"><div class="ui-body">Время</div></div>

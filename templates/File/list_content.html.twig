@@ -12,7 +12,16 @@
                         <img src="{{ screenshot|imagine_filter('thumbnail') }}" alt="{{ file.originalFileName }}" />
                     {% endif %}
                     <h2>{{ file.originalFileName }}</h2>
-                    <p>{{ file.fileSize|wapinet_size }}{% if file.meta is not null %}, {{ file.meta.get('width') }}x{{ file.meta.get('height') }}{{ file.meta.has('duration') ? ', ' ~ file.meta.get('duration')|wapinet_length : '' }}{% endif %}</p>
+                    {% set hasVideoStream = file.meta and (file.meta.has('width') or file.meta.has('height') or file.meta.has('duration')) %}
+                    <p>
+                        {{ file.fileSize|wapinet_size }}
+                        {%- if hasVideoStream %},
+                            {% if file.meta.has('width') or file.meta.has('height') %}
+                                {{ file.meta.get('width') }}x{{ file.meta.get('height') }}
+                            {%- endif -%}
+                            {{ file.meta.has('duration') ? ', ' ~ file.meta.get('duration')|wapinet_length : '' }}
+                        {% endif %}
+                    </p>
                 {% elseif file.isAudio %}
                     <h2>{{ file.originalFileName }}</h2>
                     <p>{{ file.fileSize|wapinet_size }}{% if file.meta is not null %}{{ file.meta.has('duration') ? ', ' ~ file.meta.get('duration')|wapinet_length : '' }}{% endif %}</p>
