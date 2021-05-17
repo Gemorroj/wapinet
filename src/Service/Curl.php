@@ -19,6 +19,7 @@ use const CURLOPT_SSL_VERIFYPEER;
 use const CURLOPT_URL;
 use LengthException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\LengthRequiredHttpException;
 
@@ -138,7 +139,7 @@ class Curl
             throw new LengthRequiredHttpException('Не удалось определить размер файла');
         }
 
-        $maxLength = $this->parameterBag->get('wapinet_max_download_filesize');
+        $maxLength = UploadedFile::getMaxFilesize();
         if ($length > $maxLength) {
             throw new LengthException('Размер файла превышает максимально допустимый');
         }

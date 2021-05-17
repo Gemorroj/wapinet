@@ -43,7 +43,7 @@ class EmailType extends AbstractType
                 'placeholder' => 'email@example.com',
             ],
             'constraints' => [
-                new Email(),
+                new Email(['mode' => Email::VALIDATION_MODE_HTML5]),
             ],
         ]);
         $builder->add('from', TextType::class, [

@@ -291,7 +291,7 @@ $document.one("pagecreate", "#wapinet_user_profile", function () {
     let vkId = $(":mobile-pagecontainer").find("#user-vk").data("id");
 
     if (vkId) {
-        $.post(Routing.generate('vk_api_get', {"method": "users.get"}), {
+        $.post(Routing.generate('vk_api_users_get'), {
             'v': '5.130',
             'fields': 'online,photo_200_orig',
             'user_ids': vkId

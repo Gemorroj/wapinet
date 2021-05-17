@@ -10,11 +10,10 @@ parameters:
     wapinet_robot_email: '%env(ROBOT_EMAIL)%'
     wapinet_ffmpeg_path: '%env(FFMPEG_PATH)%'
     wapinet_ffprobe_path: '%env(FFPROBE_PATH)%'
-    wapinet_max_download_filesize: 50000000 # 50 mb
     wapinet_threads_count: 3
     wapinet_geoip2_country_path: '%env(GEOIP2_COUNTRY_PATH)%'
     wapinet_forum_url: 'https://forum.wapinet.ru'
-    wapinet_forum_database_name: forum
+    wapinet_forum_database_name: '%env(FORUM_DATABASE_NAME)%'
     wapinet_role_nocaptcha: ROLE_USER
     wapinet_paginate_maxperpage: 10
     wapinet_user_last_activity_delay: 60

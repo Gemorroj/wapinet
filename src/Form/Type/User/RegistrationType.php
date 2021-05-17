@@ -22,7 +22,7 @@ class RegistrationType extends AbstractType
                 'label' => 'Email',
                 'required' => true,
                 'constraints' => [
-                    new Email(),
+                    new Email(['mode' => Email::VALIDATION_MODE_HTML5]),
                 ],
             ])
             ->add('username', TextType::class, [

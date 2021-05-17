@@ -15,16 +15,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class VkApiController extends AbstractController
 {
     /**
-     * @Route("/get/{method}", name="vk_api_get", defaults={"_format": "json"}, methods={"POST"}, requirements={"method": ".+"}, options={"expose": true})
+     * @Route("/get/{method}", name="vk_api_users_get", defaults={"_format": "json"}, methods={"POST"}, options={"expose": true})
      */
-    public function getAction(Request $request, string $method, Curl $curl): JsonResponse
+    public function getUsersAction(Request $request, Curl $curl): JsonResponse
     {
         $params = $request->request->all();
         $params['access_token'] = $this->getParameter('wapinet_vk_access_token');
 
         $query = \http_build_query($params);
 
-        $curl->init('https://api.vk.com/method/'.$method.'?'.$query);
+        $curl->init('https://api.vk.com/method/users.get?'.$query);
         $curl->addCompression();
 
         $response = $curl->exec();

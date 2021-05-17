@@ -36,12 +36,16 @@ class Forum extends AbstractExtension
 
     public function getTopicsCount(): ?int
     {
+        $database = $this->parameterBag->get('wapinet_forum_database_name');
+        if (!$database) {
+            return null;
+        }
+
         try {
-            $database = $this->parameterBag->get('wapinet_forum_database_name');
             $query = $this->em->getConnection()->executeQuery("SELECT COUNT(1) FROM `{$database}`.`topics`");
             $query->execute();
 
-            return $query->fetchColumn(0);
+            return $query->fetchOne();
         } catch (\Throwable $e) {
             $this->logger->warning('Can\'t execute query', ['exception' => $e]);
 
@@ -51,12 +55,16 @@ class Forum extends AbstractExtension
 
     public function getPostsCount(): ?int
     {
+        $database = $this->parameterBag->get('wapinet_forum_database_name');
+        if (!$database) {
+            return null;
+        }
+
         try {
-            $database = $this->parameterBag->get('wapinet_forum_database_name');
             $query = $this->em->getConnection()->executeQuery("SELECT COUNT(1) FROM `{$database}`.`posts`");
             $query->execute();
 
-            return $query->fetchColumn(0);
+            return $query->fetchOne();
         } catch (\Throwable $e) {
             $this->logger->warning('Can\'t execute query', ['exception' => $e]);
 
