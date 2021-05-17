@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Form\Type\Email\EmailType;
-use Exception;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -21,7 +21,7 @@ class EmailController extends AbstractController
     /**
      * @Route("", name="email_index")
      */
-    public function indexAction(Request $request, MailerInterface $mailer): Response
+    public function indexAction(Request $request, MailerInterface $mailer, LoggerInterface $logger): Response
     {
         $result = null;
         $form = $this->createForm(EmailType::class);
@@ -43,7 +43,11 @@ class EmailController extends AbstractController
                     $result = true;
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
+            $logger->warning('Не удалось отправить email', [
+                'exception' => $e,
+                'email' => $message ?? null,
+            ]);
             $result = false;
             $form->addError(new FormError($e->getMessage()));
         }
