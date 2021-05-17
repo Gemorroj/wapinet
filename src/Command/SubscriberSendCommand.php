@@ -56,20 +56,19 @@ class SubscriberSendCommand extends Command
 
         $this->entityManager->beginTransaction();
         $q = $this->entityManager->createQuery('UPDATE App\Entity\Event e SET e.needEmail = 0 WHERE e.id = :id');
-        /** @var Event $row */
+
         foreach ($rows as $row) {
-            if ($this->sendEmail($row)) {
-                $q->execute(['id' => $row->getId()]);
-            }
+            $this->sendEmail($row);
+            $q->execute(['id' => $row->getId()]);
         }
         $this->entityManager->commit();
 
-        $output->writeln('All Emails sended.');
+        $output->writeln('All Emails sent.');
 
         return 0;
     }
 
-    protected function sendEmail(Event $event): bool
+    protected function sendEmail(Event $event): void
     {
         try {
             $siteTitle = $this->parameterBag->get('wapinet_title');
@@ -87,18 +86,14 @@ class SubscriberSendCommand extends Command
             ;
 
             $this->mailer->send($email);
-
-            return true;
         } catch (TransportExceptionInterface $e) {
-            $this->logger->warning($e->getMessage(), [$e]);
+            $this->logger->warning('Не удалось отправить email по подписке', ['exception' => $e]);
 
             $event->getUser()->getSubscriber()->setEmailNews(false);
             $event->getUser()->getSubscriber()->setEmailFriends(false);
             $this->entityManager->persist($event->getUser()->getSubscriber());
         } catch (\Exception $e) {
-            $this->logger->critical($e->getMessage(), [$e]);
+            $this->logger->critical('Не удалось отправить email по подписке', ['exception' => $e]);
         }
-
-        return false;
     }
 }
