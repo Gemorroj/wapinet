@@ -47,6 +47,7 @@ class EmailController extends AbstractController
             $logger->warning('Не удалось отправить email', [
                 'exception' => $e,
                 'email' => $message ?? null,
+                'request' => $request,
             ]);
             $result = false;
             $form->addError(new FormError($e->getMessage()));
