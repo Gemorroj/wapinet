@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Regex;
 
 class EmailType extends AbstractType
@@ -40,6 +41,9 @@ class EmailType extends AbstractType
             'data' => '@',
             'attr' => [
                 'placeholder' => 'email@example.com',
+            ],
+            'constraints' => [
+                new Email(),
             ],
         ]);
         $builder->add('from', TextType::class, [
