@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class VkApiController extends AbstractController
 {
     /**
-     * @Route("/get/{method}", name="vk_api_users_get", defaults={"_format": "json"}, methods={"POST"}, options={"expose": true})
+     * @Route("/users", name="vk_api_users_get", defaults={"_format": "json"}, methods={"POST"}, options={"expose": true})
      */
     public function getUsersAction(Request $request, Curl $curl): JsonResponse
     {
