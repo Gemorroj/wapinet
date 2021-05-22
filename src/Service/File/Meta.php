@@ -7,7 +7,6 @@ use App\Entity\File\Meta as FileMeta;
 use App\Service\Apk as ApkHelper;
 use App\Service\Ffmpeg as FfmpegHelper;
 use App\Service\Torrent as TorrentHelper;
-use DateTime;
 use Imagine\Image\AbstractImagine;
 
 /**
@@ -239,7 +238,7 @@ class Meta
             $this->fileMeta->set('name', $data['info']['name']);
         }
         if (isset($data['creation date'])) {
-            $this->fileMeta->set('datetime', new DateTime('@'.$data['creation date']));
+            $this->fileMeta->set('datetime', new \DateTime('@'.$data['creation date']));
         }
         if (isset($data['comment'])) {
             $this->fileMeta->set('comment', $data['comment']);

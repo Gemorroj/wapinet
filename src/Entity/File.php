@@ -932,6 +932,11 @@ class File
         return 'application/x-bittorrent' === $this->getMimeType();
     }
 
+    public function isMidi(): bool
+    {
+        return 'audio/midi' === $this->getMimeType() || 'audio/x-midi' === $this->getMimeType();
+    }
+
     public function isPlaylist(): bool
     {
         return \in_array($this->getMimeType(), [
