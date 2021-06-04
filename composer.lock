@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8214a90bb2109a4baadab28eadb22248",
+    "content-hash": "62c6b2f7ed0e4771e7d9a67f527b596d",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -9588,16 +9588,16 @@
         },
         {
             "name": "vich/uploader-bundle",
-            "version": "1.17.1",
+            "version": "1.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dustin10/VichUploaderBundle.git",
-                "reference": "94ba188f2603fad9bf9d2a88c61444f5e52a11df"
+                "reference": "c5250c8d6a072960250ce5130e68a5693b3b48dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dustin10/VichUploaderBundle/zipball/94ba188f2603fad9bf9d2a88c61444f5e52a11df",
-                "reference": "94ba188f2603fad9bf9d2a88c61444f5e52a11df",
+                "url": "https://api.github.com/repos/dustin10/VichUploaderBundle/zipball/c5250c8d6a072960250ce5130e68a5693b3b48dd",
+                "reference": "c5250c8d6a072960250ce5130e68a5693b3b48dd",
                 "shasum": ""
             },
             "require": {
@@ -9608,7 +9608,6 @@
                 "symfony/console": "^4.4 || ^5.0",
                 "symfony/dependency-injection": "^4.4 || ^5.0",
                 "symfony/event-dispatcher-contracts": "^1.1 || ^2.0",
-                "symfony/form": "^4.4 || ^5.0",
                 "symfony/http-foundation": "^4.4 || ^5.0",
                 "symfony/http-kernel": "^4.4 || ^5.0",
                 "symfony/mime": "^4.4 || ^5.0",
@@ -9635,6 +9634,7 @@
                 "symfony/css-selector": "^4.4 || ^5.0",
                 "symfony/doctrine-bridge": "^4.4 || ^5.0",
                 "symfony/dom-crawler": "^4.4 || ^5.0",
+                "symfony/form": "^4.4 || ^5.0",
                 "symfony/framework-bundle": "^4.4 || ^5.0",
                 "symfony/phpunit-bridge": "^5.2",
                 "symfony/security-csrf": "^4.4 || ^5.0",
@@ -9656,6 +9656,7 @@
                 "ocramius/proxy-manager": "To use lazy services",
                 "oneup/flysystem-bundle": "For integration with Flysystem",
                 "symfony/asset": "To generate better links",
+                "symfony/form": "To handle uploads in forms",
                 "symfony/yaml": "To use YAML mapping"
             },
             "type": "symfony-bundle",
@@ -9687,9 +9688,9 @@
             ],
             "support": {
                 "issues": "https://github.com/dustin10/VichUploaderBundle/issues",
-                "source": "https://github.com/dustin10/VichUploaderBundle/tree/1.17.1"
+                "source": "https://github.com/dustin10/VichUploaderBundle/tree/1.18.0"
             },
-            "time": "2021-04-19T07:57:49+00:00"
+            "time": "2021-06-04T12:22:58+00:00"
         },
         {
             "name": "willdurand/jsonp-callback-validator",
