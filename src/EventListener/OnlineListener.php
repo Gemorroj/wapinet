@@ -20,7 +20,7 @@ class OnlineListener
 
     public function onCoreController(ControllerEvent $event): void
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 

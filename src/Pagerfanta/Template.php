@@ -6,17 +6,25 @@ use Pagerfanta\View\Template\DefaultTemplate;
 
 class Template extends DefaultTemplate
 {
-    protected static $defaultOptions = [
-        'prev_message' => 'Пред.',
-        'next_message' => 'След.',
-        'css_disabled_class' => '',
-        'css_dots_class' => '',
-        'css_current_class' => 'page-current',
-        'dots_text' => '...',
-        'container_template' => '<nav data-role="controlgroup" data-type="horizontal">%pages%</nav>',
-        'page_template' => '<a href="%href%" data-role="button">%text%</a>',
-        'span_template' => '<a href="#" class="ui-disabled %class%" data-role="button">%text%</a>',
-        'rel_previous' => 'prev',
-        'rel_next' => 'next',
-    ];
+    protected function getDefaultOptions(): array
+    {
+        return [
+            'prev_message' => 'Пред.',
+            'next_message' => 'След.',
+            'dots_message' => '...',
+            'active_suffix' => '',
+            'css_active_class' => 'page-current pagination__item--current-page',
+            'css_container_class' => 'pagination',
+            'css_disabled_class' => 'pagination__item--disabled',
+            'css_dots_class' => 'pagination__item--separator',
+            'css_item_class' => 'pagination__item',
+            'css_prev_class' => 'pagination__item--previous-page',
+            'css_next_class' => 'pagination__item--next-page',
+            'container_template' => '<nav data-role="controlgroup" data-type="horizontal">%%pages%%</nav>',
+            'rel_previous' => 'prev',
+            'rel_next' => 'next',
+            'page_template' => '<a href="%href%"%rel% data-role="button">%text%</a>',
+            'span_template' => '<a href="#" class="ui-disabled %class%" data-role="button">%text%</a>',
+        ];
+    }
 }

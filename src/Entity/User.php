@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\SelfSaltingEncoderInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -20,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class User implements UserInterface, EquatableInterface
+class User implements UserInterface, EquatableInterface, LegacyPasswordAuthenticatedUserInterface
 {
     public const LIFETIME = '5 minutes';
     public const SEX_MALE = 'm';
@@ -414,9 +415,9 @@ class User implements UserInterface, EquatableInterface
         return $this;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
-        return (string) $this->password;
+        return $this->password;
     }
 
     public function setPassword(string $password): self
@@ -458,6 +459,11 @@ class User implements UserInterface, EquatableInterface
     }
 
     public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function getUserIdentifier(): ?string
     {
         return $this->username;
     }

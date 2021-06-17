@@ -4,3 +4,7 @@ twig:
         wapinet_title: '%wapinet_title%'
         wapinet_contact_email: '%wapinet_contact_email%'
         wapinet_forum_url: '%wapinet_forum_url%'
+
+when@test:
+    twig:
+        strict_variables: true

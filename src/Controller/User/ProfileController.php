@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 
 /**
  * @Route("/user")
@@ -29,7 +29,9 @@ class ProfileController extends AbstractController
         if (null !== $username) {
             $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $username]);
             if (!$user instanceof User) {
-                throw new UsernameNotFoundException('Пользователь не найден.');
+                $e = new UserNotFoundException('Пользователь "'.$username.'" не найден.');
+                $e->setUserIdentifier($username);
+                throw $e;
             }
         } else {
             $user = $currentUser;

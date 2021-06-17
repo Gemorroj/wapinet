@@ -1,4 +1,7 @@
 security:
+    # https://symfony.com/doc/current/security/experimental_authenticators.html
+    enable_authenticator_manager: false
+
     encoders:
         App\Entity\User: sha512
         App\Entity\File: sha512
