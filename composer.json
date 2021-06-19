@@ -124,6 +124,7 @@
         "symfony/polyfill-iconv": "*",
         "symfony/polyfill-mbstring": "*",
         "symfony/polyfill-apcu": "*",
+        "symfony/polyfill-php80": "*",
         "symfony/polyfill-php74": "*",
         "symfony/polyfill-php73": "*",
         "symfony/polyfill-php72": "*",
