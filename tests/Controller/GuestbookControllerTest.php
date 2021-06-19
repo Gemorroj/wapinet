@@ -10,7 +10,7 @@ class GuestbookControllerTest extends WebTestCaseWapinet
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/guestbook/');
+        $crawler = $client->request('GET', '/guestbook');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

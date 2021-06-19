@@ -7,36 +7,21 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
-/**
- * File хэлпер
- */
 class File
 {
-    /**
-     * @var UploaderHelper
-     */
-    private $uploaderHelper;
-    /**
-     * @var EncoderFactoryInterface
-     */
-    private $encoderFactory;
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-    /**
-     * @var CacheManager
-     */
-    private $cacheManager;
+    private UploaderHelper $uploaderHelper;
+    private PasswordHasherFactoryInterface $passwordHasherFactory;
+    private Filesystem $filesystem;
+    private CacheManager $cacheManager;
 
-    public function __construct(UploaderHelper $uploaderHelper, CacheManager $cacheManager, EncoderFactoryInterface $encoderFactory, Filesystem $filesystem)
+    public function __construct(UploaderHelper $uploaderHelper, CacheManager $cacheManager, PasswordHasherFactoryInterface $passwordHasherFactory, Filesystem $filesystem)
     {
         $this->uploaderHelper = $uploaderHelper;
-        $this->encoderFactory = $encoderFactory;
+        $this->passwordHasherFactory = $passwordHasherFactory;
         $this->filesystem = $filesystem;
         $this->cacheManager = $cacheManager;
     }
@@ -81,16 +66,13 @@ class File
 
     public function setPassword(DataFile $file, string $password): void
     {
-        $file->setSaltValue();
-
-        $encoder = $this->encoderFactory->getEncoder($file);
-        $encodedPassword = $encoder->encodePassword($password, $file->getSalt());
-        $file->setPassword($encodedPassword);
+        $passwordHasher = $this->passwordHasherFactory->getPasswordHasher($file);
+        $hashedPassword = $passwordHasher->hash($password);
+        $file->setPassword($hashedPassword);
     }
 
     public function removePassword(DataFile $file): void
     {
-        $file->removeSalt();
         $file->setPassword(null);
         $file->setPlainPassword(null);
     }

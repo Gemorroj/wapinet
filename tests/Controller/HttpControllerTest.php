@@ -10,7 +10,7 @@ class HttpControllerTest extends WebTestCaseWapinet
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/http/');
+        $crawler = $client->request('GET', '/http');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

@@ -86,7 +86,6 @@ class GistController extends AbstractController
         }
 
         $form = $this->createForm(AddType::class);
-        $flashBag = $this->get('session')->getFlashBag();
 
         try {
             $form->handleRequest($request);
@@ -109,15 +108,15 @@ class GistController extends AbstractController
                         new GistEvent($user, $gist),
                         GistEvent::GIST_ADD
                     );
-                    $flashBag->add('notice', 'Сообщение успешно добавлено');
+                    $this->addFlash('notice', 'Сообщение успешно добавлено');
                 } else {
                     foreach ($form->getErrors(true) as $formError) {
-                        $flashBag->add('notice', $formError->getMessage());
+                        $this->addFlash('notice', $formError->getMessage());
                     }
                 }
             }
         } catch (Exception $e) {
-            $flashBag->add('notice', $e->getMessage());
+            $this->addFlash('notice', $e->getMessage());
         }
 
         return $this->redirectToRoute('gist_index');

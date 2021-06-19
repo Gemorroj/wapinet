@@ -10,7 +10,7 @@ class GistControllerTest extends WebTestCaseWapinet
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/gist/');
+        $crawler = $client->request('GET', '/gist');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

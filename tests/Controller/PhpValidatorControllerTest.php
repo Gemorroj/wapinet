@@ -10,7 +10,7 @@ class PhpValidatorControllerTest extends WebTestCaseWapinet
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/php_validator/');
+        $crawler = $client->request('GET', '/php_validator');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

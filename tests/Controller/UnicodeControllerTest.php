@@ -10,7 +10,7 @@ class UnicodeControllerTest extends WebTestCaseWapinet
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/unicode/');
+        $crawler = $client->request('GET', '/unicode');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

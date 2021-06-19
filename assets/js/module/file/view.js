@@ -34,6 +34,9 @@ const FileView = {
     },
     pageShow: function ($pageContainer) {
         let data = $pageContainer.find("a[download]").filter(":visible").data();
+        if (!data) {
+            return;
+        }
 
         if (data.video) {
             this.viewVideo($pageContainer, data);

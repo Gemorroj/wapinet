@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -18,7 +19,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="App\Repository\FileRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class File
+class File implements PasswordAuthenticatedUserInterface
 {
     /**
      * @var int
@@ -69,13 +70,6 @@ class File
      * @ORM\Column(name="count_views", type="integer", nullable=false)
      */
     private $countViews = 0;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="salt", type="string", nullable=true)
-     */
-    private $salt;
 
     /**
      * @var string|null
@@ -467,68 +461,24 @@ class File
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSalt()
-    {
-        return $this->salt;
-    }
-
-    /**
-     * @return File
-     */
-    public function removeSalt(): self
-    {
-        $this->salt = null;
-
-        return $this;
-    }
-
-    /**
-     * @return File
-     */
-    public function setSaltValue(): self
-    {
-        $this->salt = \base_convert(\sha1(\uniqid((string) \mt_rand(), true)), 16, 36);
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPlainPassword()
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
 
-    /**
-     * @param string|null $plainPassword
-     *
-     * @return File
-     */
-    public function setPlainPassword($plainPassword = null): self
+    public function setPlainPassword(?string $plainPassword = null): self
     {
         $this->plainPassword = $plainPassword;
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    /**
-     * @param string|null $password
-     *
-     * @return File
-     */
-    public function setPassword($password = null): self
+    public function setPassword(?string $password = null): self
     {
         $this->password = $password;
 

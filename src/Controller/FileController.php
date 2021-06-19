@@ -36,9 +36,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mime\MimeTypes;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Router;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 /**
  * @Route("/file")
@@ -275,10 +275,10 @@ class FileController extends AbstractController
     /**
      * @Route("/{id}", name="file_view", requirements={"id": "\d+"})
      */
-    public function viewAction(File $file, EncoderFactoryInterface $encoderFactory, Meta $fileMeta): Response
+    public function viewAction(File $file, PasswordHasherFactoryInterface $passwordHasherFactory, Meta $fileMeta): Response
     {
         if (null !== $file->getPassword() && !$this->isGranted('ROLE_ADMIN') && (!($this->getUser() instanceof User) || !($file->getUser() instanceof User) || !$file->getUser()->isEqualTo($this->getUser()))) {
-            return $this->passwordAction($file, $encoderFactory, $fileMeta);
+            return $this->passwordAction($file, $passwordHasherFactory, $fileMeta);
         }
 
         if ($file->isHidden()) {
@@ -329,9 +329,9 @@ class FileController extends AbstractController
         $file->setMeta($meta);
     }
 
-    public function passwordAction(File $file, EncoderFactoryInterface $encoderFactory, Meta $fileMeta): Response
+    public function passwordAction(File $file, PasswordHasherFactoryInterface $passwordHasherFactory, Meta $fileMeta): Response
     {
-        $encoder = $encoderFactory->getEncoder($file);
+        $passwordHasher = $passwordHasherFactory->getPasswordHasher($file);
         $form = $this->createForm(PasswordType::class);
         $request = $this->get('request_stack')->getCurrentRequest();
 
@@ -341,7 +341,7 @@ class FileController extends AbstractController
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    if (true !== $encoder->isPasswordValid($file->getPassword(), $data['password'], $file->getSalt())) {
+                    if (true !== $passwordHasher->verify($file->getPassword(), $data['password'])) {
                         throw $this->createAccessDeniedException('Неверный пароль');
                     }
 
@@ -540,7 +540,7 @@ class FileController extends AbstractController
     /**
      * @Route("/upload", name="file_upload")
      */
-    public function uploadAction(Request $request, EncoderFactoryInterface $encoderFactory, BotChecker $botChecker): Response
+    public function uploadAction(Request $request, PasswordHasherFactoryInterface $passwordHasherFactory, BotChecker $botChecker): Response
     {
         $form = $this->createForm(UploadType::class);
 
@@ -551,7 +551,7 @@ class FileController extends AbstractController
                 if ($form->isValid()) {
                     $botChecker->checkRequest($request);
 
-                    $file = $this->saveFileData($request, $form->getData(), $encoderFactory);
+                    $file = $this->saveFileData($request, $form->getData(), $passwordHasherFactory);
 
                     // просмотр файла авторизованными пользователями
                     if ($this->isGranted('ROLE_USER')) {
@@ -583,7 +583,7 @@ class FileController extends AbstractController
         ]);
     }
 
-    protected function saveFileData(Request $request, File $data, EncoderFactoryInterface $encoderFactory): File
+    protected function saveFileData(Request $request, File $data, PasswordHasherFactoryInterface $passwordHasherFactory): File
     {
         /** @var UploadedFile $file */
         $file = $data->getFile();
@@ -610,11 +610,10 @@ class FileController extends AbstractController
 
         if (null !== $data->getPlainPassword()) {
             $data->setFileTags(new ArrayCollection()); // не задаем тэги для запароленых файлов
-            $data->setSaltValue();
 
-            $encoder = $encoderFactory->getEncoder($data);
-            $password = $encoder->encodePassword($data->getPlainPassword(), $data->getSalt());
-            $data->setPassword($password);
+            $passwordHasher = $passwordHasherFactory->getPasswordHasher($data);
+            $hashedPassword = $passwordHasher->hash($data->getPlainPassword());
+            $data->setPassword($hashedPassword);
 
             // Запароленные файлы не скрываем
             $data->setHidden(false);

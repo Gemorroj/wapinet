@@ -10,7 +10,7 @@ class BashControllerTest extends WebTestCaseWapinet
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/bash/');
+        $crawler = $client->request('GET', '/bash');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

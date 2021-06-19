@@ -3,3 +3,4 @@ security:
         # replace 'main' by the name of your own firewall
         main:
             http_basic: ~
+            entry_point: http_basic

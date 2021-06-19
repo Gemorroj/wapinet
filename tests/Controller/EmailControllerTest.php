@@ -10,7 +10,7 @@ class EmailControllerTest extends WebTestCaseWapinet
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/email/');
+        $crawler = $client->request('GET', '/email');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

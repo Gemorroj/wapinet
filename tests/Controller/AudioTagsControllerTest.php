@@ -10,7 +10,7 @@ class AudioTagsControllerTest extends WebTestCaseWapinet
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/audio_tags/');
+        $crawler = $client->request('GET', '/audio_tags');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

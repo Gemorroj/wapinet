@@ -13,14 +13,14 @@ class GistVoter extends Voter
     public const DELETE = 'DELETE';
     public const EDIT = 'EDIT';
 
-    private $decisionManager;
+    private AccessDecisionManagerInterface $decisionManager;
 
     public function __construct(AccessDecisionManagerInterface $decisionManager)
     {
         $this->decisionManager = $decisionManager;
     }
 
-    protected function supports($attribute, $subject)
+    protected function supports(string $attribute, $subject): bool
     {
         if (!\in_array($attribute, [self::DELETE, self::EDIT], true)) {
             return false;
@@ -33,7 +33,7 @@ class GistVoter extends Voter
         return true;
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
         if (!($user instanceof User)) {

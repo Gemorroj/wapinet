@@ -11,8 +11,8 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -74,7 +74,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/registration", name="wapinet_register")
      */
-    public function registerAction(Request $request, EncoderFactoryInterface $encoderFactory, EntityManagerInterface $entityManager): Response
+    public function registerAction(Request $request, PasswordHasherFactoryInterface $passwordHasherFactory, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(RegistrationType::class, new User());
 
@@ -93,7 +93,7 @@ class DefaultController extends AbstractController
                 goto render;
             }
 
-            $user->makeEncodedPassword($encoderFactory);
+            $user->makeEncodedPassword($passwordHasherFactory);
 
             $entityManager->persist($user);
             $entityManager->flush();

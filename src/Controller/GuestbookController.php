@@ -44,7 +44,6 @@ class GuestbookController extends AbstractController
     public function addAction(Request $request, BotChecker $botChecker, StopSpam $stopSpam): RedirectResponse
     {
         $form = $this->createForm(MessageType::class);
-        $flashBag = $this->get('session')->getFlashBag();
 
         try {
             $form->handleRequest($request);
@@ -65,15 +64,15 @@ class GuestbookController extends AbstractController
                     $entityManager->persist($guestbook);
                     $entityManager->flush();
 
-                    $flashBag->add('notice', 'Сообщение успешно добавлено');
+                    $this->addFlash('notice', 'Сообщение успешно добавлено');
                 } else {
                     foreach ($form->getErrors(true) as $formError) {
-                        $flashBag->add('notice', $formError->getMessage());
+                        $this->addFlash('notice', $formError->getMessage());
                     }
                 }
             }
         } catch (\Exception $e) {
-            $flashBag->add('notice', $e->getMessage());
+            $this->addFlash('notice', $e->getMessage());
         }
 
         return $this->redirectToRoute('guestbook_index');

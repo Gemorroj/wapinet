@@ -6,9 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Intl\Countries;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
-use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
-use Symfony\Component\Security\Core\Encoder\SelfSaltingEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -559,23 +557,18 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         }
     }
 
-    public function makeEncodedPassword(EncoderFactoryInterface $encoderFactory): void
+    public function makeEncodedPassword(PasswordHasherFactoryInterface $passwordHasherFactory): void
     {
         $plainPassword = $this->getPlainPassword();
         if (null === $plainPassword || '' === $plainPassword) {
             return;
         }
 
-        $encoder = $encoderFactory->getEncoder($this);
+        $passwordHasher = $passwordHasherFactory->getPasswordHasher($this);
+        $hashedPassword = $passwordHasher->hash($plainPassword);
 
-        if ($encoder instanceof NativePasswordEncoder || $encoder instanceof SelfSaltingEncoderInterface) {
-            $this->setSalt(null);
-        } else {
-            $salt = \rtrim(\str_replace('+', '.', \base64_encode(\random_bytes(32))), '=');
-            $this->setSalt($salt);
-        }
+        $this->setSalt(null);
 
-        $hashedPassword = $encoder->encodePassword($plainPassword, $this->getSalt());
         $this->setPassword($hashedPassword);
         $this->eraseCredentials();
     }

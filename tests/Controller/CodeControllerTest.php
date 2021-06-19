@@ -10,7 +10,7 @@ class CodeControllerTest extends WebTestCaseWapinet
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/code/');
+        $crawler = $client->request('GET', '/code');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

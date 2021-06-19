@@ -11,7 +11,7 @@ class ArchiverControllerTest extends WebTestCaseWapinet
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/archiver/');
+        $crawler = $client->request('GET', '/archiver');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 

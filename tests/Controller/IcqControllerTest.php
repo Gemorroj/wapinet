@@ -10,7 +10,7 @@ class IcqControllerTest extends WebTestCaseWapinet
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/icq/');
+        $crawler = $client->request('GET', '/icq');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

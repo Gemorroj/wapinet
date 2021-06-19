@@ -10,7 +10,7 @@ class FileControllerTest extends WebTestCaseWapinet
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/file/');
+        $crawler = $client->request('GET', '/file');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }
