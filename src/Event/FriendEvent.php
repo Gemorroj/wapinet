@@ -10,8 +10,8 @@ class FriendEvent extends Event
     public const FRIEND_ADD = 'wapinet_user.friend.add';
     public const FRIEND_DELETE = 'wapinet_user.friend.delete';
 
-    private $user;
-    private $friend;
+    private User $user;
+    private User $friend;
 
     public function __construct(User $user, User $friend)
     {

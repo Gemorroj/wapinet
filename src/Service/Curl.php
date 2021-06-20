@@ -17,8 +17,6 @@ use const CURLOPT_RETURNTRANSFER;
 use const CURLOPT_SSL_VERIFYHOST;
 use const CURLOPT_SSL_VERIFYPEER;
 use const CURLOPT_URL;
-use LengthException;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\LengthRequiredHttpException;
@@ -28,8 +26,6 @@ use Symfony\Component\HttpKernel\Exception\LengthRequiredHttpException;
  */
 class Curl
 {
-    protected ParameterBagInterface $parameterBag;
-
     /**
      * @var resource
      */
@@ -46,11 +42,6 @@ class Curl
     ];
     protected array $headers = [];
     protected array $postData = [];
-
-    public function __construct(ParameterBagInterface $parameterBag)
-    {
-        $this->parameterBag = $parameterBag;
-    }
 
     /**
      * Инициализация.
@@ -127,7 +118,7 @@ class Curl
     /**
      * @param bool $strict Исключение если не удалось определить размер файла (не найден Content-Length)
      *
-     *@throws LengthRequiredHttpException|LengthException
+     *@throws LengthRequiredHttpException|\LengthException
      */
     public function checkFileSize(bool $strict = true): Response
     {
@@ -141,7 +132,7 @@ class Curl
 
         $maxLength = UploadedFile::getMaxFilesize();
         if ($length > $maxLength) {
-            throw new LengthException('Размер файла превышает максимально допустимый');
+            throw new \LengthException('Размер файла превышает максимально допустимый');
         }
 
         $this->setOpt(CURLOPT_NOBODY, false);

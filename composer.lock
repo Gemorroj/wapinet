@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "56fad23bc7e321a500f51ab183e503b1",
+    "content-hash": "2d0e8b864d0a69fe56f307e3999f293d",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -4420,6 +4420,53 @@
                 "source": "https://github.com/sensiolabs/SensioFrameworkExtraBundle/tree/v6.1.5"
             },
             "time": "2021-05-31T10:40:46+00:00"
+        },
+        {
+            "name": "stdtabs/phptabs",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stdtabs/phptabs.git",
+                "reference": "0eca0731e05b62384937ca60c1b0029c644f6902"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stdtabs/phptabs/zipball/0eca0731e05b62384937ca60c1b0029c644f6902",
+                "reference": "0eca0731e05b62384937ca60c1b0029c644f6902",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "symfony/thanks": "^1.2"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpTabs\\": "src/PhpTabs/",
+                    "PhpTabsTest\\": "test/PhpTabs/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1+"
+            ],
+            "description": "A PHP library for reading, writing and rendering Guitar Pro and MIDI files",
+            "homepage": "https://phptabs.readthedocs.io/",
+            "keywords": [
+                "guitar",
+                "midi",
+                "music",
+                "tablature",
+                "tabs"
+            ],
+            "support": {
+                "issues": "https://github.com/stdtabs/phptabs/issues",
+                "source": "https://github.com/stdtabs/phptabs/tree/master"
+            },
+            "time": "2021-05-25T11:16:27+00:00"
         },
         {
             "name": "symfony/asset",
@@ -9620,16 +9667,16 @@
         },
         {
             "name": "tufanbarisyildirim/php-apk-parser",
-            "version": "2.0.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tufanbarisyildirim/php-apk-parser.git",
-                "reference": "76a097c166877a44c8a5144c186e5306d10cd7f2"
+                "reference": "caa98f6d5e04caaf3612b08f816b0a6d2542247a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tufanbarisyildirim/php-apk-parser/zipball/76a097c166877a44c8a5144c186e5306d10cd7f2",
-                "reference": "76a097c166877a44c8a5144c186e5306d10cd7f2",
+                "url": "https://api.github.com/repos/tufanbarisyildirim/php-apk-parser/zipball/caa98f6d5e04caaf3612b08f816b0a6d2542247a",
+                "reference": "caa98f6d5e04caaf3612b08f816b0a6d2542247a",
                 "shasum": ""
             },
             "require": {
@@ -9642,6 +9689,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^7.4"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -9669,9 +9717,9 @@
             ],
             "support": {
                 "issues": "https://github.com/tufanbarisyildirim/php-apk-parser/issues",
-                "source": "https://github.com/tufanbarisyildirim/php-apk-parser/tree/2.0.2"
+                "source": "https://github.com/tufanbarisyildirim/php-apk-parser/tree/master"
             },
-            "time": "2020-01-27T15:23:37+00:00"
+            "time": "2020-12-05T11:47:55+00:00"
         },
         {
             "name": "twig/extra-bundle",
@@ -12791,6 +12839,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "tufanbarisyildirim/php-apk-parser": 20,
+        "stdtabs/phptabs": 20,
         "gemorroj/phpwhois": 20
     },
     "prefer-stable": true,

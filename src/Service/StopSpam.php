@@ -13,10 +13,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class StopSpam
 {
-    /** @var StopSpamRequest */
-    private $request;
-    /** @var UserInterface|null */
-    private $user;
+    private StopSpamRequest $request;
+    private ?UserInterface $user;
 
     public function __construct(TokenStorageInterface $tokenStorage)
     {

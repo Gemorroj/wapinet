@@ -55,8 +55,7 @@ class Paginate
         $maxPage = $pagerfanta->getNbPages();
         $minPage = 1;
         $currentPage = $page < $minPage ? $minPage : $page;
-        $currentPage = $currentPage > $maxPage ? $maxPage : $currentPage;
 
-        return $currentPage;
+        return $currentPage > $maxPage ? $maxPage : $currentPage;
     }
 }

@@ -6,45 +6,27 @@ use App\Entity\File as EntityFile;
 use App\Entity\File\Meta as FileMeta;
 use App\Service\Apk as ApkHelper;
 use App\Service\Ffmpeg as FfmpegHelper;
+use App\Service\Midi as MidiHelper;
 use App\Service\Torrent as TorrentHelper;
 use Imagine\Image\AbstractImagine;
 
-/**
- * Meta хэлпер
- */
 class Meta
 {
-    /**
-     * @var FileMeta
-     */
-    protected $fileMeta;
-    /**
-     * @var EntityFile|null
-     */
-    protected $file;
-    /**
-     * @var FfmpegHelper
-     */
-    private $ffmpegHelper;
-    /**
-     * @var ApkHelper
-     */
-    private $apkHelper;
-    /**
-     * @var TorrentHelper
-     */
-    private $torrentHelper;
-    /**
-     * @var AbstractImagine
-     */
-    private $imagine;
+    private FileMeta $fileMeta;
+    private ?EntityFile $file;
+    private FfmpegHelper $ffmpegHelper;
+    private ApkHelper $apkHelper;
+    private TorrentHelper $torrentHelper;
+    private AbstractImagine $imagine;
+    private MidiHelper $midiHelper;
 
-    public function __construct(FfmpegHelper $ffmpegHelper, ApkHelper $apkHelper, TorrentHelper $torrentHelper, AbstractImagine $imagine)
+    public function __construct(FfmpegHelper $ffmpegHelper, ApkHelper $apkHelper, TorrentHelper $torrentHelper, AbstractImagine $imagine, MidiHelper $midiHelper)
     {
         $this->ffmpegHelper = $ffmpegHelper;
         $this->apkHelper = $apkHelper;
         $this->torrentHelper = $torrentHelper;
         $this->imagine = $imagine;
+        $this->midiHelper = $midiHelper;
 
         $this->fileMeta = new FileMeta();
     }
@@ -104,6 +86,13 @@ class Meta
 
     private function setAudioMeta(): self
     {
+        if ($this->file->isMidi()) {
+            $duration = $this->midiHelper->getDuration($this->file->getFile()->getPathname());
+            $this->fileMeta->set('duration', $duration);
+
+            return $this;
+        }
+
         $ffprobe = $this->ffmpegHelper->getFfprobe();
         $info = $ffprobe->streams($this->file->getFile()->getPathname())->audios()->first();
 

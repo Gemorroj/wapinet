@@ -1,10 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Exception;
 
-/**
- * Thrown whenever a client process fails.
- */
 class ArchiverException extends \RuntimeException
 {
 }

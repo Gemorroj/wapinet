@@ -1,24 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Exception;
 
 use App\Entity\File;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\RouterInterface;
 
-/**
- * Thrown whenever a client process fails.
- */
 class FileDuplicatedException extends \RuntimeException
 {
-    /**
-     * @var File
-     */
-    protected $existingFile;
-    /**
-     * @var RouterInterface
-     */
-    protected $router;
+    private File $existingFile;
+    private RouterInterface $router;
 
     public function __construct(File $existingFile, RouterInterface $router)
     {
