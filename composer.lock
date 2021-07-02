@@ -3615,21 +3615,22 @@
         },
         {
             "name": "pagerfanta/core",
-            "version": "v3.1.0",
+            "version": "v3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pagerfanta-packages/core.git",
-                "reference": "4200941ca474bbc89d896ae7b181d6bf27c11a6f"
+                "reference": "12d9157076469f38eb75da9511e07301d03ca140"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pagerfanta-packages/core/zipball/4200941ca474bbc89d896ae7b181d6bf27c11a6f",
-                "reference": "4200941ca474bbc89d896ae7b181d6bf27c11a6f",
+                "url": "https://api.github.com/repos/pagerfanta-packages/core/zipball/12d9157076469f38eb75da9511e07301d03ca140",
+                "reference": "12d9157076469f38eb75da9511e07301d03ca140",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": "^7.4 || ^8.0"
+                "php": "^7.4 || ^8.0",
+                "symfony/deprecation-contracts": "^2.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "^9.5"
@@ -3652,28 +3653,29 @@
                 "pagerfanta"
             ],
             "support": {
-                "source": "https://github.com/pagerfanta-packages/core/tree/v3.1.0"
+                "source": "https://github.com/pagerfanta-packages/core/tree/v3.2.0"
             },
-            "time": "2021-05-11T23:30:09+00:00"
+            "time": "2021-06-27T20:01:17+00:00"
         },
         {
             "name": "pagerfanta/doctrine-collections-adapter",
-            "version": "v3.1.0",
+            "version": "v3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pagerfanta-packages/doctrine-collections-adapter.git",
-                "reference": "b708815747ee6a384a351ea045431c65b6afc0fb"
+                "reference": "a8057c236c2af07d23e364baf68bdb9ee59291d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pagerfanta-packages/doctrine-collections-adapter/zipball/b708815747ee6a384a351ea045431c65b6afc0fb",
-                "reference": "b708815747ee6a384a351ea045431c65b6afc0fb",
+                "url": "https://api.github.com/repos/pagerfanta-packages/doctrine-collections-adapter/zipball/a8057c236c2af07d23e364baf68bdb9ee59291d5",
+                "reference": "a8057c236c2af07d23e364baf68bdb9ee59291d5",
                 "shasum": ""
             },
             "require": {
                 "doctrine/collections": "^1.6",
                 "pagerfanta/core": "^3.0",
-                "php": "^7.4 || ^8.0"
+                "php": "^7.4 || ^8.0",
+                "symfony/deprecation-contracts": "^2.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "^9.5"
@@ -3698,31 +3700,34 @@
                 "pagerfanta"
             ],
             "support": {
-                "source": "https://github.com/pagerfanta-packages/doctrine-collections-adapter/tree/v3.1.0"
+                "source": "https://github.com/pagerfanta-packages/doctrine-collections-adapter/tree/v3.2.0"
             },
-            "time": "2020-12-21T00:19:13+00:00"
+            "time": "2021-05-22T02:20:56+00:00"
         },
         {
             "name": "pagerfanta/doctrine-orm-adapter",
-            "version": "v3.1.0",
+            "version": "v3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pagerfanta-packages/doctrine-orm-adapter.git",
-                "reference": "f8dbdc826ef7b9ef6c591e19372c6449dfff1659"
+                "reference": "ae213057560560e1b16ba45a2e061af3534dd483"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pagerfanta-packages/doctrine-orm-adapter/zipball/f8dbdc826ef7b9ef6c591e19372c6449dfff1659",
-                "reference": "f8dbdc826ef7b9ef6c591e19372c6449dfff1659",
+                "url": "https://api.github.com/repos/pagerfanta-packages/doctrine-orm-adapter/zipball/ae213057560560e1b16ba45a2e061af3534dd483",
+                "reference": "ae213057560560e1b16ba45a2e061af3534dd483",
                 "shasum": ""
             },
             "require": {
                 "doctrine/orm": "^2.8",
                 "pagerfanta/core": "^3.0",
-                "php": "^7.4 || ^8.0"
+                "php": "^7.4 || ^8.0",
+                "symfony/deprecation-contracts": "^2.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9.5"
+                "doctrine/cache": "^1.11 || ^2.0",
+                "phpunit/phpunit": "^9.5",
+                "symfony/cache": "^4.4 || ^5.2 || ^6.0"
             },
             "type": "library",
             "autoload": {
@@ -3744,13 +3749,13 @@
                 "pagerfanta"
             ],
             "support": {
-                "source": "https://github.com/pagerfanta-packages/doctrine-orm-adapter/tree/v3.1.0"
+                "source": "https://github.com/pagerfanta-packages/doctrine-orm-adapter/tree/v3.2.0"
             },
-            "time": "2020-12-21T00:19:13+00:00"
+            "time": "2021-06-19T16:53:13+00:00"
         },
         {
             "name": "pagerfanta/twig",
-            "version": "v3.1.0",
+            "version": "v3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pagerfanta-packages/twig.git",
@@ -3788,7 +3793,7 @@
                 "pagerfanta"
             ],
             "support": {
-                "source": "https://github.com/pagerfanta-packages/twig/tree/v3.1.0"
+                "source": "https://github.com/pagerfanta-packages/twig/tree/v3.2.0"
             },
             "time": "2021-05-11T23:30:09+00:00"
         },
@@ -10673,16 +10678,16 @@
         },
         {
             "name": "phpstan/phpstan-doctrine",
-            "version": "0.12.39",
+            "version": "0.12.40",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-doctrine.git",
-                "reference": "c35261fe7fe54bd0338c7ab43e85db20b7dc483c"
+                "reference": "553279066d733a9c223fe2981f3493687c9fed5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/c35261fe7fe54bd0338c7ab43e85db20b7dc483c",
-                "reference": "c35261fe7fe54bd0338c7ab43e85db20b7dc483c",
+                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/553279066d733a9c223fe2981f3493687c9fed5c",
+                "reference": "553279066d733a9c223fe2981f3493687c9fed5c",
                 "shasum": ""
             },
             "require": {
@@ -10735,9 +10740,9 @@
             "description": "Doctrine extensions for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-doctrine/issues",
-                "source": "https://github.com/phpstan/phpstan-doctrine/tree/0.12.39"
+                "source": "https://github.com/phpstan/phpstan-doctrine/tree/0.12.40"
             },
-            "time": "2021-06-10T12:42:07+00:00"
+            "time": "2021-07-01T07:48:56+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
@@ -10795,16 +10800,16 @@
         },
         {
             "name": "phpstan/phpstan-symfony",
-            "version": "0.12.37",
+            "version": "0.12.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-symfony.git",
-                "reference": "45e2ae29f6f53f5039b3d5c401dfc26724d8f5bb"
+                "reference": "58b5959a11e26ce495b424ee634e721aaa9674d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/45e2ae29f6f53f5039b3d5c401dfc26724d8f5bb",
-                "reference": "45e2ae29f6f53f5039b3d5c401dfc26724d8f5bb",
+                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/58b5959a11e26ce495b424ee634e721aaa9674d1",
+                "reference": "58b5959a11e26ce495b424ee634e721aaa9674d1",
                 "shasum": ""
             },
             "require": {
@@ -10858,9 +10863,9 @@
             "description": "Symfony Framework extensions and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-symfony/issues",
-                "source": "https://github.com/phpstan/phpstan-symfony/tree/0.12.37"
+                "source": "https://github.com/phpstan/phpstan-symfony/tree/0.12.38"
             },
-            "time": "2021-06-16T13:00:16+00:00"
+            "time": "2021-07-01T07:35:09+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -12538,16 +12543,16 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.32.0",
+            "version": "v1.33.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "702558c5fc5a27796eedad12a82bb27be76247dc"
+                "reference": "f093d906c667cba7e3f74487d9e5e55aaf25a031"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/702558c5fc5a27796eedad12a82bb27be76247dc",
-                "reference": "702558c5fc5a27796eedad12a82bb27be76247dc",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/f093d906c667cba7e3f74487d9e5e55aaf25a031",
+                "reference": "f093d906c667cba7e3f74487d9e5e55aaf25a031",
                 "shasum": ""
             },
             "require": {
@@ -12606,7 +12611,7 @@
             ],
             "support": {
                 "issues": "https://github.com/symfony/maker-bundle/issues",
-                "source": "https://github.com/symfony/maker-bundle/tree/v1.32.0"
+                "source": "https://github.com/symfony/maker-bundle/tree/v1.33.0"
             },
             "funding": [
                 {
@@ -12622,7 +12627,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-06-18T18:00:44+00:00"
+            "time": "2021-07-01T00:28:30+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",
