@@ -2,27 +2,19 @@
 
 {% block content_title %}Мониторинг{% endblock %}
 
-{% block body_javascript %}
-    <script>
-        $(function () {
-            $('[data-toggle="popover"]').tooltip();
-        });
-    </script>
-{% endblock %}
-
 {% block main %}
 <div class="container">
     {% if info.php.fpm.enabled %}
         <div class="row">
             <div class="col">
                 <dl class="row">
-                    <dt class="col-5 text-right monitoring-label">PHP-FPM process manager:</dt>
+                    <dt class="col-5 text-end monitoring-label">PHP-FPM process manager:</dt>
                     <dd class="col-7 monitoring-value">{{ info.php.fpm.processManager }}</dd>
                 </dl>
             </div>
             <div class="col">
                 <dl class="row">
-                    <dt class="col-5 text-right monitoring-label">PHP-FPM start time:</dt>
+                    <dt class="col-5 text-end monitoring-label">PHP-FPM start time:</dt>
                     <dd class="col-7 monitoring-value">{{ info.php.fpm.startTime|wapinet_datetime }}</dd>
                 </dl>
             </div>
@@ -31,19 +23,19 @@
         <div class="row">
             <div class="col">
                 <dl class="row">
-                    <dt class="col-7 text-right monitoring-label">Принято соединений:</dt>
+                    <dt class="col-7 text-end monitoring-label">Принято соединений:</dt>
                     <dd class="col-5 monitoring-value">{{ info.php.fpm.acceptedConnections|wapinet_count }}</dd>
                 </dl>
             </div>
             <div class="col">
                 <dl class="row">
-                    <dt class="col-7 text-right monitoring-label">Активных процессов:</dt>
+                    <dt class="col-7 text-end monitoring-label">Активных процессов:</dt>
                     <dd class="col-5 monitoring-value">{{ info.php.fpm.activeProcesses|wapinet_count }}</dd>
                 </dl>
             </div>
             <div class="col">
                 <dl class="row">
-                    <dt class="col-7 text-right monitoring-label">Простаивающих процессов:</dt>
+                    <dt class="col-7 text-end monitoring-label">Простаивающих процессов:</dt>
                     <dd class="col-5 monitoring-value">{{ info.php.fpm.idleProcesses|wapinet_count }}</dd>
                 </dl>
             </div>
@@ -51,19 +43,19 @@
         <div class="row">
             <div class="col">
                 <dl class="row">
-                    <dt class="col-7 text-right monitoring-label">Max активных процессов:</dt>
+                    <dt class="col-7 text-end monitoring-label">Max активных процессов:</dt>
                     <dd class="col-5 monitoring-value">{{ info.php.fpm.maxActiveProcesses|wapinet_count }}</dd>
                 </dl>
             </div>
             <div class="col">
                 <dl class="row">
-                    <dt class="col-7 text-right monitoring-label">Max потомков:</dt>
+                    <dt class="col-7 text-end monitoring-label">Max потомков:</dt>
                     <dd class="col-5 monitoring-value">{{ info.php.fpm.maxChildrenReached|wapinet_count }}</dd>
                 </dl>
             </div>
             <div class="col">
                 <dl class="row">
-                    <dt class="col-7 text-right monitoring-label">Медленных запросов:</dt>
+                    <dt class="col-7 text-end monitoring-label">Медленных запросов:</dt>
                     <dd class="col-5 monitoring-value">{{ info.php.fpm.slowRequests|wapinet_count }}</dd>
                 </dl>
             </div>
@@ -71,9 +63,11 @@
 
         <div class="row">
             <div class="col">
-                <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#collapseProcesses" aria-expanded="false" aria-controls="collapseProcesses">
-                    Processes ({{ info.php.fpm.processes|length|wapinet_count }})
-                </button>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" href="#collapseProcesses" aria-expanded="false" aria-controls="collapseProcesses">
+                        Processes ({{ info.php.fpm.processes|length|wapinet_count }})
+                    </button>
+                </div>
 
                 <div class="collapse" id="collapseProcesses">
                     {% for process in info.php.fpm.processes %}
@@ -88,25 +82,25 @@
                             <div class="row">
                                 <div class="col">
                                     <dl class="row">
-                                        <dt class="col-5 text-right monitoring-label">Start time:</dt>
+                                        <dt class="col-5 text-end monitoring-label">Start time:</dt>
                                         <dd class="col-7 monitoring-value">{{ process.startTime|wapinet_datetime }}</dd>
                                     </dl>
                                 </div>
                                 <div class="col">
                                     <dl class="row">
-                                        <dt class="col-7 text-right monitoring-label">Состояние:</dt>
+                                        <dt class="col-7 text-end monitoring-label">Состояние:</dt>
                                         <dd class="col-5 monitoring-value">{{ process.state }}</dd>
                                     </dl>
                                 </div>
                                 <div class="col">
                                     <dl class="row">
-                                        <dt class="col-7 text-right monitoring-label">Memory:</dt>
+                                        <dt class="col-7 text-end monitoring-label">Memory:</dt>
                                         <dd class="col-5 monitoring-value">{{ process.lastRequestMemory|wapinet_size }}</dd>
                                     </dl>
                                 </div>
                                 <div class="col">
                                     <dl class="row">
-                                        <dt class="col-7 text-right monitoring-label">CPU:</dt>
+                                        <dt class="col-7 text-end monitoring-label">CPU:</dt>
                                         <dd class="col-5 monitoring-value">{{ process.lastRequestCpu|wapinet_count(2) }}</dd>
                                     </dl>
                                 </div>
@@ -127,23 +121,23 @@
                 </h3>
                 <div class="card-body">
                     <dl class="row">
-                        <dt class="col-5 text-right monitoring-label">ОС:</dt>
+                        <dt class="col-5 text-end monitoring-label">ОС:</dt>
                         <dd class="col-7 monitoring-value">{{ info.general.osName }} {{ info.general.architecture }}</dd>
-                        <dt class="col-5 text-right monitoring-label">Ядро:</dt>
+                        <dt class="col-5 text-end monitoring-label">Ядро:</dt>
                         <dd class="col-7 monitoring-value">{{ info.general.kernel }}</dd>
-                        <dt class="col-5 text-right monitoring-label">Uptime:</dt>
+                        <dt class="col-5 text-end monitoring-label">Uptime:</dt>
                         <dd class="col-7 monitoring-value">{{ info.general.uptime ? info.general.uptime|date('%a дней %h часов %i минут') : 'Неизвестно' }}</dd>
-                        <dt class="col-5 text-right monitoring-label">Selinux:</dt>
+                        <dt class="col-5 text-end monitoring-label">Selinux:</dt>
                         <dd class="col-7 monitoring-value">{{ info.selinux ? (info.selinux.enabled ? 'Вкл.' : 'Выкл.') : 'Отсутствует' }}</dd>
-                        <dt class="col-5 text-right monitoring-label">PHP:</dt>
+                        <dt class="col-5 text-end monitoring-label">PHP:</dt>
                         <dd class="col-7 monitoring-value">{{ info.php.version }}</dd>
-                        <dt class="col-5 text-right monitoring-label">Memory limit:</dt>
+                        <dt class="col-5 text-end monitoring-label">Memory limit:</dt>
                         <dd class="col-7 monitoring-value">{{ info.php.memoryLimit|wapinet_size }}</dd>
-                        <dt class="col-5 text-right monitoring-label">Realpath cache size:</dt>
+                        <dt class="col-5 text-end monitoring-label">Realpath cache size:</dt>
                         <dd class="col-7 monitoring-value">{{ info.php.realpathCacheSizeUsed|wapinet_size }} использовано из {{ info.php.realpathCacheSizeAllowed|wapinet_size }}</dd>
-                        <dt class="col-5 text-right monitoring-label">Расширения PHP:</dt>
+                        <dt class="col-5 text-end monitoring-label">Расширения PHP:</dt>
                         <dd class="col-7 monitoring-value">
-                            <button type="button" class="btn btn-default" data-toggle="popover" title="PHP modules" data-content="{{ info.php.extensions|sort|join("\n") }}">
+                            <button type="button" class="btn btn-default" title="PHP modules" onclick="alert('{{ info.php.extensions|sort|join("\\n") }}');">
                                 {{ info.php.extensions|length|wapinet_count }} всего
                             </button>
                         </dd>
@@ -159,21 +153,21 @@
                 <div class="card-body">
                     {% if info.php.opcache.enabled %}
                         <dl class="row">
-                            <dt class="col-5 text-right monitoring-label">Закэшировано скриптов:</dt>
+                            <dt class="col-5 text-end monitoring-label">Закэшировано скриптов:</dt>
                             <dd class="col-7 monitoring-value">{{ info.php.opcache.cachedScripts|wapinet_count }}</dd>
-                            <dt class="col-5 text-right monitoring-label">Использовано памяти:</dt>
+                            <dt class="col-5 text-end monitoring-label">Использовано памяти:</dt>
                             <dd class="col-7 monitoring-value">{{ info.php.opcache.usedMemory|wapinet_size }}</dd>
-                            <dt class="col-5 text-right monitoring-label">Свободно памяти:</dt>
+                            <dt class="col-5 text-end monitoring-label">Свободно памяти:</dt>
                             <dd class="col-7 monitoring-value">{{ info.php.opcache.freeMemory|wapinet_size }}</dd>
-                            <dt class="col-5 text-right monitoring-label">Попаданий в кэш:</dt>
+                            <dt class="col-5 text-end monitoring-label">Попаданий в кэш:</dt>
                             <dd class="col-7 monitoring-value">{{ info.php.opcache.hits|wapinet_count }}</dd>
-                            <dt class="col-5 text-right monitoring-label">Промахов мимо кэша:</dt>
+                            <dt class="col-5 text-end monitoring-label">Промахов мимо кэша:</dt>
                             <dd class="col-7 monitoring-value">{{ info.php.opcache.misses|wapinet_count }}</dd>
-                            <dt class="col-5 text-right monitoring-label">Закешировно интернированных строк:</dt>
+                            <dt class="col-5 text-end monitoring-label">Закешировно интернированных строк:</dt>
                             <dd class="col-7 monitoring-value">{{ info.php.opcache.cachedInternedStrings|wapinet_count }}</dd>
-                            <dt class="col-5 text-right monitoring-label">Использовано памяти для интернированных строк:</dt>
+                            <dt class="col-5 text-end monitoring-label">Использовано памяти для интернированных строк:</dt>
                             <dd class="col-7 monitoring-value">{{ info.php.opcache.internedStringsUsedMemory|wapinet_size }}</dd>
-                            <dt class="col-5 text-right monitoring-label">Свободно памяти для интернированных строк:</dt>
+                            <dt class="col-5 text-end monitoring-label">Свободно памяти для интернированных строк:</dt>
                             <dd class="col-7 monitoring-value">{{ info.php.opcache.internedStringsFreeMemory|wapinet_size }}</dd>
                         </dl>
                     {% else %}
@@ -190,15 +184,15 @@
                 <div class="card-body">
                     {% if info.php.apcu.enabled %}
                         <dl class="row">
-                            <dt class="col-5 text-right monitoring-label">Закэшировано переменных:</dt>
+                            <dt class="col-5 text-end monitoring-label">Закэшировано переменных:</dt>
                             <dd class="col-7 monitoring-value">{{ info.php.apcu.cachedVariables|wapinet_count }}</dd>
-                            <dt class="col-5 text-right monitoring-label">Использовано памяти:</dt>
+                            <dt class="col-5 text-end monitoring-label">Использовано памяти:</dt>
                             <dd class="col-7 monitoring-value">{{ info.php.apcu.usedMemory|wapinet_size }}</dd>
-                            <dt class="col-5 text-right monitoring-label">Свободно памяти:</dt>
+                            <dt class="col-5 text-end monitoring-label">Свободно памяти:</dt>
                             <dd class="col-7 monitoring-value">{{ info.php.apcu.freeMemory|wapinet_size }}</dd>
-                            <dt class="col-5 text-right monitoring-label">Попаданий в кэш:</dt>
+                            <dt class="col-5 text-end monitoring-label">Попаданий в кэш:</dt>
                             <dd class="col-7 monitoring-value">{{ info.php.apcu.hits|wapinet_count }}</dd>
-                            <dt class="col-5 text-right monitoring-label">Промахов мимо кэша:</dt>
+                            <dt class="col-5 text-end monitoring-label">Промахов мимо кэша:</dt>
                             <dd class="col-7 monitoring-value">{{ info.php.apcu.misses|wapinet_count }}</dd>
                         </dl>
                     {% else %}
@@ -230,17 +224,17 @@
                             {% endif %}
                         {% endmacro %}
 
-                        <dt class="col-5 text-right monitoring-label">Nginx:</dt>
+                        <dt class="col-5 text-end monitoring-label">Nginx:</dt>
                         <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('nginx.service')) }}</dd>
-                        <dt class="col-5 text-right monitoring-label">PHP-Fpm:</dt>
+                        <dt class="col-5 text-end monitoring-label">PHP-Fpm:</dt>
                         <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('php-fpm.service')) }}</dd>
-                        <dt class="col-5 text-right monitoring-label">MySQL:</dt>
+                        <dt class="col-5 text-end monitoring-label">MySQL:</dt>
                         <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('mysqld.service')) }}</dd>
-                        <dt class="col-5 text-right monitoring-label">Cron:</dt>
+                        <dt class="col-5 text-end monitoring-label">Cron:</dt>
                         <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('crond.service')) }}</dd>
-                        <dt class="col-5 text-right monitoring-label">Manticore:</dt>
+                        <dt class="col-5 text-end monitoring-label">Manticore:</dt>
                         <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('manticore.service')) }}</dd>
-                        <dt class="col-5 text-right monitoring-label">OpenSSH:</dt>
+                        <dt class="col-5 text-end monitoring-label">OpenSSH:</dt>
                         <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('sshd.service')) }}</dd>
                     </dl>
                 </div>
@@ -255,14 +249,14 @@
                 <div class="card-body">
                     <dl class="row">
                         {% if info.cpu %}
-                            <dt class="col-5 text-right monitoring-label">Процессор:</dt>
+                            <dt class="col-5 text-end monitoring-label">Процессор:</dt>
                             <dd class="col-7 monitoring-value">{{ info.cpu.processors[0].model }}</dd>
-                            <dt class="col-5 text-right monitoring-label">Физических ядер:</dt>
+                            <dt class="col-5 text-end monitoring-label">Физических ядер:</dt>
                             <dd class="col-7 monitoring-value">{{ info.cpu.cores|wapinet_count }}</dd>
-                            <dt class="col-5 text-right monitoring-label">Виртуальных ядер:</dt>
+                            <dt class="col-5 text-end monitoring-label">Виртуальных ядер:</dt>
                             <dd class="col-7 monitoring-value">{{ info.cpu.virtual|wapinet_count }}</dd>
                         {% endif %}
-                        <dt class="col-5 text-right monitoring-label">Loadavg:</dt>
+                        <dt class="col-5 text-end monitoring-label">Loadavg:</dt>
                         <dd class="col-7 monitoring-value">{{ info.general.load ? info.general.load|join(' ') : 'Неизвестно' }}</dd>
                     </dl>
                 </div>
@@ -276,17 +270,17 @@
                 <div class="card-body">
                     {% if info.memory %}
                         <dl class="row">
-                            <dt class="col-5 text-right monitoring-label">Использовано:</dt>
+                            <dt class="col-5 text-end monitoring-label">Использовано:</dt>
                             <dd class="col-7 monitoring-value">{{ info.memory.used|wapinet_size }}</dd>
-                            <dt class="col-5 text-right monitoring-label">Свободно:</dt>
+                            <dt class="col-5 text-end monitoring-label">Свободно:</dt>
                             <dd class="col-7 monitoring-value">{{ info.memory.free|wapinet_size }}</dd>
-                            <dt class="col-5 text-right monitoring-label">Разделяемая память:</dt>
+                            <dt class="col-5 text-end monitoring-label">Разделяемая память:</dt>
                             <dd class="col-7 monitoring-value">{{ info.memory.shared|wapinet_size }}</dd>
-                            <dt class="col-5 text-right monitoring-label">Закэшировано памяти:</dt>
+                            <dt class="col-5 text-end monitoring-label">Закэшировано памяти:</dt>
                             <dd class="col-7 monitoring-value">{{ info.memory.cached|wapinet_size }}</dd>
-                            <dt class="col-5 text-right monitoring-label">Swap использовано:</dt>
+                            <dt class="col-5 text-end monitoring-label">Swap использовано:</dt>
                             <dd class="col-7 monitoring-value">{{ info.memory.swapUsed|wapinet_size }}</dd>
-                            <dt class="col-5 text-right monitoring-label">Swap свободно:</dt>
+                            <dt class="col-5 text-end monitoring-label">Swap свободно:</dt>
                             <dd class="col-7 monitoring-value">{{ info.memory.swapFree|wapinet_size }}</dd>
                         </dl>
                     {% else %}
@@ -312,9 +306,9 @@
                             </h3>
                             <div class="card-body">
                                 <dl class="row">
-                                    <dt class="col-5 text-right monitoring-label">Отправлено:</dt>
+                                    <dt class="col-5 text-end monitoring-label">Отправлено:</dt>
                                     <dd class="col-7 monitoring-value">{{ network.statsSent ? network.statsSent.bytes|wapinet_size ~ ' (ошибок: ' ~ network.statsSent.errors|wapinet_count ~ ')' : '' }}</dd>
-                                    <dt class="col-5 text-right monitoring-label">Получено:</dt>
+                                    <dt class="col-5 text-end monitoring-label">Получено:</dt>
                                     <dd class="col-7 monitoring-value">{{ network.statsReceived ? network.statsReceived.bytes|wapinet_size ~ ' (ошибок: ' ~ network.statsReceived.errors|wapinet_count ~ ')' : '' }}</dd>
                                 </dl>
                             </div>
@@ -335,7 +329,7 @@
                     {% if info.disk.drives %}
                         <dl class="row">
                             {% for drive in info.disk.drives %}
-                                <dt class="col-5 text-right monitoring-label">{{ drive.name }}:</dt>
+                                <dt class="col-5 text-end monitoring-label">{{ drive.name }}:</dt>
                                 <dd class="col-7 monitoring-value">{{ drive.size|wapinet_size }}</dd>
                             {% endfor %}
                         </dl>
@@ -359,11 +353,11 @@
                             </h3>
                             <div class="card-body">
                                 <dl class="row">
-                                    <dt class="col-5 text-right monitoring-label">Файловая система:</dt>
+                                    <dt class="col-5 text-end monitoring-label">Файловая система:</dt>
                                     <dd class="col-7 monitoring-value">{{ mount.type }}</dd>
-                                    <dt class="col-5 text-right monitoring-label">Использовано:</dt>
+                                    <dt class="col-5 text-end monitoring-label">Использовано:</dt>
                                     <dd class="col-7 monitoring-value">{{ mount.used|wapinet_size }} ({{ mount.usedPercent }}%)</dd>
-                                    <dt class="col-5 text-right monitoring-label">Свободно:</dt>
+                                    <dt class="col-5 text-end monitoring-label">Свободно:</dt>
                                     <dd class="col-7 monitoring-value">{{ mount.free|wapinet_size }} ({{ mount.freePercent }}%)</dd>
                                 </dl>
                             </div>
