@@ -19,6 +19,7 @@
         "ext-apcu": "*",
         "ext-simplexml": "*",
         "ext-sodium": "*",
+        "ext-gd": "*",
 
         "doctrine/annotations": "^1.13",
         "doctrine/doctrine-bundle": "^2.4",
