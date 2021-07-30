@@ -778,7 +778,11 @@ class File implements PasswordAuthenticatedUserInterface
 
     public function isWmv(): bool
     {
-        return 'video/x-ms-wmv' === $this->getMimeType() || 'audio/x-ms-wmv' === $this->getMimeType();
+        return \in_array($this->getMimeType(), [
+            'video/x-ms-wmv',
+            'audio/x-ms-wmv',
+            'video/x-ms-asf', // https://wapinet.ru/file/54193
+        ], true);
     }
 
     public function isMp3(): bool
