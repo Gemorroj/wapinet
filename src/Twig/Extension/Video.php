@@ -4,6 +4,7 @@ namespace App\Twig\Extension;
 
 use App\Service\Ffmpeg as FfmpegHelper;
 use Exception;
+use FFMpeg\Coordinate\Dimension;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\Format\Video\DefaultVideo;
 use FFMpeg\Format\Video\X264;
@@ -89,21 +90,38 @@ class Video extends AbstractExtension
             $filesize = \filesize($media->getPathfile());
             $filesize *= 3.3; // увеличиваем предположительный размер mp4 файла по сравнению с оригиналом
             $filesize /= 1024; // переводим байты в килобайты
-            $duration = $videoStream->has('duration') ? $videoStream->get('duration') : 0;
+            $duration = $videoStream->get('duration', 0);
             if ($filesize && $duration) {
-                $bitrate = $filesize / $duration;
+                $videoBitrate = $filesize / $duration;
 
                 /*$audioStream = $streams->audios()->first();
                 if (null !== $audioStream) {
-                    $audioBitrate = $audioStream->has('bit_rate') ? $audioStream->get('bit_rate') : 8000;
+                    $audioBitrate = $audioStream->get('bit_rate', 8000);
                     $audioBitrate /= 1000;
-                    $bitrate -= $audioBitrate;
+                    $videoBitrate -= $audioBitrate;
                 }*/
-                $bitrate = \floor($bitrate);
+                $videoBitrate = \floor($videoBitrate);
 
-                if ($bitrate < $format->getKiloBitrate()) {
-                    $format->setKiloBitrate($bitrate);
+                if ($videoBitrate < $format->getKiloBitrate()) {
+                    $format->setKiloBitrate($videoBitrate);
                 }
+            }
+
+            // https://github.com/PHP-FFMpeg/PHP-FFMpeg/issues/711#issuecomment-609039605
+            $dimensions = $videoStream->getDimensions();
+            $width = $dimensions->getWidth();
+            $height = $dimensions->getHeight();
+            $isOddWidth = 0 !== $width % 2;
+            $isOddHeight = 0 !== $height % 2;
+
+            if ($isOddWidth || $isOddHeight) {
+                if ($isOddWidth) {
+                    $width = (\floor($width / 2) * 2) - 2;
+                }
+                if ($isOddHeight) {
+                    $height = (\floor($height / 2) * 2) - 2;
+                }
+                $media->filters()->resize(new Dimension($width, $height), 'inset')->synchronize();
             }
         }
 
