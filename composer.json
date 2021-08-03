@@ -102,7 +102,7 @@
         "phpstan/phpstan-symfony": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
         "phpstan/phpstan-doctrine": "^0.12",
-        "friendsofphp/php-cs-fixer": "^3.0"
+        "friendsofphp/php-cs-fixer": "^3.0, !=3.0.1"
     },
     "config": {
         "optimize-autoloader": true,
