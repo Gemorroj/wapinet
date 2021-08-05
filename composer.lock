@@ -1826,16 +1826,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v3.5.2",
+            "version": "v3.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "4d4a9227fd6abbb6b6a668a708fc56b0355f3284"
+                "reference": "286b9776d25ac2cbf319fbde89418af62e2f313a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/4d4a9227fd6abbb6b6a668a708fc56b0355f3284",
-                "reference": "4d4a9227fd6abbb6b6a668a708fc56b0355f3284",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/286b9776d25ac2cbf319fbde89418af62e2f313a",
+                "reference": "286b9776d25ac2cbf319fbde89418af62e2f313a",
                 "shasum": ""
             },
             "require": {
@@ -1909,7 +1909,7 @@
             ],
             "support": {
                 "issues": "https://github.com/EasyCorp/EasyAdminBundle/issues",
-                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v3.5.2"
+                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v3.5.3"
             },
             "funding": [
                 {
@@ -1917,7 +1917,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-08-03T10:49:23+00:00"
+            "time": "2021-08-04T18:57:35+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -10223,16 +10223,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.0.0",
+            "version": "v3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "c15377bdfa8d1ecf186f1deadec39c89984e1167"
+                "reference": "990b979379502feb7f393d6c9aa36cc9b9765f24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/c15377bdfa8d1ecf186f1deadec39c89984e1167",
-                "reference": "c15377bdfa8d1ecf186f1deadec39c89984e1167",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/990b979379502feb7f393d6c9aa36cc9b9765f24",
+                "reference": "990b979379502feb7f393d6c9aa36cc9b9765f24",
                 "shasum": ""
             },
             "require": {
@@ -10299,7 +10299,7 @@
             "description": "A tool to automatically fix PHP code style",
             "support": {
                 "issues": "https://github.com/FriendsOfPHP/PHP-CS-Fixer/issues",
-                "source": "https://github.com/FriendsOfPHP/PHP-CS-Fixer/tree/v3.0.0"
+                "source": "https://github.com/FriendsOfPHP/PHP-CS-Fixer/tree/v3.0.2"
             },
             "funding": [
                 {
@@ -10307,7 +10307,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-05-03T21:51:58+00:00"
+            "time": "2021-08-04T19:28:19+00:00"
         },
         {
             "name": "myclabs/deep-copy",
