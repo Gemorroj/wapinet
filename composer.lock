@@ -469,16 +469,16 @@
         },
         {
             "name": "doctrine/annotations",
-            "version": "1.13.1",
+            "version": "1.13.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "e6e7b7d5b45a2f2abc5460cc6396480b2b1d321f"
+                "reference": "5b668aef16090008790395c02c893b1ba13f7e08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/e6e7b7d5b45a2f2abc5460cc6396480b2b1d321f",
-                "reference": "e6e7b7d5b45a2f2abc5460cc6396480b2b1d321f",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/5b668aef16090008790395c02c893b1ba13f7e08",
+                "reference": "5b668aef16090008790395c02c893b1ba13f7e08",
                 "shasum": ""
             },
             "require": {
@@ -535,9 +535,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/annotations/issues",
-                "source": "https://github.com/doctrine/annotations/tree/1.13.1"
+                "source": "https://github.com/doctrine/annotations/tree/1.13.2"
             },
-            "time": "2021-05-16T18:07:53+00:00"
+            "time": "2021-08-05T19:00:23+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -1826,16 +1826,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v3.5.3",
+            "version": "v3.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "286b9776d25ac2cbf319fbde89418af62e2f313a"
+                "reference": "43d5c05269d3da5c5747c600652ba7939c4ce994"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/286b9776d25ac2cbf319fbde89418af62e2f313a",
-                "reference": "286b9776d25ac2cbf319fbde89418af62e2f313a",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/43d5c05269d3da5c5747c600652ba7939c4ce994",
+                "reference": "43d5c05269d3da5c5747c600652ba7939c4ce994",
                 "shasum": ""
             },
             "require": {
@@ -1909,7 +1909,7 @@
             ],
             "support": {
                 "issues": "https://github.com/EasyCorp/EasyAdminBundle/issues",
-                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v3.5.3"
+                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v3.5.4"
             },
             "funding": [
                 {
@@ -1917,7 +1917,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-08-04T18:57:35+00:00"
+            "time": "2021-08-06T18:23:24+00:00"
         },
         {
             "name": "egulias/email-validator",
