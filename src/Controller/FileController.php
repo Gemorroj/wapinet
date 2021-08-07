@@ -380,10 +380,13 @@ class FileController extends AbstractController
 
             $archive = $this->get(Archive7z::class);
 
-            $archive->extractEntry($file->getFile(), $path, $tmpDir);
-            if (!$filesystem->exists($entry)) {
-                throw $this->createNotFoundException('Файл не найден.');
+            try {
+                $archive->extractEntry($file->getFile(), $path, $tmpDir);
+            } catch (\Exception $e) {
+                $filesystem->remove($entry); // 7zip создает пустой файл
+                throw $this->createNotFoundException('Не удалось распаковать файл.');
             }
+
             $filesystem->chmod($entry, 0644);
         }
 
