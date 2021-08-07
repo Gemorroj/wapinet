@@ -702,7 +702,7 @@ class File implements PasswordAuthenticatedUserInterface
     public function isAndroidApp(): bool
     {
         return 'application/vnd.android.package-archive' === $this->getMimeType() ||
-            (\in_array($this->getMimeType(), ['application/zip', 'application/x-zip', 'application/x-zip-compressed'], true) && '.apk' === \substr($this->getFileName(), -4));
+            (\in_array($this->getMimeType(), ['application/java-archive', 'application/zip', 'application/x-zip', 'application/x-zip-compressed'], true) && '.apk' === \substr($this->getFileName(), -4));
     }
 
     public function isSymbianApp(): bool
