@@ -70,7 +70,7 @@
         "vich/uploader-bundle": "^1.18",
         "liip/imagine-bundle": "^2.6",
         "gregwar/captcha-bundle": "^2.1.5",
-        "tufanbarisyildirim/php-apk-parser": "dev-master",
+        "tufanbarisyildirim/php-apk-parser": "^2.0",
         "geoip2/geoip2": "^2.11",
         "christeredvartsen/php-bittorrent": "^2.0",
         "foolz/sphinxql-query-builder": "^3.0",

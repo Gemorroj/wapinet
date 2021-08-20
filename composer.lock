@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "def3808de31ff2a9b56fad76c8b4cbb7",
+    "content-hash": "4b169c973e8d4c81526596c292b49fb5",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -1828,16 +1828,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v3.5.6",
+            "version": "v3.5.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "263cf54119497f5ea32f02af1dba2e4999a002ae"
+                "reference": "3499d3e954f95f3e12bebafbdafb71289f1a1435"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/263cf54119497f5ea32f02af1dba2e4999a002ae",
-                "reference": "263cf54119497f5ea32f02af1dba2e4999a002ae",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/3499d3e954f95f3e12bebafbdafb71289f1a1435",
+                "reference": "3499d3e954f95f3e12bebafbdafb71289f1a1435",
                 "shasum": ""
             },
             "require": {
@@ -1911,7 +1911,7 @@
             ],
             "support": {
                 "issues": "https://github.com/EasyCorp/EasyAdminBundle/issues",
-                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v3.5.6"
+                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v3.5.7"
             },
             "funding": [
                 {
@@ -1919,7 +1919,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-08-11T18:47:50+00:00"
+            "time": "2021-08-17T10:36:05+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -5673,16 +5673,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.13.4",
+            "version": "v1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "d81196c3f3b544e32997b67e955fb8291fdfe770"
+                "reference": "b298435b9df8d7c7d7d5473d4b9f850a7844d7ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/d81196c3f3b544e32997b67e955fb8291fdfe770",
-                "reference": "d81196c3f3b544e32997b67e955fb8291fdfe770",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/b298435b9df8d7c7d7d5473d4b9f850a7844d7ea",
+                "reference": "b298435b9df8d7c7d7d5473d4b9f850a7844d7ea",
                 "shasum": ""
             },
             "require": {
@@ -5721,7 +5721,7 @@
             "description": "Composer plugin for Symfony",
             "support": {
                 "issues": "https://github.com/symfony/flex/issues",
-                "source": "https://github.com/symfony/flex/tree/v1.13.4"
+                "source": "https://github.com/symfony/flex/tree/v1.14.0"
             },
             "funding": [
                 {
@@ -5737,7 +5737,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-08-03T08:14:48+00:00"
+            "time": "2021-08-20T17:26:27+00:00"
         },
         {
             "name": "symfony/form",
@@ -9660,16 +9660,16 @@
         },
         {
             "name": "tufanbarisyildirim/php-apk-parser",
-            "version": "dev-master",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tufanbarisyildirim/php-apk-parser.git",
-                "reference": "caa98f6d5e04caaf3612b08f816b0a6d2542247a"
+                "reference": "f9e311a399de8cddd112c2c6cf846d3578356eb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tufanbarisyildirim/php-apk-parser/zipball/caa98f6d5e04caaf3612b08f816b0a6d2542247a",
-                "reference": "caa98f6d5e04caaf3612b08f816b0a6d2542247a",
+                "url": "https://api.github.com/repos/tufanbarisyildirim/php-apk-parser/zipball/f9e311a399de8cddd112c2c6cf846d3578356eb5",
+                "reference": "f9e311a399de8cddd112c2c6cf846d3578356eb5",
                 "shasum": ""
             },
             "require": {
@@ -9677,12 +9677,11 @@
                 "ext-libxml": "*",
                 "ext-mbstring": "*",
                 "ext-simplexml": "*",
-                "php": ">=7.0"
+                "php": ">=7.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7.4"
+                "phpunit/phpunit": "^8.5"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -9710,9 +9709,9 @@
             ],
             "support": {
                 "issues": "https://github.com/tufanbarisyildirim/php-apk-parser/issues",
-                "source": "https://github.com/tufanbarisyildirim/php-apk-parser/tree/master"
+                "source": "https://github.com/tufanbarisyildirim/php-apk-parser/tree/2.0.3"
             },
-            "time": "2020-12-05T11:47:55+00:00"
+            "time": "2021-08-20T10:05:23+00:00"
         },
         {
             "name": "twig/extra-bundle",
@@ -10601,16 +10600,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.94",
+            "version": "0.12.95",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "3d0ba4c198a24e3c3fc489f3ec6ac9612c4be5d6"
+                "reference": "4ffddfe86e85dcc494a47e5f3dcfd1a2dccdce58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/3d0ba4c198a24e3c3fc489f3ec6ac9612c4be5d6",
-                "reference": "3d0ba4c198a24e3c3fc489f3ec6ac9612c4be5d6",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/4ffddfe86e85dcc494a47e5f3dcfd1a2dccdce58",
+                "reference": "4ffddfe86e85dcc494a47e5f3dcfd1a2dccdce58",
                 "shasum": ""
             },
             "require": {
@@ -10641,7 +10640,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.94"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.95"
             },
             "funding": [
                 {
@@ -10661,20 +10660,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-30T09:05:27+00:00"
+            "time": "2021-08-20T12:53:41+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
-            "version": "0.12.42",
+            "version": "0.12.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-doctrine.git",
-                "reference": "e3173175dcdaf808d5ca6408528dca669e4de19f"
+                "reference": "134ecca0a50742575c2da22c3f65b79eff6b9427"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/e3173175dcdaf808d5ca6408528dca669e4de19f",
-                "reference": "e3173175dcdaf808d5ca6408528dca669e4de19f",
+                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/134ecca0a50742575c2da22c3f65b79eff6b9427",
+                "reference": "134ecca0a50742575c2da22c3f65b79eff6b9427",
                 "shasum": ""
             },
             "require": {
@@ -10727,9 +10726,9 @@
             "description": "Doctrine extensions for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-doctrine/issues",
-                "source": "https://github.com/phpstan/phpstan-doctrine/tree/0.12.42"
+                "source": "https://github.com/phpstan/phpstan-doctrine/tree/0.12.43"
             },
-            "time": "2021-07-08T08:41:15+00:00"
+            "time": "2021-08-19T14:46:51+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
@@ -10787,16 +10786,16 @@
         },
         {
             "name": "phpstan/phpstan-symfony",
-            "version": "0.12.41",
+            "version": "0.12.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-symfony.git",
-                "reference": "4ae5cbe13a30ac1a377465a5d9dddfb1f1f5a0b3"
+                "reference": "2c240808116be56c7129d9d48b8dd40d1344e0eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/4ae5cbe13a30ac1a377465a5d9dddfb1f1f5a0b3",
-                "reference": "4ae5cbe13a30ac1a377465a5d9dddfb1f1f5a0b3",
+                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/2c240808116be56c7129d9d48b8dd40d1344e0eb",
+                "reference": "2c240808116be56c7129d9d48b8dd40d1344e0eb",
                 "shasum": ""
             },
             "require": {
@@ -10850,9 +10849,9 @@
             "description": "Symfony Framework extensions and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-symfony/issues",
-                "source": "https://github.com/phpstan/phpstan-symfony/tree/0.12.41"
+                "source": "https://github.com/phpstan/phpstan-symfony/tree/0.12.42"
             },
-            "time": "2021-07-18T07:21:50+00:00"
+            "time": "2021-08-18T06:56:59+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -12835,7 +12834,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "tufanbarisyildirim/php-apk-parser": 20,
         "stdtabs/phptabs": 20,
         "gemorroj/phpwhois": 20
     },
