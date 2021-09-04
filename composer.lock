@@ -1828,16 +1828,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v3.5.7",
+            "version": "v3.5.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "3499d3e954f95f3e12bebafbdafb71289f1a1435"
+                "reference": "5a64895ca6a09970fd416c385e7bd65bb7ef13c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/3499d3e954f95f3e12bebafbdafb71289f1a1435",
-                "reference": "3499d3e954f95f3e12bebafbdafb71289f1a1435",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/5a64895ca6a09970fd416c385e7bd65bb7ef13c8",
+                "reference": "5a64895ca6a09970fd416c385e7bd65bb7ef13c8",
                 "shasum": ""
             },
             "require": {
@@ -1911,7 +1911,7 @@
             ],
             "support": {
                 "issues": "https://github.com/EasyCorp/EasyAdminBundle/issues",
-                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v3.5.7"
+                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v3.5.8"
             },
             "funding": [
                 {
@@ -1919,7 +1919,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-08-17T10:36:05+00:00"
+            "time": "2021-09-03T18:19:43+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -10601,16 +10601,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.96",
+            "version": "0.12.98",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "a98bdc51318f20fcae8c953d266f81a70254917f"
+                "reference": "3bb7cc246c057405dd5e290c3ecc62ab51d57e00"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a98bdc51318f20fcae8c953d266f81a70254917f",
-                "reference": "a98bdc51318f20fcae8c953d266f81a70254917f",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/3bb7cc246c057405dd5e290c3ecc62ab51d57e00",
+                "reference": "3bb7cc246c057405dd5e290c3ecc62ab51d57e00",
                 "shasum": ""
             },
             "require": {
@@ -10641,7 +10641,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.96"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.98"
             },
             "funding": [
                 {
@@ -10661,20 +10661,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-08-21T11:55:13+00:00"
+            "time": "2021-09-02T12:33:01+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
-            "version": "0.12.43",
+            "version": "0.12.44",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-doctrine.git",
-                "reference": "134ecca0a50742575c2da22c3f65b79eff6b9427"
+                "reference": "5fe9a9b15707d9bc5178fa7cf0899e904d112ccd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/134ecca0a50742575c2da22c3f65b79eff6b9427",
-                "reference": "134ecca0a50742575c2da22c3f65b79eff6b9427",
+                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/5fe9a9b15707d9bc5178fa7cf0899e904d112ccd",
+                "reference": "5fe9a9b15707d9bc5178fa7cf0899e904d112ccd",
                 "shasum": ""
             },
             "require": {
@@ -10727,9 +10727,9 @@
             "description": "Doctrine extensions for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-doctrine/issues",
-                "source": "https://github.com/phpstan/phpstan-doctrine/tree/0.12.43"
+                "source": "https://github.com/phpstan/phpstan-doctrine/tree/0.12.44"
             },
-            "time": "2021-08-19T14:46:51+00:00"
+            "time": "2021-09-01T06:46:16+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
@@ -10787,22 +10787,22 @@
         },
         {
             "name": "phpstan/phpstan-symfony",
-            "version": "0.12.42",
+            "version": "0.12.44",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-symfony.git",
-                "reference": "2c240808116be56c7129d9d48b8dd40d1344e0eb"
+                "reference": "c1627fce5b505b3f53d9d4fbd4d7963603305f98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/2c240808116be56c7129d9d48b8dd40d1344e0eb",
-                "reference": "2c240808116be56c7129d9d48b8dd40d1344e0eb",
+                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/c1627fce5b505b3f53d9d4fbd4d7963603305f98",
+                "reference": "c1627fce5b505b3f53d9d4fbd4d7963603305f98",
                 "shasum": ""
             },
             "require": {
                 "ext-simplexml": "*",
                 "php": "^7.1 || ^8.0",
-                "phpstan/phpstan": "^0.12.86"
+                "phpstan/phpstan": "^0.12.98"
             },
             "conflict": {
                 "symfony/framework-bundle": "<3.0"
@@ -10850,9 +10850,9 @@
             "description": "Symfony Framework extensions and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-symfony/issues",
-                "source": "https://github.com/phpstan/phpstan-symfony/tree/0.12.42"
+                "source": "https://github.com/phpstan/phpstan-symfony/tree/0.12.44"
             },
-            "time": "2021-08-18T06:56:59+00:00"
+            "time": "2021-09-02T12:14:11+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -11174,16 +11174,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.5.8",
+            "version": "9.5.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "191768ccd5c85513b4068bdbe99bb6390c7d54fb"
+                "reference": "ea8c2dfb1065eb35a79b3681eee6e6fb0a6f273b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/191768ccd5c85513b4068bdbe99bb6390c7d54fb",
-                "reference": "191768ccd5c85513b4068bdbe99bb6390c7d54fb",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ea8c2dfb1065eb35a79b3681eee6e6fb0a6f273b",
+                "reference": "ea8c2dfb1065eb35a79b3681eee6e6fb0a6f273b",
                 "shasum": ""
             },
             "require": {
@@ -11261,7 +11261,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.8"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.9"
             },
             "funding": [
                 {
@@ -11273,7 +11273,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-07-31T15:17:34+00:00"
+            "time": "2021-08-31T06:47:40+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -12128,6 +12128,7 @@
                     "type": "github"
                 }
             ],
+            "abandoned": true,
             "time": "2020-09-28T06:45:17+00:00"
         },
         {
