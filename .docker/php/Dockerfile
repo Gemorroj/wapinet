@@ -8,7 +8,7 @@ RUN set -xe \
 
 # Composer
 RUN set -xe \
-    && curl -L -o /composer.phar https://github.com/composer/composer/releases/download/2.1.6/composer.phar \
+    && curl -L -o /composer.phar https://github.com/composer/composer/releases/download/2.1.8/composer.phar \
     && chmod 755 /composer.phar
 
 # GeoIP
