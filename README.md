@@ -3,7 +3,7 @@
 ##### Лицензия GPL v3
 
 ##### Используются:
-- Symfony 5.2
+- Symfony 5.3
 - Jquery Mobile
 - PHP 8.0
 - MySQL 8.0
@@ -258,7 +258,7 @@ hash -r
 ### Установка сайта
 ```bash
 cd /var/www
-curl -L -o composer.phar https://github.com/composer/composer/releases/download/2.1.9/composer.phar
+curl -L -o composer.phar https://github.com/composer/composer/releases/download/2.1.10/composer.phar
 chmod 755 composer.phar
 curl -L -o GeoLite2-Country.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-Country.mmdb
 
