@@ -98,10 +98,10 @@
         "symfony/stopwatch": "^5.3",
         "symfony/var-dumper": "^5.3",
         "symfony/web-profiler-bundle": "^5.3",
-        "phpstan/phpstan": "^0.12",
-        "phpstan/phpstan-symfony": "^0.12",
-        "phpstan/phpstan-phpunit": "^0.12",
-        "phpstan/phpstan-doctrine": "^0.12",
+        "phpstan/phpstan": "^1.0",
+        "phpstan/phpstan-symfony": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpstan/phpstan-doctrine": "^1.0",
         "friendsofphp/php-cs-fixer": "^3.2"
     },
     "config": {
