@@ -80,7 +80,7 @@
 
         "gemorroj/phpwhois": "dev-master",
         "gemorroj/stop-spam": "^3.2",
-        "gemorroj/archive7z": "^5.1.1",
+        "gemorroj/archive7z": "^5.2",
         "gemorroj/m3u-parser": "^5.3",
         "gemorroj/syntax": "^4.1.1",
         "gemorroj/htmlvalidator": "^3.1",
@@ -93,7 +93,7 @@
         "symfony/browser-kit": "^5.3",
         "symfony/css-selector": "^5.3",
         "symfony/debug-bundle": "^5.3",
-        "symfony/maker-bundle": "^1.31",
+        "symfony/maker-bundle": "^1.35",
         "symfony/phpunit-bridge": "^5.3",
         "symfony/stopwatch": "^5.3",
         "symfony/var-dumper": "^5.3",
