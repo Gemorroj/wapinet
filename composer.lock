@@ -2500,12 +2500,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/phpwhois.git",
-                "reference": "6adce2fe1f65beaf2d0c9bbe9fd6fe55c42973ab"
+                "reference": "6385197547a9a11ecd690e14763ceca915dc1997"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/6adce2fe1f65beaf2d0c9bbe9fd6fe55c42973ab",
-                "reference": "6adce2fe1f65beaf2d0c9bbe9fd6fe55c42973ab",
+                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/6385197547a9a11ecd690e14763ceca915dc1997",
+                "reference": "6385197547a9a11ecd690e14763ceca915dc1997",
                 "shasum": ""
             },
             "require": {
@@ -2513,7 +2513,7 @@
                 "php": ">=7.3"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.19",
+                "friendsofphp/php-cs-fixer": "^3.0",
                 "phpunit/phpunit": "^9.5"
             },
             "default-branch": true,
@@ -2534,7 +2534,7 @@
                 "issues": "https://github.com/Gemorroj/phpwhois/issues",
                 "source": "https://github.com/Gemorroj/phpwhois/tree/master"
             },
-            "time": "2021-05-07T18:41:10+00:00"
+            "time": "2021-11-27T14:12:43+00:00"
         },
         {
             "name": "gemorroj/stop-spam",
