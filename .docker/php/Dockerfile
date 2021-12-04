@@ -1,4 +1,4 @@
-FROM php:8.0-fpm-alpine3.14
+FROM php:8.0-fpm-alpine
 
 # Update repo and install some utilites
 RUN set -xe \
