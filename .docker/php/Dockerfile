@@ -7,9 +7,7 @@ RUN set -xe \
     && apk --no-cache add htop unzip gzip p7zip git ffmpeg
 
 # Composer
-RUN set -xe \
-    && curl -L -o /composer.phar https://github.com/composer/composer/releases/download/2.1.14/composer.phar \
-    && chmod 755 /composer.phar
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # GeoIP
 RUN set -xe \
