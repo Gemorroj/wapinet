@@ -34,7 +34,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mime\MimeTypes;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -78,7 +77,7 @@ class FileController extends AbstractController
     /**
      * @Route("/search/{key}", name="file_search", defaults={"key": null}, requirements={"key": "[a-zA-Z0-9]+"})
      */
-    public function searchAction(Request $request, SessionInterface $session, ?string $key = null): Response
+    public function searchAction(Request $request, ?string $key = null): Response
     {
         $page = $request->get('page', 1);
         $form = $this->createForm(SearchType::class);
@@ -91,7 +90,7 @@ class FileController extends AbstractController
                 if ($form->isValid()) {
                     $data = $form->getData();
                     $key = \uniqid('', false);
-                    $session->set('file_search', [
+                    $request->getSession()->set('file_search', [
                         'key' => $key,
                         'data' => $data,
                     ]);
@@ -100,8 +99,8 @@ class FileController extends AbstractController
                 return $this->redirectToRoute('file_search', ['key' => $key]);
             }
 
-            if (null !== $key && $session->has('file_search')) {
-                $search = $session->get('file_search');
+            if (null !== $key && $request->getSession()->has('file_search')) {
+                $search = $request->getSession()->get('file_search');
                 if ($key === $search['key']) {
                     $form->setData($search['data']);
                     $pagerfanta = $this->searchManticore($search['data'], $page);

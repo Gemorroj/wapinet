@@ -21,7 +21,6 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Router;
 
@@ -153,7 +152,7 @@ class GistController extends AbstractController
     /**
      * @Route("/search/{key}", name="gist_search", requirements={"key": "[a-zA-Z0-9]+"}, defaults={"key": null})
      */
-    public function searchAction(Request $request, SessionInterface $session, ?string $key = null): Response
+    public function searchAction(Request $request, ?string $key = null): Response
     {
         $page = $request->get('page', 1);
         $form = $this->createForm(SearchType::class);
@@ -166,7 +165,7 @@ class GistController extends AbstractController
                 if ($form->isValid()) {
                     $data = $form->getData();
                     $key = \uniqid('', false);
-                    $session->set('gist_search', [
+                    $request->getSession()->set('gist_search', [
                         'key' => $key,
                         'data' => $data,
                     ]);
@@ -175,8 +174,8 @@ class GistController extends AbstractController
                 return $this->redirectToRoute('gist_search', ['key' => $key]);
             }
 
-            if (null !== $key && true === $session->has('gist_search')) {
-                $search = $session->get('gist_search');
+            if (null !== $key && true === $request->getSession()->has('gist_search')) {
+                $search = $request->getSession()->get('gist_search');
                 if ($key === $search['key']) {
                     $form->setData($search['data']);
                     $pagerfanta = $this->searchManticore($search['data'], $page);

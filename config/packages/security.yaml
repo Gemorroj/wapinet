@@ -1,5 +1,4 @@
 security:
-    # https://symfony.com/doc/current/security/experimental_authenticators.html
     enable_authenticator_manager: true
 
     password_hashers:
@@ -14,7 +13,7 @@ security:
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         wapinet_user_provider:
             id: App\Security\UserProvider

@@ -49,7 +49,7 @@ class ProfileType extends AbstractType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'wapinet_user_profile';
     }

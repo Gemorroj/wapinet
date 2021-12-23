@@ -35,10 +35,8 @@ class HtmlValidatorType extends AbstractType
 
     /**
      * Уникальное имя формы.
-     *
-     * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'html_validator';
     }

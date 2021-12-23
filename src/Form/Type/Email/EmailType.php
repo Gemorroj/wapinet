@@ -78,7 +78,7 @@ class EmailType extends AbstractType
         $builder->add('submit', SubmitType::class, ['label' => 'Отправить']);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'email_form';
     }

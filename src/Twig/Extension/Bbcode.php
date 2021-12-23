@@ -20,7 +20,7 @@ class Bbcode extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('wapinet_bbcode_parse', function (string $text): string {
@@ -41,7 +41,7 @@ class WapinetSpoiler extends Spoiler
     /**
      * {@inheritdoc}
      */
-    protected function getSpoiler($id)
+    protected function getSpoiler($id): string
     {
         return '<input data-inline="true" data-mini="true" class="bb_spoiler" type="button" value="Спойлер" onclick="$(\'#'.$id.'\').toggle(); return false;" />';
     }

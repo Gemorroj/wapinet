@@ -13,7 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -24,7 +23,7 @@ class UsersController extends AbstractController
     /**
      * @Route("/users/{key}", name="wapinet_users", defaults={"key": null}, requirements={"key": "[a-zA-Z0-9]+"})
      */
-    public function indexAction(Request $request, SessionInterface $session, ?string $key = null): Response
+    public function indexAction(Request $request, ?string $key = null): Response
     {
         $page = $request->get('page', 1);
         $form = $this->createForm(SearchType::class);
@@ -37,7 +36,7 @@ class UsersController extends AbstractController
                 if ($form->isValid()) {
                     $data = $form->getData();
                     $key = \uniqid('', false);
-                    $session->set('users_search', [
+                    $request->getSession()->set('users_search', [
                         'key' => $key,
                         'data' => $data,
                     ]);
@@ -46,8 +45,8 @@ class UsersController extends AbstractController
                 return $this->redirectToRoute('wapinet_users', ['key' => $key]);
             }
 
-            if (null !== $key && true === $session->has('users_search')) {
-                $search = $session->get('users_search');
+            if (null !== $key && true === $request->getSession()->has('users_search')) {
+                $search = $request->getSession()->get('users_search');
                 if ($key === $search['key']) {
                     $form->setData($search['data']);
                     $pagerfanta = $this->searchManticore($search['data'], $page);

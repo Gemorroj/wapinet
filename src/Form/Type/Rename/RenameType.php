@@ -29,10 +29,8 @@ class RenameType extends AbstractType
 
     /**
      * Уникальное имя формы.
-     *
-     * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'rename';
     }

@@ -12,7 +12,7 @@ class Base64 extends AbstractExtension
      *
      * @return array An array of global functions
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFunction('base64_encode', 'base64_encode'),

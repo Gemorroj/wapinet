@@ -3,6 +3,7 @@
 namespace App\Entity\File;
 
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -13,7 +14,7 @@ class FileUrl extends UploadedFile
     /**
      * {@inheritdoc}
      */
-    public function move($directory, string $name = null)
+    public function move($directory, string $name = null): File
     {
         $target = $this->getTargetFile($directory, $name);
 
