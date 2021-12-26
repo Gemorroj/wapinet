@@ -12,10 +12,7 @@ use Symfony\Component\HttpFoundation\File\File;
  */
 class HtmlValidator
 {
-    /**
-     * @var W3CService
-     */
-    protected $htmlValidator;
+    private W3CService $htmlValidator;
 
     /**
      * Конструктор

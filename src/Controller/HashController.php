@@ -50,7 +50,7 @@ class HashController extends AbstractController
     protected function getHash(array $data): string
     {
         /** @var Hash $hash */
-        $hash = $this->get(Hash::class);
+        $hash = $this->container->get(Hash::class);
 
         $algorithms = $hash->getAlgorithms();
         $algorithm = $algorithms[$data['algorithm']];

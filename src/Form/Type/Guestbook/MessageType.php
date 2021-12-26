@@ -17,14 +17,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  */
 class MessageType extends AbstractType
 {
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $authorizationChecker;
-    /**
-     * @var ParameterBagInterface
-     */
-    private $parameterBag;
+    private AuthorizationCheckerInterface $authorizationChecker;
+    private ParameterBagInterface $parameterBag;
 
     public function __construct(AuthorizationCheckerInterface $authorizationChecker, ParameterBagInterface $parameterBag)
     {

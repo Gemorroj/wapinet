@@ -17,18 +17,9 @@ use Twig\TwigFilter;
 
 class Video extends AbstractExtension
 {
-    /**
-     * @var FfmpegHelper
-     */
-    private $ffmpegHelper;
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-    /**
-     * @var ParameterBagInterface
-     */
-    private $parameterBag;
+    private FfmpegHelper $ffmpegHelper;
+    private LoggerInterface $logger;
+    private ParameterBagInterface $parameterBag;
 
     public function __construct(FfmpegHelper $ffmpegHelper, LoggerInterface $logger, ParameterBagInterface $parameterBag)
     {

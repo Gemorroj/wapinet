@@ -8,6 +8,7 @@ use App\Repository\GuestbookRepository;
 use App\Service\BotChecker;
 use App\Service\Paginate;
 use App\Service\StopSpam;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,13 +23,12 @@ class GuestbookController extends AbstractController
     /**
      * @Route("", methods={"GET", "HEAD", "OPTIONS"}, name="guestbook_index")
      */
-    public function indexAction(Request $request, Paginate $paginate): Response
+    public function indexAction(Request $request, Paginate $paginate, GuestbookRepository $guestbookRepository): Response
     {
         $form = $this->createForm(MessageType::class);
 
         $page = $request->get('page', 1);
-        /** @var GuestbookRepository $guestbookRepository */
-        $guestbookRepository = $this->getDoctrine()->getRepository(Guestbook::class);
+
         $query = $guestbookRepository->getListQuery();
         $pagerfanta = $paginate->paginate($query, $page);
 
@@ -41,7 +41,7 @@ class GuestbookController extends AbstractController
     /**
      * @Route("", methods={"POST"}, name="guestbook_add")
      */
-    public function addAction(Request $request, BotChecker $botChecker, StopSpam $stopSpam): RedirectResponse
+    public function addAction(Request $request, BotChecker $botChecker, StopSpam $stopSpam, EntityManagerInterface $entityManager): RedirectResponse
     {
         $form = $this->createForm(MessageType::class);
 
@@ -60,7 +60,6 @@ class GuestbookController extends AbstractController
                     $guestbook->setIp($request->getClientIp());
                     $guestbook->setBrowser($request->headers->get('User-Agent', ''));
 
-                    $entityManager = $this->getDoctrine()->getManager();
                     $entityManager->persist($guestbook);
                     $entityManager->flush();
 

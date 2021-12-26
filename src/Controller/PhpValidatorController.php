@@ -47,7 +47,7 @@ class PhpValidatorController extends AbstractController
     protected function getPhpValidator(array $data): array
     {
         /** @var PhpValidator $phpValidator */
-        $phpValidator = $this->get(PhpValidator::class);
+        $phpValidator = $this->container->get(PhpValidator::class);
 
         if (null !== $data['php']) {
             return $phpValidator->validateFragment($data['php']);

@@ -47,7 +47,7 @@ class CodeController extends AbstractController
     protected function getCode(array $data): string
     {
         /** @var Code $code */
-        $code = $this->get(Code::class);
+        $code = $this->container->get(Code::class);
 
         if (null !== $data['text']) {
             return $code->convertString($data['algorithm'], $data['text']);

@@ -5,6 +5,7 @@ namespace App\Controller\User;
 use App\Entity\Subscriber;
 use App\Entity\User;
 use App\Form\Type\User\SubscriberType;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -20,12 +21,12 @@ class SubscriberController extends AbstractController
     /**
      * @Route("/subscriber/edit", name="wapinet_user_subscriber_edit")
      */
-    public function editAction(Request $request): Response
+    public function editAction(Request $request, EntityManagerInterface $entityManager): Response
     {
         /** @var User|null $user */
         $user = $this->getUser();
-        if (!$user || !$user instanceof User) {
-            throw $this->createAccessDeniedException('Вы должны быть авторизованы');
+        if (!$user) {
+            throw $this->createAccessDeniedException();
         }
 
         $form = $this->createForm(SubscriberType::class);
@@ -39,9 +40,8 @@ class SubscriberController extends AbstractController
                     /** @var Subscriber $data */
                     $data = $form->getData();
 
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($data);
-                    $em->flush();
+                    $entityManager->persist($data);
+                    $entityManager->flush();
 
                     $this->addFlash('success', 'Подписки успешно обновлены');
 

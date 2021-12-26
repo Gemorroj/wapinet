@@ -13,10 +13,7 @@ use Symfony\Component\HttpFoundation\File\File;
  */
 class CssValidator
 {
-    /**
-     * @var W3CService
-     */
-    protected $cssValidator;
+    private W3CService $cssValidator;
 
     /**
      * Конструктор

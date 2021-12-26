@@ -3,18 +3,18 @@
 namespace App\Form\Type;
 
 use App\Form\DataTransformer\TagsDataTransformer;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\TagRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class TagsType extends AbstractType
 {
-    private EntityManagerInterface $entityManager;
+    private TagRepository $tagRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(TagRepository $tagRepository)
     {
-        $this->entityManager = $entityManager;
+        $this->tagRepository = $tagRepository;
     }
 
     /**
@@ -24,7 +24,7 @@ class TagsType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->addViewTransformer(new TagsDataTransformer($this->entityManager));
+        $builder->addViewTransformer(new TagsDataTransformer($this->tagRepository));
     }
 
     /**

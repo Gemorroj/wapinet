@@ -54,9 +54,9 @@ class WhoisController extends AbstractController
      *
      * @return string HTML текст
      */
-    protected function getWhois(array $data): string
+    private function getWhois(array $data): string
     {
-        $phpwhois = $this->get(Phpwhois::class);
+        $phpwhois = $this->container->get(Phpwhois::class);
         $whois = $phpwhois->getWhois();
 
         //$whois->non_icann = true;

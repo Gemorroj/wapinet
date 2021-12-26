@@ -19,11 +19,11 @@ class EventsController extends AbstractController
      */
     public function indexAction(Request $request, Paginate $paginate, EventRepository $eventRepository): Response
     {
-        $page = $request->get('page', 1);
         $user = $this->getUser();
-        if (null === $user) {
-            throw $this->createAccessDeniedException('Пользователь не найден');
+        if (!$user) {
+            throw $this->createAccessDeniedException();
         }
+        $page = $request->get('page', 1);
 
         $events = $eventRepository->findEventsQuery($user);
 

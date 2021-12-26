@@ -54,7 +54,7 @@ class RenameController extends AbstractController
             $file->setContentDisposition(
                 ResponseHeaderBag::DISPOSITION_ATTACHMENT,
                 $data['name'],
-                $this->get(Translit::class)->toAscii($data['name'])
+                $this->container->get(Translit::class)->toAscii($data['name'])
             );
 
             return $file;

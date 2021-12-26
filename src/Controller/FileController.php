@@ -14,6 +14,7 @@ use App\Form\Type\File\SearchType;
 use App\Form\Type\File\UploadType;
 use App\Repository\FileRepository;
 use App\Repository\TagRepository;
+use App\Repository\UserRepository;
 use App\Service\Archiver\Archive7z;
 use App\Service\BotChecker;
 use App\Service\File\Meta;
@@ -22,6 +23,7 @@ use App\Service\Paginate;
 use App\Service\Timezone;
 use App\Service\Translit;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Pagerfanta;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -65,11 +67,9 @@ class FileController extends AbstractController
     /**
      * @Route("/statistic", name="file_statistic")
      */
-    public function statisticAction(): Response
+    public function statisticAction(FileRepository $fileRepository): Response
     {
-        /** @var FileRepository $repository */
-        $repository = $this->getDoctrine()->getRepository(File::class);
-        $statistic = $repository->getStatistic();
+        $statistic = $fileRepository->getStatistic();
 
         return $this->render('File/statistic.html.twig', ['statistic' => $statistic]);
     }
@@ -120,7 +120,7 @@ class FileController extends AbstractController
     protected function searchManticore(array $data, int $page = 1): Pagerfanta
     {
         /** @var Manticore $client */
-        $client = $this->get(Manticore::class);
+        $client = $this->container->get(Manticore::class);
 
         $sphinxQl = $client->select($page)
             ->from(['files'])
@@ -147,7 +147,7 @@ class FileController extends AbstractController
     /**
      * @Route("/hidden", name="file_hidden")
      */
-    public function hiddenAction(Request $request): Response
+    public function hiddenAction(Request $request, FileRepository $fileRepository, Paginate $paginate): Response
     {
         /** @var User|null $user */
         $user = $this->getUser();
@@ -158,10 +158,8 @@ class FileController extends AbstractController
 
         $page = $request->get('page', 1);
 
-        /** @var FileRepository $repository */
-        $repository = $this->getDoctrine()->getRepository(File::class);
-        $query = $repository->getHiddenQuery();
-        $pagerfanta = $this->get(Paginate::class)->paginate($query, $page);
+        $query = $fileRepository->getHiddenQuery();
+        $pagerfanta = $paginate->paginate($query, $page);
 
         return $this->render('File/list.html.twig', [
             'pagerfanta' => $pagerfanta,
@@ -171,14 +169,12 @@ class FileController extends AbstractController
     /**
      * @Route("/tags", name="file_tags")
      */
-    public function tagsAction(Request $request): Response
+    public function tagsAction(Request $request, TagRepository $tagRepository, Paginate $paginate): Response
     {
         $page = $request->get('page', 1);
-        /** @var TagRepository $tagRepository */
-        $tagRepository = $this->getDoctrine()->getRepository(Tag::class);
         $query = $tagRepository->getTagsQuery();
 
-        $pagerfanta = $this->get(Paginate::class)->paginate($query, $page);
+        $pagerfanta = $paginate->paginate($query, $page);
 
         return $this->render('File/tags.html.twig', [
             'pagerfanta' => $pagerfanta,
@@ -188,22 +184,18 @@ class FileController extends AbstractController
     /**
      * @Route("/tags/{tagName}", name="file_tag", requirements={"tagName": ".+"})
      */
-    public function tagAction(Request $request, string $tagName): Response
+    public function tagAction(Request $request, string $tagName, TagRepository $tagRepository, FileRepository $fileRepository, Paginate $paginate): Response
     {
         $page = $request->get('page', 1);
-        /** @var TagRepository $tagRepository */
-        $tagRepository = $this->getDoctrine()->getRepository(Tag::class);
 
         $tag = $tagRepository->getTagByName($tagName);
         if (null === $tag) {
             throw $this->createNotFoundException('Тэг не найден');
         }
 
-        /** @var FileRepository $fileRepository */
-        $fileRepository = $this->getDoctrine()->getRepository(File::class);
         $query = $fileRepository->getTagFilesQuery($tag);
 
-        $pagerfanta = $this->get(Paginate::class)->paginate($query, $page);
+        $pagerfanta = $paginate->paginate($query, $page);
 
         return $this->render('File/tag.html.twig', [
             'pagerfanta' => $pagerfanta,
@@ -214,20 +206,18 @@ class FileController extends AbstractController
     /**
      * @Route("/users/{username}", name="file_user", requirements={"username": ".+"})
      */
-    public function userAction(Request $request, string $username): Response
+    public function userAction(Request $request, string $username, UserRepository $userRepository, FileRepository $fileRepository, Paginate $paginate): Response
     {
         $page = $request->get('page', 1);
         /** @var User|null $user */
-        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $username]);
-        if (null === $user) {
-            throw $this->createNotFoundException('Пользователь не найден');
+        $user = $userRepository->findOneBy(['username' => $username]);
+        if (!$user) {
+            throw $this->createNotFoundException();
         }
 
-        /** @var FileRepository $fileRepository */
-        $fileRepository = $this->getDoctrine()->getRepository(File::class);
         $query = $fileRepository->getUserFilesQuery($user);
 
-        $pagerfanta = $this->get(Paginate::class)->paginate($query, $page);
+        $pagerfanta = $paginate->paginate($query, $page);
 
         return $this->render('File/user.html.twig', [
             'pagerfanta' => $pagerfanta,
@@ -238,7 +228,7 @@ class FileController extends AbstractController
     /**
      * @Route("/list/{date}/{category}", name="file_list", defaults={"date": "all", "category": null}, requirements={"date": "all|today|yesterday", "category": "video|audio|image|text|office|archive|android|java"})
      */
-    public function listAction(Request $request, Timezone $timezoneHelper, string $date = 'all', ?string $category = null): Response
+    public function listAction(Request $request, Timezone $timezoneHelper, FileRepository $fileRepository, Paginate $paginate, string $date = 'all', ?string $category = null): Response
     {
         $page = $request->get('page', 1);
 
@@ -255,14 +245,12 @@ class FileController extends AbstractController
                 break;
         }
 
-        /** @var FileRepository $fileRepository */
-        $fileRepository = $this->getDoctrine()->getRepository(File::class);
         $query = $fileRepository->getListQuery(
             $datetimeStart,
             $datetimeEnd,
             $category
         );
-        $pagerfanta = $this->get(Paginate::class)->paginate($query, $page);
+        $pagerfanta = $paginate->paginate($query, $page);
 
         return $this->render('File/list.html.twig', [
             'pagerfanta' => $pagerfanta,
@@ -274,10 +262,10 @@ class FileController extends AbstractController
     /**
      * @Route("/{id}", name="file_view", requirements={"id": "\d+"})
      */
-    public function viewAction(File $file, PasswordHasherFactoryInterface $passwordHasherFactory, Meta $fileMeta): Response
+    public function viewAction(Request $request, File $file, PasswordHasherFactoryInterface $passwordHasherFactory, Meta $fileMeta): Response
     {
         if (null !== $file->getPassword() && !$this->isGranted('ROLE_ADMIN') && (!($this->getUser() instanceof User) || !($file->getUser() instanceof User) || !$file->getUser()->isEqualTo($this->getUser()))) {
-            return $this->passwordAction($file, $passwordHasherFactory, $fileMeta);
+            return $this->passwordAction($request, $file, $passwordHasherFactory, $fileMeta);
         }
 
         if ($file->isHidden()) {
@@ -305,7 +293,7 @@ class FileController extends AbstractController
         $response = $this->render('File/view.html.twig', ['file' => $file]);
         $this->incrementViews($file);
 
-        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager = $this->container->get('doctrine')->getManager();
         $entityManager->persist($file);
         $entityManager->flush();
 
@@ -322,17 +310,16 @@ class FileController extends AbstractController
         try {
             $meta = $fileMeta->setFile($file)->getFileMeta();
         } catch (\Exception $e) {
-            $this->get(LoggerInterface::class)->warning('Не удалось получить мета-информацию из файла.', [$e]);
+            $this->container->get(LoggerInterface::class)->warning('Не удалось получить мета-информацию из файла.', [$e]);
         }
 
         $file->setMeta($meta);
     }
 
-    public function passwordAction(File $file, PasswordHasherFactoryInterface $passwordHasherFactory, Meta $fileMeta): Response
+    public function passwordAction(Request $request, File $file, PasswordHasherFactoryInterface $passwordHasherFactory, Meta $fileMeta): Response
     {
         $passwordHasher = $passwordHasherFactory->getPasswordHasher($file);
         $form = $this->createForm(PasswordType::class);
-        $request = $this->get('request_stack')->getCurrentRequest();
 
         try {
             $form->handleRequest($request);
@@ -360,7 +347,7 @@ class FileController extends AbstractController
     /**
      * @Route("/{id}/download/{name}", name="file_archive_download_file", requirements={"id": "\d+"})
      */
-    public function archiveDownloadFileAction(Request $request, Filesystem $filesystem, int $id, string $name): BinaryFileResponse
+    public function archiveDownloadFileAction(Request $request, Filesystem $filesystem, FileRepository $fileRepository, int $id, string $name): BinaryFileResponse
     {
         $path = (string) \str_replace('\\', '/', $request->get('path', ''));
         if ('' === $path) {
@@ -372,12 +359,12 @@ class FileController extends AbstractController
 
         if (!$filesystem->exists($entry)) { // распаковываем архив
             /** @var File|null $file */
-            $file = $this->getDoctrine()->getRepository(File::class)->find($id);
-            if (null === $file) {
+            $file = $fileRepository->find($id);
+            if (!$file) {
                 throw $this->createNotFoundException('Файл не найден.');
             }
 
-            $archive = $this->get(Archive7z::class);
+            $archive = $this->container->get(Archive7z::class);
 
             try {
                 $archive->extractEntry($file->getFile(), $path, $tmpDir);
@@ -390,13 +377,13 @@ class FileController extends AbstractController
         }
 
         $file = new BinaryFileResponse(
-            $this->get(\App\Service\File\File::class)->checkFile($tmpDir, $path, true)
+            $this->container->get(\App\Service\File\File::class)->checkFile($tmpDir, $path, true)
         );
 
         $file->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             $name,
-            $this->get(Translit::class)->toAscii($name)
+            $this->container->get(Translit::class)->toAscii($name)
         );
 
         return $file;
@@ -405,17 +392,16 @@ class FileController extends AbstractController
     /**
      * @Route("/accept/{id}", name="file_accept", requirements={"id": "\d+"})
      */
-    public function acceptAction(File $file): Response
+    public function acceptAction(File $file, EntityManagerInterface $entityManager): Response
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException('Доступ запрещен.');
         }
 
         $file->setHidden(false);
-        // БД
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($file);
-        $em->flush();
+
+        $entityManager->persist($file);
+        $entityManager->flush();
 
         // переадресация на файл
         $url = $this->generateUrl('file_view', ['id' => $file->getId()], Router::ABSOLUTE_URL);
@@ -426,21 +412,19 @@ class FileController extends AbstractController
     /**
      * @Route("/delete/{id}", name="file_delete", methods={"POST"}, requirements={"id": "\d+"}, options={"expose": true})
      */
-    public function deleteAction(Request $request, File $file): Response
+    public function deleteAction(Request $request, File $file, EntityManagerInterface $entityManager): Response
     {
         if (!$this->isGranted('DELETE', $file) && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException('Доступ запрещен.');
         }
 
-        // БД
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($file);
+        $entityManager->remove($file);
 
         // кэш
-        $this->get(\App\Service\File\File::class)->cleanupFile($file);
+        $this->container->get(\App\Service\File\File::class)->cleanupFile($file);
 
         // сам файл и сброс в БД
-        $em->flush();
+        $entityManager->flush();
 
         // переадресация на главную
         $url = $this->generateUrl('file_index', [], Router::ABSOLUTE_URL);
@@ -459,7 +443,7 @@ class FileController extends AbstractController
     {
         $this->denyAccessUnlessGranted('EDIT', $file);
 
-        $this->get(\App\Service\File\File::class)->copyFileTagsToTags($file);
+        $this->container->get(\App\Service\File\File::class)->copyFileTagsToTags($file);
 
         $oldFile = clone $file;
         $form = $this->createForm(EditType::class, $file);
@@ -493,9 +477,10 @@ class FileController extends AbstractController
         if (null !== $file) {
             $hash = \md5_file($file->getPathname());
 
-            $existingFile = $this->getDoctrine()->getRepository(File::class)->findOneBy(['hash' => $hash]);
+            $entityManager = $this->container->get('doctrine')->getManager();
+            $existingFile = $entityManager->getRepository(File::class)->findOneBy(['hash' => $hash]);
             if (null !== $existingFile) {
-                throw new FileDuplicatedException($existingFile, $this->get('router'));
+                throw new FileDuplicatedException($existingFile, $this->container->get('router'));
             }
 
             $data->setHash($hash);
@@ -518,20 +503,20 @@ class FileController extends AbstractController
         $data->setUpdatedAtValue();
 
         if (null !== $data->getPlainPassword()) {
-            $this->get(\App\Service\File\File::class)->setPassword($data, $data->getPlainPassword());
+            $this->container->get(\App\Service\File\File::class)->setPassword($data, $data->getPlainPassword());
             $data->setTags(new ArrayCollection());
         } else {
-            $this->get(\App\Service\File\File::class)->removePassword($data);
+            $this->container->get(\App\Service\File\File::class)->removePassword($data);
         }
         $this->makeEditFileTags($data);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->merge($data);
+        $entityManager = $this->container->get('doctrine')->getManager();
+        $entityManager->persist($data);
 
         // если заменен файл
         if (null !== $file) {
             // чистим старый файл и кэш
-            $this->get(\App\Service\File\File::class)->cleanupFile($oldData);
+            $this->container->get(\App\Service\File\File::class)->cleanupFile($oldData);
         }
 
         $entityManager->flush();
@@ -592,9 +577,10 @@ class FileController extends AbstractController
 
         $hash = \md5_file($file->getPathname());
 
-        $existingFile = $this->getDoctrine()->getRepository(File::class)->findOneBy(['hash' => $hash]);
+        $entityManager = $this->container->get('doctrine')->getManager();
+        $existingFile = $entityManager->getRepository(File::class)->findOneBy(['hash' => $hash]);
         if (null !== $existingFile) {
-            throw new FileDuplicatedException($existingFile, $this->get('router'));
+            throw new FileDuplicatedException($existingFile, $this->container->get('router'));
         }
 
         $data->setHash($hash);
@@ -623,12 +609,12 @@ class FileController extends AbstractController
 
         $this->makeFileTags($data);
 
-        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager = $this->container->get('doctrine')->getManager();
         $entityManager->persist($data);
 
         $entityManager->flush();
 
-        $this->get(EventDispatcherInterface::class)->dispatch(
+        $this->container->get(EventDispatcherInterface::class)->dispatch(
             new FileEvent($data->getUser(), $data),
             FileEvent::FILE_ADD
         );
@@ -641,7 +627,7 @@ class FileController extends AbstractController
      */
     private function makeEditFileTags(File $file): void
     {
-        $manager = $this->getDoctrine()->getManager();
+        $entityManager = $this->container->get('doctrine')->getManager();
 
         // удаляем из коллекции устаревшие тэги
         $removedFileTagsCollection = $file->getFileTags()->filter(static function (FileTags $oldFileTags) use ($file) {
@@ -656,7 +642,7 @@ class FileController extends AbstractController
 
         foreach ($removedFileTagsCollection as $removedFileTags) {
             $file->getFileTags()->removeElement($removedFileTags);
-            $manager->remove($removedFileTags);
+            $entityManager->remove($removedFileTags);
         }
 
         // Находим добавленные тэги, которых не было в коллекции
@@ -695,7 +681,7 @@ class FileController extends AbstractController
     /**
      * @Route("/tags_search", name="file_tags_search", defaults={"_format": "json"}, options={"expose": true})
      */
-    public function tagsSearchAction(Request $request): JsonResponse
+    public function tagsSearchAction(Request $request, TagRepository $tagRepository): JsonResponse
     {
         $term = \trim($request->get('term', ''));
         if ('' === $term) {
@@ -708,9 +694,7 @@ class FileController extends AbstractController
             return $this->json([]);
         }
 
-        /** @var TagRepository $repository */
-        $repository = $this->getDoctrine()->getRepository(Tag::class);
-        $tags = $repository->findLikeName($term);
+        $tags = $tagRepository->findLikeName($term);
 
         $result = [];
         foreach ($tags as $tag) {
@@ -723,11 +707,8 @@ class FileController extends AbstractController
     /**
      * @Route("/swiper/{id}", name="file_swiper", requirements={"id": "\d+"})
      */
-    public function swiperAction(File $file): Response
+    public function swiperAction(File $file, FileRepository $fileRepository, EntityManagerInterface $entityManager): Response
     {
-        /** @var FileRepository $repository */
-        $repository = $this->getDoctrine()->getRepository(File::class);
-
         if (!$file->isImage()) {
             throw new \InvalidArgumentException('Просмотр возможен только для картинок.');
         }
@@ -740,8 +721,8 @@ class FileController extends AbstractController
             throw new \InvalidArgumentException('Файл скрыт и не доступен для просмотра.');
         }
 
-        $prevFile = $repository->getPrevFile($file->getId(), 'image');
-        $nextFile = $repository->getNextFile($file->getId(), 'image');
+        $prevFile = $fileRepository->getPrevFile($file->getId(), 'image');
+        $nextFile = $fileRepository->getNextFile($file->getId(), 'image');
 
         $response = $this->render('File/swiper.html.twig', [
             'file' => $file,
@@ -751,7 +732,6 @@ class FileController extends AbstractController
 
         $this->incrementViews($file);
 
-        $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($file);
         $entityManager->flush();
 

@@ -15,11 +15,8 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class HashType extends AbstractType
 {
-    private $hash;
+    private Hash $hash;
 
-    /**
-     * HashType constructor.
-     */
     public function __construct(Hash $hash)
     {
         $this->hash = $hash;

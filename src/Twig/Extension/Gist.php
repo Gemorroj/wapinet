@@ -21,7 +21,7 @@ class Gist extends AbstractExtension
      *
      * @return array An array of global functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('gist_count_all', [$this, 'getCountAll']),

@@ -12,32 +12,21 @@ class Apk
     /**
      * @var Parser
      */
-    protected $apk;
+    private $apk;
 
-    /**
-     * @param string $apkPath
-     *
-     * @return Apk
-     */
-    public function init($apkPath)
+    public function init(string $apkPath): self
     {
         $this->apk = new Parser($apkPath);
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getIcon()
+    public function getIcon(): ?string
     {
         return $this->getManifest()->getApplication()->getIcon();
     }
 
-    /**
-     * @return \ApkParser\Manifest
-     */
-    public function getManifest()
+    public function getManifest(): \ApkParser\Manifest
     {
         return $this->apk->getManifest();
     }

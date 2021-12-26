@@ -94,7 +94,7 @@ class AudioTagsController extends AbstractController
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
-                    $this->setTags($fileName, $form, $info);
+                    $this->setTags($request, $fileName, $form, $info);
 
                     $form = $originalForm;
                     $info = $this->getInfo($fileName);
@@ -146,7 +146,7 @@ class AudioTagsController extends AbstractController
 
     protected function getInfo(string $fileName): array
     {
-        $getid3 = $this->get(Getid3::class)->getId3();
+        $getid3 = $this->container->get(Getid3::class)->getId3();
         $info = $getid3->analyze($this->getFilePath($fileName));
         getid3_lib::CopyTagsToComments($info);
 
@@ -160,10 +160,10 @@ class AudioTagsController extends AbstractController
     /**
      * @throws AudioException
      */
-    protected function setTags(string $fileName, FormInterface $form, array $info): void
+    protected function setTags(Request $request, string $fileName, FormInterface $form, array $info): void
     {
         $data = $form->getData();
-        $writer = $this->get(Getid3::class)->getId3Writer();
+        $writer = $this->container->get(Getid3::class)->getId3Writer();
         if ($data['remove_other_tags']) {
             $writer->remove_other_tags = true;
         }
@@ -193,7 +193,7 @@ class AudioTagsController extends AbstractController
             //'picture' => null,
         ];
 
-        $requestForm = $this->get('request_stack')->getCurrentRequest()->get($form->getName());
+        $requestForm = $request->request->get($form->getName());
 
         if (isset($info['comments']['picture'][0]) && (!isset($requestForm['picture']['file_url_delete']) || !$requestForm['picture']['file_url_delete'])) {
             $writer->tag_data['attached_picture'][0]['data'] = $info['comments']['picture'][0]['data'];
@@ -276,7 +276,7 @@ class AudioTagsController extends AbstractController
         $file->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             $originalFileName,
-            $this->get(Translit::class)->toAscii($originalFileName)
+            $this->container->get(Translit::class)->toAscii($originalFileName)
         );
 
         return $file;

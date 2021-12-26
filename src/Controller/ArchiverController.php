@@ -87,7 +87,7 @@ class ArchiverController extends AbstractController
             $form->addError(new FormError($e->getMessage()));
         }
 
-        $files = $this->get(Archive7z::class)->getFiles($archiveDirectory);
+        $files = $this->container->get(Archive7z::class)->getFiles($archiveDirectory);
 
         return $this->render('Archiver/edit.html.twig', [
             'archive' => $archive,
@@ -104,14 +104,14 @@ class ArchiverController extends AbstractController
         $archiveDirectory = $this->checkArchiveDirectory($archive);
 
         $name = $archive.'.zip';
-        $archiveZip = $this->get(ArchiveZip::class);
+        $archiveZip = $this->container->get(ArchiveZip::class);
 
         $file = new BinaryFileResponse($archiveZip->create($archiveDirectory));
 
         $file->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             $name,
-            $this->get(Translit::class)->toAscii($name)
+            $this->container->get(Translit::class)->toAscii($name)
         );
 
         return $file;
@@ -126,13 +126,13 @@ class ArchiverController extends AbstractController
         $archiveDirectory = $this->checkArchiveDirectory($archive);
 
         $file = new BinaryFileResponse(
-            $this->get(\App\Service\File\File::class)->checkFile($archiveDirectory, $path, false)
+            $this->container->get(\App\Service\File\File::class)->checkFile($archiveDirectory, $path, false)
         );
 
         $file->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             $name,
-            $this->get(Translit::class)->toAscii($name)
+            $this->container->get(Translit::class)->toAscii($name)
         );
 
         return $file;
@@ -146,9 +146,9 @@ class ArchiverController extends AbstractController
         $path = $request->get('path');
         $archiveDirectory = $this->checkArchiveDirectory($archive);
 
-        $file = $this->get(\App\Service\File\File::class)->checkFile($archiveDirectory, $path, true);
+        $file = $this->container->get(\App\Service\File\File::class)->checkFile($archiveDirectory, $path, true);
 
-        $this->get(Filesystem::class)->remove($file);
+        $this->container->get(Filesystem::class)->remove($file);
 
         return $this->redirectToRoute('archiver_edit', ['archive' => $archive]);
     }
@@ -188,20 +188,20 @@ class ArchiverController extends AbstractController
      */
     protected function extractArchive(File $file): string
     {
-        $archiveZip = $this->get(ArchiveZip::class);
+        $archiveZip = $this->container->get(ArchiveZip::class);
         if (true === $archiveZip->isValid($file)) {
             $archiveDirectory = $this->createArchiveDirectory();
             $archiveZip->extract($archiveDirectory, $file);
 
             return $archiveDirectory;
         }
-        //$archiveRar = $this->get(ArchiveRar::class);
+        //$archiveRar = $this->container->get(ArchiveRar::class);
         //if (true === $archiveRar->isValid($file)) {
         //    $archiveDirectory = $this->createArchiveDirectory();
         //    $archiveRar->extract($archiveDirectory, $file);
         //    return $archiveDirectory;
         //}
-        $archive7z = $this->get(Archive7z::class);
+        $archive7z = $this->container->get(Archive7z::class);
         if (true === $archive7z->isValid($file)) {
             $archiveDirectory = $this->createArchiveDirectory();
             $archive7z->extract($archiveDirectory, $file);
@@ -243,7 +243,7 @@ class ArchiverController extends AbstractController
     protected function createArchiveDirectory(): string
     {
         $directory = $this->getParameter('kernel.tmp_archiver_dir').DIRECTORY_SEPARATOR.$this->generateArchiveName();
-        $this->get(Filesystem::class)->mkdir($directory);
+        $this->container->get(Filesystem::class)->mkdir($directory);
 
         return $directory;
     }

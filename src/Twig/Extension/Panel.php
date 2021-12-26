@@ -11,10 +11,7 @@ use Twig\TwigFunction;
 
 class Panel extends AbstractExtension
 {
-    /**
-     * @var TokenStorageInterface
-     */
-    protected $tokenStorage;
+    private TokenStorageInterface $tokenStorage;
 
     public function __construct(TokenStorageInterface $tokenStorage)
     {
@@ -26,17 +23,14 @@ class Panel extends AbstractExtension
      *
      * @return array An array of global functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('wapinet_panel', [$this, 'getPanel']),
         ];
     }
 
-    /**
-     * @return ArrayIterator
-     */
-    public function getPanel(array $options = [])
+    public function getPanel(array $options = []): ArrayIterator
     {
         $token = $this->tokenStorage->getToken();
 

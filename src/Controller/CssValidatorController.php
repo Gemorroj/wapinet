@@ -49,7 +49,7 @@ class CssValidatorController extends AbstractController
     protected function getCssValidator(array $data): CSSValidatorResponse
     {
         /** @var CssValidator $cssValidator */
-        $cssValidator = $this->get(CssValidator::class);
+        $cssValidator = $this->container->get(CssValidator::class);
         $options = $cssValidator->getOptions();
 
         $options->setProfile($data['profile']);

@@ -55,7 +55,7 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        $info = $this->get(\App\Service\Ginfo::class)->getInfo();
+        $info = $this->container->get(\App\Service\Ginfo::class)->getInfo();
 
         return $this->render('monitoring.html.twig', [
             'info' => [

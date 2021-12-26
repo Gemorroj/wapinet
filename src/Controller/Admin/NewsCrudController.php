@@ -69,7 +69,7 @@ class NewsCrudController extends AbstractCrudController
      */
     private function newsSubscriber(News $news): void
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->container->get('doctrine')->getManager();
 
         $userRepository = $em->getRepository(User::class);
         /** @var User[] $users */

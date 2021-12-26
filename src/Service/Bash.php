@@ -10,14 +10,8 @@ use Pagerfanta\Pagerfanta;
  */
 class Bash
 {
-    /**
-     * @var Curl
-     */
-    private $curl;
-    /**
-     * @var Paginate
-     */
-    private $paginate;
+    private Curl $curl;
+    private Paginate $paginate;
 
     public function __construct(Curl $curl, Paginate $paginate)
     {

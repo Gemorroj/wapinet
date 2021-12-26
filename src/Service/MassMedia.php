@@ -7,10 +7,7 @@ namespace App\Service;
  */
 class MassMedia
 {
-    /**
-     * @var Curl
-     */
-    protected $curl;
+    private Curl $curl;
 
     public function __construct(Curl $curl)
     {

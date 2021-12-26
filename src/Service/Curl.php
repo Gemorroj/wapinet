@@ -27,7 +27,7 @@ use Symfony\Component\HttpKernel\Exception\LengthRequiredHttpException;
 class Curl
 {
     /**
-     * @var resource
+     * @var \CurlHandle
      */
     private $curl;
 
@@ -166,7 +166,7 @@ class Curl
 
                 $key = $h[0];
             } else {
-                if (0 === \mb_strpos($h[0], "\t")) {
+                if (\str_starts_with($h[0], "\t")) {
                     $headers[$key] .= "\r\n\t".\trim($h[0]);
                 } elseif (!$key) {
                     $headers[0] = \trim($h[0]);
@@ -268,7 +268,7 @@ class Curl
     /**
      * Получение ресурса CURL.
      *
-     * @return resource
+     * @return \CurlHandle
      */
     public function getCurl()
     {

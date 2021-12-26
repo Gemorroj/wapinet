@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Online;
 use App\Entity\User;
 use App\Form\Type\User\RegistrationType;
+use App\Repository\OnlineRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -62,7 +63,7 @@ class DefaultController extends AbstractController
         // last username entered by the user
         $lastUsername = (null === $session) ? '' : $session->get($lastUsernameKey);
 
-        $csrfToken = $csrfTokenManager ? $csrfTokenManager->getToken('authenticate')->getValue() : null;
+        $csrfToken = $csrfTokenManager?->getToken('authenticate')->getValue();
 
         return $this->render('Security/login.html.twig', [
             'last_username' => $lastUsername,
@@ -131,12 +132,12 @@ class DefaultController extends AbstractController
     /**
      * @Route("/online", name="online")
      */
-    public function onlineAction(): Response
+    public function onlineAction(OnlineRepository $onlineRepository): Response
     {
         return $this->render(
             'Default/online.html.twig',
             [
-                'online' => $this->getDoctrine()->getRepository(Online::class)->findBy([], ['datetime' => 'DESC']),
+                'online' => $onlineRepository->findBy([], ['datetime' => 'DESC']),
             ]
         );
     }

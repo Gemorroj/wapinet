@@ -12,14 +12,8 @@ use Twig\TwigFunction;
 
 class Playlist extends AbstractExtension
 {
-    /**
-     * @var PlaylistHelper
-     */
-    private $playlistHelper;
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private PlaylistHelper $playlistHelper;
+    private LoggerInterface $logger;
 
     public function __construct(PlaylistHelper $playlistHelper, LoggerInterface $logger)
     {
@@ -27,9 +21,6 @@ class Playlist extends AbstractExtension
         $this->logger = $logger;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions(): array
     {
         return [

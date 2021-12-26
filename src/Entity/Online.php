@@ -5,10 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Online.
- *
  * @ORM\Table(name="online", options={"engine": "MEMORY"}, uniqueConstraints={@ORM\UniqueConstraint(name="unique_idx", columns={"ip", "browser"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\OnlineRepository")
  */
 class Online
 {

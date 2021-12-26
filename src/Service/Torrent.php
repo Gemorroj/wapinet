@@ -11,10 +11,7 @@ use Symfony\Component\HttpFoundation\File\File;
  */
 class Torrent
 {
-    /**
-     * @var Decoder
-     */
-    protected $decoder;
+    private Decoder $decoder;
 
     /**
      * Конструктор

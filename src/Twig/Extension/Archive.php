@@ -12,14 +12,8 @@ use Twig\TwigFunction;
 
 class Archive extends AbstractExtension
 {
-    /**
-     * @var Archive7z
-     */
-    private $archive7z;
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private Archive7z $archive7z;
+    private LoggerInterface$logger;
 
     public function __construct(Archive7z $archive7z, LoggerInterface $logger)
     {

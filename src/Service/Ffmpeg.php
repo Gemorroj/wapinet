@@ -8,10 +8,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class Ffmpeg
 {
-    /**
-     * @var ParameterBagInterface
-     */
-    protected $parameterBag;
+    private ParameterBagInterface $parameterBag;
     /**
      * @var FFmpegOriginal
      */

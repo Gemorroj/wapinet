@@ -12,10 +12,7 @@ use Syntax\Php;
  */
 class PhpValidator
 {
-    /**
-     * @var ParameterBagInterface
-     */
-    protected $parameterBag;
+    private ParameterBagInterface $parameterBag;
 
     public function __construct(ParameterBagInterface $parameterBag)
     {

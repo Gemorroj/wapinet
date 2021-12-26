@@ -8,7 +8,6 @@ use App\Repository\UserRepository;
 use App\Service\Manticore;
 use App\Service\Paginate;
 use Exception;
-use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +22,7 @@ class UsersController extends AbstractController
     /**
      * @Route("/users/{key}", name="wapinet_users", defaults={"key": null}, requirements={"key": "[a-zA-Z0-9]+"})
      */
-    public function indexAction(Request $request, ?string $key = null): Response
+    public function indexAction(Request $request, UserRepository $userRepository, Paginate $paginate, Manticore $manticore, ?string $key = null): Response
     {
         $page = $request->get('page', 1);
         $form = $this->createForm(SearchType::class);
@@ -49,10 +48,17 @@ class UsersController extends AbstractController
                 $search = $request->getSession()->get('users_search');
                 if ($key === $search['key']) {
                     $form->setData($search['data']);
-                    $pagerfanta = $this->searchManticore($search['data'], $page);
+
+                    $sphinxQl = $manticore->select($page)
+                       ->from(['users'])
+                       ->match(['username', 'email', 'info'], $search['data']['search'])
+                    ;
+
+                    $pagerfanta = $manticore->getPagerfanta($sphinxQl, User::class);
                 }
             } else {
-                $pagerfanta = $this->online($page);
+                $query = $userRepository->getOnlineUsersQuery();
+                $pagerfanta = $paginate->paginate($query, $page);
             }
         } catch (Exception $e) {
             $form->addError(new FormError($e->getMessage()));
@@ -63,35 +69,5 @@ class UsersController extends AbstractController
             'pagerfanta' => $pagerfanta,
             'key' => $key,
         ]);
-    }
-
-    private function online(int $page = 1): Pagerfanta
-    {
-        /** @var UserRepository $userRepository */
-        $userRepository = $this->getDoctrine()->getRepository(User::class);
-        $query = $userRepository->getOnlineUsersQuery();
-
-        return $this->get(Paginate::class)->paginate($query, $page);
-    }
-
-    private function searchManticore(array $data, int $page = 1): Pagerfanta
-    {
-        /** @var Manticore $client */
-        $client = $this->get(Manticore::class);
-        $sphinxQl = $client->select($page)
-            ->from(['users'])
-            ->match(['username', 'email', 'info'], $data['search'])
-        ;
-
-        return $client->getPagerfanta($sphinxQl, User::class);
-    }
-
-    public static function getSubscribedServices(): array
-    {
-        $services = parent::getSubscribedServices();
-        $services[Manticore::class] = '?'.Manticore::class;
-        $services[Paginate::class] = Paginate::class;
-
-        return $services;
     }
 }

@@ -2,17 +2,17 @@
 
 namespace App\Twig\Extension;
 
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\OnlineRepository;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class Online extends AbstractExtension
 {
-    private EntityManagerInterface $em;
+    private OnlineRepository $onlineRepository;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(OnlineRepository $onlineRepository)
     {
-        $this->em = $em;
+        $this->onlineRepository = $onlineRepository;
     }
 
     /**
@@ -23,8 +23,8 @@ class Online extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('wapinet_online', function () {
-                return $this->em->createQuery('SELECT COUNT(o.id) FROM App\Entity\Online o')->getSingleScalarResult();
+            new TwigFunction('wapinet_online', function (): int {
+                return $this->onlineRepository->count([]);
             }),
         ];
     }

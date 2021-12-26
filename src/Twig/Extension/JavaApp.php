@@ -14,18 +14,9 @@ use Twig\TwigFilter;
 
 class JavaApp extends AbstractExtension
 {
-    /**
-     * @var ArchiveZip
-     */
-    private $archiveZip;
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-    /**
-     * @var ParameterBagInterface
-     */
-    private $parameterBag;
+    private ArchiveZip $archiveZip;
+    private Filesystem $filesystem;
+    private ParameterBagInterface $parameterBag;
 
     public function __construct(ArchiveZip $archiveZip, Filesystem $filesystem, ParameterBagInterface $parameterBag)
     {

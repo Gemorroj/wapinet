@@ -9,12 +9,13 @@ use App\Form\Type\Gist\AddType;
 use App\Form\Type\Gist\EditType;
 use App\Form\Type\Gist\SearchType;
 use App\Repository\GistRepository;
+use App\Repository\UserRepository;
 use App\Service\BotChecker;
 use App\Service\Manticore;
 use App\Service\Paginate;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Pagerfanta\Pagerfanta;
-use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormError;
@@ -32,15 +33,13 @@ class GistController extends AbstractController
     /**
      * @Route("", name="gist_index", methods={"GET", "HEAD"}, options={"expose": true})
      */
-    public function indexAction(Request $request): Response
+    public function indexAction(Request $request, GistRepository $gistRepository, Paginate $paginate): Response
     {
         $form = $this->createForm(AddType::class);
         $page = $request->get('page', 1);
 
-        /** @var GistRepository $gistRepository */
-        $gistRepository = $this->getDoctrine()->getRepository(Gist::class);
         $query = $gistRepository->getListQuery();
-        $pagerfanta = $this->get(Paginate::class)->paginate($query, $page);
+        $pagerfanta = $paginate->paginate($query, $page);
 
         return $this->render('Gist/index.html.twig', [
             'form' => $form->createView(),
@@ -51,21 +50,19 @@ class GistController extends AbstractController
     /**
      * @Route("/users/{username}", name="gist_user", requirements={"username": ".+"})
      */
-    public function userAction(Request $request, string $username): Response
+    public function userAction(Request $request, string $username, UserRepository $userRepository, GistRepository $gistRepository, Paginate $paginate): Response
     {
         $form = $this->createForm(AddType::class);
         $page = $request->get('page', 1);
 
         /** @var User|null $user */
-        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $username]);
-        if (null === $user) {
+        $user = $userRepository->findOneBy(['username' => $username]);
+        if (!$user) {
             throw $this->createNotFoundException('Пользователь не найден');
         }
 
-        /** @var GistRepository $gistRepository */
-        $gistRepository = $this->getDoctrine()->getRepository(Gist::class);
         $query = $gistRepository->getListQuery($user);
-        $pagerfanta = $this->get(Paginate::class)->paginate($query, $page);
+        $pagerfanta = $paginate->paginate($query, $page);
 
         return $this->render('Gist/index.html.twig', [
             'form' => $form->createView(),
@@ -77,11 +74,11 @@ class GistController extends AbstractController
     /**
      * @Route("", name="gist_add", methods={"POST"})
      */
-    public function addAction(Request $request, BotChecker $botChecker): RedirectResponse
+    public function addAction(Request $request, BotChecker $botChecker, EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher): RedirectResponse
     {
         $user = $this->getUser();
-        if (null === $user) {
-            throw $this->createAccessDeniedException('Вы должны быть авторизованы для добавления сообщения');
+        if (!$user) {
+            throw $this->createAccessDeniedException();
         }
 
         $form = $this->createForm(AddType::class);
@@ -99,11 +96,10 @@ class GistController extends AbstractController
                     $gist->setIp($request->getClientIp());
                     $gist->setBrowser($request->headers->get('User-Agent', ''));
 
-                    $entityManager = $this->getDoctrine()->getManager();
                     $entityManager->persist($gist);
                     $entityManager->flush();
 
-                    $this->get(EventDispatcherInterface::class)->dispatch(
+                    $eventDispatcher->dispatch(
                         new GistEvent($user, $gist),
                         GistEvent::GIST_ADD
                     );
@@ -134,14 +130,12 @@ class GistController extends AbstractController
     /**
      * @Route("/delete/{id}", name="gist_delete", methods={"POST"}, requirements={"id": "\d+"}, options={"expose": true})
      */
-    public function deleteAction(Gist $gist): Response
+    public function deleteAction(Gist $gist, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('DELETE', $gist);
 
-        // БД
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($gist);
-        $em->flush();
+        $entityManager->remove($gist);
+        $entityManager->flush();
 
         // переадресация на главную
         $url = $this->generateUrl('gist_index', [], Router::ABSOLUTE_URL);
@@ -152,7 +146,7 @@ class GistController extends AbstractController
     /**
      * @Route("/search/{key}", name="gist_search", requirements={"key": "[a-zA-Z0-9]+"}, defaults={"key": null})
      */
-    public function searchAction(Request $request, ?string $key = null): Response
+    public function searchAction(Request $request, Manticore $manticore, ?string $key = null): Response
     {
         $page = $request->get('page', 1);
         $form = $this->createForm(SearchType::class);
@@ -178,7 +172,7 @@ class GistController extends AbstractController
                 $search = $request->getSession()->get('gist_search');
                 if ($key === $search['key']) {
                     $form->setData($search['data']);
-                    $pagerfanta = $this->searchManticore($search['data'], $page);
+                    $pagerfanta = $this->searchManticore($manticore, $search['data'], $page);
                 }
             }
         } catch (Exception $e) {
@@ -192,14 +186,9 @@ class GistController extends AbstractController
         ]);
     }
 
-    /**
-     * @throws RuntimeException
-     */
-    private function searchManticore(array $data, int $page = 1): Pagerfanta
+    private function searchManticore(Manticore $manticore, array $data, int $page = 1): Pagerfanta
     {
-        /** @var Manticore $client */
-        $client = $this->get(Manticore::class);
-        $sphinxQl = $client->select($page)
+        $sphinxQl = $manticore->select($page)
             ->from(['gist'])
             ->match(['subject', 'body'], $data['search'])
         ;
@@ -210,13 +199,13 @@ class GistController extends AbstractController
             $sphinxQl->orderBy('WEIGHT()', 'desc');
         }
 
-        return $client->getPagerfanta($sphinxQl, Gist::class);
+        return $manticore->getPagerfanta($sphinxQl, Gist::class);
     }
 
     /**
      * @Route("/edit/{id}", name="gist_edit", requirements={"id": "\d+"})
      */
-    public function editAction(Request $request, Gist $gist): Response
+    public function editAction(Request $request, Gist $gist, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('EDIT', $gist);
 
@@ -230,7 +219,7 @@ class GistController extends AbstractController
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $newGist = $form->getData();
-                    $this->editGistData($request, $gist, $newGist);
+                    $this->editGistData($request, $gist, $newGist, $entityManager);
 
                     $url = $this->generateUrl('gist_view', ['id' => $gist->getId()], Router::ABSOLUTE_URL);
 
@@ -247,7 +236,7 @@ class GistController extends AbstractController
         ]);
     }
 
-    private function editGistData(Request $request, Gist $data, Gist $newData): Gist
+    private function editGistData(Request $request, Gist $data, Gist $newData, EntityManagerInterface $entityManager): void
     {
         $data->setSubject($newData->getSubject());
         $data->setBody($newData->getBody());
@@ -259,20 +248,7 @@ class GistController extends AbstractController
             $data->setBrowser($request->headers->get('User-Agent', ''));
         }
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->merge($data);
+        $entityManager->persist($data);
         $entityManager->flush();
-
-        return $data;
-    }
-
-    public static function getSubscribedServices(): array
-    {
-        $services = parent::getSubscribedServices();
-        $services[Manticore::class] = '?'.Manticore::class;
-        $services[EventDispatcherInterface::class] = '?'.EventDispatcherInterface::class;
-        $services[Paginate::class] = Paginate::class;
-
-        return $services;
     }
 }

@@ -11,14 +11,8 @@ use Twig\TwigFunction;
 
 class Torrent extends AbstractExtension
 {
-    /**
-     * @var TorrentHelper
-     */
-    private $torrentHelper;
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private TorrentHelper $torrentHelper;
+    private LoggerInterface $logger;
 
     public function __construct(TorrentHelper $torrentHelper, LoggerInterface $logger)
     {

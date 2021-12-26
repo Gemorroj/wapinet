@@ -7,10 +7,7 @@ namespace App\Service\Archiver;
  */
 class ArchiveFileInfo extends \SplFileInfo
 {
-    /**
-     * @var string
-     */
-    protected static $archiveDirectory;
+    private static string $archiveDirectory;
 
     public static function setArchiveDirectory(string $archiveDirectory): void
     {

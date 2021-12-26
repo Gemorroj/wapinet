@@ -14,11 +14,8 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CodeType extends AbstractType
 {
-    private $code;
+    private Code $code;
 
-    /**
-     * CodeType constructor.
-     */
     public function __construct(Code $code)
     {
         $this->code = $code;

@@ -47,7 +47,7 @@ class HttpController extends AbstractController
     private function getHttp(array $data): Response
     {
         /** @var Curl $curl */
-        $curl = $this->get(Curl::class);
+        $curl = $this->container->get(Curl::class);
 
         $curl->init($data['url']);
         $curl->setOpt(CURLOPT_CUSTOMREQUEST, $data['type']);

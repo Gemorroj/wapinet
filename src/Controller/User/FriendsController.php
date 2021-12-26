@@ -6,7 +6,9 @@ use App\Entity\Friend;
 use App\Entity\User;
 use App\Event\FriendEvent;
 use App\Repository\FriendRepository;
+use App\Repository\UserRepository;
 use App\Service\Paginate;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -22,18 +24,16 @@ class FriendsController extends AbstractController
     /**
      * @Route("/friends/list/{username}", name="wapinet_user_friends", requirements={"username": ".+"})
      */
-    public function indexAction(Request $request, string $username, Paginate $paginate): Response
+    public function indexAction(Request $request, string $username, Paginate $paginate, UserRepository $userRepository, FriendRepository $friendRepository): Response
     {
-        $page = $request->get('page', 1);
-
         /** @var User|null $user */
-        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $username]);
-        if (null === $user) {
+        $user = $userRepository->findOneBy(['username' => $username]);
+        if (!$user) {
             throw $this->createNotFoundException('Пользователь не найден');
         }
 
-        /** @var FriendRepository $friendRepository */
-        $friendRepository = $this->getDoctrine()->getRepository(Friend::class);
+        $page = $request->get('page', 1);
+
         $friends = $friendRepository->getFriendsQuery($user);
         $pagerfanta = $paginate->paginate($friends, $page);
 
@@ -46,24 +46,21 @@ class FriendsController extends AbstractController
     /**
      * @Route("/friends/add/{username}", name="wapinet_user_friends_add", requirements={"username": ".+"})
      */
-    public function addAction(string $username, EventDispatcherInterface $eventDispatcher): RedirectResponse
+    public function addAction(string $username, EventDispatcherInterface $eventDispatcher, UserRepository $userRepository, FriendRepository $friendRepository, EntityManagerInterface $entityManager): RedirectResponse
     {
         /** @var User|null $user */
         $user = $this->getUser();
-        if (null === $user) {
-            throw $this->createAccessDeniedException('Вы не авторизованы');
+        if (!$user) {
+            throw $this->createAccessDeniedException();
         }
 
         /** @var User|null $friend */
-        $friend = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $username]);
-        if (null === $friend) {
+        $friend = $userRepository->findOneBy(['username' => $username]);
+        if (!$friend) {
             throw $this->createNotFoundException('Пользователь не найден.');
         }
 
-        /** @var FriendRepository $friendRepository */
-        $friendRepository = $this->getDoctrine()->getRepository(Friend::class);
         $objFriend = $friendRepository->getFriend($user, $friend);
-
         if (null !== $objFriend) {
             throw new \LogicException($user->getUsername().' уже в друзьях.');
         }
@@ -73,8 +70,8 @@ class FriendsController extends AbstractController
         $objFriend->setFriend($friend);
 
         $user->getFriends()->add($objFriend);
-        $this->getDoctrine()->getManager()->merge($user);
-        $this->getDoctrine()->getManager()->flush();
+        $entityManager->persist($user);
+        $entityManager->flush();
 
         $eventDispatcher->dispatch(
             new FriendEvent($user, $friend),
@@ -87,31 +84,28 @@ class FriendsController extends AbstractController
     /**
      * @Route("/friends/delete/{username}", name="wapinet_user_friends_delete", requirements={"username": ".+"})
      */
-    public function deleteAction(string $username, EventDispatcherInterface $eventDispatcher): RedirectResponse
+    public function deleteAction(string $username, EventDispatcherInterface $eventDispatcher, UserRepository $userRepository, FriendRepository $friendRepository, EntityManagerInterface $entityManager): RedirectResponse
     {
         /** @var User|null $user */
         $user = $this->getUser();
-        if (null === $user) {
-            throw $this->createAccessDeniedException('Вы не авторизованы');
+        if (!$user) {
+            throw $this->createAccessDeniedException();
         }
 
         /** @var User|null $friend */
-        $friend = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $username]);
-        if (null === $friend) {
+        $friend = $userRepository->findOneBy(['username' => $username]);
+        if (!$friend) {
             throw $this->createNotFoundException('Пользователь не найден.');
         }
 
-        /** @var FriendRepository $friendRepository */
-        $friendRepository = $this->getDoctrine()->getRepository(Friend::class);
         $objFriend = $friendRepository->getFriend($user, $friend);
-
         if (null === $objFriend) {
             throw new \LogicException($user->getUsername().' не в друзьях.');
         }
 
         $user->getFriends()->removeElement($objFriend);
-        $this->getDoctrine()->getManager()->merge($user);
-        $this->getDoctrine()->getManager()->flush();
+        $entityManager->persist($user);
+        $entityManager->flush();
 
         $eventDispatcher->dispatch(
             new FriendEvent($user, $friend),

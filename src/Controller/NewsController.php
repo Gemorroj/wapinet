@@ -18,13 +18,11 @@ class NewsController extends AbstractController
     /**
      * @Route("", name="news_index")
      */
-    public function indexAction(Request $request, Paginate $paginate): Response
+    public function indexAction(Request $request, Paginate $paginate, NewsRepository $newsRepository): Response
     {
         $page = $request->get('page', 1);
 
-        /** @var NewsRepository $repository */
-        $repository = $this->getDoctrine()->getRepository(News::class);
-        $result = $repository->getAllBuilder();
+        $result = $newsRepository->getAllBuilder();
 
         $pagerfanta = $paginate->paginate($result, $page);
 

@@ -2,15 +2,14 @@
 
 namespace App\Service;
 
+use Ginfo\Info;
+
 /**
  * Ginfo хэлпер
  */
 class Ginfo
 {
-    /**
-     * @var \Ginfo\Info
-     */
-    protected $info;
+    private Info $info;
 
     /**
      * Ginfo constructor.
@@ -22,10 +21,7 @@ class Ginfo
         $this->info = (new \Ginfo\Ginfo())->getInfo();
     }
 
-    /**
-     * @return \Ginfo\Info
-     */
-    public function getInfo()
+    public function getInfo(): Info
     {
         return $this->info;
     }

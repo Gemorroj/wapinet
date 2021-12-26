@@ -11,10 +11,7 @@ use Symfony\Component\HttpFoundation\File\File;
  */
 abstract class Archive
 {
-    /**
-     * @var ParameterBagInterface
-     */
-    protected $parameterBag;
+    protected ParameterBagInterface $parameterBag;
 
     public function __construct(ParameterBagInterface $parameterBag)
     {

@@ -9,10 +9,7 @@ use Twig\TwigFilter;
 
 class Date extends AbstractExtension
 {
-    /**
-     * @var Timezone
-     */
-    protected $timezone;
+    private Timezone $timezone;
 
     public function __construct(Timezone $timezone)
     {

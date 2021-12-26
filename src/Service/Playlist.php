@@ -9,10 +9,7 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class Playlist
 {
-    /**
-     * @var M3uParser
-     */
-    protected $m3uParser;
+    private M3uParser $m3uParser;
 
     public function __construct()
     {

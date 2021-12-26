@@ -14,26 +14,11 @@ use Twig\TwigFilter;
 
 class AndroidApp extends AbstractExtension
 {
-    /**
-     * @var ArchiveZip
-     */
-    private $archiveZip;
-    /**
-     * @var Apk
-     */
-    private $apk;
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-    /**
-     * @var ParameterBagInterface
-     */
-    private $parameterBag;
+    private ArchiveZip $archiveZip;
+    private Apk $apk;
+    private LoggerInterface $logger;
+    private Filesystem $filesystem;
+    private ParameterBagInterface $parameterBag;
 
     public function __construct(ArchiveZip $archiveZip, Apk $apk, LoggerInterface $logger, Filesystem $filesystem, ParameterBagInterface $parameterBag)
     {

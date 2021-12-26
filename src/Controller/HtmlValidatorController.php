@@ -48,7 +48,7 @@ class HtmlValidatorController extends AbstractController
     protected function getHtmlValidator(array $data): HTMLValidatorResponse
     {
         /** @var HtmlValidator $htmlValidator */
-        $htmlValidator = $this->get(HtmlValidator::class);
+        $htmlValidator = $this->container->get(HtmlValidator::class);
 
         if (null !== $data['html']) {
             return $htmlValidator->validateFragment($data['html']);

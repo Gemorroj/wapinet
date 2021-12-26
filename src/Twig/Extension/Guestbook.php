@@ -20,7 +20,7 @@ class Guestbook extends AbstractExtension
      *
      * @return array An array of global functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('guestbook_count_all', function () {

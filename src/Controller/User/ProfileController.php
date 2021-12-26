@@ -4,6 +4,7 @@ namespace App\Controller\User;
 
 use App\Entity\User;
 use App\Form\Type\User\ProfileType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,15 +20,15 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile/{username}", name="wapinet_user_profile", defaults={"username": null}, requirements={"username": ".+"})
      */
-    public function showUserAction(?string $username = null): Response
+    public function showUserAction(UserRepository $userRepository, ?string $username = null): Response
     {
         $currentUser = $this->getUser();
-        if (!$currentUser || !$currentUser instanceof User) {
-            throw $this->createAccessDeniedException('Вы должны быть авторизованы');
+        if (!$currentUser) {
+            throw $this->createAccessDeniedException();
         }
 
         if (null !== $username) {
-            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $username]);
+            $user = $userRepository->findOneBy(['username' => $username]);
             if (!$user instanceof User) {
                 $e = new UserNotFoundException('Пользователь "'.$username.'" не найден.');
                 $e->setUserIdentifier($username);
@@ -46,8 +47,8 @@ class ProfileController extends AbstractController
     public function editUserAction(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
-        if (!$user || !$user instanceof User) {
-            throw $this->createAccessDeniedException('This user does not have access to this section.');
+        if (!$user) {
+            throw $this->createAccessDeniedException();
         }
 
         $form = $this->createForm(ProfileType::class, $user);
