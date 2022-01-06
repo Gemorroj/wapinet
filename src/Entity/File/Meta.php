@@ -43,10 +43,7 @@ class Meta
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         $out = '';
         foreach ($this->meta as $key => $value) {

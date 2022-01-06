@@ -5,8 +5,6 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Subscriber.
- *
  * @ORM\Table(name="user_subscriber")
  * @ORM\Entity
  */
@@ -21,18 +19,14 @@ class Subscriber extends \ArrayObject
     private $id;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="email_news", type="boolean", nullable=false)
      */
-    private $emailNews = true;
+    private bool $emailNews = true;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="email_friends", type="boolean", nullable=false)
      */
-    private $emailFriends = true;
+    private bool $emailFriends = true;
 
     /**
      * @var User
@@ -47,7 +41,7 @@ class Subscriber extends \ArrayObject
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -55,65 +49,43 @@ class Subscriber extends \ArrayObject
     /**
      * @return User
      */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    /**
-     * @return Subscriber
-     */
-    public function setUser(User $user)
+    public function setUser(User $user): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getEmailFriends()
+    public function getEmailFriends(): bool
     {
         return $this->emailFriends;
     }
 
-    /**
-     * @param bool $emailFriends
-     *
-     * @return Subscriber
-     */
-    public function setEmailFriends($emailFriends)
+    public function setEmailFriends(bool $emailFriends): self
     {
-        $this->emailFriends = (bool) $emailFriends;
+        $this->emailFriends = $emailFriends;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getEmailNews()
+    public function getEmailNews(): bool
     {
         return $this->emailNews;
     }
 
-    /**
-     * @param bool $emailNews
-     *
-     * @return Subscriber
-     */
-    public function setEmailNews($emailNews)
+    public function setEmailNews(bool $emailNews): self
     {
-        $this->emailNews = (bool) $emailNews;
+        $this->emailNews = $emailNews;
 
         return $this;
     }
 
-    /**
-     * @return \ArrayIterator
-     */
-    public function getIterator()
+    public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator([
             'emailNews' => [
@@ -127,10 +99,7 @@ class Subscriber extends \ArrayObject
         ]);
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         $result = '';
         foreach ($this->getIterator() as $item) {

@@ -109,10 +109,7 @@ class FileTags
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getTag()->getName();
     }

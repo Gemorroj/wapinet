@@ -5,8 +5,6 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Panel.
- *
  * @ORM\Table(name="user_panel")
  * @ORM\Entity
  */
@@ -30,60 +28,44 @@ class Panel extends \ArrayObject
     private $id;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="forum", type="boolean", nullable=false)
      */
-    private $forum = true;
+    private bool $forum = true;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="guestbook", type="boolean", nullable=false)
      */
-    private $guestbook = false;
+    private bool $guestbook = false;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="gist", type="boolean", nullable=false)
      */
-    private $gist = true;
+    private bool $gist = true;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="file", type="boolean", nullable=false)
      */
-    private $file = true;
+    private bool $file = true;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="archiver", type="boolean", nullable=false)
      */
-    private $archiver = false;
+    private bool $archiver = false;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="downloads", type="boolean", nullable=false)
      */
-    private $downloads = true;
+    private bool $downloads = true;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="utilities", type="boolean", nullable=false)
      */
-    private $utilities = true;
+    private bool $utilities = true;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="programming", type="boolean", nullable=false)
      */
-    private $programming = true;
+    private bool $programming = true;
 
     /**
      * @var User
@@ -98,7 +80,7 @@ class Panel extends \ArrayObject
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -106,25 +88,19 @@ class Panel extends \ArrayObject
     /**
      * @return User
      */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    /**
-     * @return Panel
-     */
-    public function setUser(User $user)
+    public function setUser(User $user): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * @return \ArrayIterator
-     */
-    public function getIterator()
+    public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator([
             self::ROUTE_FORUM => [
@@ -170,170 +146,103 @@ class Panel extends \ArrayObject
         ]);
     }
 
-    /**
-     * @param bool $forum
-     *
-     * @return Panel
-     */
-    public function setForum($forum)
+    public function setForum(bool $forum): self
     {
-        $this->forum = (bool) $forum;
+        $this->forum = $forum;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getForum()
+    public function getForum(): bool
     {
         return $this->forum;
     }
 
-    /**
-     * @param bool $guestbook
-     *
-     * @return Panel
-     */
-    public function setGuestbook($guestbook)
+    public function setGuestbook(bool $guestbook): self
     {
-        $this->guestbook = (bool) $guestbook;
+        $this->guestbook = $guestbook;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getGuestbook()
+    public function getGuestbook(): bool
     {
         return $this->guestbook;
     }
 
-    /**
-     * @param bool $downloads
-     *
-     * @return Panel
-     */
-    public function setDownloads($downloads)
+    public function setDownloads(bool $downloads): self
     {
-        $this->downloads = (bool) $downloads;
+        $this->downloads = $downloads;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getDownloads()
+    public function getDownloads(): bool
     {
         return $this->downloads;
     }
 
-    /**
-     * @param bool $programming
-     *
-     * @return Panel
-     */
-    public function setProgramming($programming)
+    public function setProgramming(bool $programming): self
     {
-        $this->programming = (bool) $programming;
+        $this->programming = $programming;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getProgramming()
+    public function getProgramming(): bool
     {
         return $this->programming;
     }
 
-    /**
-     * @param bool $utilities
-     *
-     * @return Panel
-     */
-    public function setUtilities($utilities)
+    public function setUtilities(bool $utilities): self
     {
-        $this->utilities = (bool) $utilities;
+        $this->utilities = $utilities;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getUtilities()
+    public function getUtilities(): bool
     {
         return $this->utilities;
     }
 
-    /**
-     * @param bool $archiver
-     *
-     * @return Panel
-     */
-    public function setArchiver($archiver)
+    public function setArchiver(bool $archiver): self
     {
-        $this->archiver = (bool) $archiver;
+        $this->archiver = $archiver;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getArchiver()
+    public function getArchiver(): bool
     {
         return $this->archiver;
     }
 
-    /**
-     * @param bool $gist
-     *
-     * @return Panel
-     */
-    public function setGist($gist)
+    public function setGist(bool $gist): self
     {
-        $this->gist = (bool) $gist;
+        $this->gist = $gist;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getGist()
+    public function getGist(): bool
     {
         return $this->gist;
     }
 
-    /**
-     * @param bool $file
-     *
-     * @return Panel
-     */
-    public function setFile($file)
+    public function setFile(bool $file): self
     {
-        $this->file = (bool) $file;
+        $this->file = $file;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getFile()
+    public function getFile(): bool
     {
         return $this->file;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         $result = '';
         foreach ($this->getIterator() as $item) {
