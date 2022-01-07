@@ -2847,16 +2847,16 @@
         },
         {
             "name": "gregwar/captcha-bundle",
-            "version": "v2.1.5",
+            "version": "v2.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gregwar/CaptchaBundle.git",
-                "reference": "2f96c759abae9c914856b9b9fc909268ba98a625"
+                "reference": "da2c7aa676f62a6adf51bf10a40bc5fdb51ab321"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gregwar/CaptchaBundle/zipball/2f96c759abae9c914856b9b9fc909268ba98a625",
-                "reference": "2f96c759abae9c914856b9b9fc909268ba98a625",
+                "url": "https://api.github.com/repos/Gregwar/CaptchaBundle/zipball/da2c7aa676f62a6adf51bf10a40bc5fdb51ab321",
+                "reference": "da2c7aa676f62a6adf51bf10a40bc5fdb51ab321",
                 "shasum": ""
             },
             "require": {
@@ -2869,6 +2869,7 @@
                 "twig/twig": "^2.10|^3.0"
             },
             "require-dev": {
+                "phpstan/phpstan": "^0.12.66",
                 "symplify/easy-coding-standard": "^6.1"
             },
             "type": "symfony-bundle",
@@ -2906,9 +2907,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Gregwar/CaptchaBundle/issues",
-                "source": "https://github.com/Gregwar/CaptchaBundle/tree/v2.1.5"
+                "source": "https://github.com/Gregwar/CaptchaBundle/tree/v2.1.6"
             },
-            "time": "2021-04-20T07:20:37+00:00"
+            "time": "2022-01-07T15:30:35+00:00"
         },
         {
             "name": "imagine/imagine",
