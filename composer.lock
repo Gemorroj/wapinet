@@ -2630,16 +2630,16 @@
         },
         {
             "name": "gemorroj/xbbcode",
-            "version": "2.5.0",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/xBBCode.git",
-                "reference": "49d62ab810e2088556b9caeb2605294afd604e3a"
+                "reference": "a2b77aad54e742c0df77cef4cf157728373ae897"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/xBBCode/zipball/49d62ab810e2088556b9caeb2605294afd604e3a",
-                "reference": "49d62ab810e2088556b9caeb2605294afd604e3a",
+                "url": "https://api.github.com/repos/Gemorroj/xBBCode/zipball/a2b77aad54e742c0df77cef4cf157728373ae897",
+                "reference": "a2b77aad54e742c0df77cef4cf157728373ae897",
                 "shasum": ""
             },
             "require": {
@@ -2647,7 +2647,7 @@
                 "php": ">=7.3"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.18",
+                "friendsofphp/php-cs-fixer": "^3.0",
                 "phpunit/phpunit": "^9.5"
             },
             "type": "library",
@@ -2680,9 +2680,9 @@
             "support": {
                 "forum": "http://xbb.uz/docs/",
                 "issues": "https://github.com/Gemorroj/xBBCode/issues",
-                "source": "https://github.com/Gemorroj/xBBCode/tree/2.5.0"
+                "source": "https://github.com/Gemorroj/xBBCode/tree/2.6.0"
             },
-            "time": "2021-02-06T23:49:58+00:00"
+            "time": "2022-01-06T20:05:26+00:00"
         },
         {
             "name": "geoip2/geoip2",
@@ -10614,16 +10614,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.3.2",
+            "version": "1.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "84eaa569d48ea79d3bebe2c3ec5d302537a6ae8a"
+                "reference": "151a51f6149855785fbd883e79768c0abc96b75f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/84eaa569d48ea79d3bebe2c3ec5d302537a6ae8a",
-                "reference": "84eaa569d48ea79d3bebe2c3ec5d302537a6ae8a",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/151a51f6149855785fbd883e79768c0abc96b75f",
+                "reference": "151a51f6149855785fbd883e79768c0abc96b75f",
                 "shasum": ""
             },
             "require": {
@@ -10654,7 +10654,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.3.2"
+                "source": "https://github.com/phpstan/phpstan/tree/1.3.3"
             },
             "funding": [
                 {
@@ -10674,7 +10674,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-06T17:11:15+00:00"
+            "time": "2022-01-07T09:49:03+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
