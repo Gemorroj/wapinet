@@ -69,7 +69,7 @@
         "james-heinrich/getid3": "^1.9.21",
         "vich/uploader-bundle": "^1.19",
         "liip/imagine-bundle": "^2.7",
-        "gregwar/captcha-bundle": "^2.1.5",
+        "gregwar/captcha-bundle": "^2.1.7",
         "tufanbarisyildirim/php-apk-parser": "^2.0",
         "geoip2/geoip2": "^2.12",
         "christeredvartsen/php-bittorrent": "^2.0",
@@ -85,7 +85,7 @@
         "gemorroj/syntax": "^4.1.1",
         "gemorroj/htmlvalidator": "^3.1",
         "gemorroj/cssvalidator": "^3.2",
-        "gemorroj/xbbcode": "^2.5",
+        "gemorroj/xbbcode": "^2.6",
         "gemorroj/ginfo": "^5.3"
     },
     "require-dev": {

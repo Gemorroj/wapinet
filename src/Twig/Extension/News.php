@@ -30,8 +30,11 @@ class News extends AbstractExtension
 
     public function getLastDate(): ?DateTime
     {
-        $result = $this->newsRepository->getLastDate()->getOneOrNullResult();
+        $lastNews = $this->newsRepository->getLastNews();
+        if ($lastNews) {
+            return $lastNews->getCreatedAt();
+        }
 
-        return null === $result ? null : $result['createdAt'];
+        return null;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Form\DataTransformer;
 
+use App\Entity\Tag;
 use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -17,7 +18,7 @@ class TagsDataTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param ArrayCollection|null $tagsDataFromDb
+     * @param ArrayCollection<Tag>|null $tagsDataFromDb
      *
      * @return string
      */
@@ -29,7 +30,7 @@ class TagsDataTransformer implements DataTransformerInterface
     /**
      * @param string $tagsDataFromForm
      *
-     * @return ArrayCollection|null
+     * @return ArrayCollection<Tag>|null
      */
     public function reverseTransform($tagsDataFromForm)
     {

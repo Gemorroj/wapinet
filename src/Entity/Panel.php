@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="user_panel")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\PanelRepository")
  */
 class Panel extends \ArrayObject
 {
@@ -77,9 +77,6 @@ class Panel extends \ArrayObject
      */
     private $user;
 
-    /**
-     * @return int
-     */
     public function getId(): ?int
     {
         return $this->id;
@@ -88,7 +85,7 @@ class Panel extends \ArrayObject
     /**
      * @return User
      */
-    public function getUser(): ?User
+    public function getUser()
     {
         return $this->user;
     }
@@ -100,6 +97,9 @@ class Panel extends \ArrayObject
         return $this;
     }
 
+    /**
+     * @return \ArrayIterator<string, array<string, string>>
+     */
     public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator([

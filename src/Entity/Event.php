@@ -5,8 +5,6 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Event.
- *
  * @ORM\Table(name="event")
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
  * @ORM\HasLifecycleCallbacks
@@ -36,11 +34,9 @@ class Event
     private $subject;
 
     /**
-     * @var array|null
-     *
      * @ORM\Column(name="variables", type="array", nullable=true)
      */
-    private $variables;
+    private ?array $variables = null;
 
     /**
      * @var string
@@ -50,11 +46,9 @@ class Event
     private $template;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="need_email", type="boolean", nullable=false)
      */
-    private $needEmail = false;
+    private bool $needEmail = false;
 
     /**
      * @var User
@@ -68,20 +62,15 @@ class Event
 
     /**
      * @param int $id
-     *
-     * @return Event
      */
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -97,7 +86,7 @@ class Event
     /**
      * @ORM\PrePersist
      */
-    public function setCreatedAtValue()
+    public function setCreatedAtValue(): self
     {
         $this->createdAt = new \DateTime();
 
@@ -106,10 +95,8 @@ class Event
 
     /**
      * @param string $subject
-     *
-     * @return Event
      */
-    public function setSubject($subject)
+    public function setSubject($subject): self
     {
         $this->subject = $subject;
 
@@ -126,10 +113,8 @@ class Event
 
     /**
      * @param string $template
-     *
-     * @return Event
      */
-    public function setTemplate($template)
+    public function setTemplate($template): self
     {
         $this->template = $template;
 
@@ -144,30 +129,19 @@ class Event
         return $this->template;
     }
 
-    /**
-     * @param array $variables
-     *
-     * @return Event
-     */
-    public function setVariables(array $variables = null)
+    public function setVariables(?array $variables = null): self
     {
         $this->variables = $variables;
 
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getVariables()
+    public function getVariables(): ?array
     {
         return $this->variables;
     }
 
-    /**
-     * @return Event
-     */
-    public function setUser(User $user)
+    public function setUser(User $user): self
     {
         $this->user = $user;
 
@@ -182,22 +156,14 @@ class Event
         return $this->user;
     }
 
-    /**
-     * @param bool $needEmail
-     *
-     * @return Event
-     */
-    public function setNeedEmail($needEmail)
+    public function setNeedEmail(bool $needEmail): self
     {
         $this->needEmail = $needEmail;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getNeedEmail()
+    public function getNeedEmail(): bool
     {
         return $this->needEmail;
     }

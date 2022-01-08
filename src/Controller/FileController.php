@@ -472,12 +472,13 @@ class FileController extends AbstractController
 
     protected function editFileData(Request $request, File $data, File $oldData): File
     {
+        $entityManager = $this->container->get('doctrine')->getManager();
+
         /** @var UploadedFile|null $file */
         $file = $data->getFile();
         if (null !== $file) {
             $hash = \md5_file($file->getPathname());
 
-            $entityManager = $this->container->get('doctrine')->getManager();
             $existingFile = $entityManager->getRepository(File::class)->findOneBy(['hash' => $hash]);
             if (null !== $existingFile) {
                 throw new FileDuplicatedException($existingFile, $this->container->get('router'));
@@ -510,7 +511,6 @@ class FileController extends AbstractController
         }
         $this->makeEditFileTags($data);
 
-        $entityManager = $this->container->get('doctrine')->getManager();
         $entityManager->persist($data);
 
         // если заменен файл
@@ -609,7 +609,6 @@ class FileController extends AbstractController
 
         $this->makeFileTags($data);
 
-        $entityManager = $this->container->get('doctrine')->getManager();
         $entityManager->persist($data);
 
         $entityManager->flush();

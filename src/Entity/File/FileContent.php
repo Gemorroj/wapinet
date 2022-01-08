@@ -10,25 +10,21 @@ class FileContent
     /**
      * @var string
      */
-    protected $content;
+    private $content;
     /**
      * @var string|null
      */
-    protected $mimeType;
+    private $mimeType;
     /**
      * @var string|null
      */
-    protected $basename;
+    private $basename;
     /**
      * @var int
      */
-    protected $size;
+    private $size;
 
-    /**
-     * @param string|null $mimeType
-     * @param string|null $basename
-     */
-    public function __construct(string $content, $mimeType = null, $basename = null)
+    public function __construct(string $content, ?string $mimeType = null, ?string $basename = null)
     {
         $this->content = $content;
         $this->mimeType = $mimeType;
@@ -68,10 +64,7 @@ class FileContent
         return $this->size;
     }
 
-    /**
-     * @return bool
-     */
-    public function isValid()
+    public function isValid(): bool
     {
         return $this->getSize() > 0;
     }
@@ -84,7 +77,7 @@ class FileContent
      *
      * @return string|null The original name
      */
-    public function getClientOriginalName()
+    public function getClientOriginalName(): ?string
     {
         return $this->getBasename();
     }

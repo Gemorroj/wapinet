@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Guestbook;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 class GuestbookRepository extends ServiceEntityRepository
@@ -15,11 +18,13 @@ class GuestbookRepository extends ServiceEntityRepository
 
     public function countAll(): int
     {
-        return $this->getEntityManager()->createQuery('SELECT COUNT(g.id) FROM App\Entity\Guestbook g')->getSingleScalarResult();
+        return $this->count([]);
     }
 
-    public function getListQuery(): \Doctrine\ORM\Query
+    public function getListQuery(): Query
     {
-        return $this->getEntityManager()->createQuery('SELECT g FROM App\Entity\Guestbook g ORDER BY g.id DESC');
+        return $this->createQueryBuilder('g')
+            ->orderBy('g.id', 'DESC')
+            ->getQuery();
     }
 }

@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Gist;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 class GistRepository extends ServiceEntityRepository
@@ -14,27 +17,19 @@ class GistRepository extends ServiceEntityRepository
         parent::__construct($registry, Gist::class);
     }
 
-    public function countAll(): int
-    {
-        return $this->getEntityManager()->createQuery('SELECT COUNT(g.id) FROM App\Entity\Gist g')->getSingleScalarResult();
-    }
-
     public function countUser(?User $user = null): int
     {
-        if (null !== $user) {
-            $q = $this->getEntityManager()->createQuery('SELECT COUNT(g.id) FROM App\Entity\Gist g WHERE g.user = :user');
-            $q->setParameter('user', $user);
-        } else {
-            $q = $this->getEntityManager()->createQuery('SELECT COUNT(g.id) FROM App\Entity\Gist g');
+        if ($user) {
+            return $this->count(['user' => $user]);
         }
 
-        return $q->getSingleScalarResult();
+        return $this->count([]);
     }
 
-    public function getListQuery(?User $user = null): \Doctrine\ORM\Query
+    public function getListQuery(?User $user = null): Query
     {
         $qb = $this->createQueryBuilder('g');
-        if (null !== $user) {
+        if ($user) {
             $qb->where('g.user = :user');
             $qb->setParameter('user', $user);
         }

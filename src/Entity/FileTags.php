@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * FileTags.
  *
  * @ORM\Table(name="file_tags")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\FileTagsRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class FileTags
@@ -22,9 +22,9 @@ class FileTags
     private $id;
 
     /**
-     * @var \App\Entity\File
+     * @var File
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\File", inversedBy="fileTags", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="File", inversedBy="fileTags", cascade={"persist", "remove"})
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="file_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
@@ -32,21 +32,16 @@ class FileTags
     private $file;
 
     /**
-     * @var \App\Entity\Tag
+     * @var Tag
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tag", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="Tag", cascade={"persist", "remove"})
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="tag_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $tag;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -55,10 +50,8 @@ class FileTags
      * Set id.
      *
      * @param int $id
-     *
-     * @return FileTags
      */
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
 
@@ -75,12 +68,7 @@ class FileTags
         return $this->file;
     }
 
-    /**
-     * Set file.
-     *
-     * @return FileTags
-     */
-    public function setFile(File $file)
+    public function setFile(File $file): self
     {
         $this->file = $file;
 
@@ -97,12 +85,7 @@ class FileTags
         return $this->tag;
     }
 
-    /**
-     * Set tag.
-     *
-     * @return FileTags
-     */
-    public function setTag(Tag $tag)
+    public function setTag(Tag $tag): self
     {
         $this->tag = $tag;
 
@@ -111,13 +94,13 @@ class FileTags
 
     public function __toString(): string
     {
-        return $this->getTag()->getName();
+        return (string) $this->getTag()->getName();
     }
 
     /**
      * @ORM\PrePersist
      */
-    public function setPrePersistValue()
+    public function setPrePersistValue(): self
     {
         $tag = $this->getTag();
         $tag->setCount($tag->getCount() + 1);
@@ -128,7 +111,7 @@ class FileTags
     /**
      * @ORM\PreUpdate
      */
-    public function setPreUpdateValue()
+    public function setPreUpdateValue(): self
     {
         $tag = $this->getTag();
         $tag->setCount($tag->getCount() + 1);
@@ -139,7 +122,7 @@ class FileTags
     /**
      * @ORM\PreRemove
      */
-    public function setPreRemoveValue()
+    public function setPreRemoveValue(): self
     {
         $tag = $this->getTag();
         $tag->setCount($tag->getCount() - 1);

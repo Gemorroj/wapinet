@@ -44,11 +44,9 @@ class Guestbook
     private $createdAt;
 
     /**
-     * @var \DateTime|null
-     *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    private $updatedAt;
+    private ?\DateTime $updatedAt;
 
     /**
      * @var string
@@ -60,21 +58,14 @@ class Guestbook
     private $message;
 
     /**
-     * @var User|null
-     *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      * })
      */
-    private $user;
+    private ?User $user = null;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -86,7 +77,7 @@ class Guestbook
      *
      * @return Guestbook
      */
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
 
@@ -115,10 +106,8 @@ class Guestbook
 
     /**
      * @param string $ip
-     *
-     * @return Guestbook
      */
-    public function setIp($ip)
+    public function setIp($ip): self
     {
         $this->ip = $ip;
 
@@ -135,10 +124,8 @@ class Guestbook
 
     /**
      * @param string $browser
-     *
-     * @return Guestbook
      */
-    public function setBrowser($browser)
+    public function setBrowser($browser): self
     {
         $this->browser = $browser;
 
@@ -156,17 +143,14 @@ class Guestbook
     /**
      * @ORM\PrePersist
      */
-    public function setCreatedAtValue()
+    public function setCreatedAtValue(): self
     {
         $this->createdAt = new \DateTime();
 
         return $this;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
@@ -174,7 +158,7 @@ class Guestbook
     /**
      * @ORM\PreUpdate
      */
-    public function setUpdatedAtValue()
+    public function setUpdatedAtValue(): self
     {
         $this->updatedAt = new \DateTime();
 
@@ -191,10 +175,8 @@ class Guestbook
 
     /**
      * @param string $message
-     *
-     * @return Guestbook
      */
-    public function setMessage($message)
+    public function setMessage($message): self
     {
         $this->message = $message;
 

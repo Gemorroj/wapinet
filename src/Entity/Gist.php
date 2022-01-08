@@ -44,11 +44,9 @@ class Gist
     private $createdAt;
 
     /**
-     * @var \DateTime|null
-     *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    private $updatedAt;
+    private ?\DateTime $updatedAt;
 
     /**
      * @var string
@@ -78,12 +76,7 @@ class Gist
      */
     private $user;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -95,7 +88,7 @@ class Gist
      *
      * @return Gist
      */
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
 
@@ -112,12 +105,7 @@ class Gist
         return $this->user;
     }
 
-    /**
-     * Set user.
-     *
-     * @return Gist
-     */
-    public function setUser(User $user)
+    public function setUser(User $user): self
     {
         $this->user = $user;
 
@@ -134,10 +122,8 @@ class Gist
 
     /**
      * @param string $ip
-     *
-     * @return Gist
      */
-    public function setIp($ip)
+    public function setIp($ip): self
     {
         $this->ip = $ip;
 
@@ -154,10 +140,8 @@ class Gist
 
     /**
      * @param string $browser
-     *
-     * @return Gist
      */
-    public function setBrowser($browser)
+    public function setBrowser($browser): self
     {
         $this->browser = $browser;
 
@@ -175,17 +159,14 @@ class Gist
     /**
      * @ORM\PrePersist
      */
-    public function setCreatedAtValue()
+    public function setCreatedAtValue(): self
     {
         $this->createdAt = new \DateTime();
 
         return $this;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
@@ -193,7 +174,7 @@ class Gist
     /**
      * @ORM\PreUpdate
      */
-    public function setUpdatedAtValue()
+    public function setUpdatedAtValue(): self
     {
         $this->updatedAt = new \DateTime();
 
@@ -210,10 +191,8 @@ class Gist
 
     /**
      * @param string $body
-     *
-     * @return Gist
      */
-    public function setBody($body)
+    public function setBody($body): self
     {
         $this->body = $body;
 
@@ -230,10 +209,8 @@ class Gist
 
     /**
      * @param string $subject
-     *
-     * @return Gist
      */
-    public function setSubject($subject)
+    public function setSubject($subject): self
     {
         $this->subject = $subject;
 

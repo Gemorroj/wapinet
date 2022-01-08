@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="user_subscriber")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\SubscriberRepository")
  */
 class Subscriber extends \ArrayObject
 {
@@ -38,9 +38,6 @@ class Subscriber extends \ArrayObject
      */
     private $user;
 
-    /**
-     * @return int
-     */
     public function getId(): ?int
     {
         return $this->id;
@@ -49,7 +46,7 @@ class Subscriber extends \ArrayObject
     /**
      * @return User
      */
-    public function getUser(): ?User
+    public function getUser()
     {
         return $this->user;
     }
@@ -85,6 +82,9 @@ class Subscriber extends \ArrayObject
         return $this;
     }
 
+    /**
+     * @return \ArrayIterator<string, array<string, string>>
+     */
     public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator([

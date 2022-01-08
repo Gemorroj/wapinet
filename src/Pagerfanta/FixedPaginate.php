@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Pagerfanta;
 
 class FixedPaginate
 {
-    protected int $nbResults;
-    protected array $results;
+    private int $nbResults;
+    private array $results;
 
     public function __construct(int $nbResults, array $results)
     {

@@ -46,12 +46,7 @@ class Online
      */
     private $path;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -63,7 +58,7 @@ class Online
      *
      * @return Online
      */
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
 

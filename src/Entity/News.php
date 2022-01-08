@@ -43,11 +43,9 @@ class News
     private $createdAt;
 
     /**
-     * @var \DateTime|null
-     *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    private $updatedAt;
+    private ?\DateTime $updatedAt;
 
     /**
      * @var User
@@ -59,17 +57,15 @@ class News
      */
     private $createdBy;
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
      * @param string $body
-     *
-     * @return News
      */
-    public function setBody($body)
+    public function setBody($body): self
     {
         $this->body = $body;
 
@@ -84,10 +80,7 @@ class News
         return $this->body;
     }
 
-    /**
-     * @return News
-     */
-    public function setCreatedBy(User $createdBy)
+    public function setCreatedBy(User $createdBy): self
     {
         $this->createdBy = $createdBy;
 
@@ -104,10 +97,8 @@ class News
 
     /**
      * @param string $subject
-     *
-     * @return News
      */
-    public function setSubject($subject)
+    public function setSubject($subject): self
     {
         $this->subject = $subject;
 
@@ -130,14 +121,14 @@ class News
     /**
      * @ORM\PrePersist
      */
-    public function setCreatedAtValue()
+    public function setCreatedAtValue(): self
     {
         $this->createdAt = new \DateTime();
 
         return $this;
     }
 
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
@@ -145,7 +136,7 @@ class News
     /**
      * @ORM\PreUpdate
      */
-    public function setUpdatedAtValue()
+    public function setUpdatedAtValue(): self
     {
         $this->updatedAt = new \DateTime();
 

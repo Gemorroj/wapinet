@@ -24,17 +24,11 @@ class Gist extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('gist_count_all', [$this, 'getCountAll']),
             new TwigFunction('gist_count', [$this, 'getCount']),
         ];
     }
 
-    public function getCountAll(): int
-    {
-        return $this->gistRepository->countAll();
-    }
-
-    public function getCount(User $user = null): int
+    public function getCount(?User $user = null): int
     {
         return $this->gistRepository->countUser($user);
     }

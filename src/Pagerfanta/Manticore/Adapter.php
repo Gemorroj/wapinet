@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Pagerfanta\Manticore;
 
 use Pagerfanta\Adapter\AdapterInterface;
@@ -12,8 +14,8 @@ use Pagerfanta\Adapter\AdapterInterface;
  */
 class Adapter implements AdapterInterface
 {
-    protected array $array = [];
-    protected int $nbResults = 0;
+    private array $array = [];
+    private int $nbResults = 0;
 
     public function __construct(array $array)
     {

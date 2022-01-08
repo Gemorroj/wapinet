@@ -35,14 +35,12 @@ class FriendRepository extends ServiceEntityRepository
             ->setParameter('user', $user)
             ->innerJoin('f.friend', 'u', Join::WITH, 'u.enabled = 1');
 
-        if (null !== $lastActivity) {
+        if ($lastActivity) {
             $queryBuilder->andWhere('u.lastActivity > :lastActivity');
             $queryBuilder->setParameter('lastActivity', $lastActivity);
         }
 
-        $q = $queryBuilder->getQuery();
-
-        return $q->getSingleScalarResult();
+        return $queryBuilder->getQuery()->getSingleScalarResult();
     }
 
     public function getFriend(User $user, User $friend): ?Friend

@@ -13,13 +13,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * User.
- *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class User implements UserInterface, EquatableInterface, LegacyPasswordAuthenticatedUserInterface
+class User implements UserInterface, EquatableInterface, LegacyPasswordAuthenticatedUserInterface, \Stringable
 {
     public const LIFETIME = '5 minutes';
     public const SEX_MALE = 'm';
@@ -34,11 +32,9 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     private $id;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="enabled", type="boolean", nullable=false, options={"default": "1"})
      */
-    private $enabled = true;
+    private bool $enabled = true;
 
     /**
      * @var \DateTime
@@ -48,11 +44,9 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     private $createdAt;
 
     /**
-     * @var \DateTime|null
-     *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    private $updatedAt;
+    private ?\DateTime $updatedAt;
 
     /**
      * @var string
@@ -70,11 +64,9 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     private $email;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="salt", type="string", length=255, nullable=true)
      */
-    private $salt;
+    private ?string $salt = null;
 
     /**
      * @var string
@@ -84,80 +76,65 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     private $password;
 
     /**
-     * @var array
-     *
+     * @var string[]
      * @ORM\Column(name="roles", type="array")
      */
-    private $roles;
+    private array $roles = [];
 
     /**
-     * @var \DateTime|null
-     *
      * @ORM\Column(name="last_activity", type="datetime", nullable=true)
      */
-    private $lastActivity;
+    private ?\DateTime $lastActivity;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="sex", type="string", nullable=true, columnDefinition="ENUM('m', 'f') DEFAULT NULL")
      */
-    private $sex;
+    private ?string $sex;
 
     /**
-     * @var \DateTime|null
-     *
      * @ORM\Column(name="birthday", type="date", nullable=true)
      */
-    private $birthday;
+    private ?\DateTime $birthday;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="info", type="string", length=5000, nullable=true)
      * @Assert\Length(max=5000)
      */
-    private $info;
+    private ?string $info;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="timezone", type="string", nullable=true)
      */
-    private $timezone;
+    private ?string $timezone;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="country", type="string", nullable=true)
      */
-    private $country;
+    private ?string $country;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="vk", type="string", nullable=true)
      */
-    private $vk;
+    private ?string $vk;
 
     /**
      * @var Panel
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\Panel", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Panel", mappedBy="user", cascade={"persist", "remove"})
      */
     private $panel;
 
     /**
      * @var Subscriber
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\Subscriber", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Subscriber", mappedBy="user", cascade={"persist", "remove"})
      */
     private $subscriber;
 
     /**
-     * @var Collection
+     * @var Collection<Friend>
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Friend", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Friend", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\OrderBy({
      *     "id": "DESC"
      * })
@@ -165,9 +142,9 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     private $friends;
 
     /**
-     * @var Collection
+     * @var Collection<Friend>
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Friend", mappedBy="friend")
+     * @ORM\OneToMany(targetEntity="Friend", mappedBy="friend")
      * @ORM\OrderBy({
      *     "id": "DESC"
      * })
@@ -197,11 +174,17 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         return $this->id;
     }
 
+    /**
+     * @return Collection<Friend>
+     */
     public function getFriends(): Collection
     {
         return $this->friends;
     }
 
+    /**
+     * @return Collection<Friend>
+     */
     public function getFriended(): Collection
     {
         return $this->friended;
@@ -268,7 +251,7 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
 
     public function getPanel(): Panel
     {
-        if (null === $this->panel) {
+        if (!$this->panel) {
             $panel = new Panel();
             $panel->setUser($this);
 
@@ -287,7 +270,7 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
 
     public function getSubscriber(): Subscriber
     {
-        if (null === $this->subscriber) {
+        if (!$this->subscriber) {
             $subscriber = new Subscriber();
             $subscriber->setUser($this);
 
@@ -324,7 +307,7 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     public function setSex(?string $sex): self
     {
         if (self::SEX_MALE !== $sex && self::SEX_FEMALE !== $sex) {
-            throw new \InvalidArgumentException('Invalid sex');
+            throw new \InvalidArgumentException('Invalid gender');
         }
 
         $this->sex = $sex;

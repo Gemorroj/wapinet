@@ -29,11 +29,9 @@ class Friend
     private $createdAt;
 
     /**
-     * @var \DateTime|null
-     *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    private $updatedAt;
+    private ?\DateTime $updatedAt;
 
     /**
      * @var User
@@ -55,10 +53,7 @@ class Friend
      */
     private $friend;
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -74,17 +69,14 @@ class Friend
     /**
      * @ORM\PrePersist
      */
-    public function setCreatedAtValue()
+    public function setCreatedAtValue(): self
     {
         $this->createdAt = new \DateTime();
 
         return $this;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
@@ -92,17 +84,14 @@ class Friend
     /**
      * @ORM\PreUpdate
      */
-    public function setUpdatedAtValue()
+    public function setUpdatedAtValue(): self
     {
         $this->updatedAt = new \DateTime();
 
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function setUser(User $user)
+    public function setUser(User $user): self
     {
         $this->user = $user;
 
@@ -117,10 +106,7 @@ class Friend
         return $this->user;
     }
 
-    /**
-     * @return $this
-     */
-    public function setFriend(User $friend)
+    public function setFriend(User $friend): self
     {
         $this->friend = $friend;
 

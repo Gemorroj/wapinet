@@ -7,10 +7,7 @@ namespace App\Entity\File;
  */
 class Meta
 {
-    /**
-     * @var array
-     */
-    protected $meta = [];
+    private array $meta = [];
 
     /**
      * @param string $key
@@ -23,7 +20,7 @@ class Meta
     /**
      * @param string $key
      *
-     * @return string
+     * @return string|null
      */
     public function get($key)
     {
@@ -33,10 +30,8 @@ class Meta
     /**
      * @param string $key
      * @param mixed  $value
-     *
-     * @return Meta
      */
-    public function set($key, $value)
+    public function set($key, $value): self
     {
         $this->meta[$key] = $value;
 

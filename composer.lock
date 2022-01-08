@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eff4ac7f4e20ae866c02be2ea1470c8e",
+    "content-hash": "b2e4ad1da4694166b7ce20dcb4e119b1",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -2847,16 +2847,16 @@
         },
         {
             "name": "gregwar/captcha-bundle",
-            "version": "v2.1.6",
+            "version": "v2.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gregwar/CaptchaBundle.git",
-                "reference": "da2c7aa676f62a6adf51bf10a40bc5fdb51ab321"
+                "reference": "d6695865e7b88f356be64997b4b60773c2d63e21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gregwar/CaptchaBundle/zipball/da2c7aa676f62a6adf51bf10a40bc5fdb51ab321",
-                "reference": "da2c7aa676f62a6adf51bf10a40bc5fdb51ab321",
+                "url": "https://api.github.com/repos/Gregwar/CaptchaBundle/zipball/d6695865e7b88f356be64997b4b60773c2d63e21",
+                "reference": "d6695865e7b88f356be64997b4b60773c2d63e21",
                 "shasum": ""
             },
             "require": {
@@ -2907,9 +2907,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Gregwar/CaptchaBundle/issues",
-                "source": "https://github.com/Gregwar/CaptchaBundle/tree/v2.1.6"
+                "source": "https://github.com/Gregwar/CaptchaBundle/tree/v2.1.7"
             },
-            "time": "2022-01-07T15:30:35+00:00"
+            "time": "2022-01-07T15:49:04+00:00"
         },
         {
             "name": "imagine/imagine",
@@ -10803,16 +10803,16 @@
         },
         {
             "name": "phpstan/phpstan-symfony",
-            "version": "1.0.4",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-symfony.git",
-                "reference": "84df52516771a2d8cf26b7b5b42a6dd4b1d26c2c"
+                "reference": "29ad8a949139ba8a5342cda60c62fea4d7afafce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/84df52516771a2d8cf26b7b5b42a6dd4b1d26c2c",
-                "reference": "84df52516771a2d8cf26b7b5b42a6dd4b1d26c2c",
+                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/29ad8a949139ba8a5342cda60c62fea4d7afafce",
+                "reference": "29ad8a949139ba8a5342cda60c62fea4d7afafce",
                 "shasum": ""
             },
             "require": {
@@ -10831,6 +10831,7 @@
                 "phpunit/phpunit": "^9.5",
                 "symfony/config": "^4.2 || ^5.0",
                 "symfony/console": "^4.0 || ^5.0",
+                "symfony/form": "^4.0 || ^5.0",
                 "symfony/framework-bundle": "^4.4 || ^5.0",
                 "symfony/http-foundation": "^4.0 || ^5.0",
                 "symfony/messenger": "^4.2 || ^5.0",
@@ -10867,9 +10868,9 @@
             "description": "Symfony Framework extensions and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-symfony/issues",
-                "source": "https://github.com/phpstan/phpstan-symfony/tree/1.0.4"
+                "source": "https://github.com/phpstan/phpstan-symfony/tree/1.0.5"
             },
-            "time": "2021-12-16T09:03:35+00:00"
+            "time": "2022-01-08T10:45:01+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

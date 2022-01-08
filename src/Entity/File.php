@@ -51,51 +51,35 @@ class File implements PasswordAuthenticatedUserInterface
     private $createdAt;
 
     /**
-     * @var \DateTime|null
-     *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    private $updatedAt;
+    private ?\DateTime $updatedAt;
 
     /**
-     * @var \DateTime|null
-     *
      * @ORM\Column(name="last_view_at", type="datetime", nullable=true)
      */
-    private $lastViewAt;
+    private ?\DateTime $lastViewAt;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="count_views", type="integer", nullable=false)
      */
-    private $countViews = 0;
+    private int $countViews = 0;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="password", type="string", nullable=true)
      */
-    private $password;
+    private ?string $password;
+    private ?string $plainPassword;
 
     /**
-     * @var string|null
-     */
-    protected $plainPassword;
-
-    /**
-     * @var string|null
-     *
      * @ORM\Column(name="mime_type", type="string", nullable=true)
      */
-    private $mimeType;
+    private ?string $mimeType;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="file_size", type="integer", nullable=false)
      */
-    private $fileSize;
+    private int $fileSize = 0;
 
     /**
      * @var string
@@ -109,7 +93,7 @@ class File implements PasswordAuthenticatedUserInterface
      * @Assert\File
      * @Vich\UploadableField(mapping="file", fileNameProperty="fileName", size="fileSize")
      */
-    protected $file;
+    private $file;
 
     /**
      * @var string
@@ -135,33 +119,29 @@ class File implements PasswordAuthenticatedUserInterface
     private $hash;
 
     /**
-     * @var Meta|null
-     *
      * @ORM\Column(name="meta", type="object", nullable=true)
      */
-    private $meta;
+    private ?Meta $meta = null;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="hidden", type="boolean", nullable=false, options={"default": "1"})
      */
-    private $hidden = true;
+    private bool $hidden = true;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection<FileTags>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\FileTags", mappedBy="file", cascade={"persist", "remove"})
      */
     private $fileTags;
 
     /**
-     * @var Collection
+     * @var Collection<Tag>
      */
-    protected $tags;
+    private $tags;
 
     /**
-     * @var User
+     * @var User|null
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
@@ -170,9 +150,6 @@ class File implements PasswordAuthenticatedUserInterface
      */
     private $user;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->fileTags = new ArrayCollection();
@@ -199,40 +176,24 @@ class File implements PasswordAuthenticatedUserInterface
         }
     }
 
-    /**
-     * @return bool
-     */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return $this->hidden;
     }
 
-    /**
-     * @return bool
-     */
-    public function getHidden()
+    public function getHidden(): bool
     {
         return $this->hidden;
     }
 
-    /**
-     * @param bool $hidden
-     *
-     * @return File
-     */
-    public function setHidden($hidden): self
+    public function setHidden(bool $hidden): self
     {
-        $this->hidden = (bool) $hidden;
+        $this->hidden = $hidden;
 
         return $this;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -241,8 +202,6 @@ class File implements PasswordAuthenticatedUserInterface
      * Set id.
      *
      * @param int $id
-     *
-     * @return File
      */
     public function setId($id): self
     {
@@ -251,23 +210,11 @@ class File implements PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * Get meta.
-     *
-     * @return Meta|null
-     */
-    public function getMeta()
+    public function getMeta(): ?Meta
     {
         return $this->meta;
     }
 
-    /**
-     * Set meta.
-     *
-     * @param Meta $meta
-     *
-     * @return File
-     */
     public function setMeta(Meta $meta = null): self
     {
         $this->meta = $meta;
@@ -276,19 +223,15 @@ class File implements PasswordAuthenticatedUserInterface
     }
 
     /**
-     * Get fileTags.
-     *
-     * @return Collection
+     * @return Collection<FileTags>
      */
-    public function getFileTags()
+    public function getFileTags(): Collection
     {
-        return $this->fileTags ?: new ArrayCollection();
+        return $this->fileTags;
     }
 
     /**
-     * Set fileTags.
-     *
-     * @return File
+     * @param Collection<FileTags> $fileTags
      */
     public function setFileTags(Collection $fileTags): self
     {
@@ -301,46 +244,34 @@ class File implements PasswordAuthenticatedUserInterface
      * Get Tags
      * Использовать только для отображения. В БД этого поля нет.
      *
-     * @return Collection
+     * @return Collection<Tag>
      */
-    public function getTags()
+    public function getTags(): Collection
     {
-        return $this->tags ?: new ArrayCollection();
+        return $this->tags;
     }
 
     /**
      * Set Tags
      * Использовать только для отображения. В БД этого поля нет.
      *
-     * @param Collection $tags
+     * @param Collection<Tag> $tags
      *
      * @return File
      */
-    public function setTags(Collection $tags = null): self
+    public function setTags(Collection $tags): self
     {
         $this->tags = $tags;
 
         return $this;
     }
 
-    /**
-     * Get user.
-     *
-     * @return User|null
-     */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    /**
-     * Set user.
-     *
-     * @param User $user
-     *
-     * @return File
-     */
-    public function setUser(User $user = null): self
+    public function setUser(?User $user = null): self
     {
         $this->user = $user;
 
@@ -357,8 +288,6 @@ class File implements PasswordAuthenticatedUserInterface
 
     /**
      * @param string $ip
-     *
-     * @return File
      */
     public function setIp($ip): self
     {
@@ -377,8 +306,6 @@ class File implements PasswordAuthenticatedUserInterface
 
     /**
      * @param string $browser
-     *
-     * @return File
      */
     public function setBrowser($browser): self
     {
@@ -405,17 +332,11 @@ class File implements PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @return File
-     */
     public function setUpdatedAtValue(): self
     {
         $this->updatedAt = new \DateTime();
@@ -423,17 +344,11 @@ class File implements PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getLastViewAt()
+    public function getLastViewAt(): ?\DateTime
     {
         return $this->lastViewAt;
     }
 
-    /**
-     * @return File
-     */
     public function setLastViewAt(\DateTime $lastViewAt): self
     {
         $this->lastViewAt = $lastViewAt;
@@ -441,20 +356,12 @@ class File implements PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getCountViews()
+    public function getCountViews(): int
     {
         return $this->countViews;
     }
 
-    /**
-     * @param int $countViews
-     *
-     * @return File
-     */
-    public function setCountViews($countViews): self
+    public function setCountViews(int $countViews): self
     {
         $this->countViews = $countViews;
 
@@ -485,20 +392,12 @@ class File implements PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getMimeType()
+    public function getMimeType(): ?string
     {
         return $this->mimeType;
     }
 
-    /**
-     * @param string|null $mimeType
-     *
-     * @return File
-     */
-    public function setMimeType($mimeType): self
+    public function setMimeType(?string $mimeType = null): self
     {
         // по mime определять принадлежность к категории
         $this->mimeType = $mimeType;
@@ -506,20 +405,12 @@ class File implements PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getFileSize()
+    public function getFileSize(): int
     {
         return $this->fileSize;
     }
 
-    /**
-     * @param int $fileSize
-     *
-     * @return File
-     */
-    public function setFileSize($fileSize): self
+    public function setFileSize(int $fileSize): self
     {
         $this->fileSize = $fileSize;
 
@@ -536,8 +427,6 @@ class File implements PasswordAuthenticatedUserInterface
 
     /**
      * @param string $fileName
-     *
-     * @return File
      */
     public function setFileName($fileName): self
     {
@@ -556,8 +445,6 @@ class File implements PasswordAuthenticatedUserInterface
 
     /**
      * @param string $originalFileName
-     *
-     * @return File
      */
     public function setOriginalFileName($originalFileName): self
     {
@@ -582,11 +469,6 @@ class File implements PasswordAuthenticatedUserInterface
         return $this->file;
     }
 
-    /**
-     * @param BaseFile $file
-     *
-     * @return File
-     */
     public function setFile(BaseFile $file = null): self
     {
         $this->file = $file;
@@ -604,8 +486,6 @@ class File implements PasswordAuthenticatedUserInterface
 
     /**
      * @param string $description
-     *
-     * @return File
      */
     public function setDescription($description): self
     {
@@ -640,27 +520,27 @@ class File implements PasswordAuthenticatedUserInterface
 
     public function isImage(): bool
     {
-        return 0 === \strpos($this->getMimeType(), 'image/') || 'application/postscript' === $this->getMimeType() || 'application/illustrator' === $this->getMimeType() || 'application/vnd.adobe.illustrator' === $this->getMimeType();
+        return \str_starts_with($this->getMimeType(), 'image/') || 'application/postscript' === $this->getMimeType() || 'application/illustrator' === $this->getMimeType() || 'application/vnd.adobe.illustrator' === $this->getMimeType();
     }
 
     public function isVideo(): bool
     {
-        return 0 === \strpos($this->getMimeType(), 'video/') || 'application/vnd.rn-realmedia' === $this->getMimeType() || 'application/vnd.rn-realmedia-vbr' === $this->getMimeType();
+        return \str_starts_with($this->getMimeType(), 'video/') || 'application/vnd.rn-realmedia' === $this->getMimeType() || 'application/vnd.rn-realmedia-vbr' === $this->getMimeType();
     }
 
     public function isAudio(): bool
     {
-        return 0 === \strpos($this->getMimeType(), 'audio/') && !$this->isPlaylist();
+        return \str_starts_with($this->getMimeType(), 'audio/') && !$this->isPlaylist();
     }
 
     public function isText(): bool
     {
-        return 0 === \strpos($this->getMimeType(), 'text/');
+        return \str_starts_with($this->getMimeType(), 'text/');
     }
 
     public function isXml(): bool
     {
-        return 'application/xml' === $this->getMimeType() || 'text/xml' === $this->getMimeType() || false !== \strpos($this->getMimeType(), '+xml');
+        return 'application/xml' === $this->getMimeType() || 'text/xml' === $this->getMimeType() || \str_contains($this->getMimeType(), '+xml');
     }
 
     public function isJson(): bool
@@ -702,7 +582,7 @@ class File implements PasswordAuthenticatedUserInterface
     public function isAndroidApp(): bool
     {
         return 'application/vnd.android.package-archive' === $this->getMimeType() ||
-            (\in_array($this->getMimeType(), ['application/java-archive', 'application/zip', 'application/x-zip', 'application/x-zip-compressed'], true) && '.apk' === \substr($this->getFileName(), -4));
+            (\in_array($this->getMimeType(), ['application/java-archive', 'application/zip', 'application/x-zip', 'application/x-zip-compressed'], true) && \str_ends_with($this->getFileName(), '.apk'));
     }
 
     public function isSymbianApp(): bool
@@ -944,6 +824,6 @@ class File implements PasswordAuthenticatedUserInterface
 
     public function __toString(): string
     {
-        return $this->getOriginalFileName();
+        return (string) $this->getOriginalFileName();
     }
 }

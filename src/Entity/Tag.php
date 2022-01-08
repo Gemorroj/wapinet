@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Tag
+class Tag implements \Stringable
 {
     /**
      * @var int
@@ -29,11 +29,9 @@ class Tag
     private $name;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="count", type="integer", nullable=false)
      */
-    private $count = 0;
+    private int $count = 0;
 
     /**
      * @var \DateTime
@@ -43,18 +41,11 @@ class Tag
     private $createdAt;
 
     /**
-     * @var \DateTime|null
-     *
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    private $updatedAt;
+    private ?\DateTime $updatedAt;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -66,31 +57,19 @@ class Tag
      *
      * @return $this
      */
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
 
         return $this;
     }
 
-    /**
-     * Get count.
-     *
-     * @return int
-     */
-    public function getCount()
+    public function getCount(): int
     {
         return $this->count;
     }
 
-    /**
-     * Set count.
-     *
-     * @param int $count
-     *
-     * @return $this
-     */
-    public function setCount($count)
+    public function setCount(int $count): self
     {
         $this->count = $count;
 
@@ -98,8 +77,6 @@ class Tag
     }
 
     /**
-     * Get name.
-     *
      * @return string
      */
     public function getName()
@@ -107,14 +84,7 @@ class Tag
         return $this->name;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -132,17 +102,14 @@ class Tag
     /**
      * @ORM\PrePersist
      */
-    public function setCreatedAtValue()
+    public function setCreatedAtValue(): self
     {
         $this->createdAt = new \DateTime();
 
         return $this;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
@@ -150,7 +117,7 @@ class Tag
     /**
      * @ORM\PreUpdate
      */
-    public function setUpdatedAtValue()
+    public function setUpdatedAtValue(): self
     {
         $this->updatedAt = new \DateTime();
 
@@ -159,6 +126,6 @@ class Tag
 
     public function __toString(): string
     {
-        return $this->getName();
+        return (string) $this->getName();
     }
 }

@@ -6,6 +6,7 @@ use App\Entity\File;
 use App\Entity\Tag;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -43,16 +44,18 @@ class FileRepository extends ServiceEntityRepository
 
     public function countHidden(): int
     {
-        return $this->getEntityManager()->createQuery(
-            'SELECT COUNT(f.id) FROM App\Entity\File f WHERE f.password IS NULL AND f.hidden = 1'
-        )->getSingleScalarResult();
+        return $this->count([
+            'password' => null,
+            'hidden' => true,
+        ]);
     }
 
     public function countAll(): int
     {
-        return $this->getEntityManager()->createQuery(
-            'SELECT COUNT(f.id) FROM App\Entity\File f WHERE f.password IS NULL AND f.hidden = 0'
-        )->getSingleScalarResult();
+        return $this->count([
+            'password' => null,
+            'hidden' => false,
+        ]);
     }
 
     public function countDate(\DateTime $datetimeStart, ?\DateTime $datetimeEnd = null): int
@@ -65,70 +68,63 @@ class FileRepository extends ServiceEntityRepository
 
         $queryBuilder->setParameter('date_start', $datetimeStart);
 
-        if (null !== $datetimeEnd) {
+        if ($datetimeEnd) {
             $queryBuilder->andWhere('f.createdAt < :date_end');
             $queryBuilder->setParameter('date_end', $datetimeEnd);
         }
 
-        $q = $queryBuilder->getQuery();
-
-        return $q->getSingleScalarResult();
+        return $queryBuilder->getQuery()->getSingleScalarResult();
     }
 
     public function countCategory(string $category): int
     {
-        $q = $this->createQueryBuilder('f')
+        $queryBuilder = $this->createQueryBuilder('f')
             ->select('COUNT(f.id)')
             ->where('f.password IS NULL')
             ->andWhere('f.hidden = 0');
 
-        $this->addCategoryMime($q, $category);
-        $q = $q->getQuery();
+        $this->addCategoryMime($queryBuilder, $category);
 
-        return $q->getSingleScalarResult();
+        return $queryBuilder->getQuery()->getSingleScalarResult();
     }
 
     public function countUser(User $user): int
     {
-        $q = $this->createQueryBuilder('f')
-            ->select('COUNT(f.id)')
-            ->where('f.password IS NULL')
-            ->andWhere('f.hidden = 0')
-            ->andWhere('f.user = :user')
-            ->setParameter('user', $user)
-            ->getQuery();
-
-        return $q->getSingleScalarResult();
+        return $this->count([
+            'password' => null,
+            'hidden' => false,
+            'user' => $user,
+        ]);
     }
 
-    public function getListQuery(?\DateTime $datetimeStart = null, ?\DateTime $datetimeEnd = null, ?string $category = null): \Doctrine\ORM\Query
+    public function getListQuery(?\DateTime $datetimeStart = null, ?\DateTime $datetimeEnd = null, ?string $category = null): Query
     {
-        $q = $this->createQueryBuilder('f')
+        $queryBuilder = $this->createQueryBuilder('f')
             ->where('f.password IS NULL')
             ->andWhere('f.hidden = 0')
             ->orderBy('f.id', 'DESC');
 
-        if (null !== $datetimeStart) {
-            $q->andWhere('f.createdAt > :date_start');
-            $q->setParameter('date_start', $datetimeStart);
+        if ($datetimeStart) {
+            $queryBuilder->andWhere('f.createdAt > :date_start');
+            $queryBuilder->setParameter('date_start', $datetimeStart);
         }
-        if (null !== $datetimeEnd) {
-            $q->andWhere('f.createdAt < :date_end');
-            $q->setParameter('date_end', $datetimeEnd);
+        if ($datetimeEnd) {
+            $queryBuilder->andWhere('f.createdAt < :date_end');
+            $queryBuilder->setParameter('date_end', $datetimeEnd);
         }
 
-        $this->addCategoryMime($q, $category);
+        $this->addCategoryMime($queryBuilder, $category);
 
-        return $q->getQuery();
+        return $queryBuilder->getQuery();
     }
 
-    public function getHiddenQuery(): \Doctrine\ORM\Query
+    public function getHiddenQuery(): Query
     {
-        $q = $this->createQueryBuilder('f')
+        $queryBuilder = $this->createQueryBuilder('f')
             ->andWhere('f.hidden = 1')
             ->orderBy('f.id', 'DESC');
 
-        return $q->getQuery();
+        return $queryBuilder->getQuery();
     }
 
     /**
@@ -136,7 +132,7 @@ class FileRepository extends ServiceEntityRepository
      */
     public function getPrevFile(int $id, ?string $category = null): ?File
     {
-        $q = $this->createQueryBuilder('f')
+        $queryBuilder = $this->createQueryBuilder('f')
             ->where('f.id > :id')
             ->andWhere('f.password IS NULL')
             ->andWhere('f.hidden = 0')
@@ -144,9 +140,9 @@ class FileRepository extends ServiceEntityRepository
             ->orderBy('f.id', 'ASC')
             ->setMaxResults(1);
 
-        $this->addCategoryMime($q, $category);
+        $this->addCategoryMime($queryBuilder, $category);
 
-        return $q->getQuery()->getOneOrNullResult();
+        return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 
     /**
@@ -154,7 +150,7 @@ class FileRepository extends ServiceEntityRepository
      */
     public function getNextFile(int $id, ?string $category = null): ?File
     {
-        $q = $this->createQueryBuilder('f')
+        $queryBuilder = $this->createQueryBuilder('f')
             ->where('f.id < :id')
             ->andWhere('f.password IS NULL')
             ->andWhere('f.hidden = 0')
@@ -162,142 +158,142 @@ class FileRepository extends ServiceEntityRepository
             ->orderBy('f.id', 'DESC')
             ->setMaxResults(1);
 
-        $this->addCategoryMime($q, $category);
+        $this->addCategoryMime($queryBuilder, $category);
 
-        return $q->getQuery()->getOneOrNullResult();
+        return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 
-    private function addCategoryMime(QueryBuilder $q, ?string $mimeType): void
+    private function addCategoryMime(QueryBuilder $qb, ?string $mimeType): void
     {
         switch ($mimeType) {
             case 'video':
-                $q->andWhere('f.mimeType LIKE :video OR f.mimeType IN(:flash, :flv, :a3gpp, :a3gppencrypted, :axrn3gppamr, :axrn3gppamrencrypted, :axrn3gppamrwb, :axrn3gppamrwbencrypted, :a3gpp2, :awmv)');
-                $q->setParameter('video', 'video/%');
-                $q->setParameter('flash', 'application/x-flash-video');
-                $q->setParameter('flv', 'flv-application/octet-stream');
-                $q->setParameter('a3gpp', 'audio/3gpp');
-                $q->setParameter('a3gppencrypted', 'audio/3gpp-encrypted');
-                $q->setParameter('axrn3gppamr', 'audio/x-rn-3gpp-amr');
-                $q->setParameter('axrn3gppamrencrypted', 'audio/x-rn-3gpp-amr-encrypted');
-                $q->setParameter('axrn3gppamrwb', 'audio/x-rn-3gpp-amr-wb');
-                $q->setParameter('axrn3gppamrwbencrypted', 'audio/x-rn-3gpp-amr-wb-encrypted');
-                $q->setParameter('a3gpp2', 'audio/3gpp2');
-                $q->setParameter('awmv', 'audio/x-ms-wmv');
+                $qb->andWhere('f.mimeType LIKE :video OR f.mimeType IN(:flash, :flv, :a3gpp, :a3gppencrypted, :axrn3gppamr, :axrn3gppamrencrypted, :axrn3gppamrwb, :axrn3gppamrwbencrypted, :a3gpp2, :awmv)');
+                $qb->setParameter('video', 'video/%');
+                $qb->setParameter('flash', 'application/x-flash-video');
+                $qb->setParameter('flv', 'flv-application/octet-stream');
+                $qb->setParameter('a3gpp', 'audio/3gpp');
+                $qb->setParameter('a3gppencrypted', 'audio/3gpp-encrypted');
+                $qb->setParameter('axrn3gppamr', 'audio/x-rn-3gpp-amr');
+                $qb->setParameter('axrn3gppamrencrypted', 'audio/x-rn-3gpp-amr-encrypted');
+                $qb->setParameter('axrn3gppamrwb', 'audio/x-rn-3gpp-amr-wb');
+                $qb->setParameter('axrn3gppamrwbencrypted', 'audio/x-rn-3gpp-amr-wb-encrypted');
+                $qb->setParameter('a3gpp2', 'audio/3gpp2');
+                $qb->setParameter('awmv', 'audio/x-ms-wmv');
                 break;
             case 'audio':
-                $q->andWhere('f.mimeType LIKE :audio OR f.mimeType IN(:flash)');
-                $q->setParameter('audio', 'audio/%');
-                $q->setParameter('flash', 'application/x-flash-audio');
+                $qb->andWhere('f.mimeType LIKE :audio OR f.mimeType IN(:flash)');
+                $qb->setParameter('audio', 'audio/%');
+                $qb->setParameter('flash', 'application/x-flash-audio');
                 break;
             case 'image':
-                $q->andWhere('f.mimeType LIKE :image OR f.mimeType IN(:postscript, :illustrator, :adobeillustrator)');
-                $q->setParameter('image', 'image/%');
-                $q->setParameter('postscript', 'application/postscript');
-                $q->setParameter('illustrator', 'application/illustrator');
-                $q->setParameter('adobeillustrator', 'application/vnd.adobe.illustrator');
+                $qb->andWhere('f.mimeType LIKE :image OR f.mimeType IN(:postscript, :illustrator, :adobeillustrator)');
+                $qb->setParameter('image', 'image/%');
+                $qb->setParameter('postscript', 'application/postscript');
+                $qb->setParameter('illustrator', 'application/illustrator');
+                $qb->setParameter('adobeillustrator', 'application/vnd.adobe.illustrator');
                 break;
             case 'text':
-                $q->andWhere('f.mimeType LIKE :text OR f.mimeType IN(:axml, :txml, :json, :xphp, :xhttpdphp, :xpython, :xpython3, :csv, :perl, :sql, :xsql, :yaml, :xsh, :xshellscript)');
-                $q->setParameter('text', 'text/%');
-                $q->setParameter('axml', 'application/xml');
-                $q->setParameter('txml', 'text/xml');
-                $q->setParameter('json', 'application/json');
-                $q->setParameter('xphp', 'application/x-php');
-                $q->setParameter('xhttpdphp', 'application/x-httpd-php');
-                $q->setParameter('xpython', 'text/x-python');
-                $q->setParameter('xpython3', 'text/x-python3');
-                $q->setParameter('csv', 'application/csv');
-                $q->setParameter('perl', 'application/x-perl');
-                $q->setParameter('sql', 'application/sql');
-                $q->setParameter('xsql', 'application/x-sql');
-                $q->setParameter('yaml', 'application/x-yaml');
-                $q->setParameter('xsh', 'application/x-sh');
-                $q->setParameter('xshellscript', 'application/x-shellscript');
+                $qb->andWhere('f.mimeType LIKE :text OR f.mimeType IN(:axml, :txml, :json, :xphp, :xhttpdphp, :xpython, :xpython3, :csv, :perl, :sql, :xsql, :yaml, :xsh, :xshellscript)');
+                $qb->setParameter('text', 'text/%');
+                $qb->setParameter('axml', 'application/xml');
+                $qb->setParameter('txml', 'text/xml');
+                $qb->setParameter('json', 'application/json');
+                $qb->setParameter('xphp', 'application/x-php');
+                $qb->setParameter('xhttpdphp', 'application/x-httpd-php');
+                $qb->setParameter('xpython', 'text/x-python');
+                $qb->setParameter('xpython3', 'text/x-python3');
+                $qb->setParameter('csv', 'application/csv');
+                $qb->setParameter('perl', 'application/x-perl');
+                $qb->setParameter('sql', 'application/sql');
+                $qb->setParameter('xsql', 'application/x-sql');
+                $qb->setParameter('yaml', 'application/x-yaml');
+                $qb->setParameter('xsh', 'application/x-sh');
+                $qb->setParameter('xshellscript', 'application/x-shellscript');
                 break;
             case 'office':
-                $q->andWhere('f.mimeType IN(:pdf, :acrobat, :nappdf, :xpdf, :ipdf, :msword, :vndmsword, :xmsword, :zzwinassocdoc, :docx, :vndmsexcel, :msexcel, :xmsexcel, :zzwinassocxls, :xlsx, :artf, :trtf, :vndmspowerpoint, :mspowerpoint, :powerpoint, :xmspowerpoint, :pptx, :xmsaccess, :mdb, :msaccess, :vndmsaccess1, :vndmsaccess2, :xmdb, :zzwinassocmdb)');
-                $q->setParameter('pdf', 'application/pdf');
-                $q->setParameter('acrobat', 'application/acrobat');
-                $q->setParameter('nappdf', 'application/nappdf');
-                $q->setParameter('xpdf', 'application/x-pdf');
-                $q->setParameter('ipdf', 'image/pdf');
-                $q->setParameter('msword', 'application/msword');
-                $q->setParameter('vndmsword', 'application/vnd.ms-word');
-                $q->setParameter('xmsword', 'application/x-msword');
-                $q->setParameter('zzwinassocdoc', 'zz-application/zz-winassoc-doc');
-                $q->setParameter('docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-                $q->setParameter('vndmsexcel', 'application/vnd.ms-excel');
-                $q->setParameter('msexcel', 'application/msexcel');
-                $q->setParameter('xmsexcel', 'application/x-msexcel');
-                $q->setParameter('zzwinassocxls', 'zz-application/zz-winassoc-xls');
-                $q->setParameter('xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-                $q->setParameter('artf', 'application/rtf');
-                $q->setParameter('trtf', 'text/rtf');
-                $q->setParameter('vndmspowerpoint', 'application/vnd.ms-powerpoint');
-                $q->setParameter('mspowerpoint', 'application/mspowerpoint');
-                $q->setParameter('powerpoint', 'application/powerpoint');
-                $q->setParameter('xmspowerpoint', 'application/x-mspowerpoint');
-                $q->setParameter('pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation');
-                $q->setParameter('xmsaccess', 'application/x-msaccess');
-                $q->setParameter('mdb', 'application/mdb');
-                $q->setParameter('msaccess', 'application/msaccess');
-                $q->setParameter('vndmsaccess1', 'application/vnd.ms-access');
-                $q->setParameter('vndmsaccess2', 'application/vnd.msaccess');
-                $q->setParameter('xmdb', 'application/x-mdb');
-                $q->setParameter('zzwinassocmdb', 'zz-application/zz-winassoc-mdb');
+                $qb->andWhere('f.mimeType IN(:pdf, :acrobat, :nappdf, :xpdf, :ipdf, :msword, :vndmsword, :xmsword, :zzwinassocdoc, :docx, :vndmsexcel, :msexcel, :xmsexcel, :zzwinassocxls, :xlsx, :artf, :trtf, :vndmspowerpoint, :mspowerpoint, :powerpoint, :xmspowerpoint, :pptx, :xmsaccess, :mdb, :msaccess, :vndmsaccess1, :vndmsaccess2, :xmdb, :zzwinassocmdb)');
+                $qb->setParameter('pdf', 'application/pdf');
+                $qb->setParameter('acrobat', 'application/acrobat');
+                $qb->setParameter('nappdf', 'application/nappdf');
+                $qb->setParameter('xpdf', 'application/x-pdf');
+                $qb->setParameter('ipdf', 'image/pdf');
+                $qb->setParameter('msword', 'application/msword');
+                $qb->setParameter('vndmsword', 'application/vnd.ms-word');
+                $qb->setParameter('xmsword', 'application/x-msword');
+                $qb->setParameter('zzwinassocdoc', 'zz-application/zz-winassoc-doc');
+                $qb->setParameter('docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+                $qb->setParameter('vndmsexcel', 'application/vnd.ms-excel');
+                $qb->setParameter('msexcel', 'application/msexcel');
+                $qb->setParameter('xmsexcel', 'application/x-msexcel');
+                $qb->setParameter('zzwinassocxls', 'zz-application/zz-winassoc-xls');
+                $qb->setParameter('xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                $qb->setParameter('artf', 'application/rtf');
+                $qb->setParameter('trtf', 'text/rtf');
+                $qb->setParameter('vndmspowerpoint', 'application/vnd.ms-powerpoint');
+                $qb->setParameter('mspowerpoint', 'application/mspowerpoint');
+                $qb->setParameter('powerpoint', 'application/powerpoint');
+                $qb->setParameter('xmspowerpoint', 'application/x-mspowerpoint');
+                $qb->setParameter('pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation');
+                $qb->setParameter('xmsaccess', 'application/x-msaccess');
+                $qb->setParameter('mdb', 'application/mdb');
+                $qb->setParameter('msaccess', 'application/msaccess');
+                $qb->setParameter('vndmsaccess1', 'application/vnd.ms-access');
+                $qb->setParameter('vndmsaccess2', 'application/vnd.msaccess');
+                $qb->setParameter('xmdb', 'application/x-mdb');
+                $qb->setParameter('zzwinassocmdb', 'zz-application/zz-winassoc-mdb');
                 break;
             case 'archive':
-                $q->andWhere('f.fileName NOT LIKE \'%.apk\'');
-                $q->andWhere('f.mimeType IN(:zip, :xzip, :xzipcompressed, :xrarcompressed, :xrar, :vndrar, :xbzip, :xbzip2, :xbz2, :p7z, :mscab, :zzcab, :tar, :xgzip, :gzip, :xace, :xacecompressed, :xlha, :xlzhcompressed, :iso1, :iso2, :iso3, :iso4, :iso5, :iso6, :iso7, :iso8, :iso9, :iso10)');
-                $q->setParameter('zip', 'application/zip'); // zip
-                $q->setParameter('xzip', 'application/x-zip'); // zip
-                $q->setParameter('xzipcompressed', 'application/x-zip-compressed'); // zip
-                $q->setParameter('xrarcompressed', 'application/x-rar-compressed'); // rar
-                $q->setParameter('xrar', 'application/x-rar'); // rar
-                $q->setParameter('vndrar', 'application/vnd.rar'); // rar
-                $q->setParameter('xbzip', 'application/x-bzip'); // bz
-                $q->setParameter('xbzip2', 'application/x-bzip2'); // bz2
-                $q->setParameter('xbz2', 'application/x-bz2'); // bz2
-                $q->setParameter('p7z', 'application/x-7z-compressed'); // 7z
-                $q->setParameter('mscab', 'application/vnd.ms-cab-compressed'); // cab
-                $q->setParameter('zzcab', 'zz-application/zz-winassoc-cab'); // cab
-                $q->setParameter('tar', 'application/x-tar');
-                $q->setParameter('xgzip', 'application/x-gzip'); // gz
-                $q->setParameter('gzip', 'application/gzip'); // gz
-                $q->setParameter('xace', 'application/x-ace'); // ace
-                $q->setParameter('xacecompressed', 'application/x-ace-compressed'); //ace
-                $q->setParameter('xlha', 'application/x-lha'); // lzh
-                $q->setParameter('xlzhcompressed', 'application/x-lzh-compressed'); // lzh
-                $q->setParameter('iso1', 'application/x-cd-image');
-                $q->setParameter('iso2', 'application/x-gamecube-iso-image');
-                $q->setParameter('iso3', 'application/x-gamecube-rom');
-                $q->setParameter('iso4', 'application/x-iso9660-image');
-                $q->setParameter('iso5', 'application/x-saturn-rom');
-                $q->setParameter('iso6', 'application/x-sega-cd-rom');
-                $q->setParameter('iso7', 'application/x-wbfs');
-                $q->setParameter('iso8', 'application/x-wia');
-                $q->setParameter('iso9', 'application/x-wii-iso-image');
-                $q->setParameter('iso10', 'application/x-wii-rom');
+                $qb->andWhere('f.fileName NOT LIKE \'%.apk\'');
+                $qb->andWhere('f.mimeType IN(:zip, :xzip, :xzipcompressed, :xrarcompressed, :xrar, :vndrar, :xbzip, :xbzip2, :xbz2, :p7z, :mscab, :zzcab, :tar, :xgzip, :gzip, :xace, :xacecompressed, :xlha, :xlzhcompressed, :iso1, :iso2, :iso3, :iso4, :iso5, :iso6, :iso7, :iso8, :iso9, :iso10)');
+                $qb->setParameter('zip', 'application/zip'); // zip
+                $qb->setParameter('xzip', 'application/x-zip'); // zip
+                $qb->setParameter('xzipcompressed', 'application/x-zip-compressed'); // zip
+                $qb->setParameter('xrarcompressed', 'application/x-rar-compressed'); // rar
+                $qb->setParameter('xrar', 'application/x-rar'); // rar
+                $qb->setParameter('vndrar', 'application/vnd.rar'); // rar
+                $qb->setParameter('xbzip', 'application/x-bzip'); // bz
+                $qb->setParameter('xbzip2', 'application/x-bzip2'); // bz2
+                $qb->setParameter('xbz2', 'application/x-bz2'); // bz2
+                $qb->setParameter('p7z', 'application/x-7z-compressed'); // 7z
+                $qb->setParameter('mscab', 'application/vnd.ms-cab-compressed'); // cab
+                $qb->setParameter('zzcab', 'zz-application/zz-winassoc-cab'); // cab
+                $qb->setParameter('tar', 'application/x-tar');
+                $qb->setParameter('xgzip', 'application/x-gzip'); // gz
+                $qb->setParameter('gzip', 'application/gzip'); // gz
+                $qb->setParameter('xace', 'application/x-ace'); // ace
+                $qb->setParameter('xacecompressed', 'application/x-ace-compressed'); //ace
+                $qb->setParameter('xlha', 'application/x-lha'); // lzh
+                $qb->setParameter('xlzhcompressed', 'application/x-lzh-compressed'); // lzh
+                $qb->setParameter('iso1', 'application/x-cd-image');
+                $qb->setParameter('iso2', 'application/x-gamecube-iso-image');
+                $qb->setParameter('iso3', 'application/x-gamecube-rom');
+                $qb->setParameter('iso4', 'application/x-iso9660-image');
+                $qb->setParameter('iso5', 'application/x-saturn-rom');
+                $qb->setParameter('iso6', 'application/x-sega-cd-rom');
+                $qb->setParameter('iso7', 'application/x-wbfs');
+                $qb->setParameter('iso8', 'application/x-wia');
+                $qb->setParameter('iso9', 'application/x-wii-iso-image');
+                $qb->setParameter('iso10', 'application/x-wii-rom');
                 break;
             case 'android':
-                $q->andWhere('f.mimeType = :android OR (f.mimeType IN(:zip, :xzip, :xzipcompressed) AND f.fileName LIKE \'%.apk\')');
-                $q->setParameter('android', 'application/vnd.android.package-archive');
-                $q->setParameter('zip', 'application/zip'); // zip
-                $q->setParameter('xzip', 'application/x-zip'); // zip
-                $q->setParameter('xzipcompressed', 'application/x-zip-compressed'); // zip
+                $qb->andWhere('f.mimeType = :android OR (f.mimeType IN(:zip, :xzip, :xzipcompressed) AND f.fileName LIKE \'%.apk\')');
+                $qb->setParameter('android', 'application/vnd.android.package-archive');
+                $qb->setParameter('zip', 'application/zip'); // zip
+                $qb->setParameter('xzip', 'application/x-zip'); // zip
+                $qb->setParameter('xzipcompressed', 'application/x-zip-compressed'); // zip
                 break;
             case 'java':
-                $q->andWhere('f.mimeType IN(:java, :xjava, :jar)');
-                $q->setParameter('java', 'application/java-archive');
-                $q->setParameter('xjava', 'application/x-java-archive');
-                $q->setParameter('jar', 'application/x-jar');
+                $qb->andWhere('f.mimeType IN(:java, :xjava, :jar)');
+                $qb->setParameter('java', 'application/java-archive');
+                $qb->setParameter('xjava', 'application/x-java-archive');
+                $qb->setParameter('jar', 'application/x-jar');
                 break;
         }
     }
 
-    public function getUserFilesQuery(User $user): \Doctrine\ORM\Query
+    public function getUserFilesQuery(User $user): Query
     {
-        $q = $this->createQueryBuilder('f')
+        $queryBuilder = $this->createQueryBuilder('f')
             ->innerJoin('f.user', 'u')
 
             ->where('u = :user')
@@ -306,16 +302,14 @@ class FileRepository extends ServiceEntityRepository
             ->andWhere('f.hidden = 0')
 
             ->orderBy('f.id', 'DESC')
-
-            ->getQuery()
         ;
 
-        return $q;
+        return $queryBuilder->getQuery();
     }
 
-    public function getTagFilesQuery(Tag $tag): \Doctrine\ORM\Query
+    public function getTagFilesQuery(Tag $tag): Query
     {
-        $q = $this->createQueryBuilder('f')
+        $queryBuilder = $this->createQueryBuilder('f')
             ->innerJoin('f.fileTags', 'ft')
 
             ->where('ft.tag = :tag')
@@ -324,10 +318,8 @@ class FileRepository extends ServiceEntityRepository
             ->andWhere('f.hidden = 0')
 
             ->orderBy('f.id', 'DESC')
-
-            ->getQuery()
             ;
 
-        return $q;
+        return $queryBuilder->getQuery();
     }
 }
