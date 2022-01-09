@@ -21,11 +21,6 @@ class Forum extends AbstractExtension
         $this->logger = $logger;
     }
 
-    /**
-     * Returns a list of global functions to add to the existing list.
-     *
-     * @return array An array of global functions
-     */
     public function getFunctions(): array
     {
         return [
@@ -42,10 +37,9 @@ class Forum extends AbstractExtension
         }
 
         try {
-            $query = $this->em->getConnection()->executeQuery("SELECT COUNT(1) FROM `{$database}`.`topics`");
-            $query->execute();
+            $result = $this->em->getConnection()->executeQuery("SELECT COUNT(1) FROM `{$database}`.`topics`");
 
-            return $query->fetchOne();
+            return $result->fetchOne();
         } catch (\Throwable $e) {
             $this->logger->warning('Can\'t execute query', ['exception' => $e]);
 
@@ -61,10 +55,9 @@ class Forum extends AbstractExtension
         }
 
         try {
-            $query = $this->em->getConnection()->executeQuery("SELECT COUNT(1) FROM `{$database}`.`posts`");
-            $query->execute();
+            $result = $this->em->getConnection()->executeQuery("SELECT COUNT(1) FROM `{$database}`.`posts`");
 
-            return $query->fetchOne();
+            return $result->fetchOne();
         } catch (\Throwable $e) {
             $this->logger->warning('Can\'t execute query', ['exception' => $e]);
 

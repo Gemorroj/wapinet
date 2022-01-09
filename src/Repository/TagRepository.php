@@ -55,6 +55,7 @@ class TagRepository extends ServiceEntityRepository
 
     /**
      * @param string[] $names Array of tag names
+     *
      * @return ArrayCollection<Tag>|null
      */
     public function makeTags(array $names): ?ArrayCollection

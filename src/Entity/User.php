@@ -76,10 +76,10 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     private $password;
 
     /**
-     * @var string[]
-     * @ORM\Column(name="roles", type="array")
+     * @var string[]|null
+     * @ORM\Column(name="roles", type="array", nullable=true)
      */
-    private array $roles = [];
+    private ?array $roles = null;
 
     /**
      * @ORM\Column(name="last_activity", type="datetime", nullable=true)
@@ -379,7 +379,7 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
+        $roles = $this->roles ?? [];
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
@@ -387,9 +387,9 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     }
 
     /**
-     * @param string[] $roles
+     * @param string[]|null $roles
      */
-    public function setRoles(array $roles): self
+    public function setRoles(?array $roles): self
     {
         $this->roles = $roles;
 
