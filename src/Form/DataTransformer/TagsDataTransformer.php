@@ -18,13 +18,13 @@ class TagsDataTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param ArrayCollection<Tag> $tagsDataFromDb
+     * @param ArrayCollection<Tag>|null $tagsDataFromDb
      *
      * @return string
      */
     public function transform($tagsDataFromDb)
     {
-        return \implode($this->separator, $tagsDataFromDb->toArray());
+        return $tagsDataFromDb ? \implode($this->separator, $tagsDataFromDb->toArray()) : '';
     }
 
     /**
