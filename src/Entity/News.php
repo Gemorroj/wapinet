@@ -45,7 +45,7 @@ class News
     /**
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    private ?\DateTime $updatedAt;
+    private ?\DateTime $updatedAt = null;
 
     /**
      * @var User

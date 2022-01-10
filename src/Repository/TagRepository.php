@@ -56,12 +56,12 @@ class TagRepository extends ServiceEntityRepository
     /**
      * @param string[] $names Array of tag names
      *
-     * @return ArrayCollection<Tag>|null
+     * @return ArrayCollection<Tag>
      */
-    public function makeTags(array $names): ?ArrayCollection
+    public function makeTags(array $names): ArrayCollection
     {
         if (!$names) {
-            return null;
+            return new ArrayCollection();
         }
 
         $names = \array_unique($names);

@@ -46,7 +46,7 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     /**
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    private ?\DateTime $updatedAt;
+    private ?\DateTime $updatedAt = null;
 
     /**
      * @var string
@@ -84,38 +84,38 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     /**
      * @ORM\Column(name="last_activity", type="datetime", nullable=true)
      */
-    private ?\DateTime $lastActivity;
+    private ?\DateTime $lastActivity = null;
 
     /**
      * @ORM\Column(name="sex", type="string", nullable=true, columnDefinition="ENUM('m', 'f') DEFAULT NULL")
      */
-    private ?string $sex;
+    private ?string $sex = null;
 
     /**
      * @ORM\Column(name="birthday", type="date", nullable=true)
      */
-    private ?\DateTime $birthday;
+    private ?\DateTime $birthday = null;
 
     /**
      * @ORM\Column(name="info", type="string", length=5000, nullable=true)
      * @Assert\Length(max=5000)
      */
-    private ?string $info;
+    private ?string $info = null;
 
     /**
      * @ORM\Column(name="timezone", type="string", nullable=true)
      */
-    private ?string $timezone;
+    private ?string $timezone = null;
 
     /**
      * @ORM\Column(name="country", type="string", nullable=true)
      */
-    private ?string $country;
+    private ?string $country = null;
 
     /**
      * @ORM\Column(name="vk", type="string", nullable=true)
      */
-    private ?string $vk;
+    private ?string $vk = null;
 
     /**
      * @var Panel
@@ -153,10 +153,8 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
 
     /**
      * Plain password. Used for model validation. Must not be persisted.
-     *
-     * @var string
      */
-    protected $plainPassword;
+    private ?string $plainPassword = null;
 
     public function __construct()
     {

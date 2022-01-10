@@ -53,12 +53,12 @@ class File implements PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    private ?\DateTime $updatedAt;
+    private ?\DateTime $updatedAt = null;
 
     /**
      * @ORM\Column(name="last_view_at", type="datetime", nullable=true)
      */
-    private ?\DateTime $lastViewAt;
+    private ?\DateTime $lastViewAt = null;
 
     /**
      * @ORM\Column(name="count_views", type="integer", nullable=false)
@@ -68,13 +68,13 @@ class File implements PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(name="password", type="string", nullable=true)
      */
-    private ?string $password;
-    private ?string $plainPassword;
+    private ?string $password = null;
+    private ?string $plainPassword = null;
 
     /**
      * @ORM\Column(name="mime_type", type="string", nullable=true)
      */
-    private ?string $mimeType;
+    private ?string $mimeType = null;
 
     /**
      * @ORM\Column(name="file_size", type="integer", nullable=false)

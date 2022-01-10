@@ -43,7 +43,7 @@ class Tag implements \Stringable
     /**
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    private ?\DateTime $updatedAt;
+    private ?\DateTime $updatedAt = null;
 
     public function getId(): ?int
     {
