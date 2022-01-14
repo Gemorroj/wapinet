@@ -592,7 +592,11 @@ class File implements PasswordAuthenticatedUserInterface
 
     public function isWindowsApp(): bool
     {
-        return 'application/x-msdownload' === $this->getMimeType() || 'application/x-ms-dos-executable' === $this->getMimeType();
+        return \in_array($this->getMimeType(), [
+            'application/x-msdownload',
+            'application/x-ms-dos-executable',
+            'application/x-dosexec',
+        ], true);
     }
 
     public function isPdf(): bool
