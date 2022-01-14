@@ -72,9 +72,9 @@ class File implements PasswordAuthenticatedUserInterface
     private ?string $plainPassword = null;
 
     /**
-     * @ORM\Column(name="mime_type", type="string", nullable=true)
+     * @ORM\Column(name="mime_type", type="string", nullable=false)
      */
-    private ?string $mimeType = null;
+    private string $mimeType = '';
 
     /**
      * @ORM\Column(name="file_size", type="integer", nullable=false)
@@ -392,12 +392,12 @@ class File implements PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getMimeType(): ?string
+    public function getMimeType(): string
     {
         return $this->mimeType;
     }
 
-    public function setMimeType(?string $mimeType = null): self
+    public function setMimeType(string $mimeType): self
     {
         // по mime определять принадлежность к категории
         $this->mimeType = $mimeType;

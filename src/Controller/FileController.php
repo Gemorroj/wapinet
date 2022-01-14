@@ -19,6 +19,7 @@ use App\Service\Archiver\Archive7z;
 use App\Service\BotChecker;
 use App\Service\File\Meta;
 use App\Service\Manticore;
+use App\Service\MimeGuesser;
 use App\Service\Paginate;
 use App\Service\Timezone;
 use App\Service\Translit;
@@ -36,7 +37,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\Mime\MimeTypes;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Router;
@@ -487,11 +487,9 @@ class FileController extends AbstractController
             $data->setHash($hash);
             $data->setOriginalFileName($file->getClientOriginalName());
 
-            /*
-            $mimes = (new MimeTypes())->getMimeTypes($file->getClientOriginalExtension());
-            $data->setMimeType($mimes ? $mimes[0] : 'application/octet-stream');
-            */
-            $data->setMimeType((new MimeTypes())->guessMimeType($file->getPathname()) ?: 'application/octet-stream');
+            /** @var MimeGuesser $mimeGuesser */
+            $mimeGuesser = $this->container->get(MimeGuesser::class);
+            $data->setMimeType($mimeGuesser->getMimeType($file));
         }
 
         // обновляем ip и браузер только если файл редактирует владелец
@@ -586,11 +584,9 @@ class FileController extends AbstractController
         $data->setHash($hash);
         $data->setOriginalFileName($file->getClientOriginalName());
 
-        /*
-        $mimes = (new MimeTypes())->getMimeTypes($file->getClientOriginalExtension());
-        $data->setMimeType($mimes ? $mimes[0] : 'application/octet-stream');
-        */
-        $data->setMimeType((new MimeTypes())->guessMimeType($file->getPathname()) ?: 'application/octet-stream');
+        /** @var MimeGuesser $mimeGuesser */
+        $mimeGuesser = $this->container->get(MimeGuesser::class);
+        $data->setMimeType($mimeGuesser->getMimeType($file));
 
         $data->setUser($this->getUser());
         $data->setIp($request->getClientIp());
@@ -629,7 +625,7 @@ class FileController extends AbstractController
         $entityManager = $this->container->get('doctrine')->getManager();
 
         // удаляем из коллекции устаревшие тэги
-        $removedFileTagsCollection = $file->getFileTags()->filter(static function (FileTags $oldFileTags) use ($file) {
+        $removedFileTagsCollection = $file->getFileTags()->filter(static function (FileTags $oldFileTags) use ($file): bool {
             foreach ($file->getTags() as $newTag) {
                 if ($newTag === $oldFileTags->getTag()) {
                     return false;
@@ -645,7 +641,7 @@ class FileController extends AbstractController
         }
 
         // Находим добавленные тэги, которых не было в коллекции
-        $newTagsCollection = $file->getTags()->filter(static function (Tag $newTag) use ($file) {
+        $newTagsCollection = $file->getTags()->filter(static function (Tag $newTag) use ($file): bool {
             foreach ($file->getFileTags() as $fileTags) {
                 if ($newTag === $fileTags->getTag()) {
                     return false;
@@ -747,6 +743,7 @@ class FileController extends AbstractController
         $services[\App\Service\File\File::class] = '?'.\App\Service\File\File::class;
         $services[EventDispatcherInterface::class] = '?'.EventDispatcherInterface::class;
         $services[Paginate::class] = Paginate::class;
+        $services[MimeGuesser::class] = MimeGuesser::class;
 
         return $services;
     }
