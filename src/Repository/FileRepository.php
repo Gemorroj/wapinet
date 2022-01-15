@@ -284,7 +284,8 @@ class FileRepository extends ServiceEntityRepository
                 $qb->setParameter('xzipcompressed', 'application/x-zip-compressed'); // zip
                 break;
             case 'java':
-                $qb->andWhere('f.mimeType IN(:java, :xjava, :jar) AND f.filename NOT LIKE \'%.apk\'');
+                $qb->andWhere('f.fileName NOT LIKE \'%.apk\'');
+                $qb->andWhere('f.mimeType IN(:java, :xjava, :jar)');
                 $qb->setParameter('java', 'application/java-archive');
                 $qb->setParameter('xjava', 'application/x-java-archive');
                 $qb->setParameter('jar', 'application/x-jar');
