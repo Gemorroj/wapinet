@@ -574,15 +574,16 @@ class File implements PasswordAuthenticatedUserInterface
 
     public function isJavaApp(): bool
     {
-        return 'application/java-archive' === $this->getMimeType() ||
-            'application/x-java-archive' === $this->getMimeType() ||
-            'application/x-jar' === $this->getMimeType();
+        return \in_array($this->getMimeType(), [
+            'application/java-archive',
+            'application/x-java-archive',
+            'application/x-jar',
+        ], true) && !\str_ends_with($this->getFileName(), '.apk');
     }
 
     public function isAndroidApp(): bool
     {
-        return 'application/vnd.android.package-archive' === $this->getMimeType() ||
-            (\in_array($this->getMimeType(), ['application/java-archive', 'application/zip', 'application/x-zip', 'application/x-zip-compressed'], true) && \str_ends_with($this->getFileName(), '.apk'));
+        return 'application/vnd.android.package-archive' === $this->getMimeType() || (\in_array($this->getMimeType(), ['application/java-archive', 'application/zip', 'application/x-zip', 'application/x-zip-compressed'], true) && \str_ends_with($this->getFileName(), '.apk'));
     }
 
     public function isSymbianApp(): bool

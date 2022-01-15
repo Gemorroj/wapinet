@@ -276,8 +276,9 @@ class FileRepository extends ServiceEntityRepository
                 $qb->setParameter('iso10', 'application/x-wii-rom');
                 break;
             case 'android':
-                $qb->andWhere('f.mimeType = :android OR (f.mimeType IN(:zip, :xzip, :xzipcompressed) AND f.fileName LIKE \'%.apk\')');
+                $qb->andWhere('f.mimeType = :android OR (f.mimeType IN(:java, :zip, :xzip, :xzipcompressed) AND f.fileName LIKE \'%.apk\')');
                 $qb->setParameter('android', 'application/vnd.android.package-archive');
+                $qb->setParameter('java', 'application/java-archive'); // jar
                 $qb->setParameter('zip', 'application/zip'); // zip
                 $qb->setParameter('xzip', 'application/x-zip'); // zip
                 $qb->setParameter('xzipcompressed', 'application/x-zip-compressed'); // zip
