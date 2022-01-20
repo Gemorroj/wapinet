@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "578395c70854018983a0f2f9865a6953",
+    "content-hash": "81ab3796cc83de9ebce5bd5c03c9a634",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -5558,16 +5558,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.17.6",
+            "version": "v1.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "7a79135e1dc66b30042b4d968ecba0908f9374bc"
+                "reference": "90ee9ddddaadee602dff23ae530310a59936bc8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/7a79135e1dc66b30042b4d968ecba0908f9374bc",
-                "reference": "7a79135e1dc66b30042b4d968ecba0908f9374bc",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/90ee9ddddaadee602dff23ae530310a59936bc8b",
+                "reference": "90ee9ddddaadee602dff23ae530310a59936bc8b",
                 "shasum": ""
             },
             "require": {
@@ -5603,7 +5603,7 @@
             "description": "Composer plugin for Symfony",
             "support": {
                 "issues": "https://github.com/symfony/flex/issues",
-                "source": "https://github.com/symfony/flex/tree/v1.17.6"
+                "source": "https://github.com/symfony/flex/tree/v1.18.1"
             },
             "funding": [
                 {
@@ -5619,7 +5619,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-29T15:39:37+00:00"
+            "time": "2022-01-19T17:52:31+00:00"
         },
         {
             "name": "symfony/form",
@@ -10538,16 +10538,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.4.1",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "5bd02c86beb4c024dd4662b6443f5d5332a0ae12"
+                "reference": "1dd8f3e40bf7aa30031a75c65cece99220a161b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/5bd02c86beb4c024dd4662b6443f5d5332a0ae12",
-                "reference": "5bd02c86beb4c024dd4662b6443f5d5332a0ae12",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/1dd8f3e40bf7aa30031a75c65cece99220a161b8",
+                "reference": "1dd8f3e40bf7aa30031a75c65cece99220a161b8",
                 "shasum": ""
             },
             "require": {
@@ -10578,7 +10578,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.4.1"
+                "source": "https://github.com/phpstan/phpstan/tree/1.4.2"
             },
             "funding": [
                 {
@@ -10598,20 +10598,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-17T16:35:17+00:00"
+            "time": "2022-01-18T16:09:11+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-doctrine.git",
-                "reference": "6c7d28ae4a022f99cb30cac322dba44e39611e36"
+                "reference": "830789b82e7e0fadbeca9ad55e7fb62c43fb69d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/6c7d28ae4a022f99cb30cac322dba44e39611e36",
-                "reference": "6c7d28ae4a022f99cb30cac322dba44e39611e36",
+                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/830789b82e7e0fadbeca9ad55e7fb62c43fb69d1",
+                "reference": "830789b82e7e0fadbeca9ad55e7fb62c43fb69d1",
                 "shasum": ""
             },
             "require": {
@@ -10667,9 +10667,9 @@
             "description": "Doctrine extensions for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-doctrine/issues",
-                "source": "https://github.com/phpstan/phpstan-doctrine/tree/1.1.0"
+                "source": "https://github.com/phpstan/phpstan-doctrine/tree/1.1.1"
             },
-            "time": "2022-01-16T10:53:12+00:00"
+            "time": "2022-01-19T07:18:34+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
@@ -10728,16 +10728,16 @@
         },
         {
             "name": "phpstan/phpstan-symfony",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-symfony.git",
-                "reference": "2e25964784fb657dbd1723691ffe6d5bc0e195a6"
+                "reference": "96ee630098c49c1c25326ae51b027e469bfd2064"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/2e25964784fb657dbd1723691ffe6d5bc0e195a6",
-                "reference": "2e25964784fb657dbd1723691ffe6d5bc0e195a6",
+                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/96ee630098c49c1c25326ae51b027e469bfd2064",
+                "reference": "96ee630098c49c1c25326ae51b027e469bfd2064",
                 "shasum": ""
             },
             "require": {
@@ -10794,9 +10794,9 @@
             "description": "Symfony Framework extensions and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-symfony/issues",
-                "source": "https://github.com/phpstan/phpstan-symfony/tree/1.1.1"
+                "source": "https://github.com/phpstan/phpstan-symfony/tree/1.1.2"
             },
-            "time": "2022-01-16T09:09:48+00:00"
+            "time": "2022-01-18T16:08:22+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

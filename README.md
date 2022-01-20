@@ -420,8 +420,8 @@ server {
 ### TODO:
 - ! проверка файлов на virustotal (возможно автоматическая) в файлообменнике
 - !!! заменить свою curl прослойку на https://github.com/symfony/http-client
-- !!! Переделать интерфейс на vue/react/angular (огромная задача)
-- переделать редактор аудиотегов на https://github.com/duncan3dc/meta-audio/issues/3 (когда будут картинки)
+- !!! Переделать интерфейс на vue/react/angular (огромная задача. jquery mobile официально мертв - https://blog.jquerymobile.com/2021/10/07/jquery-maintainers-continue-modernization-initiative-with-deprecation-of-jquery-mobile/)
+- Переделать редактор аудиотегов на https://github.com/duncan3dc/meta-audio/issues/3 (когда будут картинки)
 - ! Сделать возможность в обфускаторе загружать файлы
 - !! Актуализировать мобильные коды. Найти новые для разных андроидов.
 - Данные о видео на youtube и др. https://github.com/essence/essence
