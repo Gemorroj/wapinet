@@ -9,11 +9,6 @@ use Twig\TwigFunction;
 
 class Breadcrumbs extends AbstractExtension
 {
-    /**
-     * Returns a list of global functions to add to the existing list.
-     *
-     * @return array An array of global functions
-     */
     public function getFunctions(): array
     {
         return [
@@ -21,10 +16,7 @@ class Breadcrumbs extends AbstractExtension
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getBreadcrumbs(array $options = [])
+    public function getBreadcrumbs(array $options = []): string
     {
         if (!$options) {
             return '';

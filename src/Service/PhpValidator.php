@@ -7,9 +7,6 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
 use Syntax\Php;
 
-/**
- * PhpValidator хэлпер
- */
 class PhpValidator
 {
     private ParameterBagInterface $parameterBag;

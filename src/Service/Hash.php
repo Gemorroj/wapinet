@@ -2,9 +2,6 @@
 
 namespace App\Service;
 
-/**
- * Hash хэлпер
- */
 class Hash
 {
     public function getAlgorithms(): array

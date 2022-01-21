@@ -4,9 +4,6 @@ namespace App\Service;
 
 use getid3_writetags;
 
-/**
- * Getid3 хэлпер
- */
 class Getid3
 {
     public function getId3(): \getID3

@@ -2,9 +2,6 @@
 
 namespace App\Service;
 
-/**
- * MassMedia хэлпер
- */
 class MassMedia
 {
     private Curl $curl;
@@ -14,10 +11,7 @@ class MassMedia
         $this->curl = $curl;
     }
 
-    /**
-     * @return array
-     */
-    public function getRt()
+    public function getRt(): array
     {
         $this->curl->init('https://russian.rt.com/rss');
         $this->curl->addCompression();
@@ -38,9 +32,9 @@ class MassMedia
             if ($v->enclosure) {
                 foreach ($v->enclosure as $enclosure) {
                     $type = (string) $enclosure->attributes()->type;
-                    if (0 === \mb_strpos($type, 'image/')) {
+                    if (\str_starts_with($type, 'image/')) {
                         $photo = (string) $enclosure->attributes()->url;
-                    } elseif (0 === \mb_strpos($type, 'video/')) {
+                    } elseif (\str_starts_with($type, 'video/')) {
                         $video = (string) $enclosure->attributes()->url;
                     }
                 }
@@ -61,10 +55,7 @@ class MassMedia
         return $news;
     }
 
-    /**
-     * @return array
-     */
-    public function getInotv()
+    public function getInotv(): array
     {
         $this->curl->init('https://russian.rt.com/inotv/s/rss/inotv_main.rss');
         $this->curl->addCompression();
@@ -85,9 +76,9 @@ class MassMedia
             if ($v->enclosure) {
                 foreach ($v->enclosure as $enclosure) {
                     $type = (string) $enclosure->attributes()->type;
-                    if (0 === \mb_strpos($type, 'image/')) {
+                    if (\str_starts_with($type, 'image/')) {
                         $photo = (string) $enclosure->attributes()->url;
-                    } elseif (0 === \mb_strpos($type, 'video/')) {
+                    } elseif (\str_starts_with($type, 'video/')) {
                         $video = (string) $enclosure->attributes()->url;
                     }
                 }

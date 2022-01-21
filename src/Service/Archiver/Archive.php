@@ -2,13 +2,9 @@
 
 namespace App\Service\Archiver;
 
-use App\Exception\ArchiverException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\File;
 
-/**
- * Archive хэлпер
- */
 abstract class Archive
 {
     protected ParameterBagInterface $parameterBag;
@@ -18,22 +14,15 @@ abstract class Archive
         $this->parameterBag = $parameterBag;
     }
 
-    /**
-     * @param string $directory
-     *
-     * @return string
-     */
-    protected function getTmpArchive($directory)
+    protected function getTmpArchive(string $directory): string
     {
         return $directory.'.tmp';
     }
 
     /**
-     * @param string $directory
-     *
      * @return \SplFileObject[]
      */
-    public function getFiles($directory)
+    public function getFiles(string $directory): array
     {
         $archiveDirectory = \basename($directory);
         ArchiveFileInfo::setArchiveDirectory($archiveDirectory);
@@ -49,7 +38,7 @@ abstract class Archive
     /**
      * @return \SplFileObject[]
      */
-    private function sortFiles(\RecursiveIteratorIterator $objects)
+    private function sortFiles(\RecursiveIteratorIterator $objects): array
     {
         $result = [];
         $tmp = [];
@@ -74,34 +63,11 @@ abstract class Archive
         return $result;
     }
 
-    /**
-     * @param string $directory
-     *
-     * @throws ArchiverException
-     *
-     * @return File
-     */
-    abstract public function create($directory);
+    abstract public function create(string $directory): File;
 
-    /**
-     * @throws ArchiverException
-     *
-     * @return bool
-     */
-    abstract public function isValid(File $file);
+    abstract public function isValid(File $file): bool;
 
-    /**
-     * @param string $directory
-     *
-     * @throws ArchiverException
-     */
-    abstract public function extract($directory, File $file);
+    abstract public function extract(string $directory, File $file): void;
 
-    /**
-     * @param string $entry
-     * @param string $directory
-     *
-     * @throws ArchiverException
-     */
-    abstract public function extractEntry(File $file, $entry, $directory);
+    abstract public function extractEntry(File $file, string $entry, string $directory): void;
 }

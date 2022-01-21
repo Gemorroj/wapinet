@@ -4,15 +4,12 @@ namespace App\Service;
 
 use App\Exception\CodeException;
 
-/**
- * Code хэлпер
- */
 class Code
 {
     /**
-     * @return array
+     * @return array<string, string>
      */
-    public function getAlgorithms()
+    public function getAlgorithms(): array
     {
         return [
             'base64_encode' => 'Base64 encode',
@@ -30,14 +27,9 @@ class Code
     }
 
     /**
-     * @param string $algorithm
-     * @param string $string
-     *
      * @throws CodeException
-     *
-     * @return string
      */
-    public function convertString($algorithm, $string)
+    public function convertString(string $algorithm, string $string): string
     {
         if (!\array_key_exists($algorithm, $this->getAlgorithms())) {
             throw new CodeException('Неизвестный алгоритм кодирования');
@@ -55,11 +47,9 @@ class Code
     }
 
     /**
-     * @param string|null $result
-     *
      * @throws CodeException
      */
-    private function checkJsonResult($result)
+    private function checkJsonResult(?string $result): void
     {
         if (null === $result) {
             switch (\json_last_error()) {
@@ -91,20 +81,14 @@ class Code
      *
      * @throws CodeException
      */
-    private function checkResult($result)
+    private function checkResult($result): void
     {
         if (false === $result) {
             throw new CodeException('Не удалось преобразовать данные выбранным алгоритмом.');
         }
     }
 
-    /**
-     * @param string $algorithm
-     * @param string $fileName
-     *
-     * @return string
-     */
-    public function convertFile($algorithm, $fileName)
+    public function convertFile(string $algorithm, string $fileName): string
     {
         throw new CodeException('Конвертирование файлов не поддерживается');
     }

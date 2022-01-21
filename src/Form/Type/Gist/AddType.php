@@ -10,15 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Add.
- */
 class AddType extends AbstractType
 {
-    /**
-     * @var FormBuilderInterface
-     * @var array
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -48,9 +41,6 @@ class AddType extends AbstractType
         ]);
     }
 
-    /**
-     * Уникальное имя формы.
-     */
     public function getBlockPrefix(): string
     {
         return 'gist_add_form';

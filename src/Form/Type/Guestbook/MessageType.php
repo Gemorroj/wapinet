@@ -12,9 +12,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-/**
- * Message.
- */
 class MessageType extends AbstractType
 {
     private AuthorizationCheckerInterface $authorizationChecker;
@@ -26,10 +23,6 @@ class MessageType extends AbstractType
         $this->parameterBag = $parameterBag;
     }
 
-    /**
-     * @var FormBuilderInterface
-     * @var array
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -55,9 +48,6 @@ class MessageType extends AbstractType
         ]);
     }
 
-    /**
-     * Уникальное имя формы.
-     */
     public function getBlockPrefix(): string
     {
         return 'message_form';

@@ -21,15 +21,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\LengthRequiredHttpException;
 
-/**
- * CURL хэлпер
- */
 class Curl
 {
-    /**
-     * @var \CurlHandle
-     */
-    private $curl;
+    private \CurlHandle $curl;
 
     /**
      * @var string[]
@@ -43,11 +37,6 @@ class Curl
     protected array $headers = [];
     protected array $postData = [];
 
-    /**
-     * Инициализация.
-     *
-     * @return Curl
-     */
     public function init(?string $url = null): self
     {
         $this->curl = \curl_init();
@@ -64,20 +53,13 @@ class Curl
         return $this;
     }
 
-    /**
-     * Закрываем соединение.
-     */
     public function close(): void
     {
         \curl_close($this->curl);
     }
 
     /**
-     * Задаем опцию.
-     *
      * @param mixed $value
-     *
-     * @return Curl
      */
     public function setOpt(int $key, $value): self
     {
@@ -86,11 +68,6 @@ class Curl
         return $this;
     }
 
-    /**
-     * Задаем url.
-     *
-     * @return Curl
-     */
     public function setUrl(string $value): self
     {
         \curl_setopt($this->curl, CURLOPT_URL, $value);
@@ -98,13 +75,6 @@ class Curl
         return $this;
     }
 
-    /**
-     * Следовать перенаправлениям
-     *
-     * @param int $maxRedirects
-     *
-     * @return Curl
-     */
     public function acceptRedirects(?int $maxRedirects = null): self
     {
         \curl_setopt($this->curl, CURLOPT_FOLLOWLOCATION, true);
@@ -118,7 +88,7 @@ class Curl
     /**
      * @param bool $strict Исключение если не удалось определить размер файла (не найден Content-Length)
      *
-     *@throws LengthRequiredHttpException|\LengthException
+     * @throws LengthRequiredHttpException|\LengthException
      */
     public function checkFileSize(bool $strict = true): Response
     {
@@ -248,9 +218,6 @@ class Curl
         return new Response($content, $status, $headers);
     }
 
-    /**
-     * @return Curl
-     */
     protected function sendPostData(): self
     {
         $this->addHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -265,19 +232,11 @@ class Curl
         return $this;
     }
 
-    /**
-     * Получение ресурса CURL.
-     *
-     * @return \CurlHandle
-     */
-    public function getCurl()
+    public function getCurl(): \CurlHandle
     {
         return $this->curl;
     }
 
-    /**
-     * @return Curl
-     */
     public function addCompression(): self
     {
         $this->setOpt(CURLOPT_ENCODING, '');
@@ -285,9 +244,6 @@ class Curl
         return $this;
     }
 
-    /**
-     * @return Curl
-     */
     public function addHeader(string $key, string $value): self
     {
         $this->headers[] = $key.': '.$value;
@@ -295,9 +251,6 @@ class Curl
         return $this;
     }
 
-    /**
-     * @return Curl
-     */
     public function addBrowserHeaders(): self
     {
         $this->headers = \array_merge($this->headers, static::$browserHeaders);
@@ -305,9 +258,6 @@ class Curl
         return $this;
     }
 
-    /**
-     * @return Curl
-     */
     public function addPostData(string $key, string $value): self
     {
         $this->postData[$key] = $value;

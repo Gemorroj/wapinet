@@ -8,15 +8,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * Obfuscator.
- */
 class ObfuscatorType extends AbstractType
 {
-    /**
-     * @var FormBuilderInterface
-     * @var array
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -28,9 +21,6 @@ class ObfuscatorType extends AbstractType
         $builder->add('submit', SubmitType::class, ['label' => 'Обфусцировать']);
     }
 
-    /**
-     * Уникальное имя формы.
-     */
     public function getBlockPrefix(): string
     {
         return 'obfuscator';

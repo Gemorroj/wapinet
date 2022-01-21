@@ -10,15 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * CssValidator.
- */
 class CssValidatorType extends AbstractType
 {
-    /**
-     * @var FormBuilderInterface
-     * @var array
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -60,9 +53,6 @@ class CssValidatorType extends AbstractType
         $builder->add('submit', SubmitType::class, ['label' => 'Проверить']);
     }
 
-    /**
-     * Уникальное имя формы.
-     */
     public function getBlockPrefix(): string
     {
         return 'css_validator';

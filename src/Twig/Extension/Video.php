@@ -28,11 +28,6 @@ class Video extends AbstractExtension
         $this->parameterBag = $parameterBag;
     }
 
-    /**
-     * Returns a list of global functions to add to the existing list.
-     *
-     * @return array An array of global functions
-     */
     public function getFilters(): array
     {
         return [

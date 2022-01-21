@@ -10,9 +10,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * Hash.
- */
 class HashType extends AbstractType
 {
     private Hash $hash;
@@ -22,10 +19,6 @@ class HashType extends AbstractType
         $this->hash = $hash;
     }
 
-    /**
-     * @var FormBuilderInterface
-     * @var array
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -51,9 +44,6 @@ class HashType extends AbstractType
         $builder->add('submit', SubmitType::class, ['label' => 'Хэшировать']);
     }
 
-    /**
-     * Уникальное имя формы.
-     */
     public function getBlockPrefix(): string
     {
         return 'hash_form';

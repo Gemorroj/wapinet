@@ -5,29 +5,14 @@ namespace App\Service\Archiver;
 use App\Exception\ArchiverException;
 use Symfony\Component\HttpFoundation\File\File;
 
-/**
- * ArchiveRar хэлпер
- */
 class ArchiveRar extends Archive
 {
-    /**
-     * @param string $directory
-     *
-     * @throws ArchiverException
-     *
-     * @return File
-     */
-    public function create($directory)
+    public function create(string $directory): File
     {
         throw new ArchiverException('Создание RAR архивов не поддерживается');
     }
 
-    /**
-     * @throws ArchiverException
-     *
-     * @return bool
-     */
-    public function isValid(File $file)
+    public function isValid(File $file): bool
     {
         $rar = \RarArchive::open($file->getPathname());
         if (false === $rar) {
@@ -45,12 +30,7 @@ class ArchiveRar extends Archive
         return true;
     }
 
-    /**
-     * @param string $directory
-     *
-     * @throws ArchiverException
-     */
-    public function extract($directory, File $file)
+    public function extract(string $directory, File $file): void
     {
         $rar = \RarArchive::open($file->getPathname());
         if (false === $rar) {
@@ -73,13 +53,7 @@ class ArchiveRar extends Archive
         }
     }
 
-    /**
-     * @param string $entry
-     * @param string $directory
-     *
-     * @throws ArchiverException
-     */
-    public function extractEntry(File $file, $entry, $directory)
+    public function extractEntry(File $file, string $entry, string $directory): void
     {
         $rar = \RarArchive::open($file->getPathname());
         if (false === $rar) {

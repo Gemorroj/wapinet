@@ -5,9 +5,6 @@ namespace App\Service;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-/**
- * Timezone хэлпер
- */
 class Timezone
 {
     private TokenStorageInterface $tokenStorage;
@@ -17,10 +14,7 @@ class Timezone
         $this->tokenStorage = $tokenStorage;
     }
 
-    /**
-     * @return \DateTimeZone|null
-     */
-    public function getTimezone()
+    public function getTimezone(): ?\DateTimeZone
     {
         $token = $this->tokenStorage->getToken();
         $user = $token?->getUser();

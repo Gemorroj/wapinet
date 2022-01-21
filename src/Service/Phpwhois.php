@@ -5,9 +5,6 @@ namespace App\Service;
 use Whois;
 use WhoisUtils;
 
-/**
- * Phpwhois хэлпер
- */
 class Phpwhois
 {
     public function getWhois(): Whois

@@ -8,16 +8,10 @@ use CSSValidator\Options as W3CServiceOptions;
 use CSSValidator\Response as W3CServiceResponse;
 use Symfony\Component\HttpFoundation\File\File;
 
-/**
- * CssValidator хэлпер
- */
 class CssValidator
 {
     private W3CService $cssValidator;
 
-    /**
-     * Конструктор
-     */
     public function __construct()
     {
         $this->cssValidator = new W3CService();

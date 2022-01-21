@@ -17,9 +17,6 @@ class TagsType extends AbstractType
         $this->tagRepository = $tagRepository;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -27,17 +24,11 @@ class TagsType extends AbstractType
         $builder->addViewTransformer(new TagsDataTransformer($this->tagRepository));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent(): ?string
     {
         return TextType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix(): string
     {
         return 'tags';

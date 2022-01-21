@@ -16,11 +16,6 @@ class News extends AbstractExtension
         $this->newsRepository = $newsRepository;
     }
 
-    /**
-     * Returns a list of global functions to add to the existing list.
-     *
-     * @return array An array of global functions
-     */
     public function getFunctions(): array
     {
         return [

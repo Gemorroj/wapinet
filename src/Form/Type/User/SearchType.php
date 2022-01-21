@@ -27,9 +27,6 @@ class SearchType extends AbstractType
         $builder->add('submit', SubmitType::class, ['label' => 'Искать']);
     }
 
-    /**
-     * Уникальное имя формы.
-     */
     public function getBlockPrefix(): string
     {
         return 'users_search_form';

@@ -6,16 +6,10 @@ use BitTorrent\Decoder;
 use BitTorrent\Encoder;
 use Symfony\Component\HttpFoundation\File\File;
 
-/**
- * Torrent хэлпер
- */
 class Torrent
 {
     private Decoder $decoder;
 
-    /**
-     * Конструктор
-     */
     public function __construct()
     {
         $this->decoder = new Decoder(new Encoder());

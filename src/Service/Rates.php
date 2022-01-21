@@ -2,9 +2,6 @@
 
 namespace App\Service;
 
-/**
- * Rates хэлпер
- */
 class Rates
 {
     private Curl $curl;
@@ -16,25 +13,13 @@ class Rates
 
     public function getName(string $country): ?string
     {
-        switch ($country) {
-            case 'ru':
-                return 'Центральный банк Российской Федерации';
-                break;
-
-            case 'by':
-                return 'Национальный банк Республики Беларусь';
-                break;
-
-            case 'ua':
-                return 'Национальный банк Украины';
-                break;
-
-            case 'kz':
-                return 'Национальный банк Республики Казахстан';
-                break;
-        }
-
-        return null;
+        return match ($country) {
+            'ru' => 'Центральный банк Российской Федерации',
+            'by' => 'Национальный банк Республики Беларусь',
+            'ua' => 'Национальный банк Украины',
+            'kz' => 'Национальный банк Республики Казахстан',
+            default => null,
+        };
     }
 
     public function getRates(string $country): array

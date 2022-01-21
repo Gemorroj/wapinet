@@ -7,16 +7,10 @@ use HTMLValidator\HTMLValidator as W3CService;
 use HTMLValidator\Response as W3CServiceResponse;
 use Symfony\Component\HttpFoundation\File\File;
 
-/**
- * HtmlValidator хэлпер
- */
 class HtmlValidator
 {
     private W3CService $htmlValidator;
 
-    /**
-     * Конструктор
-     */
     public function __construct()
     {
         $this->htmlValidator = new W3CService();

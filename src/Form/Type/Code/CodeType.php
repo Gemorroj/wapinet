@@ -9,9 +9,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * Code.
- */
 class CodeType extends AbstractType
 {
     private Code $code;
@@ -21,10 +18,6 @@ class CodeType extends AbstractType
         $this->code = $code;
     }
 
-    /**
-     * @var FormBuilderInterface
-     * @var array
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -44,9 +37,6 @@ class CodeType extends AbstractType
         $builder->add('submit', SubmitType::class, ['label' => 'Конвертировать']);
     }
 
-    /**
-     * Уникальное имя формы.
-     */
     public function getBlockPrefix(): string
     {
         return 'code_form';

@@ -7,11 +7,6 @@ use Twig\TwigFilter;
 
 class Size extends AbstractExtension
 {
-    /**
-     * Returns a list of global functions to add to the existing list.
-     *
-     * @return array An array of global functions
-     */
     public function getFilters(): array
     {
         return [
@@ -19,10 +14,7 @@ class Size extends AbstractExtension
         ];
     }
 
-    /**
-     * @param int|float|null $fileSizeInBytes
-     */
-    public function getSize($fileSizeInBytes): string
+    public function getSize(int|float|null $fileSizeInBytes): string
     {
         if (null === $fileSizeInBytes) {
             return '';

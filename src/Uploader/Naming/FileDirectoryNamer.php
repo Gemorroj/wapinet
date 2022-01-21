@@ -5,9 +5,6 @@ namespace App\Uploader\Naming;
 use Vich\UploaderBundle\Mapping\PropertyMapping;
 use Vich\UploaderBundle\Naming\DirectoryNamerInterface;
 
-/**
- * FileDirectoryNamer.
- */
 class FileDirectoryNamer implements DirectoryNamerInterface
 {
     /**

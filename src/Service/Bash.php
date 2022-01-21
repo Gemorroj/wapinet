@@ -5,9 +5,6 @@ namespace App\Service;
 use App\Pagerfanta\FixedPaginate;
 use Pagerfanta\Pagerfanta;
 
-/**
- * Bash хэлпер
- */
 class Bash
 {
     private Curl $curl;

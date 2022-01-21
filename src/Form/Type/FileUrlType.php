@@ -23,9 +23,6 @@ class FileUrlType extends AbstractType
         $this->curl = $curl;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -63,9 +60,6 @@ class FileUrlType extends AbstractType
         $builder->addViewTransformer($transformer);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -75,9 +69,6 @@ class FileUrlType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix(): string
     {
         return 'file_url';

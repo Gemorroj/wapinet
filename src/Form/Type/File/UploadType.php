@@ -15,9 +15,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-/**
- * Upload.
- */
 class UploadType extends AbstractType
 {
     private AuthorizationCheckerInterface $authorizationChecker;
@@ -29,10 +26,6 @@ class UploadType extends AbstractType
         $this->parameterBag = $parameterBag;
     }
 
-    /**
-     * @var FormBuilderInterface
-     * @var array
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -66,9 +59,6 @@ class UploadType extends AbstractType
         ]);
     }
 
-    /**
-     * Уникальное имя формы.
-     */
     public function getBlockPrefix(): string
     {
         return 'file_upload_form';

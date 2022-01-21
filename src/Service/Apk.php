@@ -4,15 +4,9 @@ namespace App\Service;
 
 use ApkParser\Parser;
 
-/**
- * Apk хэлпер
- */
 class Apk
 {
-    /**
-     * @var Parser
-     */
-    private $apk;
+    private Parser $apk;
 
     public function init(string $apkPath): self
     {

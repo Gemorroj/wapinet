@@ -6,9 +6,6 @@ use GeoIp2\Database\Reader;
 use GeoIp2\Model\Country;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-/**
- * Geoip2 хэлпер
- */
 class Geoip2
 {
     private ?Reader $reader = null;
