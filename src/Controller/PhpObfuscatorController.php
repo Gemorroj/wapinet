@@ -41,10 +41,7 @@ class PhpObfuscatorController extends AbstractController
         ]);
     }
 
-    /**
-     * @return string
-     */
-    protected function getObfuscator(array $data)
+    private function getObfuscator(array $data): string
     {
         $code = $this->cleanCode($data['code']);
 
@@ -68,22 +65,18 @@ class PhpObfuscatorController extends AbstractController
 
     /**
      * Удаляем начальные и завершающие php теги.
-     *
-     * @param string $code
-     *
-     * @return string
      */
-    protected function cleanCode($code)
+    private function cleanCode(string $code): string
     {
         // Верх
         if (0 === \stripos($code, '<?php')) {
-            $code = \mb_substr($code, 5, \mb_strlen($code));
-        } elseif (0 === \strpos($code, '<?')) {
-            $code = \mb_substr($code, 2, \mb_strlen($code));
+            $code = \substr($code, 5);
+        } elseif (\str_starts_with($code, '<?')) {
+            $code = \substr($code, 2);
         }
         // Низ
-        if ('?>' === \mb_substr($code, -2, 2)) {
-            $code = \mb_substr($code, 0, -2);
+        if (\str_ends_with($code, '?>')) {
+            $code = \substr($code, 0, -2);
         }
 
         return $code;

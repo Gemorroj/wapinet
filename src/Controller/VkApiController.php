@@ -32,8 +32,6 @@ class VkApiController extends AbstractController
             throw new HttpException($response->getStatusCode());
         }
 
-        $json = \json_decode($response->getContent(), true, 512, \JSON_THROW_ON_ERROR);
-
-        return new JsonResponse($json);
+        return new JsonResponse($response->getContent(), json: true);
     }
 }

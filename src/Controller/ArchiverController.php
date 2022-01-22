@@ -186,7 +186,7 @@ class ArchiverController extends AbstractController
     /**
      * @throws ArchiverException
      */
-    protected function extractArchive(File $file): string
+    private function extractArchive(File $file): string
     {
         $archiveZip = $this->container->get(ArchiveZip::class);
         if (true === $archiveZip->isValid($file)) {
@@ -212,7 +212,7 @@ class ArchiverController extends AbstractController
         throw new ArchiverException('Неподдерживаемый тип архива');
     }
 
-    protected function generateArchiveName(): string
+    private function generateArchiveName(): string
     {
         return \uniqid('archive', false);
     }
@@ -220,7 +220,7 @@ class ArchiverController extends AbstractController
     /**
      * @throws FileException
      */
-    protected function checkArchiveDirectory(string $archive): string
+    private function checkArchiveDirectory(string $archive): string
     {
         $directory = $this->getParameter('kernel.tmp_archiver_dir').DIRECTORY_SEPARATOR.$archive;
 
@@ -240,7 +240,7 @@ class ArchiverController extends AbstractController
     /**
      * @throws IOException
      */
-    protected function createArchiveDirectory(): string
+    private function createArchiveDirectory(): string
     {
         $directory = $this->getParameter('kernel.tmp_archiver_dir').DIRECTORY_SEPARATOR.$this->generateArchiveName();
         $this->container->get(Filesystem::class)->mkdir($directory);
@@ -251,7 +251,7 @@ class ArchiverController extends AbstractController
     /**
      * @throws FileException
      */
-    protected function addFile(string $directory, UploadedFile $file): File
+    private function addFile(string $directory, UploadedFile $file): File
     {
         return $file->move($directory, $file->getClientOriginalName());
     }

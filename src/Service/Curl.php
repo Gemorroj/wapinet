@@ -210,10 +210,9 @@ class Curl
         $status = \curl_getinfo($this->curl, CURLINFO_HTTP_CODE);
 
         // заголовки
-        $headers = $this->parseHeaders(\rtrim(\mb_substr($out, 0, $size)));
+        $headers = $this->parseHeaders(\rtrim(\substr($out, 0, $size)));
         // тело
-        $content = \mb_substr($out, $size);
-        $content = (false === $content ? null : $content);
+        $content = \substr($out, $size);
 
         return new Response($content, $status, $headers);
     }

@@ -9,10 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BrowserInfoController extends AbstractController
 {
-    /**
-     * @return string|null
-     */
-    protected function getPhoneNumber(Request $request)
+    private function getPhoneNumber(Request $request): ?string
     {
         if ($request->server->has('HTTP_X_NETWORK_INFO')) {
             return \preg_replace('/(.*,)(11[d])(,.*)/i', '$2', $request->server->get('HTTP_X_NETWORK_INFO'));
@@ -36,10 +33,7 @@ class BrowserInfoController extends AbstractController
         return null;
     }
 
-    /**
-     * @return string|null
-     */
-    protected function getProxy(Request $request)
+    private function getProxy(Request $request): ?string
     {
         if ($request->server->has('HTTP_X_FORWARDED_FOR')) {
             return $request->server->get('HTTP_X_FORWARDED_FOR');
@@ -51,10 +45,7 @@ class BrowserInfoController extends AbstractController
         return null;
     }
 
-    /**
-     * @return string|null
-     */
-    protected function getProxyHost(Request $request)
+    private function getProxyHost(Request $request): ?string
     {
         $proxy = $this->getProxy($request);
         if (null !== $proxy) {
@@ -69,10 +60,7 @@ class BrowserInfoController extends AbstractController
         return null;
     }
 
-    /**
-     * @return string|null
-     */
-    protected function getEncoding(Request $request)
+    private function getEncoding(Request $request): ?string
     {
         if ($request->server->has('HTTP_ACCEPT_ENCODING')) {
             return $request->server->get('HTTP_ACCEPT_ENCODING');

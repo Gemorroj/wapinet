@@ -46,7 +46,7 @@ class CssValidatorController extends AbstractController
         ]);
     }
 
-    protected function getCssValidator(array $data): CSSValidatorResponse
+    private function getCssValidator(array $data): CSSValidatorResponse
     {
         /** @var CssValidator $cssValidator */
         $cssValidator = $this->container->get(CssValidator::class);

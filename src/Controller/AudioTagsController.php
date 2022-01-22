@@ -63,7 +63,7 @@ class AudioTagsController extends AbstractController
         ]);
     }
 
-    protected function saveFile(array $data): File
+    private function saveFile(array $data): File
     {
         /** @var UploadedFile $file */
         $file = $data['file'];
@@ -118,7 +118,7 @@ class AudioTagsController extends AbstractController
         ]);
     }
 
-    protected function setFormData(FormInterface $form, array $tags): void
+    private function setFormData(FormInterface $form, array $tags): void
     {
         $data = [
             //'picture' => null,
@@ -144,7 +144,7 @@ class AudioTagsController extends AbstractController
         $form->setData($data);
     }
 
-    protected function getInfo(string $fileName): array
+    private function getInfo(string $fileName): array
     {
         $getid3 = $this->container->get(Getid3::class)->getId3();
         $info = $getid3->analyze($this->getFilePath($fileName));
@@ -160,7 +160,7 @@ class AudioTagsController extends AbstractController
     /**
      * @throws AudioException
      */
-    protected function setTags(Request $request, string $fileName, FormInterface $form, array $info): void
+    private function setTags(Request $request, string $fileName, FormInterface $form, array $info): void
     {
         $data = $form->getData();
         $writer = $this->container->get(Getid3::class)->getId3Writer();
@@ -225,7 +225,7 @@ class AudioTagsController extends AbstractController
     /**
      * @param array $info (поддерживаются mp3, mp2, mp1, riff, mpc, flac, real, ogg)
      */
-    protected function getAllowedTagFormats(array $info): array
+    private function getAllowedTagFormats(array $info): array
     {
         switch ($info['fileformat']) {
             case 'mp3':
@@ -282,7 +282,7 @@ class AudioTagsController extends AbstractController
         return $file;
     }
 
-    protected function getFilePath(string $fileName): string
+    private function getFilePath(string $fileName): string
     {
         return $this->getParameter('kernel.tmp_dir').DIRECTORY_SEPARATOR.$fileName;
     }

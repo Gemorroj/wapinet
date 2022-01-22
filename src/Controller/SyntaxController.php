@@ -40,12 +40,12 @@ class SyntaxController extends AbstractController
         return new Response($page);
     }
 
-    protected function detectEncoding(string $source): string
+    private function detectEncoding(string $source): string
     {
         return \mb_detect_encoding($source, ['UTF-8', 'Windows-1251', 'KOI8-R', 'CP866', 'ISO-8859-1', 'US-ASCII'], true);
     }
 
-    protected function toUtf8Encoding(string $source, string $encoding): string
+    private function toUtf8Encoding(string $source, string $encoding): string
     {
         if ('UTF-8' !== $encoding) {
             return \mb_convert_encoding($source, 'UTF-8', $encoding);
@@ -54,7 +54,7 @@ class SyntaxController extends AbstractController
         return $source;
     }
 
-    protected function codeSize(string $source): string
+    private function codeSize(string $source): string
     {
         $size = \strlen($source);
 
@@ -65,7 +65,7 @@ class SyntaxController extends AbstractController
         return \round($size / 1024, 2).' kb';
     }
 
-    protected function highlightCode(string $source, ?int $line = null): string
+    private function highlightCode(string $source, ?int $line = null): string
     {
         $array = \array_slice(\explode("\n", $this->xhtmlCode($source)), 1, -2);
         $all = \count($array);
@@ -80,7 +80,7 @@ class SyntaxController extends AbstractController
         return '<div class="code"><pre><code>'.$page.'</code></pre></div>';
     }
 
-    protected function xhtmlCode(string $source): string
+    private function xhtmlCode(string $source): string
     {
         return \str_replace(
             ['&nbsp;', '<code>', '</code>', '<br />'],

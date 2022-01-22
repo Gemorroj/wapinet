@@ -49,7 +49,7 @@ class UnicodeController extends AbstractController
         return $this->render('Unicode/icons.html.twig');
     }
 
-    protected function getUnicode(array $data): string
+    private function getUnicode(array $data): string
     {
         $out = $data['text'];
         if ($data['html']) {
@@ -72,14 +72,14 @@ class UnicodeController extends AbstractController
             return '&#x'.$key.';';
         }, $out);
 
-        $out = \mb_substr($out, 1); // удаляем вначале "
-        $out = \mb_substr($out, 0, -1); // удаляем в конце "
+        $out = \substr($out, 1); // удаляем вначале "
+        $out = \substr($out, 0, -1); // удаляем в конце "
         $out = \str_replace(['\"', '\\\\'], ['"', '\\'], $out);
 
         return $out;
     }
 
-    protected function getLatin(string $str): string
+    private function getLatin(string $str): string
     {
         return \strtr($str, [
             'А' => 'A', 'В' => 'B', 'Е' => 'E', 'К' => 'K', 'М' => 'M',
@@ -89,12 +89,12 @@ class UnicodeController extends AbstractController
         ]);
     }
 
-    protected function getHtmlSpecialChars(string $str): string
+    private function getHtmlSpecialChars(string $str): string
     {
         return \htmlspecialchars($str, \ENT_QUOTES);
     }
 
-    protected function getZeroFill(string $str): string
+    private function getZeroFill(string $str): string
     {
         return \ltrim($str, '0');
     }

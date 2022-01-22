@@ -44,7 +44,7 @@ class CodeController extends AbstractController
         ]);
     }
 
-    protected function getCode(array $data): string
+    private function getCode(array $data): string
     {
         /** @var Code $code */
         $code = $this->container->get(Code::class);

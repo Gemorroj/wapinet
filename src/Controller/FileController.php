@@ -117,7 +117,7 @@ class FileController extends AbstractController
         ]);
     }
 
-    protected function searchManticore(array $data, int $page = 1): Pagerfanta
+    private function searchManticore(array $data, int $page = 1): Pagerfanta
     {
         /** @var Manticore $client */
         $client = $this->container->get(Manticore::class);
@@ -280,13 +280,13 @@ class FileController extends AbstractController
         return $this->viewFile($file, $fileMeta);
     }
 
-    protected function incrementViews(File $file): void
+    private function incrementViews(File $file): void
     {
         $file->setCountViews($file->getCountViews() + 1);
         $file->setLastViewAt(new \DateTime());
     }
 
-    protected function viewFile(File $file, Meta $fileMeta): Response
+    private function viewFile(File $file, Meta $fileMeta): Response
     {
         $this->checkMeta($file, $fileMeta);
 
@@ -300,7 +300,7 @@ class FileController extends AbstractController
         return $response;
     }
 
-    protected function checkMeta(File $file, Meta $fileMeta): void
+    private function checkMeta(File $file, Meta $fileMeta): void
     {
         if (null !== $file->getMeta()) {
             return;
@@ -470,7 +470,7 @@ class FileController extends AbstractController
         ]);
     }
 
-    protected function editFileData(Request $request, File $data, File $oldData): File
+    private function editFileData(Request $request, File $data, File $oldData): File
     {
         $entityManager = $this->container->get('doctrine')->getManager();
 

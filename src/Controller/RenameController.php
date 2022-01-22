@@ -46,7 +46,7 @@ class RenameController extends AbstractController
         ]);
     }
 
-    protected function getRename(array $data): BinaryFileResponse
+    private function getRename(array $data): BinaryFileResponse
     {
         if ($data['file'] instanceof UploadedFile) {
             $file = new BinaryFileResponse($data['file']);

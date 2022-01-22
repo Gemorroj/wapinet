@@ -47,7 +47,7 @@ class HashController extends AbstractController
     /**
      * @throws ValidatorException
      */
-    protected function getHash(array $data): string
+    private function getHash(array $data): string
     {
         /** @var Hash $hash */
         $hash = $this->container->get(Hash::class);

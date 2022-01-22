@@ -45,7 +45,7 @@ class HtmlValidatorController extends AbstractController
         ]);
     }
 
-    protected function getHtmlValidator(array $data): HTMLValidatorResponse
+    private function getHtmlValidator(array $data): HTMLValidatorResponse
     {
         /** @var HtmlValidator $htmlValidator */
         $htmlValidator = $this->container->get(HtmlValidator::class);

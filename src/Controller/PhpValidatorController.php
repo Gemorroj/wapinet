@@ -44,7 +44,7 @@ class PhpValidatorController extends AbstractController
         ]);
     }
 
-    protected function getPhpValidator(array $data): array
+    private function getPhpValidator(array $data): array
     {
         /** @var PhpValidator $phpValidator */
         $phpValidator = $this->container->get(PhpValidator::class);

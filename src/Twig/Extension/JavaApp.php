@@ -105,7 +105,7 @@ class JavaApp extends AbstractExtension
     {
         foreach (\explode(',', $content) as $v) {
             $v = \trim(\trim($v), '/');
-            if ('png' === \mb_strtolower(\pathinfo($v, PATHINFO_EXTENSION))) {
+            if ('png' === \strtolower(\pathinfo($v, PATHINFO_EXTENSION))) {
                 try {
                     $this->archiveZip->extractEntry(
                         new BaseFile($this->getPublicDir().$path, false),
