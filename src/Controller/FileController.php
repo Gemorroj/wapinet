@@ -41,32 +41,22 @@ use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Router;
 
-/**
- * @Route("/file")
- *
- * @see http://wap4file.org
- */
+#[Route('/file')]
 class FileController extends AbstractController
 {
-    /**
-     * @Route("", name="file_index", options={"expose": true})
-     */
+    #[Route(path: '', name: 'file_index', options: ['expose' => true])]
     public function indexAction(): Response
     {
         return $this->render('File/index.html.twig');
     }
 
-    /**
-     * @Route("/information", name="file_information")
-     */
+    #[Route(path: '/information', name: 'file_information')]
     public function informationAction(): Response
     {
         return $this->render('File/information.html.twig');
     }
 
-    /**
-     * @Route("/statistic", name="file_statistic")
-     */
+    #[Route(path: '/statistic', name: 'file_statistic')]
     public function statisticAction(FileRepository $fileRepository): Response
     {
         $statistic = $fileRepository->getStatistic();
@@ -74,9 +64,7 @@ class FileController extends AbstractController
         return $this->render('File/statistic.html.twig', ['statistic' => $statistic]);
     }
 
-    /**
-     * @Route("/search/{key}", name="file_search", defaults={"key": null}, requirements={"key": "[a-zA-Z0-9]+"})
-     */
+    #[Route(path: '/search/{key}', name: 'file_search', requirements: ['key' => '[a-zA-Z0-9]+'], defaults: ['key' => null])]
     public function searchAction(Request $request, ?string $key = null): Response
     {
         $page = $request->get('page', 1);
@@ -136,17 +124,13 @@ class FileController extends AbstractController
         return $client->getPagerfanta($sphinxQl, File::class);
     }
 
-    /**
-     * @Route("/categories", name="file_categories")
-     */
+    #[Route(path: '/categories', name: 'file_categories')]
     public function categoriesAction(): Response
     {
         return $this->render('File/categories.html.twig');
     }
 
-    /**
-     * @Route("/hidden", name="file_hidden")
-     */
+    #[Route(path: '/hidden', name: 'file_hidden')]
     public function hiddenAction(Request $request, FileRepository $fileRepository, Paginate $paginate): Response
     {
         /** @var User|null $user */
@@ -166,9 +150,7 @@ class FileController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/tags", name="file_tags")
-     */
+    #[Route(path: '/tags', name: 'file_tags')]
     public function tagsAction(Request $request, TagRepository $tagRepository, Paginate $paginate): Response
     {
         $page = $request->get('page', 1);
@@ -181,9 +163,7 @@ class FileController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/tags/{tagName}", name="file_tag", requirements={"tagName": ".+"})
-     */
+    #[Route(path: '/tags/{tagName}', name: 'file_tag', requirements: ['tagName' => '.+'])]
     public function tagAction(Request $request, string $tagName, TagRepository $tagRepository, FileRepository $fileRepository, Paginate $paginate): Response
     {
         $page = $request->get('page', 1);
@@ -203,9 +183,7 @@ class FileController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/users/{username}", name="file_user", requirements={"username": ".+"})
-     */
+    #[Route(path: '/users/{username}', name: 'file_user', requirements: ['username' => '.+'])]
     public function userAction(Request $request, string $username, UserRepository $userRepository, FileRepository $fileRepository, Paginate $paginate): Response
     {
         $page = $request->get('page', 1);
@@ -225,9 +203,7 @@ class FileController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/list/{date}/{category}", name="file_list", defaults={"date": "all", "category": null}, requirements={"date": "all|today|yesterday", "category": "video|audio|image|text|office|archive|android|java"})
-     */
+    #[Route(path: '/list/{date}/{category}', name: 'file_list', requirements: ['date' => 'all|today|yesterday', 'category' => 'video|audio|image|text|office|archive|android|java'], defaults: ['date' => 'all', 'category' => null])]
     public function listAction(Request $request, Timezone $timezoneHelper, FileRepository $fileRepository, Paginate $paginate, string $date = 'all', ?string $category = null): Response
     {
         $page = $request->get('page', 1);
@@ -259,9 +235,7 @@ class FileController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="file_view", requirements={"id": "\d+"})
-     */
+    #[Route(path: '/{id}', name: 'file_view', requirements: ['id' => '\d+'])]
     public function viewAction(Request $request, File $file, PasswordHasherFactoryInterface $passwordHasherFactory, Meta $fileMeta): Response
     {
         if (null !== $file->getPassword() && !$this->isGranted('ROLE_ADMIN') && (!($this->getUser() instanceof User) || !($file->getUser() instanceof User) || !$file->getUser()->isEqualTo($this->getUser()))) {
@@ -344,9 +318,7 @@ class FileController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/download/{name}", name="file_archive_download_file", requirements={"id": "\d+"})
-     */
+    #[Route(path: '/{id}/download/{name}', name: 'file_archive_download_file', requirements: ['id' => '\d+'])]
     public function archiveDownloadFileAction(Request $request, Filesystem $filesystem, FileRepository $fileRepository, int $id, string $name): BinaryFileResponse
     {
         $path = (string) \str_replace('\\', '/', $request->get('path', ''));
@@ -389,9 +361,7 @@ class FileController extends AbstractController
         return $file;
     }
 
-    /**
-     * @Route("/accept/{id}", name="file_accept", requirements={"id": "\d+"})
-     */
+    #[Route(path: '/accept/{id}', name: 'file_accept', requirements: ['id' => '\d+'])]
     public function acceptAction(File $file, EntityManagerInterface $entityManager): Response
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
@@ -409,9 +379,7 @@ class FileController extends AbstractController
         return $this->redirect($url);
     }
 
-    /**
-     * @Route("/delete/{id}", name="file_delete", methods={"POST"}, requirements={"id": "\d+"}, options={"expose": true})
-     */
+    #[Route(path: '/delete/{id}', name: 'file_delete', requirements: ['id' => '\d+'], options: ['expose' => true], methods: ['POST'])]
     public function deleteAction(Request $request, File $file, EntityManagerInterface $entityManager): Response
     {
         if (!$this->isGranted('DELETE', $file) && !$this->isGranted('ROLE_ADMIN')) {
@@ -436,9 +404,7 @@ class FileController extends AbstractController
         return $this->redirect($url);
     }
 
-    /**
-     * @Route("/edit/{id}", name="file_edit", requirements={"id": "\d+"})
-     */
+    #[Route(path: '/edit/{id}', name: 'file_edit', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, File $file): Response
     {
         $this->denyAccessUnlessGranted('EDIT', $file);
@@ -522,9 +488,7 @@ class FileController extends AbstractController
         return $data;
     }
 
-    /**
-     * @Route("/upload", name="file_upload")
-     */
+    #[Route(path: '/upload', name: 'file_upload')]
     public function uploadAction(Request $request, PasswordHasherFactoryInterface $passwordHasherFactory, BotChecker $botChecker): Response
     {
         $form = $this->createForm(UploadType::class);
@@ -673,9 +637,7 @@ class FileController extends AbstractController
         $file->setFileTags($fileTags);
     }
 
-    /**
-     * @Route("/tags_search", name="file_tags_search", defaults={"_format": "json"}, options={"expose": true})
-     */
+    #[Route(path: '/tags_search', name: 'file_tags_search', options: ['expose' => true], defaults: ['_format' => 'json'])]
     public function tagsSearchAction(Request $request, TagRepository $tagRepository): JsonResponse
     {
         $term = \trim($request->get('term', ''));
@@ -699,9 +661,7 @@ class FileController extends AbstractController
         return $this->json($result);
     }
 
-    /**
-     * @Route("/swiper/{id}", name="file_swiper", requirements={"id": "\d+"})
-     */
+    #[Route(path: '/swiper/{id}', name: 'file_swiper', requirements: ['id' => '\d+'])]
     public function swiperAction(File $file, FileRepository $fileRepository, EntityManagerInterface $entityManager): Response
     {
         if (!$file->isImage()) {

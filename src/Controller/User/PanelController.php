@@ -13,14 +13,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/user")
- */
+#[Route('/user')]
 class PanelController extends AbstractController
 {
-    /**
-     * @Route("/panel/edit", name="wapinet_user_panel_edit")
-     */
+    #[Route(path: '/panel/edit', name: 'wapinet_user_panel_edit')]
     public function editAction(Request $request, EntityManagerInterface $entityManager): Response
     {
         /** @var User|null $user */

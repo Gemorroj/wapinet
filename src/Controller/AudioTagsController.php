@@ -27,14 +27,11 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @see https://github.com/JamesHeinrich/getID3/blob/master/demos/demo.audioinfo.class.php
  * @see https://github.com/JamesHeinrich/getID3/blob/master/demos/demo.write.php
- *
- * @Route("/audio_tags")
  */
+#[Route('/audio_tags')]
 class AudioTagsController extends AbstractController
 {
-    /**
-     * @Route("", name="audio_tags_index")
-     */
+    #[Route(path: '', name: 'audio_tags_index')]
     public function indexAction(Request $request): Response
     {
         $form = $this->createForm(AudioTagsType::class);
@@ -76,9 +73,7 @@ class AudioTagsController extends AbstractController
         return $file->move($tempDirectory, $tempName);
     }
 
-    /**
-     * @Route("/edit/{fileName}/{originalFileName}", name="audio_tags_edit")
-     */
+    #[Route(path: '/edit/{fileName}/{originalFileName}', name: 'audio_tags_edit')]
     public function editAction(Request $request, string $fileName, string $originalFileName): Response
     {
         $form = $this->createForm(AudioTagsEditType::class);
@@ -266,9 +261,7 @@ class AudioTagsController extends AbstractController
         return [];
     }
 
-    /**
-     * @Route("/download/{fileName}/{originalFileName}", name="audio_tags_download")
-     */
+    #[Route(path: '/download/{fileName}/{originalFileName}', name: 'audio_tags_download')]
     public function downloadAction(string $fileName, string $originalFileName): BinaryFileResponse
     {
         $file = new BinaryFileResponse($this->getFilePath($fileName));

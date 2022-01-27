@@ -6,14 +6,8 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- * File or url.
- */
 class FileUrl extends UploadedFile
 {
-    /**
-     * {@inheritdoc}
-     */
     public function move($directory, string $name = null): File
     {
         $target = $this->getTargetFile($directory, $name);
@@ -28,9 +22,6 @@ class FileUrl extends UploadedFile
         return $target;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isValid(): bool
     {
         return \is_file($this->getPathname());

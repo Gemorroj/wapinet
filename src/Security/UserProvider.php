@@ -14,11 +14,8 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
 {
-    protected UserRepository $userRepository;
-
-    public function __construct(UserRepository $userRepository)
+    public function __construct(private UserRepository $userRepository)
     {
-        $this->userRepository = $userRepository;
     }
 
     public function upgradePassword(UserInterface $user, string $newHashedPassword): void
@@ -39,24 +36,19 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         return $user;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function loadUserByUsername(string $username): UserInterface
     {
         return $this->loadUserByIdentifier($username);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function refreshUser(UserInterface $user): UserInterface
     {
         if (!$user instanceof User) {
             throw new UnsupportedUserException(\sprintf('Expected an instance of App\Entity\User, but got "%s".', \get_class($user)));
         }
 
-        if (null === $reloadedUser = $this->userRepository->find($user->getId())) {
+        $reloadedUser = $this->userRepository->find($user->getId());
+        if (!$reloadedUser) {
             $e = new UserNotFoundException(\sprintf('Username "%s" could not be reloaded.', $user->getUserIdentifier()));
             $e->setUserIdentifier($user->getUserIdentifier());
             throw $e;
@@ -65,9 +57,6 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         return $reloadedUser;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsClass(string $class): bool
     {
         return User::class === $class || \is_subclass_of($class, User::class);

@@ -72,9 +72,7 @@ class BrowserInfoController extends AbstractController
         return null;
     }
 
-    /**
-     * @Route("/browser_info", name="browser_info")
-     */
+    #[Route(path: '/browser_info', name: 'browser_info')]
     public function indexAction(Request $request): Response
     {
         $headers = clone $request->headers;

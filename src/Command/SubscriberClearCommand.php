@@ -11,17 +11,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 class SubscriberClearCommand extends Command
 {
     protected static $defaultName = 'app:subscriber-clear';
-    private EventRepository $eventRepository;
 
-    public function __construct(EventRepository $eventRepository, string $name = null)
+    public function __construct(private EventRepository $eventRepository, string $name = null)
     {
-        $this->eventRepository = $eventRepository;
         parent::__construct($name);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         $this
@@ -38,9 +33,6 @@ class SubscriberClearCommand extends Command
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $lifetime = $input->getArgument('lifetime');
@@ -48,6 +40,6 @@ class SubscriberClearCommand extends Command
 
         $output->writeln('Deleted '.$count.' events.');
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

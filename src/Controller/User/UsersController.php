@@ -14,14 +14,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/user")
- */
+#[Route('/user')]
 class UsersController extends AbstractController
 {
-    /**
-     * @Route("/users/{key}", name="wapinet_users", defaults={"key": null}, requirements={"key": "[a-zA-Z0-9]+"})
-     */
+    #[Route(path: '/users/{key}', name: 'wapinet_users', requirements: ['key' => '[a-zA-Z0-9]+'], defaults: ['key' => null])]
     public function indexAction(Request $request, UserRepository $userRepository, Paginate $paginate, Manticore $manticore, ?string $key = null): Response
     {
         $page = $request->get('page', 1);

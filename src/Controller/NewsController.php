@@ -10,14 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/news")
- */
+#[Route('/news')]
 class NewsController extends AbstractController
 {
-    /**
-     * @Route("", name="news_index")
-     */
+    #[Route(path: '', name: 'news_index')]
     public function indexAction(Request $request, Paginate $paginate, NewsRepository $newsRepository): Response
     {
         $page = $request->get('page', 1);
@@ -31,9 +27,7 @@ class NewsController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="news_show", requirements={"id": "\d+"})
-     */
+    #[Route(path: '/{id}', name: 'news_show', requirements: ['id' => '\d+'])]
     public function showAction(News $news): Response
     {
         return $this->render('News/show.html.twig', [

@@ -14,17 +14,13 @@ use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 class UserCreateCommand extends Command
 {
     protected static $defaultName = 'app:user-create';
-    private EntityManagerInterface $entityManager;
-    private PasswordHasherFactoryInterface $passwordHasherFactory;
 
-    public function __construct(EntityManagerInterface $entityManager, PasswordHasherFactoryInterface $passwordHasherFactory, string $name = null)
+    public function __construct(private EntityManagerInterface $entityManager, private PasswordHasherFactoryInterface $passwordHasherFactory, string $name = null)
     {
-        $this->entityManager = $entityManager;
-        $this->passwordHasherFactory = $passwordHasherFactory;
         parent::__construct($name);
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Creates new user')
@@ -55,6 +51,6 @@ class UserCreateCommand extends Command
 
         $io->success('User created. Id: '.$user->getId());
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

@@ -7,22 +7,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/mass_media")
- */
+#[Route('/mass_media')]
 class MassMediaController extends AbstractController
 {
-    /**
-     * @Route("", name="mass_media_index")
-     */
+    #[Route(path: '', name: 'mass_media_index')]
     public function indexAction(): Response
     {
         return $this->render('MassMedia/index.html.twig');
     }
 
-    /**
-     * @Route("/rt", name="mass_media_rt")
-     */
+    #[Route(path: '/rt', name: 'mass_media_rt')]
     public function rtAction(MassMedia $massMediaHelper): Response
     {
         return $this->render('MassMedia/news.html.twig', [
@@ -31,9 +25,7 @@ class MassMediaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/inotv", name="mass_media_inotv")
-     */
+    #[Route(path: '/inotv', name: 'mass_media_inotv')]
     public function inotvAction(MassMedia $massMediaHelper): Response
     {
         return $this->render('MassMedia/news.html.twig', [

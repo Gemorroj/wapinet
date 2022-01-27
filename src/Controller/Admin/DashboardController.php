@@ -50,9 +50,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Гостевая', 'fas fa-folder-open', Guestbook::class);
     }
 
-    /**
-     * @Route("/admin")
-     */
+    #[Route('/admin')]
     public function index(): Response
     {
         $info = $this->container->get(\App\Service\Ginfo::class)->getInfo();

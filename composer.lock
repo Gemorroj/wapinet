@@ -3492,16 +3492,16 @@
         },
         {
             "name": "pagerfanta/core",
-            "version": "v3.5.1",
+            "version": "v3.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/core.git",
-                "reference": "ef508747e3626ea456313412b082080c5c6ab77a"
+                "reference": "6a6b909a614bb080588472c1f29c26eba8787a96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/core/zipball/ef508747e3626ea456313412b082080c5c6ab77a",
-                "reference": "ef508747e3626ea456313412b082080c5c6ab77a",
+                "url": "https://api.github.com/repos/Pagerfanta/core/zipball/6a6b909a614bb080588472c1f29c26eba8787a96",
+                "reference": "6a6b909a614bb080588472c1f29c26eba8787a96",
                 "shasum": ""
             },
             "require": {
@@ -3512,7 +3512,7 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "^9.5",
-                "symfony/phpunit-bridge": "^5.3 || ^6.0"
+                "symfony/phpunit-bridge": "^5.4 || ^6.0"
             },
             "type": "library",
             "autoload": {
@@ -3532,22 +3532,22 @@
                 "pagerfanta"
             ],
             "support": {
-                "source": "https://github.com/Pagerfanta/core/tree/v3.5.1"
+                "source": "https://github.com/Pagerfanta/core/tree/v3.5.2"
             },
-            "time": "2021-12-01T23:47:09+00:00"
+            "time": "2022-01-24T23:38:50+00:00"
         },
         {
             "name": "pagerfanta/doctrine-collections-adapter",
-            "version": "v3.5.1",
+            "version": "v3.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/doctrine-collections-adapter.git",
-                "reference": "bf9670c8a14b7e57dcdac84a15df313e133b4c94"
+                "reference": "4bc261dd2cb4ffe11b8332bf9fb9c58f8ff59f4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/doctrine-collections-adapter/zipball/bf9670c8a14b7e57dcdac84a15df313e133b4c94",
-                "reference": "bf9670c8a14b7e57dcdac84a15df313e133b4c94",
+                "url": "https://api.github.com/repos/Pagerfanta/doctrine-collections-adapter/zipball/4bc261dd2cb4ffe11b8332bf9fb9c58f8ff59f4f",
+                "reference": "4bc261dd2cb4ffe11b8332bf9fb9c58f8ff59f4f",
                 "shasum": ""
             },
             "require": {
@@ -3558,7 +3558,7 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "^9.5",
-                "symfony/phpunit-bridge": "^5.3 || ^6.0"
+                "symfony/phpunit-bridge": "^5.4 || ^6.0"
             },
             "type": "library",
             "autoload": {
@@ -3580,22 +3580,22 @@
                 "pagerfanta"
             ],
             "support": {
-                "source": "https://github.com/Pagerfanta/doctrine-collections-adapter/tree/v3.5.1"
+                "source": "https://github.com/Pagerfanta/doctrine-collections-adapter/tree/v3.5.2"
             },
-            "time": "2021-11-25T23:29:09+00:00"
+            "time": "2022-01-24T23:38:50+00:00"
         },
         {
             "name": "pagerfanta/doctrine-orm-adapter",
-            "version": "v3.5.1",
+            "version": "v3.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/doctrine-orm-adapter.git",
-                "reference": "88dbbd98088cf3591e1bb3dcfc599f618cb8c2e4"
+                "reference": "89db5b603ff107e2eb265cf09046824967163f68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/doctrine-orm-adapter/zipball/88dbbd98088cf3591e1bb3dcfc599f618cb8c2e4",
-                "reference": "88dbbd98088cf3591e1bb3dcfc599f618cb8c2e4",
+                "url": "https://api.github.com/repos/Pagerfanta/doctrine-orm-adapter/zipball/89db5b603ff107e2eb265cf09046824967163f68",
+                "reference": "89db5b603ff107e2eb265cf09046824967163f68",
                 "shasum": ""
             },
             "require": {
@@ -3608,8 +3608,8 @@
                 "doctrine/annotations": "^1.11.1",
                 "doctrine/cache": "^1.11 || ^2.0",
                 "phpunit/phpunit": "^9.5",
-                "symfony/cache": "^4.4 || ^5.3 || ^6.0",
-                "symfony/phpunit-bridge": "^5.3 || ^6.0"
+                "symfony/cache": "^4.4 || ^5.4 || ^6.0",
+                "symfony/phpunit-bridge": "^5.4 || ^6.0"
             },
             "type": "library",
             "autoload": {
@@ -3631,22 +3631,22 @@
                 "pagerfanta"
             ],
             "support": {
-                "source": "https://github.com/Pagerfanta/doctrine-orm-adapter/tree/v3.5.1"
+                "source": "https://github.com/Pagerfanta/doctrine-orm-adapter/tree/v3.5.2"
             },
-            "time": "2021-11-25T23:29:09+00:00"
+            "time": "2022-01-18T04:22:14+00:00"
         },
         {
             "name": "pagerfanta/twig",
-            "version": "v3.5.1",
+            "version": "v3.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/twig.git",
-                "reference": "b818605c814dd1b18c42a4f047cc75352152841b"
+                "reference": "0d7af77b027ffd613212abb434a40f4520f4e9d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/twig/zipball/b818605c814dd1b18c42a4f047cc75352152841b",
-                "reference": "b818605c814dd1b18c42a4f047cc75352152841b",
+                "url": "https://api.github.com/repos/Pagerfanta/twig/zipball/0d7af77b027ffd613212abb434a40f4520f4e9d5",
+                "reference": "0d7af77b027ffd613212abb434a40f4520f4e9d5",
                 "shasum": ""
             },
             "require": {
@@ -3657,7 +3657,7 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "^9.5",
-                "symfony/phpunit-bridge": "^5.3 || ^6.0"
+                "symfony/phpunit-bridge": "^5.4 || ^6.0"
             },
             "type": "library",
             "autoload": {
@@ -3677,9 +3677,9 @@
                 "pagerfanta"
             ],
             "support": {
-                "source": "https://github.com/Pagerfanta/twig/tree/v3.5.1"
+                "source": "https://github.com/Pagerfanta/twig/tree/v3.5.2"
             },
-            "time": "2021-12-01T23:47:09+00:00"
+            "time": "2022-01-18T04:22:14+00:00"
         },
         {
             "name": "php-ffmpeg/php-ffmpeg",
@@ -5558,16 +5558,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.18.1",
+            "version": "v1.18.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "90ee9ddddaadee602dff23ae530310a59936bc8b"
+                "reference": "d40a6b176b70ea323af2b08507319d1c417520fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/90ee9ddddaadee602dff23ae530310a59936bc8b",
-                "reference": "90ee9ddddaadee602dff23ae530310a59936bc8b",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/d40a6b176b70ea323af2b08507319d1c417520fd",
+                "reference": "d40a6b176b70ea323af2b08507319d1c417520fd",
                 "shasum": ""
             },
             "require": {
@@ -5603,7 +5603,7 @@
             "description": "Composer plugin for Symfony",
             "support": {
                 "issues": "https://github.com/symfony/flex/issues",
-                "source": "https://github.com/symfony/flex/tree/v1.18.1"
+                "source": "https://github.com/symfony/flex/tree/v1.18.3"
             },
             "funding": [
                 {
@@ -5619,7 +5619,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-19T17:52:31+00:00"
+            "time": "2022-01-27T10:24:58+00:00"
         },
         {
             "name": "symfony/form",
@@ -10602,16 +10602,16 @@
         },
         {
             "name": "phpstan/phpstan-doctrine",
-            "version": "1.2.3",
+            "version": "1.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-doctrine.git",
-                "reference": "16cb23af853014620473a0c72d188cf76b9a9401"
+                "reference": "46256c90118589b9d823cb8352c0abcd325ec8ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/16cb23af853014620473a0c72d188cf76b9a9401",
-                "reference": "16cb23af853014620473a0c72d188cf76b9a9401",
+                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/46256c90118589b9d823cb8352c0abcd325ec8ff",
+                "reference": "46256c90118589b9d823cb8352c0abcd325ec8ff",
                 "shasum": ""
             },
             "require": {
@@ -10667,9 +10667,9 @@
             "description": "Doctrine extensions for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-doctrine/issues",
-                "source": "https://github.com/phpstan/phpstan-doctrine/tree/1.2.3"
+                "source": "https://github.com/phpstan/phpstan-doctrine/tree/1.2.7"
             },
-            "time": "2022-01-23T12:35:08+00:00"
+            "time": "2022-01-25T13:05:19+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
@@ -11118,16 +11118,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.5.12",
+            "version": "9.5.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "93d4bf4c37aec6384bb9e5d390d9049a463a7256"
+                "reference": "597cb647654ede35e43b137926dfdfef0fb11743"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/93d4bf4c37aec6384bb9e5d390d9049a463a7256",
-                "reference": "93d4bf4c37aec6384bb9e5d390d9049a463a7256",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/597cb647654ede35e43b137926dfdfef0fb11743",
+                "reference": "597cb647654ede35e43b137926dfdfef0fb11743",
                 "shasum": ""
             },
             "require": {
@@ -11205,7 +11205,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.12"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.13"
             },
             "funding": [
                 {
@@ -11217,7 +11217,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-21T05:54:47+00:00"
+            "time": "2022-01-24T07:33:35+00:00"
         },
         {
             "name": "sebastian/cli-parser",

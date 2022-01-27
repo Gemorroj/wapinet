@@ -7,22 +7,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/rates")
- */
+#[Route('/rates')]
 class RatesController extends AbstractController
 {
-    /**
-     * @Route("", name="rates_index")
-     */
+    #[Route(path: '', name: 'rates_index')]
     public function indexAction(): Response
     {
         return $this->render('Rates/index.html.twig');
     }
 
-    /**
-     * @Route("/{country}", name="rates_show", requirements={"country": "ru|by|ua|kz"})
-     */
+    #[Route(path: '/{country}', name: 'rates_show', requirements: ['country' => 'ru|by|ua|kz'])]
     public function showAction(string $country, Rates $ratesHelper): Response
     {
         $rates = $ratesHelper->getRates($country);

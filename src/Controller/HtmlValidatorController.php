@@ -13,14 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Exception\ValidatorException;
 
-/**
- * @Route("/html_validator")
- */
+#[Route('/html_validator')]
 class HtmlValidatorController extends AbstractController
 {
-    /**
-     * @Route("", name="html_validator_index")
-     */
+    #[Route(path: '', name: 'html_validator_index')]
     public function indexAction(Request $request): Response
     {
         $result = null;

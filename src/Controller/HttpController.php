@@ -13,14 +13,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/http")
- */
+#[Route('/http')]
 class HttpController extends AbstractController
 {
-    /**
-     * @Route("", name="http_index")
-     */
+    #[Route(path: '', name: 'http_index')]
     public function indexAction(Request $request): Response
     {
         $result = null;

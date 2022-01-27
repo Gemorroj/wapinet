@@ -12,16 +12,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class EventFriends implements EventSubscriberInterface
 {
-    private EntityManagerInterface $em;
-
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

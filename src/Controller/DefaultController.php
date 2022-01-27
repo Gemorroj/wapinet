@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Online;
 use App\Entity\User;
 use App\Form\Type\User\RegistrationType;
 use App\Repository\OnlineRepository;
@@ -20,25 +19,19 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class DefaultController extends AbstractController
 {
-    /**
-     * @Route("/login_check", methods={"POST"}, name="wapinet_check")
-     */
+    #[Route(path: '/login_check', name: 'wapinet_check', methods: ['POST'])]
     public function checkAction()
     {
         throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
     }
 
-    /**
-     * @Route("/logout", name="wapinet_logout")
-     */
+    #[Route(path: '/logout', name: 'wapinet_logout')]
     public function logoutAction()
     {
         throw new \RuntimeException('You must activate the logout in your security firewall configuration.');
     }
 
-    /**
-     * @Route("/login", name="wapinet_login")
-     */
+    #[Route(path: '/login', name: 'wapinet_login')]
     public function loginAction(Request $request, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         $session = $request->getSession();
@@ -72,9 +65,7 @@ class DefaultController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/registration", name="wapinet_register")
-     */
+    #[Route(path: '/registration', name: 'wapinet_register')]
     public function registerAction(Request $request, PasswordHasherFactoryInterface $passwordHasherFactory, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(RegistrationType::class, new User());
@@ -113,25 +104,19 @@ class DefaultController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("", name="index")
-     */
+    #[Route(path: '', name: 'index')]
     public function indexAction(): Response
     {
         return $this->render('Default/index.html.twig');
     }
 
-    /**
-     * @Route("/about", name="about")
-     */
+    #[Route(path: '/about', name: 'about')]
     public function aboutAction(): Response
     {
         return $this->render('Default/about.html.twig');
     }
 
-    /**
-     * @Route("/online", name="online")
-     */
+    #[Route(path: '/online', name: 'online')]
     public function onlineAction(OnlineRepository $onlineRepository): Response
     {
         return $this->render(
@@ -142,57 +127,43 @@ class DefaultController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/utilities", name="utilities")
-     */
+    #[Route(path: '/utilities', name: 'utilities')]
     public function utilitiesAction(): Response
     {
         return $this->render('Default/utilities.html.twig');
     }
 
-    /**
-     * @Route("/programming", name="programming")
-     */
+    #[Route(path: '/programming', name: 'programming')]
     public function programmingAction(): Response
     {
         return $this->render('Default/programming.html.twig');
     }
 
-    /**
-     * @Route("/open_source", name="open_source")
-     */
+    #[Route(path: '/open_source', name: 'open_source')]
     public function openSourceAction(): Response
     {
         return $this->render('Default/open_source.html.twig');
     }
 
-    /**
-     * @Route("/gmanager", name="gmanager")
-     */
+    #[Route(path: '/gmanager', name: 'gmanager')]
     public function gmanagerAction(): RedirectResponse
     {
         return $this->redirect('https://github.com/Gemorroj/gmanager', 301);
     }
 
-    /**
-     * @Route("/downloads", name="downloads")
-     */
+    #[Route(path: '/downloads', name: 'downloads')]
     public function downloadsAction(): Response
     {
         return $this->render('Default/downloads.html.twig');
     }
 
-    /**
-     * @Route("/textbook", name="textbook")
-     */
+    #[Route(path: '/textbook', name: 'textbook')]
     public function textbookAction(): Response
     {
         return $this->render('Default/textbook.html.twig');
     }
 
-    /**
-     * @Route("/video_courses", name="video_courses")
-     */
+    #[Route(path: '/video_courses', name: 'video_courses')]
     public function videoCoursesAction(): Response
     {
         return $this->render('Default/video_courses.html.twig');

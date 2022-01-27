@@ -15,14 +15,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/rename")
- */
+#[Route('/rename')]
 class RenameController extends AbstractController
 {
-    /**
-     * @Route("", name="rename_index")
-     */
+    #[Route(path: '', name: 'rename_index')]
     public function indexAction(Request $request): Response
     {
         $form = $this->createForm(RenameType::class);

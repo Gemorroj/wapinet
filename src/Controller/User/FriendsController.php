@@ -16,14 +16,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/user")
- */
+#[Route('/user')]
 class FriendsController extends AbstractController
 {
-    /**
-     * @Route("/friends/list/{username}", name="wapinet_user_friends", requirements={"username": ".+"})
-     */
+    #[Route(path: '/friends/list/{username}', name: 'wapinet_user_friends', requirements: ['username' => '.+'])]
     public function indexAction(Request $request, string $username, Paginate $paginate, UserRepository $userRepository, FriendRepository $friendRepository): Response
     {
         /** @var User|null $user */
@@ -43,9 +39,7 @@ class FriendsController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/friends/add/{username}", name="wapinet_user_friends_add", requirements={"username": ".+"})
-     */
+    #[Route(path: '/friends/add/{username}', name: 'wapinet_user_friends_add', requirements: ['username' => '.+'])]
     public function addAction(string $username, EventDispatcherInterface $eventDispatcher, UserRepository $userRepository, FriendRepository $friendRepository, EntityManagerInterface $entityManager): RedirectResponse
     {
         /** @var User|null $user */
@@ -81,9 +75,7 @@ class FriendsController extends AbstractController
         return $this->redirectToRoute('wapinet_user_profile', ['username' => $friend->getUsername()]);
     }
 
-    /**
-     * @Route("/friends/delete/{username}", name="wapinet_user_friends_delete", requirements={"username": ".+"})
-     */
+    #[Route(path: '/friends/delete/{username}', name: 'wapinet_user_friends_delete', requirements: ['username' => '.+'])]
     public function deleteAction(string $username, EventDispatcherInterface $eventDispatcher, UserRepository $userRepository, FriendRepository $friendRepository, EntityManagerInterface $entityManager): RedirectResponse
     {
         /** @var User|null $user */

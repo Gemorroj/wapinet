@@ -13,14 +13,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/user")
- */
+#[Route('/user')]
 class SubscriberController extends AbstractController
 {
-    /**
-     * @Route("/subscriber/edit", name="wapinet_user_subscriber_edit")
-     */
+    #[Route(path: '/subscriber/edit', name: 'wapinet_user_subscriber_edit')]
     public function editAction(Request $request, EntityManagerInterface $entityManager): Response
     {
         /** @var User|null $user */

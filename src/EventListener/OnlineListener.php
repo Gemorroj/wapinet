@@ -11,11 +11,8 @@ use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 class OnlineListener
 {
-    private EntityManagerInterface $em;
-
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
     public function onCoreController(ControllerEvent $event): void

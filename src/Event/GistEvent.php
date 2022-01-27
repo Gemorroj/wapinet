@@ -10,13 +10,8 @@ class GistEvent extends Event
 {
     public const GIST_ADD = 'wapinet.gist.add';
 
-    private ?User $user;
-    private Gist $gist;
-
-    public function __construct(?User $user, Gist $gist)
+    public function __construct(private ?User $user, private Gist $gist)
     {
-        $this->user = $user;
-        $this->gist = $gist;
     }
 
     /**

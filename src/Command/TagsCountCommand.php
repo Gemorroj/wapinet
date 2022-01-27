@@ -13,17 +13,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 class TagsCountCommand extends Command
 {
     protected static $defaultName = 'app:tags-count';
-    private EntityManagerInterface $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager, string $name = null)
+    public function __construct(private EntityManagerInterface $entityManager, string $name = null)
     {
-        $this->entityManager = $entityManager;
         parent::__construct($name);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         $this
@@ -37,9 +32,6 @@ class TagsCountCommand extends Command
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $fixedCounts = 0;
@@ -63,6 +55,6 @@ class TagsCountCommand extends Command
 
         $output->writeln('Fixed '.$fixedCounts.' tags count.');
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

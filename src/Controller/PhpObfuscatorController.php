@@ -9,14 +9,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/php_obfuscator")
- */
+#[Route('/php_obfuscator')]
 class PhpObfuscatorController extends AbstractController
 {
-    /**
-     * @Route("", name="php_obfuscator_index")
-     */
+    #[Route(path: '', name: 'php_obfuscator_index')]
     public function indexAction(Request $request): Response
     {
         $result = null;

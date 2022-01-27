@@ -10,15 +10,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class ListenerLastActivity
 {
-    private ParameterBagInterface $parameterBag;
-    private EntityManagerInterface $em;
-    private TokenStorageInterface $tokenStorage;
-
-    public function __construct(ParameterBagInterface $parameterBag, TokenStorageInterface $tokenStorage, EntityManagerInterface $em)
+    public function __construct(private ParameterBagInterface $parameterBag, private TokenStorageInterface $tokenStorage, private EntityManagerInterface $em)
     {
-        $this->parameterBag = $parameterBag;
-        $this->tokenStorage = $tokenStorage;
-        $this->em = $em;
     }
 
     /**

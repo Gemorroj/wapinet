@@ -2,9 +2,6 @@
 
 namespace App\Service\Archiver;
 
-/**
- * ArchiveFileInfo.
- */
 class ArchiveFileInfo extends \SplFileInfo
 {
     private static string $archiveDirectory;

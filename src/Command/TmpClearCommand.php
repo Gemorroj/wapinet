@@ -13,19 +13,12 @@ use Symfony\Component\Finder\Finder;
 class TmpClearCommand extends Command
 {
     protected static $defaultName = 'app:tmp-clear';
-    private ParameterBagInterface $parameterBag;
-    private Filesystem $filesystem;
 
-    public function __construct(ParameterBagInterface $parameterBag, Filesystem $filesystem, string $name = null)
+    public function __construct(private ParameterBagInterface $parameterBag, private Filesystem $filesystem, string $name = null)
     {
-        $this->parameterBag = $parameterBag;
-        $this->filesystem = $filesystem;
         parent::__construct($name);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         $this
@@ -42,9 +35,6 @@ class TmpClearCommand extends Command
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $lifetime = $input->getArgument('lifetime');
@@ -56,6 +46,6 @@ class TmpClearCommand extends Command
 
         $output->writeln(\sprintf('Files over "%s" are removed. Removed "%d" files.', $lifetime, $oldFileCount));
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

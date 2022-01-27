@@ -15,21 +15,16 @@ use Symfony\Component\Finder\Finder;
 class FilesClearCommand extends Command
 {
     protected static $defaultName = 'app:files-clear';
-    private EntityManagerInterface $entityManager;
-    private Filesystem $filesystem;
-    private ParameterBagInterface $parameterBag;
 
-    public function __construct(EntityManagerInterface $entityManager, Filesystem $filesystem, ParameterBagInterface $parameterBag, string $name = null)
-    {
-        $this->entityManager = $entityManager;
-        $this->filesystem = $filesystem;
-        $this->parameterBag = $parameterBag;
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private Filesystem $filesystem,
+        private ParameterBagInterface $parameterBag,
+        string $name = null,
+    ) {
         parent::__construct($name);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         $this
@@ -46,9 +41,6 @@ class FilesClearCommand extends Command
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $lifetime = $input->getArgument('lifetime');
@@ -87,6 +79,6 @@ class FilesClearCommand extends Command
 
         $output->writeln(\sprintf('Files over "%s" are removed. Removed "%d" rows from DB and "%d" files from filesystem.', $lifetime, $dbDeleted, $filesystemDeleted));
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

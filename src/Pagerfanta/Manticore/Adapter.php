@@ -46,9 +46,6 @@ class Adapter implements AdapterInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSlice(int $offset, int $length): iterable
     {
         if ($offset >= \count($this->array)) {

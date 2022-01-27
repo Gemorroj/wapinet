@@ -17,9 +17,6 @@ class Bbcode extends AbstractExtension
         $this->requestContext = $requestContext;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters(): array
     {
         return [
@@ -38,9 +35,6 @@ class Bbcode extends AbstractExtension
 
 class WapinetSpoiler extends Spoiler
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function getSpoiler($id): string
     {
         return '<input data-inline="true" data-mini="true" class="bb_spoiler" type="button" value="Спойлер" onclick="$(\'#'.$id.'\').toggle(); return false;" />';

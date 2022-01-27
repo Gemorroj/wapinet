@@ -9,14 +9,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/vk_api")
- */
+#[Route('/vk_api')]
 class VkApiController extends AbstractController
 {
-    /**
-     * @Route("/users", name="vk_api_users_get", defaults={"_format": "json"}, methods={"POST"}, options={"expose": true})
-     */
+    #[Route(path: '/users', name: 'vk_api_users_get', options: ['expose' => true], defaults: ['_format' => 'json'], methods: ['POST'])]
     public function getUsersAction(Request $request, Curl $curl): JsonResponse
     {
         $params = $request->request->all();

@@ -25,14 +25,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Router;
 
-/**
- * @Route("/gist")
- */
+#[Route('/gist')]
 class GistController extends AbstractController
 {
-    /**
-     * @Route("", name="gist_index", methods={"GET", "HEAD"}, options={"expose": true})
-     */
+    #[Route(path: '', name: 'gist_index', options: ['expose' => true], methods: ['GET', 'HEAD'])]
     public function indexAction(Request $request, GistRepository $gistRepository, Paginate $paginate): Response
     {
         $form = $this->createForm(AddType::class);
@@ -47,9 +43,7 @@ class GistController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/users/{username}", name="gist_user", requirements={"username": ".+"})
-     */
+    #[Route(path: '/users/{username}', name: 'gist_user', requirements: ['username' => '.+'])]
     public function userAction(Request $request, string $username, UserRepository $userRepository, GistRepository $gistRepository, Paginate $paginate): Response
     {
         $form = $this->createForm(AddType::class);
@@ -71,9 +65,7 @@ class GistController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("", name="gist_add", methods={"POST"})
-     */
+    #[Route(path: '', name: 'gist_add', methods: ['POST'])]
     public function addAction(Request $request, BotChecker $botChecker, EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher): RedirectResponse
     {
         $user = $this->getUser();
@@ -117,9 +109,7 @@ class GistController extends AbstractController
         return $this->redirectToRoute('gist_index');
     }
 
-    /**
-     * @Route("/view/{id}", name="gist_view", requirements={"id": "\d+"})
-     */
+    #[Route(path: '/view/{id}', name: 'gist_view', requirements: ['id' => '\d+'])]
     public function viewAction(Gist $gist): Response
     {
         return $this->render('Gist/view.html.twig', [
@@ -127,9 +117,7 @@ class GistController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/delete/{id}", name="gist_delete", methods={"POST"}, requirements={"id": "\d+"}, options={"expose": true})
-     */
+    #[Route(path: '/delete/{id}', name: 'gist_delete', requirements: ['id' => '\d+'], options: ['expose' => true], methods: ['POST'])]
     public function deleteAction(Gist $gist, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('DELETE', $gist);
@@ -143,9 +131,7 @@ class GistController extends AbstractController
         return $this->redirect($url);
     }
 
-    /**
-     * @Route("/search/{key}", name="gist_search", requirements={"key": "[a-zA-Z0-9]+"}, defaults={"key": null})
-     */
+    #[Route(path: '/search/{key}', name: 'gist_search', requirements: ['key' => '[a-zA-Z0-9]+'], defaults: ['key' => null])]
     public function searchAction(Request $request, Manticore $manticore, ?string $key = null): Response
     {
         $page = $request->get('page', 1);
@@ -202,9 +188,7 @@ class GistController extends AbstractController
         return $manticore->getPagerfanta($sphinxQl, Gist::class);
     }
 
-    /**
-     * @Route("/edit/{id}", name="gist_edit", requirements={"id": "\d+"})
-     */
+    #[Route(path: '/edit/{id}', name: 'gist_edit', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, Gist $gist, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('EDIT', $gist);

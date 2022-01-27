@@ -9,14 +9,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/unicode")
- */
+#[Route('/unicode')]
 class UnicodeController extends AbstractController
 {
-    /**
-     * @Route("", name="unicode_index")
-     */
+    #[Route(path: '', name: 'unicode_index')]
     public function indexAction(Request $request): Response
     {
         $result = null;
@@ -41,9 +37,7 @@ class UnicodeController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/icons", name="unicode_icons")
-     */
+    #[Route(path: '/icons', name: 'unicode_icons')]
     public function iconsAction(): Response
     {
         return $this->render('Unicode/icons.html.twig');

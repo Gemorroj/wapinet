@@ -8,14 +8,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/bash")
- */
+#[Route('/bash')]
 class BashController extends AbstractController
 {
-    /**
-     * @Route("", name="bash_index")
-     */
+    #[Route(path: '', name: 'bash_index')]
     public function indexAction(Request $request, Bash $bashHelper): Response
     {
         $page = $request->get('page');

@@ -15,14 +15,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/guestbook")
- */
+#[Route('/guestbook')]
 class GuestbookController extends AbstractController
 {
-    /**
-     * @Route("", methods={"GET", "HEAD", "OPTIONS"}, name="guestbook_index")
-     */
+    #[Route(path: '', name: 'guestbook_index', methods: ['GET', 'HEAD', 'OPTIONS'])]
     public function indexAction(Request $request, Paginate $paginate, GuestbookRepository $guestbookRepository): Response
     {
         $form = $this->createForm(MessageType::class);
@@ -38,9 +34,7 @@ class GuestbookController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("", methods={"POST"}, name="guestbook_add")
-     */
+    #[Route(path: '', name: 'guestbook_add', methods: ['POST'])]
     public function addAction(Request $request, BotChecker $botChecker, StopSpam $stopSpam, EntityManagerInterface $entityManager): RedirectResponse
     {
         $form = $this->createForm(MessageType::class);

@@ -15,11 +15,8 @@ class GistVoter extends Voter
     public const DELETE = 'DELETE';
     public const EDIT = 'EDIT';
 
-    private AccessDecisionManagerInterface $decisionManager;
-
-    public function __construct(AccessDecisionManagerInterface $decisionManager)
+    public function __construct(private AccessDecisionManagerInterface $decisionManager)
     {
-        $this->decisionManager = $decisionManager;
     }
 
     protected function supports(string $attribute, $subject): bool
@@ -33,6 +30,11 @@ class GistVoter extends Voter
         }
 
         return true;
+    }
+
+    public function supportsType(string $subjectType): bool
+    {
+        return \is_a($subjectType, Gist::class, true);
     }
 
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool

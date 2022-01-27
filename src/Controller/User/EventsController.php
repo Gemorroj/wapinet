@@ -9,14 +9,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/user")
- */
+#[Route('/user')]
 class EventsController extends AbstractController
 {
-    /**
-     * @Route("/events", name="wapinet_user_events")
-     */
+    #[Route(path: '/events', name: 'wapinet_user_events')]
     public function indexAction(Request $request, Paginate $paginate, EventRepository $eventRepository): Response
     {
         $user = $this->getUser();

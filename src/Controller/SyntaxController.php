@@ -12,10 +12,9 @@ class SyntaxController extends AbstractController
 {
     /**
      * Check syntax for Gmanager.
-     *
-     * @Route("/syntax", name="syntax")
-     * @Route("/syntax2/index.php", name="syntax_old")
      */
+    #[Route(path: '/syntax', name: 'syntax')]
+    #[Route(path: '/syntax2/index.php', name: 'syntax_old')]
     public function indexAction(Request $request, PhpValidator $phpValidator): Response
     {
         $code = $request->get('f');

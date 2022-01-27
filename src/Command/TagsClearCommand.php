@@ -12,17 +12,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 class TagsClearCommand extends Command
 {
     protected static $defaultName = 'app:tags-clear';
-    private EntityManagerInterface $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager, string $name = null)
+    public function __construct(private EntityManagerInterface $entityManager, string $name = null)
     {
-        $this->entityManager = $entityManager;
         parent::__construct($name);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         $this
@@ -36,9 +31,6 @@ class TagsClearCommand extends Command
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var TagRepository $repository */
@@ -53,6 +45,6 @@ class TagsClearCommand extends Command
 
         $output->writeln('Deleted '.\count($rows).' tags.');
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

@@ -13,14 +13,10 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/email")
- */
+#[Route('/email')]
 class EmailController extends AbstractController
 {
-    /**
-     * @Route("", name="email_index")
-     */
+    #[Route(path: '', name: 'email_index')]
     public function indexAction(Request $request, MailerInterface $mailer, LoggerInterface $logger): Response
     {
         $result = null;

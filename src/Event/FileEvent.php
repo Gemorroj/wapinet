@@ -10,13 +10,8 @@ class FileEvent extends Event
 {
     public const FILE_ADD = 'wapinet.file.add';
 
-    private ?User $user;
-    private File $file;
-
-    public function __construct(?User $user, File $file)
+    public function __construct(private ?User $user, private File $file)
     {
-        $this->user = $user;
-        $this->file = $file;
     }
 
     /**

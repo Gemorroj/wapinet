@@ -12,14 +12,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Exception\ValidatorException;
 
-/**
- * @Route("/code")
- */
+#[Route('/code')]
 class CodeController extends AbstractController
 {
-    /**
-     * @Route("", name="code_index")
-     */
+    #[Route(path: '', name: 'code_index')]
     public function indexAction(Request $request): Response
     {
         $hash = null;

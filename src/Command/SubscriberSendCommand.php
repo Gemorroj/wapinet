@@ -17,36 +17,22 @@ use Symfony\Component\Mailer\MailerInterface;
 class SubscriberSendCommand extends Command
 {
     protected static $defaultName = 'app:subscriber-send';
-    private EntityManagerInterface $entityManager;
-    private MailerInterface $mailer;
-    private LoggerInterface $logger;
-    private ParameterBagInterface $parameterBag;
 
     public function __construct(
-        EntityManagerInterface $entityManager,
-        MailerInterface $mailer,
-        LoggerInterface $logger,
-        ParameterBagInterface $parameterBag,
+        private EntityManagerInterface $entityManager,
+        private MailerInterface $mailer,
+        private LoggerInterface $logger,
+        private ParameterBagInterface $parameterBag,
         string $name = null
     ) {
-        $this->entityManager = $entityManager;
-        $this->mailer = $mailer;
-        $this->logger = $logger;
-        $this->parameterBag = $parameterBag;
         parent::__construct($name);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         $this->setDescription('Send emails to subscribers');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var EventRepository $repository */
@@ -65,7 +51,7 @@ class SubscriberSendCommand extends Command
 
         $output->writeln('All Emails sent.');
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     protected function sendEmail(Event $event): void

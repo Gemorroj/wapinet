@@ -12,14 +12,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/whois")
- */
+#[Route('/whois')]
 class WhoisController extends AbstractController
 {
-    /**
-     * @Route("", name="whois_index")
-     */
+    #[Route(path: '', name: 'whois_index')]
     public function indexAction(Request $request): Response
     {
         $resultHtml = null;
