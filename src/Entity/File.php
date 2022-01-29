@@ -111,6 +111,10 @@ class File implements PasswordAuthenticatedUserInterface
 
         foreach ($data as $key => $value) {
             if (\property_exists($this, $key)) {
+                if (null === $value && \in_array($key, ['fileTags', 'tags'], true)) {
+                    $value = new ArrayCollection();
+                }
+
                 $this->{$key} = $value;
             }
         }
@@ -329,7 +333,7 @@ class File implements PasswordAuthenticatedUserInterface
 
     public function setFileSize(?int $fileSize): self
     {
-        $this->fileSize = (int)$fileSize;
+        $this->fileSize = (int) $fileSize;
 
         return $this;
     }
@@ -341,7 +345,7 @@ class File implements PasswordAuthenticatedUserInterface
 
     public function setFileName(?string $fileName): self
     {
-        $this->fileName = (string)$fileName;
+        $this->fileName = (string) $fileName;
 
         return $this;
     }

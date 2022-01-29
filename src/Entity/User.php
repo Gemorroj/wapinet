@@ -474,6 +474,9 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
 
         foreach ($data as $key => $value) {
             if (\property_exists($this, $key)) {
+                if (null === $value && \in_array($key, ['friends', 'friended'], true)) {
+                    $value = new ArrayCollection();
+                }
                 $this->{$key} = $value;
             }
         }
