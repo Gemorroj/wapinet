@@ -3,7 +3,7 @@
 namespace App\EventListener;
 
 use App\Entity\Event as EntityEvent;
-use App\Entity\Friend;
+use App\Entity\UserFriend;
 use App\Event\FileEvent;
 use App\Event\FriendEvent;
 use App\Event\GistEvent;
@@ -43,7 +43,7 @@ class EventFriends implements EventSubscriberInterface
         $entityEvent->setUser($event->getFriend());
         $this->em->persist($entityEvent);
 
-        /** @var Friend $friend */
+        /** @var UserFriend $friend */
         foreach ($event->getUser()->getFriended() as $friend) {
             if ($friend->getUser()->isEqualTo($event->getFriend())) {
                 continue;
@@ -87,7 +87,7 @@ class EventFriends implements EventSubscriberInterface
         $entityEvent->setUser($event->getFriend());
         $this->em->persist($entityEvent);
 
-        /** @var Friend $friend */
+        /** @var UserFriend $friend */
         foreach ($event->getUser()->getFriended() as $friend) {
             if ($friend->getUser()->isEqualTo($event->getFriend())) {
                 continue;
@@ -120,7 +120,7 @@ class EventFriends implements EventSubscriberInterface
             return;
         }
 
-        /** @var Friend $friend */
+        /** @var UserFriend $friend */
         foreach ($user->getFriended() as $friend) {
             $entityEvent = new EntityEvent();
             if ($user->isFemale()) {
@@ -149,7 +149,7 @@ class EventFriends implements EventSubscriberInterface
             return;
         }
 
-        /** @var Friend $friend */
+        /** @var UserFriend $friend */
         foreach ($user->getFriended() as $friend) {
             $entityEvent = new EntityEvent();
             if ($user->isFemale()) {

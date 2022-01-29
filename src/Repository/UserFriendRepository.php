@@ -2,18 +2,18 @@
 
 namespace App\Repository;
 
-use App\Entity\Friend;
 use App\Entity\User;
+use App\Entity\UserFriend;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
-class FriendRepository extends ServiceEntityRepository
+class UserFriendRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Friend::class);
+        parent::__construct($registry, UserFriend::class);
     }
 
     public function getFriendsQuery(User $user): Query
@@ -43,7 +43,7 @@ class FriendRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getSingleScalarResult();
     }
 
-    public function getFriend(User $user, User $friend): ?Friend
+    public function getFriend(User $user, User $friend): ?UserFriend
     {
         return $this->findOneBy([
             'user' => $user,

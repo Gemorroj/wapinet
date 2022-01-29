@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Panel;
+use App\Entity\UserPanel;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -14,7 +14,7 @@ class PanelCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Panel::class;
+        return UserPanel::class;
     }
 
     public function configureCrud(Crud $crud): Crud

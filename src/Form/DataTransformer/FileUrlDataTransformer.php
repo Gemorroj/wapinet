@@ -16,15 +16,11 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class FileUrlDataTransformer implements DataTransformerInterface
 {
-    private ParameterBagInterface $parameterBag;
-    private bool $required;
-    private Curl $curl;
-
-    public function __construct(ParameterBagInterface $parameterBag, Curl $curl, bool $required = true)
-    {
-        $this->parameterBag = $parameterBag;
-        $this->curl = $curl;
-        $this->required = $required;
+    public function __construct(
+        private ParameterBagInterface $parameterBag,
+        private Curl $curl,
+        private bool $required = true
+    ) {
     }
 
     /**

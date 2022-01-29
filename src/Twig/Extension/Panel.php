@@ -2,8 +2,8 @@
 
 namespace App\Twig\Extension;
 
-use App\Entity\Panel as UserPanel;
 use App\Entity\User;
+use App\Entity\UserPanel as UserPanel;
 use ArrayIterator;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Twig\Extension\AbstractExtension;

@@ -3,16 +3,16 @@
 namespace App\Twig\Extension\User;
 
 use App\Entity\User;
-use App\Repository\FriendRepository;
+use App\Repository\UserFriendRepository;
 use DateTime;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class Friend extends AbstractExtension
 {
-    private FriendRepository $friendRepository;
+    private UserFriendRepository $friendRepository;
 
-    public function __construct(FriendRepository $friendRepository)
+    public function __construct(UserFriendRepository $friendRepository)
     {
         $this->friendRepository = $friendRepository;
     }

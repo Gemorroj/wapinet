@@ -10,11 +10,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class TagsType extends AbstractType
 {
-    private TagRepository $tagRepository;
-
-    public function __construct(TagRepository $tagRepository)
+    public function __construct(private TagRepository $tagRepository)
     {
-        $this->tagRepository = $tagRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)

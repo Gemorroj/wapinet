@@ -10,7 +10,6 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 
 class RegistrationType extends AbstractType
@@ -19,11 +18,12 @@ class RegistrationType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
+                'attr' => [
+                    'minlength' => 3,
+                    'maxlength' => 180,
+                ],
                 'label' => 'Email',
                 'required' => true,
-                'constraints' => [
-                    new Email(['mode' => Email::VALIDATION_MODE_HTML5]),
-                ],
             ])
             ->add('username', TextType::class, [
                 'attr' => [

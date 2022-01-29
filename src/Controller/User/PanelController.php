@@ -2,8 +2,8 @@
 
 namespace App\Controller\User;
 
-use App\Entity\Panel;
 use App\Entity\User;
+use App\Entity\UserPanel;
 use App\Form\Type\User\PanelType;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -33,7 +33,7 @@ class PanelController extends AbstractController
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
-                    /** @var Panel $data */
+                    /** @var UserPanel $data */
                     $data = $form->getData();
 
                     $entityManager->persist($data);

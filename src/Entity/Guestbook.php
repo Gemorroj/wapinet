@@ -2,67 +2,39 @@
 
 namespace App\Entity;
 
+use App\Repository\GuestbookRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * Guestbook.
- *
- * @ORM\Table(name="guestbook")
- * @ORM\Entity(repositoryClass="App\Repository\GuestbookRepository")
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: GuestbookRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Guestbook
 {
-    /**
-     * @var int
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: 'integer', nullable: false)]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="ip", type="string", nullable=false)
-     */
-    private $ip;
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $ip = '';
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="browser", type="string", nullable=false)
-     */
-    private $browser;
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $browser = '';
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     */
-    private $createdAt;
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    private ?\DateTime $createdAt = null;
 
-    /**
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTime $updatedAt = null;
 
-    /**
-     * @var string
-     *
-     * @Assert\Length(max=5000)
-     * @ORM\Column(name="message", type="string", length=5000, nullable=false)
-     * @Assert\NotBlank
-     */
-    private $message;
+    #[ORM\Column(type: 'string', length: 5000, nullable: false)]
+    #[Assert\Length(1, 5000)]
+    #[Assert\NotNull]
+    private string $message = '';
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
-     * })
-     */
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: true, onDelete: 'CASCADE')]
     private ?User $user = null;
 
     public function getId(): ?int
@@ -70,14 +42,7 @@ class Guestbook
         return $this->id;
     }
 
-    /**
-     * Set id.
-     *
-     * @param int $id
-     *
-     * @return Guestbook
-     */
-    public function setId($id): self
+    public function setId(int $id): self
     {
         $this->id = $id;
 
@@ -96,36 +61,24 @@ class Guestbook
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getIp()
+    public function getIp(): string
     {
         return $this->ip;
     }
 
-    /**
-     * @param string $ip
-     */
-    public function setIp($ip): self
+    public function setIp(string $ip): self
     {
         $this->ip = $ip;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBrowser()
+    public function getBrowser(): string
     {
         return $this->browser;
     }
 
-    /**
-     * @param string $browser
-     */
-    public function setBrowser($browser): self
+    public function setBrowser(string $browser): self
     {
         $this->browser = $browser;
 
@@ -140,9 +93,7 @@ class Guestbook
         return $this->createdAt;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
+    #[ORM\PrePersist]
     public function setCreatedAtValue(): self
     {
         $this->createdAt = new \DateTime();
@@ -155,9 +106,7 @@ class Guestbook
         return $this->updatedAt;
     }
 
-    /**
-     * @ORM\PreUpdate
-     */
+    #[ORM\PreUpdate]
     public function setUpdatedAtValue(): self
     {
         $this->updatedAt = new \DateTime();
@@ -165,18 +114,12 @@ class Guestbook
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->message;
     }
 
-    /**
-     * @param string $message
-     */
-    public function setMessage($message): self
+    public function setMessage(string $message): self
     {
         $this->message = $message;
 

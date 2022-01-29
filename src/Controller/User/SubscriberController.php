@@ -2,8 +2,8 @@
 
 namespace App\Controller\User;
 
-use App\Entity\Subscriber;
 use App\Entity\User;
+use App\Entity\UserSubscriber;
 use App\Form\Type\User\SubscriberType;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -33,7 +33,7 @@ class SubscriberController extends AbstractController
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
-                    /** @var Subscriber $data */
+                    /** @var UserSubscriber $data */
                     $data = $form->getData();
 
                     $entityManager->persist($data);

@@ -3,7 +3,6 @@
 namespace App\Twig\Extension;
 
 use App\Service\Timezone;
-use DateTime;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -26,23 +25,20 @@ class Date extends AbstractExtension
         ];
     }
 
-    /**
-     * @param DateTime|mixed $date
-     */
-    public function getDate($date): string
+    public function getDate(?\DateTimeInterface $date): string
     {
-        if ($date instanceof DateTime) {
+        if ($date instanceof \DateTimeInterface) {
             $timezone = $this->timezone->getTimezone();
 
             if (null !== $timezone) {
                 $date->setTimezone($timezone);
             }
 
-            $today = new DateTime('today', $timezone);
-            $yesterday = new DateTime('yesterday', $timezone);
-            $dayBeforeYesterday = new DateTime('yesterday - 1 day', $timezone);
-            $tomorrow = new DateTime('tomorrow', $timezone);
-            $dayAfterTomorrow = new DateTime('tomorrow + 1 day', $timezone);
+            $today = new \DateTime('today', $timezone);
+            $yesterday = new \DateTime('yesterday', $timezone);
+            $dayBeforeYesterday = new \DateTime('yesterday - 1 day', $timezone);
+            $tomorrow = new \DateTime('tomorrow', $timezone);
+            $dayAfterTomorrow = new \DateTime('tomorrow + 1 day', $timezone);
 
             if ($date->format('Ymd') === $today->format('Ymd')) {
                 return 'Сегодня';
@@ -66,23 +62,20 @@ class Date extends AbstractExtension
         return '';
     }
 
-    /**
-     * @param DateTime|mixed $datetime
-     */
-    public function getDateTime($datetime): string
+    public function getDateTime(?\DateTimeInterface $datetime): string
     {
-        if ($datetime instanceof DateTime) {
+        if ($datetime instanceof \DateTimeInterface) {
             $timezone = $this->timezone->getTimezone();
 
             if (null !== $timezone) {
                 $datetime->setTimezone($timezone);
             }
 
-            $today = new DateTime('today', $timezone);
-            $yesterday = new DateTime('yesterday', $timezone);
-            $dayBeforeYesterday = new DateTime('yesterday - 1 day', $timezone);
-            $tomorrow = new DateTime('tomorrow', $timezone);
-            $dayAfterTomorrow = new DateTime('tomorrow + 1 day', $timezone);
+            $today = new \DateTime('today', $timezone);
+            $yesterday = new \DateTime('yesterday', $timezone);
+            $dayBeforeYesterday = new \DateTime('yesterday - 1 day', $timezone);
+            $tomorrow = new \DateTime('tomorrow', $timezone);
+            $dayAfterTomorrow = new \DateTime('tomorrow + 1 day', $timezone);
 
             if ($datetime->format('Ymd') === $today->format('Ymd')) {
                 return 'Сегодня в '.$datetime->format('H:i');
@@ -107,12 +100,9 @@ class Date extends AbstractExtension
         return '';
     }
 
-    /**
-     * @param DateTime|mixed $datetime
-     */
-    public function getTime($datetime): string
+    public function getTime(?\DateTimeInterface $datetime): string
     {
-        if ($datetime instanceof DateTime) {
+        if ($datetime instanceof \DateTimeInterface) {
             $timezone = $this->timezone->getTimezone();
 
             if (null !== $timezone) {
@@ -128,8 +118,8 @@ class Date extends AbstractExtension
     public function getLength(int $seconds): string
     {
         $length = '';
-        $d1 = new DateTime();
-        $d2 = new DateTime('- '.$seconds.' seconds');
+        $d1 = new \DateTime();
+        $d2 = new \DateTime('- '.$seconds.' seconds');
 
         $iv = $d2->diff($d1);
 

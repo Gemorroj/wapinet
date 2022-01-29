@@ -9,12 +9,10 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class TagsDataTransformer implements DataTransformerInterface
 {
-    private string $separator = ',';
-    private TagRepository $tagRepository;
+    private const SEPARATOR = ',';
 
-    public function __construct(TagRepository $tagRepository)
+    public function __construct(private TagRepository $tagRepository)
     {
-        $this->tagRepository = $tagRepository;
     }
 
     /**
@@ -24,7 +22,7 @@ class TagsDataTransformer implements DataTransformerInterface
      */
     public function transform($tagsDataFromDb)
     {
-        return $tagsDataFromDb ? \implode($this->separator, $tagsDataFromDb->toArray()) : '';
+        return $tagsDataFromDb ? \implode(self::SEPARATOR, $tagsDataFromDb->toArray()) : '';
     }
 
     /**
@@ -34,7 +32,7 @@ class TagsDataTransformer implements DataTransformerInterface
      */
     public function reverseTransform($tagsDataFromForm)
     {
-        $tags = \explode($this->separator, $tagsDataFromForm);
+        $tags = \explode(self::SEPARATOR, $tagsDataFromForm);
         $tags = \array_map('trim', $tags);
         $tags = \array_filter($tags, static function ($value): bool {
             return !empty($value);

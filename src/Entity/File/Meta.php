@@ -2,36 +2,24 @@
 
 namespace App\Entity\File;
 
-/**
- * Meta.
- */
 class Meta
 {
+    /**
+     * @var array<string, int|float|string|\Stringable|null>
+     */
     private array $meta = [];
 
-    /**
-     * @param string $key
-     */
-    public function has($key): bool
+    public function has(string $key): bool
     {
         return isset($this->meta[$key]);
     }
 
-    /**
-     * @param string $key
-     *
-     * @return string|null
-     */
-    public function get($key)
+    public function get(string $key): int|float|string|null|\Stringable
     {
         return $this->meta[$key] ?? null;
     }
 
-    /**
-     * @param string $key
-     * @param mixed  $value
-     */
-    public function set($key, $value): self
+    public function set(string $key, int|float|string|null|\Stringable $value): self
     {
         $this->meta[$key] = $value;
 

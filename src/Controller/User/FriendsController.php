@@ -2,10 +2,10 @@
 
 namespace App\Controller\User;
 
-use App\Entity\Friend;
 use App\Entity\User;
+use App\Entity\UserFriend;
 use App\Event\FriendEvent;
-use App\Repository\FriendRepository;
+use App\Repository\UserFriendRepository;
 use App\Repository\UserRepository;
 use App\Service\Paginate;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class FriendsController extends AbstractController
 {
     #[Route(path: '/friends/list/{username}', name: 'wapinet_user_friends', requirements: ['username' => '.+'])]
-    public function indexAction(Request $request, string $username, Paginate $paginate, UserRepository $userRepository, FriendRepository $friendRepository): Response
+    public function indexAction(Request $request, string $username, Paginate $paginate, UserRepository $userRepository, UserFriendRepository $friendRepository): Response
     {
         /** @var User|null $user */
         $user = $userRepository->findOneBy(['username' => $username]);
@@ -40,7 +40,7 @@ class FriendsController extends AbstractController
     }
 
     #[Route(path: '/friends/add/{username}', name: 'wapinet_user_friends_add', requirements: ['username' => '.+'])]
-    public function addAction(string $username, EventDispatcherInterface $eventDispatcher, UserRepository $userRepository, FriendRepository $friendRepository, EntityManagerInterface $entityManager): RedirectResponse
+    public function addAction(string $username, EventDispatcherInterface $eventDispatcher, UserRepository $userRepository, UserFriendRepository $friendRepository, EntityManagerInterface $entityManager): RedirectResponse
     {
         /** @var User|null $user */
         $user = $this->getUser();
@@ -59,7 +59,7 @@ class FriendsController extends AbstractController
             throw new \LogicException($user->getUsername().' уже в друзьях.');
         }
 
-        $objFriend = new Friend();
+        $objFriend = new UserFriend();
         $objFriend->setUser($user);
         $objFriend->setFriend($friend);
 
@@ -76,7 +76,7 @@ class FriendsController extends AbstractController
     }
 
     #[Route(path: '/friends/delete/{username}', name: 'wapinet_user_friends_delete', requirements: ['username' => '.+'])]
-    public function deleteAction(string $username, EventDispatcherInterface $eventDispatcher, UserRepository $userRepository, FriendRepository $friendRepository, EntityManagerInterface $entityManager): RedirectResponse
+    public function deleteAction(string $username, EventDispatcherInterface $eventDispatcher, UserRepository $userRepository, UserFriendRepository $friendRepository, EntityManagerInterface $entityManager): RedirectResponse
     {
         /** @var User|null $user */
         $user = $this->getUser();

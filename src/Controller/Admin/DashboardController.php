@@ -6,10 +6,10 @@ use App\Entity\File;
 use App\Entity\Gist;
 use App\Entity\Guestbook;
 use App\Entity\News;
-use App\Entity\Panel;
-use App\Entity\Subscriber;
 use App\Entity\Tag;
 use App\Entity\User;
+use App\Entity\UserPanel;
+use App\Entity\UserSubscriber;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -44,8 +44,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Тэги', 'fas fa-folder-open', Tag::class);
         yield MenuItem::linkToCrud('Новости', 'fas fa-folder-open', News::class);
         yield MenuItem::linkToCrud('Пользователи', 'fas fa-folder-open', User::class);
-        yield MenuItem::linkToCrud('Подписки', 'fas fa-folder-open', Subscriber::class);
-        yield MenuItem::linkToCrud('Панель', 'fas fa-folder-open', Panel::class);
+        yield MenuItem::linkToCrud('Подписки', 'fas fa-folder-open', UserSubscriber::class);
+        yield MenuItem::linkToCrud('Панель', 'fas fa-folder-open', UserPanel::class);
         yield MenuItem::linkToCrud('Блоги', 'fas fa-folder-open', Gist::class);
         yield MenuItem::linkToCrud('Гостевая', 'fas fa-folder-open', Guestbook::class);
     }

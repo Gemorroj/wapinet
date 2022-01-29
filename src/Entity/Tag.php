@@ -2,47 +2,30 @@
 
 namespace App\Entity;
 
+use App\Repository\TagRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Tag.
- *
- * @ORM\Table(name="tag", uniqueConstraints={@ORM\UniqueConstraint(name="name_idx", columns={"name"})})
- * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Table]
+#[ORM\UniqueConstraint(name: 'name_idx', columns: ['name'])]
+#[ORM\Entity(repositoryClass: TagRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Tag implements \Stringable
 {
-    /**
-     * @var int
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: 'integer', nullable: false)]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", nullable=false)
-     */
-    private $name;
+    #[ORM\Column(type: 'string', nullable: false)]
+    private string $name = '';
 
-    /**
-     * @ORM\Column(name="count", type="integer", nullable=false)
-     */
+    #[ORM\Column(type: 'integer', nullable: false)]
     private int $count = 0;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     */
-    private $createdAt;
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    private ?\DateTime $createdAt = null;
 
-    /**
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTime $updatedAt = null;
 
     public function getId(): ?int
@@ -50,14 +33,7 @@ class Tag implements \Stringable
         return $this->id;
     }
 
-    /**
-     * Set id.
-     *
-     * @param int $id
-     *
-     * @return $this
-     */
-    public function setId($id): self
+    public function setId(int $id): self
     {
         $this->id = $id;
 
@@ -76,10 +52,7 @@ class Tag implements \Stringable
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -99,9 +72,7 @@ class Tag implements \Stringable
         return $this->createdAt;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
+    #[ORM\PrePersist]
     public function setCreatedAtValue(): self
     {
         $this->createdAt = new \DateTime();
@@ -114,9 +85,7 @@ class Tag implements \Stringable
         return $this->updatedAt;
     }
 
-    /**
-     * @ORM\PreUpdate
-     */
+    #[ORM\PreUpdate]
     public function setUpdatedAtValue(): self
     {
         $this->updatedAt = new \DateTime();
@@ -126,6 +95,6 @@ class Tag implements \Stringable
 
     public function __toString(): string
     {
-        return (string) $this->getName();
+        return $this->getName();
     }
 }

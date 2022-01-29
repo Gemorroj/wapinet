@@ -2,91 +2,51 @@
 
 namespace App\Entity;
 
+use App\Repository\GistRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Table(name="gist")
- * @ORM\Entity(repositoryClass="App\Repository\GistRepository")
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: GistRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Gist
 {
-    /**
-     * @var int
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: 'integer', nullable: false)]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="ip", type="string", nullable=false)
-     */
-    private $ip;
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $ip = '';
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="browser", type="string", nullable=false)
-     */
-    private $browser;
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $browser = '';
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     */
-    private $createdAt;
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    private ?\DateTime $createdAt = null;
 
-    /**
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTime $updatedAt = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="body", type="text", nullable=false)
-     * @Assert\Length(max=4294967295)
-     * @Assert\NotBlank
-     */
-    private $body;
+    #[ORM\Column(type: 'string', length: 5000, nullable: false)]
+    #[Assert\Length(min: 1, max: 5000)]
+    #[Assert\NotNull]
+    private string $subject = '';
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="subject", type="string", length=5000, nullable=false)
-     * @Assert\Length(max=5000)
-     * @Assert\NotBlank
-     */
-    private $subject;
+    #[ORM\Column(type: 'text', nullable: false)]
+    #[Assert\NotBlank]
+    private string $body = '';
 
-    /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
-     * })
-     */
-    private $user;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set id.
-     *
-     * @param int $id
-     *
-     * @return Gist
-     */
-    public function setId($id): self
+    public function setId(int $id): self
     {
         $this->id = $id;
 
@@ -94,8 +54,6 @@ class Gist
     }
 
     /**
-     * Get user.
-     *
      * @return User
      */
     public function getUser()
@@ -110,36 +68,24 @@ class Gist
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getIp()
+    public function getIp(): string
     {
         return $this->ip;
     }
 
-    /**
-     * @param string $ip
-     */
-    public function setIp($ip): self
+    public function setIp(string $ip): self
     {
         $this->ip = $ip;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBrowser()
+    public function getBrowser(): string
     {
         return $this->browser;
     }
 
-    /**
-     * @param string $browser
-     */
-    public function setBrowser($browser): self
+    public function setBrowser(string $browser): self
     {
         $this->browser = $browser;
 
@@ -154,9 +100,7 @@ class Gist
         return $this->createdAt;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
+    #[ORM\PrePersist]
     public function setCreatedAtValue(): self
     {
         $this->createdAt = new \DateTime();
@@ -169,9 +113,7 @@ class Gist
         return $this->updatedAt;
     }
 
-    /**
-     * @ORM\PreUpdate
-     */
+    #[ORM\PreUpdate]
     public function setUpdatedAtValue(): self
     {
         $this->updatedAt = new \DateTime();
@@ -179,36 +121,24 @@ class Gist
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBody()
+    public function getBody(): string
     {
         return $this->body;
     }
 
-    /**
-     * @param string $body
-     */
-    public function setBody($body): self
+    public function setBody(string $body): self
     {
         $this->body = $body;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSubject()
+    public function getSubject(): string
     {
         return $this->subject;
     }
 
-    /**
-     * @param string $subject
-     */
-    public function setSubject($subject): self
+    public function setSubject(string $subject): self
     {
         $this->subject = $subject;
 

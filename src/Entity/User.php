@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,149 +13,98 @@ use Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserInterfac
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Table(name="user")
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class User implements UserInterface, EquatableInterface, LegacyPasswordAuthenticatedUserInterface, \Stringable
 {
     public const LIFETIME = '5 minutes';
     public const SEX_MALE = 'm';
     public const SEX_FEMALE = 'f';
 
-    /**
-     * @var int
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: 'integer', nullable: false)]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(name="enabled", type="boolean", nullable=false, options={"default": "1"})
-     */
+    #[ORM\Column(type: 'boolean', nullable: false, options: ['default' => true])]
     private bool $enabled = true;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     */
-    private $createdAt;
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    private ?\DateTime $createdAt = null;
 
-    /**
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTime $updatedAt = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="username", type="string", length=180, nullable=false, unique=true)
-     * @Assert\Length(min=3, max=180)
-     */
-    private $username;
+    #[ORM\Column(type: 'string', length: 180, unique: true, nullable: false)]
+    #[Assert\Length(min: 3, max: 180)]
+    private string $username = '';
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=180, nullable=false, unique=true)
-     */
-    private $email;
+    #[ORM\Column(type: 'string', length: 180, unique: true, nullable: false)]
+    #[Assert\Email(mode: 'html5')]
+    #[Assert\Length(min: 3, max: 180)]
+    private string $email = '';
 
-    /**
-     * @ORM\Column(name="salt", type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $salt = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=255, nullable=false)
-     */
-    private $password;
-
-    /**
-     * @var string[]|null
-     * @ORM\Column(name="roles", type="array", nullable=true)
-     */
-    private ?array $roles = null;
-
-    /**
-     * @ORM\Column(name="last_activity", type="datetime", nullable=true)
-     */
-    private ?\DateTime $lastActivity = null;
-
-    /**
-     * @ORM\Column(name="sex", type="string", nullable=true, columnDefinition="ENUM('m', 'f') DEFAULT NULL")
-     */
-    private ?string $sex = null;
-
-    /**
-     * @ORM\Column(name="birthday", type="date", nullable=true)
-     */
-    private ?\DateTime $birthday = null;
-
-    /**
-     * @ORM\Column(name="info", type="string", length=5000, nullable=true)
-     * @Assert\Length(max=5000)
-     */
-    private ?string $info = null;
-
-    /**
-     * @ORM\Column(name="timezone", type="string", nullable=true)
-     */
-    private ?string $timezone = null;
-
-    /**
-     * @ORM\Column(name="country", type="string", nullable=true)
-     */
-    private ?string $country = null;
-
-    /**
-     * @ORM\Column(name="vk", type="string", nullable=true)
-     */
-    private ?string $vk = null;
-
-    /**
-     * @var Panel
-     *
-     * @ORM\OneToOne(targetEntity="Panel", mappedBy="user", cascade={"persist", "remove"})
-     */
-    private $panel;
-
-    /**
-     * @var Subscriber
-     *
-     * @ORM\OneToOne(targetEntity="Subscriber", mappedBy="user", cascade={"persist", "remove"})
-     */
-    private $subscriber;
-
-    /**
-     * @var Collection<Friend>
-     *
-     * @ORM\OneToMany(targetEntity="Friend", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
-     * @ORM\OrderBy({
-     *     "id": "DESC"
-     * })
-     */
-    private $friends;
-
-    /**
-     * @var Collection<Friend>
-     *
-     * @ORM\OneToMany(targetEntity="Friend", mappedBy="friend")
-     * @ORM\OrderBy({
-     *     "id": "DESC"
-     * })
-     */
-    private $friended;
-
+    #[ORM\Column(type: 'string', length: 255, nullable: false)]
+    private ?string $password = null;
     /**
      * Plain password. Used for model validation. Must not be persisted.
      */
     private ?string $plainPassword = null;
+
+    /**
+     * @var string[]|null
+     */
+    #[ORM\Column(type: 'array', nullable: true)]
+    private ?array $roles = null;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTime $lastActivity = null;
+
+    #[ORM\Column(type: 'string', nullable: true, columnDefinition: 'ENUM(\'m\', \'f\') DEFAULT NULL')]
+    #[Assert\Choice(choices: [self::SEX_MALE, self::SEX_FEMALE])]
+    private ?string $sex = null;
+
+    #[ORM\Column(type: 'date', nullable: true)]
+    private ?\DateTime $birthday = null;
+
+    #[ORM\Column(type: 'string', length: 5000, nullable: true)]
+    #[Assert\Length(max: 5000)]
+    private ?string $info = null;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    #[Assert\Timezone]
+    private ?string $timezone = null;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    #[Assert\Country]
+    private ?string $country = null;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $vk = null;
+
+    #[ORM\OneToOne(mappedBy: 'user', targetEntity: UserPanel::class, cascade: ['persist', 'remove'])]
+    private ?UserPanel $panel = null;
+
+    #[ORM\OneToOne(mappedBy: 'user', targetEntity: UserSubscriber::class, cascade: ['persist', 'remove'])]
+    private ?UserSubscriber $subscriber = null;
+
+    /**
+     * @var Collection<UserFriend>
+     */
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserFriend::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\OrderBy(['id' => 'DESC'])]
+    private Collection $friends;
+
+    /**
+     * @var Collection<UserFriend>
+     */
+    #[ORM\OneToMany(mappedBy: 'friend', targetEntity: UserFriend::class)]
+    #[ORM\OrderBy(['id' => 'DESC'])]
+    private Collection $friended;
 
     public function __construct()
     {
@@ -164,7 +114,7 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
 
     public function __toString(): string
     {
-        return (string) $this->getUsername();
+        return $this->getUsername();
     }
 
     public function getId(): ?int
@@ -173,7 +123,7 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     }
 
     /**
-     * @return Collection<Friend>
+     * @return Collection<UserFriend>
      */
     public function getFriends(): Collection
     {
@@ -181,7 +131,7 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     }
 
     /**
-     * @return Collection<Friend>
+     * @return Collection<UserFriend>
      */
     public function getFriended(): Collection
     {
@@ -240,17 +190,17 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         return $lastActivity && ($lastActivity > new \DateTime('now -'.self::LIFETIME));
     }
 
-    public function setPanel(Panel $panel): self
+    public function setPanel(UserPanel $panel): self
     {
         $this->panel = $panel;
 
         return $this;
     }
 
-    public function getPanel(): Panel
+    public function getPanel(): UserPanel
     {
         if (!$this->panel) {
-            $panel = new Panel();
+            $panel = new UserPanel();
             $panel->setUser($this);
 
             return $panel;
@@ -259,17 +209,17 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         return $this->panel;
     }
 
-    public function setSubscriber(Subscriber $subscriber): self
+    public function setSubscriber(UserSubscriber $subscriber): self
     {
         $this->subscriber = $subscriber;
 
         return $this;
     }
 
-    public function getSubscriber(): Subscriber
+    public function getSubscriber(): UserSubscriber
     {
         if (!$this->subscriber) {
-            $subscriber = new Subscriber();
+            $subscriber = new UserSubscriber();
             $subscriber->setUser($this);
 
             return $subscriber;
@@ -323,9 +273,7 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         return $this->createdAt;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
+    #[ORM\PrePersist]
     public function setCreatedAtValue(): self
     {
         $this->createdAt = new \DateTime();
@@ -338,9 +286,7 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         return $this->updatedAt;
     }
 
-    /**
-     * @ORM\PreUpdate
-     */
+    #[ORM\PreUpdate]
     public function setUpdatedAtValue(): self
     {
         $this->updatedAt = new \DateTime();
@@ -399,7 +345,7 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
 
@@ -437,12 +383,12 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         return $this;
     }
 
-    public function getUsername(): ?string
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    public function getUserIdentifier(): ?string
+    public function getUserIdentifier(): string
     {
         return $this->username;
     }
@@ -454,14 +400,9 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
-    }
-
-    public function getGravatarEmail(): ?string
-    {
-        return $this->getEmail();
     }
 
     public function isEnabled(): bool

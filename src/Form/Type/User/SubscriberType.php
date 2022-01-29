@@ -2,7 +2,7 @@
 
 namespace App\Form\Type\User;
 
-use App\Entity\Subscriber;
+use App\Entity\UserSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -26,7 +26,7 @@ class SubscriberType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Subscriber::class,
+            'data_class' => UserSubscriber::class,
         ]);
     }
 

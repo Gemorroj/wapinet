@@ -2,80 +2,48 @@
 
 namespace App\Entity;
 
+use App\Repository\NewsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * News.
- *
- * @ORM\Table(name="news")
- * @ORM\Entity(repositoryClass="App\Repository\NewsRepository")
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: NewsRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class News
 {
-    /**
-     * @var int
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: 'integer', nullable: false)]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="subject", type="string", nullable=false)
-     */
-    private $subject;
+    #[ORM\Column(type: 'string', nullable: false)]
+    private string $subject = '';
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="body", type="text", nullable=false)
-     */
-    private $body;
+    #[ORM\Column(type: 'text', nullable: false)]
+    private string $body = '';
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     */
-    private $createdAt;
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    private ?\DateTime $createdAt = null;
 
-    /**
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTime $updatedAt = null;
 
-    /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="created_by_id", referencedColumnName="id")
-     * })
-     */
-    private $createdBy;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(referencedColumnName: 'id')]
+    private ?User $createdBy = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param string $body
-     */
-    public function setBody($body): self
+    public function setBody(string $body): self
     {
         $this->body = $body;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBody()
+    public function getBody(): string
     {
         return $this->body;
     }
@@ -95,32 +63,27 @@ class News
         return $this->createdBy;
     }
 
-    /**
-     * @param string $subject
-     */
-    public function setSubject($subject): self
+    public function setSubject(string $subject): self
     {
         $this->subject = $subject;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSubject()
+    public function getSubject(): string
     {
         return $this->subject;
     }
 
+    /**
+     * @return \DateTime
+     */
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
+    #[ORM\PrePersist]
     public function setCreatedAtValue(): self
     {
         $this->createdAt = new \DateTime();
@@ -133,9 +96,7 @@ class News
         return $this->updatedAt;
     }
 
-    /**
-     * @ORM\PreUpdate
-     */
+    #[ORM\PreUpdate]
     public function setUpdatedAtValue(): self
     {
         $this->updatedAt = new \DateTime();

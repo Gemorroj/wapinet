@@ -14,13 +14,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FileUrlType extends AbstractType
 {
-    private ParameterBagInterface $parameterBag;
-    private Curl $curl;
-
-    public function __construct(ParameterBagInterface $parameterBag, Curl $curl)
+    public function __construct(private ParameterBagInterface $parameterBag, private Curl $curl)
     {
-        $this->parameterBag = $parameterBag;
-        $this->curl = $curl;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)

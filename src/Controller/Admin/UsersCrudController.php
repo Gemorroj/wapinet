@@ -76,7 +76,7 @@ class UsersCrudController extends AbstractCrudController
         $subscriber = AssociationField::new('subscriber');
         $friends = AssociationField::new('friends');
         $friended = AssociationField::new('friended');
-        $avatar = AvatarField::new('gravatarEmail', 'Аватар')
+        $avatar = AvatarField::new('email', 'Аватар')
             ->setIsGravatarEmail(true)
             ->setHeight(48);
 

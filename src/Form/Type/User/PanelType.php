@@ -2,7 +2,7 @@
 
 namespace App\Form\Type\User;
 
-use App\Entity\Panel;
+use App\Entity\UserPanel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -30,7 +30,7 @@ class PanelType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Panel::class,
+            'data_class' => UserPanel::class,
         ]);
     }
 

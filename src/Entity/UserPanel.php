@@ -2,13 +2,12 @@
 
 namespace App\Entity;
 
+use App\Repository\UserPanelRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="user_panel")
- * @ORM\Entity(repositoryClass="App\Repository\PanelRepository")
- */
-class Panel extends \ArrayObject
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: UserPanelRepository::class)]
+class UserPanel extends \ArrayObject
 {
     public const ROUTE_FORUM = 'forum_index';
     public const ROUTE_GUESTBOOK = 'guestbook_index';
@@ -19,63 +18,38 @@ class Panel extends \ArrayObject
     public const ROUTE_UTILITIES = 'utilities';
     public const ROUTE_PROGRAMMING = 'programming';
 
-    /**
-     * @var int
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: 'integer', nullable: false)]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(name="forum", type="boolean", nullable=false)
-     */
+    #[ORM\Column(type: 'boolean', nullable: false)]
     private bool $forum = true;
 
-    /**
-     * @ORM\Column(name="guestbook", type="boolean", nullable=false)
-     */
+    #[ORM\Column(type: 'boolean', nullable: false)]
     private bool $guestbook = false;
 
-    /**
-     * @ORM\Column(name="gist", type="boolean", nullable=false)
-     */
+    #[ORM\Column(type: 'boolean', nullable: false)]
     private bool $gist = true;
 
-    /**
-     * @ORM\Column(name="file", type="boolean", nullable=false)
-     */
+    #[ORM\Column(type: 'boolean', nullable: false)]
     private bool $file = true;
 
-    /**
-     * @ORM\Column(name="archiver", type="boolean", nullable=false)
-     */
+    #[ORM\Column(type: 'boolean', nullable: false)]
     private bool $archiver = false;
 
-    /**
-     * @ORM\Column(name="downloads", type="boolean", nullable=false)
-     */
+    #[ORM\Column(type: 'boolean', nullable: false)]
     private bool $downloads = true;
 
-    /**
-     * @ORM\Column(name="utilities", type="boolean", nullable=false)
-     */
+    #[ORM\Column(type: 'boolean', nullable: false)]
     private bool $utilities = true;
 
-    /**
-     * @ORM\Column(name="programming", type="boolean", nullable=false)
-     */
+    #[ORM\Column(type: 'boolean', nullable: false)]
     private bool $programming = true;
 
-    /**
-     * @var User
-     *
-     * @ORM\OneToOne(targetEntity="User", inversedBy="panel", cascade={"persist"})
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", unique=true, nullable=false)
-     * })
-     */
-    private $user;
+    #[ORM\OneToOne(inversedBy: 'panel', targetEntity: User::class, cascade: ['persist'])]
+    #[ORM\JoinColumn(referencedColumnName: 'id', unique: true, nullable: false)]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -98,7 +72,7 @@ class Panel extends \ArrayObject
     }
 
     /**
-     * @return \ArrayIterator<string, array<string, string>>
+     * @return \ArrayIterator<string, array<string, string|bool>>
      */
     public function getIterator(): \ArrayIterator
     {

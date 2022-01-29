@@ -14,8 +14,12 @@ class Count extends AbstractExtension
         ];
     }
 
-    public function getCount(float $count, int $decimals = 0): string
+    public function getCount(?float $count, int $decimals = 0): string
     {
+        if (null === $count) {
+            return '';
+        }
+
         return \number_format($count, $decimals, ',', ' ');
     }
 }

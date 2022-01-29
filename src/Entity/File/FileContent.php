@@ -2,64 +2,34 @@
 
 namespace App\Entity\File;
 
-/**
- * File content.
- */
 class FileContent
 {
-    /**
-     * @var string
-     */
-    private $content;
-    /**
-     * @var string|null
-     */
-    private $mimeType;
-    /**
-     * @var string|null
-     */
-    private $basename;
-    /**
-     * @var int
-     */
-    private $size;
+    private int $size;
 
-    public function __construct(string $content, ?string $mimeType = null, ?string $basename = null)
-    {
-        $this->content = $content;
-        $this->mimeType = $mimeType;
-        $this->basename = $basename;
+    public function __construct(
+        private string $content,
+        private ?string $mimeType = null,
+        private ?string $basename = null,
+    ) {
         $this->size = \strlen($content);
     }
 
-    /**
-     * @return string
-     */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getMimeType()
+    public function getMimeType(): ?string
     {
         return $this->mimeType;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getBasename()
+    public function getBasename(): ?string
     {
         return $this->basename;
     }
 
-    /**
-     * @return int
-     */
-    public function getSize()
+    public function getSize(): int
     {
         return $this->size;
     }

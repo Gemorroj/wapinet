@@ -2,68 +2,39 @@
 
 namespace App\Entity;
 
+use App\Repository\EventRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="event")
- * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: EventRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Event
 {
-    /**
-     * @var int
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: 'integer', nullable: false)]
+    private ?int $id = null;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     */
-    private $createdAt;
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    private ?\DateTime $createdAt = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="subject", type="string", nullable=false)
-     */
-    private $subject;
+    #[ORM\Column(type: 'string', nullable: false)]
+    private string $subject = '';
 
-    /**
-     * @ORM\Column(name="variables", type="array", nullable=true)
-     */
+    #[ORM\Column(type: 'array', nullable: true)]
     private ?array $variables = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="template", type="string")
-     */
-    private $template;
+    #[ORM\Column(type: 'string', nullable: false)]
+    private string $template = '';
 
-    /**
-     * @ORM\Column(name="need_email", type="boolean", nullable=false)
-     */
+    #[ORM\Column(type: 'boolean', nullable: false)]
     private bool $needEmail = false;
 
-    /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
-     * })
-     */
-    private $user;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    private ?User $user = null;
 
-    /**
-     * @param int $id
-     */
-    public function setId($id): self
+    public function setId(int $id): self
     {
         $this->id = $id;
 
@@ -83,9 +54,7 @@ class Event
         return $this->createdAt;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
+    #[ORM\PrePersist]
     public function setCreatedAtValue(): self
     {
         $this->createdAt = new \DateTime();
@@ -93,10 +62,7 @@ class Event
         return $this;
     }
 
-    /**
-     * @param string $subject
-     */
-    public function setSubject($subject): self
+    public function setSubject(string $subject): self
     {
         $this->subject = $subject;
 
@@ -111,10 +77,7 @@ class Event
         return $this->subject;
     }
 
-    /**
-     * @param string $template
-     */
-    public function setTemplate($template): self
+    public function setTemplate(string $template): self
     {
         $this->template = $template;
 

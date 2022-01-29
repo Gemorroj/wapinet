@@ -2,56 +2,32 @@
 
 namespace App\Entity;
 
+use App\Repository\UserFriendRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Friend.
- *
- * @ORM\Table(name="user_friend")
- * @ORM\Entity(repositoryClass="App\Repository\FriendRepository")
- * @ORM\HasLifecycleCallbacks
- */
-class Friend
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: UserFriendRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+class UserFriend
 {
-    /**
-     * @var int
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: 'integer', nullable: false)]
+    private ?int $id = null;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     */
-    private $createdAt;
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    private ?\DateTime $createdAt = null;
 
-    /**
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTime $updatedAt = null;
 
-    /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="friends")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     * })
-     */
-    private $user;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'friends')]
+    #[ORM\JoinColumn(referencedColumnName: 'id')]
+    private ?User $user = null;
 
-    /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="friended")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="friend_id", referencedColumnName="id")
-     * })
-     */
-    private $friend;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'friended')]
+    #[ORM\JoinColumn(referencedColumnName: 'id')]
+    private ?User $friend = null;
 
     public function getId(): ?int
     {
@@ -66,9 +42,7 @@ class Friend
         return $this->createdAt;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
+    #[ORM\PrePersist]
     public function setCreatedAtValue(): self
     {
         $this->createdAt = new \DateTime();
@@ -81,9 +55,7 @@ class Friend
         return $this->updatedAt;
     }
 
-    /**
-     * @ORM\PreUpdate
-     */
+    #[ORM\PreUpdate]
     public function setUpdatedAtValue(): self
     {
         $this->updatedAt = new \DateTime();

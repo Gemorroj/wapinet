@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\File\Meta;
+use App\Repository\FileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,144 +12,83 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * File.
- *
- * @Vich\Uploadable
- * @ORM\Table(name="file", indexes={@ORM\Index(name="hash_idx", columns={"hash"})})
- * @ORM\Entity(repositoryClass="App\Repository\FileRepository")
- * @ORM\HasLifecycleCallbacks
- */
+#[Vich\Uploadable]
+#[ORM\Table]
+#[ORM\Index(columns: ['hash'], name: 'hash_idx')]
+#[ORM\Entity(repositoryClass: FileRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class File implements PasswordAuthenticatedUserInterface
 {
-    /**
-     * @var int
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: 'integer', nullable: false)]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="ip", type="string", nullable=false)
-     */
-    private $ip;
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $ip = '';
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="browser", type="string", nullable=false)
-     */
-    private $browser;
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $browser = '';
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     */
-    private $createdAt;
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    private ?\DateTime $createdAt = null;
 
-    /**
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTime $updatedAt = null;
 
-    /**
-     * @ORM\Column(name="last_view_at", type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTime $lastViewAt = null;
 
-    /**
-     * @ORM\Column(name="count_views", type="integer", nullable=false)
-     */
+    #[ORM\Column(type: 'integer', nullable: false)]
     private int $countViews = 0;
 
-    /**
-     * @ORM\Column(name="password", type="string", nullable=true)
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     private ?string $password = null;
     private ?string $plainPassword = null;
 
-    /**
-     * @ORM\Column(name="mime_type", type="string", nullable=false)
-     */
+    #[ORM\Column(type: 'string', nullable: false)]
     private string $mimeType = '';
 
-    /**
-     * @ORM\Column(name="file_size", type="integer", nullable=false)
-     */
+    #[ORM\Column(type: 'integer', nullable: false)]
     private int $fileSize = 0;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="file_name", type="string", nullable=false)
-     */
-    private $fileName;
+    #[ORM\Column(type: 'string', nullable: false)]
+    private string $fileName = '';
 
-    /**
-     * @var BaseFile
-     * @Assert\File
-     * @Vich\UploadableField(mapping="file", fileNameProperty="fileName", size="fileSize")
-     */
-    private $file;
+    #[Assert\File]
+    #[Vich\UploadableField(mapping: 'file', fileNameProperty: 'fileName', size: 'fileSize')]
+    private ?BaseFile $file = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="original_file_name", type="string", nullable=false)
-     */
-    private $originalFileName;
+    #[ORM\Column(type: 'string', nullable: false)]
+    private string $originalFileName = '';
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="string", length=5000, nullable=false)
-     * @Assert\Length(max=5000)
-     * @Assert\NotBlank
-     */
-    private $description;
+    #[ORM\Column(type: 'string', length: 5000, nullable: false)]
+    #[Assert\Length(min: 1, max: 5000)]
+    private string $description = '';
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="hash", type="string", nullable=false)
-     */
-    private $hash;
+    #[ORM\Column(type: 'string', nullable: false)]
+    private string $hash = '';
 
-    /**
-     * @ORM\Column(name="meta", type="object", nullable=true)
-     */
+    #[ORM\Column(type: 'object', nullable: true)]
     private ?Meta $meta = null;
 
-    /**
-     * @ORM\Column(name="hidden", type="boolean", nullable=false, options={"default": "1"})
-     */
+    #[ORM\Column(type: 'boolean', nullable: false, options: ['default' => true])]
     private bool $hidden = true;
 
     /**
      * @var Collection<FileTags>
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\FileTags", mappedBy="file", cascade={"persist", "remove"})
      */
-    private $fileTags;
+    #[ORM\OneToMany(mappedBy: 'file', targetEntity: FileTags::class, cascade: ['persist', 'remove'])]
+    private Collection $fileTags;
 
     /**
      * @var Collection<Tag>
      */
-    private $tags;
+    private Collection $tags;
 
-    /**
-     * @var User|null
-     *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
-     * })
-     */
-    private $user;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: true, onDelete: 'CASCADE')]
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -198,12 +138,7 @@ class File implements PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    /**
-     * Set id.
-     *
-     * @param int $id
-     */
-    public function setId($id): self
+    public function setId(int $id): self
     {
         $this->id = $id;
 
@@ -215,7 +150,7 @@ class File implements PasswordAuthenticatedUserInterface
         return $this->meta;
     }
 
-    public function setMeta(Meta $meta = null): self
+    public function setMeta(?Meta $meta = null): self
     {
         $this->meta = $meta;
 
@@ -241,7 +176,6 @@ class File implements PasswordAuthenticatedUserInterface
     }
 
     /**
-     * Get Tags
      * Использовать только для отображения. В БД этого поля нет.
      *
      * @return Collection<Tag>
@@ -252,12 +186,9 @@ class File implements PasswordAuthenticatedUserInterface
     }
 
     /**
-     * Set Tags
      * Использовать только для отображения. В БД этого поля нет.
      *
      * @param Collection<Tag> $tags
-     *
-     * @return File
      */
     public function setTags(Collection $tags): self
     {
@@ -278,36 +209,24 @@ class File implements PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getIp()
+    public function getIp(): string
     {
         return $this->ip;
     }
 
-    /**
-     * @param string $ip
-     */
-    public function setIp($ip): self
+    public function setIp(string $ip): self
     {
         $this->ip = $ip;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBrowser()
+    public function getBrowser(): string
     {
         return $this->browser;
     }
 
-    /**
-     * @param string $browser
-     */
-    public function setBrowser($browser): self
+    public function setBrowser(string $browser): self
     {
         $this->browser = $browser;
 
@@ -322,9 +241,7 @@ class File implements PasswordAuthenticatedUserInterface
         return $this->createdAt;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
+    #[ORM\PrePersist]
     public function setCreatedAtValue(): self
     {
         $this->createdAt = new \DateTime();
@@ -417,46 +334,31 @@ class File implements PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFileName()
+    public function getFileName(): string
     {
         return $this->fileName;
     }
 
-    /**
-     * @param string $fileName
-     */
-    public function setFileName($fileName): self
+    public function setFileName(string $fileName): self
     {
         $this->fileName = $fileName;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getOriginalFileName()
+    public function getOriginalFileName(): string
     {
         return $this->originalFileName;
     }
 
-    /**
-     * @param string $originalFileName
-     */
-    public function setOriginalFileName($originalFileName): self
+    public function setOriginalFileName(string $originalFileName): self
     {
         $this->originalFileName = $originalFileName;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getOriginalFileNameWithoutExtension()
+    public function getOriginalFileNameWithoutExtension(): string
     {
         return \pathinfo($this->getOriginalFileName(), \PATHINFO_FILENAME);
     }
@@ -476,18 +378,12 @@ class File implements PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     */
-    public function setDescription($description): self
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
@@ -496,22 +392,16 @@ class File implements PasswordAuthenticatedUserInterface
 
     /**
      * MD5 file hash.
-     *
-     * @return string
      */
-    public function getHash()
+    public function getHash(): string
     {
         return $this->hash;
     }
 
     /**
      * MD5 file hash.
-     *
-     * @param string $hash
-     *
-     * @return File
      */
-    public function setHash($hash): self
+    public function setHash(string $hash): self
     {
         $this->hash = $hash;
 
@@ -829,6 +719,6 @@ class File implements PasswordAuthenticatedUserInterface
 
     public function __toString(): string
     {
-        return (string) $this->getOriginalFileName();
+        return $this->getOriginalFileName();
     }
 }

@@ -2,41 +2,27 @@
 
 namespace App\Entity;
 
+use App\Repository\UserSubscriberRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="user_subscriber")
- * @ORM\Entity(repositoryClass="App\Repository\SubscriberRepository")
- */
-class Subscriber extends \ArrayObject
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: UserSubscriberRepository::class)]
+class UserSubscriber extends \ArrayObject
 {
-    /**
-     * @var int
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: 'integer', nullable: false)]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(name="email_news", type="boolean", nullable=false)
-     */
+    #[ORM\Column(type: 'boolean', nullable: false)]
     private bool $emailNews = true;
 
-    /**
-     * @ORM\Column(name="email_friends", type="boolean", nullable=false)
-     */
+    #[ORM\Column(type: 'boolean', nullable: false)]
     private bool $emailFriends = true;
 
-    /**
-     * @var User
-     *
-     * @ORM\OneToOne(targetEntity="User", inversedBy="subscriber", cascade={"persist"})
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id", unique=true, nullable=false)
-     * })
-     */
-    private $user;
+    #[ORM\OneToOne(inversedBy: 'subscriber', targetEntity: User::class, cascade: ['persist'])]
+    #[ORM\JoinColumn(referencedColumnName: 'id', unique: true, nullable: false)]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -83,7 +69,7 @@ class Subscriber extends \ArrayObject
     }
 
     /**
-     * @return \ArrayIterator<string, array<string, string>>
+     * @return \ArrayIterator<string, array<string, string|bool>>
      */
     public function getIterator(): \ArrayIterator
     {

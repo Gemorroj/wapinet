@@ -2,99 +2,56 @@
 
 namespace App\Entity;
 
+use App\Repository\OnlineRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="online", options={"engine": "MEMORY"}, uniqueConstraints={@ORM\UniqueConstraint(name="unique_idx", columns={"ip", "browser"})})
- * @ORM\Entity(repositoryClass="App\Repository\OnlineRepository")
- */
+#[ORM\Table(options: ['engine' => 'MEMORY'])]
+#[ORM\UniqueConstraint(name: 'unique_idx', columns: ['ip', 'browser'])]
+#[ORM\Entity(repositoryClass: OnlineRepository::class)]
 class Online
 {
-    /**
-     * @var int
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: 'integer', nullable: false)]
+    private ?int $id = null;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="datetime", type="datetime")
-     */
-    private $datetime;
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    private ?\DateTime $datetime = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="ip", type="string", length=255)
-     */
-    private $ip;
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $ip = '';
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="browser", type="string", length=255)
-     */
-    private $browser;
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $browser = '';
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="path", type="string", length=255)
-     */
-    private $path;
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $path = '';
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set id.
-     *
-     * @param int $id
-     *
-     * @return Online
-     */
-    public function setId($id): self
+    public function setId(int $id): self
     {
         $this->id = $id;
 
         return $this;
     }
 
-    /**
-     * Get path.
-     *
-     * @return string
-     */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
 
-    /**
-     * Set path.
-     *
-     * @param string $path
-     *
-     * @return Online
-     */
-    public function setPath($path)
+    public function setPath(string $path): self
     {
         $this->path = $path;
 
         return $this;
     }
 
-    /**
-     * Set datetime.
-     *
-     * @return Online
-     */
-    public function setDatetime(\DateTime $datetime)
+    public function setDatetime(\DateTime $datetime): self
     {
         $this->datetime = $datetime;
 
@@ -102,8 +59,6 @@ class Online
     }
 
     /**
-     * Get datetime.
-     *
      * @return \DateTime
      */
     public function getDatetime()
@@ -111,50 +66,26 @@ class Online
         return $this->datetime;
     }
 
-    /**
-     * Set ip.
-     *
-     * @param string $ip
-     *
-     * @return Online
-     */
-    public function setIp($ip)
+    public function setIp(string $ip): self
     {
         $this->ip = $ip;
 
         return $this;
     }
 
-    /**
-     * Get ip.
-     *
-     * @return string
-     */
-    public function getIp()
+    public function getIp(): string
     {
         return $this->ip;
     }
 
-    /**
-     * Set browser.
-     *
-     * @param string $browser
-     *
-     * @return Online
-     */
-    public function setBrowser($browser)
+    public function setBrowser(string $browser): self
     {
         $this->browser = $browser;
 
         return $this;
     }
 
-    /**
-     * Get browser.
-     *
-     * @return string
-     */
-    public function getBrowser()
+    public function getBrowser(): string
     {
         return $this->browser;
     }
