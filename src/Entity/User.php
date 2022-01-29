@@ -450,8 +450,8 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     public function __serialize(): array
     {
         $data = \get_object_vars($this);
-        $data['friends'] = null;
-        $data['friended'] = null;
+        $data['friends'] = new ArrayCollection();
+        $data['friended'] = new ArrayCollection();
         $data['subscriber'] = null;
         $data['panel'] = null;
 
