@@ -327,9 +327,9 @@ class File implements PasswordAuthenticatedUserInterface
         return $this->fileSize;
     }
 
-    public function setFileSize(int $fileSize): self
+    public function setFileSize(?int $fileSize): self
     {
-        $this->fileSize = $fileSize;
+        $this->fileSize = (int)$fileSize;
 
         return $this;
     }
@@ -339,9 +339,9 @@ class File implements PasswordAuthenticatedUserInterface
         return $this->fileName;
     }
 
-    public function setFileName(string $fileName): self
+    public function setFileName(?string $fileName): self
     {
-        $this->fileName = $fileName;
+        $this->fileName = (string)$fileName;
 
         return $this;
     }
