@@ -221,7 +221,7 @@ const _commentsLoader = function ($pageContainer, xid) {
         if ("VK" in window) {
             window.clearInterval(vkCommentsInterval);
             VK.init({
-                apiId: 6449783,
+                apiId: 7855495,
                 onlyWidgets: true
             });
             VK.Widgets.Comments(id, {}, xid);
