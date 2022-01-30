@@ -215,21 +215,21 @@ const _commentsLoader = function ($pageContainer, xid) {
     const id = 'vkcomments_widget-' + new Date().getTime();
     $commentsContainer.attr('id', id); // заменяем id на уникальный для API вконтакте
 
-    let i = 0;
-    let vkCommentsInterval = window.setInterval(function () {
-        i++;
+    //let i = 0;
+    //let vkCommentsInterval = window.setInterval(function () {
+        //i++;
         if ("VK" in window) {
-            window.clearInterval(vkCommentsInterval);
+            //window.clearInterval(vkCommentsInterval);
             VK.init({
                 apiId: 7855495,
                 onlyWidgets: true
             });
             VK.Widgets.Comments(id, {}, xid);
-        } else if (i > 100) {
+        }/* else if (i > 100) {
             window.clearInterval(vkCommentsInterval);
             console.log('Can\'t initialize VK');
-        }
-    }, 100);
+        }*/
+    //}, 100);
 };
 
 $document.on("pageshow", "#file_view", function () {
@@ -292,7 +292,7 @@ $document.one("pagecreate", "#wapinet_user_profile", function () {
 
     if (vkId) {
         $.post(Routing.generate('vk_api_users_get'), {
-            'v': '5.130',
+            'v': '5.131',
             'fields': 'online,photo_200_orig',
             'user_ids': vkId
         }, Vk.show, 'json');
