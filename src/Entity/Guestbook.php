@@ -29,7 +29,7 @@ class Guestbook
     private ?\DateTime $updatedAt = null;
 
     #[ORM\Column(type: 'string', length: 5000, nullable: false)]
-    #[Assert\Length(1, 5000)]
+    #[Assert\Length(min: 1, max: 5000)]
     #[Assert\NotNull]
     private string $message = '';
 
