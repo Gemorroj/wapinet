@@ -221,7 +221,7 @@ const _commentsLoader = function ($pageContainer, xid) {
         } else {
             console.log('Can\'t initialize VK');
         }
-    }, 100);
+    }, 1000);
 };
 
 $document.on("pageshow", "#file_view", function () {
