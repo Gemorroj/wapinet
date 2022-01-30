@@ -28,6 +28,14 @@
 
     {# vk comments #}
     <script src="https://vk.com/js/api/openapi.js?169" async="async"></script>
+    <script>
+        window.vkAsyncInit = function() {
+            VK.init({
+                apiId: 7855495,
+                onlyWidgets: true
+            });
+        };
+    </script>
 
     {# яндекс метрика #}
     <script src="https://mc.yandex.ru/metrika/watch.js" async="async"></script>
