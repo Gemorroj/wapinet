@@ -1,7 +1,4 @@
 {
-    "alchemy/binary-driver": {
-        "version": "v2.0.0"
-    },
     "algo26-matthias/idna-convert": {
         "version": "v3.0.4"
     },
@@ -206,9 +203,6 @@
     "myclabs/deep-copy": {
         "version": "1.10.2"
     },
-    "neutron/temporary-filesystem": {
-        "version": "2.3.0"
-    },
     "nikic/php-parser": {
         "version": "v3.1.5"
     },
@@ -369,6 +363,9 @@
             "version": "4.0",
             "ref": "aaddfdf43cdecd4cf91f992052d76c2cadc04543"
         }
+    },
+    "spatie/temporary-directory": {
+        "version": "2.0.0"
     },
     "stdtabs/phptabs": {
         "version": "dev-master"

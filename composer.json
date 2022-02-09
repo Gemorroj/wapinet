@@ -74,7 +74,7 @@
         "geoip2/geoip2": "^2.12",
         "christeredvartsen/php-bittorrent": "^2.0",
         "foolz/sphinxql-query-builder": "^3.0",
-        "php-ffmpeg/php-ffmpeg": "^0.19",
+        "php-ffmpeg/php-ffmpeg": "^1.0",
         "riverline/multipart-parser": "^2.0",
         "stdtabs/phptabs": "dev-master",
 
