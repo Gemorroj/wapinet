@@ -80,7 +80,7 @@
 
         "gemorroj/phpwhois": "dev-master",
         "gemorroj/stop-spam": "^3.2",
-        "gemorroj/archive7z": "^5.2",
+        "gemorroj/archive7z": "^5.3",
         "gemorroj/m3u-parser": "^5.3",
         "gemorroj/syntax": "^4.1.1",
         "gemorroj/htmlvalidator": "^3.1",
