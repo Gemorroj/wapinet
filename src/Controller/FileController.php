@@ -460,7 +460,7 @@ class FileController extends AbstractController
 
         // обновляем ip и браузер только если файл редактирует владелец
         if ($data->getUser() && $data->getUser()->isEqualTo($this->getUser())) {
-            //$data->setUser($this->getUser());
+            // $data->setUser($this->getUser());
             $data->setIp($request->getClientIp());
             $data->setBrowser($request->headers->get('User-Agent', ''));
         }

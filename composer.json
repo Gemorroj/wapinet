@@ -6,7 +6,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.0.2",
+        "php": ">=8.1.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-mbstring": "*",
@@ -130,6 +130,7 @@
         "symfony/polyfill-iconv": "*",
         "symfony/polyfill-mbstring": "*",
         "symfony/polyfill-apcu": "*",
+        "symfony/polyfill-php81": "*",
         "symfony/polyfill-php80": "*",
         "symfony/polyfill-php74": "*",
         "symfony/polyfill-php73": "*",

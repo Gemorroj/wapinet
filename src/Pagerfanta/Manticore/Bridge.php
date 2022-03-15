@@ -86,7 +86,7 @@ class Bridge
             $q = $qb->select('r')
                 ->from($this->entityClass, 'r INDEX BY r.'.$pkColumn)
                 ->where($qb->expr()->in('r.'.$pkColumn, $pks))
-                //->addOrderBy('FIELD(r.id,...)', 'ASC')
+                // ->addOrderBy('FIELD(r.id,...)', 'ASC')
                 ->getQuery();
 
             $unorderedResults = $q->getResult();

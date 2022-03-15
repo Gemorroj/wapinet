@@ -179,12 +179,12 @@ class ArchiverController extends AbstractController
 
             return $archiveDirectory;
         }
-        //$archiveRar = $this->container->get(ArchiveRar::class);
-        //if (true === $archiveRar->isValid($file)) {
+        // $archiveRar = $this->container->get(ArchiveRar::class);
+        // if (true === $archiveRar->isValid($file)) {
         //    $archiveDirectory = $this->createArchiveDirectory();
         //    $archiveRar->extract($archiveDirectory, $file);
         //    return $archiveDirectory;
-        //}
+        // }
         $archive7z = $this->container->get(Archive7z::class);
         if (true === $archive7z->isValid($file)) {
             $archiveDirectory = $this->createArchiveDirectory();

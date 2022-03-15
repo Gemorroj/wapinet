@@ -261,7 +261,7 @@ class FileRepository extends ServiceEntityRepository
                 $qb->setParameter('xgzip', 'application/x-gzip'); // gz
                 $qb->setParameter('gzip', 'application/gzip'); // gz
                 $qb->setParameter('xace', 'application/x-ace'); // ace
-                $qb->setParameter('xacecompressed', 'application/x-ace-compressed'); //ace
+                $qb->setParameter('xacecompressed', 'application/x-ace-compressed'); // ace
                 $qb->setParameter('xlha', 'application/x-lha'); // lzh
                 $qb->setParameter('xlzhcompressed', 'application/x-lzh-compressed'); // lzh
                 $qb->setParameter('iso1', 'application/x-cd-image');

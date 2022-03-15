@@ -48,9 +48,9 @@ class CodeController extends AbstractController
         if (null !== $data['text']) {
             return $code->convertString($data['algorithm'], $data['text']);
         }
-        //if (null !== $data['file']) {
+        // if (null !== $data['file']) {
         //    return $code->convertFile($algorithm, $data['file']);
-        //}
+        // }
 
         throw new ValidatorException('Не заполнено ни одного поля с конвертируемыми данными');
     }

@@ -32,7 +32,7 @@ class SearchType extends AbstractType
             ],
             'expanded' => true,
             'required' => true,
-            //'data' => 'relevance',
+            // 'data' => 'relevance',
             'label' => 'Сортировать по',
         ]);
 

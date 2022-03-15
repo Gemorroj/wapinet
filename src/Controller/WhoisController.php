@@ -55,7 +55,7 @@ class WhoisController extends AbstractController
         $phpwhois = $this->container->get(Phpwhois::class);
         $whois = $phpwhois->getWhois();
 
-        //$whois->non_icann = true;
+        // $whois->non_icann = true;
         $result = $whois->Lookup($data['query']);
 
         if (!empty($result['rawdata'])) {

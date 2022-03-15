@@ -29,10 +29,10 @@ class CodeType extends AbstractType
 
         $builder->add('text', TextareaType::class, ['label' => 'Текст', 'required' => false]);
 
-        //$builder->add('file', FileUrlType::class, [
+        // $builder->add('file', FileUrlType::class, [
         //    'label' => false,
         //    'required' => false,
-        //]);
+        // ]);
 
         $builder->add('submit', SubmitType::class, ['label' => 'Конвертировать']);
     }

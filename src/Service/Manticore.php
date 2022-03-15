@@ -43,7 +43,7 @@ class Manticore
     public function getPagerfanta(SphinxQL $sphinxQl, string $entityClass): Pagerfanta
     {
         $result = $sphinxQl->execute();
-        //$sphinxQl->reset();
+        // $sphinxQl->reset();
         $meta = $sphinxQl->query('SHOW META')->execute();
 
         $bridge = new Bridge($this->entityManager, $entityClass);

@@ -227,7 +227,7 @@ class GistController extends AbstractController
 
         // обновляем ip и браузер только если сообщение редактирует владелец
         if ($data->getUser()->isEqualTo($this->getUser())) {
-            //$data->setUser($this->getUser());
+            // $data->setUser($this->getUser());
             $data->setIp($request->getClientIp());
             $data->setBrowser($request->headers->get('User-Agent', ''));
         }

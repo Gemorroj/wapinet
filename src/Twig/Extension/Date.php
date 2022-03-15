@@ -93,7 +93,7 @@ class Date extends AbstractExtension
                 return 'Послезавтра в '.$datetime->format('H:i');
             }
 
-            //return $datetime->format('d.m.Y H:i:s');
+            // return $datetime->format('d.m.Y H:i:s');
             return $datetime->format('d.m.Y H:i');
         }
 

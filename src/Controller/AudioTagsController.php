@@ -82,7 +82,7 @@ class AudioTagsController extends AbstractController
         $comments = $info['comments'] ?? [];
 
         $this->setFormData($form, $comments);
-        $originalForm = clone $form; //hack stupid symfony
+        $originalForm = clone $form; // hack stupid symfony
 
         try {
             $form->handleRequest($request);
@@ -116,7 +116,7 @@ class AudioTagsController extends AbstractController
     private function setFormData(FormInterface $form, array $tags): void
     {
         $data = [
-            //'picture' => null,
+            // 'picture' => null,
             'title' => $tags['title'][0] ?? '',
             'album_artist' => $tags['album_artist'][0] ?? ($tags['albumartist'][0] ?? ($tags['band'][0] ?? '')),
             'artist' => $tags['artist'][0] ?? '',
@@ -185,7 +185,7 @@ class AudioTagsController extends AbstractController
             'url_user' => [$data['url_user']],
             'genre' => [$data['genre']],
             'comment' => [$data['comment']],
-            //'picture' => null,
+            // 'picture' => null,
         ];
 
         $requestForm = $request->request->get($form->getName());
@@ -227,7 +227,7 @@ class AudioTagsController extends AbstractController
             case 'mp2':
             case 'mp1':
             case 'riff': // maybe not officially, but people do it anyway
-                return ['id3v1', /*'id3v2.2', */ 'id3v2.3', 'id3v2.4'/*'ape', 'lyrics3'*/];
+                return ['id3v1', /* 'id3v2.2', */ 'id3v2.3', 'id3v2.4'/* 'ape', 'lyrics3' */];
                 break;
 
             case 'mpc':

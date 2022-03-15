@@ -106,7 +106,7 @@ class File implements PasswordAuthenticatedUserInterface
 
     public function __unserialize(array $data): void
     {
-        $this->file = new BaseFile($data['file'], false); //fix события (файлы могут быть удалены)
+        $this->file = new BaseFile($data['file'], false); // fix события (файлы могут быть удалены)
         unset($data['file']);
 
         foreach ($data as $key => $value) {
