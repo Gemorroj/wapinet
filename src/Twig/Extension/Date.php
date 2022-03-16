@@ -115,7 +115,7 @@ class Date extends AbstractExtension
         return '';
     }
 
-    public function getLength(int $seconds): string
+    public function getLength(int|float|string $seconds): string
     {
         $length = '';
         $d1 = new \DateTime();
