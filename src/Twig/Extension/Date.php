@@ -119,7 +119,7 @@ class Date extends AbstractExtension
     {
         $length = '';
         $d1 = new \DateTime();
-        $d2 = new \DateTime('- '.$seconds.' seconds');
+        $d2 = new \DateTime('- '.\round($seconds).' seconds');
 
         $iv = $d2->diff($d1);
 
