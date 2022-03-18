@@ -1,6 +1,6 @@
 {
     "devDependencies": {
-        "@symfony/webpack-encore": "^1.8.1",
+        "@symfony/webpack-encore": "^1.8.2",
         "core-js": "^3.21.1",
         "file-loader": "^6.2.0",
         "regenerator-runtime": "^0.13.9"
