@@ -39,7 +39,7 @@ class PhpObfuscatorController extends AbstractController
 
     private function getObfuscator(array $data): string
     {
-        $code = $this->cleanCode($data['code']);
+        $code = $this->cleanCode($data['code'] ?? '');
 
         if ($data['remove_comments']) {
             $code = \preg_replace("#(?<!:|\\\)//.*$#m", ' ', $code); // функция уничтожения комментариев
