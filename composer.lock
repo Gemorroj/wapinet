@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "98da4948e31290ef14343d7e089db5d9",
+    "content-hash": "5f3a3bae8c4839f3c024192f9c088421",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -2444,25 +2444,25 @@
         },
         {
             "name": "gemorroj/syntax",
-            "version": "4.1.1",
+            "version": "4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/Syntax.git",
-                "reference": "86814ea0afee1321d0a36b45f27d22f2756658df"
+                "reference": "0b7b61dd85ae930ffe37b1e3ba8b2d1df091abc7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/Syntax/zipball/86814ea0afee1321d0a36b45f27d22f2756658df",
-                "reference": "86814ea0afee1321d0a36b45f27d22f2756658df",
+                "url": "https://api.github.com/repos/Gemorroj/Syntax/zipball/0b7b61dd85ae930ffe37b1e3ba8b2d1df091abc7",
+                "reference": "0b7b61dd85ae930ffe37b1e3ba8b2d1df091abc7",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.3",
-                "symfony/process": "^4.4|^5.0"
+                "symfony/process": "^4.4||^5.0||^6.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.18",
-                "phpunit/phpunit": "^9.5"
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "phpunit/phpunit": "^9.5.16"
             },
             "type": "library",
             "autoload": {
@@ -2472,7 +2472,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-3.0"
+                "LGPL-3.0-or-later"
             ],
             "authors": [
                 {
@@ -2482,9 +2482,9 @@
             "description": "PHP code syntax checker.",
             "support": {
                 "issues": "https://github.com/Gemorroj/Syntax/issues",
-                "source": "https://github.com/Gemorroj/Syntax/tree/4.1.1"
+                "source": "https://github.com/Gemorroj/Syntax/tree/4.1.2"
             },
-            "time": "2021-02-06T23:31:03+00:00"
+            "time": "2022-03-22T08:03:47+00:00"
         },
         {
             "name": "gemorroj/xbbcode",
