@@ -2193,16 +2193,16 @@
         },
         {
             "name": "gemorroj/ginfo",
-            "version": "5.3.0",
+            "version": "5.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/ginfo.git",
-                "reference": "50fe9995bb4aa029dc5ddba27db1320e31fdd423"
+                "reference": "4efb47b1a1d40e2f307ac4b7c19f87e741890b43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/50fe9995bb4aa029dc5ddba27db1320e31fdd423",
-                "reference": "50fe9995bb4aa029dc5ddba27db1320e31fdd423",
+                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/4efb47b1a1d40e2f307ac4b7c19f87e741890b43",
+                "reference": "4efb47b1a1d40e2f307ac4b7c19f87e741890b43",
                 "shasum": ""
             },
             "require": {
@@ -2210,12 +2210,15 @@
                 "ext-mbstring": "*",
                 "ext-pcre": "*",
                 "php": ">=7.3",
-                "symfony/process": "^4.4|^5.0"
+                "symfony/process": "^4.4||^5.0||^6.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.17",
-                "phpstan/phpstan": "^0.12",
-                "phpunit/phpunit": "^9.5"
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "phpstan/phpstan": "^1.0",
+                "phpunit/phpunit": "^9.5.16"
+            },
+            "suggest": {
+                "ext-apcu": "APCU info"
             },
             "type": "library",
             "autoload": {
@@ -2251,9 +2254,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Gemorroj/ginfo/issues",
-                "source": "https://github.com/Gemorroj/ginfo/tree/5.3.0"
+                "source": "https://github.com/Gemorroj/ginfo/tree/5.3.1"
             },
-            "time": "2021-01-03T01:07:01+00:00"
+            "time": "2022-03-26T16:19:24+00:00"
         },
         {
             "name": "gemorroj/htmlvalidator",
@@ -2392,25 +2395,25 @@
         },
         {
             "name": "gemorroj/stop-spam",
-            "version": "3.2.0",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/StopSpam.git",
-                "reference": "a24ac967a9065b69a553155603c9422951c35f84"
+                "reference": "7c8090a4863ec40cf42b15c4410d059d211d233b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/StopSpam/zipball/a24ac967a9065b69a553155603c9422951c35f84",
-                "reference": "a24ac967a9065b69a553155603c9422951c35f84",
+                "url": "https://api.github.com/repos/Gemorroj/StopSpam/zipball/7c8090a4863ec40cf42b15c4410d059d211d233b",
+                "reference": "7c8090a4863ec40cf42b15c4410d059d211d233b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.3",
-                "symfony/http-client": "^4.4|^5.0"
+                "symfony/http-client": "^4.4.11||^5.0||^6.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.17",
-                "phpunit/phpunit": "^9.5"
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "phpunit/phpunit": "^9.5.16"
             },
             "type": "library",
             "autoload": {
@@ -2420,7 +2423,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-3.0"
+                "LGPL-3.0-or-later"
             ],
             "authors": [
                 {
@@ -2438,9 +2441,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Gemorroj/StopSpam/issues",
-                "source": "https://github.com/Gemorroj/StopSpam/tree/3.2.0"
+                "source": "https://github.com/Gemorroj/StopSpam/tree/3.2.1"
             },
-            "time": "2021-01-03T12:33:01+00:00"
+            "time": "2022-03-26T16:12:14+00:00"
         },
         {
             "name": "gemorroj/syntax",
