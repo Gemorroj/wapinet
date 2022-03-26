@@ -5,7 +5,7 @@
 ##### Используются:
 - Symfony 5.4
 - Jquery Mobile
-- PHP 8.0
+- PHP 8.1
 - MySQL 8.0
 - Manticore
 - p7zip
@@ -60,10 +60,10 @@ firewall-cmd --permanent --add-service=https
 firewall-cmd --reload
 systemctl enable nginx
 ```
-- Установить php 8.0
+- Установить php 8.1
 ```bash
 dnf module reset php
-dnf module install php:remi-8.0
+dnf module install php:remi-8.1
 dnf install php-fpm php-cli php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-pecl-apcu php-pecl-zip php-process php-xml php-sodium
 systemctl enable php-fpm
 ```
@@ -117,10 +117,10 @@ make all3
 ```bash
 dnf install autoconf automake bzip2 bzip2-devel cmake freetype-devel gcc gcc-c++ libtool make nasm yasm pkgconfig zlib-devel
 
-mkdir /opt/ffmpeg_2021-05-15_build
-mkdir /opt/ffmpeg_2021-05-15_source
-build_directory="/opt/ffmpeg_2021-05-15_build"
-source_directory="/opt/ffmpeg_2021-05-15_source"
+mkdir /opt/ffmpeg_2022-03-26_build
+mkdir /opt/ffmpeg_2022-03-26_source
+build_directory="/opt/ffmpeg_2022-03-26_build"
+source_directory="/opt/ffmpeg_2022-03-26_source"
 PATH="$build_directory/bin:$PATH"
 
 cd $source_directory
@@ -142,9 +142,9 @@ make clean
 
 ####
 # create by hand the fucking pc file
-# /opt/ffmpeg_2021-05-15_build/lib/pkgconfig/x265.pc
+# /opt/ffmpeg_2022-03-26_build/lib/pkgconfig/x265.pc
 #
-# prefix=/opt/ffmpeg_2021-05-15_build
+# prefix=/opt/ffmpeg_2022-03-26_build
 # exec_prefix=${prefix}
 # libdir=${exec_prefix}/lib
 # includedir=${prefix}/include
@@ -168,9 +168,9 @@ make install
 make distclean
 
 cd $source_directory
-curl -O -L https://ftp.osuosl.org/pub/xiph/releases/ogg/libogg-1.3.4.tar.gz
-tar xzvf libogg-1.3.4.tar.gz
-cd libogg-1.3.4
+curl -O -L https://ftp.osuosl.org/pub/xiph/releases/ogg/libogg-1.3.5.tar.gz
+tar xzvf libogg-1.3.5.tar.gz
+cd libogg-1.3.5
 ./configure --prefix="$build_directory" --disable-shared
 make
 make install
@@ -206,7 +206,7 @@ make distclean
 cd $source_directory
 git clone https://chromium.googlesource.com/webm/libvpx.git 
 cd libvpx
-git checkout tags/v1.10.0
+git checkout tags/v1.11.0
 ./configure --prefix="$build_directory" --disable-examples --disable-unit-tests --enable-vp9-highbitdepth --as=yasm
 make
 make install
