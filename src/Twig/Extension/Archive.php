@@ -31,10 +31,10 @@ class Archive extends AbstractExtension
     /**
      * @return Entry[]|null
      */
-    public function getList(File $file): ?array
+    public function getList(File $file, ?int $limit = null): ?array
     {
         try {
-            $entries = $this->archive7z->getEntries($file);
+            $entries = $this->archive7z->getEntries($file, $limit);
         } catch (Exception $e) {
             $this->logger->warning($e->getMessage());
             $entries = null;

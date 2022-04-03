@@ -30,11 +30,11 @@ class Archive7z extends Archive
     /**
      * @return \Archive7z\Entry[]
      */
-    public function getEntries(File $file): array
+    public function getEntries(File $file, ?int $limit = null): array
     {
         $archive7z = new Base7zArchive($file->getPathname(), $this->parameterBag->get('wapinet_7z_path'));
 
-        return $archive7z->getEntries();
+        return $archive7z->getEntries(null, $limit);
     }
 
     public function extractEntry(File $file, string $entry, string $directory): void
