@@ -1962,16 +1962,16 @@
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
-            "version": "v1.0.7",
+            "version": "v1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/proxy-manager-lts.git",
-                "reference": "c828ced1f932094ab79e4120a106a666565e4d9c"
+                "reference": "581ab35f83ce2135057e0afae892fbf1c583bfb9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/proxy-manager-lts/zipball/c828ced1f932094ab79e4120a106a666565e4d9c",
-                "reference": "c828ced1f932094ab79e4120a106a666565e4d9c",
+                "url": "https://api.github.com/repos/FriendsOfPHP/proxy-manager-lts/zipball/581ab35f83ce2135057e0afae892fbf1c583bfb9",
+                "reference": "581ab35f83ce2135057e0afae892fbf1c583bfb9",
                 "shasum": ""
             },
             "require": {
@@ -2028,7 +2028,7 @@
             ],
             "support": {
                 "issues": "https://github.com/FriendsOfPHP/proxy-manager-lts/issues",
-                "source": "https://github.com/FriendsOfPHP/proxy-manager-lts/tree/v1.0.7"
+                "source": "https://github.com/FriendsOfPHP/proxy-manager-lts/tree/v1.0.8"
             },
             "funding": [
                 {
@@ -2040,7 +2040,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-02T09:29:19+00:00"
+            "time": "2022-04-28T20:30:12+00:00"
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
@@ -10435,16 +10435,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.6.2",
+            "version": "1.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "becb9603a31d70f5007d505877a7b812598dfe46"
+                "reference": "6128620b98292e0b69ea6d799871d77163681c8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/becb9603a31d70f5007d505877a7b812598dfe46",
-                "reference": "becb9603a31d70f5007d505877a7b812598dfe46",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/6128620b98292e0b69ea6d799871d77163681c8e",
+                "reference": "6128620b98292e0b69ea6d799871d77163681c8e",
                 "shasum": ""
             },
             "require": {
@@ -10470,7 +10470,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.6.2"
+                "source": "https://github.com/phpstan/phpstan/tree/1.6.3"
             },
             "funding": [
                 {
@@ -10490,7 +10490,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-27T11:05:24+00:00"
+            "time": "2022-04-28T11:27:53+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
