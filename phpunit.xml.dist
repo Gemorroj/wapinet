@@ -44,6 +44,17 @@
         <!-- ###+ symfony/mailer ### -->
         <env name="MAILER_DSN" value="smtp://localhost"/>
         <!-- ###- symfony/mailer ### -->
+
+        <!-- ###+ symfony/webapp-meta ### -->
+        <env name="MESSENGER_TRANSPORT_DSN" value="doctrine://default?auto_setup=0"/>
+        <!-- ###- symfony/webapp-meta ### -->
+
+        <!-- ###+ symfony/messenger ### -->
+        <!-- Choose one of the transports below -->
+        <!-- MESSENGER_TRANSPORT_DSN=doctrine://default -->
+        <!-- MESSENGER_TRANSPORT_DSN=amqp://guest:guest@localhost:5672/%2f/messages -->
+        <!-- MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages -->
+        <!-- ###- symfony/messenger ### -->
     </php>
 
     <testsuites>
