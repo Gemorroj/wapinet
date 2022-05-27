@@ -191,6 +191,9 @@
             "ref": "d2a601ea5ccad81de2a131ed68481d012ed4667c"
         }
     },
+    "masterminds/html5": {
+        "version": "2.7.5"
+    },
     "maxmind-db/reader": {
         "version": "v1.3.0"
     },
