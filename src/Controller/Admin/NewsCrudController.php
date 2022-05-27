@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Event;
 use App\Entity\News;
 use App\Entity\User;
+use Doctrine\Persistence\ManagerRegistry;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -69,7 +70,7 @@ class NewsCrudController extends AbstractCrudController
      */
     private function newsSubscriber(News $news): void
     {
-        $em = $this->container->get('doctrine')->getManager();
+        $em = $this->container->get(ManagerRegistry::class)->getManager();
 
         $userRepository = $em->getRepository(User::class);
         /** @var User[] $users */
@@ -90,5 +91,13 @@ class NewsCrudController extends AbstractCrudController
 
             $em->persist($entityEvent);
         }
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        $services = parent::getSubscribedServices();
+        $services[ManagerRegistry::class] = ManagerRegistry::class;
+
+        return $services;
     }
 }

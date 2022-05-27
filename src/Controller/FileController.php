@@ -25,6 +25,7 @@ use App\Service\Timezone;
 use App\Service\Translit;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Pagerfanta\Pagerfanta;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -267,7 +268,7 @@ class FileController extends AbstractController
         $response = $this->render('File/view.html.twig', ['file' => $file]);
         $this->incrementViews($file);
 
-        $entityManager = $this->container->get('doctrine')->getManager();
+        $entityManager = $this->container->get(ManagerRegistry::class)->getManager();
         $entityManager->persist($file);
         $entityManager->flush();
 
@@ -438,7 +439,7 @@ class FileController extends AbstractController
 
     private function editFileData(Request $request, File $data, File $oldData): File
     {
-        $entityManager = $this->container->get('doctrine')->getManager();
+        $entityManager = $this->container->get(ManagerRegistry::class)->getManager();
 
         /** @var UploadedFile|null $file */
         $file = $data->getFile();
@@ -539,7 +540,7 @@ class FileController extends AbstractController
 
         $hash = \md5_file($file->getPathname());
 
-        $entityManager = $this->container->get('doctrine')->getManager();
+        $entityManager = $this->container->get(ManagerRegistry::class)->getManager();
         $existingFile = $entityManager->getRepository(File::class)->findOneBy(['hash' => $hash]);
         if (null !== $existingFile) {
             throw new FileDuplicatedException($existingFile, $this->container->get('router'));
@@ -586,7 +587,7 @@ class FileController extends AbstractController
      */
     private function makeEditFileTags(File $file): void
     {
-        $entityManager = $this->container->get('doctrine')->getManager();
+        $entityManager = $this->container->get(ManagerRegistry::class)->getManager();
 
         // удаляем из коллекции устаревшие тэги
         $removedFileTagsCollection = $file->getFileTags()->filter(static function (FileTags $oldFileTags) use ($file): bool {
@@ -704,6 +705,7 @@ class FileController extends AbstractController
         $services[EventDispatcherInterface::class] = '?'.EventDispatcherInterface::class;
         $services[Paginate::class] = Paginate::class;
         $services[MimeGuesser::class] = MimeGuesser::class;
+        $services[ManagerRegistry::class] = ManagerRegistry::class;
 
         return $services;
     }
