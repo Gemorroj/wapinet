@@ -63,7 +63,7 @@
         "twig/extra-bundle": "^3.4",
         "twig/twig": "^3.4",
 
-        "babdev/pagerfanta-bundle": "^3.6",
+        "babdev/pagerfanta-bundle": "^3.7",
         "pagerfanta/doctrine-collections-adapter": "^v3.6",
         "pagerfanta/doctrine-orm-adapter": "^v3.6",
         "pagerfanta/twig": "^v3.6",
