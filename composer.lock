@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5cac7022008cdd3902569c358397eee3",
+    "content-hash": "b91397e38f675ba4788e266462feb886",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -3082,16 +3082,16 @@
         },
         {
             "name": "liip/imagine-bundle",
-            "version": "2.7.6",
+            "version": "2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipImagineBundle.git",
-                "reference": "9baad226c7cbc85e7cd751d2bc587c35b0ad0325"
+                "reference": "6063279c79f0c119475bad8a0066bf2513a6cfca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/9baad226c7cbc85e7cd751d2bc587c35b0ad0325",
-                "reference": "9baad226c7cbc85e7cd751d2bc587c35b0ad0325",
+                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/6063279c79f0c119475bad8a0066bf2513a6cfca",
+                "reference": "6063279c79f0c119475bad8a0066bf2513a6cfca",
                 "shasum": ""
             },
             "require": {
@@ -3178,9 +3178,9 @@
             ],
             "support": {
                 "issues": "https://github.com/liip/LiipImagineBundle/issues",
-                "source": "https://github.com/liip/LiipImagineBundle/tree/2.7.6"
+                "source": "https://github.com/liip/LiipImagineBundle/tree/2.8.0"
             },
-            "time": "2022-01-14T16:46:57+00:00"
+            "time": "2022-05-30T13:06:31+00:00"
         },
         {
             "name": "maxmind-db/reader",
@@ -10706,16 +10706,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.7.3",
+            "version": "1.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "48c4621b1a6dde32aab2e9a79658b843ffb614f7"
+                "reference": "9381761d40a5daa3eee2ace98b9eaa8fed1f8ecc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/48c4621b1a6dde32aab2e9a79658b843ffb614f7",
-                "reference": "48c4621b1a6dde32aab2e9a79658b843ffb614f7",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9381761d40a5daa3eee2ace98b9eaa8fed1f8ecc",
+                "reference": "9381761d40a5daa3eee2ace98b9eaa8fed1f8ecc",
                 "shasum": ""
             },
             "require": {
@@ -10741,7 +10741,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.7.3"
+                "source": "https://github.com/phpstan/phpstan/tree/1.7.4"
             },
             "funding": [
                 {
@@ -10761,7 +10761,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-29T11:36:09+00:00"
+            "time": "2022-05-30T12:42:52+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",

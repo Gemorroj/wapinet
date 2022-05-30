@@ -72,7 +72,7 @@
         "friendsofsymfony/jsrouting-bundle": "^3.1",
         "james-heinrich/getid3": "^1.9.21",
         "vich/uploader-bundle": "^1.19",
-        "liip/imagine-bundle": "^2.7",
+        "liip/imagine-bundle": "^2.8",
         "gregwar/captcha-bundle": "^2.2",
         "tufanbarisyildirim/php-apk-parser": "^2.0",
         "geoip2/geoip2": "^2.12",
