@@ -4,6 +4,7 @@ namespace App\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,23 +13,23 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
+#[AsCommand(
+    name: 'app:files-clear',
+    description: 'Clean old files',
+)]
 class FilesClearCommand extends Command
 {
-    protected static $defaultName = 'app:files-clear';
-
     public function __construct(
         private EntityManagerInterface $entityManager,
         private Filesystem $filesystem,
-        private ParameterBagInterface $parameterBag,
-        string $name = null,
+        private ParameterBagInterface $parameterBag
     ) {
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function configure(): void
     {
         $this
-            ->setDescription('Clean old files')
             ->setDefinition([
                 new InputArgument('lifetime', InputArgument::OPTIONAL, 'The lifetime timeout', '1 year'),
             ])

@@ -7,6 +7,7 @@ use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -14,23 +15,19 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 
+#[AsCommand(
+    name: 'app:subscriber-send',
+    description: 'Send emails to subscribers',
+)]
 class SubscriberSendCommand extends Command
 {
-    protected static $defaultName = 'app:subscriber-send';
-
     public function __construct(
         private EntityManagerInterface $entityManager,
         private MailerInterface $mailer,
         private LoggerInterface $logger,
         private ParameterBagInterface $parameterBag,
-        string $name = null
     ) {
-        parent::__construct($name);
-    }
-
-    protected function configure(): void
-    {
-        $this->setDescription('Send emails to subscribers');
+        parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

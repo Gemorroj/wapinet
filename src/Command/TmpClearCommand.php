@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -10,19 +11,20 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
+#[AsCommand(
+    name: 'app:tmp-clear',
+    description: 'Clean tmp files',
+)]
 class TmpClearCommand extends Command
 {
-    protected static $defaultName = 'app:tmp-clear';
-
-    public function __construct(private ParameterBagInterface $parameterBag, private Filesystem $filesystem, string $name = null)
+    public function __construct(private ParameterBagInterface $parameterBag, private Filesystem $filesystem)
     {
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function configure(): void
     {
         $this
-            ->setDescription('Clean tmp files')
             ->setDefinition([
                 new InputArgument('lifetime', InputArgument::OPTIONAL, 'The lifetime timeout', '1 day'),
             ])

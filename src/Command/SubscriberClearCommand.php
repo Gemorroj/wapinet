@@ -3,24 +3,26 @@
 namespace App\Command;
 
 use App\Repository\EventRepository;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'app:subscriber-clear',
+    description: 'Clean events',
+)]
 class SubscriberClearCommand extends Command
 {
-    protected static $defaultName = 'app:subscriber-clear';
-
-    public function __construct(private EventRepository $eventRepository, string $name = null)
+    public function __construct(private EventRepository $eventRepository)
     {
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function configure(): void
     {
         $this
-            ->setDescription('Clean events')
             ->setDefinition([
                 new InputArgument('lifetime', InputArgument::OPTIONAL, 'The lifetime timeout', '30 days'),
             ])
