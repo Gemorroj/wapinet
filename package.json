@@ -5,6 +5,9 @@
         "file-loader": "^6.2.0",
         "regenerator-runtime": "^0.13.9"
     },
+    "engines": {
+        "node": ">= 16"
+    },
     "license": "GPL-3.0-or-later",
     "scripts": {
         "dev-server": "encore dev-server",
