@@ -68,14 +68,14 @@
         "pagerfanta/doctrine-orm-adapter": "^v3.6",
         "pagerfanta/twig": "^v3.6",
 
-        "easycorp/easyadmin-bundle": "^4.2",
-        "friendsofsymfony/jsrouting-bundle": "^3.1",
-        "james-heinrich/getid3": "^1.9.21",
-        "vich/uploader-bundle": "^1.19",
+        "easycorp/easyadmin-bundle": "^4.3",
+        "friendsofsymfony/jsrouting-bundle": "^3.2",
+        "james-heinrich/getid3": "^1.9.22",
+        "vich/uploader-bundle": "^1.21",
         "liip/imagine-bundle": "^2.8",
         "gregwar/captcha-bundle": "^2.2",
         "tufanbarisyildirim/php-apk-parser": "^2.0",
-        "geoip2/geoip2": "^2.12",
+        "geoip2/geoip2": "^2.13",
         "christeredvartsen/php-bittorrent": "^2.0",
         "foolz/sphinxql-query-builder": "^3.0",
         "php-ffmpeg/php-ffmpeg": "^1.0",
@@ -102,11 +102,11 @@
         "symfony/stopwatch": "6.1.*",
         "symfony/var-dumper": "6.1.*",
         "symfony/web-profiler-bundle": "6.1.*",
-        "phpstan/phpstan": "^1.6",
+        "phpstan/phpstan": "^1.8",
         "phpstan/phpstan-symfony": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
         "phpstan/phpstan-doctrine": "^1.0",
-        "friendsofphp/php-cs-fixer": "^3.8"
+        "friendsofphp/php-cs-fixer": "^3.11"
     },
     "config": {
         "allow-plugins": {
