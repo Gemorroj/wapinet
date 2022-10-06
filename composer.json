@@ -68,7 +68,7 @@
         "pagerfanta/doctrine-orm-adapter": "^v3.6",
         "pagerfanta/twig": "^v3.6",
 
-        "easycorp/easyadmin-bundle": "^4.3",
+        "easycorp/easyadmin-bundle": "^4.4",
         "friendsofsymfony/jsrouting-bundle": "^3.2",
         "james-heinrich/getid3": "^1.9.22",
         "vich/uploader-bundle": "^1.21",
@@ -97,7 +97,7 @@
         "symfony/browser-kit": "6.1.*",
         "symfony/css-selector": "6.1.*",
         "symfony/debug-bundle": "6.1.*",
-        "symfony/maker-bundle": "^1.43",
+        "symfony/maker-bundle": "^1.47",
         "symfony/phpunit-bridge": "6.1.*",
         "symfony/stopwatch": "6.1.*",
         "symfony/var-dumper": "6.1.*",
