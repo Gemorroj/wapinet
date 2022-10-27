@@ -10,7 +10,7 @@
         "webpack-cli": "^4.10.0"
     },
     "engines": {
-        "node": ">= 16"
+        "node": ">= 18"
     },
     "license": "GPL-3.0-or-later",
     "scripts": {
