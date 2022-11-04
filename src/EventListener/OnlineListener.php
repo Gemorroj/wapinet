@@ -4,9 +4,7 @@ namespace App\EventListener;
 
 use App\Entity\Online;
 use App\Entity\User;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 class OnlineListener
@@ -42,14 +40,14 @@ class OnlineListener
             $online->setBrowser($requestBrowser);
             $online->setIp($requestIp);
         }
-        $online->setDatetime(new DateTime());
+        $online->setDatetime(new \DateTime());
         $online->setPath($request->getPathInfo());
 
         $this->em->persist($online);
 
         try {
             $this->em->flush();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // могут быть конкурентные запросы, которые запишут в онлайн данные на уникальном индексе
             // игнорируем, т.к. маловажно
         }
@@ -58,7 +56,7 @@ class OnlineListener
     private function cleanupOnline(): void
     {
         $this->em->createQuery('DELETE FROM App\Entity\Online o WHERE o.datetime < :lifetime')
-            ->setParameter('lifetime', new DateTime('now -'.User::LIFETIME))
+            ->setParameter('lifetime', new \DateTime('now -'.User::LIFETIME))
             ->execute();
     }
 }

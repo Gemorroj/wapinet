@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
 use Syntax\Php;
@@ -17,7 +16,7 @@ class PhpValidator
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function validateFile(BaseFile $file): array
     {
@@ -30,7 +29,7 @@ class PhpValidator
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function validateFragment(string $source): array
     {

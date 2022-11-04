@@ -5,7 +5,6 @@ namespace App\Twig\Extension;
 use App\Entity\User;
 use App\Repository\FileRepository;
 use App\Service\Timezone;
-use DateTime;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -48,15 +47,15 @@ class File extends AbstractExtension
     public function getCountToday(): int
     {
         return $this->fileRepository->countDate(
-            new DateTime('today', $this->timezoneHelper->getTimezone())
+            new \DateTime('today', $this->timezoneHelper->getTimezone())
         );
     }
 
     public function getCountYesterday(): int
     {
         return $this->fileRepository->countDate(
-            new DateTime('yesterday', $this->timezoneHelper->getTimezone()),
-            new DateTime('today', $this->timezoneHelper->getTimezone())
+            new \DateTime('yesterday', $this->timezoneHelper->getTimezone()),
+            new \DateTime('today', $this->timezoneHelper->getTimezone())
         );
     }
 

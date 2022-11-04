@@ -7,7 +7,6 @@ use App\Form\Type\User\SearchType;
 use App\Repository\UserRepository;
 use App\Service\Manticore;
 use App\Service\Paginate;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,7 +55,7 @@ class UsersController extends AbstractController
                 $query = $userRepository->getOnlineUsersQuery();
                 $pagerfanta = $paginate->paginate($query, $page);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 

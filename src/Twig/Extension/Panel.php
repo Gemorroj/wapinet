@@ -4,7 +4,6 @@ namespace App\Twig\Extension;
 
 use App\Entity\User;
 use App\Entity\UserPanel;
-use ArrayIterator;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -25,7 +24,7 @@ class Panel extends AbstractExtension
         ];
     }
 
-    public function getPanel(array $options = []): ArrayIterator
+    public function getPanel(array $options = []): \ArrayIterator
     {
         $token = $this->tokenStorage->getToken();
 

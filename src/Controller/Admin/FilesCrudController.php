@@ -79,6 +79,8 @@ class FilesCrudController extends AbstractCrudController
         if (Crud::PAGE_EDIT === $pageName) {
             return [$originalFileName, $mimeType, $description, $countViews, $hidden];
         }
+
+        return [];
     }
 
     public function deleteEntity(EntityManagerInterface $entityManager, $entityInstance): void

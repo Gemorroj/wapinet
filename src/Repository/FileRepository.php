@@ -320,7 +320,7 @@ class FileRepository extends ServiceEntityRepository
             ->andWhere('f.hidden = 0')
 
             ->orderBy('f.id', 'DESC')
-            ;
+        ;
 
         return $queryBuilder->getQuery();
     }

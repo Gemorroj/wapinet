@@ -3,7 +3,6 @@
 namespace App\Twig\Extension;
 
 use App\Service\Ffmpeg as FfmpegHelper;
-use Exception;
 use FFMpeg\Format\Audio\DefaultAudio;
 use FFMpeg\Format\Audio\Mp3;
 use FFMpeg\Media\Audio as FFmpegAudio;
@@ -49,7 +48,7 @@ class Audio extends AbstractExtension
                 if (false === \is_file($this->getPublicDir().$mp3File)) {
                     throw new \RuntimeException('Не удалось создать MP3 файл');
                 }
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $this->logger->warning('Ошибка при конвертировании аудио в MP3.', [$e]);
 
                 return null;

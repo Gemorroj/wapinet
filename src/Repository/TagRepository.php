@@ -66,10 +66,10 @@ class TagRepository extends ServiceEntityRepository
 
         $names = \array_unique($names);
 
+        /** @var Tag[] $tags */
         $tags = $this->findBy(['name' => $names]);
 
         $loadedNames = [];
-        /** @var Tag $loadedTag */
         foreach ($tags as $loadedTag) {
             $loadedNames[] = $loadedTag->getName();
         }

@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Form\Type\CssValidator\CssValidatorType;
 use App\Service\CssValidator;
 use CSSValidator\Response as CSSValidatorResponse;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +31,7 @@ class CssValidatorController extends AbstractController
                     $result = $this->getCssValidator($data);
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 

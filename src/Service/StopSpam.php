@@ -3,7 +3,6 @@
 namespace App\Service;
 
 use App\Entity\User;
-use Exception;
 use StopSpam\Query as StopSpamQuery;
 use StopSpam\Request as StopSpamRequest;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,7 +32,7 @@ class StopSpam
 
         try {
             $response = $this->request->send($query);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // игнорируем проблемы с сетью или неработоспособность апи
             return;
         }

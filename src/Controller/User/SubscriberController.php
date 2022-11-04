@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Entity\UserSubscriber;
 use App\Form\Type\User\SubscriberType;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,7 +43,7 @@ class SubscriberController extends AbstractController
                     return $this->redirectToRoute('wapinet_user_profile', ['username' => $user->getUsername()]);
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 

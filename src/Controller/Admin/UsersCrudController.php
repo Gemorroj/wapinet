@@ -92,5 +92,7 @@ class UsersCrudController extends AbstractCrudController
         if (Crud::PAGE_EDIT === $pageName) {
             return [$username, $enabled, $email, $roles, $sex, $birthday, $timezone, $info];
         }
+
+        return [];
     }
 }

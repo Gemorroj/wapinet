@@ -3,7 +3,6 @@
 namespace App\Twig\Extension;
 
 use App\Service\Playlist as PlaylistHelper;
-use Exception;
 use M3uParser\M3uData;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\File;
@@ -32,7 +31,7 @@ class Playlist extends AbstractExtension
     {
         try {
             return $this->playlistHelper->parseFile($file);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->warning($e->getMessage());
 
             return null;

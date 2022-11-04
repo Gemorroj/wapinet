@@ -244,8 +244,8 @@ class FileController extends AbstractController
         }
 
         if ($file->isHidden()) {
-            $isAdmin = ($this->getUser() instanceof User) && ($this->isGranted('ROLE_ADMIN', $this->getUser()));
-            $isFileUser = ($this->getUser() instanceof User) && ($file->getUser() instanceof User) && ($file->getUser()->isEqualTo($this->getUser()));
+            $isAdmin = ($this->getUser() instanceof User) && $this->isGranted('ROLE_ADMIN', $this->getUser());
+            $isFileUser = ($this->getUser() instanceof User) && ($file->getUser() instanceof User) && $file->getUser()->isEqualTo($this->getUser());
 
             if (!$isAdmin && !$isFileUser) {
                 throw $this->createNotFoundException('Файл скрыт и не доступен для просмотра');

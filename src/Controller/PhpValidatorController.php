@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Form\Type\PhpValidator\PhpValidatorType;
 use App\Service\PhpValidator;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +29,7 @@ class PhpValidatorController extends AbstractController
                     $result = $this->getPhpValidator($data);
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 

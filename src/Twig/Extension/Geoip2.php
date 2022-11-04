@@ -3,7 +3,6 @@
 namespace App\Twig\Extension;
 
 use App\Service\Geoip2 as Geoip2Helper;
-use Exception;
 use GeoIp2\Model\Country;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -23,7 +22,7 @@ class Geoip2 extends AbstractExtension
             new TwigFunction('wapinet_geoip2_country', function (string $ip): ?Country {
                 try {
                     return $this->geoip2->getCountry($ip);
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     return null;
                 }
             }),

@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Form\Type\Code\CodeType;
 use App\Service\Code;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +29,7 @@ class CodeController extends AbstractController
                     $hash = $this->getCode($data);
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 

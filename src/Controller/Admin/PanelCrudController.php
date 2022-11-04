@@ -55,5 +55,7 @@ class PanelCrudController extends AbstractCrudController
         if (Crud::PAGE_EDIT === $pageName) {
             return [$forum, $guestbook, $gist, $file, $archiver, $downloads, $utilities, $programming];
         }
+
+        return [];
     }
 }

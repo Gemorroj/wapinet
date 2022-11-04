@@ -4,7 +4,6 @@ namespace App\Twig\Extension\User;
 
 use App\Entity\User;
 use App\Repository\UserFriendRepository;
-use DateTime;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -40,6 +39,6 @@ class Friend extends AbstractExtension
 
     public function countOnlineFriends(User $user): int
     {
-        return $this->friendRepository->getFriendsCount($user, new DateTime('now -'.User::LIFETIME));
+        return $this->friendRepository->getFriendsCount($user, new \DateTime('now -'.User::LIFETIME));
     }
 }

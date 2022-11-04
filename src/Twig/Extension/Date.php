@@ -25,9 +25,9 @@ class Date extends AbstractExtension
         ];
     }
 
-    public function getDate(?\DateTimeInterface $date): string
+    public function getDate(\DateTime|\DateTimeImmutable|null $date): string
     {
-        if ($date instanceof \DateTimeInterface) {
+        if ($date) {
             $timezone = $this->timezone->getTimezone();
 
             if (null !== $timezone) {
@@ -62,9 +62,9 @@ class Date extends AbstractExtension
         return '';
     }
 
-    public function getDateTime(?\DateTimeInterface $datetime): string
+    public function getDateTime(\DateTime|\DateTimeImmutable|null $datetime): string
     {
-        if ($datetime instanceof \DateTimeInterface) {
+        if ($datetime) {
             $timezone = $this->timezone->getTimezone();
 
             if (null !== $timezone) {
@@ -100,9 +100,9 @@ class Date extends AbstractExtension
         return '';
     }
 
-    public function getTime(?\DateTimeInterface $datetime): string
+    public function getTime(\DateTime|\DateTimeImmutable|null $datetime): string
     {
-        if ($datetime instanceof \DateTimeInterface) {
+        if ($datetime) {
             $timezone = $this->timezone->getTimezone();
 
             if (null !== $timezone) {

@@ -2,18 +2,15 @@
 
 namespace App\Service;
 
-use Whois;
-use WhoisUtils;
-
 class Phpwhois
 {
-    public function getWhois(): Whois
+    public function getWhois(): \Whois
     {
-        return new Whois();
+        return new \Whois();
     }
 
-    public function getUtils(): WhoisUtils
+    public function getUtils(): \WhoisUtils
     {
-        return new WhoisUtils();
+        return new \WhoisUtils();
     }
 }

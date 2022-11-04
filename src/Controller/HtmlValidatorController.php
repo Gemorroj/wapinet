@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Form\Type\HtmlValidator\HtmlValidatorType;
 use App\Service\HtmlValidator;
-use Exception;
 use HTMLValidator\Response as HTMLValidatorResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -31,7 +30,7 @@ class HtmlValidatorController extends AbstractController
                     $result = $this->getHtmlValidator($data);
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 

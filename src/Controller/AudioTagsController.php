@@ -8,10 +8,6 @@ use App\Form\Type\AudioTags\AudioTagsEditType;
 use App\Form\Type\AudioTags\AudioTagsType;
 use App\Service\Getid3;
 use App\Service\Translit;
-use const DIRECTORY_SEPARATOR;
-use Exception;
-use getid3_lib;
-use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Form\FormError;
@@ -51,7 +47,7 @@ class AudioTagsController extends AbstractController
                     ]);
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -67,7 +63,7 @@ class AudioTagsController extends AbstractController
         $tempDirectory = $this->getParameter('kernel.tmp_dir');
         $tempName = \tempnam($tempDirectory, 'audio_file');
         if (false === $tempName) {
-            throw new RuntimeException('Не удалось создать временный файл');
+            throw new \RuntimeException('Не удалось создать временный файл');
         }
 
         return $file->move($tempDirectory, $tempName);
@@ -101,7 +97,7 @@ class AudioTagsController extends AbstractController
             foreach ($e->getMessages() as $message) {
                 $form->addError(new FormError($message));
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -143,7 +139,7 @@ class AudioTagsController extends AbstractController
     {
         $getid3 = $this->container->get(Getid3::class)->getId3();
         $info = $getid3->analyze($this->getFilePath($fileName));
-        getid3_lib::CopyTagsToComments($info);
+        \getid3_lib::CopyTagsToComments($info);
 
         if (!isset($info['tags'])) {
             $info['tags'] = [];
@@ -277,7 +273,7 @@ class AudioTagsController extends AbstractController
 
     private function getFilePath(string $fileName): string
     {
-        return $this->getParameter('kernel.tmp_dir').DIRECTORY_SEPARATOR.$fileName;
+        return $this->getParameter('kernel.tmp_dir').\DIRECTORY_SEPARATOR.$fileName;
     }
 
     public static function getSubscribedServices(): array

@@ -55,5 +55,7 @@ class GistsCrudController extends AbstractCrudController
         if (Crud::PAGE_EDIT === $pageName) {
             return [$subject, $body];
         }
+
+        return [];
     }
 }

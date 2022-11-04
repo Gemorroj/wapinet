@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Form\Type\Hash\HashType;
 use App\Service\Hash;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +29,7 @@ class HashController extends AbstractController
                     $hash = $this->getHash($data);
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 

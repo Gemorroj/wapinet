@@ -72,7 +72,7 @@ class UserPanel extends \ArrayObject
     }
 
     /**
-     * @return \ArrayIterator<string, array<string, string|bool>>
+     * @return \ArrayIterator<string, array{route: string, name: string, enabled: bool}>
      */
     public function getIterator(): \ArrayIterator
     {

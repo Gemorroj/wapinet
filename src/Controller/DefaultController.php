@@ -42,7 +42,7 @@ class DefaultController extends AbstractController
         // get the error if any (works with forward and redirect -- see below)
         if ($request->attributes->has($authErrorKey)) {
             $error = $request->attributes->get($authErrorKey);
-        } elseif (null !== $session && $session->has($authErrorKey)) {
+        } elseif ($session->has($authErrorKey)) {
             $error = $session->get($authErrorKey);
             $session->remove($authErrorKey);
         } else {
@@ -54,9 +54,9 @@ class DefaultController extends AbstractController
         }
 
         // last username entered by the user
-        $lastUsername = (null === $session) ? '' : $session->get($lastUsernameKey);
+        $lastUsername = $session->get($lastUsernameKey);
 
-        $csrfToken = $csrfTokenManager?->getToken('authenticate')->getValue();
+        $csrfToken = $csrfTokenManager->getToken('authenticate')->getValue();
 
         return $this->render('Security/login.html.twig', [
             'last_username' => $lastUsername,
@@ -91,9 +91,7 @@ class DefaultController extends AbstractController
             $entityManager->flush();
 
             $session = $request->getSession();
-            if ($session) {
-                $session->set(Security::LAST_USERNAME, $user->getUsername());
-            }
+            $session->set(Security::LAST_USERNAME, $user->getUsername());
 
             return $this->redirectToRoute('wapinet_login');
         }

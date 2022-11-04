@@ -4,7 +4,6 @@ namespace App\Twig\Extension;
 
 use App\Service\Archiver\Archive7z;
 use Archive7z\Entry;
-use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Twig\Extension\AbstractExtension;
@@ -35,7 +34,7 @@ class Archive extends AbstractExtension
     {
         try {
             $entries = $this->archive7z->getEntries($file, $limit);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->warning($e->getMessage());
             $entries = null;
         }

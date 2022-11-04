@@ -49,14 +49,11 @@ class NewsCrudController extends AbstractCrudController
         if (Crud::PAGE_EDIT === $pageName) {
             return [$subject, $body];
         }
+
+        return [];
     }
 
-    /**
-     * Создание новости.
-     *
-     * @return News
-     */
-    public function createEntity(string $entityFqcn)
+    public function createEntity(string $entityFqcn): News
     {
         $news = new News();
         $news->setCreatedBy($this->getUser());
@@ -65,9 +62,6 @@ class NewsCrudController extends AbstractCrudController
         return $news;
     }
 
-    /**
-     * Подписка на новости.
-     */
     private function newsSubscriber(News $news): void
     {
         $em = $this->container->get(ManagerRegistry::class)->getManager();

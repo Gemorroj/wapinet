@@ -4,8 +4,6 @@ namespace App\Controller;
 
 use App\Form\Type\Rename\RenameType;
 use App\Service\Translit;
-use Exception;
-use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -33,7 +31,7 @@ class RenameController extends AbstractController
                     return $this->getRename($data);
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -56,7 +54,7 @@ class RenameController extends AbstractController
             return $file;
         }
 
-        throw new RuntimeException('Не указан файл');
+        throw new \RuntimeException('Не указан файл');
     }
 
     public static function getSubscribedServices(): array

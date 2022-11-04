@@ -35,7 +35,7 @@ class ProfileType extends AbstractType
             ->add('country', CountryType::class, ['label' => 'Страна', 'required' => false])
             ->add('vk', TextType::class, ['label' => 'ID вконтакте', 'required' => false, 'attr' => ['pattern' => '[a-z0-9_]{0,255}', 'placeholder' => 'id123456789']])
             ->add('info', TextareaType::class, ['label' => 'Дополнительная информация', 'required' => false, 'attr' => ['maxlength' => 5000]])
-            ;
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

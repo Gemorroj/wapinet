@@ -69,7 +69,7 @@ class UserSubscriber extends \ArrayObject
     }
 
     /**
-     * @return \ArrayIterator<string, array<string, string|bool>>
+     * @return \ArrayIterator<string, array{name: string, enabled: bool}>
      */
     public function getIterator(): \ArrayIterator
     {

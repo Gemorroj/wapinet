@@ -4,8 +4,6 @@ namespace App\Twig\Extension;
 
 use App\Exception\ArchiverException;
 use App\Service\Archiver\ArchiveZip;
-use Exception;
-use const PATHINFO_EXTENSION;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
@@ -94,7 +92,7 @@ class JavaApp extends AbstractExtension
             while (!$reader->eof()) {
                 $content .= $reader->fgets();
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $content = null;
         }
 
@@ -105,7 +103,7 @@ class JavaApp extends AbstractExtension
     {
         foreach (\explode(',', $content) as $v) {
             $v = \trim(\trim($v), '/');
-            if ('png' === \strtolower(\pathinfo($v, PATHINFO_EXTENSION))) {
+            if ('png' === \strtolower(\pathinfo($v, \PATHINFO_EXTENSION))) {
                 try {
                     $this->archiveZip->extractEntry(
                         new BaseFile($this->getPublicDir().$path, false),
@@ -119,7 +117,7 @@ class JavaApp extends AbstractExtension
 
                     return true;
                     break;
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                 }
             }
         }

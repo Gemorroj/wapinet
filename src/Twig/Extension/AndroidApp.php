@@ -4,7 +4,6 @@ namespace App\Twig\Extension;
 
 use App\Service\Apk;
 use App\Service\Archiver\ArchiveZip;
-use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -60,7 +59,7 @@ class AndroidApp extends AbstractExtension
             if ($icon && $this->extractIcon($icon, $path, $screenshot)) {
                 return true;
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->warning('Не удалось прочитать APK файл.', [$e]);
         }
 
@@ -123,7 +122,7 @@ class AndroidApp extends AbstractExtension
             );
 
             return true;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
         }
 
         return false;

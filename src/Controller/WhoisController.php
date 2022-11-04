@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Exception\WhoisException;
 use App\Form\Type\Whois\WhoisType;
 use App\Service\Phpwhois;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +34,7 @@ class WhoisController extends AbstractController
 
                 $resultHtml = $this->getWhois($data);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 

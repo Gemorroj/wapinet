@@ -3,7 +3,6 @@
 namespace App\Twig\Extension;
 
 use App\Service\Ffmpeg as FfmpegHelper;
-use Exception;
 use FFMpeg\Coordinate\Dimension;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\Format\Video\DefaultVideo;
@@ -53,7 +52,7 @@ class Video extends AbstractExtension
                 if (!\is_file($this->getPublicDir().$mp4File)) {
                     throw new \RuntimeException('Не удалось создать MP4 файл. '.$path);
                 }
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $this->logger->warning('Ошибка при конвертировании видео в MP4. '.$path, [$e]);
 
                 return null;
@@ -86,7 +85,7 @@ class Video extends AbstractExtension
                     $audioBitrate /= 1000;
                     $videoBitrate -= $audioBitrate;
                 }*/
-                $videoBitrate = \floor($videoBitrate);
+                $videoBitrate = (int) \floor($videoBitrate);
 
                 if ($videoBitrate < $format->getKiloBitrate()) {
                     $format->setKiloBitrate($videoBitrate);
@@ -135,7 +134,7 @@ class Video extends AbstractExtension
 
                     return null;
                 }
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $this->logger->warning('Ошибка при создании скриншота видео. '.$path, [$e]);
 
                 return null;

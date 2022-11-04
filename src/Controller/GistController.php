@@ -14,7 +14,6 @@ use App\Service\BotChecker;
 use App\Service\Manticore;
 use App\Service\Paginate;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -102,7 +101,7 @@ class GistController extends AbstractController
                     }
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->addFlash('notice', $e->getMessage());
         }
 
@@ -161,7 +160,7 @@ class GistController extends AbstractController
                     $pagerfanta = $this->searchManticore($manticore, $search['data'], $page);
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -210,7 +209,7 @@ class GistController extends AbstractController
                     return $this->redirect($url);
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 

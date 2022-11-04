@@ -3,7 +3,6 @@
 namespace App\Twig\Extension;
 
 use App\Service\Torrent as TorrentHelper;
-use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Twig\Extension\AbstractExtension;
@@ -31,7 +30,7 @@ class Torrent extends AbstractExtension
     {
         try {
             $data = $this->torrentHelper->decodeFile($file);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->warning($e->getMessage(), [$e]);
 
             return null;

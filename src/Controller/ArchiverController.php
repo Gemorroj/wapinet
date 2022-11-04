@@ -8,8 +8,6 @@ use App\Service\Archiver\Archive7z;
 use App\Service\Archiver\ArchiveRar;
 use App\Service\Archiver\ArchiveZip;
 use App\Service\Translit;
-use const DIRECTORY_SEPARATOR;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
@@ -52,7 +50,7 @@ class ArchiverController extends AbstractController
                     return $this->redirectToRoute('archiver_edit', ['archive' => $archive]);
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -75,7 +73,7 @@ class ArchiverController extends AbstractController
                     $this->addFile($archiveDirectory, $data['file']);
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -158,7 +156,7 @@ class ArchiverController extends AbstractController
                     return $this->redirectToRoute('archiver_edit', ['archive' => $archive]);
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -206,7 +204,7 @@ class ArchiverController extends AbstractController
      */
     private function checkArchiveDirectory(string $archive): string
     {
-        $directory = $this->getParameter('kernel.tmp_archiver_dir').DIRECTORY_SEPARATOR.$archive;
+        $directory = $this->getParameter('kernel.tmp_archiver_dir').\DIRECTORY_SEPARATOR.$archive;
 
         if (false === \is_dir($directory)) {
             throw new FileException('Не удалось найти временную директорию');
@@ -226,7 +224,7 @@ class ArchiverController extends AbstractController
      */
     private function createArchiveDirectory(): string
     {
-        $directory = $this->getParameter('kernel.tmp_archiver_dir').DIRECTORY_SEPARATOR.$this->generateArchiveName();
+        $directory = $this->getParameter('kernel.tmp_archiver_dir').\DIRECTORY_SEPARATOR.$this->generateArchiveName();
         $this->container->get(Filesystem::class)->mkdir($directory);
 
         return $directory;

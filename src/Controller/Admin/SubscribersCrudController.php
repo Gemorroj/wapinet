@@ -49,5 +49,7 @@ class SubscribersCrudController extends AbstractCrudController
         if (Crud::PAGE_EDIT === $pageName) {
             return [$emailNews, $emailFriends];
         }
+
+        return [];
     }
 }

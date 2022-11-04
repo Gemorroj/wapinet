@@ -3,7 +3,6 @@
 namespace App\Twig\Extension;
 
 use App\Repository\NewsRepository;
-use DateTime;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -23,7 +22,7 @@ class News extends AbstractExtension
         ];
     }
 
-    public function getLastDate(): ?DateTime
+    public function getLastDate(): ?\DateTime
     {
         $lastNews = $this->newsRepository->getLastNews();
         if ($lastNews) {
