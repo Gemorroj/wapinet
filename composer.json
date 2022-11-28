@@ -74,7 +74,7 @@
         "vich/uploader-bundle": "^2.0",
         "liip/imagine-bundle": "^2.9",
         "gregwar/captcha-bundle": "^2.2",
-        "tufanbarisyildirim/php-apk-parser": "^2.0",
+        "tufanbarisyildirim/php-apk-parser": "^3.0",
         "geoip2/geoip2": "^2.13",
         "christeredvartsen/php-bittorrent": "^2.0",
         "foolz/sphinxql-query-builder": "^3.0",
@@ -150,10 +150,12 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "@php bin/anti-terrorism"
         ],
         "post-update-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "@php bin/anti-terrorism"
         ]
     },
     "conflict": {
