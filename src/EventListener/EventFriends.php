@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class EventFriends implements EventSubscriberInterface
 {
-    public function __construct(private EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
     }
 
@@ -28,7 +28,7 @@ class EventFriends implements EventSubscriberInterface
 
     public function friendAdd(FriendEvent $event): void
     {
-        // Уведомление о добавлении  в друзья
+        // Уведомление о добавлении в друзья
         $entityEvent = new EntityEvent();
         if ($event->getUser()->isFemale()) {
             $entityEvent->setSubject('Вас добавила в друзья '.$event->getUser()->getUsername().'.');
@@ -41,7 +41,7 @@ class EventFriends implements EventSubscriberInterface
         ]);
         $entityEvent->setNeedEmail($event->getFriend()->getSubscriber()->getEmailFriends());
         $entityEvent->setUser($event->getFriend());
-        $this->em->persist($entityEvent);
+        $this->entityManager->persist($entityEvent);
 
         /** @var UserFriend $friend */
         foreach ($event->getUser()->getFriended() as $friend) {
@@ -64,10 +64,10 @@ class EventFriends implements EventSubscriberInterface
             $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()->getEmailFriends());
             $entityEvent->setUser($friend->getUser());
 
-            $this->em->persist($entityEvent);
+            $this->entityManager->persist($entityEvent);
         }
 
-        $this->em->flush();
+        $this->entityManager->flush();
     }
 
     public function friendDelete(FriendEvent $event): void
@@ -85,7 +85,7 @@ class EventFriends implements EventSubscriberInterface
         ]);
         $entityEvent->setNeedEmail($event->getFriend()->getSubscriber()->getEmailFriends());
         $entityEvent->setUser($event->getFriend());
-        $this->em->persist($entityEvent);
+        $this->entityManager->persist($entityEvent);
 
         /** @var UserFriend $friend */
         foreach ($event->getUser()->getFriended() as $friend) {
@@ -107,10 +107,10 @@ class EventFriends implements EventSubscriberInterface
             $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()->getEmailFriends());
             $entityEvent->setUser($friend->getUser());
 
-            $this->em->persist($entityEvent);
+            $this->entityManager->persist($entityEvent);
         }
 
-        $this->em->flush();
+        $this->entityManager->flush();
     }
 
     public function fileAdd(FileEvent $event): void
@@ -136,10 +136,10 @@ class EventFriends implements EventSubscriberInterface
             $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()->getEmailFriends());
             $entityEvent->setUser($friend->getUser());
 
-            $this->em->persist($entityEvent);
+            $this->entityManager->persist($entityEvent);
         }
 
-        $this->em->flush();
+        $this->entityManager->flush();
     }
 
     public function gistAdd(GistEvent $event): void
@@ -165,9 +165,9 @@ class EventFriends implements EventSubscriberInterface
             $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()->getEmailFriends());
             $entityEvent->setUser($friend->getUser());
 
-            $this->em->persist($entityEvent);
+            $this->entityManager->persist($entityEvent);
         }
 
-        $this->em->flush();
+        $this->entityManager->flush();
     }
 }

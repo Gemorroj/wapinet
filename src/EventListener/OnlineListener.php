@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 class OnlineListener
 {
-    public function __construct(private EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
     }
 
@@ -30,7 +30,7 @@ class OnlineListener
         $requestBrowser = $request->headers->get('User-Agent', '');
 
         /** @var Online|null $online */
-        $online = $this->em->getRepository(Online::class)->findOneBy([
+        $online = $this->entityManager->getRepository(Online::class)->findOneBy([
             'ip' => $requestIp,
             'browser' => $requestBrowser,
         ]);
@@ -43,10 +43,10 @@ class OnlineListener
         $online->setDatetime(new \DateTime());
         $online->setPath($request->getPathInfo());
 
-        $this->em->persist($online);
+        $this->entityManager->persist($online);
 
         try {
-            $this->em->flush();
+            $this->entityManager->flush();
         } catch (\Exception $e) {
             // могут быть конкурентные запросы, которые запишут в онлайн данные на уникальном индексе
             // игнорируем, т.к. маловажно
@@ -55,7 +55,7 @@ class OnlineListener
 
     private function cleanupOnline(): void
     {
-        $this->em->createQuery('DELETE FROM App\Entity\Online o WHERE o.datetime < :lifetime')
+        $this->entityManager->createQuery('DELETE FROM App\Entity\Online o WHERE o.datetime < :lifetime')
             ->setParameter('lifetime', new \DateTime('now -'.User::LIFETIME))
             ->execute();
     }

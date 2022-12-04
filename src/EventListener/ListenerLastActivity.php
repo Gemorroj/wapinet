@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class ListenerLastActivity
 {
-    public function __construct(private ParameterBagInterface $parameterBag, private TokenStorageInterface $tokenStorage, private EntityManagerInterface $em)
+    public function __construct(private ParameterBagInterface $parameterBag, private TokenStorageInterface $tokenStorage, private EntityManagerInterface $entityManager)
     {
     }
 
@@ -26,7 +26,7 @@ class ListenerLastActivity
 
         // We are checking a token authentification is available before using the User
         $token = $this->tokenStorage->getToken();
-        if (null !== $token) {
+        if ($token) {
             $user = $token->getUser();
             if ($user instanceof User) {
                 // We are using a delay during wich the user will be considered as still active, in order to avoid too much UPDATE in the database
@@ -35,7 +35,12 @@ class ListenerLastActivity
                 // We are checking the User class in order to be certain we can call "getLastActivity".
                 if ($user->getLastActivity() < $delay) {
                     $user->setLastActivity(new \DateTime());
-                    $this->em->getUnitOfWork()->commit($user);
+                    $this->entityManager->persist($user);
+                    try {
+                        $this->entityManager->flush();
+                    } catch (\Exception $e) {
+                        // игнорируем, т.к. маловажно
+                    }
                 }
             }
         }

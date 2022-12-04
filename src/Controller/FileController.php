@@ -25,7 +25,6 @@ use App\Service\Timezone;
 use App\Service\Translit;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Pagerfanta\Pagerfanta;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -237,8 +236,13 @@ class FileController extends AbstractController
     }
 
     #[Route(path: '/{id}', name: 'file_view', requirements: ['id' => '\d+'])]
-    public function viewAction(Request $request, File $file, PasswordHasherFactoryInterface $passwordHasherFactory, Meta $fileMeta): Response
-    {
+    public function viewAction(
+        Request $request,
+        File $file,
+        PasswordHasherFactoryInterface $passwordHasherFactory,
+        Meta $fileMeta,
+        EntityManagerInterface $entityManager
+    ): Response {
         if (null !== $file->getPassword() && !$this->isGranted('ROLE_ADMIN') && (!($this->getUser() instanceof User) || !($file->getUser() instanceof User) || !$file->getUser()->isEqualTo($this->getUser()))) {
             return $this->passwordAction($request, $file, $passwordHasherFactory, $fileMeta);
         }
@@ -252,7 +256,7 @@ class FileController extends AbstractController
             }
         }
 
-        return $this->viewFile($file, $fileMeta);
+        return $this->viewFile($file, $fileMeta, $entityManager);
     }
 
     private function incrementViews(File $file): void
@@ -261,14 +265,13 @@ class FileController extends AbstractController
         $file->setLastViewAt(new \DateTime());
     }
 
-    private function viewFile(File $file, Meta $fileMeta): Response
+    private function viewFile(File $file, Meta $fileMeta, EntityManagerInterface $entityManager): Response
     {
         $this->checkMeta($file, $fileMeta);
 
         $response = $this->render('File/view.html.twig', ['file' => $file]);
         $this->incrementViews($file);
 
-        $entityManager = $this->container->get(ManagerRegistry::class)->getManager();
         $entityManager->persist($file);
         $entityManager->flush();
 
@@ -291,8 +294,13 @@ class FileController extends AbstractController
         $file->setMeta($meta);
     }
 
-    public function passwordAction(Request $request, File $file, PasswordHasherFactoryInterface $passwordHasherFactory, Meta $fileMeta): Response
-    {
+    public function passwordAction(
+        Request $request,
+        File $file,
+        PasswordHasherFactoryInterface $passwordHasherFactory,
+        Meta $fileMeta,
+        EntityManagerInterface $entityManager
+    ): Response {
         $passwordHasher = $passwordHasherFactory->getPasswordHasher($file);
         $form = $this->createForm(PasswordType::class);
 
@@ -306,7 +314,7 @@ class FileController extends AbstractController
                         throw $this->createAccessDeniedException('Неверный пароль');
                     }
 
-                    return $this->viewFile($file, $fileMeta);
+                    return $this->viewFile($file, $fileMeta, $entityManager);
                 }
             }
         } catch (\Exception $e) {
@@ -406,7 +414,7 @@ class FileController extends AbstractController
     }
 
     #[Route(path: '/edit/{id}', name: 'file_edit', requirements: ['id' => '\d+'])]
-    public function editAction(Request $request, File $file): Response
+    public function editAction(Request $request, File $file, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('EDIT', $file);
 
@@ -420,7 +428,7 @@ class FileController extends AbstractController
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
-                    $this->editFileData($request, $form->getData(), $oldFile);
+                    $this->editFileData($request, $form->getData(), $oldFile, $entityManager);
 
                     $url = $this->generateUrl('file_view', ['id' => $file->getId()], Router::ABSOLUTE_URL);
 
@@ -437,10 +445,8 @@ class FileController extends AbstractController
         ]);
     }
 
-    private function editFileData(Request $request, File $data, File $oldData): File
+    private function editFileData(Request $request, File $data, File $oldData, EntityManagerInterface $entityManager): File
     {
-        $entityManager = $this->container->get(ManagerRegistry::class)->getManager();
-
         /** @var UploadedFile|null $file */
         $file = $data->getFile();
         if (null !== $file) {
@@ -474,7 +480,7 @@ class FileController extends AbstractController
         } else {
             $this->container->get(\App\Service\File\File::class)->removePassword($data);
         }
-        $this->makeEditFileTags($data);
+        $this->makeEditFileTags($data, $entityManager);
 
         $entityManager->persist($data);
 
@@ -490,7 +496,7 @@ class FileController extends AbstractController
     }
 
     #[Route(path: '/upload', name: 'file_upload')]
-    public function uploadAction(Request $request, PasswordHasherFactoryInterface $passwordHasherFactory, BotChecker $botChecker): Response
+    public function uploadAction(Request $request, PasswordHasherFactoryInterface $passwordHasherFactory, BotChecker $botChecker, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(UploadType::class);
 
@@ -501,7 +507,7 @@ class FileController extends AbstractController
                 if ($form->isValid()) {
                     $botChecker->checkRequest($request);
 
-                    $file = $this->saveFileData($request, $form->getData(), $passwordHasherFactory);
+                    $file = $this->saveFileData($request, $form->getData(), $passwordHasherFactory, $entityManager);
 
                     // просмотр файла авторизованными пользователями
                     if ($this->isGranted('ROLE_USER')) {
@@ -533,14 +539,13 @@ class FileController extends AbstractController
         ]);
     }
 
-    protected function saveFileData(Request $request, File $data, PasswordHasherFactoryInterface $passwordHasherFactory): File
+    protected function saveFileData(Request $request, File $data, PasswordHasherFactoryInterface $passwordHasherFactory, EntityManagerInterface $entityManager): File
     {
         /** @var UploadedFile $file */
         $file = $data->getFile();
 
         $hash = \md5_file($file->getPathname());
 
-        $entityManager = $this->container->get(ManagerRegistry::class)->getManager();
         $existingFile = $entityManager->getRepository(File::class)->findOneBy(['hash' => $hash]);
         if (null !== $existingFile) {
             throw new FileDuplicatedException($existingFile, $this->container->get('router'));
@@ -585,10 +590,8 @@ class FileController extends AbstractController
     /**
      * TODO: отрефакторить.
      */
-    private function makeEditFileTags(File $file): void
+    private function makeEditFileTags(File $file, EntityManagerInterface $entityManager): void
     {
-        $entityManager = $this->container->get(ManagerRegistry::class)->getManager();
-
         // удаляем из коллекции устаревшие тэги
         $removedFileTagsCollection = $file->getFileTags()->filter(static function (FileTags $oldFileTags) use ($file): bool {
             foreach ($file->getTags() as $newTag) {
@@ -705,7 +708,6 @@ class FileController extends AbstractController
         $services[EventDispatcherInterface::class] = '?'.EventDispatcherInterface::class;
         $services[Paginate::class] = Paginate::class;
         $services[MimeGuesser::class] = MimeGuesser::class;
-        $services[ManagerRegistry::class] = ManagerRegistry::class;
 
         return $services;
     }
