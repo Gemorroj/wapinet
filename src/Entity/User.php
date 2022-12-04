@@ -408,7 +408,7 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         $this->plainPassword = null;
     }
 
-    public function isEqualTo(UserInterface $user): bool
+    public function isEqualTo(?UserInterface $user): bool
     {
         if (!$user instanceof self) {
             return false;
