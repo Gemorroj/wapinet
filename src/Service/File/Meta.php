@@ -12,8 +12,6 @@ use Imagine\Image\AbstractImagine;
 
 class Meta
 {
-    private FileMeta $fileMeta;
-    private ?EntityFile $file;
     private FfmpegHelper $ffmpegHelper;
     private ApkHelper $apkHelper;
     private TorrentHelper $torrentHelper;
@@ -27,15 +25,6 @@ class Meta
         $this->torrentHelper = $torrentHelper;
         $this->imagine = $imagine;
         $this->midiHelper = $midiHelper;
-
-        $this->fileMeta = new FileMeta();
-    }
-
-    public function setFile(EntityFile $file): self
-    {
-        $this->file = $file;
-
-        return $this;
     }
 
     /**
@@ -43,171 +32,178 @@ class Meta
      *
      * @throws \RuntimeException
      */
-    public function getFileMeta(): FileMeta
+    public function getFileMeta(EntityFile $file): FileMeta
     {
-        if (null === $this->file) {
-            throw new \RuntimeException('Не указан файл, мета-информацию которого нужно получить.');
+        if ($file->isAndroidApp()) {
+            return $this->makeAndroidMeta($file);
+        }
+        if ($file->isVideo()) {
+            return $this->makeVideoMeta($file);
+        }
+        if ($file->isAudio()) {
+            return $this->makeAudioMeta($file);
+        }
+        if ($file->isImage()) {
+            return $this->makeImageMeta($file);
+        }
+        if ($file->isTorrent()) {
+            return $this->makeTorrentMeta($file);
         }
 
-        if ($this->file->isAndroidApp()) {
-            $this->setAndroidMeta();
-        } elseif ($this->file->isVideo()) {
-            $this->setVideoMeta();
-        } elseif ($this->file->isAudio()) {
-            $this->setAudioMeta();
-        } elseif ($this->file->isImage()) {
-            $this->setImageMeta();
-        } elseif ($this->file->isTorrent()) {
-            $this->setTorrentMeta();
-        }
-
-        return $this->fileMeta;
+        return new FileMeta();
     }
 
-    private function setAndroidMeta(): self
+    private function makeAndroidMeta(EntityFile $file): FileMeta
     {
-        $this->apkHelper->init($this->file->getFile()->getPathname());
+        $fileMeta = new FileMeta();
+        $this->apkHelper->init($file->getFile()->getPathname());
 
         $manifest = $this->apkHelper->getManifest();
 
-        $this->fileMeta->set('versionName', $manifest->getVersionName());
-        $this->fileMeta->set('packageName', $manifest->getPackageName());
+        $fileMeta->set('versionName', $manifest->getVersionName());
+        $fileMeta->set('packageName', $manifest->getPackageName());
         if ($manifest->getMinSdkLevel()) {
-            $this->fileMeta->set('minSdkVersions', $manifest->getMinSdk()->versions);
+            $fileMeta->set('minSdkVersions', $manifest->getMinSdk()->versions);
         }
 
         $permissions = $manifest->getPermissions();
         if ($permissions) {
-            $this->fileMeta->set('permissions', $permissions);
+            $fileMeta->set('permissions', $permissions);
         }
 
-        return $this;
+        return $fileMeta;
     }
 
-    private function setAudioMeta(): self
+    private function makeAudioMeta(EntityFile $file): FileMeta
     {
-        if ($this->file->isMidi()) {
-            $duration = $this->midiHelper->getDuration($this->file->getFile()->getPathname());
-            $this->fileMeta->set('duration', $duration);
+        $fileMeta = new FileMeta();
 
-            return $this;
+        if ($file->isMidi()) {
+            $duration = $this->midiHelper->getDuration($file->getFile()->getPathname());
+            $fileMeta->set('duration', $duration);
+
+            return $fileMeta;
         }
 
         $ffprobe = $this->ffmpegHelper->getFfprobe();
-        $info = $ffprobe->streams($this->file->getFile()->getPathname())->audios()->first();
+        $info = $ffprobe->streams($file->getFile()->getPathname())->audios()->first();
 
         if (null !== $info) {
             if ($info->has('duration')) {
-                $this->fileMeta->set('duration', $info->get('duration'));
+                $fileMeta->set('duration', $info->get('duration'));
             }
             if ($info->has('codec_name')) {
-                $this->fileMeta->set('codecName', $info->get('codec_name'));
+                $fileMeta->set('codecName', $info->get('codec_name'));
             }
             if ($info->has('bit_rate')) {
-                $this->fileMeta->set('bitRate', $info->get('bit_rate'));
+                $fileMeta->set('bitRate', $info->get('bit_rate'));
             }
             if ($info->has('sample_rate')) {
-                $this->fileMeta->set('sampleRate', $info->get('sample_rate'));
+                $fileMeta->set('sampleRate', $info->get('sample_rate'));
             }
         }
 
-        return $this;
+        return $fileMeta;
     }
 
-    private function setVideoMeta(): self
+    private function makeVideoMeta(EntityFile $file): FileMeta
     {
+        $fileMeta = new FileMeta();
+
         $ffprobe = $this->ffmpegHelper->getFfprobe();
-        $streams = $ffprobe->streams($this->file->getFile()->getPathname());
+        $streams = $ffprobe->streams($file->getFile()->getPathname());
         $videoInfo = $streams->videos()->first();
         $audioInfo = $streams->audios()->first();
 
         if (null !== $videoInfo) {
-            $this->fileMeta->set('width', $videoInfo->getDimensions()->getWidth());
-            $this->fileMeta->set('height', $videoInfo->getDimensions()->getHeight());
+            $fileMeta->set('width', $videoInfo->getDimensions()->getWidth());
+            $fileMeta->set('height', $videoInfo->getDimensions()->getHeight());
 
             if ($videoInfo->has('duration')) {
-                $this->fileMeta->set('duration', $videoInfo->get('duration'));
+                $fileMeta->set('duration', $videoInfo->get('duration'));
             }
             if ($videoInfo->has('codec_name')) {
-                $this->fileMeta->set('codecName', $videoInfo->get('codec_name'));
+                $fileMeta->set('codecName', $videoInfo->get('codec_name'));
             }
             if ($videoInfo->has('bit_rate')) {
-                $this->fileMeta->set('bitRate', $videoInfo->get('bit_rate'));
+                $fileMeta->set('bitRate', $videoInfo->get('bit_rate'));
             }
         }
 
         if (null !== $audioInfo) {
             if ($audioInfo->has('codec_name')) {
-                $this->fileMeta->set('audioCodecName', $audioInfo->get('codec_name'));
+                $fileMeta->set('audioCodecName', $audioInfo->get('codec_name'));
             }
             if ($audioInfo->has('bit_rate')) {
-                $this->fileMeta->set('audioBitRate', $audioInfo->get('bit_rate'));
+                $fileMeta->set('audioBitRate', $audioInfo->get('bit_rate'));
             }
             if ($audioInfo->has('sample_rate')) {
-                $this->fileMeta->set('audioSampleRate', $audioInfo->get('sample_rate'));
+                $fileMeta->set('audioSampleRate', $audioInfo->get('sample_rate'));
             }
         }
 
-        return $this;
+        return $fileMeta;
     }
 
-    private function setImageMeta(): self
+    private function makeImageMeta(EntityFile $file): FileMeta
     {
-        $info = $this->imagine->open($this->file->getFile()->getPathname());
+        $fileMeta = new FileMeta();
+        $info = $this->imagine->open($file->getFile()->getPathname());
 
-        $this->fileMeta->set('width', $info->getSize()->getWidth());
-        $this->fileMeta->set('height', $info->getSize()->getHeight());
+        $fileMeta->set('width', $info->getSize()->getWidth());
+        $fileMeta->set('height', $info->getSize()->getHeight());
 
         $infoMetadata = $info->metadata();
 
         if ($infoMetadata->offsetExists('exif.DateTimeOriginal')) {
-            $this->fileMeta->set('dateTimeOriginal', $infoMetadata->offsetGet('exif.DateTimeOriginal'));
+            $fileMeta->set('dateTimeOriginal', $infoMetadata->offsetGet('exif.DateTimeOriginal'));
         } elseif ($infoMetadata->offsetExists('ifd0.DateTimeOriginal')) {
-            $this->fileMeta->set('dateTimeOriginal', $infoMetadata->offsetGet('ifd0.DateTimeOriginal'));
+            $fileMeta->set('dateTimeOriginal', $infoMetadata->offsetGet('ifd0.DateTimeOriginal'));
         }
 
         if ($infoMetadata->offsetExists('exif.DateTime')) {
-            $this->fileMeta->set('dateTime', $infoMetadata->offsetGet('exif.DateTime'));
+            $fileMeta->set('dateTime', $infoMetadata->offsetGet('exif.DateTime'));
         } elseif ($infoMetadata->offsetExists('ifd0.DateTime')) {
-            $this->fileMeta->set('dateTime', $infoMetadata->offsetGet('ifd0.DateTime'));
+            $fileMeta->set('dateTime', $infoMetadata->offsetGet('ifd0.DateTime'));
         }
 
         if ($infoMetadata->offsetExists('exif.Make')) {
-            $this->fileMeta->set('make', $infoMetadata->offsetGet('exif.Make'));
+            $fileMeta->set('make', $infoMetadata->offsetGet('exif.Make'));
         } elseif ($infoMetadata->offsetExists('ifd0.Make')) {
-            $this->fileMeta->set('make', $infoMetadata->offsetGet('ifd0.Make'));
+            $fileMeta->set('make', $infoMetadata->offsetGet('ifd0.Make'));
         }
 
         if ($infoMetadata->offsetExists('exif.Model')) {
-            $this->fileMeta->set('model', $infoMetadata->offsetGet('exif.Model'));
+            $fileMeta->set('model', $infoMetadata->offsetGet('exif.Model'));
         } elseif ($infoMetadata->offsetExists('ifd0.Model')) {
-            $this->fileMeta->set('model', $infoMetadata->offsetGet('ifd0.Model'));
+            $fileMeta->set('model', $infoMetadata->offsetGet('ifd0.Model'));
         }
 
         if ($infoMetadata->offsetExists('exif.Software')) {
-            $this->fileMeta->set('software', $infoMetadata->offsetGet('exif.Software'));
+            $fileMeta->set('software', $infoMetadata->offsetGet('exif.Software'));
         } elseif ($infoMetadata->offsetExists('ifd0.Software')) {
-            $this->fileMeta->set('software', $infoMetadata->offsetGet('ifd0.Software'));
+            $fileMeta->set('software', $infoMetadata->offsetGet('ifd0.Software'));
         }
 
         if ($infoMetadata->offsetExists('exif.COMMENT')) {
-            $commentTrimed = \trim($infoMetadata->offsetGet('exif.COMMENT'));
-            if ('' !== $commentTrimed) {
-                $this->fileMeta->set('comment', $infoMetadata->offsetGet('exif.COMMENT'));
+            $commentTrimmed = \trim($infoMetadata->offsetGet('exif.COMMENT'));
+            if ('' !== $commentTrimmed) {
+                $fileMeta->set('comment', $infoMetadata->offsetGet('exif.COMMENT'));
             }
         } elseif ($infoMetadata->offsetExists('exif.UserComment')) {
-            $commentTrimed = \trim($infoMetadata->offsetGet('exif.UserComment'));
-            if ('' !== $commentTrimed) {
-                $this->fileMeta->set('comment', $infoMetadata->offsetGet('exif.UserComment'));
+            $commentTrimmed = \trim($infoMetadata->offsetGet('exif.UserComment'));
+            if ('' !== $commentTrimmed) {
+                $fileMeta->set('comment', $infoMetadata->offsetGet('exif.UserComment'));
             }
         }
 
-        return $this;
+        return $fileMeta;
     }
 
-    private function setTorrentMeta(): self
+    private function makeTorrentMeta(EntityFile $file): FileMeta
     {
-        $data = $this->torrentHelper->decodeFile($this->file->getFile());
+        $fileMeta = new FileMeta();
+        $data = $this->torrentHelper->decodeFile($file->getFile());
 
         if (isset($data['info']['length'])) {
             $size = $data['info']['length'];
@@ -221,18 +217,18 @@ class Meta
         }
 
         if ($size) {
-            $this->fileMeta->set('size', $size);
+            $fileMeta->set('size', $size);
         }
         if (isset($data['info']['name'])) {
-            $this->fileMeta->set('name', $data['info']['name']);
+            $fileMeta->set('name', $data['info']['name']);
         }
         if (isset($data['creation date'])) {
-            $this->fileMeta->set('datetime', new \DateTime('@'.$data['creation date']));
+            $fileMeta->set('datetime', new \DateTime('@'.$data['creation date']));
         }
         if (isset($data['comment'])) {
-            $this->fileMeta->set('comment', $data['comment']);
+            $fileMeta->set('comment', $data['comment']);
         }
 
-        return $this;
+        return $fileMeta;
     }
 }

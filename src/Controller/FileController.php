@@ -243,13 +243,15 @@ class FileController extends AbstractController
         Meta $fileMeta,
         EntityManagerInterface $entityManager
     ): Response {
-        if (null !== $file->getPassword() && !$this->isGranted('ROLE_ADMIN') && (!($this->getUser() instanceof User) || !($file->getUser() instanceof User) || !$file->getUser()->isEqualTo($this->getUser()))) {
-            return $this->passwordAction($request, $file, $passwordHasherFactory, $fileMeta);
+        $user = $this->getUser();
+
+        if (null !== $file->getPassword() && !$this->isGranted('ROLE_ADMIN') && (!($user instanceof User) || !($file->getUser() instanceof User) || !$file->getUser()->isEqualTo($user))) {
+            return $this->passwordAction($request, $file, $passwordHasherFactory, $fileMeta, $entityManager);
         }
 
         if ($file->isHidden()) {
-            $isAdmin = ($this->getUser() instanceof User) && $this->isGranted('ROLE_ADMIN', $this->getUser());
-            $isFileUser = ($this->getUser() instanceof User) && ($file->getUser() instanceof User) && $file->getUser()->isEqualTo($this->getUser());
+            $isAdmin = ($user instanceof User) && $this->isGranted('ROLE_ADMIN', $user);
+            $isFileUser = ($user instanceof User) && ($file->getUser() instanceof User) && $file->getUser()->isEqualTo($user);
 
             if (!$isAdmin && !$isFileUser) {
                 throw $this->createNotFoundException('Файл скрыт и не доступен для просмотра');
@@ -267,7 +269,15 @@ class FileController extends AbstractController
 
     private function viewFile(File $file, Meta $fileMeta, EntityManagerInterface $entityManager): Response
     {
-        $this->checkMeta($file, $fileMeta);
+        if (!$file->getMeta()) {
+
+            try {
+                $meta = $fileMeta->getFileMeta($file);
+                $file->setMeta($meta);
+            } catch (\Exception $e) {
+                $this->container->get(LoggerInterface::class)->warning('Не удалось получить мета-информацию из файла.', [$e]);
+            }
+        }
 
         $response = $this->render('File/view.html.twig', ['file' => $file]);
         $this->incrementViews($file);
@@ -276,22 +286,6 @@ class FileController extends AbstractController
         $entityManager->flush();
 
         return $response;
-    }
-
-    private function checkMeta(File $file, Meta $fileMeta): void
-    {
-        if (null !== $file->getMeta()) {
-            return;
-        }
-
-        $meta = null;
-        try {
-            $meta = $fileMeta->setFile($file)->getFileMeta();
-        } catch (\Exception $e) {
-            $this->container->get(LoggerInterface::class)->warning('Не удалось получить мета-информацию из файла.', [$e]);
-        }
-
-        $file->setMeta($meta);
     }
 
     public function passwordAction(

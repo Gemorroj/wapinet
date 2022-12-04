@@ -190,41 +190,27 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         return $lastActivity && ($lastActivity > new \DateTime('now -'.self::LIFETIME));
     }
 
-    public function setPanel(UserPanel $panel): self
+    public function setPanel(?UserPanel $panel): self
     {
         $this->panel = $panel;
 
         return $this;
     }
 
-    public function getPanel(): UserPanel
+    public function getPanel(): ?UserPanel
     {
-        if (!$this->panel) {
-            $panel = new UserPanel();
-            $panel->setUser($this);
-
-            return $panel;
-        }
-
         return $this->panel;
     }
 
-    public function setSubscriber(UserSubscriber $subscriber): self
+    public function setSubscriber(?UserSubscriber $subscriber): self
     {
         $this->subscriber = $subscriber;
 
         return $this;
     }
 
-    public function getSubscriber(): UserSubscriber
+    public function getSubscriber(): ?UserSubscriber
     {
-        if (!$this->subscriber) {
-            $subscriber = new UserSubscriber();
-            $subscriber->setUser($this);
-
-            return $subscriber;
-        }
-
         return $this->subscriber;
     }
 

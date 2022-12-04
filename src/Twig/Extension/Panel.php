@@ -27,11 +27,14 @@ class Panel extends AbstractExtension
     public function getPanel(array $options = []): \ArrayIterator
     {
         $token = $this->tokenStorage->getToken();
-
-        if ($token && $token->getUser() && $token->getUser() instanceof User) {
-            $panel = $token->getUser()->getPanel();
-        } else {
+        /** @var User|null $user */
+        $user = $token?->getUser();
+        $panel = $user?->getPanel();
+        if (!$panel) {
             $panel = new UserPanel();
+            if ($user) {
+                $panel->setUser($user);
+            }
         }
 
         return $panel->getIterator();

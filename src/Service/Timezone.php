@@ -19,7 +19,7 @@ class Timezone
         $token = $this->tokenStorage->getToken();
         $user = $token?->getUser();
 
-        if ($user instanceof User && null !== $user->getTimezone()) {
+        if ($user instanceof User && $user->getTimezone()) {
             return new \DateTimeZone($user->getTimezone());
         }
 

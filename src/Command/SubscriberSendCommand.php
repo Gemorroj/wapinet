@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Entity\Event;
+use App\Entity\UserSubscriber;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -72,9 +73,15 @@ class SubscriberSendCommand extends Command
         } catch (TransportExceptionInterface $e) {
             $this->logger->warning('Не удалось отправить email по подписке', ['exception' => $e]);
 
-            $event->getUser()->getSubscriber()->setEmailNews(false);
-            $event->getUser()->getSubscriber()->setEmailFriends(false);
-            $this->entityManager->persist($event->getUser()->getSubscriber());
+            $subscriber = $event->getUser()->getSubscriber();
+            if (!$subscriber) {
+                $subscriber = new UserSubscriber();
+                $subscriber->setUser($event->getUser());
+            }
+            $subscriber->setEmailNews(false);
+            $subscriber->setEmailFriends(false);
+
+            $this->entityManager->persist($subscriber);
         } catch (\Exception $e) {
             $this->logger->critical('Не удалось отправить email по подписке', ['exception' => $e]);
         }

@@ -22,12 +22,12 @@ class UserFriend
     private ?\DateTime $updatedAt = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'friends')]
-    #[ORM\JoinColumn(referencedColumnName: 'id')]
-    private ?User $user = null;
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false)]
+    private User $user;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'friended')]
-    #[ORM\JoinColumn(referencedColumnName: 'id')]
-    private ?User $friend = null;
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false)]
+    private User $friend;
 
     public function getId(): ?int
     {
@@ -70,10 +70,7 @@ class UserFriend
         return $this;
     }
 
-    /**
-     * @return User
-     */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
@@ -85,10 +82,7 @@ class UserFriend
         return $this;
     }
 
-    /**
-     * @return User
-     */
-    public function getFriend()
+    public function getFriend(): User
     {
         return $this->friend;
     }

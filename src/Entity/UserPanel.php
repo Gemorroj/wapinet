@@ -47,19 +47,16 @@ class UserPanel extends \ArrayObject
     #[ORM\Column(type: 'boolean', nullable: false)]
     private bool $programming = true;
 
-    #[ORM\OneToOne(inversedBy: 'panel', targetEntity: User::class, cascade: ['persist'])]
+    #[ORM\OneToOne(inversedBy: 'panel', targetEntity: User::class)]
     #[ORM\JoinColumn(referencedColumnName: 'id', unique: true, nullable: false)]
-    private ?User $user = null;
+    private User $user;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return User
-     */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }

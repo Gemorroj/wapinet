@@ -57,7 +57,7 @@ class FilesClearCommand extends Command
             ->setParameter('date', $dateTime)
             ->execute();
 
-        // полностью чистим кэш (прверюшки)
+        // полностью чистим кэш (превьюшки)
         $this->filesystem->remove($cacheDir);
 
         // удаляем осиротевшие файлы (которые есть в файловой системе, но нет в БД)
