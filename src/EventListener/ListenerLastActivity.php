@@ -36,9 +36,9 @@ class ListenerLastActivity
                 if ($user->getLastActivity() < $delay) {
                     $user->setLastActivity(new \DateTime());
 
+                    //$this->entityManager->persist($user);
                     try {
-                        $this->entityManager->persist($user);
-                        $this->entityManager->flush();
+                        //$this->entityManager->flush();
                     } catch (\Exception $e) {
                         // игнорируем, т.к. маловажно
                     }
