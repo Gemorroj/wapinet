@@ -137,7 +137,7 @@ class FileController extends AbstractController
         /** @var User|null $user */
         $user = $this->getUser();
         if (!$user) {
-            $this->createAccessDeniedException();
+            throw $this->createAccessDeniedException();
         }
         $this->denyAccessUnlessGranted('ROLE_ADMIN', $user);
 
