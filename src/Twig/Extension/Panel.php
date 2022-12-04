@@ -2,7 +2,6 @@
 
 namespace App\Twig\Extension;
 
-use App\Entity\User;
 use App\Entity\UserPanel;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Twig\Extension\AbstractExtension;
@@ -10,33 +9,18 @@ use Twig\TwigFunction;
 
 class Panel extends AbstractExtension
 {
-    private TokenStorageInterface $tokenStorage;
-
-    public function __construct(TokenStorageInterface $tokenStorage)
+    public function __construct(private TokenStorageInterface $tokenStorage)
     {
-        $this->tokenStorage = $tokenStorage;
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('wapinet_panel', [$this, 'getPanel']),
+            new TwigFunction('wapinet_panel', function (): \ArrayIterator {
+                $panel = $this->tokenStorage->getToken()?->getUser()?->getPanel() ?: new UserPanel();
+
+                return $panel->getIterator();
+            }),
         ];
-    }
-
-    public function getPanel(array $options = []): \ArrayIterator
-    {
-        $token = $this->tokenStorage->getToken();
-        /** @var User|null $user */
-        $user = $token?->getUser();
-        $panel = $user?->getPanel();
-        if (!$panel) {
-            $panel = new UserPanel();
-            if ($user) {
-                $panel->setUser($user);
-            }
-        }
-
-        return $panel->getIterator();
     }
 }

@@ -39,7 +39,7 @@ class EventFriends implements EventSubscriberInterface
         $entityEvent->setVariables([
             'friend' => $event->getUser(),
         ]);
-        $entityEvent->setNeedEmail($event->getFriend()->getSubscriber()?->getEmailFriends() ?? true);
+        $entityEvent->setNeedEmail($event->getFriend()->getSubscriber()?->isEmailFriends() ?? true);
         $entityEvent->setUser($event->getFriend());
         $this->entityManager->persist($entityEvent);
 
@@ -61,7 +61,7 @@ class EventFriends implements EventSubscriberInterface
                 'friend' => $event->getUser(),
                 'friend_friend' => $event->getFriend(),
             ]);
-            $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()?->getEmailFriends() ?? true);
+            $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()?->isEmailFriends() ?? true);
             $entityEvent->setUser($friend->getUser());
 
             $this->entityManager->persist($entityEvent);
@@ -83,7 +83,7 @@ class EventFriends implements EventSubscriberInterface
         $entityEvent->setVariables([
             'friend' => $event->getUser(),
         ]);
-        $entityEvent->setNeedEmail($event->getFriend()->getSubscriber()?->getEmailFriends() ?? true);
+        $entityEvent->setNeedEmail($event->getFriend()->getSubscriber()?->isEmailFriends() ?? true);
         $entityEvent->setUser($event->getFriend());
         $this->entityManager->persist($entityEvent);
 
@@ -104,7 +104,7 @@ class EventFriends implements EventSubscriberInterface
                 'friend' => $event->getUser(),
                 'friend_friend' => $event->getFriend(),
             ]);
-            $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()?->getEmailFriends() ?? true);
+            $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()?->isEmailFriends() ?? true);
             $entityEvent->setUser($friend->getUser());
 
             $this->entityManager->persist($entityEvent);
@@ -133,7 +133,7 @@ class EventFriends implements EventSubscriberInterface
                 'friend' => $user,
                 'file' => $event->getFile(),
             ]);
-            $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()?->getEmailFriends() ?? true);
+            $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()?->isEmailFriends() ?? true);
             $entityEvent->setUser($friend->getUser());
 
             $this->entityManager->persist($entityEvent);
@@ -162,7 +162,7 @@ class EventFriends implements EventSubscriberInterface
                 'friend' => $user,
                 'gist' => $event->getGist(),
             ]);
-            $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()?->getEmailFriends() ?? true);
+            $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()?->isEmailFriends() ?? true);
             $entityEvent->setUser($friend->getUser());
 
             $this->entityManager->persist($entityEvent);

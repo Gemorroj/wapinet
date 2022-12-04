@@ -80,7 +80,7 @@ class NewsCrudController extends AbstractCrudController
                 'news' => $news,
             ]);
 
-            $entityEvent->setNeedEmail($user->getSubscriber()?->getEmailNews() ?? true);
+            $entityEvent->setNeedEmail($user->getSubscriber()?->isEmailNews() ?? true);
             $entityEvent->setUser($user);
 
             $em->persist($entityEvent);

@@ -44,7 +44,7 @@ class FileVoter extends Voter
             return false;
         }
 
-        if ($user === $subject->getUser()) {
+        if ($user->isEqualTo($subject->getUser())) {
             return true;
         }
 

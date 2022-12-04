@@ -11,13 +11,8 @@ use Twig\TwigFunction;
 
 class File extends AbstractExtension
 {
-    private FileRepository $fileRepository;
-    private Timezone $timezoneHelper;
-
-    public function __construct(FileRepository $fileRepository, Timezone $timezoneHelper)
+    public function __construct(private FileRepository $fileRepository, private Timezone $timezoneHelper)
     {
-        $this->fileRepository = $fileRepository;
-        $this->timezoneHelper = $timezoneHelper;
     }
 
     public function getFilters(): array

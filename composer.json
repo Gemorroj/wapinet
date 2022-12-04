@@ -22,9 +22,9 @@
         "ext-gd": "*",
 
         "doctrine/annotations": "^1.13",
-        "doctrine/doctrine-bundle": "^2.6",
+        "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
-        "doctrine/orm": "^2.12",
+        "doctrine/orm": "^2.13",
         "symfony/proxy-manager-bridge": "6.1.*",
         "beberlei/doctrineextensions": "^1.3",
 

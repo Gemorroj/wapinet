@@ -8,11 +8,8 @@ use Twig\TwigFunction;
 
 class Online extends AbstractExtension
 {
-    private OnlineRepository $onlineRepository;
-
-    public function __construct(OnlineRepository $onlineRepository)
+    public function __construct(private OnlineRepository $onlineRepository)
     {
-        $this->onlineRepository = $onlineRepository;
     }
 
     public function getFunctions(): array

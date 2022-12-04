@@ -24,9 +24,9 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         $this->userRepository->upgradePassword($user, $newHashedPassword);
     }
 
-    public function loadUserByIdentifier(string $identifier): UserInterface
+    public function loadUserByIdentifier(string $identifier): User
     {
-        $user = $this->userRepository->findOneBy(['username' => $identifier]);
+        $user = $this->userRepository->loadUserByIdentifier($identifier);
 
         if (!$user) {
             $e = new UserNotFoundException(\sprintf('Username "%s" does not exist.', $identifier));
@@ -37,12 +37,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         return $user;
     }
 
-    public function loadUserByUsername(string $username): UserInterface
-    {
-        return $this->loadUserByIdentifier($username);
-    }
-
-    public function refreshUser(UserInterface $user): UserInterface
+    public function refreshUser(UserInterface $user): User
     {
         if (!$user instanceof User) {
             throw new UnsupportedUserException(\sprintf('Expected an instance of App\Entity\User, but got "%s".', \get_class($user)));

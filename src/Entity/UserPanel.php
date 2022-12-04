@@ -48,7 +48,7 @@ class UserPanel extends \ArrayObject
     private bool $programming = true;
 
     #[ORM\OneToOne(inversedBy: 'panel', targetEntity: User::class)]
-    #[ORM\JoinColumn(referencedColumnName: 'id', unique: true, nullable: false)]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
     private User $user;
 
     public function getId(): ?int
@@ -77,42 +77,42 @@ class UserPanel extends \ArrayObject
             self::ROUTE_FORUM => [
                 'route' => self::ROUTE_FORUM,
                 'name' => 'Форум',
-                'enabled' => $this->getForum(),
+                'enabled' => $this->isForum(),
             ],
             self::ROUTE_GUESTBOOK => [
                 'route' => self::ROUTE_GUESTBOOK,
                 'name' => 'Гостевая',
-                'enabled' => $this->getGuestbook(),
+                'enabled' => $this->isGuestbook(),
             ],
             self::ROUTE_GIST => [
                 'route' => self::ROUTE_GIST,
                 'name' => 'Блоги',
-                'enabled' => $this->getGist(),
+                'enabled' => $this->isGist(),
             ],
             self::ROUTE_FILE => [
                 'route' => self::ROUTE_FILE,
                 'name' => 'Файлообменник',
-                'enabled' => $this->getFile(),
+                'enabled' => $this->isFile(),
             ],
             self::ROUTE_ARCHIVER => [
                 'route' => self::ROUTE_ARCHIVER,
                 'name' => 'Архиватор',
-                'enabled' => $this->getArchiver(),
+                'enabled' => $this->isArchiver(),
             ],
             self::ROUTE_DOWNLOADS => [
                 'route' => self::ROUTE_DOWNLOADS,
                 'name' => 'Развлечения',
-                'enabled' => $this->getDownloads(),
+                'enabled' => $this->isDownloads(),
             ],
             self::ROUTE_UTILITIES => [
                 'route' => self::ROUTE_UTILITIES,
                 'name' => 'Утилиты',
-                'enabled' => $this->getUtilities(),
+                'enabled' => $this->isUtilities(),
             ],
             self::ROUTE_PROGRAMMING => [
                 'route' => self::ROUTE_PROGRAMMING,
                 'name' => 'WEB мастерская',
-                'enabled' => $this->getProgramming(),
+                'enabled' => $this->isProgramming(),
             ],
         ]);
     }
@@ -124,7 +124,7 @@ class UserPanel extends \ArrayObject
         return $this;
     }
 
-    public function getForum(): bool
+    public function isForum(): bool
     {
         return $this->forum;
     }
@@ -136,7 +136,7 @@ class UserPanel extends \ArrayObject
         return $this;
     }
 
-    public function getGuestbook(): bool
+    public function isGuestbook(): bool
     {
         return $this->guestbook;
     }
@@ -148,7 +148,7 @@ class UserPanel extends \ArrayObject
         return $this;
     }
 
-    public function getDownloads(): bool
+    public function isDownloads(): bool
     {
         return $this->downloads;
     }
@@ -160,7 +160,7 @@ class UserPanel extends \ArrayObject
         return $this;
     }
 
-    public function getProgramming(): bool
+    public function isProgramming(): bool
     {
         return $this->programming;
     }
@@ -172,7 +172,7 @@ class UserPanel extends \ArrayObject
         return $this;
     }
 
-    public function getUtilities(): bool
+    public function isUtilities(): bool
     {
         return $this->utilities;
     }
@@ -184,7 +184,7 @@ class UserPanel extends \ArrayObject
         return $this;
     }
 
-    public function getArchiver(): bool
+    public function isArchiver(): bool
     {
         return $this->archiver;
     }
@@ -196,7 +196,7 @@ class UserPanel extends \ArrayObject
         return $this;
     }
 
-    public function getGist(): bool
+    public function isGist(): bool
     {
         return $this->gist;
     }
@@ -208,7 +208,7 @@ class UserPanel extends \ArrayObject
         return $this;
     }
 
-    public function getFile(): bool
+    public function isFile(): bool
     {
         return $this->file;
     }

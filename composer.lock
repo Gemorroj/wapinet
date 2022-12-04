@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4abd84ceaded240a52d1e2209fcc1a18",
+    "content-hash": "2a90a7ec80621dfb444ed4fa330114e7",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",

@@ -4,13 +4,14 @@ namespace App\EventListener;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ListenerLastActivity
 {
-    public function __construct(private ParameterBagInterface $parameterBag, private TokenStorageInterface $tokenStorage, private EntityManagerInterface $entityManager)
+    public function __construct(private ParameterBagInterface $parameterBag, private TokenStorageInterface $tokenStorage, private EntityManagerInterface $entityManager, private ManagerRegistry $managerRegistry)
     {
     }
 
@@ -34,12 +35,13 @@ class ListenerLastActivity
 
                 // We are checking the User class in order to be certain we can call "getLastActivity".
                 if ($user->getLastActivity() < $delay) {
-                    //$user->setLastActivity(new \DateTime());
+                    $user->setLastActivity(new \DateTime());
 
-                    //$this->entityManager->persist($user);
                     try {
-                        //$this->entityManager->flush();
+                        $this->entityManager->persist($user);
+                        $this->entityManager->flush();
                     } catch (\Exception $e) {
+                        $this->managerRegistry->resetManager();
                         // игнорируем, т.к. маловажно
                     }
                 }

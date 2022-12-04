@@ -5,11 +5,12 @@ namespace App\EventListener;
 use App\Entity\Online;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 class OnlineListener
 {
-    public function __construct(private EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager, private ManagerRegistry $managerRegistry)
     {
     }
 
@@ -43,13 +44,13 @@ class OnlineListener
         $online->setDatetime(new \DateTime());
         $online->setPath($request->getPathInfo());
 
-        $this->entityManager->persist($online);
-
         try {
+            $this->entityManager->persist($online);
             $this->entityManager->flush();
         } catch (\Exception $e) {
             // Могут быть конкурентные запросы, которые запишут в онлайн данные на уникальном индексе
             // игнорируем, т.к. маловажно
+            $this->managerRegistry->resetManager();
         }
     }
 

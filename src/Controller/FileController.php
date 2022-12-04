@@ -270,7 +270,6 @@ class FileController extends AbstractController
     private function viewFile(File $file, Meta $fileMeta, EntityManagerInterface $entityManager): Response
     {
         if (!$file->getMeta()) {
-
             try {
                 $meta = $fileMeta->getFileMeta($file);
                 $file->setMeta($meta);

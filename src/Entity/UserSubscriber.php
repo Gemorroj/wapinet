@@ -21,7 +21,7 @@ class UserSubscriber extends \ArrayObject
     private bool $emailFriends = true;
 
     #[ORM\OneToOne(inversedBy: 'subscriber', targetEntity: User::class)]
-    #[ORM\JoinColumn(referencedColumnName: 'id', unique: true, nullable: false)]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
     private User $user;
 
     public function getId(): ?int
@@ -41,7 +41,7 @@ class UserSubscriber extends \ArrayObject
         return $this;
     }
 
-    public function getEmailFriends(): bool
+    public function isEmailFriends(): bool
     {
         return $this->emailFriends;
     }
@@ -53,7 +53,7 @@ class UserSubscriber extends \ArrayObject
         return $this;
     }
 
-    public function getEmailNews(): bool
+    public function isEmailNews(): bool
     {
         return $this->emailNews;
     }
@@ -73,11 +73,11 @@ class UserSubscriber extends \ArrayObject
         return new \ArrayIterator([
             'emailNews' => [
                 'name' => 'Новости',
-                'enabled' => $this->getEmailNews(),
+                'enabled' => $this->isEmailNews(),
             ],
             'emailFriends =' => [
                 'name' => 'События друзей',
-                'enabled' => $this->getEmailFriends(),
+                'enabled' => $this->isEmailFriends(),
             ],
         ]);
     }
