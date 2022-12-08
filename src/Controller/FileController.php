@@ -261,12 +261,6 @@ class FileController extends AbstractController
         return $this->viewFile($file, $fileMeta, $entityManager);
     }
 
-    private function incrementViews(File $file): void
-    {
-        $file->setCountViews($file->getCountViews() + 1);
-        $file->setLastViewAt(new \DateTime());
-    }
-
     private function viewFile(File $file, Meta $fileMeta, EntityManagerInterface $entityManager): Response
     {
         if (!$file->getMeta()) {
@@ -278,12 +272,14 @@ class FileController extends AbstractController
             }
         }
 
-        $this->incrementViews($file);
+        $lastViewAt = $file->getLastViewAt();
+        $file->setCountViews($file->getCountViews() + 1);
+        $file->setLastViewAt(new \DateTime());
 
         $entityManager->persist($file);
         $entityManager->flush();
 
-        return $this->render('File/view.html.twig', ['file' => $file]);
+        return $this->render('File/view.html.twig', ['file' => $file, 'lastViewAt' => $lastViewAt]);
     }
 
     public function passwordAction(
@@ -672,19 +668,16 @@ class FileController extends AbstractController
         $prevFile = $fileRepository->getPrevFile($file->getId(), 'image');
         $nextFile = $fileRepository->getNextFile($file->getId(), 'image');
 
-        $response = $this->render('File/swiper.html.twig', [
-            'file' => $file,
-            'prevFile' => $prevFile,
-            'nextFile' => $nextFile,
-        ]);
-
-        $this->incrementViews($file);
+        $lastViewAt = $file->getLastViewAt();
+        $file->setCountViews($file->getCountViews() + 1);
+        $file->setLastViewAt(new \DateTime());
 
         $entityManager->persist($file);
         $entityManager->flush();
 
         return $this->render('File/swiper.html.twig', [
             'file' => $file,
+            'lastViewAt' => $lastViewAt,
             'prevFile' => $prevFile,
             'nextFile' => $nextFile,
         ]);
