@@ -11,7 +11,7 @@ class RequestMessage
         public readonly string $ip,
         public readonly string $browser,
         public readonly string $path,
-        public readonly ?string $userIdentifier,
+        public readonly ?string $userIdentifier = null,
     ) {
     }
 }

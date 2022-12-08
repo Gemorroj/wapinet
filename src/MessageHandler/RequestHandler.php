@@ -26,14 +26,15 @@ class RequestHandler
 
     public function __invoke(RequestMessage $message): void
     {
-        /** @var User|null $user */
-        $user = $this->userRepository->loadUserByIdentifier($message->userIdentifier);
+        if ($message->userIdentifier) {
+            $user = $this->userRepository->loadUserByIdentifier($message->userIdentifier);
 
-        if ($user) {
-            $delay = new \DateTime($this->parameterBag->get('wapinet_user_last_activity_delay').' seconds ago');
-            if ($user->getLastActivity() < $delay) {
-                $user->setLastActivity(new \DateTime());
-                $this->entityManager->persist($user);
+            if ($user) {
+                $delay = new \DateTime($this->parameterBag->get('wapinet_user_last_activity_delay').' seconds ago');
+                if ($user->getLastActivity() < $delay) {
+                    $user->setLastActivity(new \DateTime());
+                    $this->entityManager->persist($user);
+                }
             }
         }
 
