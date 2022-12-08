@@ -37,19 +37,19 @@ class LastActivityListener
 
                 // We are checking the User class in order to be certain we can call "getLastActivity".
                 if ($user->getLastActivity() < $delay) {
-                    $user->setLastActivity(new \DateTime());
+                    //$user->setLastActivity(new \DateTime());
 
                     try {
                         // fixme: avoid the stupid doctrine error
                         if ($user->getPanel()) {
-                            $this->entityManager->initializeObject($user->getPanel());
+                            //$this->entityManager->initializeObject($user->getPanel());
                         }
                         if ($user->getSubscriber()) {
-                            $this->entityManager->initializeObject($user->getSubscriber());
+                            //$this->entityManager->initializeObject($user->getSubscriber());
                         }
 
-                        $this->entityManager->persist($user);
-                        $this->entityManager->flush();
+                        //$this->entityManager->persist($user);
+                        //$this->entityManager->flush();
                     } catch (\Exception $e) {
                         $this->managerRegistry->resetManager();
                         // игнорируем, т.к. маловажно
