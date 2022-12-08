@@ -10,7 +10,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
-#[AsEventListener(priority: -2)]
+#[AsEventListener(priority: -1)]
 class OnlineListener
 {
     public function __construct(private EntityManagerInterface $entityManager, private ManagerRegistry $managerRegistry, private OnlineRepository $onlineRepository)
