@@ -3,6 +3,7 @@
 namespace App\EventListener;
 
 use App\Entity\User;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -44,7 +45,7 @@ class LastActivityListener
                     // $user->setLastActivity(new \DateTime());
 
                     try {
-                        $this->entityManager->getConnection()->executeStatement('UPDATE user SET last_activity = NOW() WHERE id = '.$user->getId());
+                        $this->entityManager->getConnection()->executeStatement('UPDATE user SET last_activity = NOW() WHERE id = :id', ['id' => $user->getId()], [Types::INTEGER]);
                     } catch (\Exception $e) {
                         $this->logger->error('Не удалось записать lastActivity', ['exception' => $e]);
                     }
