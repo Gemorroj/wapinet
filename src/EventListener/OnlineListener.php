@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 #[AsEventListener(priority: -1)]
@@ -18,7 +19,7 @@ class OnlineListener
     ) {
     }
 
-    public function __invoke(ResponseEvent $event): void
+    public function __invoke(FinishRequestEvent $event): void
     {
         if (!$event->isMainRequest()) {
             return;
@@ -26,7 +27,7 @@ class OnlineListener
 
         // чистим случайным образом, чтобы разгрузить БД
         if (1 === \mt_rand(1, 10)) {
-            $this->entityManager->getConnection()->executeStatement('DELETE FROM online WHERE DATE_SUB(NOW(), INTERVAL '.User::LIFETIME.') > datetime');
+            //$this->entityManager->getConnection()->executeStatement('DELETE FROM online WHERE DATE_SUB(NOW(), INTERVAL '.User::LIFETIME.') > datetime');
         }
 
         $request = $event->getRequest();
