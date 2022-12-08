@@ -21,6 +21,10 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
 
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
+        if (!$user instanceof User) {
+            throw new UnsupportedUserException(\sprintf('Expected an instance of App\Entity\User, but got "%s".', \get_class($user)));
+        }
+
         $this->userRepository->upgradePassword($user, $newHashedPassword);
     }
 

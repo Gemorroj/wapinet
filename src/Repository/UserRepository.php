@@ -29,12 +29,8 @@ class UserRepository extends ServiceEntityRepository implements UserLoaderInterf
             ->getQuery();
     }
 
-    public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
+    public function upgradePassword(User $user, string $newHashedPassword): void
     {
-        if (!$user instanceof User) {
-            throw new UnsupportedUserException(\sprintf('Expected an instance of App\Entity\User, but got "%s".', \get_class($user)));
-        }
-
         $user->setSalt(null);
         // set the new hashed password on the User object
         $user->setPassword($newHashedPassword);

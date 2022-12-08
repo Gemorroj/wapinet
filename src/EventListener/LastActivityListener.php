@@ -45,7 +45,7 @@ class LastActivityListener
                     // $user->setLastActivity(new \DateTime());
 
                     try {
-                        $this->entityManager->getConnection()->executeStatement('UPDATE user SET last_activity = NOW() WHERE id = :id', ['id' => $user->getId()], [Types::INTEGER]);
+                        //$this->entityManager->getConnection()->executeStatement('UPDATE user SET last_activity = NOW() WHERE id = :id', ['id' => $user->getId()], [Types::INTEGER]);
                     } catch (\Exception $e) {
                         $this->logger->error('Не удалось записать lastActivity', ['exception' => $e]);
                     }
