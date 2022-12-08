@@ -9,11 +9,8 @@ use Twig\TwigFunction;
 
 class Gist extends AbstractExtension
 {
-    private GistRepository $gistRepository;
-
-    public function __construct(GistRepository $gistRepository)
+    public function __construct(private GistRepository $gistRepository)
     {
-        $this->gistRepository = $gistRepository;
     }
 
     public function getFunctions(): array

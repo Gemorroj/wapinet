@@ -7,17 +7,13 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class Timezone
 {
-    private TokenStorageInterface $tokenStorage;
-
-    public function __construct(TokenStorageInterface $tokenStorage)
+    public function __construct(private TokenStorageInterface $tokenStorage)
     {
-        $this->tokenStorage = $tokenStorage;
     }
 
     public function getTimezone(): ?\DateTimeZone
     {
-        $token = $this->tokenStorage->getToken();
-        $user = $token?->getUser();
+        $user = $this->tokenStorage->getToken()?->getUser();
 
         if ($user instanceof User && $user->getTimezone()) {
             return new \DateTimeZone($user->getTimezone());

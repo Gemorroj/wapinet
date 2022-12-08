@@ -12,15 +12,11 @@ use Twig\TwigFilter;
 
 class JavaApp extends AbstractExtension
 {
-    private ArchiveZip $archiveZip;
-    private Filesystem $filesystem;
-    private ParameterBagInterface $parameterBag;
-
-    public function __construct(ArchiveZip $archiveZip, Filesystem $filesystem, ParameterBagInterface $parameterBag)
-    {
-        $this->archiveZip = $archiveZip;
-        $this->filesystem = $filesystem;
-        $this->parameterBag = $parameterBag;
+    public function __construct(
+        private ArchiveZip $archiveZip,
+        private Filesystem $filesystem,
+        private ParameterBagInterface $parameterBag
+    ) {
     }
 
     public function getFilters(): array

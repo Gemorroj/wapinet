@@ -10,15 +10,11 @@ use Twig\TwigFunction;
 
 class Forum extends AbstractExtension
 {
-    protected ParameterBagInterface $parameterBag;
-    protected EntityManagerInterface $em;
-    protected LoggerInterface $logger;
-
-    public function __construct(ParameterBagInterface $parameterBag, EntityManagerInterface $em, LoggerInterface $logger)
-    {
-        $this->parameterBag = $parameterBag;
-        $this->em = $em;
-        $this->logger = $logger;
+    public function __construct(
+        private ParameterBagInterface $parameterBag,
+        private EntityManagerInterface $em,
+        private LoggerInterface $logger
+    ) {
     }
 
     public function getFunctions(): array

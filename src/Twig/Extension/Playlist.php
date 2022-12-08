@@ -11,13 +11,8 @@ use Twig\TwigFunction;
 
 class Playlist extends AbstractExtension
 {
-    private PlaylistHelper $playlistHelper;
-    private LoggerInterface $logger;
-
-    public function __construct(PlaylistHelper $playlistHelper, LoggerInterface $logger)
+    public function __construct(private PlaylistHelper $playlistHelper, private LoggerInterface $logger)
     {
-        $this->playlistHelper = $playlistHelper;
-        $this->logger = $logger;
     }
 
     public function getFunctions(): array

@@ -13,15 +13,11 @@ use Twig\TwigFilter;
 
 class Audio extends AbstractExtension
 {
-    private FfmpegHelper $ffmpegHelper;
-    private LoggerInterface $logger;
-    private ParameterBagInterface $parameterBag;
-
-    public function __construct(FfmpegHelper $ffmpegHelper, LoggerInterface $logger, ParameterBagInterface $parameterBag)
-    {
-        $this->ffmpegHelper = $ffmpegHelper;
-        $this->logger = $logger;
-        $this->parameterBag = $parameterBag;
+    public function __construct(
+        private FfmpegHelper $ffmpegHelper,
+        private LoggerInterface $logger,
+        private ParameterBagInterface $parameterBag
+    ) {
     }
 
     public function getFilters(): array

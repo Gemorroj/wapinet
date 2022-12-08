@@ -10,13 +10,8 @@ use Twig\TwigFunction;
 
 class Torrent extends AbstractExtension
 {
-    private TorrentHelper $torrentHelper;
-    private LoggerInterface $logger;
-
-    public function __construct(TorrentHelper $torrentHelper, LoggerInterface $logger)
+    public function __construct(private TorrentHelper $torrentHelper, private LoggerInterface $logger)
     {
-        $this->torrentHelper = $torrentHelper;
-        $this->logger = $logger;
     }
 
     public function getFunctions(): array

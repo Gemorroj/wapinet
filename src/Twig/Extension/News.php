@@ -8,11 +8,8 @@ use Twig\TwigFunction;
 
 class News extends AbstractExtension
 {
-    private NewsRepository $newsRepository;
-
-    public function __construct(NewsRepository $newsRepository)
+    public function __construct(private NewsRepository $newsRepository)
     {
-        $this->newsRepository = $newsRepository;
     }
 
     public function getFunctions(): array

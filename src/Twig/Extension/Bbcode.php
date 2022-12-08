@@ -10,11 +10,8 @@ use Xbbcode\Xbbcode;
 
 class Bbcode extends AbstractExtension
 {
-    private RequestContext $requestContext;
-
-    public function __construct(RequestContext $requestContext)
+    public function __construct(private RequestContext $requestContext)
     {
-        $this->requestContext = $requestContext;
     }
 
     public function getFilters(): array

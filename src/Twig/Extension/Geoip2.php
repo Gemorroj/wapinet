@@ -9,11 +9,8 @@ use Twig\TwigFunction;
 
 class Geoip2 extends AbstractExtension
 {
-    private Geoip2Helper $geoip2;
-
-    public function __construct(Geoip2Helper $geoip2)
+    public function __construct(private Geoip2Helper $geoip2)
     {
-        $this->geoip2 = $geoip2;
     }
 
     public function getFunctions(): array

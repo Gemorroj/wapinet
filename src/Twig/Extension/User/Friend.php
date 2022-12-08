@@ -9,11 +9,8 @@ use Twig\TwigFunction;
 
 class Friend extends AbstractExtension
 {
-    private UserFriendRepository $friendRepository;
-
-    public function __construct(UserFriendRepository $friendRepository)
+    public function __construct(private UserFriendRepository $friendRepository)
     {
-        $this->friendRepository = $friendRepository;
     }
 
     public function getFunctions(): array

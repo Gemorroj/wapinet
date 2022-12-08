@@ -8,11 +8,8 @@ use Twig\TwigFilter;
 
 class Date extends AbstractExtension
 {
-    private Timezone $timezone;
-
-    public function __construct(Timezone $timezone)
+    public function __construct(private Timezone $timezoneHelper)
     {
-        $this->timezone = $timezone;
     }
 
     public function getFilters(): array
@@ -25,94 +22,94 @@ class Date extends AbstractExtension
         ];
     }
 
-    public function getDate(\DateTime|\DateTimeImmutable|null $date): string
+    public function getDate(\DateTimeInterface|null $originalDate): string
     {
-        if ($date) {
-            $timezone = $this->timezone->getTimezone();
-
-            if (null !== $timezone) {
-                $date->setTimezone($timezone);
-            }
-
-            $today = new \DateTime('today', $timezone);
-            $yesterday = new \DateTime('yesterday', $timezone);
-            $dayBeforeYesterday = new \DateTime('yesterday - 1 day', $timezone);
-            $tomorrow = new \DateTime('tomorrow', $timezone);
-            $dayAfterTomorrow = new \DateTime('tomorrow + 1 day', $timezone);
-
-            if ($date->format('Ymd') === $today->format('Ymd')) {
-                return 'Сегодня';
-            }
-            if ($date->format('Ymd') === $yesterday->format('Ymd')) {
-                return 'Вчера';
-            }
-            if ($date->format('Ymd') === $dayBeforeYesterday->format('Ymd')) {
-                return 'Позавчера';
-            }
-            if ($date->format('Ymd') === $tomorrow->format('Ymd')) {
-                return 'Завтра';
-            }
-            if ($date->format('Ymd') === $dayAfterTomorrow->format('Ymd')) {
-                return 'Послезавтра';
-            }
-
-            return $date->format('d.m.Y');
+        if (!$originalDate) {
+            return '';
         }
 
-        return '';
+        $date = \DateTime::createFromInterface($originalDate);
+        $timezone = $this->timezoneHelper->getTimezone();
+        if ($timezone) {
+            $date->setTimezone($timezone);
+        }
+
+        $today = new \DateTime('today', $timezone);
+        $yesterday = new \DateTime('yesterday', $timezone);
+        $dayBeforeYesterday = new \DateTime('yesterday - 1 day', $timezone);
+        $tomorrow = new \DateTime('tomorrow', $timezone);
+        $dayAfterTomorrow = new \DateTime('tomorrow + 1 day', $timezone);
+
+        if ($date->format('Ymd') === $today->format('Ymd')) {
+            return 'Сегодня';
+        }
+        if ($date->format('Ymd') === $yesterday->format('Ymd')) {
+            return 'Вчера';
+        }
+        if ($date->format('Ymd') === $dayBeforeYesterday->format('Ymd')) {
+            return 'Позавчера';
+        }
+        if ($date->format('Ymd') === $tomorrow->format('Ymd')) {
+            return 'Завтра';
+        }
+        if ($date->format('Ymd') === $dayAfterTomorrow->format('Ymd')) {
+            return 'Послезавтра';
+        }
+
+        return $date->format('d.m.Y');
     }
 
-    public function getDateTime(\DateTime|\DateTimeImmutable|null $datetime): string
+    public function getDateTime(\DateTimeInterface|null $originalDatetime): string
     {
-        if ($datetime) {
-            $timezone = $this->timezone->getTimezone();
-
-            if (null !== $timezone) {
-                $datetime->setTimezone($timezone);
-            }
-
-            $today = new \DateTime('today', $timezone);
-            $yesterday = new \DateTime('yesterday', $timezone);
-            $dayBeforeYesterday = new \DateTime('yesterday - 1 day', $timezone);
-            $tomorrow = new \DateTime('tomorrow', $timezone);
-            $dayAfterTomorrow = new \DateTime('tomorrow + 1 day', $timezone);
-
-            if ($datetime->format('Ymd') === $today->format('Ymd')) {
-                return 'Сегодня в '.$datetime->format('H:i');
-            }
-            if ($datetime->format('Ymd') === $yesterday->format('Ymd')) {
-                return 'Вчера в '.$datetime->format('H:i');
-            }
-            if ($datetime->format('Ymd') === $dayBeforeYesterday->format('Ymd')) {
-                return 'Позавчера в '.$datetime->format('H:i');
-            }
-            if ($datetime->format('Ymd') === $tomorrow->format('Ymd')) {
-                return 'Завтра в '.$datetime->format('H:i');
-            }
-            if ($datetime->format('Ymd') === $dayAfterTomorrow->format('Ymd')) {
-                return 'Послезавтра в '.$datetime->format('H:i');
-            }
-
-            // return $datetime->format('d.m.Y H:i:s');
-            return $datetime->format('d.m.Y H:i');
+        if (!$originalDatetime) {
+            return '';
         }
 
-        return '';
+        $datetime = \DateTime::createFromInterface($originalDatetime);
+        $timezone = $this->timezoneHelper->getTimezone();
+        if ($timezone) {
+            $datetime->setTimezone($timezone);
+        }
+
+        $today = new \DateTime('today', $timezone);
+        $yesterday = new \DateTime('yesterday', $timezone);
+        $dayBeforeYesterday = new \DateTime('yesterday - 1 day', $timezone);
+        $tomorrow = new \DateTime('tomorrow', $timezone);
+        $dayAfterTomorrow = new \DateTime('tomorrow + 1 day', $timezone);
+
+        if ($datetime->format('Ymd') === $today->format('Ymd')) {
+            return 'Сегодня в '.$datetime->format('H:i');
+        }
+        if ($datetime->format('Ymd') === $yesterday->format('Ymd')) {
+            return 'Вчера в '.$datetime->format('H:i');
+        }
+        if ($datetime->format('Ymd') === $dayBeforeYesterday->format('Ymd')) {
+            return 'Позавчера в '.$datetime->format('H:i');
+        }
+        if ($datetime->format('Ymd') === $tomorrow->format('Ymd')) {
+            return 'Завтра в '.$datetime->format('H:i');
+        }
+        if ($datetime->format('Ymd') === $dayAfterTomorrow->format('Ymd')) {
+            return 'Послезавтра в '.$datetime->format('H:i');
+        }
+
+        // return $datetime->format('d.m.Y H:i:s');
+        return $datetime->format('d.m.Y H:i');
     }
 
-    public function getTime(\DateTime|\DateTimeImmutable|null $datetime): string
+    public function getTime(\DateTimeInterface|null $originalDatetime): string
     {
-        if ($datetime) {
-            $timezone = $this->timezone->getTimezone();
-
-            if (null !== $timezone) {
-                $datetime->setTimezone($timezone);
-            }
-
-            return $datetime->format('Hч.iм.sс.');
+        if (!$originalDatetime) {
+            return '';
         }
 
-        return '';
+        $datetime = \DateTime::createFromInterface($originalDatetime);
+        $timezone = $this->timezoneHelper->getTimezone();
+        if ($timezone) {
+            $datetime->setTimezone($timezone);
+        }
+
+        return $datetime->format('Hч.iм.sс.');
     }
 
     public function getLength(int|float|string $seconds): string

@@ -11,13 +11,8 @@ use Twig\TwigFunction;
 
 class Archive extends AbstractExtension
 {
-    private Archive7z $archive7z;
-    private LoggerInterface$logger;
-
-    public function __construct(Archive7z $archive7z, LoggerInterface $logger)
+    public function __construct(private Archive7z $archive7z, private LoggerInterface $logger)
     {
-        $this->archive7z = $archive7z;
-        $this->logger = $logger;
     }
 
     public function getFunctions(): array

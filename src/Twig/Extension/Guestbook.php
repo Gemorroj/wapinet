@@ -8,11 +8,8 @@ use Twig\TwigFunction;
 
 class Guestbook extends AbstractExtension
 {
-    private GuestbookRepository $guestbookRepository;
-
-    public function __construct(GuestbookRepository $guestbookRepository)
+    public function __construct(private GuestbookRepository $guestbookRepository)
     {
-        $this->guestbookRepository = $guestbookRepository;
     }
 
     public function getFunctions(): array
