@@ -47,7 +47,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
             throw new UnsupportedUserException(\sprintf('Expected an instance of App\Entity\User, but got "%s".', \get_class($user)));
         }
 
-        return $user;
+        //return $user;
 
         $reloadedUser = $this->userRepository->loadUserByIdentifier($user->getUserIdentifier());
         if (!$reloadedUser) {
