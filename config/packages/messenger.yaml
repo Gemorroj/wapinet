@@ -25,3 +25,4 @@ framework:
             'App\Message\FriendAddMessage': sync
             'App\Message\FriendDeleteMessage': sync
             'App\Message\GistAddMessage': sync
+            'App\Message\RequestMessage': sync

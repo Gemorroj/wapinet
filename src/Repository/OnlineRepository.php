@@ -14,4 +14,22 @@ class OnlineRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Online::class);
     }
+
+    public function cleanup(\DateTime $lifetime): void
+    {
+        $this->getEntityManager()->createQuery('DELETE FROM App\Entity\Online o WHERE o.datetime < :lifetime')
+             ->setParameter('lifetime', $lifetime)
+             ->execute();
+    }
+
+    public function findOneByIpAndBrowser(string $ip, string $browser): ?Online
+    {
+        return $this->createQueryBuilder('o')
+           ->where('o.ip = :ip')
+           ->andWhere('o.browser = :browser')
+            ->setParameter('ip', $ip)
+            ->setParameter('browser', $browser)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
