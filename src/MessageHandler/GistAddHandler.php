@@ -42,6 +42,14 @@ class GistAddHandler
                 'gist' => $gist,
             ]);
             $entityEvent->setNeedEmail($friend->getUser()->getSubscriber()?->isEmailFriends() ?? true);
+
+            // fixme: avoid the stupid doctrine error
+            if ($friend->getUser()->getPanel()) {
+                $this->entityManager->initializeObject($friend->getUser()->getPanel());
+            }
+            if ($friend->getUser()->getSubscriber()) {
+                $this->entityManager->initializeObject($friend->getUser()->getSubscriber());
+            }
             $entityEvent->setUser($friend->getUser());
 
             $this->entityManager->persist($entityEvent);

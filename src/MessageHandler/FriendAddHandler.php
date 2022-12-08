@@ -43,6 +43,14 @@ class FriendAddHandler
             'friend' => $user,
         ]);
         $entityEvent->setNeedEmail($friend->getSubscriber()?->isEmailFriends() ?? true);
+
+        // fixme: avoid the stupid doctrine error
+        if ($friend->getPanel()) {
+            $this->entityManager->initializeObject($friend->getPanel());
+        }
+        if ($friend->getSubscriber()) {
+            $this->entityManager->initializeObject($friend->getSubscriber());
+        }
         $entityEvent->setUser($friend);
         $this->entityManager->persist($entityEvent);
 
@@ -65,6 +73,14 @@ class FriendAddHandler
                 'friend_friend' => $friend,
             ]);
             $entityEvent->setNeedEmail($friended->getUser()->getSubscriber()?->isEmailFriends() ?? true);
+
+            // fixme: avoid the stupid doctrine error
+            if ($friended->getUser()->getPanel()) {
+                $this->entityManager->initializeObject($friended->getUser()->getPanel());
+            }
+            if ($friended->getUser()->getSubscriber()) {
+                $this->entityManager->initializeObject($friended->getUser()->getSubscriber());
+            }
             $entityEvent->setUser($friended->getUser());
 
             $this->entityManager->persist($entityEvent);
