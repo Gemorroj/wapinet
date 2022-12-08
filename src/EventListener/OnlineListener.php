@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 #[AsEventListener(priority: -1)]
@@ -19,7 +20,7 @@ class OnlineListener
     ) {
     }
 
-    public function __invoke(FinishRequestEvent $event): void
+    public function __invoke(RequestEvent $event): void
     {
         if (!$event->isMainRequest()) {
             return;
