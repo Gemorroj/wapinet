@@ -532,7 +532,7 @@ class FileController extends AbstractController
         ]);
     }
 
-    protected function saveFileData(Request $request, File $data, PasswordHasherFactoryInterface $passwordHasherFactory, EntityManagerInterface $entityManager): File
+    private function saveFileData(Request $request, File $data, PasswordHasherFactoryInterface $passwordHasherFactory, EntityManagerInterface $entityManager): File
     {
         /** @var UploadedFile $file */
         $file = $data->getFile();
@@ -551,7 +551,16 @@ class FileController extends AbstractController
         $mimeGuesser = $this->container->get(MimeGuesser::class);
         $data->setMimeType($mimeGuesser->getMimeType($file));
 
-        $data->setUser($this->getUser());
+        /** @var User|null $user */
+        $user = $this->getUser();
+        // fixme: avoid the stupid doctrine error
+        if ($user?->getPanel()) {
+            $entityManager->initializeObject($user->getPanel());
+        }
+        if ($user?->getSubscriber()) {
+            $entityManager->initializeObject($user->getSubscriber());
+        }
+        $data->setUser($user);
         $data->setIp($request->getClientIp());
         $data->setBrowser($request->headers->get('User-Agent', ''));
 

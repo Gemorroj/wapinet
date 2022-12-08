@@ -38,6 +38,7 @@ class ListenerLastActivity
                     $user->setLastActivity(new \DateTime());
 
                     try {
+                        // fixme: avoid the stupid doctrine error
                         if ($user->getPanel()) {
                             $this->entityManager->initializeObject($user->getPanel());
                         }
