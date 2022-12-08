@@ -38,6 +38,13 @@ class ListenerLastActivity
                     $user->setLastActivity(new \DateTime());
 
                     try {
+                        if ($user->getPanel()) {
+                            $this->entityManager->initializeObject($user->getPanel());
+                        }
+                        if ($user->getSubscriber()) {
+                            $this->entityManager->initializeObject($user->getSubscriber());
+                        }
+
                         $this->entityManager->persist($user);
                         $this->entityManager->flush();
                     } catch (\Exception $e) {

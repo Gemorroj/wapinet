@@ -24,11 +24,7 @@ class PanelController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        $panel = $user->getPanel();
-        if (!$panel) {
-            $panel = new UserPanel();
-            $panel->setUser($user);
-        }
+        $panel = $user->getPanel() ?: new UserPanel();
         $form = $this->createForm(PanelType::class, $panel);
 
         try {

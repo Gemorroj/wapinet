@@ -20,25 +20,9 @@ class UserSubscriber extends \ArrayObject
     #[ORM\Column(type: 'boolean', nullable: false)]
     private bool $emailFriends = true;
 
-    #[ORM\OneToOne(inversedBy: 'subscriber', targetEntity: User::class)]
-    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
-    private User $user;
-
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getUser(): User
-    {
-        return $this->user;
-    }
-
-    public function setUser(User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
     }
 
     public function isEmailFriends(): bool

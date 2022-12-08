@@ -47,25 +47,9 @@ class UserPanel extends \ArrayObject
     #[ORM\Column(type: 'boolean', nullable: false)]
     private bool $programming = true;
 
-    #[ORM\OneToOne(inversedBy: 'panel', targetEntity: User::class)]
-    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
-    private User $user;
-
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getUser(): User
-    {
-        return $this->user;
-    }
-
-    public function setUser(User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
     }
 
     /**

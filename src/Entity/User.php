@@ -86,10 +86,12 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $vk = null;
 
-    #[ORM\OneToOne(mappedBy: 'user', targetEntity: UserPanel::class, orphanRemoval: true)]
+    #[ORM\OneToOne(targetEntity: UserPanel::class, cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\JoinColumn(name: 'panel_id', referencedColumnName: 'id', unique: true, nullable: true)]
     private ?UserPanel $panel = null;
 
-    #[ORM\OneToOne(mappedBy: 'user', targetEntity: UserSubscriber::class, orphanRemoval: true)]
+    #[ORM\OneToOne(targetEntity: UserSubscriber::class, cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\JoinColumn(name: 'subscriber_id', referencedColumnName: 'id', unique: true, nullable: true)]
     private ?UserSubscriber $subscriber = null;
 
     /**

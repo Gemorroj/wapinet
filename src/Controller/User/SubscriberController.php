@@ -24,11 +24,7 @@ class SubscriberController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        $subscriber = $user->getSubscriber();
-        if (!$subscriber) {
-            $subscriber = new UserSubscriber();
-            $subscriber->setUser($user);
-        }
+        $subscriber = $user->getSubscriber() ?: new UserSubscriber();
         $form = $this->createForm(SubscriberType::class, $subscriber);
 
         try {

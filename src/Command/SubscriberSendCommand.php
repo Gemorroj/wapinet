@@ -73,11 +73,7 @@ class SubscriberSendCommand extends Command
         } catch (TransportExceptionInterface $e) {
             $this->logger->warning('Не удалось отправить email по подписке', ['exception' => $e]);
 
-            $subscriber = $event->getUser()->getSubscriber();
-            if (!$subscriber) {
-                $subscriber = new UserSubscriber();
-                $subscriber->setUser($event->getUser());
-            }
+            $subscriber = $event->getUser()->getSubscriber() ?: new UserSubscriber();
             $subscriber->setEmailNews(false);
             $subscriber->setEmailFriends(false);
 

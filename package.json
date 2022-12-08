@@ -7,7 +7,20 @@
         "file-loader": "^6.2.0",
         "regenerator-runtime": "^0.13.11",
         "webpack": "^5.75.0",
-        "webpack-cli": "^5.0.0"
+        "webpack-cli": "^5.0.1"
+    },
+    "browserslist": {
+        "production": [
+            ">0.4%",
+            "not IE <= 11",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
     },
     "engines": {
         "node": ">= 18"
