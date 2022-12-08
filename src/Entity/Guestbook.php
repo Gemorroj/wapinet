@@ -33,7 +33,7 @@ class Guestbook
     #[Assert\NotNull]
     private string $message = '';
 
-    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\ManyToOne(targetEntity: User::class, cascade: ['merge'])]
     #[ORM\JoinColumn(referencedColumnName: 'id', nullable: true, onDelete: 'CASCADE')]
     private ?User $user = null;
 
