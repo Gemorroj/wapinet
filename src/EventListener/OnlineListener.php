@@ -2,11 +2,9 @@
 
 namespace App\EventListener;
 
-use App\Entity\Online;
 use App\Entity\User;
-use App\Repository\OnlineRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
@@ -16,8 +14,6 @@ class OnlineListener
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private ManagerRegistry $managerRegistry,
-        private OnlineRepository $onlineRepository,
         private LoggerInterface $logger,
     ) {
     }
@@ -30,7 +26,7 @@ class OnlineListener
 
         // чистим случайным образом, чтобы разгрузить БД
         if (1 === \mt_rand(1, 10)) {
-            $this->onlineRepository->cleanup(new \DateTime('now -'.User::LIFETIME));
+            $this->entityManager->getConnection()->executeStatement('DELETE FROM online WHERE DATE_SUB(NOW(), INTERVAL '.User::LIFETIME.') > datetime');
         }
 
         $request = $event->getRequest();
@@ -38,25 +34,27 @@ class OnlineListener
         $requestIp = $request->getClientIp();
         $requestBrowser = $request->headers->get('User-Agent', '');
 
-        /** @var Online|null $online */
-        $online = $this->onlineRepository->findOneBy([
-            'ip' => $requestIp,
-            'browser' => $requestBrowser,
-        ]);
-
-        if (null === $online) {
-            $online = new Online();
-            $online->setBrowser($requestBrowser);
-            $online->setIp($requestIp);
-        }
-        $online->setDatetime(new \DateTime());
-        $online->setPath($request->getPathInfo());
+        $online = $this->entityManager->getConnection()->executeQuery(
+            'SELECT id, datetime, path FROM online WHERE ip = :ip AND browser = :browser',
+            ['ip' => $requestIp, 'browser' => $requestBrowser],
+            [Types::STRING, Types::STRING]
+        )->fetchAssociative();
 
         try {
-            $this->entityManager->persist($online);
-            $this->entityManager->flush();
+            if ($online) {
+                $this->entityManager->getConnection()->executeStatement(
+                    'UPDATE online SET datetime = NOW(), path = :path WHERE id = :id',
+                    ['path' => $request->getPathInfo(), 'id' => $online['id']],
+                    [Types::STRING, Types::INTEGER]
+                );
+            } else {
+                $this->entityManager->getConnection()->executeStatement(
+                    'INSERT INTO online SET datetime = NOW(), ip = :ip, browser = :browser, path = :path',
+                    ['ip' => $requestIp, 'browser' => $requestBrowser, 'path' => $request->getPathInfo()],
+                    [Types::STRING, Types::STRING, Types::STRING]
+                );
+            }
         } catch (\Exception $e) {
-            $this->managerRegistry->resetManager();
             $this->logger->error('Не удалось записать online', ['exception' => $e]);
         }
     }

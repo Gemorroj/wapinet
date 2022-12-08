@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\HasLifecycleCallbacks]
 class User implements UserInterface, EquatableInterface, LegacyPasswordAuthenticatedUserInterface, \Stringable
 {
-    public const LIFETIME = '5 minutes';
+    public const LIFETIME = '5 minute';
     public const SEX_MALE = 'm';
     public const SEX_FEMALE = 'f';
 

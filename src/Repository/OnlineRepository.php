@@ -14,11 +14,4 @@ class OnlineRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Online::class);
     }
-
-    public function cleanup(\DateTime $lifetime): void
-    {
-        $this->getEntityManager()->createQuery('DELETE FROM App\Entity\Online o WHERE o.datetime < :lifetime')
-            ->setParameter('lifetime', $lifetime)
-            ->execute();
-    }
 }
