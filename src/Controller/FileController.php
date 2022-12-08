@@ -278,13 +278,12 @@ class FileController extends AbstractController
             }
         }
 
-        $response = $this->render('File/view.html.twig', ['file' => $file]);
         $this->incrementViews($file);
 
         $entityManager->persist($file);
         $entityManager->flush();
 
-        return $response;
+        return $this->render('File/view.html.twig', ['file' => $file]);
     }
 
     public function passwordAction(
@@ -684,7 +683,11 @@ class FileController extends AbstractController
         $entityManager->persist($file);
         $entityManager->flush();
 
-        return $response;
+        return $this->render('File/swiper.html.twig', [
+            'file' => $file,
+            'prevFile' => $prevFile,
+            'nextFile' => $nextFile,
+        ]);
     }
 
     public static function getSubscribedServices(): array

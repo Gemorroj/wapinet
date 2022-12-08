@@ -7,11 +7,8 @@ use Symfony\Component\HttpFoundation\File\File;
 
 abstract class Archive
 {
-    protected ParameterBagInterface $parameterBag;
-
-    public function __construct(ParameterBagInterface $parameterBag)
+    public function __construct(protected ParameterBagInterface $parameterBag)
     {
-        $this->parameterBag = $parameterBag;
     }
 
     protected function getTmpArchive(string $directory): string

@@ -8,11 +8,8 @@ use Syntax\Php;
 
 class PhpValidator
 {
-    private ParameterBagInterface $parameterBag;
-
-    public function __construct(ParameterBagInterface $parameterBag)
+    public function __construct(private ParameterBagInterface $parameterBag)
     {
-        $this->parameterBag = $parameterBag;
     }
 
     /**

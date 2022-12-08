@@ -4,11 +4,8 @@ namespace App\Service;
 
 class Rates
 {
-    private Curl $curl;
-
-    public function __construct(Curl $curl)
+    public function __construct(private Curl $curl)
     {
-        $this->curl = $curl;
     }
 
     public function getName(string $country): ?string

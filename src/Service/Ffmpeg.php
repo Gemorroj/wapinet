@@ -8,13 +8,11 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class Ffmpeg
 {
-    private ParameterBagInterface $parameterBag;
     private ?FFmpegOriginal $ffmpeg = null;
     private ?FFProbe $ffprobe = null;
 
-    public function __construct(ParameterBagInterface $parameterBag)
+    public function __construct(private ParameterBagInterface $parameterBag)
     {
-        $this->parameterBag = $parameterBag;
     }
 
     private function createFfprobe(): FFProbe

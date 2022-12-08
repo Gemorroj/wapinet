@@ -4,11 +4,8 @@ namespace App\Service;
 
 class MassMedia
 {
-    private Curl $curl;
-
-    public function __construct(Curl $curl)
+    public function __construct(private Curl $curl)
     {
-        $this->curl = $curl;
     }
 
     public function getRt(): array

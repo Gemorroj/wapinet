@@ -11,15 +11,12 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class Manticore
 {
-    private EntityManagerInterface $entityManager;
     private Connection $connection;
     private int $maxPerPage = 10;
     private int $page = 1;
 
-    public function __construct(EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag)
+    public function __construct(private EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag)
     {
-        $this->entityManager = $entityManager;
-
         $this->connection = new Connection();
         $this->connection->setParams([
             'host' => $parameterBag->get('manticore_host'),

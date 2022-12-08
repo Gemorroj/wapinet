@@ -12,19 +12,13 @@ use Imagine\Image\AbstractImagine;
 
 class Meta
 {
-    private FfmpegHelper $ffmpegHelper;
-    private ApkHelper $apkHelper;
-    private TorrentHelper $torrentHelper;
-    private AbstractImagine $imagine;
-    private MidiHelper $midiHelper;
-
-    public function __construct(FfmpegHelper $ffmpegHelper, ApkHelper $apkHelper, TorrentHelper $torrentHelper, AbstractImagine $imagine, MidiHelper $midiHelper)
-    {
-        $this->ffmpegHelper = $ffmpegHelper;
-        $this->apkHelper = $apkHelper;
-        $this->torrentHelper = $torrentHelper;
-        $this->imagine = $imagine;
-        $this->midiHelper = $midiHelper;
+    public function __construct(
+        private FfmpegHelper $ffmpegHelper,
+        private ApkHelper $apkHelper,
+        private TorrentHelper $torrentHelper,
+        private AbstractImagine $imagine,
+        private MidiHelper $midiHelper
+    ) {
     }
 
     /**

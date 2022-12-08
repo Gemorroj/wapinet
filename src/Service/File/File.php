@@ -13,17 +13,12 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class File
 {
-    private UploaderHelper $uploaderHelper;
-    private PasswordHasherFactoryInterface $passwordHasherFactory;
-    private Filesystem $filesystem;
-    private CacheManager $cacheManager;
-
-    public function __construct(UploaderHelper $uploaderHelper, CacheManager $cacheManager, PasswordHasherFactoryInterface $passwordHasherFactory, Filesystem $filesystem)
-    {
-        $this->uploaderHelper = $uploaderHelper;
-        $this->passwordHasherFactory = $passwordHasherFactory;
-        $this->filesystem = $filesystem;
-        $this->cacheManager = $cacheManager;
+    public function __construct(
+        private UploaderHelper $uploaderHelper,
+        private CacheManager $cacheManager,
+        private PasswordHasherFactoryInterface $passwordHasherFactory,
+        private Filesystem $filesystem
+    ) {
     }
 
     public function cleanupFile(DataFile $file): void

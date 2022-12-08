@@ -8,30 +8,29 @@ use StopSpam\Request as StopSpamRequest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class StopSpam
 {
-    private StopSpamRequest $request;
-    private ?UserInterface $user;
+    private StopSpamRequest $httpClient;
 
-    public function __construct(TokenStorageInterface $tokenStorage)
+    public function __construct(private TokenStorageInterface $tokenStorage, HttpClientInterface $httpClient)
     {
-        $this->user = $tokenStorage->getToken() ? $tokenStorage->getToken()->getUser() : null;
-        $this->request = new StopSpamRequest();
+        $this->httpClient = new StopSpamRequest($httpClient);
     }
 
     public function checkRequest(Request $request): void
     {
-        if ($this->user instanceof User) {
-            return; // доверяем зарегистрированным пользователям. (защита от ложных срабатываний на IP)
+        $user = $this->tokenStorage->getToken()?->getUser();
+        if ($user instanceof User) {
+            return; // Доверяем зарегистрированным пользователям. (защита от ложных срабатываний на IP)
         }
 
         $query = new StopSpamQuery();
         $query->addIp($request->getClientIp());
 
         try {
-            $response = $this->request->send($query);
+            $response = $this->httpClient->send($query);
         } catch (\Exception $e) {
             // игнорируем проблемы с сетью или неработоспособность апи
             return;

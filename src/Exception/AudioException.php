@@ -6,12 +6,8 @@ namespace App\Exception;
 
 class AudioException extends \RuntimeException
 {
-    private array $messages;
-
-    public function __construct(array $messages, int $code = 0, \Exception $previous = null)
+    public function __construct(private array $messages, int $code = 0, \Exception $previous = null)
     {
-        $this->messages = $messages;
-
         parent::__construct(\implode("\r\n", $messages), $code, $previous);
     }
 
