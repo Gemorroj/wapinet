@@ -4,7 +4,6 @@ namespace App\EventListener;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
@@ -18,7 +17,6 @@ class LastActivityListener
         private ParameterBagInterface $parameterBag,
         private TokenStorageInterface $tokenStorage,
         private EntityManagerInterface $entityManager,
-        private ManagerRegistry $managerRegistry,
         private LoggerInterface $logger,
     ) {
     }
@@ -43,22 +41,11 @@ class LastActivityListener
 
                 // We are checking the User class in order to be certain we can call "getLastActivity".
                 if ($user->getLastActivity() < $delay) {
-                    $user->setLastActivity(new \DateTime());
+                    // $user->setLastActivity(new \DateTime());
 
                     try {
-                        // fixme: avoid the stupid doctrine error
-                        if ($user->getPanel()) {
-                            //$this->entityManager->initializeObject($user->getPanel());
-                        }
-                        if ($user->getSubscriber()) {
-                            //$this->entityManager->initializeObject($user->getSubscriber());
-                        }
-
-                        $manager = $this->managerRegistry->resetManager();
-                        $manager->persist($user);
-                        $manager->flush();
+                        $this->entityManager->getConnection()->executeStatement('UPDATE user SET last_activity = NOW() WHERE id = '.$user->getId());
                     } catch (\Exception $e) {
-                        $this->managerRegistry->resetManager();
                         $this->logger->error('Не удалось записать lastActivity', ['exception' => $e]);
                     }
                 }
