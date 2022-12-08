@@ -4,16 +4,17 @@ namespace App\Controller\User;
 
 use App\Entity\User;
 use App\Entity\UserFriend;
-use App\Event\FriendEvent;
+use App\Message\FriendAddMessage;
+use App\Message\FriendDeleteMessage;
 use App\Repository\UserFriendRepository;
 use App\Repository\UserRepository;
 use App\Service\Paginate;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/user')]
@@ -40,7 +41,7 @@ class FriendsController extends AbstractController
     }
 
     #[Route(path: '/friends/add/{username}', name: 'wapinet_user_friends_add', requirements: ['username' => '.+'])]
-    public function addAction(string $username, EventDispatcherInterface $eventDispatcher, UserRepository $userRepository, UserFriendRepository $friendRepository, EntityManagerInterface $entityManager): RedirectResponse
+    public function addAction(string $username, UserRepository $userRepository, UserFriendRepository $friendRepository, EntityManagerInterface $entityManager, MessageBusInterface $messageBus): RedirectResponse
     {
         /** @var User|null $user */
         $user = $this->getUser();
@@ -67,16 +68,13 @@ class FriendsController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        $eventDispatcher->dispatch(
-            new FriendEvent($user, $friend),
-            FriendEvent::FRIEND_ADD
-        );
+        $messageBus->dispatch(new FriendAddMessage($user->getId(), $friend->getId()));
 
         return $this->redirectToRoute('wapinet_user_profile', ['username' => $friend->getUsername()]);
     }
 
     #[Route(path: '/friends/delete/{username}', name: 'wapinet_user_friends_delete', requirements: ['username' => '.+'])]
-    public function deleteAction(string $username, EventDispatcherInterface $eventDispatcher, UserRepository $userRepository, UserFriendRepository $friendRepository, EntityManagerInterface $entityManager): RedirectResponse
+    public function deleteAction(string $username, UserRepository $userRepository, UserFriendRepository $friendRepository, EntityManagerInterface $entityManager, MessageBusInterface $messageBus): RedirectResponse
     {
         /** @var User|null $user */
         $user = $this->getUser();
@@ -99,10 +97,7 @@ class FriendsController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        $eventDispatcher->dispatch(
-            new FriendEvent($user, $friend),
-            FriendEvent::FRIEND_DELETE
-        );
+        $messageBus->dispatch(new FriendDeleteMessage($user->getId(), $friend->getId()));
 
         return $this->redirectToRoute('wapinet_user_profile', ['username' => $friend->getUsername()]);
     }

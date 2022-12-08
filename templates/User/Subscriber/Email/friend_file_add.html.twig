@@ -1,9 +1,10 @@
 {% extends 'User/Subscriber/Email/_layout.html.twig' %}
 
+{# @var file \App\Entity\File #}
 {% block content %}
-    {% if friend.isFemale %}
-        Ваша подруга <a href="{{ url('wapinet_user_profile', {'username': friend.username}) }}">{{ friend }}</a> добавила новый файл <a href="{{ url('file_view', {'id': file.id}) }}">{{ file.originalFileName }}</a> ({{ file.fileSize|wapinet_size }}).
+    {% if file.user.isFemale %}
+        Ваша подруга <a href="{{ url('wapinet_user_profile', {'username': file.user.username}) }}">{{ file.user.username }}</a> добавила новый файл <a href="{{ url('file_view', {'id': file.id}) }}">{{ file.originalFileName }}</a> ({{ file.fileSize|wapinet_size }}).
     {% else %}
-        Ваш друг <a href="{{ url('wapinet_user_profile', {'username': friend.username}) }}">{{ friend }}</a> добавил новый файл <a href="{{ url('file_view', {'id': file.id}) }}">{{ file.originalFileName }}</a> ({{ file.fileSize|wapinet_size }}).
+        Ваш друг <a href="{{ url('wapinet_user_profile', {'username': file.user.username}) }}">{{ file.user.username }}</a> добавил новый файл <a href="{{ url('file_view', {'id': file.id}) }}">{{ file.originalFileName }}</a> ({{ file.fileSize|wapinet_size }}).
     {% endif %}
 {% endblock %}

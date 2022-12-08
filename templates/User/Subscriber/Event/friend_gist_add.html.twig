@@ -1,3 +1,5 @@
+{# @var event \App\Entity\Event #}
+
 <li data-role="list-divider">
     <span>
         <a class="bar-button ui-btn-icon-right ui-icon-comment ui-mini ui-btn-inline ui-btn" href="{{ path('gist_view', {'id': event.variables.gist.id}) }}">&#10150;</a>
@@ -7,10 +9,10 @@
 <li>
     <h2 class="long-description">{{ event.subject }}</h2>
     <div class="long-description">
-        {% if event.variables.friend.isFemale %}
-            Ваша подруга {{ event.variables.friend }} добавила в блог новое сообщение.
+        {% if event.variables.gist.user.isFemale %}
+            Ваша подруга {{ event.variables.gist.user.username }} добавила в блог новое сообщение.
         {% else %}
-            Ваш друг {{ event.variables.friend }} добавил в блог новое сообщение.
+            Ваш друг {{ event.variables.gist.user.username }} добавил в блог новое сообщение.
         {% endif %}
     </div>
 </li>

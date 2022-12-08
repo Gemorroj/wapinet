@@ -8,9 +8,9 @@
     <h2 class="long-description">{{ event.subject }}</h2>
     <div class="long-description">
         {% if event.variables.friend.isFemale %}
-            Вас добавила в друзья {{ event.variables.friend }}.
+            Вас добавила в друзья {{ event.variables.friend.username }}.
         {% else %}
-            Вас добавил в друзья {{ event.variables.friend }}.
+            Вас добавил в друзья {{ event.variables.friend.username }}.
         {% endif %}
     </div>
 </li>

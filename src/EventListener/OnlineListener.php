@@ -4,17 +4,20 @@ namespace App\EventListener;
 
 use App\Entity\Online;
 use App\Entity\User;
+use App\Repository\OnlineRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
+#[AsEventListener(priority: -2)]
 class OnlineListener
 {
-    public function __construct(private EntityManagerInterface $entityManager, private ManagerRegistry $managerRegistry)
+    public function __construct(private EntityManagerInterface $entityManager, private ManagerRegistry $managerRegistry, private OnlineRepository $onlineRepository)
     {
     }
 
-    public function onCoreController(ControllerEvent $event): void
+    public function __invoke(ControllerEvent $event): void
     {
         if (!$event->isMainRequest()) {
             return;
@@ -22,7 +25,7 @@ class OnlineListener
 
         // чистим случайным образом, чтобы разгрузить БД
         if (1 === \mt_rand(1, 10)) {
-            $this->cleanupOnline();
+            $this->onlineRepository->cleanup(new \DateTime('now -'.User::LIFETIME));
         }
 
         $request = $event->getRequest();
@@ -31,7 +34,7 @@ class OnlineListener
         $requestBrowser = $request->headers->get('User-Agent', '');
 
         /** @var Online|null $online */
-        $online = $this->entityManager->getRepository(Online::class)->findOneBy([
+        $online = $this->onlineRepository->findOneBy([
             'ip' => $requestIp,
             'browser' => $requestBrowser,
         ]);
@@ -52,12 +55,5 @@ class OnlineListener
             // игнорируем, т.к. маловажно
             $this->managerRegistry->resetManager();
         }
-    }
-
-    private function cleanupOnline(): void
-    {
-        $this->entityManager->createQuery('DELETE FROM App\Entity\Online o WHERE o.datetime < :lifetime')
-            ->setParameter('lifetime', new \DateTime('now -'.User::LIFETIME))
-            ->execute();
     }
 }

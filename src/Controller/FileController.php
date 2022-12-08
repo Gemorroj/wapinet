@@ -6,12 +6,12 @@ use App\Entity\File;
 use App\Entity\FileTags;
 use App\Entity\Tag;
 use App\Entity\User;
-use App\Event\FileEvent;
 use App\Exception\FileDuplicatedException;
 use App\Form\Type\File\EditType;
 use App\Form\Type\File\PasswordType;
 use App\Form\Type\File\SearchType;
 use App\Form\Type\File\UploadType;
+use App\Message\FileAddMessage;
 use App\Repository\FileRepository;
 use App\Repository\TagRepository;
 use App\Repository\UserRepository;
@@ -28,7 +28,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Pagerfanta;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -37,6 +36,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Router;
@@ -489,7 +489,7 @@ class FileController extends AbstractController
     }
 
     #[Route(path: '/upload', name: 'file_upload')]
-    public function uploadAction(Request $request, PasswordHasherFactoryInterface $passwordHasherFactory, BotChecker $botChecker, EntityManagerInterface $entityManager): Response
+    public function uploadAction(Request $request, PasswordHasherFactoryInterface $passwordHasherFactory, BotChecker $botChecker, EntityManagerInterface $entityManager, MessageBusInterface $messageBus): Response
     {
         $form = $this->createForm(UploadType::class);
 
@@ -500,7 +500,7 @@ class FileController extends AbstractController
                 if ($form->isValid()) {
                     $botChecker->checkRequest($request);
 
-                    $file = $this->saveFileData($request, $form->getData(), $passwordHasherFactory, $entityManager);
+                    $file = $this->saveFileData($request, $form->getData(), $passwordHasherFactory, $entityManager, $messageBus);
 
                     // просмотр файла авторизованными пользователями
                     if ($this->isGranted('ROLE_USER')) {
@@ -532,61 +532,49 @@ class FileController extends AbstractController
         ]);
     }
 
-    private function saveFileData(Request $request, File $data, PasswordHasherFactoryInterface $passwordHasherFactory, EntityManagerInterface $entityManager): File
+    private function saveFileData(Request $request, File $file, PasswordHasherFactoryInterface $passwordHasherFactory, EntityManagerInterface $entityManager, MessageBusInterface $messageBus): File
     {
-        /** @var UploadedFile $file */
-        $file = $data->getFile();
+        /** @var UploadedFile $uploadedFile */
+        $uploadedFile = $file->getFile();
 
-        $hash = \md5_file($file->getPathname());
+        $hash = \md5_file($uploadedFile->getPathname());
 
         $existingFile = $entityManager->getRepository(File::class)->findOneBy(['hash' => $hash]);
         if (null !== $existingFile) {
             throw new FileDuplicatedException($existingFile, $this->container->get('router'));
         }
 
-        $data->setHash($hash);
-        $data->setOriginalFileName($file->getClientOriginalName());
+        $file->setHash($hash);
+        $file->setOriginalFileName($uploadedFile->getClientOriginalName());
 
         /** @var MimeGuesser $mimeGuesser */
         $mimeGuesser = $this->container->get(MimeGuesser::class);
-        $data->setMimeType($mimeGuesser->getMimeType($file));
+        $file->setMimeType($mimeGuesser->getMimeType($uploadedFile));
 
-        /** @var User|null $user */
-        $user = $this->getUser();
-        // fixme: avoid the stupid doctrine error
-        if ($user?->getPanel()) {
-            $entityManager->initializeObject($user->getPanel());
-        }
-        if ($user?->getSubscriber()) {
-            $entityManager->initializeObject($user->getSubscriber());
-        }
-        $data->setUser($user);
-        $data->setIp($request->getClientIp());
-        $data->setBrowser($request->headers->get('User-Agent', ''));
+        $file->setUser($this->getUser());
+        $file->setIp($request->getClientIp());
+        $file->setBrowser($request->headers->get('User-Agent', ''));
 
-        if (null !== $data->getPlainPassword()) {
-            $data->setFileTags(new ArrayCollection()); // не задаем тэги для запароленых файлов
+        if (null !== $file->getPlainPassword()) {
+            $file->setFileTags(new ArrayCollection()); // не задаем тэги для запароленых файлов
 
-            $passwordHasher = $passwordHasherFactory->getPasswordHasher($data);
-            $hashedPassword = $passwordHasher->hash($data->getPlainPassword());
-            $data->setPassword($hashedPassword);
+            $passwordHasher = $passwordHasherFactory->getPasswordHasher($file);
+            $hashedPassword = $passwordHasher->hash($file->getPlainPassword());
+            $file->setPassword($hashedPassword);
 
             // Запароленные файлы не скрываем
-            $data->setHidden(false);
+            $file->setHidden(false);
         }
 
-        $this->makeFileTags($data);
+        $this->makeFileTags($file);
 
-        $entityManager->persist($data);
+        $entityManager->persist($file);
 
         $entityManager->flush();
 
-        $this->container->get(EventDispatcherInterface::class)->dispatch(
-            new FileEvent($data->getUser(), $data),
-            FileEvent::FILE_ADD
-        );
+        $messageBus->dispatch(new FileAddMessage($file->getId()));
 
-        return $data;
+        return $file;
     }
 
     /**
@@ -707,7 +695,6 @@ class FileController extends AbstractController
         $services[LoggerInterface::class] = '?'.LoggerInterface::class;
         $services[Archive7z::class] = '?'.Archive7z::class;
         $services[\App\Service\File\File::class] = '?'.\App\Service\File\File::class;
-        $services[EventDispatcherInterface::class] = '?'.EventDispatcherInterface::class;
         $services[Paginate::class] = Paginate::class;
         $services[MimeGuesser::class] = MimeGuesser::class;
 

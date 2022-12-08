@@ -1,9 +1,10 @@
 {% extends 'User/Subscriber/Email/_layout.html.twig' %}
 
+{# @var gist \App\Entity\Gist #}
 {% block content %}
-    {% if friend.isFemale %}
-        Ваша подруга <a href="{{ url('wapinet_user_profile', {'username': friend.username}) }}">{{ friend }}</a> добавила в блог новое сообщение с темой <a href="{{ url('gist_view', {'id': gist.id}) }}">{{ gist.subject }}</a>.
+    {% if gist.user.isFemale %}
+        Ваша подруга <a href="{{ url('wapinet_user_profile', {'username': gist.user.username}) }}">{{ gist.user.username }}</a> добавила в блог новое сообщение с темой <a href="{{ url('gist_view', {'id': gist.id}) }}">{{ gist.subject }}</a>.
     {% else %}
-        Ваш друг <a href="{{ url('wapinet_user_profile', {'username': friend.username}) }}">{{ friend }}</a> добавил в блог новое сообщение с темой <a href="{{ url('gist_view', {'id': gist.id}) }}">{{ gist.subject }}</a>.
+        Ваш друг <a href="{{ url('wapinet_user_profile', {'username': gist.user.username}) }}">{{ gist.user.username }}</a> добавил в блог новое сообщение с темой <a href="{{ url('gist_view', {'id': gist.id}) }}">{{ gist.subject }}</a>.
     {% endif %}
 {% endblock %}

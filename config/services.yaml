@@ -55,16 +55,8 @@ services:
         tags:
             - { name: pagerfanta.view, alias: default }
 
-    App\EventListener\OnlineListener:
-        tags:
-            - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
-
     App\Uploader\Naming\FileDirectoryNamer:
         public: true
-
-    App\EventListener\ListenerLastActivity:
-        tags:
-            - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
 
     App\Service\File\Meta:
         $imagine: '@liip_imagine'

@@ -1,3 +1,5 @@
+{# @var event \App\Entity\Event #}
+
 <li data-role="list-divider">
     <span>
         <a class="bar-button ui-btn-icon-right ui-icon-camera ui-mini ui-btn-inline ui-btn" href="{{ path('file_view', {'id': event.variables.file.id}) }}">&#10150;</a>
@@ -7,10 +9,10 @@
 <li>
     <h2 class="long-description">{{ event.subject }}</h2>
     <div class="long-description">
-        {% if event.variables.friend.isFemale %}
-            Ваша подруга {{ event.variables.friend }} добавила новый файл {{ event.variables.file.originalFileName }} ({{ event.variables.file.fileSize|wapinet_size }}).
+        {% if event.variables.file.user.isFemale %}
+            Ваша подруга {{ event.variables.file.user.username }} добавила новый файл {{ event.variables.file.originalFileName }} ({{ event.variables.file.fileSize|wapinet_size }}).
         {% else %}
-            Ваш друг {{ event.variables.friend }} добавил новый файл {{ event.variables.file.originalFileName }} ({{ event.variables.file.fileSize|wapinet_size }}).
+            Ваш друг {{ event.variables.file.user.username }} добавил новый файл {{ event.variables.file.originalFileName }} ({{ event.variables.file.fileSize|wapinet_size }}).
         {% endif %}
     </div>
 </li>

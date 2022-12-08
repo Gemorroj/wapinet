@@ -4,10 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Gist;
 use App\Entity\User;
-use App\Event\GistEvent;
 use App\Form\Type\Gist\AddType;
 use App\Form\Type\Gist\EditType;
 use App\Form\Type\Gist\SearchType;
+use App\Message\GistAddMessage;
 use App\Repository\GistRepository;
 use App\Repository\UserRepository;
 use App\Service\BotChecker;
@@ -16,11 +16,11 @@ use App\Service\Paginate;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Router;
 
@@ -65,7 +65,7 @@ class GistController extends AbstractController
     }
 
     #[Route(path: '', name: 'gist_add', methods: ['POST'])]
-    public function addAction(Request $request, BotChecker $botChecker, EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher): RedirectResponse
+    public function addAction(Request $request, BotChecker $botChecker, EntityManagerInterface $entityManager, MessageBusInterface $messageBus): RedirectResponse
     {
         $user = $this->getUser();
         if (!$user) {
@@ -90,10 +90,7 @@ class GistController extends AbstractController
                     $entityManager->persist($gist);
                     $entityManager->flush();
 
-                    $eventDispatcher->dispatch(
-                        new GistEvent($user, $gist),
-                        GistEvent::GIST_ADD
-                    );
+                    $messageBus->dispatch(new GistAddMessage($gist->getId()));
                     $this->addFlash('notice', 'Сообщение успешно добавлено');
                 } else {
                     foreach ($form->getErrors(true) as $formError) {
