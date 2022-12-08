@@ -1,0 +1,13 @@
+[Unit]
+Description=messenger server
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+ExecStart=/var/www/wapinet/bin/console messenger:consume --limit=1000 --memory-limit=128M --time-limit=3600 --ansi
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

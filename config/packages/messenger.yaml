@@ -13,7 +13,7 @@ framework:
                     max_retries: 3
                     multiplier: 2
             failed: 'doctrine://default?queue_name=failed'
-            sync: 'sync://'
+            # sync: 'sync://'
 
         routing:
             Symfony\Component\Mailer\Messenger\SendEmailMessage: async
@@ -21,8 +21,8 @@ framework:
             Symfony\Component\Notifier\Message\SmsMessage: async
 
             # Route your messages to the transports
-            'App\Message\FileAddMessage': sync
-            'App\Message\FriendAddMessage': sync
-            'App\Message\FriendDeleteMessage': sync
-            'App\Message\GistAddMessage': sync
-            'App\Message\RequestMessage': sync
+            'App\Message\FileAddMessage': async
+            'App\Message\FriendAddMessage': async
+            'App\Message\FriendDeleteMessage': async
+            'App\Message\GistAddMessage': async
+            'App\Message\RequestMessage': async
