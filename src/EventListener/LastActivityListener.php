@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
-use Symfony\Component\HttpKernel\Event\ControllerEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 #[AsEventListener(priority: 1)]
@@ -20,7 +20,7 @@ class LastActivityListener
     /**
      * Update the user "lastActivity" on each request.
      */
-    public function __invoke(ControllerEvent $event): void
+    public function __invoke(ResponseEvent $event): void
     {
         // Here we are checking that the current request is a "MASTER_REQUEST", and ignore any subrequest in the process (for example when doing a render() in a twig template)
         if (!$event->isMainRequest()) {
@@ -37,19 +37,19 @@ class LastActivityListener
 
                 // We are checking the User class in order to be certain we can call "getLastActivity".
                 if ($user->getLastActivity() < $delay) {
-                    //$user->setLastActivity(new \DateTime());
+                    $user->setLastActivity(new \DateTime());
 
                     try {
                         // fixme: avoid the stupid doctrine error
                         if ($user->getPanel()) {
-                            //$this->entityManager->initializeObject($user->getPanel());
+                            // $this->entityManager->initializeObject($user->getPanel());
                         }
                         if ($user->getSubscriber()) {
-                            //$this->entityManager->initializeObject($user->getSubscriber());
+                            // $this->entityManager->initializeObject($user->getSubscriber());
                         }
 
-                        //$this->entityManager->persist($user);
-                        //$this->entityManager->flush();
+                        $this->entityManager->persist($user);
+                        $this->entityManager->flush();
                     } catch (\Exception $e) {
                         $this->managerRegistry->resetManager();
                         // игнорируем, т.к. маловажно

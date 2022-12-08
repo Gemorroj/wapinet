@@ -8,7 +8,7 @@ use App\Repository\OnlineRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
-use Symfony\Component\HttpKernel\Event\ControllerEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 #[AsEventListener(priority: -1)]
 class OnlineListener
@@ -17,7 +17,7 @@ class OnlineListener
     {
     }
 
-    public function __invoke(ControllerEvent $event): void
+    public function __invoke(ResponseEvent $event): void
     {
         if (!$event->isMainRequest()) {
             return;
