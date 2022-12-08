@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EventListener;
 
 use App\Message\RequestMessage;
@@ -24,8 +26,11 @@ class RequestListener
         }
 
         $request = $event->getRequest();
-        $userIdentifier = $this->tokenStorage->getToken()?->getUser()?->getUserIdentifier();
+        if (\in_array($request->attributes->get('_route'), ['_wdt', '_profiler', 'fos_js_routing_js'], true)) {
+            return;
+        }
 
+        $userIdentifier = $this->tokenStorage->getToken()?->getUser()?->getUserIdentifier();
         $this->messageBus->dispatch(new RequestMessage(
             new \DateTime(),
             $request->getClientIp() ?? '',
