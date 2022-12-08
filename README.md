@@ -10,6 +10,7 @@
 - Manticore
 - p7zip
 - ffmpeg
+- systemd
 
 
 ### Базовая установка (актуально для Centos 8 Stream)
@@ -80,7 +81,16 @@ dnf install manticore
 echo 'export MYSQL_LIB=/usr/lib64/mysql/libmysqlclient.so.21' > /etc/profile.d/mysql-manticore.csh
 systemctl enable manticore
 ```
+- Установить Symfony Messenger
+```bash
+cd /var/www/wapinet
 
+cp bin/messenger/messenger.service.dist bin/messenger/messenger.service
+# edit bin/messenger/messenger.service
+ln -s /var/www/wapinet/bin/messenger/messenger.service /etc/systemd/system/messenger.service
+systemctl daemon-reload
+systemctl enable messenger
+```
 
 #### Дополнительные настройки
 ```bash
