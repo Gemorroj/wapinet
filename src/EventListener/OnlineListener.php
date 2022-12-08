@@ -7,14 +7,19 @@ use App\Entity\User;
 use App\Repository\OnlineRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 #[AsEventListener(priority: -1)]
 class OnlineListener
 {
-    public function __construct(private EntityManagerInterface $entityManager, private ManagerRegistry $managerRegistry, private OnlineRepository $onlineRepository)
-    {
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private ManagerRegistry $managerRegistry,
+        private OnlineRepository $onlineRepository,
+        private LoggerInterface $logger,
+    ) {
     }
 
     public function __invoke(ResponseEvent $event): void
@@ -51,9 +56,8 @@ class OnlineListener
             $this->entityManager->persist($online);
             $this->entityManager->flush();
         } catch (\Exception $e) {
-            // Могут быть конкурентные запросы, которые запишут в онлайн данные на уникальном индексе
-            // игнорируем, т.к. маловажно
             $this->managerRegistry->resetManager();
+            $this->logger->error('Не удалось записать online', ['exception' => $e]);
         }
     }
 }

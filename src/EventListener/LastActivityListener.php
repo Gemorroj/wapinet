@@ -5,6 +5,7 @@ namespace App\EventListener;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
@@ -13,8 +14,13 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 #[AsEventListener(priority: 1)]
 class LastActivityListener
 {
-    public function __construct(private ParameterBagInterface $parameterBag, private TokenStorageInterface $tokenStorage, private EntityManagerInterface $entityManager, private ManagerRegistry $managerRegistry)
-    {
+    public function __construct(
+        private ParameterBagInterface $parameterBag,
+        private TokenStorageInterface $tokenStorage,
+        private EntityManagerInterface $entityManager,
+        private ManagerRegistry $managerRegistry,
+        private LoggerInterface $logger,
+    ) {
     }
 
     /**
@@ -44,7 +50,7 @@ class LastActivityListener
                         $this->entityManager->flush();
                     } catch (\Exception $e) {
                         $this->managerRegistry->resetManager();
-                        // игнорируем, т.к. маловажно
+                        $this->logger->error('Не удалось записать lastActivity', ['exception' => $e]);
                     }
                 }
             }
