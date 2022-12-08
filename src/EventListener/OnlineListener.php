@@ -26,7 +26,7 @@ class OnlineListener
 
         // чистим случайным образом, чтобы разгрузить БД
         if (1 === \mt_rand(1, 10)) {
-            //$this->entityManager->getConnection()->executeStatement('DELETE FROM online WHERE DATE_SUB(NOW(), INTERVAL '.User::LIFETIME.') > datetime');
+            $this->entityManager->getConnection()->executeStatement('DELETE FROM online WHERE DATE_SUB(NOW(), INTERVAL '.User::LIFETIME.') > datetime');
         }
 
         $request = $event->getRequest();
@@ -34,14 +34,14 @@ class OnlineListener
         $requestIp = $request->getClientIp();
         $requestBrowser = $request->headers->get('User-Agent', '');
 
-        /*$online = $this->entityManager->getConnection()->executeQuery(
+        $online = $this->entityManager->getConnection()->executeQuery(
             'SELECT id, datetime, path FROM online WHERE ip = :ip AND browser = :browser',
             ['ip' => $requestIp, 'browser' => $requestBrowser],
             [Types::STRING, Types::STRING]
-        )->fetchAssociative();*/
+        )->fetchAssociative();
 
         try {
-            /*if ($online) {
+            if ($online) {
                 $this->entityManager->getConnection()->executeStatement(
                     'UPDATE online SET datetime = NOW(), path = :path WHERE id = :id',
                     ['path' => $request->getPathInfo(), 'id' => $online['id']],
@@ -53,7 +53,7 @@ class OnlineListener
                     ['ip' => $requestIp, 'browser' => $requestBrowser, 'path' => $request->getPathInfo()],
                     [Types::STRING, Types::STRING, Types::STRING]
                 );
-            }*/
+            }
         } catch (\Exception $e) {
             $this->logger->error('Не удалось записать online', ['exception' => $e]);
         }
