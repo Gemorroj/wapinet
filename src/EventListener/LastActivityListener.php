@@ -48,14 +48,15 @@ class LastActivityListener
                     try {
                         // fixme: avoid the stupid doctrine error
                         if ($user->getPanel()) {
-                            $this->entityManager->initializeObject($user->getPanel());
+                            //$this->entityManager->initializeObject($user->getPanel());
                         }
                         if ($user->getSubscriber()) {
-                            $this->entityManager->initializeObject($user->getSubscriber());
+                            //$this->entityManager->initializeObject($user->getSubscriber());
                         }
 
-                        $this->entityManager->persist($user);
-                        $this->entityManager->flush();
+                        $manager = $this->managerRegistry->resetManager();
+                        $manager->persist($user);
+                        $manager->flush();
                     } catch (\Exception $e) {
                         $this->managerRegistry->resetManager();
                         $this->logger->error('Не удалось записать lastActivity', ['exception' => $e]);
