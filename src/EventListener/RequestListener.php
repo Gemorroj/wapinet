@@ -26,7 +26,8 @@ class RequestListener
         }
 
         $request = $event->getRequest();
-        if (\in_array($request->attributes->get('_route'), ['_wdt', '_profiler', 'fos_js_routing_js'], true)) {
+        $routeName = $request->attributes->get('_route', '');
+        if ('fos_js_routing_js' === $routeName || '_' === $routeName[0]) {
             return;
         }
 
