@@ -14,8 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Http\SecurityRequestAttributes;
 
 class DefaultController extends AbstractController
 {
@@ -36,8 +36,8 @@ class DefaultController extends AbstractController
     {
         $session = $request->getSession();
 
-        $authErrorKey = Security::AUTHENTICATION_ERROR;
-        $lastUsernameKey = Security::LAST_USERNAME;
+        $authErrorKey = SecurityRequestAttributes::AUTHENTICATION_ERROR;
+        $lastUsernameKey = SecurityRequestAttributes::LAST_USERNAME;
 
         // get the error if any (works with forward and redirect -- see below)
         if ($request->attributes->has($authErrorKey)) {
@@ -91,7 +91,7 @@ class DefaultController extends AbstractController
             $entityManager->flush();
 
             $session = $request->getSession();
-            $session->set(Security::LAST_USERNAME, $user->getUsername());
+            $session->set(SecurityRequestAttributes::LAST_USERNAME, $user->getUsername());
 
             return $this->redirectToRoute('wapinet_login');
         }
