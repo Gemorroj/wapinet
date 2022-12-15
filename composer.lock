@@ -1703,16 +1703,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v4.4.4",
+            "version": "v4.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "8d91efa1448b44b7ad0f7be0253daf87cd176c8b"
+                "reference": "abf018d4f05547b6640a41c911095d2894a23d17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/8d91efa1448b44b7ad0f7be0253daf87cd176c8b",
-                "reference": "8d91efa1448b44b7ad0f7be0253daf87cd176c8b",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/abf018d4f05547b6640a41c911095d2894a23d17",
+                "reference": "abf018d4f05547b6640a41c911095d2894a23d17",
                 "shasum": ""
             },
             "require": {
@@ -1784,7 +1784,7 @@
             ],
             "support": {
                 "issues": "https://github.com/EasyCorp/EasyAdminBundle/issues",
-                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.4.4"
+                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.4.5"
             },
             "funding": [
                 {
@@ -1792,7 +1792,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-11-29T19:44:16+00:00"
+            "time": "2022-12-14T19:16:19+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -10801,16 +10801,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.2.20",
+            "version": "9.2.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "af7463c955007de36db0c5e26d03e2f933c2e980"
+                "reference": "3f893e19712bb0c8bc86665d1562e9fd509c4ef0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/af7463c955007de36db0c5e26d03e2f933c2e980",
-                "reference": "af7463c955007de36db0c5e26d03e2f933c2e980",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/3f893e19712bb0c8bc86665d1562e9fd509c4ef0",
+                "reference": "3f893e19712bb0c8bc86665d1562e9fd509c4ef0",
                 "shasum": ""
             },
             "require": {
@@ -10866,7 +10866,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.20"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.21"
             },
             "funding": [
                 {
@@ -10874,7 +10874,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-12-13T07:49:28+00:00"
+            "time": "2022-12-14T13:26:54+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",

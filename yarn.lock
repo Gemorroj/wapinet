@@ -992,10 +992,10 @@
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.24.51.tgz#645f33fe4e02defe26f2f5c0410e1c094eac7f5f"
   integrity sha512-1P1OROm/rdubP5aFDSZQILU0vrLCJ4fvHt6EoqHEM+2D/G5MK3bIaymUKLit8Js9gbns5UyJnkP/TZROLw4tUA==
 
-"@symfony/webpack-encore@4.1.2":
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/@symfony/webpack-encore/-/webpack-encore-4.1.2.tgz#152c21bba61c44001b739e2ad3054dc0ddcc0afe"
-  integrity sha512-qODQon/RCFlpB/OYrFdNL+FmSbJvfrFRrTQ8a3czIA9NiJ85a5CjWFXVs+ri4Dy/X/aEUcMmjBYkgxbGlB1xwQ==
+"@symfony/webpack-encore@4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@symfony/webpack-encore/-/webpack-encore-4.2.0.tgz#1eec87e3fca9a410563511eb557f70461c10cce5"
+  integrity sha512-m0ZGm7vZpmc9pVKE7YBppS1tb9bK8r0qzOvRI2uCK7UfXtzfV3VgXr0VdTAlfmC72vvLKI+s9YJpiesOFbR6Aw==
   dependencies:
     "@nuxt/friendly-errors-webpack-plugin" "^2.5.1"
     assets-webpack-plugin "7.0.*"
@@ -1843,12 +1843,12 @@ css-declaration-sorter@^6.3.1:
   integrity sha512-fBffmak0bPAnyqc/HO8C3n2sHrp9wcqQz6ES9koRF2/mLOVAx9zIQ3Y7R29sYCteTPqMCwns4WYQoCX91Xl3+w==
 
 css-loader@^6.7.0:
-  version "6.7.2"
-  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-6.7.2.tgz#26bc22401b5921686a10fbeba75d124228302304"
-  integrity sha512-oqGbbVcBJkm8QwmnNzrFrWTnudnRZC+1eXikLJl0n4ljcfotgRifpg2a1lKy8jTrc4/d9A/ap1GFq1jDKG7J+Q==
+  version "6.7.3"
+  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-6.7.3.tgz#1e8799f3ccc5874fdd55461af51137fcc5befbcd"
+  integrity sha512-qhOH1KlBMnZP8FzRO6YCH9UHXQhVMcEGLyNdb7Hv2cpcmJbW0YrddO+tG1ab5nT41KpHIYGsbeHqxB9xPu1pKQ==
   dependencies:
     icss-utils "^5.1.0"
-    postcss "^8.4.18"
+    postcss "^8.4.19"
     postcss-modules-extract-imports "^3.0.0"
     postcss-modules-local-by-default "^4.0.0"
     postcss-modules-scope "^3.0.0"
@@ -3383,7 +3383,7 @@ postcss-value-parser@^4.1.0, postcss-value-parser@^4.2.0:
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz#723c09920836ba6d3e5af019f92bc0971c02e514"
   integrity sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==
 
-postcss@^8.2.14, postcss@^8.4.17, postcss@^8.4.18:
+postcss@^8.2.14, postcss@^8.4.17, postcss@^8.4.19:
   version "8.4.20"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.20.tgz#64c52f509644cecad8567e949f4081d98349dc56"
   integrity sha512-6Q04AXR1212bXr5fh03u8aAwbLxAQNGQ/Q1LNa0VfOI06ZAlhPHtQvE4OIdpj4kLThXilalPnmDSOD65DcHt+g==
