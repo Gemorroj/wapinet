@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class WhoisController extends AbstractController
 {
     #[Route(path: '', name: 'whois_index')]
-    public function indexAction(Request $request): Response
+    public function indexAction(Request $request, Phpwhois $phpwhois): Response
     {
         $resultHtml = null;
         $form = $this->createForm(WhoisType::class);
@@ -26,13 +26,13 @@ class WhoisController extends AbstractController
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    $resultHtml = $this->getWhois($data);
+                    $resultHtml = $this->getWhois($data, $phpwhois);
                 }
             } elseif (null !== $request->get('query')) {
                 $data = ['query' => $request->get('query')];
                 $form->setData($data);
 
-                $resultHtml = $this->getWhois($data);
+                $resultHtml = $this->getWhois($data, $phpwhois);
             }
         } catch (\Exception $e) {
             $form->addError(new FormError($e->getMessage()));
@@ -49,9 +49,8 @@ class WhoisController extends AbstractController
      *
      * @return string HTML текст
      */
-    private function getWhois(array $data): string
+    private function getWhois(array $data, Phpwhois $phpwhois): string
     {
-        $phpwhois = $this->container->get(Phpwhois::class);
         $whois = $phpwhois->getWhois();
 
         // $whois->non_icann = true;
@@ -59,10 +58,9 @@ class WhoisController extends AbstractController
 
         if (!empty($result['rawdata'])) {
             $result['rawdata'] = \str_replace('{query}', \htmlspecialchars($data['query']), $result['rawdata']);
-            $utils = $phpwhois->getUtils();
             $link = $this->generateUrl('whois_index');
 
-            return $utils->showHTML($result, $link);
+            return $whois::showHTML($result, $link);
         }
 
         if (isset($whois->Query['errstr'])) {
@@ -70,13 +68,5 @@ class WhoisController extends AbstractController
         }
 
         throw new WhoisException(['Не найдено данных']);
-    }
-
-    public static function getSubscribedServices(): array
-    {
-        $services = parent::getSubscribedServices();
-        $services[Phpwhois::class] = '?'.Phpwhois::class;
-
-        return $services;
     }
 }

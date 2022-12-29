@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 class Phpwhois
@@ -7,10 +9,5 @@ class Phpwhois
     public function getWhois(): \Whois
     {
         return new \Whois();
-    }
-
-    public function getUtils(): \WhoisUtils
-    {
-        return new \WhoisUtils();
     }
 }

@@ -5,8 +5,8 @@ namespace App\Service;
 use App\Entity\User;
 use StopSpam\Query as StopSpamQuery;
 use StopSpam\Request as StopSpamRequest;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -14,14 +14,14 @@ class StopSpam
 {
     private StopSpamRequest $httpClient;
 
-    public function __construct(private TokenStorageInterface $tokenStorage, HttpClientInterface $httpClient)
+    public function __construct(private Security $security, HttpClientInterface $httpClient)
     {
         $this->httpClient = new StopSpamRequest($httpClient);
     }
 
     public function checkRequest(Request $request): void
     {
-        $user = $this->tokenStorage->getToken()?->getUser();
+        $user = $this->security->getUser();
         if ($user instanceof User) {
             return; // Доверяем зарегистрированным пользователям. (защита от ложных срабатываний на IP)
         }

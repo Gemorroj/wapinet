@@ -15,17 +15,13 @@ use Pagerfanta\Pagerfanta;
  */
 class Bridge
 {
-    private EntityManagerInterface $entityManager;
-    private string $entityClass;
     /**
      * The results obtained from Manticore.
      */
     private ?array $results = null;
 
-    public function __construct(EntityManagerInterface $entityManager, string $entityClass)
+    public function __construct(private EntityManagerInterface $entityManager, private string $entityClass)
     {
-        $this->entityManager = $entityManager;
-        $this->entityClass = $entityClass;
     }
 
     private function extractPksFromResults(): array
