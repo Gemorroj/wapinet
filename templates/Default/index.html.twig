@@ -3,6 +3,7 @@
 {% block title %}{{ parent() }}{% endblock %}
 
 {% block content %}
+    <audio style="width: 100%;" controls src="{{ asset('build/resources/Aleksandr_Sklyar_i_gr_Va-Bank_-_Ty_zabyl_brat.mp3') }}"></audio>
     <ul data-role="listview" data-inset="true">
         <li><a href="{{ path('file_index') }}">Файлообменник <span class="ui-li-count">{{ file_count_all()|wapinet_count }}</span></a></li>
         <li><a href="{{ path('downloads') }}">Развлечения</a></li>
