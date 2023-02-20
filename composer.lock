@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c6f1f3ac078297c2d19022bd1ba05725",
+    "content-hash": "8411700e4d9ded0ea37bfac35d5d806f",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -1630,16 +1630,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v4.5.2",
+            "version": "v4.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "7ae836d9da53a8da115ea92583be7a6ffe06a388"
+                "reference": "90b3ccd9565b986d9d39ed8ca7f390063a760321"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/7ae836d9da53a8da115ea92583be7a6ffe06a388",
-                "reference": "7ae836d9da53a8da115ea92583be7a6ffe06a388",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/90b3ccd9565b986d9d39ed8ca7f390063a760321",
+                "reference": "90b3ccd9565b986d9d39ed8ca7f390063a760321",
                 "shasum": ""
             },
             "require": {
@@ -1715,7 +1715,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-02-06T19:25:46+00:00"
+            "time": "2023-02-20T19:01:40+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -2258,16 +2258,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/phpwhois.git",
-                "reference": "7f5f50079b3cab330df52f7978c7140b9880a395"
+                "reference": "4274c738e7a90fcff25ea5142b957acf80d48c95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/7f5f50079b3cab330df52f7978c7140b9880a395",
-                "reference": "7f5f50079b3cab330df52f7978c7140b9880a395",
+                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/4274c738e7a90fcff25ea5142b957acf80d48c95",
+                "reference": "4274c738e7a90fcff25ea5142b957acf80d48c95",
                 "shasum": ""
             },
             "require": {
-                "algo26-matthias/idna-convert": "^3.0.5",
+                "algo26-matthias/idna-convert": "^3.1",
                 "php": ">=7.4",
                 "symfony/polyfill-iconv": "^1.27"
             },
@@ -2289,7 +2289,7 @@
                 "GPL-2.0-only"
             ],
             "description": "This package contains a Whois (RFC954) library for PHP. It allows a PHP program to create a Whois object, and obtain the output of a whois query with the Lookup function.",
-            "time": "2022-12-29T09:50:04+00:00"
+            "time": "2023-02-20T07:55:36+00:00"
         },
         {
             "name": "gemorroj/stop-spam",
