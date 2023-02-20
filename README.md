@@ -111,7 +111,7 @@ cd /opt
 mkdir p7zip_17.05_sources
 mkdir p7zip_17.05_build
 cd /opt/p7zip_17.05_sources
-curl -O -L https://github.com/jinfeihan57/p7zip/archive/v17.05.tar.gz
+curl -O -L https://github.com/p7zip-project/p7zip/archive/v17.05.tar.gz
 tar xzvf v17.05.tar.gz
 cd p7zip-17.05
 make all3
