@@ -108,17 +108,17 @@ systemctl restart sshd
 ```bash
 dnf install make gcc gcc-c++
 cd /opt
-mkdir p7zip_17.04_sources
-mkdir p7zip_17.04_build
-cd /opt/p7zip_17.04_sources
-curl -O -L https://github.com/jinfeihan57/p7zip/archive/v17.04.tar.gz
-tar xzvf v17.04.tar.gz
-cd p7zip-17.04
+mkdir p7zip_17.05_sources
+mkdir p7zip_17.05_build
+cd /opt/p7zip_17.05_sources
+curl -O -L https://github.com/jinfeihan57/p7zip/archive/v17.05.tar.gz
+tar xzvf v17.05.tar.gz
+cd p7zip-17.05
 make all3
-# изменить в файле install.sh переменную DEST_HOME на /opt/p7zip_17.04_build
+# изменить в файле install.sh переменную DEST_HOME на /opt/p7zip_17.05_build
 ./install.sh
 ```
-Проверить список поддерживаемых форматов можно так `/opt/p7zip_17.04_build/bin/7z i` или `/opt/p7zip_17.04_build/bin/7za i` 
+Проверить список поддерживаемых форматов можно так `/opt/p7zip_17.05_build/bin/7z i` или `/opt/p7zip_17.05_build/bin/7za i` 
 
 
 ### Установка FFmpeg:
