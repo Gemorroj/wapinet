@@ -21,7 +21,7 @@
         "ext-sodium": "*",
         "ext-gd": "*",
 
-        "doctrine/annotations": "^1.14",
+        "doctrine/annotations": "^2.0",
         "doctrine/doctrine-bundle": "^2.8",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.14",
@@ -70,7 +70,7 @@
         "easycorp/easyadmin-bundle": "^4.6",
         "friendsofsymfony/jsrouting-bundle": "^3.2",
         "james-heinrich/getid3": "^1.9.22",
-        "vich/uploader-bundle": "^2.0",
+        "vich/uploader-bundle": "^2.1",
         "liip/imagine-bundle": "^2.10",
         "gregwar/captcha-bundle": "^2.2",
         "tufanbarisyildirim/php-apk-parser": "^3.0",
@@ -105,7 +105,7 @@
         "phpstan/phpstan-symfony": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
         "phpstan/phpstan-doctrine": "^1.0",
-        "friendsofphp/php-cs-fixer": "^3.13"
+        "friendsofphp/php-cs-fixer": "^3.15"
     },
     "config": {
         "allow-plugins": {
