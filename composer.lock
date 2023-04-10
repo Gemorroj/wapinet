@@ -8,25 +8,25 @@
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
-            "version": "v3.1.0",
+            "version": "v4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/algo26-matthias/idna-convert.git",
-                "reference": "340a4dc65f6b0d9884853a3d32895d82f0c1502a"
+                "reference": "a739f3f3a0c61913954ee8da145a9862a39b183f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/algo26-matthias/idna-convert/zipball/340a4dc65f6b0d9884853a3d32895d82f0c1502a",
-                "reference": "340a4dc65f6b0d9884853a3d32895d82f0c1502a",
+                "url": "https://api.github.com/repos/algo26-matthias/idna-convert/zipball/a739f3f3a0c61913954ee8da145a9862a39b183f",
+                "reference": "a739f3f3a0c61913954ee8da145a9862a39b183f",
                 "shasum": ""
             },
             "require": {
                 "ext-pcre": "*",
                 "jakeasmith/http_build_url": "^1",
-                "php": ">=7.2.0"
+                "php": ">=8.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "8.0"
+                "phpunit/phpunit": "^9 || ^10"
             },
             "suggest": {
                 "ext-iconv": "Install ext/iconv for using input / output other than UTF-8 or ISO-8859-1",
@@ -56,7 +56,7 @@
                 "idna",
                 "php"
             ],
-            "time": "2023-02-17T10:08:02+00:00"
+            "time": "2023-02-26T10:28:17+00:00"
         },
         {
             "name": "babdev/pagerfanta-bundle",
@@ -2259,16 +2259,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/phpwhois.git",
-                "reference": "4274c738e7a90fcff25ea5142b957acf80d48c95"
+                "reference": "049658462dbffd06aedf1cc1be3fa3c9c331be8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/4274c738e7a90fcff25ea5142b957acf80d48c95",
-                "reference": "4274c738e7a90fcff25ea5142b957acf80d48c95",
+                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/049658462dbffd06aedf1cc1be3fa3c9c331be8e",
+                "reference": "049658462dbffd06aedf1cc1be3fa3c9c331be8e",
                 "shasum": ""
             },
             "require": {
-                "algo26-matthias/idna-convert": "^3.1",
+                "algo26-matthias/idna-convert": "^3.1||^4.0",
                 "php": ">=7.4",
                 "symfony/polyfill-iconv": "^1.27"
             },
@@ -2290,7 +2290,7 @@
                 "GPL-2.0-only"
             ],
             "description": "This package contains a Whois (RFC954) library for PHP. It allows a PHP program to create a Whois object, and obtain the output of a whois query with the Lookup function.",
-            "time": "2023-02-20T07:55:36+00:00"
+            "time": "2023-04-10T09:30:44+00:00"
         },
         {
             "name": "gemorroj/stop-spam",
