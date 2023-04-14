@@ -342,7 +342,7 @@ class FileController extends AbstractController
                 throw $this->createNotFoundException('Не удалось распаковать файл.');
             }
 
-            $filesystem->chmod($entry, 0644);
+            $filesystem->chmod($entry, 0o644);
         }
 
         $file = new BinaryFileResponse(

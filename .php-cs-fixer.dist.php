@@ -9,7 +9,7 @@ return (new PhpCsFixer\Config())
         '@Symfony' => true,
         '@Symfony:risky' => true,
         '@DoctrineAnnotation' => true,
-        '@PHP80Migration' => true,
+        '@PHP81Migration' => true,
 
         'combine_consecutive_issets' => true,
         'combine_consecutive_unsets' => true,

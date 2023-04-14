@@ -29,7 +29,7 @@ class Kernel extends BaseKernel
             $fullPathDir = $this->getProjectDir().'/var/'.$dir;
 
             if (!\is_dir($fullPathDir)) {
-                if (false === @\mkdir($fullPathDir, 0777, true) && !\is_dir($fullPathDir)) {
+                if (false === @\mkdir($fullPathDir, 0o777, true) && !\is_dir($fullPathDir)) {
                     throw new \RuntimeException(\sprintf("Unable to create the var/%s directory\n", $dir));
                 }
             } elseif (!\is_writable($fullPathDir)) {
