@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2e76cf5c099af34defada923fd549301",
+    "content-hash": "c3c9a15974abfd551c6bf6377b74bea8",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -60,52 +60,56 @@
         },
         {
             "name": "babdev/pagerfanta-bundle",
-            "version": "v3.7.0",
+            "version": "v4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BabDev/PagerfantaBundle.git",
-                "reference": "d2760ebc3d22db10f219544323bea432dedc9eb0"
+                "reference": "055919ca4f0061d903cd4347335d922824736809"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BabDev/PagerfantaBundle/zipball/d2760ebc3d22db10f219544323bea432dedc9eb0",
-                "reference": "d2760ebc3d22db10f219544323bea432dedc9eb0",
+                "url": "https://api.github.com/repos/BabDev/PagerfantaBundle/zipball/055919ca4f0061d903cd4347335d922824736809",
+                "reference": "055919ca4f0061d903cd4347335d922824736809",
                 "shasum": ""
             },
             "require": {
-                "pagerfanta/core": "^3.1",
-                "php": "^7.4 || ^8.0",
-                "symfony/config": "^4.4 || ^5.4 || ^6.0",
-                "symfony/dependency-injection": "^4.4 || ^5.4 || ^6.0",
-                "symfony/deprecation-contracts": "^2.1 || ^3.0",
-                "symfony/http-foundation": "^4.4 || ^5.4 || ^6.0",
-                "symfony/http-kernel": "^4.4 || ^5.4 || ^6.0",
-                "symfony/polyfill-php80": "^1.15",
-                "symfony/property-access": "^4.4 || ^5.4 || ^6.0",
-                "symfony/routing": "^4.4 || ^5.4 || ^6.0"
+                "pagerfanta/core": "^3.7 || ^4.0",
+                "php": "^8.1",
+                "psr/container": "^1.0 || ^2.0",
+                "symfony/config": "^5.4 || ^6.2",
+                "symfony/dependency-injection": "^5.4 || ^6.2",
+                "symfony/http-foundation": "^5.4 || ^6.2",
+                "symfony/http-kernel": "^5.4 || ^6.2",
+                "symfony/property-access": "^5.4 || ^6.2",
+                "symfony/routing": "^5.4 || ^6.2"
             },
             "conflict": {
-                "pagerfanta/twig": "<3.1",
-                "twig/twig": "<1.35 || >=2.0,<2.5",
+                "jms/serializer": "<3.18",
+                "jms/serializer-bundle": "<4.2",
+                "pagerfanta/twig": "<3.7",
+                "symfony/serializer": "<5.4 || >=6.0,<6.2",
+                "symfony/translation": "<5.4 || >=6.0,<6.2",
+                "symfony/twig-bridge": "<5.4 || >=6.0,<6.2",
+                "symfony/twig-bundle": "<5.4 || >=6.0,<6.2",
+                "twig/twig": "<2.13",
                 "white-october/pagerfanta-bundle": "*"
             },
             "require-dev": {
-                "doctrine/annotations": "^1.8",
-                "jms/serializer": "^3.0",
-                "jms/serializer-bundle": "^3.0 || ^4.0",
+                "jms/serializer": "^3.18",
+                "jms/serializer-bundle": "^4.2 || ^5.0",
                 "matthiasnoback/symfony-dependency-injection-test": "^4.3",
-                "pagerfanta/twig": "^3.1",
-                "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "1.7.2",
-                "phpstan/phpstan-phpunit": "1.1.1",
-                "phpstan/phpstan-symfony": "1.2.0",
-                "phpunit/phpunit": "^9.5",
-                "symfony/phpunit-bridge": "^5.4 || ^6.0",
-                "symfony/serializer": "^4.4 || ^5.4 || ^6.0",
-                "symfony/translation": "^4.4 || ^5.4 || ^6.0",
-                "symfony/twig-bridge": "^4.4 || ^5.4 || ^6.0",
-                "symfony/twig-bundle": "^4.4 || ^5.4 || ^6.0",
-                "twig/twig": "^1.35 || ^2.5 || ^3.0"
+                "pagerfanta/twig": "^3.7 || ^4.0",
+                "phpstan/extension-installer": "^1.2",
+                "phpstan/phpstan": "1.10.6",
+                "phpstan/phpstan-phpunit": "1.3.10",
+                "phpstan/phpstan-symfony": "1.2.23",
+                "phpunit/phpunit": "9.6.5",
+                "symfony/phpunit-bridge": "^5.4 || ^6.2",
+                "symfony/serializer": "^5.4 || ^6.2",
+                "symfony/translation": "^5.4 || ^6.2",
+                "symfony/twig-bridge": "^5.4 || ^6.2",
+                "symfony/twig-bundle": "^5.4 || ^6.2",
+                "twig/twig": "^2.13 || ^3.0"
             },
             "suggest": {
                 "jms/serializer-bundle": "To use the Pagerfanta class with the JMS Serializer",
@@ -135,7 +139,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-05-27T20:58:26+00:00"
+            "time": "2023-03-15T22:01:31+00:00"
         },
         {
             "name": "beberlei/doctrineextensions",
@@ -3215,27 +3219,24 @@
         },
         {
             "name": "pagerfanta/core",
-            "version": "v3.7.0",
+            "version": "v4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/core.git",
-                "reference": "53c0bfdffc18fb816ae5c08e4bdda0773651bacc"
+                "reference": "157a6178bf49087c4d347ec9f5c0565aeea50121"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/core/zipball/53c0bfdffc18fb816ae5c08e4bdda0773651bacc",
-                "reference": "53c0bfdffc18fb816ae5c08e4bdda0773651bacc",
+                "url": "https://api.github.com/repos/Pagerfanta/core/zipball/157a6178bf49087c4d347ec9f5c0565aeea50121",
+                "reference": "157a6178bf49087c4d347ec9f5c0565aeea50121",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": "^7.4 || ^8.0",
-                "symfony/deprecation-contracts": "^2.1 || ^3.0",
-                "symfony/polyfill-php80": "^1.15"
+                "php": "^8.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9.5",
-                "symfony/phpunit-bridge": "^5.4 || ^6.0"
+                "phpunit/phpunit": "^10.1"
             },
             "type": "library",
             "autoload": {
@@ -3254,31 +3255,29 @@
             "keywords": [
                 "pagerfanta"
             ],
-            "time": "2022-12-01T22:53:57+00:00"
+            "time": "2023-04-15T16:44:14+00:00"
         },
         {
             "name": "pagerfanta/doctrine-collections-adapter",
-            "version": "v3.7.0",
+            "version": "v4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/doctrine-collections-adapter.git",
-                "reference": "3cf73b828dbd3011cebab7cf86856a16d9bf3dae"
+                "reference": "e3729e35b7bf7e6c0555ad650ce43cd70014bf17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/doctrine-collections-adapter/zipball/3cf73b828dbd3011cebab7cf86856a16d9bf3dae",
-                "reference": "3cf73b828dbd3011cebab7cf86856a16d9bf3dae",
+                "url": "https://api.github.com/repos/Pagerfanta/doctrine-collections-adapter/zipball/e3729e35b7bf7e6c0555ad650ce43cd70014bf17",
+                "reference": "e3729e35b7bf7e6c0555ad650ce43cd70014bf17",
                 "shasum": ""
             },
             "require": {
                 "doctrine/collections": "^1.8 || ^2.0",
-                "pagerfanta/core": "^3.0",
-                "php": "^7.4 || ^8.0",
-                "symfony/deprecation-contracts": "^2.1 || ^3.0"
+                "pagerfanta/core": "^3.7 || ^4.0",
+                "php": "^8.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9.5",
-                "symfony/phpunit-bridge": "^5.4 || ^6.0"
+                "phpunit/phpunit": "^10.1"
             },
             "type": "library",
             "autoload": {
@@ -3299,34 +3298,30 @@
                 "doctrine",
                 "pagerfanta"
             ],
-            "time": "2022-11-22T23:38:15+00:00"
+            "time": "2023-04-15T16:44:14+00:00"
         },
         {
             "name": "pagerfanta/doctrine-orm-adapter",
-            "version": "v3.7.0",
+            "version": "v4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/doctrine-orm-adapter.git",
-                "reference": "a76dccd512cd31c5400030e39bc0793caa13da51"
+                "reference": "0f4865e8ac6a1481d0d223259c49ceca50b40d4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/doctrine-orm-adapter/zipball/a76dccd512cd31c5400030e39bc0793caa13da51",
-                "reference": "a76dccd512cd31c5400030e39bc0793caa13da51",
+                "url": "https://api.github.com/repos/Pagerfanta/doctrine-orm-adapter/zipball/0f4865e8ac6a1481d0d223259c49ceca50b40d4d",
+                "reference": "0f4865e8ac6a1481d0d223259c49ceca50b40d4d",
                 "shasum": ""
             },
             "require": {
-                "doctrine/orm": "^2.8",
-                "pagerfanta/core": "^3.0",
-                "php": "^7.4 || ^8.0",
-                "symfony/deprecation-contracts": "^2.1 || ^3.0"
+                "doctrine/orm": "^2.14",
+                "pagerfanta/core": "^3.7 || ^4.0",
+                "php": "^8.1"
             },
             "require-dev": {
-                "doctrine/annotations": "^1.11.1",
-                "doctrine/cache": "^1.11 || ^2.0",
-                "phpunit/phpunit": "^9.5",
-                "symfony/cache": "^4.4 || ^5.4 || ^6.0",
-                "symfony/phpunit-bridge": "^5.4 || ^6.0"
+                "phpunit/phpunit": "^10.1",
+                "symfony/cache": "^5.4 || ^6.2"
             },
             "type": "library",
             "autoload": {
@@ -3347,31 +3342,29 @@
                 "orm",
                 "pagerfanta"
             ],
-            "time": "2022-12-01T22:53:57+00:00"
+            "time": "2023-04-15T16:44:14+00:00"
         },
         {
             "name": "pagerfanta/twig",
-            "version": "v3.7.0",
+            "version": "v4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/twig.git",
-                "reference": "e8f60980242db0e744ef926a0263ff3722f502bf"
+                "reference": "58f6b8f3c8fed141b5bfb6648a55deb07b517f4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/twig/zipball/e8f60980242db0e744ef926a0263ff3722f502bf",
-                "reference": "e8f60980242db0e744ef926a0263ff3722f502bf",
+                "url": "https://api.github.com/repos/Pagerfanta/twig/zipball/58f6b8f3c8fed141b5bfb6648a55deb07b517f4c",
+                "reference": "58f6b8f3c8fed141b5bfb6648a55deb07b517f4c",
                 "shasum": ""
             },
             "require": {
-                "pagerfanta/core": "^3.0",
-                "php": "^7.4 || ^8.0",
-                "symfony/polyfill-php80": "^1.15",
-                "twig/twig": "^1.35 || ^2.5 || ^3.0"
+                "pagerfanta/core": "^3.7 || ^4.0",
+                "php": "^8.1",
+                "twig/twig": "^2.13 || ^3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9.5",
-                "symfony/phpunit-bridge": "^5.4 || ^6.0"
+                "phpunit/phpunit": "^10.1"
             },
             "type": "library",
             "autoload": {
@@ -3390,7 +3383,7 @@
             "keywords": [
                 "pagerfanta"
             ],
-            "time": "2022-12-01T22:53:57+00:00"
+            "time": "2023-04-15T16:44:14+00:00"
         },
         {
             "name": "php-ffmpeg/php-ffmpeg",
@@ -10230,16 +10223,16 @@
         },
         {
             "name": "phpstan/phpstan-symfony",
-            "version": "1.2.25",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-symfony.git",
-                "reference": "1da7bf450c6b351fec08ca0aa97298473d4f6ab3"
+                "reference": "7e78605a699d183f5a6936cf91904f4c16ca79b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/1da7bf450c6b351fec08ca0aa97298473d4f6ab3",
-                "reference": "1da7bf450c6b351fec08ca0aa97298473d4f6ab3",
+                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/7e78605a699d183f5a6936cf91904f4c16ca79b2",
+                "reference": "7e78605a699d183f5a6936cf91904f4c16ca79b2",
                 "shasum": ""
             },
             "require": {
@@ -10293,7 +10286,7 @@
                 }
             ],
             "description": "Symfony Framework extensions and rules for PHPStan",
-            "time": "2023-04-05T12:16:20+00:00"
+            "time": "2023-04-14T16:59:18+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

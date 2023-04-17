@@ -62,10 +62,10 @@
         "twig/extra-bundle": "^3.4",
         "twig/twig": "^3.4",
 
-        "babdev/pagerfanta-bundle": "^3.7",
-        "pagerfanta/doctrine-collections-adapter": "^v3.7",
-        "pagerfanta/doctrine-orm-adapter": "^v3.7",
-        "pagerfanta/twig": "^v3.7",
+        "babdev/pagerfanta-bundle": "^4.0",
+        "pagerfanta/doctrine-collections-adapter": "^v4.1",
+        "pagerfanta/doctrine-orm-adapter": "^v4.1",
+        "pagerfanta/twig": "^v4.1",
 
         "easycorp/easyadmin-bundle": "^4.6",
         "friendsofsymfony/jsrouting-bundle": "^3.2",
