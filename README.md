@@ -3,9 +3,9 @@
 ##### Лицензия GPL v3
 
 ##### Используются:
-- Symfony 5.4
+- Symfony 6.2
 - Jquery Mobile
-- PHP 8.1
+- PHP 8.2
 - MySQL 8.0
 - Manticore
 - p7zip
@@ -61,10 +61,10 @@ firewall-cmd --permanent --add-service=https
 firewall-cmd --reload
 systemctl enable nginx
 ```
-- Установить php 8.1
+- Установить php 8.2
 ```bash
 dnf module reset php
-dnf module install php:remi-8.1
+dnf module install php:remi-8.2
 dnf install php-fpm php-cli php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-pecl-apcu php-pecl-zip php-process php-xml php-sodium
 systemctl enable php-fpm
 ```
