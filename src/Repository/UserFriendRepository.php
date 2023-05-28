@@ -27,7 +27,7 @@ class UserFriendRepository extends ServiceEntityRepository
             ->getQuery();
     }
 
-    public function getFriendsCount(User $user, ?\DateTime $lastActivity = null): int
+    public function getFriendsCount(User $user, \DateTime $lastActivity = null): int
     {
         $queryBuilder = $this->createQueryBuilder('f')
             ->select('COUNT(f.id)')

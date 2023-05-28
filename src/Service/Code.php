@@ -77,8 +77,6 @@ class Code
     }
 
     /**
-     * @param mixed $result
-     *
      * @throws CodeException
      */
     private function checkResult($result): void

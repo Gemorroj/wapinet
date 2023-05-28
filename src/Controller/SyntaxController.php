@@ -64,7 +64,7 @@ class SyntaxController extends AbstractController
         return \round($size / 1024, 2).' kb';
     }
 
-    private function highlightCode(string $source, ?int $line = null): string
+    private function highlightCode(string $source, int $line = null): string
     {
         $array = \array_slice(\explode("\n", $this->xhtmlCode($source)), 1, -2);
         $all = \count($array);

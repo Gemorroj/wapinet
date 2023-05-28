@@ -2,24 +2,28 @@
 
 namespace App\Service;
 
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+
 class MassMedia
 {
-    public function __construct(private Curl $curl)
+    public function __construct(private HttpClientInterface $httpClient)
     {
+        $this->httpClient = HttpClient::createForBaseUri('https://russian.rt.com');
     }
 
     public function getRt(): array
     {
-        $this->curl->init('https://russian.rt.com/rss');
-        $this->curl->addCompression();
+        $response = $this->httpClient->request('GET', '/rss');
 
-        $response = $this->curl->exec();
-
-        if (!$response->isSuccessful()) {
-            throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
+        try {
+            $data = $response->getContent();
+        } catch (HttpExceptionInterface $e) {
+            throw new \Exception('Не удалось получить данные (HTTP код: '.$e->getResponse()->getStatusCode().')');
         }
 
-        $obj = \simplexml_load_string($response->getContent());
+        $obj = \simplexml_load_string($data);
 
         $news = [];
         foreach ($obj->channel->item as $v) {
@@ -54,16 +58,15 @@ class MassMedia
 
     public function getInotv(): array
     {
-        $this->curl->init('https://russian.rt.com/inotv/s/rss/inotv_main.rss');
-        $this->curl->addCompression();
+        $response = $this->httpClient->request('GET', '/inotv/s/rss/inotv_main.rss');
 
-        $response = $this->curl->exec();
-
-        if (!$response->isSuccessful()) {
-            throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
+        try {
+            $data = $response->getContent();
+        } catch (HttpExceptionInterface $e) {
+            throw new \Exception('Не удалось получить данные (HTTP код: '.$e->getResponse()->getStatusCode().')');
         }
 
-        $obj = \simplexml_load_string($response->getContent());
+        $obj = \simplexml_load_string($data);
 
         $news = [];
         foreach ($obj->channel->item as $v) {

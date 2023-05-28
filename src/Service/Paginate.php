@@ -22,7 +22,7 @@ class Paginate
     /**
      * @throws \RuntimeException
      */
-    public function paginate(Query|QueryBuilder|Collection|array|FixedPaginate $data, int $page = 1, ?int $maxPerPage = null): Pagerfanta
+    public function paginate(Query|QueryBuilder|Collection|array|FixedPaginate $data, int $page = 1, int $maxPerPage = null): Pagerfanta
     {
         if ($data instanceof Collection) {
             $adapter = new CollectionAdapter($data);

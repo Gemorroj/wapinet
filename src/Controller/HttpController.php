@@ -3,28 +3,33 @@
 namespace App\Controller;
 
 use App\Form\Type\Http\HttpType;
-use App\Service\Curl;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 #[Route('/http')]
 class HttpController extends AbstractController
 {
     #[Route(path: '', name: 'http_index')]
-    public function indexAction(Request $request): Response
+    public function indexAction(Request $request, HttpClientInterface $httpClient): Response
     {
-        $result = null;
+        $headers = null;
+        $content = null;
         $form = $this->createForm(HttpType::class);
         try {
             $form->handleRequest($request);
 
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
-                    $data = $form->getData();
-                    $result = $this->getHttp($data);
+                    $formData = $form->getData();
+                    $response = $this->getHttp($httpClient, $formData['url'], $formData['type'], $formData['header'], $formData['body']);
+
+                    $content = $response->getContent(false); // first
+                    $headers = $response->getInfo('response_headers');
                 }
             }
         } catch (\Exception $e) {
@@ -33,37 +38,26 @@ class HttpController extends AbstractController
 
         return $this->render('Http/index.html.twig', [
             'form' => $form->createView(),
-            'result' => $result,
+            'headers' => $headers,
+            'content' => $content,
         ]);
     }
 
-    private function getHttp(array $data): Response
+    private function getHttp(HttpClientInterface $httpClient, string $url, string $method, ?string $headers, ?string $body): ResponseInterface
     {
-        /** @var Curl $curl */
-        $curl = $this->container->get(Curl::class);
+        $options = [];
 
-        $curl->init($data['url']);
-        $curl->setOpt(\CURLOPT_CUSTOMREQUEST, $data['type']);
-
-        if (null !== $data['header']) {
-            foreach (\explode("\n", \str_replace("\r", '', \trim($data['header']))) as $header) {
+        if (null !== $headers) {
+            foreach (\explode("\n", \str_replace("\r", '', \trim($headers))) as $header) {
                 [$key, $value] = \explode(':', $header, 2);
-                $curl->addHeader($key, $value);
+                $options['headers'][$key] = $value;
             }
         }
 
-        if (null !== $data['body']) {
-            $curl->setOpt(\CURLOPT_POSTFIELDS, $data['body']);
+        if (null !== $body) {
+            $options['body'] = $body;
         }
 
-        return $curl->exec();
-    }
-
-    public static function getSubscribedServices(): array
-    {
-        $services = parent::getSubscribedServices();
-        $services[Curl::class] = '?'.Curl::class;
-
-        return $services;
+        return $httpClient->request($method, $url, $options);
     }
 }

@@ -3,10 +3,10 @@
 namespace App\Tests\Form\DataTransformer;
 
 use App\Form\DataTransformer\FileUrlDataTransformer;
-use App\Service\Curl;
 use App\Tests\WebTestCaseWapinet;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class FileUrlDataTransformerTest extends WebTestCaseWapinet
 {
@@ -73,9 +73,9 @@ class FileUrlDataTransformerTest extends WebTestCaseWapinet
     {
         $container = static::getContainer();
         $parameterBag = $container->get(ParameterBagInterface::class);
-        $curl = $container->get(Curl::class);
+        $httpClient = $container->get(HttpClientInterface::class);
 
-        $fileUrlDataTransformer = new FileUrlDataTransformer($parameterBag, $curl);
+        $fileUrlDataTransformer = new FileUrlDataTransformer($parameterBag, $httpClient);
 
         $method = new \ReflectionMethod($fileUrlDataTransformer, 'getOriginalName');
         $method->setAccessible(true);

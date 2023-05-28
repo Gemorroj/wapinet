@@ -58,7 +58,7 @@ class FileRepository extends ServiceEntityRepository
         ]);
     }
 
-    public function countDate(\DateTime $datetimeStart, ?\DateTime $datetimeEnd = null): int
+    public function countDate(\DateTime $datetimeStart, \DateTime $datetimeEnd = null): int
     {
         $queryBuilder = $this->createQueryBuilder('f')
             ->select('COUNT(f.id)')
@@ -97,7 +97,7 @@ class FileRepository extends ServiceEntityRepository
         ]);
     }
 
-    public function getListQuery(?\DateTime $datetimeStart = null, ?\DateTime $datetimeEnd = null, ?string $category = null): Query
+    public function getListQuery(\DateTime $datetimeStart = null, \DateTime $datetimeEnd = null, string $category = null): Query
     {
         $queryBuilder = $this->createQueryBuilder('f')
             ->where('f.password IS NULL')
@@ -130,7 +130,7 @@ class FileRepository extends ServiceEntityRepository
     /**
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getPrevFile(int $id, ?string $category = null): ?File
+    public function getPrevFile(int $id, string $category = null): ?File
     {
         $queryBuilder = $this->createQueryBuilder('f')
             ->where('f.id > :id')
@@ -148,7 +148,7 @@ class FileRepository extends ServiceEntityRepository
     /**
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getNextFile(int $id, ?string $category = null): ?File
+    public function getNextFile(int $id, string $category = null): ?File
     {
         $queryBuilder = $this->createQueryBuilder('f')
             ->where('f.id < :id')

@@ -2,9 +2,12 @@
 
 namespace App\Service;
 
+use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+
 class Rates
 {
-    public function __construct(private Curl $curl)
+    public function __construct(private HttpClientInterface $httpClient)
     {
     }
 
@@ -30,16 +33,15 @@ class Rates
 
     protected function getRu(): array
     {
-        $this->curl->init('http://www.cbr.ru/scripts/XML_daily.asp');
-        $this->curl->addCompression();
+        $response = $this->httpClient->request('GET', 'http://www.cbr.ru/scripts/XML_daily.asp');
 
-        $response = $this->curl->exec();
-
-        if (!$response->isSuccessful()) {
-            throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
+        try {
+            $data = $response->getContent();
+        } catch (HttpExceptionInterface $e) {
+            throw new \Exception('Не удалось получить данные (HTTP код: '.$e->getResponse()->getStatusCode().')');
         }
 
-        $obj = \simplexml_load_string($response->getContent());
+        $obj = \simplexml_load_string($data);
         $rates = [];
         foreach ($obj->Valute as $v) {
             $rates[] = [
@@ -57,16 +59,15 @@ class Rates
 
     protected function getBy(): array
     {
-        $this->curl->init('https://www.nbrb.by/Services/XmlExRates.aspx');
-        $this->curl->addCompression();
+        $response = $this->httpClient->request('GET', 'https://www.nbrb.by/Services/XmlExRates.aspx');
 
-        $response = $this->curl->exec();
-
-        if (!$response->isSuccessful()) {
-            throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
+        try {
+            $data = $response->getContent();
+        } catch (HttpExceptionInterface $e) {
+            throw new \Exception('Не удалось получить данные (HTTP код: '.$e->getResponse()->getStatusCode().')');
         }
 
-        $obj = \simplexml_load_string($response->getContent());
+        $obj = \simplexml_load_string($data);
         $rates = [];
         foreach ($obj->Currency as $v) {
             $rates[] = [
@@ -84,18 +85,16 @@ class Rates
 
     protected function getUa(): array
     {
-        $this->curl->init('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json');
-        $this->curl->addCompression();
+        $response = $this->httpClient->request('GET', 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json');
 
-        $response = $this->curl->exec();
-
-        if (!$response->isSuccessful()) {
-            throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
+        try {
+            $data = $response->toArray();
+        } catch (HttpExceptionInterface $e) {
+            throw new \Exception('Не удалось получить данные (HTTP код: '.$e->getResponse()->getStatusCode().')');
         }
 
-        $arr = \json_decode($response->getContent(), true, 512, \JSON_THROW_ON_ERROR);
         $rates = [];
-        foreach ($arr as $v) {
+        foreach ($data as $v) {
             $rates[] = [
                 'name' => $v['txt'],
                 'code' => $v['cc'],
@@ -104,24 +103,22 @@ class Rates
         }
 
         return [
-            'date' => new \DateTime($arr[0]['exchangedate'], new \DateTimeZone('Europe/Kiev')),
+            'date' => new \DateTime($data[0]['exchangedate'], new \DateTimeZone('Europe/Kiev')),
             'rates' => $rates,
         ];
     }
 
     protected function getKz(): array
     {
-        $this->curl->init('https://www.nationalbank.kz/rss/rates_all.xml');
-        $this->curl->addCompression();
-        $this->curl->acceptRedirects(); // fix
+        $response = $this->httpClient->request('GET', 'https://www.nationalbank.kz/rss/rates_all.xml');
 
-        $response = $this->curl->exec();
-
-        if (!$response->isSuccessful()) {
-            throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$response->getStatusCode().')');
+        try {
+            $data = $response->getContent();
+        } catch (HttpExceptionInterface $e) {
+            throw new \Exception('Не удалось получить данные (HTTP код: '.$e->getResponse()->getStatusCode().')');
         }
 
-        $obj = \simplexml_load_string($response->getContent());
+        $obj = \simplexml_load_string($data);
         $rates = [];
         foreach ($obj->channel->item as $v) {
             $rates[] = [

@@ -128,7 +128,7 @@ class GistController extends AbstractController
     }
 
     #[Route(path: '/search/{key}', name: 'gist_search', requirements: ['key' => '[a-zA-Z0-9]+'], defaults: ['key' => null])]
-    public function searchAction(Request $request, Manticore $manticore, ?string $key = null): Response
+    public function searchAction(Request $request, Manticore $manticore, string $key = null): Response
     {
         $page = $request->get('page', 1);
         $form = $this->createForm(SearchType::class);

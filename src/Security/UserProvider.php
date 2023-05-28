@@ -22,7 +22,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
         if (!$user instanceof User) {
-            throw new UnsupportedUserException(\sprintf('Expected an instance of App\Entity\User, but got "%s".', \get_class($user)));
+            throw new UnsupportedUserException(\sprintf('Expected an instance of App\Entity\User, but got "%s".', $user::class));
         }
 
         $this->userRepository->upgradePassword($user, $newHashedPassword);
@@ -44,7 +44,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
     public function refreshUser(UserInterface $user): User
     {
         if (!$user instanceof User) {
-            throw new UnsupportedUserException(\sprintf('Expected an instance of App\Entity\User, but got "%s".', \get_class($user)));
+            throw new UnsupportedUserException(\sprintf('Expected an instance of App\Entity\User, but got "%s".', $user::class));
         }
 
         $reloadedUser = $this->userRepository->loadUserByIdentifier($user->getUserIdentifier());

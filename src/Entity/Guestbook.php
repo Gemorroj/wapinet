@@ -54,7 +54,7 @@ class Guestbook
         return $this->user;
     }
 
-    public function setUser(?User $user = null): self
+    public function setUser(User $user = null): self
     {
         $this->user = $user;
 

@@ -11,7 +11,7 @@
 {% block content %}
     {{ form_start(form, {'action': path('http_index'), 'method': 'POST'}) }}
     {{ form_errors(form) }}
-    {% if result is not null %}
+    {% if headers is not null or content is not null %}
         <fieldset>
             <label for="http-result">Результат</label>
             <div class="ui-grid-solo" id="http-result">
@@ -19,22 +19,14 @@
                     <label>
                         Заголовки <a href="#" id="downloadHeaders" class="ui-btn-inline ui-btn ui-icon-arrow-d ui-btn-icon-notext ui-corner-all">Скачать</a>
                         <textarea id="textHeaders">
-                            {%- for name, values in result.headers.allPreserveCase %}
-                                {%- if loop.first %}
-                                    {{- values[0] ~ "\r\n" }}
-                                {%- else %}
-                                    {%- for value in values %}
-                                        {{- name }}: {{ value ~ "\r\n" }}
-                                    {%- endfor %}
-                                {%- endif %}
-                            {%- endfor %}
+                            {{- headers|join("\r\n") }}
                         </textarea>
                     </label>
                 </div>
                 <div class="ui-block-a">
                     <label>
                         Тело <a href="#" id="downloadBody" class="ui-btn-inline ui-btn ui-icon-arrow-d ui-btn-icon-notext ui-corner-all">Скачать</a>
-                        <textarea id="textBody">{{ result.content }}</textarea>
+                        <textarea id="textBody">{{ content }}</textarea>
                     </label>
                 </div>
             </div>

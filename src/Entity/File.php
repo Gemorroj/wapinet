@@ -154,7 +154,7 @@ class File implements PasswordAuthenticatedUserInterface
         return $this->meta;
     }
 
-    public function setMeta(?Meta $meta = null): self
+    public function setMeta(Meta $meta = null): self
     {
         $this->meta = $meta;
 
@@ -206,7 +206,7 @@ class File implements PasswordAuthenticatedUserInterface
         return $this->user;
     }
 
-    public function setUser(?User $user = null): self
+    public function setUser(User $user = null): self
     {
         $this->user = $user;
 
@@ -294,7 +294,7 @@ class File implements PasswordAuthenticatedUserInterface
         return $this->plainPassword;
     }
 
-    public function setPlainPassword(?string $plainPassword = null): self
+    public function setPlainPassword(string $plainPassword = null): self
     {
         $this->plainPassword = $plainPassword;
 
@@ -306,7 +306,7 @@ class File implements PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(?string $password = null): self
+    public function setPassword(string $password = null): self
     {
         $this->password = $password;
 
@@ -461,9 +461,9 @@ class File implements PasswordAuthenticatedUserInterface
 
     public function isFlash(): bool
     {
-        return 'application/x-shockwave-flash' === $this->getMimeType() ||
-            'application/futuresplash' === $this->getMimeType() ||
-            'application/vnd.adobe.flash.movie' === $this->getMimeType();
+        return 'application/x-shockwave-flash' === $this->getMimeType()
+            || 'application/futuresplash' === $this->getMimeType()
+            || 'application/vnd.adobe.flash.movie' === $this->getMimeType();
     }
 
     public function isJavaApp(): bool
@@ -686,14 +686,14 @@ class File implements PasswordAuthenticatedUserInterface
     public function isPlayableVideo(): bool
     {
         return $this->isVideo() && (
-            $this->isM4v() ||
-            $this->isOgv() ||
-            $this->isWebmv() ||
-            $this->isFlv() ||
-            $this->is3gp() ||
-            $this->isAvi() ||
-            $this->isWmv() ||
-            $this->isMov()
+            $this->isM4v()
+            || $this->isOgv()
+            || $this->isWebmv()
+            || $this->isFlv()
+            || $this->is3gp()
+            || $this->isAvi()
+            || $this->isWmv()
+            || $this->isMov()
         );
     }
 
@@ -705,14 +705,14 @@ class File implements PasswordAuthenticatedUserInterface
     public function isPlayableAudio(): bool
     {
         return $this->isAudio() && (
-            $this->isMp3() ||
-            $this->isM4a() ||
-            $this->isOga() ||
-            $this->isWebma() ||
-            $this->isWav() ||
-            $this->isFla() ||
-            $this->isFlac() ||
-            $this->isAmr()
+            $this->isMp3()
+            || $this->isM4a()
+            || $this->isOga()
+            || $this->isWebma()
+            || $this->isWav()
+            || $this->isFla()
+            || $this->isFlac()
+            || $this->isAmr()
         );
     }
 

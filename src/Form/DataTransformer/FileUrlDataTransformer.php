@@ -4,7 +4,6 @@ namespace App\Form\DataTransformer;
 
 use App\Entity\File\FileContent;
 use App\Entity\File\FileUrl;
-use App\Service\Curl;
 use Riverline\MultiPartParser\StreamedPart;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -12,13 +11,14 @@ use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class FileUrlDataTransformer implements DataTransformerInterface
 {
     public function __construct(
         private ParameterBagInterface $parameterBag,
-        private Curl $curl,
+        private HttpClientInterface $httpClient,
         private bool $required = true
     ) {
     }
@@ -85,13 +85,16 @@ class FileUrlDataTransformer implements DataTransformerInterface
         }
 
         if ($fileDataFromForm['url']) {
-            $this->curl->init($fileDataFromForm['url']);
-            $this->curl->addBrowserHeaders();
-            $this->curl->acceptRedirects();
-            $responseHead = $this->curl->checkFileSize(false);
-
-            if (!$responseHead->isSuccessful() && !$responseHead->isRedirection()) {
-                throw new \RuntimeException('Не удалось получить данные (HTTP код: '.$responseHead->getStatusCode().')');
+            $response = $this->httpClient->request('GET', $fileDataFromForm['url']);
+            try {
+                $headers = $response->getHeaders();
+                $info = $response->getInfo();
+                $maxFilesize = UploadedFile::getMaxFilesize();
+                if ($info['download_content_length'] > $maxFilesize) {
+                    throw new \LengthException('Размер файла превышает максимально допустимый');
+                }
+            } catch (HttpExceptionInterface $e) {
+                throw new \Exception('Не удалось получить данные (HTTP код: '.$e->getResponse()->getStatusCode().')');
             }
 
             $temp = \tempnam($this->parameterBag->get('kernel.tmp_dir'), 'file_url');
@@ -103,31 +106,28 @@ class FileUrlDataTransformer implements DataTransformerInterface
                 throw new TransformationFailedException('Не удалось открыть временный файл на запись');
             }
 
-            $this->curl->setOpt(\CURLOPT_HEADER, false);
-            $this->curl->setOpt(\CURLOPT_FILE, $f);
-
-            $responseBody = $this->curl->exec();
-            $this->curl->close();
-            \fclose($f);
-
-            if (!$responseBody->isSuccessful()) {
-                throw new TransformationFailedException('Не удалось скачать файл по ссылке (HTTP код: '.$responseBody->getStatusCode().')');
+            foreach ($this->httpClient->stream($response) as $chunk) {
+                \fwrite($f, $chunk->getContent());
             }
+            \fclose($f);
 
             $uploadedFile = new FileUrl(
                 $temp,
-                $this->getOriginalName($responseHead->headers, $fileDataFromForm['url']),
-                $responseHead->headers->get('Content-Type'),
-                $responseHead->headers->has('Content-Length') ? (int) $responseHead->headers->get('Content-Length') : null
+                $this->getOriginalName($headers, $fileDataFromForm['url']),
+                $info['content_type'],
+                $info['download_content_length'] > 0 ? (int) $info['download_content_length'] : null
             );
         }
 
         return $uploadedFile;
     }
 
-    protected function getOriginalName(ResponseHeaderBag $headers, string $url, string $default = 'index.html'): string
+    /**
+     * @param string[][] $headers
+     */
+    protected function getOriginalName(array $headers, string $url, string $default = 'index.html'): string
     {
-        $contentDisposition = $headers->get('Content-Disposition');
+        $contentDisposition = $headers['content-disposition'][0] ?? null;
         if ($contentDisposition) {
             $tmpName = StreamedPart::getHeaderOption($contentDisposition, 'filename');
             if ($tmpName) {
@@ -140,7 +140,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
             return $path;
         }
 
-        $location = $headers->get('Location');
+        $location = $headers['location'][0] ?? null;
         if ($location) {
             $locationPath = \parse_url($location, \PHP_URL_PATH);
             if (null !== $locationPath && '/' !== $locationPath) {
