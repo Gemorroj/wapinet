@@ -538,18 +538,6 @@
             "ref": "2955e26d3818b803d82b5de05d91805df5994d3a"
         }
     },
-    "symfony/polyfill-intl-grapheme": {
-        "version": "v1.13.1"
-    },
-    "symfony/polyfill-intl-icu": {
-        "version": "v1.8.0"
-    },
-    "symfony/polyfill-intl-idn": {
-        "version": "v1.10.0"
-    },
-    "symfony/polyfill-intl-normalizer": {
-        "version": "v1.13.1"
-    },
     "symfony/polyfill-uuid": {
         "version": "v1.22.0"
     },
