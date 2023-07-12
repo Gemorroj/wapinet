@@ -116,9 +116,6 @@
             "ref": "81dee417d2cc60cd1c9d6208dff2ec22a1103e93"
         }
     },
-    "friendsofphp/proxy-manager-lts": {
-        "version": "v1.0.3"
-    },
     "friendsofsymfony/jsrouting-bundle": {
         "version": "2.0",
         "recipe": {
@@ -178,9 +175,6 @@
     },
     "jms/metadata": {
         "version": "1.6.0"
-    },
-    "laminas/laminas-code": {
-        "version": "3.4.1"
     },
     "liip/imagine-bundle": {
         "version": "1.8",
@@ -550,9 +544,6 @@
     "symfony/property-info": {
         "version": "v4.0.8"
     },
-    "symfony/proxy-manager-bridge": {
-        "version": "v4.4.18"
-    },
     "symfony/routing": {
         "version": "4.0",
         "recipe": {
@@ -642,18 +633,6 @@
             "version": "3.3",
             "ref": "6bdfa1a95f6b2e677ab985cd1af2eae35d62e0f6"
         }
-    },
-    "symfony/webapp-meta": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "1.0",
-            "ref": "67cae591d131c133d63b893c5324796b88c59b34"
-        },
-        "files": [
-            "./config/packages/messenger.yaml"
-        ]
     },
     "symfony/webpack-encore-bundle": {
         "version": "1.0",

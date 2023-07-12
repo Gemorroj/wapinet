@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table]
 #[ORM\Entity(repositoryClass: UserPanelRepository::class)]
-class UserPanel extends \ArrayObject
+class UserPanel implements \Stringable
 {
     public const ROUTE_FORUM = 'forum_index';
     public const ROUTE_GUESTBOOK = 'guestbook_index';
