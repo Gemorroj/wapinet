@@ -7,7 +7,7 @@ use Vich\UploaderBundle\Naming\DirectoryNamerInterface;
 
 class FileDirectoryNamer implements DirectoryNamerInterface
 {
-    public function directoryName($object, PropertyMapping $mapping): string
+    public function directoryName(object|array $object, PropertyMapping $mapping): string
     {
         return '/'.$object->getCreatedAt()->format('Y/m/d');
     }

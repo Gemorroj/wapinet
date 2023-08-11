@@ -67,7 +67,7 @@
         "easycorp/easyadmin-bundle": "^4.7",
         "friendsofsymfony/jsrouting-bundle": "^3.3",
         "james-heinrich/getid3": "^1.9.22",
-        "vich/uploader-bundle": "^2.1",
+        "vich/uploader-bundle": "^2.2",
         "liip/imagine-bundle": "^2.11",
         "gregwar/captcha-bundle": "^2.2",
         "tufanbarisyildirim/php-apk-parser": "^3.0",
