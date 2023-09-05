@@ -1,8 +1,9 @@
 <?php
 
-$finder = PhpCsFixer\Finder::create()
-    ->exclude('fixtures')
-    ->in(['src', 'tests', 'config', 'migrations', 'public']);
+$finder = (new PhpCsFixer\Finder())
+    ->in(__DIR__)
+    ->exclude('var')
+;
 
 return (new PhpCsFixer\Config())
     ->setRules([
