@@ -554,13 +554,19 @@
         "version": "v5.3.2"
     },
     "symfony/phpunit-bridge": {
-        "version": "4.1",
+        "version": "6.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "4.1",
-            "ref": "2955e26d3818b803d82b5de05d91805df5994d3a"
-        }
+            "branch": "main",
+            "version": "6.3",
+            "ref": "01dfaa98c58f7a7b5a9b30e6edb7074af7ed9819"
+        },
+        "files": [
+            ".env.test",
+            "bin/phpunit",
+            "phpunit.xml.dist",
+            "tests/bootstrap.php"
+        ]
     },
     "symfony/polyfill-uuid": {
         "version": "v1.22.0"
