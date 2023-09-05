@@ -35,10 +35,7 @@ class FileTags
         return $this;
     }
 
-    /**
-     * @return File
-     */
-    public function getFile()
+    public function getFile(): ?File
     {
         return $this->file;
     }
@@ -50,10 +47,7 @@ class FileTags
         return $this;
     }
 
-    /**
-     * @return Tag
-     */
-    public function getTag()
+    public function getTag(): ?Tag
     {
         return $this->tag;
     }
@@ -67,7 +61,7 @@ class FileTags
 
     public function __toString(): string
     {
-        return (string) $this->getTag()->getName();
+        return (string) $this->getTag()?->getName();
     }
 
     #[ORM\PrePersist]

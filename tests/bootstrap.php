@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Symfony\Component\Dotenv\Dotenv;
@@ -12,5 +13,5 @@ if (\file_exists(\dirname(__DIR__).'/config/bootstrap.php')) {
 }
 
 if ($_SERVER['APP_DEBUG']) {
-    \umask(0000);
+    \umask(0o000);
 }

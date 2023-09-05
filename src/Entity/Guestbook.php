@@ -85,10 +85,7 @@ class Guestbook
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }

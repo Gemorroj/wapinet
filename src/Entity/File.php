@@ -237,10 +237,7 @@ class File implements PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -367,10 +364,7 @@ class File implements PasswordAuthenticatedUserInterface
         return \pathinfo($this->getOriginalFileName(), \PATHINFO_FILENAME);
     }
 
-    /**
-     * @return BaseFile
-     */
-    public function getFile()
+    public function getFile(): ?BaseFile
     {
         return $this->file;
     }

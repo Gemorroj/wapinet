@@ -17,10 +17,8 @@ class TagsDataTransformer implements DataTransformerInterface
 
     /**
      * @param ArrayCollection<Tag>|null $tagsDataFromDb
-     *
-     * @return string
      */
-    public function transform($tagsDataFromDb)
+    public function transform($tagsDataFromDb): string
     {
         return $tagsDataFromDb ? \implode(self::SEPARATOR, $tagsDataFromDb->toArray()) : '';
     }
@@ -30,7 +28,7 @@ class TagsDataTransformer implements DataTransformerInterface
      *
      * @return ArrayCollection<Tag>|null
      */
-    public function reverseTransform($tagsDataFromForm)
+    public function reverseTransform($tagsDataFromForm): ?ArrayCollection
     {
         $tags = \explode(self::SEPARATOR, $tagsDataFromForm);
         $tags = \array_map('trim', $tags);

@@ -58,10 +58,7 @@ class Online
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDatetime()
+    public function getDatetime(): \DateTime
     {
         return $this->datetime;
     }

@@ -50,10 +50,8 @@ class FileUrlDataTransformer implements DataTransformerInterface
      * @param array $fileDataFromForm
      *
      * @throws TransformationFailedException|InvalidArgumentException
-     *
-     * @return UploadedFile|FileUrl|null
      */
-    public function reverseTransform($fileDataFromForm)
+    public function reverseTransform($fileDataFromForm): UploadedFile|FileUrl|null
     {
         $uploadedFile = $this->getUploadedFile($fileDataFromForm);
 
@@ -68,10 +66,7 @@ class FileUrlDataTransformer implements DataTransformerInterface
         return $uploadedFile;
     }
 
-    /**
-     * @return FileUrl|UploadedFile|null
-     */
-    protected function getUploadedFile(array $fileDataFromForm)
+    protected function getUploadedFile(array $fileDataFromForm): FileUrl|UploadedFile|null
     {
         $uploadedFile = null;
 

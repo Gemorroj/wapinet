@@ -18,7 +18,7 @@ class MessageType extends AbstractType
     {
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
 
@@ -36,7 +36,7 @@ class MessageType extends AbstractType
         $builder->add('submit', SubmitType::class, ['label' => 'Написать']);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Guestbook::class,

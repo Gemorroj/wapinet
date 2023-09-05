@@ -46,10 +46,7 @@ class Event
         return $this->id;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -69,10 +66,7 @@ class Event
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSubject()
+    public function getSubject(): string
     {
         return $this->subject;
     }
@@ -84,10 +78,7 @@ class Event
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getTemplate()
+    public function getTemplate(): string
     {
         return $this->template;
     }

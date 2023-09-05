@@ -55,10 +55,7 @@ class News
         return $this;
     }
 
-    /**
-     * @return User
-     */
-    public function getCreatedBy()
+    public function getCreatedBy(): ?User
     {
         return $this->createdBy;
     }
@@ -75,10 +72,7 @@ class News
         return $this->subject;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }

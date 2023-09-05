@@ -18,7 +18,7 @@ class CodeType extends AbstractType
         $this->code = $code;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
 
