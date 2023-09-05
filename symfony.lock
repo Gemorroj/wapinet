@@ -184,13 +184,17 @@
         "version": "1.6.0"
     },
     "liip/imagine-bundle": {
-        "version": "1.8",
+        "version": "2.11",
         "recipe": {
             "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
+            "branch": "main",
             "version": "1.8",
-            "ref": "d2a601ea5ccad81de2a131ed68481d012ed4667c"
-        }
+            "ref": "d1227d002b70d1a1f941d91845fcd7ac7fbfc929"
+        },
+        "files": [
+            "config/packages/liip_imagine.yaml",
+            "config/routes/liip_imagine.yaml"
+        ]
     },
     "masterminds/html5": {
         "version": "2.7.5"
