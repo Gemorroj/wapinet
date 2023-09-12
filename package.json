@@ -12,9 +12,10 @@
     "browserslist": {
         "production": [
             ">0.4%",
-            "not IE <= 11",
             "not dead",
-            "not op_mini all"
+            "not op_mini all",
+            "not Safari <= 16",
+            "not iOS <= 16"
         ],
         "development": [
             "last 1 chrome version",
