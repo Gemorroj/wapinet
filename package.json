@@ -1,12 +1,12 @@
 {
     "devDependencies": {
-        "@babel/core": "^7.23.0",
-        "@babel/preset-env": "^7.22.20",
+        "@babel/core": "^7.23.2",
+        "@babel/preset-env": "^7.23.2",
         "@symfony/webpack-encore": "4.4.0",
-        "core-js": "^3.33.0",
+        "core-js": "^3.33.1",
         "file-loader": "^6.2.0",
         "regenerator-runtime": "^0.14.0",
-        "webpack": "^5.88.2",
+        "webpack": "^5.89.0",
         "webpack-cli": "^5.1.4"
     },
     "browserslist": {
