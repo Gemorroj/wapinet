@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b08a7e9afc706b146c25ad9b4cfd5a8",
+    "content-hash": "2af2aa5516587dd5e3ddb2c3c44e2989",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -143,16 +143,16 @@
         },
         {
             "name": "beberlei/doctrineextensions",
-            "version": "v1.3.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/beberlei/DoctrineExtensions.git",
-                "reference": "008f162f191584a6c37c03a803f718802ba9dd9a"
+                "reference": "67f32c184e80085e170b6e4e8f4f94bc92394c72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/beberlei/DoctrineExtensions/zipball/008f162f191584a6c37c03a803f718802ba9dd9a",
-                "reference": "008f162f191584a6c37c03a803f718802ba9dd9a",
+                "url": "https://api.github.com/repos/beberlei/DoctrineExtensions/zipball/67f32c184e80085e170b6e4e8f4f94bc92394c72",
+                "reference": "67f32c184e80085e170b6e4e8f4f94bc92394c72",
                 "shasum": ""
             },
             "require": {
@@ -160,13 +160,15 @@
                 "php": "^7.2 || ^8.0"
             },
             "require-dev": {
+                "doctrine/cache": "^1.11",
                 "friendsofphp/php-cs-fixer": "^2.14",
                 "nesbot/carbon": "*",
                 "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0",
-                "symfony/yaml": "^4.2 || ^5.0",
+                "symfony/yaml": "^4.4 || ^5.3 || ^6.0",
                 "zf1/zend-date": "^1.12",
                 "zf1/zend-registry": "^1.12"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -193,7 +195,7 @@
                 "doctrine",
                 "orm"
             ],
-            "time": "2020-11-29T07:37:23+00:00"
+            "time": "2023-02-25T19:57:36+00:00"
         },
         {
             "name": "christeredvartsen/php-bittorrent",
@@ -1338,16 +1340,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "2.17.0",
+            "version": "2.16.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "e8afa9f80ce66ac728f63325d102adda01cbd6ff"
+                "reference": "609647a51a1b28a674de270204a5cea3af57d554"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/e8afa9f80ce66ac728f63325d102adda01cbd6ff",
-                "reference": "e8afa9f80ce66ac728f63325d102adda01cbd6ff",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/609647a51a1b28a674de270204a5cea3af57d554",
+                "reference": "609647a51a1b28a674de270204a5cea3af57d554",
                 "shasum": ""
             },
             "require": {
@@ -1365,7 +1367,7 @@
                 "ext-ctype": "*",
                 "php": "^7.1 || ^8.0",
                 "psr/cache": "^1 || ^2 || ^3",
-                "symfony/console": "^4.2 || ^5.0 || ^6.0 || ^7.0",
+                "symfony/console": "^4.2 || ^5.0 || ^6.0",
                 "symfony/polyfill-php72": "^1.23",
                 "symfony/polyfill-php80": "^1.16"
             },
@@ -1431,7 +1433,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2023-11-15T23:04:41+00:00"
+            "time": "2023-10-21T17:35:18+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -11599,6 +11601,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "beberlei/doctrineextensions": 20,
         "stdtabs/phptabs": 20,
         "gemorroj/phpwhois": 20
     },
