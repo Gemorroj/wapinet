@@ -23,7 +23,7 @@
 
         "doctrine/doctrine-bundle": "^2.11",
         "doctrine/doctrine-migrations-bundle": "^3.3",
-        "doctrine/orm": "2.16.*",
+        "doctrine/orm": "^2.17.1",
         "beberlei/doctrineextensions": "dev-master",
 
         "phpdocumentor/reflection-docblock": "^5.3",
