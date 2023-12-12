@@ -65,7 +65,7 @@
         "pagerfanta/twig": "^v4.2",
 
         "easycorp/easyadmin-bundle": "^4.8",
-        "friendsofsymfony/jsrouting-bundle": "^3.3",
+        "friendsofsymfony/jsrouting-bundle": "^3.4",
         "james-heinrich/getid3": "^1.9.23",
         "vich/uploader-bundle": "^2.2",
         "liip/imagine-bundle": "^2.12",
