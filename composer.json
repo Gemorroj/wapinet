@@ -59,7 +59,7 @@
         "twig/extra-bundle": "^3.8",
         "twig/twig": "^3.8",
 
-        "babdev/pagerfanta-bundle": "^4.3",
+        "babdev/pagerfanta-bundle": "^4.4",
         "pagerfanta/doctrine-collections-adapter": "^v4.2",
         "pagerfanta/doctrine-orm-adapter": "^v4.2",
         "pagerfanta/twig": "^v4.2",
@@ -76,7 +76,7 @@
         "foolz/sphinxql-query-builder": "^3.0",
         "php-ffmpeg/php-ffmpeg": "^1.1",
         "riverline/multipart-parser": "^2.1",
-        "stdtabs/phptabs": "dev-master",
+        "stdtabs/phptabs": "^1.1.0",
 
         "gemorroj/phpwhois": "dev-master",
         "gemorroj/stop-spam": "^3.3",
