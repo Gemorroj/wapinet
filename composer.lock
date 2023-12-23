@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b5af654a23c6e9df42e7f34f81be411f",
+    "content-hash": "61dc2a140872b6be1f1b834a4eed7a21",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -1888,26 +1888,26 @@
         },
         {
             "name": "gemorroj/archive7z",
-            "version": "5.6.0",
+            "version": "5.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/Archive7z.git",
-                "reference": "e7733839542fc8b7b7a7106327ae9c00e8a09c80"
+                "reference": "5e627fd6cc8def6125211c16d8bd60cf7e8fde99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/Archive7z/zipball/e7733839542fc8b7b7a7106327ae9c00e8a09c80",
-                "reference": "e7733839542fc8b7b7a7106327ae9c00e8a09c80",
+                "url": "https://api.github.com/repos/Gemorroj/Archive7z/zipball/5e627fd6cc8def6125211c16d8bd60cf7e8fde99",
+                "reference": "5e627fd6cc8def6125211c16d8bd60cf7e8fde99",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0.2",
-                "symfony/process": "^5.4||^6.0"
+                "symfony/process": "^5.4||^6.0||^7.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.0",
-                "phpstan/phpstan": "^1.0",
-                "phpunit/phpunit": "^9.5.28"
+                "friendsofphp/php-cs-fixer": "^3.41",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^9.6"
             },
             "type": "library",
             "autoload": {
@@ -1932,30 +1932,30 @@
                 "archive",
                 "p7zip"
             ],
-            "time": "2023-07-03T17:03:31+00:00"
+            "time": "2023-12-22T13:40:05+00:00"
         },
         {
             "name": "gemorroj/cssvalidator",
-            "version": "3.3.0",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/CSSValidator.git",
-                "reference": "a0768bd5247b189e951c2ad373b5ff0f2232fc94"
+                "reference": "a7dcba30e26df75f38166c97c6e86c3d58cd2999"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/CSSValidator/zipball/a0768bd5247b189e951c2ad373b5ff0f2232fc94",
-                "reference": "a0768bd5247b189e951c2ad373b5ff0f2232fc94",
+                "url": "https://api.github.com/repos/Gemorroj/CSSValidator/zipball/a7dcba30e26df75f38166c97c6e86c3d58cd2999",
+                "reference": "a7dcba30e26df75f38166c97c6e86c3d58cd2999",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-libxml": "*",
                 "php": ">=8.0.2",
-                "symfony/http-client": "^5.4||^6.0"
+                "symfony/http-client": "^5.4||^6.0||^7.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.0",
+                "friendsofphp/php-cs-fixer": "^3.41",
                 "phpunit/phpunit": "^9.6"
             },
             "type": "library",
@@ -1974,20 +1974,20 @@
                 }
             ],
             "description": "W3C CSS Validator service.",
-            "time": "2023-07-03T17:49:50+00:00"
+            "time": "2023-12-22T13:41:44+00:00"
         },
         {
             "name": "gemorroj/ginfo",
-            "version": "5.4.0",
+            "version": "5.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/ginfo.git",
-                "reference": "d0aa66c58ff50476de1abd9962a65d12a5445e08"
+                "reference": "1dc000c3025e096011415f8323270aee32b71ef4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/d0aa66c58ff50476de1abd9962a65d12a5445e08",
-                "reference": "d0aa66c58ff50476de1abd9962a65d12a5445e08",
+                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/1dc000c3025e096011415f8323270aee32b71ef4",
+                "reference": "1dc000c3025e096011415f8323270aee32b71ef4",
                 "shasum": ""
             },
             "require": {
@@ -1995,10 +1995,10 @@
                 "ext-mbstring": "*",
                 "ext-pcre": "*",
                 "php": ">=8.0.2",
-                "symfony/process": "^5.4||^6.0"
+                "symfony/process": "^5.4||^6.0||^7.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.20",
+                "friendsofphp/php-cs-fixer": "^3.41",
                 "phpstan/phpstan": "^1.10",
                 "phpunit/phpunit": "^9.6"
             },
@@ -2037,28 +2037,28 @@
                 "specs",
                 "system"
             ],
-            "time": "2023-07-03T17:06:37+00:00"
+            "time": "2023-12-22T13:44:51+00:00"
         },
         {
             "name": "gemorroj/htmlvalidator",
-            "version": "3.2.0",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/HTMLValidator.git",
-                "reference": "a1d95a078fb6be52f1b4adb92e5aa75266e27336"
+                "reference": "14ec58006355bc4c7b4ba9693845362b88eed048"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/HTMLValidator/zipball/a1d95a078fb6be52f1b4adb92e5aa75266e27336",
-                "reference": "a1d95a078fb6be52f1b4adb92e5aa75266e27336",
+                "url": "https://api.github.com/repos/Gemorroj/HTMLValidator/zipball/14ec58006355bc4c7b4ba9693845362b88eed048",
+                "reference": "14ec58006355bc4c7b4ba9693845362b88eed048",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0.2",
-                "symfony/http-client": "^5.4||^6.0"
+                "symfony/http-client": "^5.4||^6.0||^7.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.0",
+                "friendsofphp/php-cs-fixer": "^3.41",
                 "phpunit/phpunit": "^9.6"
             },
             "type": "library",
@@ -2077,28 +2077,28 @@
                 }
             ],
             "description": "W3C HTML Validator service.",
-            "time": "2023-07-03T17:09:08+00:00"
+            "time": "2023-12-22T13:45:50+00:00"
         },
         {
             "name": "gemorroj/m3u-parser",
-            "version": "5.4.0",
+            "version": "5.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/M3uParser.git",
-                "reference": "0f75e381fb56f39d60e6b98b14cb5c8990db5dcd"
+                "reference": "b78b68fb55bb4374a2dab7482c934dd2eddc2070"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/M3uParser/zipball/0f75e381fb56f39d60e6b98b14cb5c8990db5dcd",
-                "reference": "0f75e381fb56f39d60e6b98b14cb5c8990db5dcd",
+                "url": "https://api.github.com/repos/Gemorroj/M3uParser/zipball/b78b68fb55bb4374a2dab7482c934dd2eddc2070",
+                "reference": "b78b68fb55bb4374a2dab7482c934dd2eddc2070",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0.2"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.0",
-                "phpstan/phpstan": "^1.0",
+                "friendsofphp/php-cs-fixer": "^3.41",
+                "phpstan/phpstan": "^1.10",
                 "phpunit/phpunit": "^9.6"
             },
             "type": "library",
@@ -2122,7 +2122,7 @@
                 "m3u8",
                 "playlist"
             ],
-            "time": "2023-07-03T17:15:40+00:00"
+            "time": "2023-12-22T13:47:59+00:00"
         },
         {
             "name": "gemorroj/phpwhois",
@@ -2130,12 +2130,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/phpwhois.git",
-                "reference": "392bb54bc9ba084c0a75ac1871414cb6939c61bc"
+                "reference": "4c2405f8238431ad91ec9b66ecbaad1b8e28c119"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/392bb54bc9ba084c0a75ac1871414cb6939c61bc",
-                "reference": "392bb54bc9ba084c0a75ac1871414cb6939c61bc",
+                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/4c2405f8238431ad91ec9b66ecbaad1b8e28c119",
+                "reference": "4c2405f8238431ad91ec9b66ecbaad1b8e28c119",
                 "shasum": ""
             },
             "require": {
@@ -2144,7 +2144,7 @@
                 "symfony/polyfill-iconv": "^1.28"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.0",
+                "friendsofphp/php-cs-fixer": "^3.41",
                 "phpunit/phpunit": "^9.6"
             },
             "default-branch": true,
@@ -2161,28 +2161,28 @@
                 "GPL-2.0-only"
             ],
             "description": "This package contains a Whois (RFC954) library for PHP. It allows a PHP program to create a Whois object, and obtain the output of a whois query with the Lookup function.",
-            "time": "2023-11-24T17:23:17+00:00"
+            "time": "2023-12-22T13:50:19+00:00"
         },
         {
             "name": "gemorroj/stop-spam",
-            "version": "3.3.0",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/StopSpam.git",
-                "reference": "4f2a629a8a9abfb2ad4a9000876a6a7f07207b79"
+                "reference": "6aac7e30d7d4733fcf6cfed12622498e9ac86ebf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/StopSpam/zipball/4f2a629a8a9abfb2ad4a9000876a6a7f07207b79",
-                "reference": "4f2a629a8a9abfb2ad4a9000876a6a7f07207b79",
+                "url": "https://api.github.com/repos/Gemorroj/StopSpam/zipball/6aac7e30d7d4733fcf6cfed12622498e9ac86ebf",
+                "reference": "6aac7e30d7d4733fcf6cfed12622498e9ac86ebf",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0.2",
-                "symfony/http-client": "^5.4||^6.0"
+                "symfony/http-client": "^5.4||^6.0||^7.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.0",
+                "friendsofphp/php-cs-fixer": "^3.41",
                 "phpunit/phpunit": "^9.6"
             },
             "type": "library",
@@ -2209,28 +2209,28 @@
                 "spam-protection",
                 "stopforumspam"
             ],
-            "time": "2023-07-03T17:34:10+00:00"
+            "time": "2023-12-22T13:58:36+00:00"
         },
         {
             "name": "gemorroj/syntax",
-            "version": "4.3.0",
+            "version": "4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/Syntax.git",
-                "reference": "4c2ca3a116d35a07e515c0d2de827d768c5ee739"
+                "reference": "cf828b36c5d87a7e6dff04d92593a34f23c0fd65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/Syntax/zipball/4c2ca3a116d35a07e515c0d2de827d768c5ee739",
-                "reference": "4c2ca3a116d35a07e515c0d2de827d768c5ee739",
+                "url": "https://api.github.com/repos/Gemorroj/Syntax/zipball/cf828b36c5d87a7e6dff04d92593a34f23c0fd65",
+                "reference": "cf828b36c5d87a7e6dff04d92593a34f23c0fd65",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0.2",
-                "symfony/process": "^5.4||^6.0"
+                "symfony/process": "^5.4||^6.0||^7.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.0",
+                "friendsofphp/php-cs-fixer": "^3.41",
                 "phpunit/phpunit": "^9.6"
             },
             "type": "library",
@@ -2249,7 +2249,7 @@
                 }
             ],
             "description": "PHP code syntax checker.",
-            "time": "2023-11-24T18:08:45+00:00"
+            "time": "2023-12-22T13:59:57+00:00"
         },
         {
             "name": "gemorroj/xbbcode",
@@ -9691,16 +9691,16 @@
         },
         {
             "name": "phpstan/phpstan-symfony",
-            "version": "1.3.5",
+            "version": "1.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-symfony.git",
-                "reference": "27ff6339f83796a7e0dd963cf445cd3c456fc620"
+                "reference": "34b3c43684834f6a20aa51af8d455480d9de8b88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/27ff6339f83796a7e0dd963cf445cd3c456fc620",
-                "reference": "27ff6339f83796a7e0dd963cf445cd3c456fc620",
+                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/34b3c43684834f6a20aa51af8d455480d9de8b88",
+                "reference": "34b3c43684834f6a20aa51af8d455480d9de8b88",
                 "shasum": ""
             },
             "require": {
@@ -9755,7 +9755,7 @@
                 }
             ],
             "description": "Symfony Framework extensions and rules for PHPStan",
-            "time": "2023-10-30T14:52:15+00:00"
+            "time": "2023-12-22T11:22:34+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
