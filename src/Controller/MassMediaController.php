@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Service\MassMedia;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/mass_media')]
 class MassMediaController extends AbstractController
