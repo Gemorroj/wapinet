@@ -219,6 +219,7 @@ const _commentsLoader = function ($pageContainer, xid) {
     let vkCommentsInterval = window.setInterval(function () {
         i++;
         if ("VK" in window) {
+            VK.init(window.vkInitConfig);
             window.clearInterval(vkCommentsInterval);
             VK.Widgets.Comments(id, {}, xid);
         } else if (i > 100) {
