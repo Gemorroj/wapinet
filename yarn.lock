@@ -1953,7 +1953,7 @@ css-select@^5.1.0:
     domutils "^3.0.1"
     nth-check "^2.0.1"
 
-css-tree@^2.2.1:
+css-tree@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/css-tree/-/css-tree-2.3.1.tgz#10264ce1e5442e8572fc82fbe490644ff54b5c20"
   integrity sha512-6Fv1DV/TYw//QF5IzQdqsNDjx/wc8TrMBZsqjL9eW01tWb7R7k/mq+/VXfJCl7SoD5emsJop9cOByJZfs8hYIw==
@@ -2027,7 +2027,7 @@ cssnano@^6.0.1:
     cssnano-preset-default "^6.0.2"
     lilconfig "^3.0.0"
 
-csso@5.0.5:
+csso@^5.0.5:
   version "5.0.5"
   resolved "https://registry.yarnpkg.com/csso/-/csso-5.0.5.tgz#f9b7fe6cc6ac0b7d90781bb16d5e9874303e2ca6"
   integrity sha512-0LrrStPOdJj+SPCCrGhzryycLjwcgUSHBtxNA8aIDxf0GLsRh1cKYhB00Gd1lDOS4yGH69+SNn13+TWbVHETFQ==
@@ -3700,9 +3700,9 @@ regenerator-transform@^0.15.2:
     "@babel/runtime" "^7.8.4"
 
 regex-parser@^2.2.11:
-  version "2.2.11"
-  resolved "https://registry.yarnpkg.com/regex-parser/-/regex-parser-2.2.11.tgz#3b37ec9049e19479806e878cabe7c1ca83ccfe58"
-  integrity sha512-jbD/FT0+9MBU2XAZluI7w2OBs1RBi6p9M83nkoZayQXXU9e8Robt69FcZc7wU4eJD/YFTjn1JdCk3rbMJajz8Q==
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/regex-parser/-/regex-parser-2.3.0.tgz#4bb61461b1a19b8b913f3960364bb57887f920ee"
+  integrity sha512-TVILVSz2jY5D47F4mA4MppkBrafEaiUWJO/TcZHEIuI13AqoZMkK1WMA4Om1YkYbTx+9Ki1/tSUXbceyr9saRg==
 
 regexpu-core@^5.3.1:
   version "5.3.2"
@@ -4101,16 +4101,16 @@ supports-preserve-symlinks-flag@^1.0.0:
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
 svgo@^3.0.5:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/svgo/-/svgo-3.1.0.tgz#7e63855c8da73297d5d5765e968f9679a0f8d24a"
-  integrity sha512-R5SnNA89w1dYgNv570591F66v34b3eQShpIBcQtZtM5trJwm1VvxbIoMpRYY3ybTAutcKTLEmTsdnaknOHbiQA==
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/svgo/-/svgo-3.2.0.tgz#7a5dff2938d8c6096e00295c2390e8e652fa805d"
+  integrity sha512-4PP6CMW/V7l/GmKRKzsLR8xxjdHTV4IMvhTnpuHwwBazSIlw5W/5SmPjN8Dwyt7lKbSJrRDgp4t9ph0HgChFBQ==
   dependencies:
     "@trysound/sax" "0.2.0"
     commander "^7.2.0"
     css-select "^5.1.0"
-    css-tree "^2.2.1"
+    css-tree "^2.3.1"
     css-what "^6.1.0"
-    csso "5.0.5"
+    csso "^5.0.5"
     picocolors "^1.0.0"
 
 sync-rpc@^1.3.6:
