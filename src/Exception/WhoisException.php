@@ -6,6 +6,9 @@ namespace App\Exception;
 
 class WhoisException extends \RuntimeException
 {
+    /**
+     * @param string[] $messages
+     */
     public function __construct(array $messages, int $code = 0, \Exception $previous = null)
     {
         parent::__construct(\implode("\r\n", $messages), $code, $previous);

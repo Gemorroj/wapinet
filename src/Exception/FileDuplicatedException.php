@@ -10,7 +10,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 class FileDuplicatedException extends \RuntimeException
 {
-    public function __construct(private File $existingFile, private RouterInterface $router)
+    public function __construct(private readonly File $existingFile, private readonly RouterInterface $router)
     {
         parent::__construct('Такой файл уже существует: '.$this->getPath());
     }

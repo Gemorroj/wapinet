@@ -10,8 +10,8 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-#[AsEventListener]
-class RequestListener
+#[AsEventListener(event: RequestEvent::class)]
+readonly class RequestListener
 {
     public function __construct(
         private TokenStorageInterface $tokenStorage,
