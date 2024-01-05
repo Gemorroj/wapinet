@@ -86,10 +86,14 @@ systemctl enable manticore
 cd /var/www/wapinet
 
 cp bin/messenger/messenger.service.dist bin/messenger/messenger.service
+cp bin/messenger/scheduler.service.dist bin/messenger/scheduler.service
 # edit bin/messenger/messenger.service
+# edit bin/messenger/scheduler.service
 ln -s /var/www/wapinet/bin/messenger/messenger.service /etc/systemd/system/messenger.service
+ln -s /var/www/wapinet/bin/messenger/scheduler.service /etc/systemd/system/scheduler.service
 systemctl daemon-reload
 systemctl enable messenger
+systemctl enable scheduler
 ```
 
 #### Дополнительные настройки
