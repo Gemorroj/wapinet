@@ -8,12 +8,13 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Scheduler\Attribute\AsCronTask;
+use Symfony\Component\Scheduler\Attribute\AsPeriodicTask;
 
 #[AsCommand(
     name: 'app:test',
     description: 'test',
 )]
-#[AsCronTask('* * * * *')]
+#[AsPeriodicTask('1 minute')]
 class TestCommand extends Command
 {
     public function __construct(
