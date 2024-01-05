@@ -230,6 +230,10 @@
                         <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('php-fpm.service')) }}</dd>
                         <dt class="col-5 text-end monitoring-label">MySQL:</dt>
                         <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('mysqld.service')) }}</dd>
+                        <dt class="col-5 text-end monitoring-label">Messenger:</dt>
+                        <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('messenger.service')) }}</dd>
+                        <dt class="col-5 text-end monitoring-label">Scheduler:</dt>
+                        <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('scheduler.service')) }}</dd>
                         <dt class="col-5 text-end monitoring-label">Cron:</dt>
                         <dd class="col-7 monitoring-value">{{ macroService.macro_service(info.services|wapinet_ginfo_search_service('crond.service')) }}</dd>
                         <dt class="col-5 text-end monitoring-label">Manticore:</dt>
