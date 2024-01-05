@@ -15,18 +15,20 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Scheduler\Attribute\AsPeriodicTask;
 
 #[AsCommand(
     name: 'app:subscriber-send',
     description: 'Send emails to subscribers',
 )]
+#[AsPeriodicTask('30 minutes')]
 class SubscriberSendCommand extends Command
 {
     public function __construct(
-        private EntityManagerInterface $entityManager,
-        private MailerInterface $mailer,
-        private LoggerInterface $logger,
-        private ParameterBagInterface $parameterBag,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly MailerInterface $mailer,
+        private readonly LoggerInterface $logger,
+        private readonly ParameterBagInterface $parameterBag,
     ) {
         parent::__construct();
     }

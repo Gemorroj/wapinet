@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class SubscriberClearCommand extends Command
 {
-    public function __construct(private EventRepository $eventRepository)
+    public function __construct(private readonly EventRepository $eventRepository)
     {
         parent::__construct();
     }

@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class FilesClearMetaCommand extends Command
 {
-    public function __construct(private EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
         parent::__construct();
     }

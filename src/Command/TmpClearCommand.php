@@ -10,15 +10,19 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Scheduler\Attribute\AsPeriodicTask;
 
 #[AsCommand(
     name: 'app:tmp-clear',
     description: 'Clean tmp files',
 )]
+#[AsPeriodicTask('1 day')]
 class TmpClearCommand extends Command
 {
-    public function __construct(private ParameterBagInterface $parameterBag, private Filesystem $filesystem)
-    {
+    public function __construct(
+        private readonly ParameterBagInterface $parameterBag,
+        private readonly Filesystem $filesystem,
+    ) {
         parent::__construct();
     }
 

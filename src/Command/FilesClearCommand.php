@@ -20,9 +20,9 @@ use Symfony\Component\Finder\Finder;
 class FilesClearCommand extends Command
 {
     public function __construct(
-        private EntityManagerInterface $entityManager,
-        private Filesystem $filesystem,
-        private ParameterBagInterface $parameterBag
+        private readonly EntityManagerInterface $entityManager,
+        private readonly Filesystem $filesystem,
+        private readonly ParameterBagInterface $parameterBag
     ) {
         parent::__construct();
     }

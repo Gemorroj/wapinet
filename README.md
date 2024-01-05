@@ -3,7 +3,7 @@
 ##### Лицензия GPL v3
 
 ##### Используются:
-- Symfony 6.2
+- Symfony 6.4
 - Jquery Mobile
 - PHP 8.2
 - MySQL 8.0
@@ -106,19 +106,14 @@ systemctl restart sshd
 
 ##### Установка p7zip
 ```bash
-dnf install make gcc gcc-c++
 cd /opt
-mkdir p7zip_17.05_sources
-mkdir p7zip_17.05_build
-cd /opt/p7zip_17.05_sources
-curl -O -L https://github.com/p7zip-project/p7zip/archive/v17.05.tar.gz
-tar xzvf v17.05.tar.gz
-cd p7zip-17.05
-make all3
-# изменить в файле install.sh переменную DEST_HOME на /opt/p7zip_17.05_build
-./install.sh
+mkdir 7z2301-linux-x64
+cd /opt/7z2301-linux-x64
+curl -O -L https://7-zip.org/a/7z2301-linux-x64.tar.xz
+tar xJvf 7z2301-linux-x64.tar.xz
+rm -f 7z2301-linux-x64.tar.xz
 ```
-Проверить список поддерживаемых форматов можно так `/opt/p7zip_17.05_build/bin/7z i` или `/opt/p7zip_17.05_build/bin/7za i` 
+Проверить список поддерживаемых форматов можно так `/opt/7z2301-linux-x64/7zz i` или `/opt/7z2301-linux-x64/7zzs i` 
 
 
 ### Установка FFmpeg:
@@ -127,10 +122,10 @@ make all3
 ```bash
 dnf install autoconf automake bzip2 bzip2-devel cmake freetype-devel gcc gcc-c++ libtool make nasm yasm pkgconfig zlib-devel
 
-mkdir /opt/ffmpeg_2022-03-26_build
-mkdir /opt/ffmpeg_2022-03-26_source
-build_directory="/opt/ffmpeg_2022-03-26_build"
-source_directory="/opt/ffmpeg_2022-03-26_source"
+mkdir /opt/ffmpeg_2024-01-05_build
+mkdir /opt/ffmpeg_2024-01-05_source
+build_directory="/opt/ffmpeg_2024-01-05_build"
+source_directory="/opt/ffmpeg_2024-01-05_source"
 PATH="$build_directory/bin:$PATH"
 
 cd $source_directory
@@ -152,9 +147,9 @@ make clean
 
 ####
 # create by hand the fucking pc file
-# /opt/ffmpeg_2022-03-26_build/lib/pkgconfig/x265.pc
+# /opt/ffmpeg_2024-01-05_build/lib/pkgconfig/x265.pc
 #
-# prefix=/opt/ffmpeg_2022-03-26_build
+# prefix=/opt/ffmpeg_2024-01-05_build
 # exec_prefix=${prefix}
 # libdir=${exec_prefix}/lib
 # includedir=${prefix}/include
@@ -216,16 +211,16 @@ make distclean
 cd $source_directory
 git clone https://chromium.googlesource.com/webm/libvpx.git 
 cd libvpx
-git checkout tags/v1.11.0
+git checkout tags/v1.13.1
 ./configure --prefix="$build_directory" --disable-examples --disable-unit-tests --enable-vp9-highbitdepth --as=yasm
 make
 make install
 make clean
 
 cd $source_directory
-curl -O -L https://downloads.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.5.tar.gz
-tar -xzvf opencore-amr-0.1.5.tar.gz
-cd opencore-amr-0.1.5
+curl -O -L https://downloads.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.6.tar.gz
+tar -xzvf opencore-amr-0.1.6.tar.gz
+cd opencore-amr-0.1.6
 autoreconf -fiv
 ./configure --prefix="$build_directory" --disable-shared
 make
@@ -235,7 +230,7 @@ make clean
 make distclean
 
 cd $source_directory
-git clone --depth 1 --branch release/4.4 https://github.com/FFmpeg/FFmpeg.git
+git clone --depth 1 --branch release/6.1 https://github.com/FFmpeg/FFmpeg.git
 cd FFmpeg
 PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure \
     --prefix="$build_directory" \
@@ -293,11 +288,6 @@ service php-fpm restart
 
 
 ### Установка cron заданий:
-##### Каждый день в 1 час ночи от пользователя php-fpm
-`php /var/www/wapinet/bin/console app:tmp-clear "1 day"`    
-`php /var/www/wapinet/bin/console app:tags-clear`
-##### Каждые пол часа от пользователя php-fpm
-`php /var/www/wapinet/bin/console app:subscriber-send`
 ##### Каждый день в 2 часа ночи от пользователя manticore
 `indexer --rotate --all`
 
