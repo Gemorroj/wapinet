@@ -145,7 +145,7 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         return $this->vk;
     }
 
-    public function setVk(string $vk = null): self
+    public function setVk(?string $vk = null): self
     {
         $this->vk = $vk;
 
@@ -157,7 +157,7 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         return $this->country;
     }
 
-    public function setCountry(string $country = null): self
+    public function setCountry(?string $country = null): self
     {
         $this->country = $country;
 
@@ -178,7 +178,7 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         return $this->timezone;
     }
 
-    public function setTimezone(string $timezone = null): self
+    public function setTimezone(?string $timezone = null): self
     {
         $this->timezone = $timezone;
 
@@ -228,7 +228,7 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         return $this;
     }
 
-    public function setBirthday(\DateTime $birthday = null): self
+    public function setBirthday(?\DateTime $birthday = null): self
     {
         $this->birthday = $birthday;
 

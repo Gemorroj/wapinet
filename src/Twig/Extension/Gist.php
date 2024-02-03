@@ -20,7 +20,7 @@ class Gist extends AbstractExtension
         ];
     }
 
-    public function getCount(User $user = null): int
+    public function getCount(?User $user = null): int
     {
         return $this->gistRepository->countUser($user);
     }

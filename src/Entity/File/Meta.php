@@ -14,12 +14,12 @@ class Meta
         return isset($this->meta[$key]);
     }
 
-    public function get(string $key): int|float|string|null|\Stringable|\DateTimeInterface|array
+    public function get(string $key): int|float|string|\Stringable|\DateTimeInterface|array|null
     {
         return $this->meta[$key] ?? null;
     }
 
-    public function set(string $key, int|float|string|null|\Stringable|\DateTimeInterface|array $value): self
+    public function set(string $key, int|float|string|\Stringable|\DateTimeInterface|array|null $value): self
     {
         $this->meta[$key] = $value;
 

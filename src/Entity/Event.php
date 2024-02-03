@@ -83,7 +83,7 @@ class Event
         return $this->template;
     }
 
-    public function setVariables(array $variables = null): self
+    public function setVariables(?array $variables = null): self
     {
         $this->variables = $variables;
 

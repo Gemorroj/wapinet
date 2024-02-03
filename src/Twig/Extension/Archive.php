@@ -25,7 +25,7 @@ class Archive extends AbstractExtension
     /**
      * @return Entry[]|null
      */
-    public function getList(File $file, int $limit = null): ?array
+    public function getList(File $file, ?int $limit = null): ?array
     {
         try {
             $entries = $this->archive7z->getEntries($file, $limit);

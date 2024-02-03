@@ -154,7 +154,7 @@ class File implements PasswordAuthenticatedUserInterface
         return $this->meta;
     }
 
-    public function setMeta(Meta $meta = null): self
+    public function setMeta(?Meta $meta = null): self
     {
         $this->meta = $meta;
 
@@ -206,7 +206,7 @@ class File implements PasswordAuthenticatedUserInterface
         return $this->user;
     }
 
-    public function setUser(User $user = null): self
+    public function setUser(?User $user = null): self
     {
         $this->user = $user;
 
@@ -291,7 +291,7 @@ class File implements PasswordAuthenticatedUserInterface
         return $this->plainPassword;
     }
 
-    public function setPlainPassword(string $plainPassword = null): self
+    public function setPlainPassword(?string $plainPassword = null): self
     {
         $this->plainPassword = $plainPassword;
 
@@ -303,7 +303,7 @@ class File implements PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password = null): self
+    public function setPassword(?string $password = null): self
     {
         $this->password = $password;
 
@@ -369,7 +369,7 @@ class File implements PasswordAuthenticatedUserInterface
         return $this->file;
     }
 
-    public function setFile(BaseFile $file = null): self
+    public function setFile(?BaseFile $file = null): self
     {
         $this->file = $file;
 

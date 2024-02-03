@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 class ProfileController extends AbstractController
 {
     #[Route(path: '/profile/{username}', name: 'wapinet_user_profile', requirements: ['username' => '.+'], defaults: ['username' => null])]
-    public function showUserAction(UserRepository $userRepository, string $username = null): Response
+    public function showUserAction(UserRepository $userRepository, ?string $username = null): Response
     {
         $currentUser = $this->getUser();
         if (!$currentUser) {

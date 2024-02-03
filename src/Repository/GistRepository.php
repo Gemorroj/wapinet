@@ -17,7 +17,7 @@ class GistRepository extends ServiceEntityRepository
         parent::__construct($registry, Gist::class);
     }
 
-    public function countUser(User $user = null): int
+    public function countUser(?User $user = null): int
     {
         if ($user) {
             return $this->count(['user' => $user]);
@@ -26,7 +26,7 @@ class GistRepository extends ServiceEntityRepository
         return $this->count([]);
     }
 
-    public function getListQuery(User $user = null): Query
+    public function getListQuery(?User $user = null): Query
     {
         $qb = $this->createQueryBuilder('g');
         if ($user) {

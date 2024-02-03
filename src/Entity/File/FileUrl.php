@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUrl extends UploadedFile
 {
-    public function move($directory, string $name = null): File
+    public function move($directory, ?string $name = null): File
     {
         $target = $this->getTargetFile($directory, $name);
 

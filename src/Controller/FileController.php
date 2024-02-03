@@ -65,7 +65,7 @@ class FileController extends AbstractController
     }
 
     #[Route(path: '/search/{key}', name: 'file_search', requirements: ['key' => '[a-zA-Z0-9]+'], defaults: ['key' => null])]
-    public function searchAction(Request $request, string $key = null): Response
+    public function searchAction(Request $request, ?string $key = null): Response
     {
         $page = $request->get('page', 1);
         $form = $this->createForm(SearchType::class);
@@ -204,7 +204,7 @@ class FileController extends AbstractController
     }
 
     #[Route(path: '/list/{date}/{category}', name: 'file_list', requirements: ['date' => 'all|today|yesterday', 'category' => 'video|audio|image|text|office|archive|android|java'], defaults: ['date' => 'all', 'category' => null])]
-    public function listAction(Request $request, Timezone $timezoneHelper, FileRepository $fileRepository, Paginate $paginate, string $date = 'all', string $category = null): Response
+    public function listAction(Request $request, Timezone $timezoneHelper, FileRepository $fileRepository, Paginate $paginate, string $date = 'all', ?string $category = null): Response
     {
         $page = $request->get('page', 1);
 
