@@ -62,13 +62,14 @@ class FilesClearCommand extends Command
 
         // удаляем осиротевшие файлы (которые есть в файловой системе, но нет в БД)
         $filesystemDeleted = 0;
-        $q = $this->entityManager->createQuery('SELECT 1 FROM App\Entity\File f WHERE DATE(f.createdAt) = :date AND f.fileName = :fileName');
+        $q = $this->entityManager->createQuery('SELECT 1 FROM App\Entity\File f WHERE (f.createdAt BETWEEN :dateFrom AND :dateTo) AND f.fileName = :fileName');
         foreach (Finder::create()->in($uploadDir)->depth('>2')->files()->getIterator() as $file) {
             // see src/Uploader/Naming/FileDirectoryNamer.php
 
             $date = \str_replace('/', '-', \substr($file->getPath(), -10));
 
-            $r = $q->setParameter('date', $date)
+            $r = $q->setParameter('dateFrom', $date.' 00:00:00')
+                ->setParameter('dateTo', $date.'  23:59:59')
                 ->setParameter('fileName', $file->getFilename())
                 ->getOneOrNullResult(Query::HYDRATE_SINGLE_SCALAR);
 
