@@ -93,7 +93,7 @@
         "symfony/browser-kit": "6.4.*",
         "symfony/css-selector": "6.4.*",
         "symfony/debug-bundle": "6.4.*",
-        "symfony/maker-bundle": "^1.53",
+        "symfony/maker-bundle": "^1.54",
         "symfony/phpunit-bridge": "6.4.*",
         "symfony/stopwatch": "6.4.*",
         "symfony/var-dumper": "6.4.*",
