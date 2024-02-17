@@ -21,7 +21,7 @@ class Event
     #[ORM\Column(type: 'string', nullable: false)]
     private string $subject = '';
 
-    #[ORM\Column(type: 'array', nullable: true)]
+    #[ORM\Column(type: 'json', nullable: true)]
     private ?array $variables = null;
 
     #[ORM\Column(type: 'string', nullable: false)]
@@ -90,9 +90,9 @@ class Event
         return $this;
     }
 
-    public function getVariables(): ?array
+    public function getVariables(): array
     {
-        return $this->variables;
+        return $this->variables ?? [];
     }
 
     public function setUser(User $user): self

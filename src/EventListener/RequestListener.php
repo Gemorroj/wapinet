@@ -11,7 +11,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 #[AsEventListener(event: RequestEvent::class)]
-readonly class RequestListener
+final readonly class RequestListener
 {
     public function __construct(
         private TokenStorageInterface $tokenStorage,

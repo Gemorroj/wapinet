@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\DBAL\Types\FileMetaType;
 use App\Entity\File\Meta;
 use App\Repository\FileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,7 +18,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Index(columns: ['hash'], name: 'hash_idx')]
 #[ORM\Entity(repositoryClass: FileRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class File implements PasswordAuthenticatedUserInterface
+class File implements PasswordAuthenticatedUserInterface, \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -69,7 +70,7 @@ class File implements PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', nullable: false)]
     private string $hash = '';
 
-    #[ORM\Column(type: 'object', nullable: true)]
+    #[ORM\Column(type: FileMetaType::TYPE_NAME, nullable: true)]
     private ?Meta $meta = null;
 
     #[ORM\Column(type: 'boolean', nullable: false, options: ['default' => true])]
@@ -718,5 +719,13 @@ class File implements PasswordAuthenticatedUserInterface
     public function __toString(): string
     {
         return $this->getOriginalFileName();
+    }
+
+    public function jsonSerialize(): array
+    {
+        $data = \get_object_vars($this);
+        $data['plainPassword'] = null;
+
+        return $data;
     }
 }

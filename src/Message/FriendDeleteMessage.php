@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Message;
 
-class FriendDeleteMessage
+readonly class FriendDeleteMessage
 {
-    public function __construct(public readonly int $userId, public readonly int $friendId)
+    public function __construct(public int $userId, public int $friendId)
     {
     }
 }

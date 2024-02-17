@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table]
 #[ORM\Entity(repositoryClass: NewsRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class News
+class News implements \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -96,5 +96,10 @@ class News
         $this->updatedAt = new \DateTime();
 
         return $this;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return \get_object_vars($this);
     }
 }

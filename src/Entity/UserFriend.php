@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table]
 #[ORM\Entity(repositoryClass: UserFriendRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class UserFriend
+class UserFriend implements \Stringable, \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -87,5 +87,10 @@ class UserFriend
     public function __toString(): string
     {
         return (string) $this->getFriend();
+    }
+
+    public function jsonSerialize(): array
+    {
+        return \get_object_vars($this);
     }
 }

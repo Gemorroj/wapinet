@@ -60,7 +60,7 @@ class SubscriberSendCommand extends Command
             $siteTitle = $this->parameterBag->get('wapinet_title');
             $robotEmail = $this->parameterBag->get('wapinet_robot_email');
 
-            $variables = $event->getVariables() ?? [];
+            $variables = $event->getVariables();
             $variables['subject'] = $event->getSubject();
 
             $email = (new TemplatedEmail())

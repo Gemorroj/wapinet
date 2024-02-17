@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table]
 #[ORM\Entity(repositoryClass: GistRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class Gist
+class Gist implements \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -137,5 +137,10 @@ class Gist
         $this->subject = $subject;
 
         return $this;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return \get_object_vars($this);
     }
 }

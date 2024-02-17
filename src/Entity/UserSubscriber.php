@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table]
 #[ORM\Entity(repositoryClass: UserSubscriberRepository::class)]
-class UserSubscriber implements \Stringable
+class UserSubscriber implements \Stringable, \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -76,5 +76,10 @@ class UserSubscriber implements \Stringable
         }
 
         return \rtrim($result, ', ');
+    }
+
+    public function jsonSerialize(): array
+    {
+        return \get_object_vars($this);
     }
 }

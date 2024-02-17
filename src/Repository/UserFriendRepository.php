@@ -9,6 +9,14 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends ServiceEntityRepository<UserFriend>
+ *
+ * @method UserFriend|null find($id, $lockMode = null, $lockVersion = null)
+ * @method UserFriend|null findOneBy(array $criteria, array $orderBy = null)
+ * @method UserFriend[]    findAll()
+ * @method UserFriend[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
 class UserFriendRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)

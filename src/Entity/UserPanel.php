@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table]
 #[ORM\Entity(repositoryClass: UserPanelRepository::class)]
-class UserPanel implements \Stringable
+class UserPanel implements \Stringable, \JsonSerializable
 {
     public const ROUTE_FORUM = 'forum_index';
     public const ROUTE_GUESTBOOK = 'guestbook_index';
@@ -207,5 +207,10 @@ class UserPanel implements \Stringable
         }
 
         return \rtrim($result, ', ');
+    }
+
+    public function jsonSerialize(): array
+    {
+        return \get_object_vars($this);
     }
 }

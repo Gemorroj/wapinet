@@ -10,6 +10,14 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends ServiceEntityRepository<Gist>
+ *
+ * @method Gist|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Gist|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Gist[]    findAll()
+ * @method Gist[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
 class GistRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)

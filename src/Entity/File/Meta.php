@@ -2,12 +2,23 @@
 
 namespace App\Entity\File;
 
-class Meta
+class Meta implements \Stringable, \JsonSerializable
 {
     /**
      * @var array<string, int|float|string|\Stringable|\DateTimeInterface|array|null>
      */
     private array $meta = [];
+
+    /**
+     * @param array<string, int|float|string|\Stringable|\DateTimeInterface|array|null> $meta
+     */
+    public static function create(array $meta): self
+    {
+        $obj = new self();
+        $obj->meta = $meta;
+
+        return $obj;
+    }
 
     public function has(string $key): bool
     {
@@ -39,5 +50,10 @@ class Meta
         }
 
         return $out;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return $this->meta;
     }
 }

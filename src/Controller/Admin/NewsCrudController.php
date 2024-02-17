@@ -2,9 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Event;
 use App\Entity\News;
-use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -57,34 +55,8 @@ class NewsCrudController extends AbstractCrudController
     {
         $news = new News();
         $news->setCreatedBy($this->getUser());
-        $this->newsSubscriber($news);
 
         return $news;
-    }
-
-    private function newsSubscriber(News $news): void
-    {
-        $em = $this->container->get(ManagerRegistry::class)->getManager();
-
-        $userRepository = $em->getRepository(User::class);
-        /** @var User[] $users */
-        $users = $userRepository->findBy([
-            'enabled' => true,
-        ]);
-
-        foreach ($users as $user) {
-            $entityEvent = new Event();
-            $entityEvent->setSubject('Новость на сайте.');
-            $entityEvent->setTemplate('news');
-            $entityEvent->setVariables([
-                'news' => $news,
-            ]);
-
-            $entityEvent->setNeedEmail($user->getSubscriber()?->isEmailNews() ?? true);
-            $entityEvent->setUser($user);
-
-            $em->persist($entityEvent);
-        }
     }
 
     public static function getSubscribedServices(): array

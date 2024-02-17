@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class User implements UserInterface, EquatableInterface, LegacyPasswordAuthenticatedUserInterface, \Stringable
+class User implements UserInterface, EquatableInterface, LegacyPasswordAuthenticatedUserInterface, \Stringable, \JsonSerializable
 {
     public const LIFETIME = '5 minute';
     public const SEX_MALE = 'm';
@@ -476,5 +476,13 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
 
         $this->setPassword($hashedPassword);
         $this->eraseCredentials();
+    }
+
+    public function jsonSerialize(): array
+    {
+        $data = \get_object_vars($this);
+        $data['plainPassword'] = null;
+
+        return $data;
     }
 }

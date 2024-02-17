@@ -22,16 +22,20 @@ class Date extends AbstractExtension
         ];
     }
 
-    public function getDate(\DateTimeInterface|null $originalDate): string
+    public function getDate(\DateTimeInterface|array|null $originalDatetime): string
     {
-        if (!$originalDate) {
+        if (!$originalDatetime) {
             return '';
         }
 
-        $date = \DateTime::createFromInterface($originalDate);
+        if (\is_array($originalDatetime)) {
+            $datetime = new \DateTime($originalDatetime['date'], new \DateTimeZone($originalDatetime['timezone']));
+        } else {
+            $datetime = \DateTime::createFromInterface($originalDatetime);
+        }
         $timezone = $this->timezoneHelper->getTimezone();
         if ($timezone) {
-            $date->setTimezone($timezone);
+            $datetime->setTimezone($timezone);
         }
 
         $today = new \DateTime('today', $timezone);
@@ -40,32 +44,36 @@ class Date extends AbstractExtension
         $tomorrow = new \DateTime('tomorrow', $timezone);
         $dayAfterTomorrow = new \DateTime('tomorrow + 1 day', $timezone);
 
-        if ($date->format('Ymd') === $today->format('Ymd')) {
+        if ($datetime->format('Ymd') === $today->format('Ymd')) {
             return 'Сегодня';
         }
-        if ($date->format('Ymd') === $yesterday->format('Ymd')) {
+        if ($datetime->format('Ymd') === $yesterday->format('Ymd')) {
             return 'Вчера';
         }
-        if ($date->format('Ymd') === $dayBeforeYesterday->format('Ymd')) {
+        if ($datetime->format('Ymd') === $dayBeforeYesterday->format('Ymd')) {
             return 'Позавчера';
         }
-        if ($date->format('Ymd') === $tomorrow->format('Ymd')) {
+        if ($datetime->format('Ymd') === $tomorrow->format('Ymd')) {
             return 'Завтра';
         }
-        if ($date->format('Ymd') === $dayAfterTomorrow->format('Ymd')) {
+        if ($datetime->format('Ymd') === $dayAfterTomorrow->format('Ymd')) {
             return 'Послезавтра';
         }
 
-        return $date->format('d.m.Y');
+        return $datetime->format('d.m.Y');
     }
 
-    public function getDateTime(\DateTimeInterface|null $originalDatetime): string
+    public function getDateTime(\DateTimeInterface|array|null $originalDatetime): string
     {
         if (!$originalDatetime) {
             return '';
         }
 
-        $datetime = \DateTime::createFromInterface($originalDatetime);
+        if (\is_array($originalDatetime)) {
+            $datetime = new \DateTime($originalDatetime['date'], new \DateTimeZone($originalDatetime['timezone']));
+        } else {
+            $datetime = \DateTime::createFromInterface($originalDatetime);
+        }
         $timezone = $this->timezoneHelper->getTimezone();
         if ($timezone) {
             $datetime->setTimezone($timezone);
@@ -97,13 +105,17 @@ class Date extends AbstractExtension
         return $datetime->format('d.m.Y H:i');
     }
 
-    public function getTime(\DateTimeInterface|null $originalDatetime): string
+    public function getTime(\DateTimeInterface|array|null $originalDatetime): string
     {
         if (!$originalDatetime) {
             return '';
         }
 
-        $datetime = \DateTime::createFromInterface($originalDatetime);
+        if (\is_array($originalDatetime)) {
+            $datetime = new \DateTime($originalDatetime['date'], new \DateTimeZone($originalDatetime['timezone']));
+        } else {
+            $datetime = \DateTime::createFromInterface($originalDatetime);
+        }
         $timezone = $this->timezoneHelper->getTimezone();
         if ($timezone) {
             $datetime->setTimezone($timezone);

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table]
 #[ORM\Entity(repositoryClass: FileTagsRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class FileTags
+class FileTags implements \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -89,5 +89,10 @@ class FileTags
         $tag->setCount($tag->getCount() - 1);
 
         return $this;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return \get_object_vars($this);
     }
 }

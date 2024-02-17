@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Message;
 
-class GistAddMessage
+readonly class GistAddMessage
 {
-    public function __construct(public readonly int $gistId)
+    public function __construct(public int $gistId)
     {
     }
 }
