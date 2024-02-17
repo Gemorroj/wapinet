@@ -42,8 +42,8 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/admin, roles: ROLE_SUPER_ADMIN }
-        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: PUBLIC_ACCESS }
 
 when@test:
