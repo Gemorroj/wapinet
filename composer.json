@@ -149,12 +149,10 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts",
-            "@php bin/anti-terrorism"
+            "@auto-scripts"
         ],
         "post-update-cmd": [
-            "@auto-scripts",
-            "@php bin/anti-terrorism"
+            "@auto-scripts"
         ]
     },
     "conflict": {
