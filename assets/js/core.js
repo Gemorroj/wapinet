@@ -43,9 +43,22 @@ const Loader = {
 };
 
 const Helper = {
+    /**
+     * @param {Blob} blob
+     * @param {string} name
+     */
+    saveAs: function (blob, name) {
+        const a = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+        a.download = name;
+        a.rel = 'noopener';
+        a.href = URL.createObjectURL(blob);
+
+        setTimeout(() => URL.revokeObjectURL(a.href), 40 /* sec */ * 1000);
+        setTimeout(() => a.click(), 0);
+    },
     sizeFormat: function (fileSizeInBytes) {
         let i = -1;
-        let byteUnits = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
+        const byteUnits = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
         do {
             fileSizeInBytes = fileSizeInBytes / 1024;
             i++;
@@ -60,12 +73,12 @@ const Helper = {
         return window.encodeURI(str.toString());
     },
     downloadText: function (text, fileName) {
-        let blob = new Blob(
+        const blob = new Blob(
             [text],
             {"type": "text/plain;charset=utf-8"}
         );
         // saveAs реализована в FileSaver
-        saveAs(blob, fileName || "file.txt");
+        Helper.saveAs(blob, fileName || "file.txt");
     }
 };
 
@@ -203,7 +216,7 @@ const $document = $(document);
 
 // jplayer
 window.Jplayer = {
-    'swfPath': "//cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.swf"
+    "swfPath": "//cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.swf"
 };
 
 
