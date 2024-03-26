@@ -60,9 +60,9 @@
         "twig/twig": "^3.8",
 
         "babdev/pagerfanta-bundle": "^4.4",
-        "pagerfanta/doctrine-collections-adapter": "^v4.3",
-        "pagerfanta/doctrine-orm-adapter": "^v4.3",
-        "pagerfanta/twig": "^v4.3",
+        "pagerfanta/doctrine-collections-adapter": "^v4.4",
+        "pagerfanta/doctrine-orm-adapter": "^v4.4",
+        "pagerfanta/twig": "^v4.4",
 
         "easycorp/easyadmin-bundle": "^4.9",
         "friendsofsymfony/jsrouting-bundle": "^3.5",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9f75ec19a6c9d787b83dc0dd8800b4f2",
+    "content-hash": "58b2b98dd40254953eb5ed8387dba620",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -2873,16 +2873,16 @@
         },
         {
             "name": "pagerfanta/core",
-            "version": "v4.3.2",
+            "version": "v4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/core.git",
-                "reference": "2fe70a38067d74a514bee1b90d301d115dce0b87"
+                "reference": "93246f475f4f2d90d5f186dd9d01d96dc98eaa31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/core/zipball/2fe70a38067d74a514bee1b90d301d115dce0b87",
-                "reference": "2fe70a38067d74a514bee1b90d301d115dce0b87",
+                "url": "https://api.github.com/repos/Pagerfanta/core/zipball/93246f475f4f2d90d5f186dd9d01d96dc98eaa31",
+                "reference": "93246f475f4f2d90d5f186dd9d01d96dc98eaa31",
                 "shasum": ""
             },
             "require": {
@@ -2909,11 +2909,11 @@
             "keywords": [
                 "pagerfanta"
             ],
-            "time": "2024-03-06T23:53:35+00:00"
+            "time": "2024-03-24T20:29:46+00:00"
         },
         {
             "name": "pagerfanta/doctrine-collections-adapter",
-            "version": "v4.3.2",
+            "version": "v4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/doctrine-collections-adapter.git",
@@ -2956,7 +2956,7 @@
         },
         {
             "name": "pagerfanta/doctrine-orm-adapter",
-            "version": "v4.3.2",
+            "version": "v4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/doctrine-orm-adapter.git",
@@ -3000,7 +3000,7 @@
         },
         {
             "name": "pagerfanta/twig",
-            "version": "v4.3.2",
+            "version": "v4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/twig.git",
@@ -9360,16 +9360,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.64",
+            "version": "1.10.65",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "fb9f270daffedcb5ff46275dcafe92538b1bc4bb"
+                "reference": "3c657d057a0b7ecae19cb12db446bbc99d8839c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/fb9f270daffedcb5ff46275dcafe92538b1bc4bb",
-                "reference": "fb9f270daffedcb5ff46275dcafe92538b1bc4bb",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/3c657d057a0b7ecae19cb12db446bbc99d8839c6",
+                "reference": "3c657d057a0b7ecae19cb12db446bbc99d8839c6",
                 "shasum": ""
             },
             "require": {
@@ -9411,7 +9411,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-03-21T09:57:47+00:00"
+            "time": "2024-03-23T10:30:26+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
@@ -11157,16 +11157,16 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.56.0",
+            "version": "v1.57.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "bbb7949ae048363df7c8439abeddef8befd155ce"
+                "reference": "2c90181911241648356b828b86b04fe3571aca0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/bbb7949ae048363df7c8439abeddef8befd155ce",
-                "reference": "bbb7949ae048363df7c8439abeddef8befd155ce",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/2c90181911241648356b828b86b04fe3571aca0b",
+                "reference": "2c90181911241648356b828b86b04fe3571aca0b",
                 "shasum": ""
             },
             "require": {
@@ -11241,7 +11241,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-03-04T13:36:45+00:00"
+            "time": "2024-03-22T12:00:21+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",
