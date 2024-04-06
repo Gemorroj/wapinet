@@ -126,10 +126,10 @@ rm -f 7z2301-linux-x64.tar.xz
 ```bash
 dnf install autoconf automake bzip2 bzip2-devel cmake freetype-devel gcc gcc-c++ libtool make nasm yasm pkgconfig zlib-devel
 
-mkdir /opt/ffmpeg_2024-01-05_build
-mkdir /opt/ffmpeg_2024-01-05_source
-build_directory="/opt/ffmpeg_2024-01-05_build"
-source_directory="/opt/ffmpeg_2024-01-05_source"
+mkdir /opt/ffmpeg_2024-04-06_build
+mkdir /opt/ffmpeg_2024-04-06_source
+build_directory="/opt/ffmpeg_2024-04-06_build"
+source_directory="/opt/ffmpeg_2024-04-06_source"
 PATH="$build_directory/bin:$PATH"
 
 cd $source_directory
@@ -151,9 +151,9 @@ make clean
 
 ####
 # create by hand the fucking pc file
-# /opt/ffmpeg_2024-01-05_build/lib/pkgconfig/x265.pc
+# /opt/ffmpeg_2024-04-06_build/lib/pkgconfig/x265.pc
 #
-# prefix=/opt/ffmpeg_2024-01-05_build
+# prefix=/opt/ffmpeg_2024-04-06_build
 # exec_prefix=${prefix}
 # libdir=${exec_prefix}/lib
 # includedir=${prefix}/include
@@ -215,7 +215,7 @@ make distclean
 cd $source_directory
 git clone https://chromium.googlesource.com/webm/libvpx.git 
 cd libvpx
-git checkout tags/v1.13.1
+git checkout tags/v1.14.0
 ./configure --prefix="$build_directory" --disable-examples --disable-unit-tests --enable-vp9-highbitdepth --as=yasm
 make
 make install
@@ -234,7 +234,7 @@ make clean
 make distclean
 
 cd $source_directory
-git clone --depth 1 --branch release/6.1 https://github.com/FFmpeg/FFmpeg.git
+git clone --depth 1 --branch release/7.0 https://github.com/FFmpeg/FFmpeg.git
 cd FFmpeg
 PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure \
     --prefix="$build_directory" \
@@ -247,6 +247,7 @@ PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure \
     --enable-gpl \
     --enable-nonfree \
     --enable-libfreetype \
+    --enable-libharfbuzz \
     --enable-libmp3lame \
     --enable-libopus \
     --enable-libvorbis \
