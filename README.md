@@ -247,7 +247,6 @@ PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure \
     --enable-gpl \
     --enable-nonfree \
     --enable-libfreetype \
-    --enable-libharfbuzz \
     --enable-libmp3lame \
     --enable-libopus \
     --enable-libvorbis \
