@@ -5,7 +5,7 @@
 ##### Используются:
 - Symfony 7.0
 - Jquery Mobile
-- PHP 8.2
+- PHP 8.3
 - MySQL 8.0
 - Manticore
 - p7zip
@@ -111,13 +111,13 @@ systemctl restart sshd
 ##### Установка p7zip
 ```bash
 cd /opt
-mkdir 7z2301-linux-x64
-cd /opt/7z2301-linux-x64
-curl -O -L https://7-zip.org/a/7z2301-linux-x64.tar.xz
-tar xJvf 7z2301-linux-x64.tar.xz
-rm -f 7z2301-linux-x64.tar.xz
+mkdir 7z2405-linux-x64
+cd /opt/7z2405-linux-x64
+curl -O -L https://7-zip.org/a/7z2405-linux-x64.tar.xz
+tar xJvf 7z2405-linux-x64.tar.xz
+rm -f 7z2405-linux-x64.tar.xz
 ```
-Проверить список поддерживаемых форматов можно так `/opt/7z2301-linux-x64/7zz i` или `/opt/7z2301-linux-x64/7zzs i` 
+Проверить список поддерживаемых форматов можно так `/opt/7z2405-linux-x64/7zz i` или `/opt/7z2405-linux-x64/7zzs i` 
 
 
 ### Установка FFmpeg:
