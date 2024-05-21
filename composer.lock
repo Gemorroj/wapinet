@@ -2573,16 +2573,16 @@
         },
         {
             "name": "liip/imagine-bundle",
-            "version": "2.12.2",
+            "version": "2.12.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipImagineBundle.git",
-                "reference": "2ad259dd46ce55f93c6e8d87908d2572bd94796e"
+                "reference": "fa2baa6262bb74038f01ac746dc3e2a8bc441e09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/2ad259dd46ce55f93c6e8d87908d2572bd94796e",
-                "reference": "2ad259dd46ce55f93c6e8d87908d2572bd94796e",
+                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/fa2baa6262bb74038f01ac746dc3e2a8bc441e09",
+                "reference": "fa2baa6262bb74038f01ac746dc3e2a8bc441e09",
                 "shasum": ""
             },
             "require": {
@@ -2668,7 +2668,7 @@
                 "symfony",
                 "transformation"
             ],
-            "time": "2024-02-23T21:12:25+00:00"
+            "time": "2024-05-16T08:51:30+00:00"
         },
         {
             "name": "maxmind-db/reader",
@@ -3179,16 +3179,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "5.4.0",
+            "version": "5.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "298d2febfe79d03fe714eb871d5538da55205b1a"
+                "reference": "9d07b3f7fdcf5efec5d1609cba3c19c5ea2bdc9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/298d2febfe79d03fe714eb871d5538da55205b1a",
-                "reference": "298d2febfe79d03fe714eb871d5538da55205b1a",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/9d07b3f7fdcf5efec5d1609cba3c19c5ea2bdc9c",
+                "reference": "9d07b3f7fdcf5efec5d1609cba3c19c5ea2bdc9c",
                 "shasum": ""
             },
             "require": {
@@ -3235,7 +3235,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2024-04-09T21:13:58+00:00"
+            "time": "2024-05-21T05:55:05+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -8536,16 +8536,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.10.2",
+            "version": "v3.10.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "7aaed0b8311a557cc8c4047a71fd03153a00e755"
+                "reference": "67f29781ffafa520b0bbfbd8384674b42db04572"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/7aaed0b8311a557cc8c4047a71fd03153a00e755",
-                "reference": "7aaed0b8311a557cc8c4047a71fd03153a00e755",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/67f29781ffafa520b0bbfbd8384674b42db04572",
+                "reference": "67f29781ffafa520b0bbfbd8384674b42db04572",
                 "shasum": ""
             },
             "require": {
@@ -8607,7 +8607,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-05-14T06:04:16+00:00"
+            "time": "2024-05-16T10:04:27+00:00"
         },
         {
             "name": "vich/uploader-bundle",
@@ -9132,16 +9132,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.57.0",
+            "version": "v3.57.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "0d4fcaea3e1d1304f75b9ff58474f60484e43498"
+                "reference": "22f7f3145606df92b02fb1bd22c30abfce956d3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/0d4fcaea3e1d1304f75b9ff58474f60484e43498",
-                "reference": "0d4fcaea3e1d1304f75b9ff58474f60484e43498",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/22f7f3145606df92b02fb1bd22c30abfce956d3c",
+                "reference": "22f7f3145606df92b02fb1bd22c30abfce956d3c",
                 "shasum": ""
             },
             "require": {
@@ -9224,7 +9224,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-05-15T14:45:33+00:00"
+            "time": "2024-05-20T20:41:57+00:00"
         },
         {
             "name": "masterminds/html5",
