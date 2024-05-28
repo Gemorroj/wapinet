@@ -61,10 +61,10 @@ firewall-cmd --permanent --add-service=https
 firewall-cmd --reload
 systemctl enable nginx
 ```
-- Установить php 8.2
+- Установить php 8.3
 ```bash
 dnf module reset php
-dnf module install php:remi-8.2
+dnf module install php:remi-8.3
 dnf install php-fpm php-cli php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-pecl-apcu php-pecl-zip php-process php-xml php-sodium
 systemctl enable php-fpm
 ```
@@ -111,13 +111,13 @@ systemctl restart sshd
 ##### Установка p7zip
 ```bash
 cd /opt
-mkdir 7z2405-linux-x64
-cd /opt/7z2405-linux-x64
-curl -O -L https://7-zip.org/a/7z2405-linux-x64.tar.xz
-tar xJvf 7z2405-linux-x64.tar.xz
-rm -f 7z2405-linux-x64.tar.xz
+mkdir 7z2406-linux-x64
+cd /opt/7z2406-linux-x64
+curl -O -L https://7-zip.org/a/7z2406-linux-x64.tar.xz
+tar xJvf 7z2406-linux-x64.tar.xz
+rm -f 7z2406-linux-x64.tar.xz
 ```
-Проверить список поддерживаемых форматов можно так `/opt/7z2405-linux-x64/7zz i` или `/opt/7z2405-linux-x64/7zzs i` 
+Проверить список поддерживаемых форматов можно так `/opt/7z2406-linux-x64/7zz i` или `/opt/7z2406-linux-x64/7zzs i` 
 
 
 ### Установка FFmpeg:
