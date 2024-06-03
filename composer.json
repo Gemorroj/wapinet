@@ -60,9 +60,9 @@
         "twig/twig": "^3.10",
 
         "babdev/pagerfanta-bundle": "^4.4",
-        "pagerfanta/doctrine-collections-adapter": "^v4.5",
-        "pagerfanta/doctrine-orm-adapter": "^v4.5",
-        "pagerfanta/twig": "^v4.5",
+        "pagerfanta/doctrine-collections-adapter": "^v4.6",
+        "pagerfanta/doctrine-orm-adapter": "^v4.6",
+        "pagerfanta/twig": "^v4.6",
 
         "easycorp/easyadmin-bundle": "^4.10",
         "friendsofsymfony/jsrouting-bundle": "^3.5",
@@ -102,7 +102,7 @@
         "phpstan/phpstan-symfony": "^1.4",
         "phpstan/phpstan-phpunit": "^1.4",
         "phpstan/phpstan-doctrine": "^1.4",
-        "friendsofphp/php-cs-fixer": "^3.57"
+        "friendsofphp/php-cs-fixer": "^3.58"
     },
     "repositories": [{
         "type": "github",
