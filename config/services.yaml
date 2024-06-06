@@ -44,7 +44,6 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-            - '../src/Tests/'
             - '../src/Exception/'
 
     # add more service definitions when explicit configuration is needed
