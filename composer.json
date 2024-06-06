@@ -104,10 +104,6 @@
         "phpstan/phpstan-doctrine": "^1.4",
         "friendsofphp/php-cs-fixer": "^3.58"
     },
-    "repositories": [{
-        "type": "github",
-        "url": "https://github.com/michnovka/CaptchaBundle.git"
-    }],
     "config": {
         "allow-plugins": {
             "php-http/discovery": true,

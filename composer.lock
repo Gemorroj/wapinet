@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99b9238ebf0b819dcf365c45f90aa60f",
+    "content-hash": "5e79f92d4d3c9c5ec67a32e6f9f2d4c6",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -2296,13 +2296,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/michnovka/CaptchaBundle.git",
-                "reference": "92d2ecf488535edfcd931fa7924cd4e8687c1072"
+                "url": "https://github.com/Gregwar/CaptchaBundle.git",
+                "reference": "8eb95c0911a1db9e3b2f368f6319e0945b959a6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/michnovka/CaptchaBundle/zipball/92d2ecf488535edfcd931fa7924cd4e8687c1072",
-                "reference": "92d2ecf488535edfcd931fa7924cd4e8687c1072",
+                "url": "https://api.github.com/repos/Gregwar/CaptchaBundle/zipball/8eb95c0911a1db9e3b2f368f6319e0945b959a6c",
+                "reference": "8eb95c0911a1db9e3b2f368f6319e0945b959a6c",
                 "shasum": ""
             },
             "require": {
@@ -2326,6 +2326,7 @@
                     "Gregwar\\CaptchaBundle\\": "/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2343,19 +2344,16 @@
             "description": "Captcha bundle",
             "homepage": "https://github.com/Gregwar/CaptchaBundle",
             "keywords": [
+                "Symfony2",
                 "bot",
                 "captcha",
                 "code",
                 "security",
                 "spam",
                 "symfony",
-                "symfony2",
                 "visual"
             ],
-            "support": {
-                "source": "https://github.com/michnovka/CaptchaBundle/tree/master"
-            },
-            "time": "2024-01-03T18:06:29+00:00"
+            "time": "2024-06-06T13:14:57+00:00"
         },
         {
             "name": "imagine/imagine",
@@ -9609,16 +9607,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.11.3",
+            "version": "1.11.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "e64220a05c1209fc856d58e789c3b7a32c0bb9a5"
+                "reference": "9100a76ce8015b9aa7125b9171ae3a76887b6c82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e64220a05c1209fc856d58e789c3b7a32c0bb9a5",
-                "reference": "e64220a05c1209fc856d58e789c3b7a32c0bb9a5",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9100a76ce8015b9aa7125b9171ae3a76887b6c82",
+                "reference": "9100a76ce8015b9aa7125b9171ae3a76887b6c82",
                 "shasum": ""
             },
             "require": {
@@ -9656,7 +9654,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-05-31T13:53:37+00:00"
+            "time": "2024-06-06T12:19:22+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
