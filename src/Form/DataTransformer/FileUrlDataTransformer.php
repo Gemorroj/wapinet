@@ -7,14 +7,13 @@ use App\Entity\File\FileUrl;
 use Riverline\MultiPartParser\StreamedPart;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class FileUrlDataTransformer implements DataTransformerInterface
+final readonly class FileUrlDataTransformer implements DataTransformerInterface
 {
     public function __construct(
         private ParameterBagInterface $parameterBag,
@@ -24,22 +23,22 @@ class FileUrlDataTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param File|FileContent|null $fileDataFromDb
+     * @param File|FileContent|null $value
      *
      * @see https://github.com/dustin10/VichUploaderBundle/issues/27
      */
-    public function transform($fileDataFromDb): ?array
+    public function transform(mixed $value): ?array
     {
-        if ($fileDataFromDb instanceof File) {
+        if ($value instanceof File) {
             return [
-                'web_path' => \str_replace('\\', '//', \mb_substr($fileDataFromDb->getPathname(), \mb_strlen($this->parameterBag->get('kernel.project_dir').'/public'))),
-                'file_url' => $fileDataFromDb,
+                'web_path' => \str_replace('\\', '//', \mb_substr($value->getPathname(), \mb_strlen($this->parameterBag->get('kernel.project_dir').'/public'))),
+                'file_url' => $value,
             ];
         }
-        if ($fileDataFromDb instanceof FileContent) {
+        if ($value instanceof FileContent) {
             return [
-                'web_path' => 'data:'.$fileDataFromDb->getMimeType().';base64,'.\base64_encode($fileDataFromDb->getContent()),
-                'file_url' => $fileDataFromDb,
+                'web_path' => 'data:'.$value->getMimeType().';base64,'.\base64_encode($value->getContent()),
+                'file_url' => $value,
             ];
         }
 
@@ -48,10 +47,8 @@ class FileUrlDataTransformer implements DataTransformerInterface
 
     /**
      * @param array $fileDataFromForm
-     *
-     * @throws TransformationFailedException|InvalidArgumentException
      */
-    public function reverseTransform($fileDataFromForm): UploadedFile|FileUrl|null
+    public function reverseTransform(mixed $fileDataFromForm): UploadedFile|FileUrl|null
     {
         $uploadedFile = $this->getUploadedFile($fileDataFromForm);
 

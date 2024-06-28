@@ -7,32 +7,32 @@ use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\DataTransformerInterface;
 
-class TagsDataTransformer implements DataTransformerInterface
+final readonly class TagsDataTransformer implements DataTransformerInterface
 {
-    private const SEPARATOR = ',';
+    private const string SEPARATOR = ',';
 
     public function __construct(private TagRepository $tagRepository)
     {
     }
 
     /**
-     * @param ArrayCollection<Tag>|null $tagsDataFromDb
+     * @param ArrayCollection<Tag>|null $value
      */
-    public function transform($tagsDataFromDb): string
+    public function transform(mixed $value): string
     {
-        return $tagsDataFromDb ? \implode(self::SEPARATOR, $tagsDataFromDb->toArray()) : '';
+        return $value ? \implode(self::SEPARATOR, $value->toArray()) : '';
     }
 
     /**
-     * @param string $tagsDataFromForm
+     * @param string $value
      *
      * @return ArrayCollection<Tag>|null
      */
-    public function reverseTransform($tagsDataFromForm): ?ArrayCollection
+    public function reverseTransform(mixed $value): ?ArrayCollection
     {
-        $tags = \explode(self::SEPARATOR, $tagsDataFromForm);
+        $tags = \explode(self::SEPARATOR, $value);
         $tags = \array_map('trim', $tags);
-        $tags = \array_filter($tags, static function ($value): bool {
+        $tags = \array_filter($tags, static function (string $value): bool {
             return !empty($value);
         });
 
