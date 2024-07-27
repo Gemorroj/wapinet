@@ -86,7 +86,7 @@
         "gemorroj/htmlvalidator": "^3.3",
         "gemorroj/cssvalidator": "^3.4",
         "gemorroj/xbbcode": "^2.7",
-        "gemorroj/ginfo": "^5.5"
+        "gemorroj/ginfo": "^5.5.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.6",

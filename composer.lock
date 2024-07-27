@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c25fcf6e11b50f99ee404363ca40e2a",
+    "content-hash": "e545756142fd47141138aa5b6287ee78",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -1821,16 +1821,16 @@
         },
         {
             "name": "gemorroj/ginfo",
-            "version": "5.5.0",
+            "version": "5.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/ginfo.git",
-                "reference": "1dc000c3025e096011415f8323270aee32b71ef4"
+                "reference": "b777f6a5350ceff47d5eaf5715010c95ed26ad71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/1dc000c3025e096011415f8323270aee32b71ef4",
-                "reference": "1dc000c3025e096011415f8323270aee32b71ef4",
+                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/b777f6a5350ceff47d5eaf5715010c95ed26ad71",
+                "reference": "b777f6a5350ceff47d5eaf5715010c95ed26ad71",
                 "shasum": ""
             },
             "require": {
@@ -1841,7 +1841,7 @@
                 "symfony/process": "^5.4||^6.0||^7.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.41",
+                "friendsofphp/php-cs-fixer": "^3.46",
                 "phpstan/phpstan": "^1.10",
                 "phpunit/phpunit": "^9.6"
             },
@@ -1880,7 +1880,7 @@
                 "specs",
                 "system"
             ],
-            "time": "2023-12-22T13:44:51+00:00"
+            "time": "2024-07-27T12:31:58+00:00"
         },
         {
             "name": "gemorroj/htmlvalidator",
@@ -1973,12 +1973,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/phpwhois.git",
-                "reference": "be2e5caefeb8c0eee4dcf9caf5bffa5c0bb3d263"
+                "reference": "24eecbf5ff42ca5e6d4854fd95bf455849bb63d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/be2e5caefeb8c0eee4dcf9caf5bffa5c0bb3d263",
-                "reference": "be2e5caefeb8c0eee4dcf9caf5bffa5c0bb3d263",
+                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/24eecbf5ff42ca5e6d4854fd95bf455849bb63d8",
+                "reference": "24eecbf5ff42ca5e6d4854fd95bf455849bb63d8",
                 "shasum": ""
             },
             "require": {
@@ -2004,7 +2004,7 @@
                 "GPL-2.0-only"
             ],
             "description": "This package contains a Whois (RFC954) library for PHP. It allows a PHP program to create a Whois object, and obtain the output of a whois query with the Lookup function.",
-            "time": "2024-01-04T18:02:12+00:00"
+            "time": "2024-07-27T11:55:38+00:00"
         },
         {
             "name": "gemorroj/stop-spam",
