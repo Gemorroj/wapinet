@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e545756142fd47141138aa5b6287ee78",
+    "content-hash": "34939d2a92ac59e1f2bde2b890b56e8d",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -1421,16 +1421,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v4.10.5",
+            "version": "v4.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "cf45d227fcd9f58172ab8a8e5cb9857c8c816d9c"
+                "reference": "39bb75340b1747d607991ed6d9e72cdcfe9b5e90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/cf45d227fcd9f58172ab8a8e5cb9857c8c816d9c",
-                "reference": "cf45d227fcd9f58172ab8a8e5cb9857c8c816d9c",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/39bb75340b1747d607991ed6d9e72cdcfe9b5e90",
+                "reference": "39bb75340b1747d607991ed6d9e72cdcfe9b5e90",
                 "shasum": ""
             },
             "require": {
@@ -1508,7 +1508,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-07-18T18:12:45+00:00"
+            "time": "2024-07-27T17:32:52+00:00"
         },
         {
             "name": "egulias/email-validator",
