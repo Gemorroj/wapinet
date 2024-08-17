@@ -19,7 +19,7 @@ class Gist implements \JsonSerializable
     #[ORM\Column(type: 'string', length: 255)]
     private string $ip = '';
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 500)]
     private string $browser = '';
 
     #[ORM\Column(type: 'datetime', nullable: false)]
