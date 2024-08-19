@@ -6,6 +6,7 @@ use App\Entity\FileTags;
 use App\Entity\Tag;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,7 +20,7 @@ use Symfony\Component\Scheduler\Attribute\AsPeriodicTask;
 #[AsPeriodicTask('1 day')]
 class TagsCountCommand extends Command
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly LoggerInterface $logger)
     {
         parent::__construct();
     }
@@ -57,7 +58,9 @@ class TagsCountCommand extends Command
 
         $this->entityManager->flush();
 
-        $output->writeln('Fixed '.$fixedCounts.' tags count.');
+        $message = 'Fixed '.$fixedCounts.' tags count.';
+        $this->logger->warning($this->getName().': '.$message);
+        $output->writeln($message);
 
         return Command::SUCCESS;
     }

@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -20,7 +21,8 @@ class UserCreateCommand extends Command
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly PasswordHasherFactoryInterface $passwordHasherFactory
+        private readonly PasswordHasherFactoryInterface $passwordHasherFactory,
+        private readonly LoggerInterface $logger,
     ) {
         parent::__construct();
     }
@@ -53,7 +55,9 @@ class UserCreateCommand extends Command
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $io->success('User created. Id: '.$user->getId());
+        $message = 'User created. Id: '.$user->getId();
+        $this->logger->warning($this->getName().': '.$message);
+        $io->success($message);
 
         return Command::SUCCESS;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -22,6 +23,7 @@ class TmpClearCommand extends Command
     public function __construct(
         private readonly ParameterBagInterface $parameterBag,
         private readonly Filesystem $filesystem,
+        private readonly LoggerInterface $logger,
     ) {
         parent::__construct();
     }
@@ -50,7 +52,9 @@ class TmpClearCommand extends Command
         $oldFileCount = $oldFiles->count();
         $this->filesystem->remove($oldFiles);
 
-        $output->writeln(\sprintf('Files over "%s" are removed. Removed "%d" files.', $lifetime, $oldFileCount));
+        $message = \sprintf('Files over "%s" are removed. Removed "%d" files.', $lifetime, $oldFileCount);
+        $this->logger->warning($this->getName().': '.$message);
+        $output->writeln($message);
 
         return Command::SUCCESS;
     }

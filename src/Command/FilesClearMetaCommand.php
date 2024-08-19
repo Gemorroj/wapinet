@@ -3,9 +3,9 @@
 namespace App\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class FilesClearMetaCommand extends Command
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly LoggerInterface $logger)
     {
         parent::__construct();
     }
@@ -23,9 +23,6 @@ class FilesClearMetaCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDefinition([
-                new InputArgument('lifetime', InputArgument::OPTIONAL, 'The lifetime timeout', '1 year'),
-            ])
             ->setHelp(
                 <<<EOT
                     The <info>app:files-clear-meta</info> command removes meta for all files:
@@ -41,7 +38,9 @@ class FilesClearMetaCommand extends Command
             ->createQuery('UPDATE App\Entity\File f SET f.meta = NULL')
             ->execute();
 
-        $output->writeln('Database has been updated.');
+        $message = 'Meta for all files have been cleared.';
+        $this->logger->warning($this->getName().': '.$message);
+        $output->writeln($message);
 
         return Command::SUCCESS;
     }

@@ -4,6 +4,7 @@ namespace App\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -22,7 +23,8 @@ class FilesClearCommand extends Command
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly Filesystem $filesystem,
-        private readonly ParameterBagInterface $parameterBag
+        private readonly ParameterBagInterface $parameterBag,
+        private readonly LoggerInterface $logger,
     ) {
         parent::__construct();
     }
@@ -79,7 +81,9 @@ class FilesClearCommand extends Command
             }
         }
 
-        $output->writeln(\sprintf('Files over "%s" are removed. Removed "%d" rows from DB and "%d" files from filesystem.', $lifetime, $dbDeleted, $filesystemDeleted));
+        $message = \sprintf('Files over "%s" are removed. Removed "%d" rows from DB and "%d" files from filesystem.', $lifetime, $dbDeleted, $filesystemDeleted);
+        $this->logger->warning($this->getName().': '.$message);
+        $output->writeln($message);
 
         return Command::SUCCESS;
     }

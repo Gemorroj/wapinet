@@ -49,7 +49,9 @@ class SubscriberSendCommand extends Command
         }
         $this->entityManager->commit();
 
-        $output->writeln('All Emails sent.');
+        $message = 'All Emails sent.';
+        $this->logger->warning($this->getName().': '.$message);
+        $output->writeln($message);
 
         return Command::SUCCESS;
     }

@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Repository\EventRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class SubscriberClearCommand extends Command
 {
-    public function __construct(private readonly EventRepository $eventRepository)
+    public function __construct(private readonly EventRepository $eventRepository, private readonly LoggerInterface $logger)
     {
         parent::__construct();
     }
@@ -40,7 +41,9 @@ class SubscriberClearCommand extends Command
         $lifetime = $input->getArgument('lifetime');
         $count = $this->eventRepository->removeEvents(new \DateTime('-'.$lifetime));
 
-        $output->writeln('Deleted '.$count.' events.');
+        $message = 'Deleted '.$count.' events.';
+        $this->logger->warning($this->getName().': '.$message);
+        $output->writeln($message);
 
         return Command::SUCCESS;
     }
