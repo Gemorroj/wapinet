@@ -31,7 +31,7 @@ class GistController extends AbstractController
     public function indexAction(Request $request, GistRepository $gistRepository, Paginate $paginate): Response
     {
         $form = $this->createForm(AddType::class);
-        $page = $request->get('page', 1);
+        $page = (int) $request->get('page', 1);
 
         $query = $gistRepository->getListQuery();
         $pagerfanta = $paginate->paginate($query, $page);
@@ -46,7 +46,7 @@ class GistController extends AbstractController
     public function userAction(Request $request, string $username, UserRepository $userRepository, GistRepository $gistRepository, Paginate $paginate): Response
     {
         $form = $this->createForm(AddType::class);
-        $page = $request->get('page', 1);
+        $page = (int) $request->get('page', 1);
 
         /** @var User|null $user */
         $user = $userRepository->findOneBy(['username' => $username]);
@@ -130,7 +130,7 @@ class GistController extends AbstractController
     #[Route(path: '/search/{key}', name: 'gist_search', requirements: ['key' => '[a-zA-Z0-9]+'], defaults: ['key' => null])]
     public function searchAction(Request $request, Manticore $manticore, ?string $key = null): Response
     {
-        $page = $request->get('page', 1);
+        $page = (int) $request->get('page', 1);
         $form = $this->createForm(SearchType::class);
         $pagerfanta = null;
 

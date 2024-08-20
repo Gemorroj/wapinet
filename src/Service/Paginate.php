@@ -13,7 +13,7 @@ use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class Paginate
+readonly class Paginate
 {
     public function __construct(private ParameterBagInterface $parameterBag)
     {

@@ -16,7 +16,7 @@ class NewsController extends AbstractController
     #[Route(path: '', name: 'news_index')]
     public function indexAction(Request $request, Paginate $paginate, NewsRepository $newsRepository): Response
     {
-        $page = $request->get('page', 1);
+        $page = (int) $request->get('page', 1);
 
         $result = $newsRepository->getAllBuilder();
 

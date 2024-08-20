@@ -15,7 +15,7 @@ class Manticore
     private int $maxPerPage = 10;
     private int $page = 1;
 
-    public function __construct(private EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag)
+    public function __construct(private readonly EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag)
     {
         $this->connection = new Connection();
         $this->connection->setParams([

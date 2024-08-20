@@ -67,7 +67,7 @@ class FileController extends AbstractController
     #[Route(path: '/search/{key}', name: 'file_search', requirements: ['key' => '[a-zA-Z0-9]+'], defaults: ['key' => null])]
     public function searchAction(Request $request, ?string $key = null): Response
     {
-        $page = $request->get('page', 1);
+        $page = (int) $request->get('page', 1);
         $form = $this->createForm(SearchType::class);
         $pagerfanta = null;
 
@@ -140,7 +140,7 @@ class FileController extends AbstractController
         }
         $this->denyAccessUnlessGranted('ROLE_ADMIN', $user);
 
-        $page = $request->get('page', 1);
+        $page = (int) $request->get('page', 1);
 
         $query = $fileRepository->getHiddenQuery();
         $pagerfanta = $paginate->paginate($query, $page);
@@ -153,7 +153,7 @@ class FileController extends AbstractController
     #[Route(path: '/tags', name: 'file_tags')]
     public function tagsAction(Request $request, TagRepository $tagRepository, Paginate $paginate): Response
     {
-        $page = $request->get('page', 1);
+        $page = (int) $request->get('page', 1);
         $query = $tagRepository->getTagsQuery();
 
         $pagerfanta = $paginate->paginate($query, $page);
@@ -166,7 +166,7 @@ class FileController extends AbstractController
     #[Route(path: '/tags/{tagName}', name: 'file_tag', requirements: ['tagName' => '.+'])]
     public function tagAction(Request $request, string $tagName, TagRepository $tagRepository, FileRepository $fileRepository, Paginate $paginate): Response
     {
-        $page = $request->get('page', 1);
+        $page = (int) $request->get('page', 1);
 
         $tag = $tagRepository->getTagByName($tagName);
         if (null === $tag) {
@@ -186,7 +186,7 @@ class FileController extends AbstractController
     #[Route(path: '/users/{username}', name: 'file_user', requirements: ['username' => '.+'])]
     public function userAction(Request $request, string $username, UserRepository $userRepository, FileRepository $fileRepository, Paginate $paginate): Response
     {
-        $page = $request->get('page', 1);
+        $page = (int) $request->get('page', 1);
         /** @var User|null $user */
         $user = $userRepository->findOneBy(['username' => $username]);
         if (!$user) {
@@ -206,7 +206,7 @@ class FileController extends AbstractController
     #[Route(path: '/list/{date}/{category}', name: 'file_list', requirements: ['date' => 'all|today|yesterday', 'category' => 'video|audio|image|text|office|archive|android|java'], defaults: ['date' => 'all', 'category' => null])]
     public function listAction(Request $request, Timezone $timezoneHelper, FileRepository $fileRepository, Paginate $paginate, string $date = 'all', ?string $category = null): Response
     {
-        $page = $request->get('page', 1);
+        $page = (int) $request->get('page', 1);
 
         $datetimeStart = null;
         $datetimeEnd = null;
