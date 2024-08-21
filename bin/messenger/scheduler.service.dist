@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 User=apache
-ExecStart=/var/www/wapinet/bin/console messenger:consume scheduler_default --limit=1000 --memory-limit=128M --time-limit=3600 --ansi
+ExecStart=/var/www/wapinet/bin/console messenger:consume scheduler_default --limit=1000 --memory-limit=128M --time-limit=1500000 --ansi
 Restart=always
 RestartSec=5
 
