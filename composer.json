@@ -21,7 +21,7 @@
         "ext-sodium": "*",
         "ext-gd": "*",
 
-        "doctrine/doctrine-bundle": "^2.12",
+        "doctrine/doctrine-bundle": "^2.13",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.2",
 
@@ -64,7 +64,7 @@
         "pagerfanta/doctrine-orm-adapter": "^v4.6",
         "pagerfanta/twig": "^v4.6",
 
-        "easycorp/easyadmin-bundle": "^4.11",
+        "easycorp/easyadmin-bundle": "^4.12",
         "friendsofsymfony/jsrouting-bundle": "^3.5",
         "james-heinrich/getid3": "^1.9.23",
         "vich/uploader-bundle": "^2.4",
@@ -102,7 +102,7 @@
         "phpstan/phpstan-symfony": "^1.4",
         "phpstan/phpstan-phpunit": "^1.4",
         "phpstan/phpstan-doctrine": "^1.5",
-        "friendsofphp/php-cs-fixer": "^3.61"
+        "friendsofphp/php-cs-fixer": "^3.64"
     },
     "config": {
         "allow-plugins": {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a556dc9f7d36f536ca7e1f0758ee2a7f",
+    "content-hash": "0d3333d637d445700674758121f571df",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -578,16 +578,16 @@
         },
         {
             "name": "doctrine/doctrine-bundle",
-            "version": "2.12.0",
+            "version": "2.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "5418e811a14724068e95e0ba43353b903ada530f"
+                "reference": "ca59d84b8e63143ce1aed90cdb333ba329d71563"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/5418e811a14724068e95e0ba43353b903ada530f",
-                "reference": "5418e811a14724068e95e0ba43353b903ada530f",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/ca59d84b8e63143ce1aed90cdb333ba329d71563",
+                "reference": "ca59d84b8e63143ce1aed90cdb333ba329d71563",
                 "shasum": ""
             },
             "require": {
@@ -690,7 +690,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-03-19T07:20:37+00:00"
+            "time": "2024-09-01T09:46:40+00:00"
         },
         {
             "name": "doctrine/doctrine-migrations-bundle",
@@ -1422,16 +1422,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v4.11.1",
+            "version": "v4.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "d0945053e9dbf81d0c10f8cacec25c8ec5e87053"
+                "reference": "d21c3222a660f6aa9748623e53db8be5d8d98e78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/d0945053e9dbf81d0c10f8cacec25c8ec5e87053",
-                "reference": "d0945053e9dbf81d0c10f8cacec25c8ec5e87053",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/d21c3222a660f6aa9748623e53db8be5d8d98e78",
+                "reference": "d21c3222a660f6aa9748623e53db8be5d8d98e78",
                 "shasum": ""
             },
             "require": {
@@ -1509,7 +1509,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-06T18:21:54+00:00"
+            "time": "2024-09-02T17:48:17+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -9240,16 +9240,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.63.2",
+            "version": "v3.64.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "9d427f3f14984403a6ae9fc726b61765ca0c005e"
+                "reference": "58dd9c931c785a79739310aef5178928305ffa67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/9d427f3f14984403a6ae9fc726b61765ca0c005e",
-                "reference": "9d427f3f14984403a6ae9fc726b61765ca0c005e",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/58dd9c931c785a79739310aef5178928305ffa67",
+                "reference": "58dd9c931c785a79739310aef5178928305ffa67",
                 "shasum": ""
             },
             "require": {
@@ -9335,7 +9335,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-28T10:47:21+00:00"
+            "time": "2024-08-30T23:09:38+00:00"
         },
         {
             "name": "masterminds/html5",
@@ -9673,16 +9673,16 @@
         },
         {
             "name": "phpstan/phpstan-doctrine",
-            "version": "1.5.2",
+            "version": "1.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-doctrine.git",
-                "reference": "4d17bed8a33aa8220c1f2a21a6b14fcdb0e5b02c"
+                "reference": "38db3bad8f1567d7bf64806738d724261f8a2b5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/4d17bed8a33aa8220c1f2a21a6b14fcdb0e5b02c",
-                "reference": "4d17bed8a33aa8220c1f2a21a6b14fcdb0e5b02c",
+                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/38db3bad8f1567d7bf64806738d724261f8a2b5c",
+                "reference": "38db3bad8f1567d7bf64806738d724261f8a2b5c",
                 "shasum": ""
             },
             "require": {
@@ -9737,7 +9737,7 @@
                 "MIT"
             ],
             "description": "Doctrine extensions for PHPStan",
-            "time": "2024-08-23T11:07:15+00:00"
+            "time": "2024-09-01T13:17:34+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
