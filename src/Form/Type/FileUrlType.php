@@ -14,7 +14,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class FileUrlType extends AbstractType
 {
-    public function __construct(private ParameterBagInterface $parameterBag, private HttpClientInterface $httpClient)
+    public function __construct(private readonly ParameterBagInterface $parameterBag, private readonly HttpClientInterface $httpClient)
     {
     }
 
@@ -42,6 +42,7 @@ class FileUrlType extends AbstractType
             'attr' => ['placeholder' => 'Ссылка'],
             'label' => false,
             'required' => false,
+            'default_protocol' => 'https',
         ]);
 
         if ($options['delete_button']) {

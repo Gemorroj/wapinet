@@ -31,6 +31,7 @@ class HttpType extends AbstractType
         ]);
         $builder->add('url', UrlType::class, [
             'label' => 'Путь',
+            'default_protocol' => 'http',
         ]);
         $builder->add('header', TextareaType::class, [
             'data' => 'Accept: */*'."\r\n".'Cache-Control: no-cache'."\r\n".'User-Agent: Wapinet HTTP Client',

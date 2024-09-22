@@ -26,7 +26,7 @@
 {% set video = null %}
 
 {% if file.isPlayableVideo %}
-    {% set format %}{% apply spaceless %}
+    {% set format -%}
         {% if file.isM4v or file.is3gp or file.isWmv or file.isAvi or file.isMov %}
             m4v
         {% elseif file.isOgv %}
@@ -36,17 +36,17 @@
         {% elseif file.isFlv %}
             flv
         {% endif %}
-    {% endapply %}{% endset %}
+    {%- endset %}
 
-    {% set video %}{% apply spaceless %}
+    {% set video -%}
         {% if file.is3gp or file.isAvi or file.isWmv or file.isMov %}
             {{ vich_uploader_asset(file, 'file')|wapinet_video_to_mp4 }}
         {% else %}
             {{ vich_uploader_asset(file, 'file') }}
         {% endif %}
-    {% endapply %}{% endset %}
+    {%- endset %}
 {% elseif file.isPlayableAudio %}
-    {% set format %}{% apply spaceless %}
+    {% set format -%}
         {% if file.isMp3 or file.isAmr %}
             mp3
         {% elseif file.isM4a %}
@@ -62,15 +62,15 @@
         {% elseif file.isFlac %}
             flac
         {% endif %}
-    {% endapply %}{% endset %}
+    {%- endset %}
 
-    {% set audio %}{% apply spaceless %}
+    {% set audio -%}
         {% if file.isAmr %}
             {{ vich_uploader_asset(file, 'file')|wapinet_audio_to_mp3 }}
         {% else %}
             {{ vich_uploader_asset(file, 'file') }}
         {% endif %}
-    {% endapply %}{% endset %}
+    {%- endset %}
 {% endif %}
 
 
