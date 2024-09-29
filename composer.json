@@ -3,7 +3,7 @@
     "description": "wapinet.ru website",
     "type": "project",
     "license": "GPL-3.0-or-later",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
         "php": ">=8.3",
@@ -85,7 +85,7 @@
         "gemorroj/syntax": "^4.4",
         "gemorroj/htmlvalidator": "^3.3",
         "gemorroj/cssvalidator": "^3.4",
-        "gemorroj/xbbcode": "^2.8",
+        "gemorroj/xbbcode": "^2.8.1",
         "gemorroj/ginfo": "^5.5.1"
     },
     "require-dev": {
