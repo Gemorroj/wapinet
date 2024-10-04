@@ -51,6 +51,16 @@ services:
     expose:
       - "9001" # xdebug
 
+  messenger:
+    build:
+      context: ./.docker/php
+    restart: unless-stopped
+    command: php ./bin/console messenger:consume --all
+    volumes:
+      - '.:/var/www/app'
+    depends_on:
+      - php
+
   nginx:
     build:
       context: ./.docker/nginx
