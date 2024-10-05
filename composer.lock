@@ -12214,8 +12214,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "gregwar/captcha-bundle": 20,
-        "gemorroj/phpwhois": 20
+        "gemorroj/phpwhois": 20,
+        "gregwar/captcha-bundle": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
@@ -12235,6 +12235,6 @@
         "ext-sodium": "*",
         "ext-gd": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
