@@ -3,7 +3,8 @@
     "app": {
       "js": [
         "/build/runtime.a88fa370.js",
-        "/build/app.9bc821b6.js"
+        "/build/855.af935d9f.js",
+        "/build/app.7d5439fc.js"
       ],
       "css": [
         "/build/app.ff80507c.css"
