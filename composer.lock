@@ -1425,16 +1425,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v4.16.1",
+            "version": "v4.16.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "e9e90f8659f9f8b508b46fe8d380ba28f6b6e498"
+                "reference": "abe5cac99c21d01ad497b6af86fc0e5ecb632cab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/e9e90f8659f9f8b508b46fe8d380ba28f6b6e498",
-                "reference": "e9e90f8659f9f8b508b46fe8d380ba28f6b6e498",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/abe5cac99c21d01ad497b6af86fc0e5ecb632cab",
+                "reference": "abe5cac99c21d01ad497b6af86fc0e5ecb632cab",
                 "shasum": ""
             },
             "require": {
@@ -1513,7 +1513,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-11-25T18:58:01+00:00"
+            "time": "2024-11-26T19:48:14+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -1674,16 +1674,16 @@
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
-            "version": "3.5.1",
+            "version": "3.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSJsRoutingBundle.git",
-                "reference": "57ba412d813bb150b8a4ff9b65d4513725e31a1d"
+                "reference": "af2ee3a5406a3b57dfe1a0c010d2a29c2fdbfeed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/57ba412d813bb150b8a4ff9b65d4513725e31a1d",
-                "reference": "57ba412d813bb150b8a4ff9b65d4513725e31a1d",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/af2ee3a5406a3b57dfe1a0c010d2a29c2fdbfeed",
+                "reference": "af2ee3a5406a3b57dfe1a0c010d2a29c2fdbfeed",
                 "shasum": ""
             },
             "require": {
@@ -1732,7 +1732,7 @@
                 "javascript",
                 "routing"
             ],
-            "time": "2024-11-22T10:11:52+00:00"
+            "time": "2024-11-26T15:26:56+00:00"
         },
         {
             "name": "gemorroj/archive7z",
