@@ -9,6 +9,6 @@ parameters:
         - src
         - tests
     symfony:
-        container_xml_path: '%rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml'
+        containerXmlPath: '%rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml'
     doctrine:
         objectManagerLoader: object-manager.php
