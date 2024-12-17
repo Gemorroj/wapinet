@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eee5fb21effc547a76c1e08f53e80d72",
+    "content-hash": "063dfca33ab8350c8dc35db476f5b313",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -1423,16 +1423,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v4.20.2",
+            "version": "v4.20.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "b65b73b0980dabf6b46259e9eeb16931701422eb"
+                "reference": "cd8aca714bdd598898c3a0ba6a42e4e646641cc7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/b65b73b0980dabf6b46259e9eeb16931701422eb",
-                "reference": "b65b73b0980dabf6b46259e9eeb16931701422eb",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/cd8aca714bdd598898c3a0ba6a42e4e646641cc7",
+                "reference": "cd8aca714bdd598898c3a0ba6a42e4e646641cc7",
                 "shasum": ""
             },
             "require": {
@@ -1513,7 +1513,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-12-09T19:02:47+00:00"
+            "time": "2024-12-12T07:25:40+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -2575,16 +2575,16 @@
         },
         {
             "name": "liip/imagine-bundle",
-            "version": "2.13.2",
+            "version": "2.13.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipImagineBundle.git",
-                "reference": "98e0318ea0f7b9500343236e63cc29ded58a1d43"
+                "reference": "3faccde327f91368e51d05ecad49a9cd915abd81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/98e0318ea0f7b9500343236e63cc29ded58a1d43",
-                "reference": "98e0318ea0f7b9500343236e63cc29ded58a1d43",
+                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/3faccde327f91368e51d05ecad49a9cd915abd81",
+                "reference": "3faccde327f91368e51d05ecad49a9cd915abd81",
                 "shasum": ""
             },
             "require": {
@@ -2673,7 +2673,7 @@
                 "symfony",
                 "transformation"
             ],
-            "time": "2024-09-04T12:55:26+00:00"
+            "time": "2024-12-12T09:38:23+00:00"
         },
         {
             "name": "maxmind-db/reader",
@@ -2882,16 +2882,16 @@
         },
         {
             "name": "pagerfanta/core",
-            "version": "v4.7.0",
+            "version": "v4.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/core.git",
-                "reference": "4509db0e1e22baea6678b724f3254609acbaa9cc"
+                "reference": "829eaa9737b3cfae1406f67a4e9ee36e0e37caf9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/core/zipball/4509db0e1e22baea6678b724f3254609acbaa9cc",
-                "reference": "4509db0e1e22baea6678b724f3254609acbaa9cc",
+                "url": "https://api.github.com/repos/Pagerfanta/core/zipball/829eaa9737b3cfae1406f67a4e9ee36e0e37caf9",
+                "reference": "829eaa9737b3cfae1406f67a4e9ee36e0e37caf9",
                 "shasum": ""
             },
             "require": {
@@ -2918,20 +2918,20 @@
             "keywords": [
                 "pagerfanta"
             ],
-            "time": "2024-08-13T23:43:44+00:00"
+            "time": "2024-12-13T15:05:37+00:00"
         },
         {
             "name": "pagerfanta/doctrine-collections-adapter",
-            "version": "v4.7.0",
+            "version": "v4.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/doctrine-collections-adapter.git",
-                "reference": "6a1cf09efbfe7fc7131247d7fcac9ce9baf3d50e"
+                "reference": "a1c59f8afbfc57958d54126d8357c4a769dd864f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/doctrine-collections-adapter/zipball/6a1cf09efbfe7fc7131247d7fcac9ce9baf3d50e",
-                "reference": "6a1cf09efbfe7fc7131247d7fcac9ce9baf3d50e",
+                "url": "https://api.github.com/repos/Pagerfanta/doctrine-collections-adapter/zipball/a1c59f8afbfc57958d54126d8357c4a769dd864f",
+                "reference": "a1c59f8afbfc57958d54126d8357c4a769dd864f",
                 "shasum": ""
             },
             "require": {
@@ -2961,20 +2961,20 @@
                 "doctrine",
                 "pagerfanta"
             ],
-            "time": "2024-08-13T23:48:58+00:00"
+            "time": "2024-11-30T19:18:10+00:00"
         },
         {
             "name": "pagerfanta/doctrine-orm-adapter",
-            "version": "v4.7.0",
+            "version": "v4.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/doctrine-orm-adapter.git",
-                "reference": "c51e5c7b2c704e83442a365604d94ebcdec3d054"
+                "reference": "b3be49948e84b67c023c820abc54ea574a100d5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/doctrine-orm-adapter/zipball/c51e5c7b2c704e83442a365604d94ebcdec3d054",
-                "reference": "c51e5c7b2c704e83442a365604d94ebcdec3d054",
+                "url": "https://api.github.com/repos/Pagerfanta/doctrine-orm-adapter/zipball/b3be49948e84b67c023c820abc54ea574a100d5d",
+                "reference": "b3be49948e84b67c023c820abc54ea574a100d5d",
                 "shasum": ""
             },
             "require": {
@@ -3005,20 +3005,20 @@
                 "orm",
                 "pagerfanta"
             ],
-            "time": "2024-03-06T23:51:47+00:00"
+            "time": "2024-11-30T19:18:10+00:00"
         },
         {
             "name": "pagerfanta/twig",
-            "version": "v4.7.0",
+            "version": "v4.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/twig.git",
-                "reference": "8aae872221eff1093c55ba69e50f81031f50790d"
+                "reference": "f3eb17928c61fe6f72abc822825e1006afae6257"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/twig/zipball/8aae872221eff1093c55ba69e50f81031f50790d",
-                "reference": "8aae872221eff1093c55ba69e50f81031f50790d",
+                "url": "https://api.github.com/repos/Pagerfanta/twig/zipball/f3eb17928c61fe6f72abc822825e1006afae6257",
+                "reference": "f3eb17928c61fe6f72abc822825e1006afae6257",
                 "shasum": ""
             },
             "require": {
@@ -3046,7 +3046,7 @@
             "keywords": [
                 "pagerfanta"
             ],
-            "time": "2024-08-13T23:43:44+00:00"
+            "time": "2024-12-13T15:11:13+00:00"
         },
         {
             "name": "php-ffmpeg/php-ffmpeg",
@@ -5440,16 +5440,16 @@
         },
         {
             "name": "symfony/http-client-contracts",
-            "version": "v3.5.1",
+            "version": "v3.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client-contracts.git",
-                "reference": "c2f3ad828596624ca39ea40f83617ef51ca8bbf9"
+                "reference": "ee8d807ab20fcb51267fdace50fbe3494c31e645"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client-contracts/zipball/c2f3ad828596624ca39ea40f83617ef51ca8bbf9",
-                "reference": "c2f3ad828596624ca39ea40f83617ef51ca8bbf9",
+                "url": "https://api.github.com/repos/symfony/http-client-contracts/zipball/ee8d807ab20fcb51267fdace50fbe3494c31e645",
+                "reference": "ee8d807ab20fcb51267fdace50fbe3494c31e645",
                 "shasum": ""
             },
             "require": {
@@ -5511,7 +5511,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-25T12:02:18+00:00"
+            "time": "2024-12-07T08:49:48+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -8726,16 +8726,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.17.0",
+            "version": "v3.17.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "d3a64b742a5e74c57e3964d766e1032982145872"
+                "reference": "677ef8da6497a03048192aeeb5aa3018e379ac71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/d3a64b742a5e74c57e3964d766e1032982145872",
-                "reference": "d3a64b742a5e74c57e3964d766e1032982145872",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/677ef8da6497a03048192aeeb5aa3018e379ac71",
+                "reference": "677ef8da6497a03048192aeeb5aa3018e379ac71",
                 "shasum": ""
             },
             "require": {
@@ -8798,7 +8798,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-12-10T15:19:11+00:00"
+            "time": "2024-12-12T09:58:10+00:00"
         },
         {
             "name": "vich/uploader-bundle",
