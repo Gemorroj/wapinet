@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "02ec2994299c0bec9756d98f93fe548c",
+    "content-hash": "f4ce1004c81d3a91a43bc5becfb021a9",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -1819,16 +1819,16 @@
         },
         {
             "name": "gemorroj/ginfo",
-            "version": "5.5.1",
+            "version": "5.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/ginfo.git",
-                "reference": "b777f6a5350ceff47d5eaf5715010c95ed26ad71"
+                "reference": "d40b35cf7a7414fc4f887848a433acbc96dc1469"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/b777f6a5350ceff47d5eaf5715010c95ed26ad71",
-                "reference": "b777f6a5350ceff47d5eaf5715010c95ed26ad71",
+                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/d40b35cf7a7414fc4f887848a433acbc96dc1469",
+                "reference": "d40b35cf7a7414fc4f887848a433acbc96dc1469",
                 "shasum": ""
             },
             "require": {
@@ -1839,8 +1839,8 @@
                 "symfony/process": "^5.4||^6.0||^7.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.46",
-                "phpstan/phpstan": "^1.10",
+                "friendsofphp/php-cs-fixer": "^3.68",
+                "phpstan/phpstan": "^2",
                 "phpunit/phpunit": "^9.6"
             },
             "suggest": {
@@ -1878,7 +1878,7 @@
                 "specs",
                 "system"
             ],
-            "time": "2024-07-27T12:31:58+00:00"
+            "time": "2025-01-28T19:41:55+00:00"
         },
         {
             "name": "gemorroj/htmlvalidator",
