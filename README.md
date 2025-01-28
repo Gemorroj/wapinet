@@ -5,7 +5,7 @@
 ##### Используются:
 - Symfony 7.2
 - Jquery Mobile
-- PHP 8.3
+- PHP 8.4
 - MySQL 8.0
 - Manticore
 - 7zip
@@ -13,324 +13,258 @@
 - systemd
 
 
-### Базовая установка (актуально для Centos 8 Stream)
-- Отключить `selinux`
+### Базовая установка (актуально для Ubuntu 24.04)
 ```bash
-sed -i 's/^SELINUX=.*/SELINUX=disabled/g' /etc/selinux/config
+apt update && sudo apt dist-upgrade && sudo apt autoremove --purge
+apt install software-properties-common
+add-apt-repository ppa:ondrej/php
+add-apt-repository ppa:ondrej/nginx
+apt update && apt dist-upgrade
+hostnamectl set-hostname wapinet.ru
+timedatectl set-timezone UTC
+
+# edit /etc/hosts to associate domain to ip address without dns requests. see https://www.linode.com/docs/guides/getting-started/#update-your-systems-hosts-file
+# edit /etc/ssh/sshd_config - set `Port 2200`
+# edit /root/.ssh/authorized_keys - add public key
 reboot
 ```
-- Перевести на Stream
+
 ```bash
-dnf upgrade
-dnf install centos-release-stream
-dnf swap centos-{linux,stream}-repos
-dnf distro-sync
-dnf autoremove
-reboot
-```
-- Установить дополнительные репозитории `powertools`, `epel`, `remi`, `nginx`, `mysql`, `manticore`
-```bash
-dnf install dnf-plugins-core
-dnf config-manager --set-enabled powertools
-dnf install epel-release
-dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm
-dnf config-manager --set-enabled remi
-# https://nginx.org/ru/linux_packages.html#RHEL-CentOS
-dnf install https://dev.mysql.com/get/mysql80-community-release-el8-1.noarch.rpm
-dnf install https://repo.manticoresearch.com/manticore-repo.noarch.rpm
-dnf upgrade
-```
-- Установить MySQL 8.0
-```bash
-dnf remove @mysql
-dnf module reset mysql
-dnf module disable mysql
-dnf config-manager --set-enabled mysql80-community
-dnf install mysql-community-server
-systemctl enable --now mysqld.service
-grep 'A temporary password' /var/log/mysqld.log |tail -1
-mysql_secure_installation
-```
-- Установить Nginx
-```bash
-dnf config-manager --set-disabled nginx-mainline
-dnf config-manager --set-enabled nginx-stable
-dnf install nginx
-firewall-cmd --permanent --add-service=http
-firewall-cmd --permanent --add-service=https
-firewall-cmd --reload
+apt install htop mc git unzip
+apt install mysql-client mysql-server
+apt install nginx
 systemctl enable nginx
-```
-- Установить php 8.3
-```bash
-dnf module reset php
-dnf module install php:remi-8.3
-dnf install php-fpm php-cli php-gd php-intl php-json php-mbstring php-mysqlnd php-opcache php-pdo php-pecl-apcu php-pecl-zip php-process php-xml php-sodium
-systemctl enable php-fpm
-```
-- Установить cron
-```bash
-dnf install crontabs
-systemctl enable crond
-```
-- Установить manticore
-```bash
-dnf config-manager --set-enabled manticore
-dnf install manticore
-### fix the manticore
-echo 'export MYSQL_LIB=/usr/lib64/mysql/libmysqlclient.so.21' > /etc/profile.d/mysql-manticore.csh
-systemctl enable manticore
-```
-- Установить Symfony Messenger
-```bash
-cd /var/www/wapinet
+apt install php8.4-fpm php8.4-curl php8.4-gd php8.4-intl php8.4-mbstring php8.4-mysql php8.4-xml php8.4-zip php8.4-apcu
 
-cp bin/messenger/messenger.service.dist bin/messenger/messenger.service
-cp bin/messenger/scheduler.service.dist bin/messenger/scheduler.service
-# edit bin/messenger/messenger.service
-# edit bin/messenger/scheduler.service
-ln -s /var/www/wapinet/bin/messenger/messenger.service /etc/systemd/system/messenger.service
-ln -s /var/www/wapinet/bin/messenger/scheduler.service /etc/systemd/system/scheduler.service
-systemctl daemon-reload
-systemctl enable messenger
-systemctl enable scheduler
-```
+mysql_secure_installation
+echo '[mysqld]
+default-authentication-plugin=mysql_native_password
 
-#### Дополнительные настройки
-```bash
-timedatectl set-timezone Europe/Moscow
-dnf install git htop mc tar unzip
-# /etc/ssh/sshd_config change Port to 2222
-firewall-cmd --permanent --remove-service=ssh
-firewall-cmd --permanent --add-port=2222/tcp
-firewall-cmd --reload
-systemctl restart sshd
-```
+skip-log-bin
+skip-external-locking
+skip-name-resolve
+
+transaction_write_set_extraction=OFF
+
+innodb_file_per_table=1
+max_connections=50
+innodb_flush_log_at_trx_commit=2
+innodb_buffer_pool_size=512M
+innodb_buffer_pool_instances=1
+innodb_log_file_size=76M
+key_buffer_size=0
+innodb_flush_method = O_DIRECT
 
 
-##### Установка 7zip
-```bash
-cd /opt
-mkdir 7z2408-linux-x64
-cd /opt/7z2408-linux-x64
-curl -O -L https://7-zip.org/a/7z2408-linux-x64.tar.xz
-tar xJvf 7z2408-linux-x64.tar.xz
-rm -f 7z2408-linux-x64.tar.xz
-```
-Проверить список поддерживаемых форматов можно так `/opt/7z2408-linux-x64/7zz i` или `/opt/7z2408-linux-x64/7zzs i` 
+table_open_cache=2000
+tmp_table_size=76M
+max_heap_table_size=76M
+join_buffer_size = 2M
+
+innodb_fast_shutdown = 0
+' > /etc/mysql/mysql.conf.d/z_wapinet.cnf
+
+# manticore
+curl -O -L https://repo.manticoresearch.com/manticore-repo.noarch.deb
+dpkg -i manticore-repo.noarch.deb
+rm manticore-repo.noarch.deb
+apt install manticore manticore-extra
+
+echo 'common {
+    plugin_dir = /usr/local/lib/manticore
+}
+indexer
+{
+    mem_limit = 128M
+}
+searchd
+{
+    # listen = localhost:9312
+    listen = localhost:9306:mysql
+    # listen = localhost:9308:http
+    log = /var/log/manticore/searchd.log
+    query_log = /var/log/manticore/query.log
+    query_log_format = sphinxql
+    pid_file = /run/manticore/searchd.pid
+    data_dir = /var/lib/manticore
+    binlog_path = # disable logging
+}
+
+source config
+{
+    type = mysql
+    sql_host = localhost
+    sql_user = wapinet
+    sql_pass = xgh466*fhjG
+    sql_db = wapinet
+    sql_port = 3306
+    sql_query_pre = SET NAMES utf8mb4
+}
+
+source files:config
+{
+    sql_query = \
+        SELECT f.id, \
+        f.description, \
+        f.original_file_name, \
+        UNIX_TIMESTAMP(f.created_at) AS created_at_ts, \
+        ( \
+            SELECT GROUP_CONCAT(t.name SEPARATOR " ") \
+            FROM tag AS t \
+            WHERE t.id IN(SELECT file_tags.tag_id FROM file_tags WHERE file_tags.file_id = f.id) \
+        ) AS tag_name \
+        FROM file AS f \
+        WHERE f.password IS NULL \
+        AND f.hidden = 0
+
+    sql_field_string = description
+    sql_field_string = original_file_name
+    sql_field_string = tag_name
+    sql_attr_timestamp = created_at_ts
+}
+
+index files
+{
+    type = plain
+    source = files
+    path = /var/lib/manticore/files
+    morphology = stem_enru, soundex, metaphone
+    html_strip = 0
+    min_infix_len = 3
+    min_word_len = 2
+    expand_keywords = 1
+    index_exact_words = 1
+    charset_table = 0..9, english, russian, _
+}
+
+source users:config
+{
+    sql_query = \
+        SELECT u.id, \
+        u.username, \
+        u.email, \
+        u.info \
+        FROM user AS u \
+        WHERE u.enabled = 1
+
+    sql_field_string = username
+    sql_field_string = email
+    sql_field_string = info
+}
+
+index users
+{
+    type = plain
+    source = users
+    path = /var/lib/manticore/users
+    morphology = stem_enru, soundex, metaphone
+    html_strip = 0
+    min_infix_len = 3
+    min_word_len = 2
+    expand_keywords = 1
+    index_exact_words = 1
+    charset_table = 0..9, english, russian, _
+}
+
+source gist:config
+{
+    sql_query = \
+        SELECT g.id, \
+        g.subject, \
+        g.body, \
+        UNIX_TIMESTAMP(g.created_at) AS created_at_ts \
+        FROM gist AS g
+
+    sql_field_string = subject
+    sql_field_string = body
+    sql_attr_timestamp = created_at_ts
+}
+
+index gist
+{
+    type = plain
+    source = gist
+    path = /var/lib/manticore/gist
+    morphology = stem_enru, soundex, metaphone
+    html_strip = 0
+    min_infix_len = 3
+    min_word_len = 2
+    expand_keywords = 1
+    index_exact_words = 1
+    charset_table = 0..9, english, russian, _
+}' > /etc/manticoresearch/manticore.conf
+
+echo '0 2 * * * indexer --rotate --all  > /dev/null 2>&1' -> /var/spool/cron/crontabs/manticore
+chown manticore:crontab /var/spool/cron/crontabs/manticore
+chmod 600 /var/spool/cron/crontabs/manticore
 
 
-### Установка FFmpeg:
-Базовая информация: [https://trac.ffmpeg.org/wiki/CompilationGuide/Centos](https://trac.ffmpeg.org/wiki/CompilationGuide/Centos).
-В конце проверить что на всех директориях выше и самих бинарниках есть права на выполнение.
-```bash
-dnf install autoconf automake bzip2 bzip2-devel cmake freetype-devel gcc gcc-c++ libtool make nasm yasm pkgconfig zlib-devel
-
-mkdir /opt/ffmpeg_2024-04-06_build
-mkdir /opt/ffmpeg_2024-04-06_source
-build_directory="/opt/ffmpeg_2024-04-06_build"
-source_directory="/opt/ffmpeg_2024-04-06_source"
-PATH="$build_directory/bin:$PATH"
-
-cd $source_directory
-git clone --depth 1 --branch stable https://code.videolan.org/videolan/x264.git
-cd x264
-PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure --prefix="$build_directory" --bindir="$build_directory/bin" --enable-static
-make
-make install
-make distclean
-
-cd $source_directory
-git clone --depth 1 --branch stable https://bitbucket.org/multicoreware/x265_git.git
-cd x265_git
-cd build/linux
-cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$build_directory" -DENABLE_SHARED=OFF ../../source
-make
-make install
-make clean
-
-####
-# create by hand the fucking pc file
-# /opt/ffmpeg_2024-04-06_build/lib/pkgconfig/x265.pc
-#
-# prefix=/opt/ffmpeg_2024-04-06_build
-# exec_prefix=${prefix}
-# libdir=${exec_prefix}/lib
-# includedir=${prefix}/include
-#
-# Name: x265
-# Description: H.265/HEVC video encoder
-# Version: 3.5
-# Libs: -L${libdir} -lx265
-# Libs.private: -lstdc++ -lm -lrt -ldl
-# Cflags: -I${includedir}
-###
-
-
-cd $source_directory
-curl -O -L https://archive.mozilla.org/pub/opus/opus-1.3.1.tar.gz
-tar xzvf opus-1.3.1.tar.gz
-cd opus-1.3.1
-./configure --prefix="$build_directory" --disable-shared
-make
-make install
-make distclean
-
-cd $source_directory
-curl -O -L https://ftp.osuosl.org/pub/xiph/releases/ogg/libogg-1.3.5.tar.gz
-tar xzvf libogg-1.3.5.tar.gz
-cd libogg-1.3.5
-./configure --prefix="$build_directory" --disable-shared
-make
-make install
-make distclean
-
-cd $source_directory
-curl -O -L https://ftp.osuosl.org/pub/xiph/releases/vorbis/libvorbis-1.3.7.tar.gz
-tar xzvf libvorbis-1.3.7.tar.gz
-cd libvorbis-1.3.7
-LDFLAGS="-L$build_directory/lib" CPPFLAGS="-I$build_directory/include" ./configure --prefix="$build_directory" --with-ogg="$build_directory" --disable-shared
-make
-make install
-make distclean
-
-cd $source_directory
-curl -O -L https://ftp.osuosl.org/pub/xiph/releases/theora/libtheora-1.1.1.tar.gz
-tar xzvf libtheora-1.1.1.tar.gz
-cd libtheora-1.1.1
-./configure --prefix="$build_directory" --with-ogg="$build_directory" --disable-examples --disable-shared --disable-sdltest --disable-vorbistest
-make
-make install
-make distclean
-
-cd $source_directory
-curl -O -L https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz
-tar xzvf lame-3.100.tar.gz
-cd lame-3.100
-./configure --prefix="$build_directory" --bindir="$build_directory/bin" --disable-shared --enable-nasm
-make
-make install
-make distclean
-
-cd $source_directory
-git clone https://chromium.googlesource.com/webm/libvpx.git 
-cd libvpx
-git checkout tags/v1.14.0
-./configure --prefix="$build_directory" --disable-examples --disable-unit-tests --enable-vp9-highbitdepth --as=yasm
-make
-make install
-make clean
-
-cd $source_directory
-curl -O -L https://downloads.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.6.tar.gz
-tar -xzvf opencore-amr-0.1.6.tar.gz
-cd opencore-amr-0.1.6
-autoreconf -fiv
-./configure --prefix="$build_directory" --disable-shared
-make
-make install
-ldconfig
-make clean
-make distclean
-
-cd $source_directory
-git clone --depth 1 --branch release/7.0 https://github.com/FFmpeg/FFmpeg.git
-cd FFmpeg
-PKG_CONFIG_PATH="$build_directory/lib/pkgconfig" ./configure \
-    --prefix="$build_directory" \
-    --extra-cflags="-I$build_directory/include" \
-    --extra-ldflags="-L$build_directory/lib" \
-    --extra-libs=-lpthread \
-    --extra-libs=-lm \
-    --bindir="$build_directory/bin" \
-    --pkg-config-flags="--static" \
-    --enable-gpl \
-    --enable-nonfree \
-    --enable-libfreetype \
-    --enable-libmp3lame \
-    --enable-libopus \
-    --enable-libvorbis \
-    --enable-libvpx \
-    --enable-libx264 \
-    --enable-libx265 \
-    --enable-libopencore-amrwb \
-    --enable-libopencore-amrnb \
-    --enable-libtheora \
-    --enable-version3
-make
-make install
-make distclean
-hash -r
-```
-
-
-### Установка сайта
-```bash
+# composer
 cd /var/www
 curl -L -o composer.phar https://getcomposer.org/download/latest-stable/composer.phar
 chmod 755 composer.phar
+
+# geoip database
+cd /var/www
 curl -L -o GeoLite2-Country.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-Country.mmdb
 
-git clone https://github.com/Gemorroj/wapinet.git
-cd wapinet
-cp .env.dist .env
-../composer.phar install --no-dev --optimize-autoloader --apcu-autoloader
-rm -rf ./var/cache/*
-rm -rf ./var/log/*
-rm -rf ./var/tmp/*
-service php-fpm restart
+# 7zip
+cd /opt
+mkdir 7z2409-linux-x64
+cd /opt/7z2409-linux-x64
+curl -O -L https://7-zip.org/a/7z2409-linux-x64.tar.xz
+tar xJvf 7z2409-linux-x64.tar.xz
+rm -f 7z2409-linux-x64.tar.xz
+/opt/7z2409-linux-x64/7zz i
+
+# ffmpeg - https://ubuntuhandbook.org/index.php/2024/04/ffmpeg-7-0-ppa-ubuntu/
+add-apt-repository ppa:ubuntuhandbook1/ffmpeg7
+apt install ffmpeg
 ```
 
-
-### Установка прав доступа на запись:
-`var/log`  
-`var/tmp`  
-`var/cache`  
-`public/media/cache/resolve/thumbnail/static`  
-`public/media/cache/thumbnail/static`  
-`public/static/file`
-
-
-### Установка cron заданий:
-##### Каждый день в 2 часа ночи от пользователя manticore
-`indexer --rotate --all`
-
-
-### СУБД
 ```bash
-mysql -u root -p
-CREATE USER 'wapinet'@'localhost' IDENTIFIED BY 'password';
-GRANT ALL ON wapinet.* TO 'wapinet'@'localhost';
-GRANT SELECT ON forum.* TO 'wapinet'@'localhost';
-quit
-mysql -u wapinet -p wapinet < wapinet.sql
+# edit /etc/php/8.4/fpm/php.ini & /etc/php/8.4/cli/php.ini
+# cgi.fix_pathinfo=0
+# memory_limit = 256M
+# date.timezone = "UTC"
+# post_max_size = 50M
+# upload_max_filesize = 50M
+# opcache.enable=1
+# opcache.enable_cli=1
+# opcache.memory_consumption=256
+# opcache.interned_strings_buffer=18
+# opcache.max_accelerated_files=100000
+# opcache.validate_timestamps=0
+# [apcu]
+# apc.shm_size=64M
+# apc.enabled = on
+# apc.enable_cli = on
+
+# edit /etc/php/8.4/fpm/pool.d/www.conf
+# listen.allowed_clients = 127.0.0.1
+# edit pm.* settings for performance
+
+# edit /etc/nginx/nginx.conf
+# server_tokens off;
+# gzip  on;
+# gzip_comp_level 2;
+# gzip_min_length 40;
+# gzip_types text/css text/plain application/json text/javascript application/javascript text/xml application/xml application/xml+rss application/x-font-ttf application/x-font-opentype application/vnd.ms-fontobject image/svg+xml image/x-icon font/ttf font/opentype;
 ```
 
-
-### SSL сертификаты
-##### Установка
 ```bash
-dnf install socat
-curl https://get.acme.sh | sh -s email=wapinet@mail.ru
-systemctl stop nginx
-acme.sh --issue --standalone -d wapinet.ru
-systemctl start nginx
-
-# remove all jobs
-crontab -r
-```
-##### Обновление
-```bash
-acme.sh --upgrade
-service nginx stop
-acme.sh --renew-all --force
-service nginx start
-```
-
-
-### Конфиг nginx:
-```nginx
 server {
+    listen 80;
+
+    server_name wapinet.ru www.wapinet.ru;
+	return 301 https://$server_name$request_uri;
+}
+
+server {
+    if ($request_uri ~ "/forum/(.*)") {
+        return 301 https://forum.$server_name/$1;
+    }
+
     location ~ /\.well-known\/acme-challenge {
         allow all;
     }
@@ -339,12 +273,12 @@ server {
     }
 
     ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_certificate /path_to_fullchain.pem;
-    ssl_certificate_key /path_to_key.pem;
-    ssl_trusted_certificate /path_to_chain.pem;
+    ssl_certificate /root/.acme.sh/wapinet.ru/fullchain.cer;
+    ssl_certificate_key /root/.acme.sh/wapinet.ru/wapinet.ru.key;
 
     charset utf-8;
     listen 443 ssl http2;
+    client_max_body_size 50m;
 
     server_name wapinet.ru www.wapinet.ru;
     root /var/www/wapinet/public;
@@ -352,9 +286,9 @@ server {
     error_log /var/log/nginx/wapinet.error.log;
     access_log /var/log/nginx/wapinet.access.log;
 
-    # todo: Content-Security-Policy
-    add_header Strict-Transport-Security "max-age=31536000";
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
     add_header X-Frame-Options "DENY";
+    add_header X-Content-Type-Options nosniff;
 
     # Кэширование
     location = /favicon.ico {
@@ -397,14 +331,14 @@ server {
     }
 
     location ~ ^/index\.php(/|$) {
-        fastcgi_pass unix:/run/php-fpm.sock;
+        fastcgi_pass unix:/run/php/php8.4-fpm.sock;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
        # When you are using symlinks to link the document root to the
        # current version of your application, you should pass the real
        # application path instead of the path to the symlink to PHP
        # FPM.
-       # Otherwise, PHP's OPcache may not properly detect changes to
+       # Otherwise, PHP OPcache may not properly detect changes to
        # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
        # for more information).
        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
@@ -418,8 +352,66 @@ server {
     #location ~ \.php$ {
     #    return 404;
     #}
-}
+}' > /etc/nginx/sites-available/wapinet.ru.conf
+ln -s /etc/nginx/sites-available/wapinet.ru.conf /etc/nginx/sites-enabled/wapinet.ru.conf
 ```
+
+### СУБД
+```bash
+mysql -u root -p
+CREATE USER 'wapinet'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL ON wapinet.* TO 'wapinet'@'localhost';
+GRANT SELECT ON forum.* TO 'wapinet'@'localhost';
+quit
+mysql -u wapinet -p wapinet < wapinet.sql
+```
+
+### Установка сайта
+```bash
+cd /var/www
+git clone https://github.com/Gemorroj/wapinet.git
+cd wapinet
+cp .env.dist .env
+# edit .env
+../composer.phar install --no-dev --optimize-autoloader --apcu-autoloader
+rm -rf ./var/cache/*
+rm -rf ./var/log/*
+rm -rf ./var/tmp/*
+service php-fpm restart
+
+cp bin/messenger/messenger.service.dist bin/messenger/messenger.service
+cp bin/messenger/scheduler.service.dist bin/messenger/scheduler.service
+# edit bin/messenger/messenger.service
+# edit bin/messenger/scheduler.service
+ln -s /var/www/wapinet/bin/messenger/messenger.service /etc/systemd/system/messenger.service
+ln -s /var/www/wapinet/bin/messenger/scheduler.service /etc/systemd/system/scheduler.service
+systemctl daemon-reload
+systemctl enable messenger
+systemctl enable scheduler
+
+chmod 777 ./var/log
+chmod 777 ./var/tmp
+chmod 777 ./var/cache
+chmod 777 ./public/media/cache/resolve/thumbnail/static
+chmod 777 ./public/media/cache/thumbnail/static
+chmod 777 ./public/static/file
+```
+
+### SSL сертификаты
+##### Установка
+```bash
+apt install socat
+curl https://get.acme.sh | sh -s email=wapinet@mail.ru
+acme.sh --issue -d wapinet.ru
+systemctl restart nginx
+```
+##### Обновление
+```bash
+acme.sh --upgrade
+acme.sh --renew-all --force
+service nginx restart
+```
+
 
 ### TODO:
 - ! проверка файлов на virustotal (возможно автоматическая) в файлообменнике (https://docs.virustotal.com/reference/files-scan + https://docs.virustotal.com/reference/analysis)

@@ -1,4 +1,4 @@
-FROM php:8.3-fpm
+FROM php:8.4-fpm
 
 # Update repo and install some utilites
 RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
@@ -38,11 +38,11 @@ RUN set -xe \
 # 7zip
 RUN set -xe \
     && cd /opt \
-    && mkdir 7z2408-linux-x64 \
-    && cd /opt/7z2408-linux-x64 \
-    && curl -O -L https://7-zip.org/a/7z2408-linux-x64.tar.xz \
-    && tar xJvf 7z2408-linux-x64.tar.xz \
-    && rm -f 7z2408-linux-x64.tar.xz
+    && mkdir 7z2409-linux-x64 \
+    && cd /opt/7z2409-linux-x64 \
+    && curl -O -L https://7-zip.org/a/7z2409-linux-x64.tar.xz \
+    && tar xJvf 7z2409-linux-x64.tar.xz \
+    && rm -f 7z2409-linux-x64.tar.xz
 
 # Cleanup
 RUN set -eux; \
