@@ -86,7 +86,7 @@ searchd
     query_log = /var/log/manticore/query.log
     query_log_format = sphinxql
     pid_file = /run/manticore/searchd.pid
-    data_dir = /var/lib/manticore
+    # data_dir = /var/lib/manticore
     binlog_path = # disable logging
 }
 
