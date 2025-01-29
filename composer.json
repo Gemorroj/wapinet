@@ -56,8 +56,8 @@
         "symfony/webpack-encore-bundle": "^2.2",
         "symfony/scheduler": "7.2.*",
 
-        "twig/extra-bundle": "^3.18",
-        "twig/twig": "^3.18",
+        "twig/extra-bundle": "^3.19",
+        "twig/twig": "^3.19",
 
         "babdev/pagerfanta-bundle": "^4.5",
         "pagerfanta/doctrine-collections-adapter": "^4.7.1",
