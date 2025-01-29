@@ -189,16 +189,15 @@ class AudioTagsController extends AbstractController
         try {
             $formValues = $request->request->all($form->getName());
             $this->container->get(LoggerInterface::class)->error('OK', [
-                'formValues' => $formValues,
+                'file_url_delete' => isset($formValues['picture']['file_url_delete']),
             ]);
-            // $formValues['picture']['file_url_delete'];
         } catch (\Exception $e) {
-            $this->container->get(LoggerInterface::class)->error($e->getMessage(), ['formValues' => $formValues]);
+            $this->container->get(LoggerInterface::class)->error($e->getMessage(), ['file_url_delete' => isset($formValues['picture']['file_url_delete'])]);
             throw $e;
         }
         throw new \Exception('test');
 
-        if (isset($info['comments']['picture'][0]) && (!isset($requestForm['picture']['file_url_delete']) || !$requestForm['picture']['file_url_delete'])) {
+        if (isset($info['comments']['picture'][0]) && (!isset($formValues['picture']['file_url_delete']) || !$formValues['picture']['file_url_delete'])) {
             $writer->tag_data['attached_picture'][0]['data'] = $info['comments']['picture'][0]['data'];
             $writer->tag_data['attached_picture'][0]['picturetypeid'] = 0;
             $writer->tag_data['attached_picture'][0]['description'] = 'image';
