@@ -8,7 +8,6 @@ use App\Form\Type\AudioTags\AudioTagsEditType;
 use App\Form\Type\AudioTags\AudioTagsType;
 use App\Service\Getid3;
 use App\Service\Translit;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Form\FormError;
@@ -185,18 +184,7 @@ class AudioTagsController extends AbstractController
             // 'picture' => null,
         ];
 
-        $formValues = null;
-        try {
-            $formValues = $request->request->all($form->getName());
-            $this->container->get(LoggerInterface::class)->error('OK', [
-                'file_url_delete' => isset($formValues['picture']['file_url_delete']),
-            ]);
-        } catch (\Exception $e) {
-            $this->container->get(LoggerInterface::class)->error($e->getMessage(), ['file_url_delete' => isset($formValues['picture']['file_url_delete'])]);
-            throw $e;
-        }
-        throw new \Exception('test');
-
+        $formValues = $request->request->all($form->getName());
         if (isset($info['comments']['picture'][0]) && (!isset($formValues['picture']['file_url_delete']) || !$formValues['picture']['file_url_delete'])) {
             $writer->tag_data['attached_picture'][0]['data'] = $info['comments']['picture'][0]['data'];
             $writer->tag_data['attached_picture'][0]['picturetypeid'] = 0;
@@ -292,7 +280,6 @@ class AudioTagsController extends AbstractController
         $services = parent::getSubscribedServices();
         $services[Translit::class] = '?'.Translit::class;
         $services[Getid3::class] = '?'.Getid3::class;
-        $services[LoggerInterface::class] = '?'.LoggerInterface::class;
 
         return $services;
     }
