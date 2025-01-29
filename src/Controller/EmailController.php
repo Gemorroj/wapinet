@@ -73,11 +73,6 @@ class EmailController extends AbstractController
                 throw new \RuntimeException('Unable to open file.');
             }
             $email->attach($handle, $data['file']->getClientOriginalName(), $data['file']->getClientMimeType());
-            /*$email->attachFromPath(
-                $data['file']->getPathname(),
-                $data['file']->getClientOriginalName(),
-                $data['file']->getClientMimeType()
-            );*/
         }
 
         return $email;

@@ -8,6 +8,7 @@ use App\Form\Type\AudioTags\AudioTagsEditType;
 use App\Form\Type\AudioTags\AudioTagsType;
 use App\Service\Getid3;
 use App\Service\Translit;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Form\FormError;
@@ -98,6 +99,7 @@ class AudioTagsController extends AbstractController
                 $form->addError(new FormError($message));
             }
         } catch (\Exception $e) {
+            $this->container->get(LoggerInterface::class)->error($e->getMessage(), ['exception' => $e]);
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -281,6 +283,7 @@ class AudioTagsController extends AbstractController
         $services = parent::getSubscribedServices();
         $services[Translit::class] = '?'.Translit::class;
         $services[Getid3::class] = '?'.Getid3::class;
+        $services[LoggerInterface::class] = '?'.LoggerInterface::class;
 
         return $services;
     }
