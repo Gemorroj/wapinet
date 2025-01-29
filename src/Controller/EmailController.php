@@ -69,11 +69,15 @@ class EmailController extends AbstractController
             ->text($data['message'].$this->getEmailFooter());
 
         if ($data['file'] instanceof UploadedFile) {
-            $email->attachFromPath(
+            if (false === $handle = @\fopen($data['file']->getPathname(), 'r', false)) {
+                throw new \RuntimeException('Unable to open file.');
+            }
+            $email->attach($handle, $data['file']->getClientOriginalName(), $data['file']->getClientMimeType());
+            /*$email->attachFromPath(
                 $data['file']->getPathname(),
                 $data['file']->getClientOriginalName(),
                 $data['file']->getClientMimeType()
-            );
+            );*/
         }
 
         return $email;
