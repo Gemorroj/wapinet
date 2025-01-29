@@ -99,7 +99,7 @@ class AudioTagsController extends AbstractController
                 $form->addError(new FormError($message));
             }
         } catch (\Exception $e) {
-            $this->container->get(LoggerInterface::class)->error($e->getMessage(), ['exception' => $e]);
+            $this->container->get(LoggerInterface::class)->error($e->getMessage(), ['exception' => $e, 'trace' => $e->getTraceAsString()]);
             $form->addError(new FormError($e->getMessage()));
         }
 
