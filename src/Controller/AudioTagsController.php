@@ -99,7 +99,6 @@ class AudioTagsController extends AbstractController
                 $form->addError(new FormError($message));
             }
         } catch (\Exception $e) {
-            $this->container->get(LoggerInterface::class)->error($e->getMessage(), ['exception' => $e, 'trace' => $e->getTraceAsString()]);
             $form->addError(new FormError($e->getMessage()));
         }
 
@@ -186,7 +185,11 @@ class AudioTagsController extends AbstractController
             // 'picture' => null,
         ];
 
-        $requestForm = $request->request->get($form->getName());
+        try {
+            $requestForm = $request->request->get($form->getName());
+        } catch (\Exception $e) {
+            $this->container->get(LoggerInterface::class)->error($e->getMessage(), ['form' => $form, 'formName' => $form->getName()]);
+        }
 
         if (isset($info['comments']['picture'][0]) && (!isset($requestForm['picture']['file_url_delete']) || !$requestForm['picture']['file_url_delete'])) {
             $writer->tag_data['attached_picture'][0]['data'] = $info['comments']['picture'][0]['data'];
