@@ -188,7 +188,8 @@ class AudioTagsController extends AbstractController
         try {
             $requestForm = $request->request->get($form->getName());
         } catch (\Exception $e) {
-            $this->container->get(LoggerInterface::class)->error($e->getMessage(), ['form' => $form, 'formName' => $form->getName()]);
+            $this->container->get(LoggerInterface::class)->error($e->getMessage(), ['data' => $data, 'picture' => $data['picture']]);
+            throw $e;
         }
 
         if (isset($info['comments']['picture'][0]) && (!isset($requestForm['picture']['file_url_delete']) || !$requestForm['picture']['file_url_delete'])) {
