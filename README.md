@@ -65,6 +65,7 @@ innodb_fast_shutdown = 0
 ' > /etc/mysql/mysql.conf.d/z_wapinet.cnf
 
 # manticore
+apt install default-libmysqlclient-dev
 curl -O -L https://repo.manticoresearch.com/manticore-repo.noarch.deb
 dpkg -i manticore-repo.noarch.deb
 rm manticore-repo.noarch.deb
