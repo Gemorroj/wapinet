@@ -14,8 +14,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 
+#[AdminDashboard(routePath: '/admin')]
 class DashboardController extends AbstractDashboardController
 {
     public function configureDashboard(): Dashboard
@@ -46,7 +47,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Гостевая', 'fas fa-folder-open', Guestbook::class);
     }
 
-    #[Route('/admin')]
     public function index(): Response
     {
         $info = $this->container->get(\App\Service\Ginfo::class)->getInfo();

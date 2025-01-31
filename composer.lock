@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3d427f493710c4987b3d79517021e33c",
+    "content-hash": "5d909a9a809264625aafca7d1833fca9",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -1413,16 +1413,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v4.23.3",
+            "version": "v4.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "3c043c25f75a72cb2c7c292e5051218b1e0d1ee0"
+                "reference": "f641b359bfe23406469453f274dde167ecafd3a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/3c043c25f75a72cb2c7c292e5051218b1e0d1ee0",
-                "reference": "3c043c25f75a72cb2c7c292e5051218b1e0d1ee0",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/f641b359bfe23406469453f274dde167ecafd3a4",
+                "reference": "f641b359bfe23406469453f274dde167ecafd3a4",
                 "shasum": ""
             },
             "require": {
@@ -1506,7 +1506,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-01-23T07:32:51+00:00"
+            "time": "2025-01-31T19:11:07+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -9395,16 +9395,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.68.3",
+            "version": "v3.68.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "85fd31cced824749a732e697acdd1a3d657312f0"
+                "reference": "7bedb718b633355272428c60736dc97fb96daf27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/85fd31cced824749a732e697acdd1a3d657312f0",
-                "reference": "85fd31cced824749a732e697acdd1a3d657312f0",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/7bedb718b633355272428c60736dc97fb96daf27",
+                "reference": "7bedb718b633355272428c60736dc97fb96daf27",
                 "shasum": ""
             },
             "require": {
@@ -9490,7 +9490,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-01-27T16:37:32+00:00"
+            "time": "2025-01-30T17:00:50+00:00"
         },
         {
             "name": "masterminds/html5",
