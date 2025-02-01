@@ -5,9 +5,6 @@
     "babdev/pagerfanta-bundle": {
         "version": "v2.4.3"
     },
-    "christeredvartsen/php-bittorrent": {
-        "version": "1.1.0"
-    },
     "composer/ca-bundle": {
         "version": "1.1.1"
     },
