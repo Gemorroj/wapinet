@@ -12,7 +12,7 @@ class BotChecker
      */
     public function checkRequest(Request $request): void
     {
-        if ('' !== $request->get('bot-checker')) {
+        if ('' !== $request->get('b-check')) {
             throw new AccessDeniedException('Кажется, вы - спам-бот.');
         }
     }
