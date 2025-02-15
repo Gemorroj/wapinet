@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
+final readonly class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
 {
     public function __construct(private UserRepository $userRepository)
     {

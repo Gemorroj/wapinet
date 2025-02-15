@@ -4,7 +4,7 @@ namespace App\Service;
 
 use ApkParser\Parser;
 
-class Apk
+final class Apk
 {
     private Parser $apk;
 

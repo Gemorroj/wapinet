@@ -2,18 +2,16 @@
 
 namespace App\Service;
 
-use App\Pagerfanta\FixedPaginate;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\ArrayAdapter;
-use Pagerfanta\Adapter\FixedAdapter;
 use Pagerfanta\Doctrine\Collections\CollectionAdapter;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-readonly class Paginate
+final readonly class Paginate
 {
     public function __construct(private ParameterBagInterface $parameterBag)
     {
@@ -22,7 +20,7 @@ readonly class Paginate
     /**
      * @throws \RuntimeException
      */
-    public function paginate(Query|QueryBuilder|Collection|array|FixedPaginate $data, int $page = 1, ?int $maxPerPage = null): Pagerfanta
+    public function paginate(Query|QueryBuilder|Collection|array $data, int $page = 1, ?int $maxPerPage = null): Pagerfanta
     {
         if ($data instanceof Collection) {
             $adapter = new CollectionAdapter($data);
@@ -30,8 +28,6 @@ readonly class Paginate
             $adapter = new QueryAdapter($data, false);
         } elseif (\is_array($data)) {
             $adapter = new ArrayAdapter($data);
-        } elseif ($data instanceof FixedPaginate) {
-            $adapter = new FixedAdapter($data->getNbResults(), $data->getResults());
         } else {
             throw new \RuntimeException('Неизвестный тип данных для постраничной навигации');
         }

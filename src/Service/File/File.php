@@ -11,7 +11,7 @@ use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
-class File
+final readonly class File
 {
     public function __construct(
         private UploaderHelper $uploaderHelper,

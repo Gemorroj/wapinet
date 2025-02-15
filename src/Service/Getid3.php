@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-class Getid3
+final readonly class Getid3
 {
     public function getId3(): \getID3
     {

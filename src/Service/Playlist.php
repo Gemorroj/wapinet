@@ -9,7 +9,7 @@ use M3uParser\M3uParser;
 use M3uParser\Tag\ExtInf;
 use Symfony\Component\HttpFoundation\File\File;
 
-class Playlist
+final readonly class Playlist
 {
     private M3uParser $m3uParser;
 

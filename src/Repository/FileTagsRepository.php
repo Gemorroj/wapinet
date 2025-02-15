@@ -16,7 +16,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method FileTags[]    findAll()
  * @method FileTags[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class FileTagsRepository extends ServiceEntityRepository
+final class FileTagsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

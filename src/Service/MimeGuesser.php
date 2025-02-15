@@ -6,7 +6,7 @@ namespace App\Service;
 
 use Symfony\Component\Mime\MimeTypes;
 
-class MimeGuesser
+final readonly class MimeGuesser
 {
     private MimeTypes $mimeTypes;
 

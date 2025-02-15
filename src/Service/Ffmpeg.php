@@ -6,40 +6,34 @@ use FFMpeg\FFMpeg as FFmpegOriginal;
 use FFMpeg\FFProbe;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class Ffmpeg
+final class Ffmpeg
 {
     private ?FFmpegOriginal $ffmpeg = null;
     private ?FFProbe $ffprobe = null;
 
-    public function __construct(private ParameterBagInterface $parameterBag)
+    public function __construct(private readonly ParameterBagInterface $parameterBag)
     {
-    }
-
-    private function createFfprobe(): FFProbe
-    {
-        return FFProbe::create([
-            'ffmpeg.binaries' => $this->parameterBag->get('wapinet_ffmpeg_path'),
-            'ffprobe.binaries' => $this->parameterBag->get('wapinet_ffprobe_path'),
-            'ffmpeg.threads' => $this->parameterBag->get('wapinet_threads_count'),
-        ]);
-    }
-
-    private function createFfmpeg(): FFmpegOriginal
-    {
-        return FFmpegOriginal::create([
-            'ffmpeg.binaries' => $this->parameterBag->get('wapinet_ffmpeg_path'),
-            'ffprobe.binaries' => $this->parameterBag->get('wapinet_ffprobe_path'),
-            'ffmpeg.threads' => $this->parameterBag->get('wapinet_threads_count'),
-        ]);
     }
 
     public function getFfmpeg(): FFmpegOriginal
     {
-        return $this->ffmpeg ?? $this->createFfmpeg();
+        $this->ffmpeg = $this->ffmpeg ?: FFmpegOriginal::create([
+            'ffmpeg.binaries' => $this->parameterBag->get('wapinet_ffmpeg_path'),
+            'ffprobe.binaries' => $this->parameterBag->get('wapinet_ffprobe_path'),
+            'ffmpeg.threads' => $this->parameterBag->get('wapinet_threads_count'),
+        ]);
+
+        return $this->ffmpeg;
     }
 
     public function getFfprobe(): FFProbe
     {
-        return $this->ffprobe ?? $this->createFfprobe();
+        $this->ffprobe = $this->ffprobe ?: FFProbe::create([
+            'ffmpeg.binaries' => $this->parameterBag->get('wapinet_ffmpeg_path'),
+            'ffprobe.binaries' => $this->parameterBag->get('wapinet_ffprobe_path'),
+            'ffmpeg.threads' => $this->parameterBag->get('wapinet_threads_count'),
+        ]);
+
+        return $this->ffprobe;
     }
 }

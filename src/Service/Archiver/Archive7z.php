@@ -6,7 +6,7 @@ use App\Exception\ArchiverException;
 use Archive7z\Archive7z as Base7zArchive;
 use Symfony\Component\HttpFoundation\File\File;
 
-class Archive7z extends Archive
+final class Archive7z extends Archive
 {
     public function create(string $directory): File
     {

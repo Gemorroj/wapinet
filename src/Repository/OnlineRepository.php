@@ -16,7 +16,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Online[]    findAll()
  * @method Online[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class OnlineRepository extends ServiceEntityRepository
+final class OnlineRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

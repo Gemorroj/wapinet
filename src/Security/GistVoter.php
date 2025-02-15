@@ -10,12 +10,12 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-class GistVoter extends Voter
+final class GistVoter extends Voter
 {
-    public const DELETE = 'DELETE';
-    public const EDIT = 'EDIT';
+    public const string DELETE = 'DELETE';
+    public const string EDIT = 'EDIT';
 
-    public function __construct(private AccessDecisionManagerInterface $decisionManager)
+    public function __construct(private readonly AccessDecisionManagerInterface $decisionManager)
     {
     }
 

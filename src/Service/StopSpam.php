@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class StopSpam
+final readonly class StopSpam
 {
     private StopSpamRequest $httpClient;
 

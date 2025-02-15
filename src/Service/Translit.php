@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-class Translit
+final readonly class Translit
 {
     public function toAscii(string $str): string
     {

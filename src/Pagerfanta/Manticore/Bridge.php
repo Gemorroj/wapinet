@@ -13,14 +13,14 @@ use Pagerfanta\Pagerfanta;
  * @author Nikola Petkanski <nikola@petkanski.com>
  * @author Gemorroj <wapinet@mail.ru>
  */
-class Bridge
+final class Bridge
 {
     /**
      * The results obtained from Manticore.
      */
     private ?array $results = null;
 
-    public function __construct(private EntityManagerInterface $entityManager, private string $entityClass)
+    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly string $entityClass)
     {
     }
 
@@ -63,8 +63,7 @@ class Bridge
             throw new \RuntimeException('You should define manticore results on '.self::class);
         }
 
-        $adapter = new Adapter($this->getResults());
-        $adapter->setNbResults($this->results['meta']['total_found'] ?? 0);
+        $adapter = new Adapter($this->results['meta']['total_found'] ?? 0, $this->getResults());
 
         return new Pagerfanta($adapter);
     }

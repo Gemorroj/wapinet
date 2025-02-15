@@ -5,7 +5,7 @@ namespace App\Service;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class BotChecker
+final readonly class BotChecker
 {
     /**
      * @throws AccessDeniedException

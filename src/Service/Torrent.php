@@ -8,7 +8,7 @@ use BitTorrent\Decoder;
 use BitTorrent\Encoder;
 use Symfony\Component\HttpFoundation\File\File;
 
-class Torrent
+final readonly class Torrent
 {
     private Decoder $decoder;
 

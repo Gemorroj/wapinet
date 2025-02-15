@@ -5,7 +5,7 @@ namespace App\Service;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class Rates
+final readonly class Rates
 {
     public function __construct(private HttpClientInterface $httpClient)
     {

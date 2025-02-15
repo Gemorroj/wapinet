@@ -5,7 +5,7 @@ namespace App\Service\Archiver;
 use App\Exception\ArchiverException;
 use Symfony\Component\HttpFoundation\File\File;
 
-class ArchiveZip extends Archive
+final class ArchiveZip extends Archive
 {
     public function create(string $directory): File
     {

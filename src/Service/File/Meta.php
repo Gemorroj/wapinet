@@ -10,7 +10,7 @@ use App\Service\Midi as MidiHelper;
 use App\Service\Torrent as TorrentHelper;
 use Imagine\Image\AbstractImagine;
 
-class Meta
+final readonly class Meta
 {
     public function __construct(
         private FfmpegHelper $ffmpegHelper,

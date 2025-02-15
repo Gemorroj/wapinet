@@ -4,7 +4,7 @@ namespace App\Service;
 
 use Ginfo\Info;
 
-class Ginfo
+final readonly class Ginfo
 {
     private Info $info;
 

@@ -7,7 +7,7 @@ namespace App\DependencyInjection\Compiler;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class FileUrlCompilerPass implements CompilerPassInterface
+final readonly class FileUrlCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {

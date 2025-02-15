@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-class Hash
+final readonly class Hash
 {
     public function getAlgorithms(): array
     {

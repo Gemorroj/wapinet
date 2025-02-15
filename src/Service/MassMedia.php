@@ -2,20 +2,18 @@
 
 namespace App\Service;
 
-use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class MassMedia
+final readonly class MassMedia
 {
     public function __construct(private HttpClientInterface $httpClient)
     {
-        $this->httpClient = HttpClient::createForBaseUri('https://russian.rt.com');
     }
 
     public function getRt(): array
     {
-        $response = $this->httpClient->request('GET', '/rss');
+        $response = $this->httpClient->request('GET', 'https://russian.rt.com/rss');
 
         try {
             $data = $response->getContent();
@@ -58,7 +56,7 @@ class MassMedia
 
     public function getInotv(): array
     {
-        $response = $this->httpClient->request('GET', '/inotv/s/rss/inotv_main.rss');
+        $response = $this->httpClient->request('GET', 'https://russian.rt.com/inotv/s/rss/inotv_main.rss');
 
         try {
             $data = $response->getContent();

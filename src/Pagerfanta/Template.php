@@ -6,7 +6,7 @@ namespace App\Pagerfanta;
 
 use Pagerfanta\View\Template\DefaultTemplate;
 
-class Template extends DefaultTemplate
+final class Template extends DefaultTemplate
 {
     protected function getDefaultOptions(): array
     {

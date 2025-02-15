@@ -4,7 +4,7 @@ namespace App\Service;
 
 use PhpTabs\PhpTabs;
 
-class Midi
+final readonly class Midi
 {
     public function getDuration(string $filename): float
     {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-class Phpwhois
+final readonly class Phpwhois
 {
     public function getWhois(): \Whois
     {

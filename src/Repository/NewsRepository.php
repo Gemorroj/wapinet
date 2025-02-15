@@ -17,7 +17,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method News[]    findAll()
  * @method News[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class NewsRepository extends ServiceEntityRepository
+final class NewsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

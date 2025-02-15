@@ -16,7 +16,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method UserPanel[]    findAll()
  * @method UserPanel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserPanelRepository extends ServiceEntityRepository
+final class UserPanelRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

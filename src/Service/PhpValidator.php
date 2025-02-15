@@ -6,7 +6,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
 use Syntax\Php;
 
-class PhpValidator
+final readonly class PhpValidator
 {
     public function __construct(private ParameterBagInterface $parameterBag)
     {

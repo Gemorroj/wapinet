@@ -12,26 +12,15 @@ use Pagerfanta\Adapter\AdapterInterface;
  * @author Stephane PY <py.stephane1@gmail.com>
  * @author Gemorroj <wapinet@mail.ru>
  */
-class Adapter implements AdapterInterface
+final readonly class Adapter implements AdapterInterface
 {
-    private array $array = [];
-    private int $nbResults = 0;
+    private array $results;
+    private int $nbResults;
 
-    public function __construct(array $array)
+    public function __construct(int $nbResults, array $results)
     {
-        $this->array = $array;
-    }
-
-    public function getArray(): array
-    {
-        return $this->array;
-    }
-
-    public function setArray(array $array): self
-    {
-        $this->array = $array;
-
-        return $this;
+        $this->nbResults = $nbResults;
+        $this->results = $results;
     }
 
     public function getNbResults(): int
@@ -39,19 +28,12 @@ class Adapter implements AdapterInterface
         return $this->nbResults;
     }
 
-    public function setNbResults(int $v): self
-    {
-        $this->nbResults = $v;
-
-        return $this;
-    }
-
     public function getSlice(int $offset, int $length): iterable
     {
-        if ($offset >= \count($this->array)) {
-            return $this->array;
+        if ($offset >= \count($this->results)) {
+            return $this->results;
         }
 
-        return \array_slice($this->array, $offset, $length);
+        return \array_slice($this->results, $offset, $length);
     }
 }

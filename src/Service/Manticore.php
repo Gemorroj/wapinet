@@ -9,9 +9,9 @@ use Foolz\SphinxQL\SphinxQL;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class Manticore
+final class Manticore
 {
-    private Connection $connection;
+    private readonly Connection $connection;
     private int $maxPerPage = 10;
     private int $page = 1;
 

@@ -7,7 +7,7 @@ namespace App\Service;
 use App\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security;
 
-class Timezone
+final readonly class Timezone
 {
     public function __construct(private Security $security)
     {

@@ -17,7 +17,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Guestbook[]    findAll()
  * @method Guestbook[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class GuestbookRepository extends ServiceEntityRepository
+final class GuestbookRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

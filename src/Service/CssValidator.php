@@ -8,7 +8,7 @@ use CSSValidator\Options as W3CServiceOptions;
 use CSSValidator\Response as W3CServiceResponse;
 use Symfony\Component\HttpFoundation\File\File;
 
-class CssValidator
+final readonly class CssValidator
 {
     private W3CService $cssValidator;
 

@@ -6,10 +6,10 @@ use GeoIp2\Database\Reader;
 use GeoIp2\Model\Country;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class Geoip2
+final class Geoip2
 {
     private ?Reader $reader = null;
-    private string $dbPath;
+    private readonly string $dbPath;
 
     public function __construct(ParameterBagInterface $parameterBag)
     {

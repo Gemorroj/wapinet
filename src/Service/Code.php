@@ -4,7 +4,7 @@ namespace App\Service;
 
 use App\Exception\CodeException;
 
-class Code
+final readonly class Code
 {
     /**
      * @return array<string, string>
