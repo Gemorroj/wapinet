@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7d6365cd22fe600862db55547200b867",
+    "content-hash": "2900000963870f52ccf70a3aa3a6b3ac",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -1983,16 +1983,16 @@
         },
         {
             "name": "gemorroj/m3u-parser",
-            "version": "5.5.1",
+            "version": "6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/M3uParser.git",
-                "reference": "e358a2c5b0da7ab32ce6f2ba7c24e247751b1843"
+                "reference": "cf2bdaab12d32299dd417a847d550d3ae4aad4ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/M3uParser/zipball/e358a2c5b0da7ab32ce6f2ba7c24e247751b1843",
-                "reference": "e358a2c5b0da7ab32ce6f2ba7c24e247751b1843",
+                "url": "https://api.github.com/repos/Gemorroj/M3uParser/zipball/cf2bdaab12d32299dd417a847d550d3ae4aad4ed",
+                "reference": "cf2bdaab12d32299dd417a847d550d3ae4aad4ed",
                 "shasum": ""
             },
             "require": {
@@ -2026,9 +2026,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Gemorroj/M3uParser/issues",
-                "source": "https://github.com/Gemorroj/M3uParser/tree/5.5.1"
+                "source": "https://github.com/Gemorroj/M3uParser/tree/6.0.0"
             },
-            "time": "2025-02-01T14:41:49+00:00"
+            "time": "2025-02-15T16:02:10+00:00"
         },
         {
             "name": "gemorroj/php-bittorrent",
