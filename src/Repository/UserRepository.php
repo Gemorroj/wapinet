@@ -9,6 +9,9 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -18,7 +21,7 @@ use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-final class UserRepository extends ServiceEntityRepository implements UserLoaderInterface
+final class UserRepository extends ServiceEntityRepository implements UserLoaderInterface, PasswordUpgraderInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -35,13 +38,14 @@ final class UserRepository extends ServiceEntityRepository implements UserLoader
             ->getQuery();
     }
 
-    public function upgradePassword(User $user, string $newHashedPassword): void
+    public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
-        $user->setSalt(null);
-        // set the new hashed password on the User object
+        if ($user instanceof LegacyPasswordAuthenticatedUserInterface) {
+            $user->setSalt(null);
+        }
         $user->setPassword($newHashedPassword);
 
-        // execute the queries on the database
+        $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
 

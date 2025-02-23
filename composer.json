@@ -6,7 +6,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.4",
+        "php": ">=8.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-mbstring": "*",
@@ -102,7 +102,7 @@
         "phpstan/phpstan-symfony": "^2.0.2",
         "phpstan/phpstan-phpunit": "^2.0.4",
         "phpstan/phpstan-doctrine": "^2.0.1",
-        "friendsofphp/php-cs-fixer": "^3.69.1"
+        "friendsofphp/php-cs-fixer": "^3.70"
     },
     "config": {
         "allow-plugins": {

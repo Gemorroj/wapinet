@@ -424,6 +424,14 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
             return false;
         }
 
+        if ($this->password !== $user->getPassword()) {
+            return false;
+        }
+
+        if ($this->salt !== $user->getSalt()) {
+            return false;
+        }
+
         return true;
     }
 
