@@ -194,17 +194,10 @@ class AudioTagsController extends AbstractController
 
         $picture = $data['picture'];
         if ($picture instanceof UploadedFile) {
-            $data = \file_get_contents($picture->getPathname());
-            if (false === $data) {
-                throw new IOException('Не удалось получить изображение.', 0, null, $picture->getPathname());
-            }
-
-            $writer->tag_data['attached_picture'][0]['data'] = $data;
+            $writer->tag_data['attached_picture'][0]['data'] = $picture->getContent();
             $writer->tag_data['attached_picture'][0]['picturetypeid'] = 0;
             $writer->tag_data['attached_picture'][0]['description'] = 'image';
             $writer->tag_data['attached_picture'][0]['mime'] = $picture->getMimeType();
-
-            unset($data); // чистим память
         }
 
         if (!$writer->WriteTags()) {
