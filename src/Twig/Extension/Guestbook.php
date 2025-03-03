@@ -8,7 +8,7 @@ use Twig\TwigFunction;
 
 class Guestbook extends AbstractExtension
 {
-    public function __construct(private GuestbookRepository $guestbookRepository)
+    public function __construct(private readonly GuestbookRepository $guestbookRepository)
     {
     }
 

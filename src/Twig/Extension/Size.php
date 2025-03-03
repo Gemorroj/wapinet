@@ -10,7 +10,7 @@ class Size extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('wapinet_size', [$this, 'getSize']),
+            new TwigFilter('wapinet_size', $this->getSize(...)),
         ];
     }
 

@@ -10,6 +10,7 @@ return (new PhpCsFixer\Config())
         '@Symfony' => true,
         '@Symfony:risky' => true,
         '@DoctrineAnnotation' => true,
+        '@PHP82Migration:risky' => true,
         '@PHP84Migration' => true,
 
         'combine_consecutive_issets' => true,
@@ -25,6 +26,8 @@ return (new PhpCsFixer\Config())
         'phpdoc_order' => true,
         'strict_comparison' => true,
         'combine_nested_dirname' => true,
+        'use_arrow_functions' => false,
+        'declare_strict_types' => false,
     ])
     ->setRiskyAllowed(true)
     ->setFinder($finder)

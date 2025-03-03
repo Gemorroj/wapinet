@@ -7,7 +7,7 @@ use Symfony\Component\DomCrawler\Field\FileFormField;
 
 class ArchiverControllerTest extends WebTestCaseWapinet
 {
-    public function testIndex()
+    public function testIndex(): void
     {
         $client = static::createClient();
 
@@ -15,7 +15,7 @@ class ArchiverControllerTest extends WebTestCaseWapinet
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 
-    public function testExtract()
+    public function testExtract(): void
     {
         $client = static::createClient();
 

@@ -10,7 +10,7 @@ class Count extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('wapinet_count', [$this, 'getCount']),
+            new TwigFilter('wapinet_count', $this->getCount(...)),
         ];
     }
 

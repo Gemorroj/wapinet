@@ -6,7 +6,7 @@ use App\Tests\WebTestCaseWapinet;
 
 class NewsControllerTest extends WebTestCaseWapinet
 {
-    public function testIndex()
+    public function testIndex(): void
     {
         $client = static::createClient();
 

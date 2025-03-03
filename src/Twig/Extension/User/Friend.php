@@ -9,16 +9,16 @@ use Twig\TwigFunction;
 
 class Friend extends AbstractExtension
 {
-    public function __construct(private UserFriendRepository $friendRepository)
+    public function __construct(private readonly UserFriendRepository $friendRepository)
     {
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('wapinet_user_is_friends', [$this, 'isFriends']),
-            new TwigFunction('wapinet_user_count_friends', [$this, 'countFriends']),
-            new TwigFunction('wapinet_user_count_online_friends', [$this, 'countOnlineFriends']),
+            new TwigFunction('wapinet_user_is_friends', $this->isFriends(...)),
+            new TwigFunction('wapinet_user_count_friends', $this->countFriends(...)),
+            new TwigFunction('wapinet_user_count_online_friends', $this->countOnlineFriends(...)),
         ];
     }
 

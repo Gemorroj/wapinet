@@ -13,16 +13,16 @@ use Twig\TwigFilter;
 class JavaApp extends AbstractExtension
 {
     public function __construct(
-        private ArchiveZip $archiveZip,
-        private Filesystem $filesystem,
-        private ParameterBagInterface $parameterBag
+        private readonly ArchiveZip $archiveZip,
+        private readonly Filesystem $filesystem,
+        private readonly ParameterBagInterface $parameterBag
     ) {
     }
 
     public function getFilters(): array
     {
         return [
-            new TwigFilter('wapinet_java_app_screenshot', [$this, 'getScreenshot']),
+            new TwigFilter('wapinet_java_app_screenshot', $this->getScreenshot(...)),
         ];
     }
 

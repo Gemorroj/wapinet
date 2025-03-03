@@ -17,17 +17,17 @@ use Twig\TwigFilter;
 class Video extends AbstractExtension
 {
     public function __construct(
-        private FfmpegHelper $ffmpegHelper,
-        private LoggerInterface $logger,
-        private ParameterBagInterface $parameterBag
+        private readonly FfmpegHelper $ffmpegHelper,
+        private readonly LoggerInterface $logger,
+        private readonly ParameterBagInterface $parameterBag
     ) {
     }
 
     public function getFilters(): array
     {
         return [
-            new TwigFilter('wapinet_video_screenshot', [$this, 'getScreenshot']),
-            new TwigFilter('wapinet_video_to_mp4', [$this, 'convertToMp4']),
+            new TwigFilter('wapinet_video_screenshot', $this->getScreenshot(...)),
+            new TwigFilter('wapinet_video_to_mp4', $this->convertToMp4(...)),
         ];
     }
 

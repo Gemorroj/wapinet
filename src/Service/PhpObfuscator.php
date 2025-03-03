@@ -21,7 +21,7 @@ final readonly class PhpObfuscator
         $code = 'eval(\urldecode(\base64_decode(\''.\base64_encode(\urlencode($code)).'\')));';
         $code = 'eval(\rawurldecode(\base64_decode(\''.\base64_encode(\rawurlencode($code)).'\')));';
 
-        for ($i = 0, $l = \mt_rand(1, 3); $i <= $l; ++$i) {
+        for ($i = 0, $l = \random_int(1, 3); $i <= $l; ++$i) {
             $code = 'eval(\gzinflate(\base64_decode(\''.\base64_encode(\gzdeflate($code, 6)).'\')));';
         }
 

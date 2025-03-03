@@ -20,13 +20,13 @@ use Symfony\Component\Security\Http\SecurityRequestAttributes;
 class DefaultController extends AbstractController
 {
     #[Route(path: '/login_check', name: 'wapinet_check', methods: ['POST'])]
-    public function checkAction()
+    public function checkAction(): void
     {
         throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
     }
 
     #[Route(path: '/logout', name: 'wapinet_logout')]
-    public function logoutAction()
+    public function logoutAction(): void
     {
         throw new \RuntimeException('You must activate the logout in your security firewall configuration.');
     }

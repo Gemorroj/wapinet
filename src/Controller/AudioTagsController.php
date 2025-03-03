@@ -9,7 +9,6 @@ use App\Form\Type\AudioTags\AudioTagsType;
 use App\Service\Getid3;
 use App\Service\Translit;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;

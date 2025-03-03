@@ -9,7 +9,7 @@ use Twig\TwigFunction;
 
 class Gist extends AbstractExtension
 {
-    public function __construct(private GistRepository $gistRepository)
+    public function __construct(private readonly GistRepository $gistRepository)
     {
     }
 

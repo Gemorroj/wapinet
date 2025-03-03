@@ -10,14 +10,14 @@ use Twig\TwigFunction;
 
 class Torrent extends AbstractExtension
 {
-    public function __construct(private TorrentHelper $torrentHelper, private LoggerInterface $logger)
+    public function __construct(private readonly TorrentHelper $torrentHelper, private readonly LoggerInterface $logger)
     {
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('wapinet_torrent_list', [$this, 'getList']),
+            new TwigFunction('wapinet_torrent_list', $this->getList(...)),
         ];
     }
 

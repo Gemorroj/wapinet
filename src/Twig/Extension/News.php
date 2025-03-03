@@ -8,14 +8,14 @@ use Twig\TwigFunction;
 
 class News extends AbstractExtension
 {
-    public function __construct(private NewsRepository $newsRepository)
+    public function __construct(private readonly NewsRepository $newsRepository)
     {
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('news_last_date', [$this, 'getLastDate']),
+            new TwigFunction('news_last_date', $this->getLastDate(...)),
         ];
     }
 

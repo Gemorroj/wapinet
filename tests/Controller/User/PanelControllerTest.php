@@ -6,7 +6,7 @@ use App\Tests\WebTestCaseWapinet;
 
 class PanelControllerTest extends WebTestCaseWapinet
 {
-    public function testIndex()
+    public function testIndex(): void
     {
         $client = static::loginAdmin();
 

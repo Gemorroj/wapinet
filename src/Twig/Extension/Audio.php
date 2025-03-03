@@ -14,16 +14,16 @@ use Twig\TwigFilter;
 class Audio extends AbstractExtension
 {
     public function __construct(
-        private FfmpegHelper $ffmpegHelper,
-        private LoggerInterface $logger,
-        private ParameterBagInterface $parameterBag
+        private readonly FfmpegHelper $ffmpegHelper,
+        private readonly LoggerInterface $logger,
+        private readonly ParameterBagInterface $parameterBag
     ) {
     }
 
     public function getFilters(): array
     {
         return [
-            new TwigFilter('wapinet_audio_to_mp3', [$this, 'convertToMp3']),
+            new TwigFilter('wapinet_audio_to_mp3', $this->convertToMp3(...)),
         ];
     }
 

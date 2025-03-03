@@ -11,17 +11,17 @@ use Twig\TwigFunction;
 class Forum extends AbstractExtension
 {
     public function __construct(
-        private ParameterBagInterface $parameterBag,
-        private EntityManagerInterface $em,
-        private LoggerInterface $logger
+        private readonly ParameterBagInterface $parameterBag,
+        private readonly EntityManagerInterface $em,
+        private readonly LoggerInterface $logger
     ) {
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('wapinet_forum_topics_count', [$this, 'getTopicsCount']),
-            new TwigFunction('wapinet_forum_posts_count', [$this, 'getPostsCount']),
+            new TwigFunction('wapinet_forum_topics_count', $this->getTopicsCount(...)),
+            new TwigFunction('wapinet_forum_posts_count', $this->getPostsCount(...)),
         ];
     }
 

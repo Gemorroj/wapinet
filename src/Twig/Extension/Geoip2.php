@@ -9,7 +9,7 @@ use Twig\TwigFunction;
 
 class Geoip2 extends AbstractExtension
 {
-    public function __construct(private Geoip2Helper $geoip2)
+    public function __construct(private readonly Geoip2Helper $geoip2)
     {
     }
 

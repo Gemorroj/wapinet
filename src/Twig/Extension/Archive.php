@@ -11,14 +11,14 @@ use Twig\TwigFunction;
 
 class Archive extends AbstractExtension
 {
-    public function __construct(private Archive7z $archive7z, private LoggerInterface $logger)
+    public function __construct(private readonly Archive7z $archive7z, private readonly LoggerInterface $logger)
     {
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('wapinet_archive_list', [$this, 'getList']),
+            new TwigFunction('wapinet_archive_list', $this->getList(...)),
         ];
     }
 

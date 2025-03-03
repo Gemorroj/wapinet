@@ -11,14 +11,14 @@ use Twig\TwigFunction;
 
 class Playlist extends AbstractExtension
 {
-    public function __construct(private PlaylistHelper $playlistHelper, private LoggerInterface $logger)
+    public function __construct(private readonly PlaylistHelper $playlistHelper, private readonly LoggerInterface $logger)
     {
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('wapinet_playlist_list', [$this, 'getList']),
+            new TwigFunction('wapinet_playlist_list', $this->getList(...)),
         ];
     }
 

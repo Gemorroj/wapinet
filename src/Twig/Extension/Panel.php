@@ -9,7 +9,7 @@ use Twig\TwigFunction;
 
 class Panel extends AbstractExtension
 {
-    public function __construct(private TokenStorageInterface $tokenStorage)
+    public function __construct(private readonly TokenStorageInterface $tokenStorage)
     {
     }
 

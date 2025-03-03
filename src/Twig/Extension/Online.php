@@ -8,7 +8,7 @@ use Twig\TwigFunction;
 
 class Online extends AbstractExtension
 {
-    public function __construct(private OnlineRepository $onlineRepository)
+    public function __construct(private readonly OnlineRepository $onlineRepository)
     {
     }
 

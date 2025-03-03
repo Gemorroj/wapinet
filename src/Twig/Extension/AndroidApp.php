@@ -14,18 +14,18 @@ use Twig\TwigFilter;
 class AndroidApp extends AbstractExtension
 {
     public function __construct(
-        private ArchiveZip $archiveZip,
-        private Apk $apk,
-        private LoggerInterface $logger,
-        private Filesystem $filesystem,
-        private ParameterBagInterface $parameterBag
+        private readonly ArchiveZip $archiveZip,
+        private readonly Apk $apk,
+        private readonly LoggerInterface $logger,
+        private readonly Filesystem $filesystem,
+        private readonly ParameterBagInterface $parameterBag
     ) {
     }
 
     public function getFilters(): array
     {
         return [
-            new TwigFilter('wapinet_android_app_screenshot', [$this, 'getScreenshot']),
+            new TwigFilter('wapinet_android_app_screenshot', $this->getScreenshot(...)),
         ];
     }
 

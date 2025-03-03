@@ -8,17 +8,17 @@ use Twig\TwigFilter;
 
 class Date extends AbstractExtension
 {
-    public function __construct(private Timezone $timezoneHelper)
+    public function __construct(private readonly Timezone $timezoneHelper)
     {
     }
 
     public function getFilters(): array
     {
         return [
-            new TwigFilter('wapinet_date', [$this, 'getDate']),
-            new TwigFilter('wapinet_time', [$this, 'getTime']),
-            new TwigFilter('wapinet_datetime', [$this, 'getDateTime']),
-            new TwigFilter('wapinet_length', [$this, 'getLength']),
+            new TwigFilter('wapinet_date', $this->getDate(...)),
+            new TwigFilter('wapinet_time', $this->getTime(...)),
+            new TwigFilter('wapinet_datetime', $this->getDateTime(...)),
+            new TwigFilter('wapinet_length', $this->getLength(...)),
         ];
     }
 

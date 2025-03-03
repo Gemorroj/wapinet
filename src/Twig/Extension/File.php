@@ -11,7 +11,7 @@ use Twig\TwigFunction;
 
 class File extends AbstractExtension
 {
-    public function __construct(private FileRepository $fileRepository, private Timezone $timezoneHelper)
+    public function __construct(private readonly FileRepository $fileRepository, private readonly Timezone $timezoneHelper)
     {
     }
 
@@ -25,12 +25,12 @@ class File extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('file_count_all', [$this, 'getCountAll']),
-            new TwigFunction('file_count_today', [$this, 'getCountToday']),
-            new TwigFunction('file_count_hidden', [$this, 'getCountHidden']),
-            new TwigFunction('file_count_yesterday', [$this, 'getCountYesterday']),
-            new TwigFunction('file_count_category', [$this, 'getCountCategory']),
-            new TwigFunction('file_count_user', [$this, 'getCountUser']),
+            new TwigFunction('file_count_all', $this->getCountAll(...)),
+            new TwigFunction('file_count_today', $this->getCountToday(...)),
+            new TwigFunction('file_count_hidden', $this->getCountHidden(...)),
+            new TwigFunction('file_count_yesterday', $this->getCountYesterday(...)),
+            new TwigFunction('file_count_category', $this->getCountCategory(...)),
+            new TwigFunction('file_count_user', $this->getCountUser(...)),
         ];
     }
 

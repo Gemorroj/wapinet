@@ -6,7 +6,7 @@ use App\Tests\WebTestCaseWapinet;
 
 class FriendsControllerTest extends WebTestCaseWapinet
 {
-    public function testIndex()
+    public function testIndex(): void
     {
         $client = static::loginAdmin();
 

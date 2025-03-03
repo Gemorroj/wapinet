@@ -6,7 +6,7 @@ use App\Tests\WebTestCaseWapinet;
 
 class ProfileControllerTest extends WebTestCaseWapinet
 {
-    public function testIndex()
+    public function testIndex(): void
     {
         $client = static::loginAdmin();
 
@@ -14,7 +14,7 @@ class ProfileControllerTest extends WebTestCaseWapinet
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
         $client = static::loginAdmin();
 

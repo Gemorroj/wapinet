@@ -11,7 +11,7 @@ class Avatar extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('wapinet_user_get_avatar_url', [$this, 'getAvatarUrl']),
+            new TwigFunction('wapinet_user_get_avatar_url', $this->getAvatarUrl(...)),
         ];
     }
 

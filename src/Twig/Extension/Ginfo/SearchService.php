@@ -12,7 +12,7 @@ class SearchService extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('wapinet_ginfo_search_service', [$this, 'searchService']),
+            new TwigFilter('wapinet_ginfo_search_service', $this->searchService(...)),
         ];
     }
 
