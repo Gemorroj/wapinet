@@ -1,60 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
+<!-- https://docs.phpunit.de/en/11.5/configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-         backupGlobals="false"
+         failOnDeprecation="true"
+         failOnNotice="true"
+         failOnWarning="true"
          colors="true"
          bootstrap="tests/bootstrap.php"
-         convertDeprecationsToExceptions="false"
 >
     <php>
-        <ini name="display_errors" value="1" />
-        <ini name="error_reporting" value="-1" />
-        <server name="APP_ENV" value="test" force="true" />
-        <server name="KERNEL_CLASS" value="App\Kernel" />
-        <server name="SHELL_VERBOSITY" value="-1" />
-        <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
-        <server name="SYMFONY_PHPUNIT_VERSION" value="9.6" />
-
-        <env name="APP_USER" value="admin"/>
-        <env name="APP_PASSWD" value="1234"/>
-
-
-        <!-- ###+ symfony/framework-bundle ### -->
-        <env name="APP_ENV" value="test"/>
-        <env name="APP_SECRET" value="1234"/>
-        <!-- ###- symfony/framework-bundle ### -->
-
-        <env name="FFMPEG_PATH" value="/usr/bin/ffmpeg"/>
-        <env name="FFPROBE_PATH" value="/usr/bin/ffprobe"/>
-        <env name="GEOIP2_COUNTRY_PATH" value="/GeoLite2-Country.mmdb"/>
-        <env name="PHP_PATH" value="/GeoLite2-Country.mmdb"/>
-        <env name="P7Z_PATH" value="/usr/bin/7z"/>
-        <env name="CONTACT_EMAIL" value="support@localhost"/>
-        <env name="ROBOT_EMAIL" value="robot@localhost"/>
-
-        <!-- ###+ doctrine/doctrine-bundle ### -->
-        <!-- Format described at http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url -->
-        <!-- For an SQLite database, use: "sqlite:///%kernel.project_dir%/var/data.db" -->
-        <!-- Configure your db driver and server_version in config/packages/doctrine.yaml -->
-        <env name="DATABASE_URL" value="mysql://root:@127.0.0.1:3306/wapinet?serverVersion=8.0"/>
-        <!-- ###- doctrine/doctrine-bundle ### -->
-
-        <!-- ###+ symfony/mailer ### -->
-        <env name="MAILER_DSN" value="smtp://localhost"/>
-        <!-- ###- symfony/mailer ### -->
-
-        <!-- ###+ symfony/webapp-meta ### -->
-        <env name="MESSENGER_TRANSPORT_DSN" value="doctrine://default?auto_setup=0"/>
-        <!-- ###- symfony/webapp-meta ### -->
-
-        <!-- ###+ symfony/messenger ### -->
-        <!-- Choose one of the transports below -->
-        <!-- MESSENGER_TRANSPORT_DSN=doctrine://default -->
-        <!-- MESSENGER_TRANSPORT_DSN=amqp://guest:guest@localhost:5672/%2f/messages -->
-        <!-- MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages -->
-        <!-- ###- symfony/messenger ### -->
+        <ini name="display_errors" value="1"/>
+        <ini name="error_reporting" value="-1"/>
+        <server name="APP_ENV" value="test" force="true"/>
+        <server name="SHELL_VERBOSITY" value="-1"/>
     </php>
 
     <testsuites>
@@ -63,16 +22,26 @@
         </testsuite>
     </testsuites>
 
-    <coverage processUncoveredFiles="true">
+    <source ignoreSuppressionOfDeprecations="true"
+            ignoreIndirectDeprecations="true"
+    >
         <include>
             <directory suffix=".php">src</directory>
         </include>
-    </coverage>
 
-    <listeners>
-        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
-    </listeners>
+        <deprecationTrigger>
+            <function>trigger_deprecation</function>
+            <method>Doctrine\Deprecations\Deprecation::trigger</method>
+            <method>Doctrine\Deprecations\Deprecation::delegateTriggerToBackend</method>
+        </deprecationTrigger>
+    </source>
 
     <extensions>
+        <!-- it begins a database transaction before every testcase and rolls it back after
+             the test finished, so tests can manipulate the database without affecting other tests -->
+        <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
+
+        <!-- Run `composer require symfony/panther` before enabling this extension -->
+        <!-- <bootstrap class="Symfony\Component\Panther\ServerExtension" /> -->
     </extensions>
 </phpunit>

@@ -11,4 +11,4 @@ parameters:
     symfony:
         containerXmlPath: '%rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml'
     doctrine:
-        objectManagerLoader: object-manager.php
+        objectManagerLoader: tests/object-manager.php

@@ -12,6 +12,7 @@ return (new PhpCsFixer\Config())
         '@DoctrineAnnotation' => true,
         '@PHP82Migration:risky' => true,
         '@PHP84Migration' => true,
+        '@PHPUnit100Migration:risky' => true,
 
         'combine_consecutive_issets' => true,
         'combine_consecutive_unsets' => true,

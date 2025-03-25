@@ -333,9 +333,6 @@
     "sebastian/recursion-context": {
         "version": "4.0.4"
     },
-    "sebastian/resource-operations": {
-        "version": "3.0.3"
-    },
     "sebastian/type": {
         "version": "2.3.4"
     },
@@ -544,21 +541,6 @@
     },
     "symfony/password-hasher": {
         "version": "v5.3.2"
-    },
-    "symfony/phpunit-bridge": {
-        "version": "7.2",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "6.3",
-            "ref": "a411a0480041243d97382cac7984f7dce7813c08"
-        },
-        "files": [
-            ".env.test",
-            "bin/phpunit",
-            "phpunit.xml.dist",
-            "tests/bootstrap.php"
-        ]
     },
     "symfony/polyfill-uuid": {
         "version": "v1.22.0"
