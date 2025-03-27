@@ -67,7 +67,7 @@
         "easycorp/easyadmin-bundle": "^4.24.5",
         "friendsofsymfony/jsrouting-bundle": "^3.5.2",
         "james-heinrich/getid3": "^1.9.23",
-        "vich/uploader-bundle": "^2.5.1",
+        "vich/uploader-bundle": "^2.6",
         "liip/imagine-bundle": "^2.13.3",
         "gregwar/captcha-bundle": "dev-master",
         "tufanbarisyildirim/php-apk-parser": "^3.0",
@@ -99,7 +99,7 @@
         "symfony/web-profiler-bundle": "7.2.*",
         "phpstan/phpstan": "^2.1.11",
         "phpstan/phpstan-symfony": "^2.0.3",
-        "phpstan/phpstan-phpunit": "^2.0.5",
+        "phpstan/phpstan-phpunit": "^2.0.6",
         "phpstan/phpstan-doctrine": "^2.0.2",
         "friendsofphp/php-cs-fixer": "^3.73.1"
     },
