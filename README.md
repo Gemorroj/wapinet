@@ -97,7 +97,7 @@ source config
     type = mysql
     sql_host = localhost
     sql_user = wapinet
-    sql_pass = xgh466*fhjG
+    sql_pass = password
     sql_db = wapinet
     sql_port = 3306
     sql_query_pre = SET NAMES utf8mb4
