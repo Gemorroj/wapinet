@@ -70,6 +70,7 @@ curl -O -L https://repo.manticoresearch.com/manticore-repo.noarch.deb
 dpkg -i manticore-repo.noarch.deb
 rm manticore-repo.noarch.deb
 apt install manticore manticore-extra
+systemctl enable manticore
 
 echo 'common {
     plugin_dir = /usr/local/lib/manticore
