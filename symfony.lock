@@ -135,9 +135,6 @@
     "gemorroj/m3u-parser": {
         "version": "4.0.0"
     },
-    "gemorroj/phpwhois": {
-        "version": "dev-master"
-    },
     "gemorroj/stop-spam": {
         "version": "2.0.0"
     },

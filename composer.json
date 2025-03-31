@@ -67,7 +67,7 @@
         "easycorp/easyadmin-bundle": "^4.24.5",
         "friendsofsymfony/jsrouting-bundle": "^3.5.2",
         "james-heinrich/getid3": "^1.9.23",
-        "vich/uploader-bundle": "^2.6",
+        "vich/uploader-bundle": "^2.6.1",
         "liip/imagine-bundle": "^2.13.3",
         "gregwar/captcha-bundle": "dev-master",
         "tufanbarisyildirim/php-apk-parser": "^3.0",
@@ -77,7 +77,7 @@
         "riverline/multipart-parser": "^2.1.2",
         "stdtabs/phptabs": "^1.1.0",
 
-        "gemorroj/phpwhois": "dev-master",
+        "gemorroj/phpwhois2": "dev-main",
         "gemorroj/stop-spam": "^3.4.1",
         "gemorroj/archive7z": "^5.7",
         "gemorroj/m3u-parser": "^6.0.1",

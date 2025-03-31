@@ -53,18 +53,17 @@ class WhoisController extends AbstractController
     {
         $whois = $phpwhois->getWhois();
 
-        // $whois->non_icann = true;
-        $result = $whois->Lookup($data['query']);
+        $result = $whois->lookup($data['query']);
 
-        if (!empty($result['rawdata'])) {
-            $result['rawdata'] = \str_replace('{query}', \htmlspecialchars($data['query']), $result['rawdata']);
+        if ($result->rawData) {
+            $result->rawData = \str_replace('{query}', \htmlspecialchars($data['query']), $result->rawData);
             $link = $this->generateUrl('whois_index');
 
             return $whois::showHTML($result, $link);
         }
 
-        if (isset($whois->Query['errstr'])) {
-            throw new WhoisException($whois->Query['errstr']);
+        if ($result->errstr) {
+            throw new WhoisException($result->errstr);
         }
 
         throw new WhoisException(['Не найдено данных']);

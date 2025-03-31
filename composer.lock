@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "76cce0bc2bc419f6d7f76bf13364d1e7",
+    "content-hash": "b50ecac1f925af3849e9cbea255a9bc2",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -1992,47 +1992,84 @@
             "time": "2025-02-01T11:40:42+00:00"
         },
         {
-            "name": "gemorroj/phpwhois",
-            "version": "dev-master",
+            "name": "gemorroj/phpwhois2",
+            "version": "dev-main",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Gemorroj/phpwhois.git",
-                "reference": "fc0ea43aa4cb4a44aed3dfeaafd76b046649ae1b"
+                "url": "https://github.com/Gemorroj/phpwhois2.git",
+                "reference": "fefe8b628e2900e8e907290c60ab622d855c3eaf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/phpwhois/zipball/fc0ea43aa4cb4a44aed3dfeaafd76b046649ae1b",
-                "reference": "fc0ea43aa4cb4a44aed3dfeaafd76b046649ae1b",
+                "url": "https://api.github.com/repos/Gemorroj/phpwhois2/zipball/fefe8b628e2900e8e907290c60ab622d855c3eaf",
+                "reference": "fefe8b628e2900e8e907290c60ab622d855c3eaf",
                 "shasum": ""
             },
             "require": {
-                "algo26-matthias/idna-convert": "^4.2.0",
+                "algo26-matthias/idna-convert": "^4.2",
                 "php": ">=8.2",
-                "symfony/polyfill-iconv": "^1.31"
+                "symfony/polyfill-mbstring": "*",
+                "symfony/polyfill-php84": "*"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.73.1",
+                "friendsofphp/php-cs-fixer": "^3.74.0",
                 "phpunit/phpunit": "^11.5.15"
+            },
+            "suggest": {
+                "ext-mbstring": "*",
+                "lib-openssl": "*"
             },
             "default-branch": true,
             "type": "library",
             "autoload": {
-                "files": [
-                    "src/WhoisParser.php",
-                    "src/WhoisHandlerAbstract.php",
-                    "src/Whois.php"
-                ]
+                "psr-4": {
+                    "PHPWhois2\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-2.0-only"
+                "GPL-2.0-or-later"
             ],
-            "description": "This package contains a Whois (RFC954) library for PHP. It allows a PHP program to create a Whois object, and obtain the output of a whois query with the Lookup function.",
+            "authors": [
+                {
+                    "name": "Kevin Lucich",
+                    "email": "info@lucichkevin.it"
+                },
+                {
+                    "name": "Mark Jeftovic",
+                    "email": "markjr@easydns.com"
+                },
+                {
+                    "name": "David Saez Padros",
+                    "email": "david@ols.es"
+                },
+                {
+                    "name": "Ross Golder",
+                    "email": "ross@golder.org"
+                },
+                {
+                    "name": "Dmitry Lukashin",
+                    "email": "dmitry@lukashin.ru"
+                },
+                {
+                    "name": "Joshua Smith",
+                    "email": "jsmith@jssm.com"
+                },
+                {
+                    "name": "Gemorroj",
+                    "email": "wapinet@mail.ru"
+                }
+            ],
+            "description": "PHPWhois2 - library for querying whois services and parsing results.",
+            "keywords": [
+                "php",
+                "phpwhois",
+                "whois"
+            ],
             "support": {
-                "issues": "https://github.com/Gemorroj/phpwhois/issues",
-                "source": "https://github.com/Gemorroj/phpwhois/tree/master"
+                "source": "https://github.com/Gemorroj/phpwhois2/tree/main"
             },
-            "time": "2025-03-28T14:14:42+00:00"
+            "time": "2025-03-31T15:44:07+00:00"
         },
         {
             "name": "gemorroj/stop-spam",
@@ -9223,16 +9260,16 @@
         },
         {
             "name": "vich/uploader-bundle",
-            "version": "v2.6.0",
+            "version": "v2.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dustin10/VichUploaderBundle.git",
-                "reference": "d1b8177b963a5022b5c29bb80452c50a09f236f0"
+                "reference": "28d99f6678135ea61c7c67d6fb52fe63ac2937ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dustin10/VichUploaderBundle/zipball/d1b8177b963a5022b5c29bb80452c50a09f236f0",
-                "reference": "d1b8177b963a5022b5c29bb80452c50a09f236f0",
+                "url": "https://api.github.com/repos/dustin10/VichUploaderBundle/zipball/28d99f6678135ea61c7c67d6fb52fe63ac2937ee",
+                "reference": "28d99f6678135ea61c7c67d6fb52fe63ac2937ee",
                 "shasum": ""
             },
             "require": {
@@ -9325,9 +9362,9 @@
             ],
             "support": {
                 "issues": "https://github.com/dustin10/VichUploaderBundle/issues",
-                "source": "https://github.com/dustin10/VichUploaderBundle/tree/v2.6.0"
+                "source": "https://github.com/dustin10/VichUploaderBundle/tree/v2.6.1"
             },
-            "time": "2025-03-26T07:30:30+00:00"
+            "time": "2025-03-30T13:31:23+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -12873,7 +12910,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "gemorroj/phpwhois": 20,
+        "gemorroj/phpwhois2": 20,
         "gregwar/captcha-bundle": 20
     },
     "prefer-stable": true,
