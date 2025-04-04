@@ -9,10 +9,10 @@
 
 {% block content %}
     {{ form_start(form, {'action': path('whois_index'), 'method': 'POST'}) }}
-    {% if resultHtml is not null %}
+    {% if result is not null %}
     <div class="ui-corner-all custom-corners">
         <div class="ui-body ui-body-a">
-            <p>{{ resultHtml|raw }}</p>
+            <pre>{{ result }}</pre>
         </div>
     </div>
     {% endif %}
@@ -22,7 +22,7 @@
 
     <div class="ui-corner-all custom-corners">
         <div class="ui-body ui-body-a">
-            <p>Сервис позволяет получить регистрационные данные о владельцах доменных имён, IP-адресов и автономных систем.</p>
+            <p>Сервис позволяет получить регистрационные данные о владельцах доменных имён, IP-адресов и автономных систем. Используется комбинация из <abbr title="Registration Data Access Protocol - Протокол доступа к регистрационным данным">RDAP</abbr> и <abbr title="WHOIS (от англ. who is — «кто это?») — сетевой протокол прикладного уровня, базирующийся на протоколе TCP (порт 43). Основное применение — получение регистрационных данных о владельцах доменных имён, IP-адресов и автономных систем.">WHOIS</abbr> серверов.</p>
         </div>
     </div>
 {% endblock %}

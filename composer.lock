@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "707e5fe6da8e6f59a583dfd0398a3d23",
+    "content-hash": "d2ba332f218871e52853989c7d8a9f1e",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -1992,86 +1992,6 @@
             "time": "2025-02-01T11:40:42+00:00"
         },
         {
-            "name": "gemorroj/phpwhois2",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Gemorroj/phpwhois2.git",
-                "reference": "ab85a91f545a8837b2513f775f87da609de253e8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/phpwhois2/zipball/ab85a91f545a8837b2513f775f87da609de253e8",
-                "reference": "ab85a91f545a8837b2513f775f87da609de253e8",
-                "shasum": ""
-            },
-            "require": {
-                "algo26-matthias/idna-convert": "^4.2",
-                "php": ">=8.2",
-                "symfony/polyfill-mbstring": "*",
-                "symfony/polyfill-php84": "*"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.74.0",
-                "phpunit/phpunit": "^11.5.15"
-            },
-            "suggest": {
-                "ext-mbstring": "*",
-                "lib-openssl": "*"
-            },
-            "default-branch": true,
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PHPWhois2\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Kevin Lucich",
-                    "email": "info@lucichkevin.it"
-                },
-                {
-                    "name": "Mark Jeftovic",
-                    "email": "markjr@easydns.com"
-                },
-                {
-                    "name": "David Saez Padros",
-                    "email": "david@ols.es"
-                },
-                {
-                    "name": "Ross Golder",
-                    "email": "ross@golder.org"
-                },
-                {
-                    "name": "Dmitry Lukashin",
-                    "email": "dmitry@lukashin.ru"
-                },
-                {
-                    "name": "Joshua Smith",
-                    "email": "jsmith@jssm.com"
-                },
-                {
-                    "name": "Gemorroj",
-                    "email": "wapinet@mail.ru"
-                }
-            ],
-            "description": "PHPWhois2 - library for querying whois services and parsing results.",
-            "keywords": [
-                "php",
-                "phpwhois",
-                "whois"
-            ],
-            "support": {
-                "source": "https://github.com/Gemorroj/phpwhois2/tree/main"
-            },
-            "time": "2025-03-31T22:55:44+00:00"
-        },
-        {
             "name": "gemorroj/stop-spam",
             "version": "3.4.1",
             "source": {
@@ -2166,6 +2086,70 @@
                 "source": "https://github.com/Gemorroj/Syntax/tree/4.4.0"
             },
             "time": "2023-12-22T13:59:57+00:00"
+        },
+        {
+            "name": "gemorroj/whordap",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Gemorroj/whordap.git",
+                "reference": "9396534ad018530c4aa5e46a102b2184849d80ec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Gemorroj/whordap/zipball/9396534ad018530c4aa5e46a102b2184849d80ec",
+                "reference": "9396534ad018530c4aa5e46a102b2184849d80ec",
+                "shasum": ""
+            },
+            "require": {
+                "algo26-matthias/idna-convert": "^4.2",
+                "ext-curl": "*",
+                "ext-pcre": "*",
+                "php": ">=8.2",
+                "psr/cache": "^3.0.0",
+                "psr/log": "^3.0.2",
+                "symfony/polyfill-mbstring": "^1.31",
+                "symfony/polyfill-php84": "^1.31"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.75.0",
+                "phpstan/phpstan": "^2.1.11",
+                "phpunit/phpunit": "^11.5.15",
+                "symfony/cache": "^7.2.5",
+                "symfony/console": "^7.2.5"
+            },
+            "suggest": {
+                "ext-mbstring": "*",
+                "php": ">=8.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "WhoRdap\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Gemorroj"
+                }
+            ],
+            "description": "WHOIS/RDAP client",
+            "keywords": [
+                "lookup",
+                "phprdap",
+                "phpwhois",
+                "rdap",
+                "whois"
+            ],
+            "support": {
+                "issues": "https://github.com/Gemorroj/whordap/issues",
+                "source": "https://github.com/Gemorroj/whordap/tree/1.0.1"
+            },
+            "time": "2025-04-04T20:45:38+00:00"
         },
         {
             "name": "gemorroj/xbbcode",
@@ -3184,16 +3168,16 @@
         },
         {
             "name": "php-ffmpeg/php-ffmpeg",
-            "version": "v1.3.1",
+            "version": "v1.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-FFMpeg/PHP-FFMpeg.git",
-                "reference": "0fbbc4c6a6336155679adc800616001ae3328c7a"
+                "reference": "8e74bdc07ad200da7a6cfb21ec2652875e4368e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-FFMpeg/PHP-FFMpeg/zipball/0fbbc4c6a6336155679adc800616001ae3328c7a",
-                "reference": "0fbbc4c6a6336155679adc800616001ae3328c7a",
+                "url": "https://api.github.com/repos/PHP-FFMpeg/PHP-FFMpeg/zipball/8e74bdc07ad200da7a6cfb21ec2652875e4368e0",
+                "reference": "8e74bdc07ad200da7a6cfb21ec2652875e4368e0",
                 "shasum": ""
             },
             "require": {
@@ -3267,9 +3251,9 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-FFMpeg/PHP-FFMpeg/issues",
-                "source": "https://github.com/PHP-FFMpeg/PHP-FFMpeg/tree/v1.3.1"
+                "source": "https://github.com/PHP-FFMpeg/PHP-FFMpeg/tree/v1.3.2"
             },
-            "time": "2025-01-10T20:23:57+00:00"
+            "time": "2025-04-01T20:36:46+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -12910,7 +12894,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "gemorroj/phpwhois2": 20,
         "gregwar/captcha-bundle": 20
     },
     "prefer-stable": true,
