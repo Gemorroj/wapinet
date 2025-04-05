@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d2ba332f218871e52853989c7d8a9f1e",
+    "content-hash": "3b09a33ef7bc92a2df78874a5f6bc9f1",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -2089,38 +2089,36 @@
         },
         {
             "name": "gemorroj/whordap",
-            "version": "1.0.1",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/whordap.git",
-                "reference": "9396534ad018530c4aa5e46a102b2184849d80ec"
+                "reference": "c3f165bd89a5800940eeede85a5b722e2352b7ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/whordap/zipball/9396534ad018530c4aa5e46a102b2184849d80ec",
-                "reference": "9396534ad018530c4aa5e46a102b2184849d80ec",
+                "url": "https://api.github.com/repos/Gemorroj/whordap/zipball/c3f165bd89a5800940eeede85a5b722e2352b7ed",
+                "reference": "c3f165bd89a5800940eeede85a5b722e2352b7ed",
                 "shasum": ""
             },
             "require": {
                 "algo26-matthias/idna-convert": "^4.2",
                 "ext-curl": "*",
                 "ext-pcre": "*",
-                "php": ">=8.2",
+                "php": ">=8.4",
                 "psr/cache": "^3.0.0",
                 "psr/log": "^3.0.2",
-                "symfony/polyfill-mbstring": "^1.31",
-                "symfony/polyfill-php84": "^1.31"
+                "symfony/polyfill-mbstring": "^1.31"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.75.0",
                 "phpstan/phpstan": "^2.1.11",
-                "phpunit/phpunit": "^11.5.15",
+                "phpunit/phpunit": "^12.1.0",
                 "symfony/cache": "^7.2.5",
                 "symfony/console": "^7.2.5"
             },
             "suggest": {
-                "ext-mbstring": "*",
-                "php": ">=8.4"
+                "ext-mbstring": "*"
             },
             "type": "library",
             "autoload": {
@@ -2147,9 +2145,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Gemorroj/whordap/issues",
-                "source": "https://github.com/Gemorroj/whordap/tree/1.0.1"
+                "source": "https://github.com/Gemorroj/whordap/tree/2.0.0"
             },
-            "time": "2025-04-04T20:45:38+00:00"
+            "time": "2025-04-05T16:54:56+00:00"
         },
         {
             "name": "gemorroj/xbbcode",
@@ -8401,16 +8399,16 @@
         },
         {
             "name": "symfony/ux-twig-component",
-            "version": "v2.23.0",
+            "version": "v2.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/ux-twig-component.git",
-                "reference": "f29033b95e93aea2d498dc40eac185ed14b07800"
+                "reference": "48a46e4c6215d41cc97ba8dff0cff21ea9b255a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ux-twig-component/zipball/f29033b95e93aea2d498dc40eac185ed14b07800",
-                "reference": "f29033b95e93aea2d498dc40eac185ed14b07800",
+                "url": "https://api.github.com/repos/symfony/ux-twig-component/zipball/48a46e4c6215d41cc97ba8dff0cff21ea9b255a8",
+                "reference": "48a46e4c6215d41cc97ba8dff0cff21ea9b255a8",
                 "shasum": ""
             },
             "require": {
@@ -8464,7 +8462,7 @@
                 "twig"
             ],
             "support": {
-                "source": "https://github.com/symfony/ux-twig-component/tree/v2.23.0"
+                "source": "https://github.com/symfony/ux-twig-component/tree/v2.24.0"
             },
             "funding": [
                 {
@@ -8480,7 +8478,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-01-25T02:19:26+00:00"
+            "time": "2025-03-21T20:14:36+00:00"
         },
         {
             "name": "symfony/validator",
