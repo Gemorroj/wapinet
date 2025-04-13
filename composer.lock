@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3b09a33ef7bc92a2df78874a5f6bc9f1",
+    "content-hash": "fd97a7bd591d58d9eb94d4c3a6325e0b",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -1347,16 +1347,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v4.24.5",
+            "version": "v4.24.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "dcc64d06fc142f894667439e72837aa3742b5460"
+                "reference": "c5e4496c4c96d67385c48e285c463e0f5a8947e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/dcc64d06fc142f894667439e72837aa3742b5460",
-                "reference": "dcc64d06fc142f894667439e72837aa3742b5460",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/c5e4496c4c96d67385c48e285c463e0f5a8947e7",
+                "reference": "c5e4496c4c96d67385c48e285c463e0f5a8947e7",
                 "shasum": ""
             },
             "require": {
@@ -1437,7 +1437,7 @@
             ],
             "support": {
                 "issues": "https://github.com/EasyCorp/EasyAdminBundle/issues",
-                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.24.5"
+                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.24.6"
             },
             "funding": [
                 {
@@ -1445,7 +1445,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-10T19:31:19+00:00"
+            "time": "2025-04-12T13:53:15+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -2092,16 +2092,16 @@
         },
         {
             "name": "gemorroj/whordap",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/whordap.git",
-                "reference": "c3f165bd89a5800940eeede85a5b722e2352b7ed"
+                "reference": "48db26f134ff334aea427059f16eaae871ecba24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/whordap/zipball/c3f165bd89a5800940eeede85a5b722e2352b7ed",
-                "reference": "c3f165bd89a5800940eeede85a5b722e2352b7ed",
+                "url": "https://api.github.com/repos/Gemorroj/whordap/zipball/48db26f134ff334aea427059f16eaae871ecba24",
+                "reference": "48db26f134ff334aea427059f16eaae871ecba24",
                 "shasum": ""
             },
             "require": {
@@ -2116,7 +2116,7 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.75.0",
                 "phpstan/phpstan": "^2.1.11",
-                "phpunit/phpunit": "^12.1.0",
+                "phpunit/phpunit": "^12.1.2",
                 "symfony/cache": "^7.2.5",
                 "symfony/console": "^7.2.5"
             },
@@ -2148,9 +2148,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Gemorroj/whordap/issues",
-                "source": "https://github.com/Gemorroj/whordap/tree/2.0.0"
+                "source": "https://github.com/Gemorroj/whordap/tree/2.0.1"
             },
-            "time": "2025-04-05T16:54:56+00:00"
+            "time": "2025-04-13T16:28:41+00:00"
         },
         {
             "name": "gemorroj/xbbcode",
@@ -10790,16 +10790,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "11.5.15",
+            "version": "11.5.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "4b6a4ee654e5e0c5e1f17e2f83c0f4c91dee1f9c"
+                "reference": "fd2e863a2995cdfd864fb514b5e0b28b09895b5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4b6a4ee654e5e0c5e1f17e2f83c0f4c91dee1f9c",
-                "reference": "4b6a4ee654e5e0c5e1f17e2f83c0f4c91dee1f9c",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/fd2e863a2995cdfd864fb514b5e0b28b09895b5c",
+                "reference": "fd2e863a2995cdfd864fb514b5e0b28b09895b5c",
                 "shasum": ""
             },
             "require": {
@@ -10871,7 +10871,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.15"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.17"
             },
             "funding": [
                 {
@@ -10887,7 +10887,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-03-23T16:02:11+00:00"
+            "time": "2025-04-08T07:59:11+00:00"
         },
         {
             "name": "react/cache",
