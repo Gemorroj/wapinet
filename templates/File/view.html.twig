@@ -21,53 +21,8 @@
     {% set screenshot = null %}
 {% endif %}
 
-{% set format = null %}
-{% set audio = null %}
-{% set video = null %}
-
-{% if file.isPlayableVideo %}
-    {% if file.isM4v or file.is3gp or file.isWmv or file.isAvi or file.isMov %}
-        {% set format = 'm4v' %}
-    {% elseif file.isOgv %}
-        {% set format = 'ogv' %}
-    {% elseif file.isWebmv %}
-        {% set format = 'webmv' %}
-    {% elseif file.isFlv %}
-        {% set format = 'flv' %}
-    {% endif %}
-
-    {% if file.is3gp or file.isAvi or file.isWmv or file.isMov %}
-        {% set video = vich_uploader_asset(file, 'file')|wapinet_video_to_mp4 %}
-    {% else %}
-        {% set video = vich_uploader_asset(file, 'file') %}
-    {% endif %}
-{% elseif file.isPlayableAudio %}
-    {% if file.isMp3 or file.isAmr %}
-        {% set format = 'mp3' %}
-    {% elseif file.isM4a %}
-        {% set format = 'm4a' %}
-    {% elseif file.isOga %}
-        {% set format = 'oga' %}
-    {% elseif file.isWebma %}
-        {% set format = 'webma' %}
-    {% elseif file.isWav %}
-        {% set format = 'wav' %}
-    {% elseif file.isFla %}
-        {% set format = 'fla' %}
-    {% elseif file.isFlac %}
-        {% set format = 'flac' %}
-    {% endif %}
-
-    {% if file.isAmr %}
-        {% set audio = vich_uploader_asset(file, 'file')|wapinet_audio_to_mp3 %}
-    {% else %}
-        {% set audio = vich_uploader_asset(file, 'file') %}
-    {% endif %}
-{% endif %}
-
-
 {% block content %}
-    <a data-screenshot="{{ screenshot }}" data-format="{{ format }}" data-audio="{{ audio }}" data-video="{{ video }}" data-id="{{ file.id }}" data-ajax="false" data-role="button" data-icon="arrow-d" href="{{ vich_uploader_asset(file, 'file') }}" download="{{ file.originalFileName }}">Скачать</a>
+    <a data-id="{{ file.id }}" data-ajax="false" data-role="button" data-icon="arrow-d" href="{{ vich_uploader_asset(file, 'file') }}" download="{{ file.originalFileName }}">Скачать</a>
 
     {% if file.isHidden %}
         <button class="ui-btn ui-icon-alert ui-btn-icon-left">Файл скрыт от общего просмотра. Дождитесь модерации.</button>

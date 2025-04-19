@@ -215,12 +215,6 @@ const $document = $(document);
 })(document, window, "yandex_metrika_callbacks");
 
 
-// jplayer
-window.Jplayer = {
-    "swfPath": "//cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.swf"
-};
-
-
 // vk comments
 const _commentsLoader = function ($pageContainer, xid) {
     let $commentsContainer = $pageContainer.find("#vkcomments_widget");
@@ -271,8 +265,6 @@ $document.one("pagecreate", "#file_edit", function () {
 });
 $document.one("pagecreate", "#file_view", function () {
     FileView.pageCreate();
-}).on("pageshow", "#file_view", function () {
-    FileView.pageShow($(this));
 });
 $document.one("pagecreate", "#file_swiper", function () {
     FileSwiper.pageCreate();
