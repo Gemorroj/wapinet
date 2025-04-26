@@ -15,7 +15,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[Vich\Uploadable]
 #[ORM\Table]
-#[ORM\Index(columns: ['hash'], name: 'hash_idx')]
+#[ORM\Index(name: 'hash_idx', columns: ['hash'])]
 #[ORM\Entity(repositoryClass: FileRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class File implements PasswordAuthenticatedUserInterface, \JsonSerializable
@@ -79,7 +79,7 @@ class File implements PasswordAuthenticatedUserInterface, \JsonSerializable
     /**
      * @var Collection<FileTags>
      */
-    #[ORM\OneToMany(mappedBy: 'file', targetEntity: FileTags::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: FileTags::class, mappedBy: 'file', cascade: ['persist', 'remove'])]
     private Collection $fileTags;
 
     /**

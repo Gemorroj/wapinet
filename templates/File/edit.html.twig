@@ -3,9 +3,8 @@
 {% block title %}Редактирование файла - {{ file.originalFileName }}{% endblock %}
 {% block breadcrumbs %}
     {{wapinet_breadcrumbs({
-    1: {'uri': path('downloads'), 'title': 'Развлечения'},
-    2: {'uri': path('file_index'), 'title': 'Файлообменник'},
-    3: {'uri': path('file_view', {'id': file.id}), 'title': file.originalFileName}
+    1: {'uri': path('file_index'), 'title': 'Файлообменник'},
+    2: {'uri': path('file_view', {'id': file.id}), 'title': file.originalFileName}
     })}}
 {% endblock %}
 

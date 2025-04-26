@@ -20,9 +20,26 @@ class PanelType extends AbstractType
         $builder->add('gist', CheckboxType::class, ['required' => false, 'label' => 'Блоги']);
         $builder->add('file', CheckboxType::class, ['required' => false, 'label' => 'Файлообменник']);
         $builder->add('archiver', CheckboxType::class, ['required' => false, 'label' => 'Архиватор']);
-        $builder->add('downloads', CheckboxType::class, ['required' => false, 'label' => 'Развлечения']);
-        $builder->add('utilities', CheckboxType::class, ['required' => false, 'label' => 'Утилиты']);
-        $builder->add('programming', CheckboxType::class, ['required' => false, 'label' => 'WEB мастерская']);
+        $builder->add('http', CheckboxType::class, ['required' => false, 'label' => 'HTTP клиент']);
+        $builder->add('whois', CheckboxType::class, ['required' => false, 'label' => 'WHOIS/RDAP']);
+        $builder->add('phpValidator', CheckboxType::class, ['required' => false, 'label' => 'PHP валидатор']);
+        $builder->add('htmlValidator', CheckboxType::class, ['required' => false, 'label' => 'HTML валидатор']);
+        $builder->add('cssValidator', CheckboxType::class, ['required' => false, 'label' => 'CSS валидатор']);
+        $builder->add('phpObfuscator', CheckboxType::class, ['required' => false, 'label' => 'PHP обфускатор']);
+        $builder->add('audioTags', CheckboxType::class, ['required' => false, 'label' => 'Редактор аудио тегов']);
+        $builder->add('rename', CheckboxType::class, ['required' => false, 'label' => 'Переименование файлов']);
+        $builder->add('email', CheckboxType::class, ['required' => false, 'label' => 'Отправка E-mail']);
+        $builder->add('browserInfo', CheckboxType::class, ['required' => false, 'label' => 'Информация о браузере']);
+        $builder->add('hash', CheckboxType::class, ['required' => false, 'label' => 'Хэширование данных']);
+        $builder->add('code', CheckboxType::class, ['required' => false, 'label' => 'Конвертирование данных']);
+        $builder->add('unicode', CheckboxType::class, ['required' => false, 'label' => 'Конвертер в Unicode']);
+        $builder->add('unicodeIcons', CheckboxType::class, ['required' => false, 'label' => 'Пиктограммы в Unicode']);
+        $builder->add('massMedia', CheckboxType::class, ['required' => false, 'label' => 'СМИ']);
+        $builder->add('rates', CheckboxType::class, ['required' => false, 'label' => 'Курсы валют']);
+        $builder->add('mobileCode', CheckboxType::class, ['required' => false, 'label' => 'Телефонные коды']);
+        $builder->add('openSource', CheckboxType::class, ['required' => false, 'label' => 'Open source разработки']);
+        $builder->add('textbook', CheckboxType::class, ['required' => false, 'label' => 'Учебники']);
+        $builder->add('videoCourses', CheckboxType::class, ['required' => false, 'label' => 'Видео-курсы']);
 
         $builder->add('submit', SubmitType::class, ['label' => 'Изменить']);
     }

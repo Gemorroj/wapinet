@@ -14,10 +14,10 @@ class UserSubscriber implements \Stringable, \JsonSerializable
     #[ORM\Column(type: 'integer', nullable: false)]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'boolean', nullable: false)]
+    #[ORM\Column(type: 'boolean', nullable: false, options: ['default' => true])]
     private bool $emailNews = true;
 
-    #[ORM\Column(type: 'boolean', nullable: false)]
+    #[ORM\Column(type: 'boolean', nullable: false, options: ['default' => true])]
     private bool $emailFriends = true;
 
     public function getId(): ?int

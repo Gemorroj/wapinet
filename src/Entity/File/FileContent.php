@@ -2,7 +2,7 @@
 
 namespace App\Entity\File;
 
-class FileContent
+readonly class FileContent
 {
     private int $size;
 

@@ -18,9 +18,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\HasLifecycleCallbacks]
 class User implements UserInterface, EquatableInterface, LegacyPasswordAuthenticatedUserInterface, \Stringable, \JsonSerializable
 {
-    public const LIFETIME = '5 minute';
-    public const SEX_MALE = 'm';
-    public const SEX_FEMALE = 'f';
+    public const string LIFETIME = '5 minute';
+    public const string SEX_MALE = 'm';
+    public const string SEX_FEMALE = 'f';
 
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -97,14 +97,14 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     /**
      * @var Collection<UserFriend>
      */
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserFriend::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: UserFriend::class, mappedBy: 'user', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[ORM\OrderBy(['id' => 'DESC'])]
     private Collection $friends;
 
     /**
      * @var Collection<UserFriend>
      */
-    #[ORM\OneToMany(mappedBy: 'friend', targetEntity: UserFriend::class)]
+    #[ORM\OneToMany(targetEntity: UserFriend::class, mappedBy: 'friend')]
     #[ORM\OrderBy(['id' => 'DESC'])]
     private Collection $friended;
 

@@ -125,16 +125,18 @@ class DefaultController extends AbstractController
         );
     }
 
+    #[\Deprecated('Obsolete. leave for search robots')]
     #[Route(path: '/utilities', name: 'utilities')]
     public function utilitiesAction(): Response
     {
-        return $this->render('Default/utilities.html.twig');
+        return $this->redirectToRoute('index');
     }
 
+    #[\Deprecated('Obsolete. leave for search robots')]
     #[Route(path: '/programming', name: 'programming')]
     public function programmingAction(): Response
     {
-        return $this->render('Default/programming.html.twig');
+        return $this->redirectToRoute('index');
     }
 
     #[Route(path: '/open_source', name: 'open_source')]
@@ -149,10 +151,11 @@ class DefaultController extends AbstractController
         return $this->redirect('https://github.com/Gemorroj/gmanager', 301);
     }
 
+    #[\Deprecated('Obsolete. leave for search robots')]
     #[Route(path: '/downloads', name: 'downloads')]
     public function downloadsAction(): Response
     {
-        return $this->render('Default/downloads.html.twig');
+        return $this->redirectToRoute('index');
     }
 
     #[Route(path: '/textbook', name: 'textbook')]

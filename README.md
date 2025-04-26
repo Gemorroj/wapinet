@@ -38,8 +38,6 @@ apt install php8.4-fpm php8.4-curl php8.4-gd php8.4-intl php8.4-mbstring php8.4-
 
 mysql_secure_installation
 echo '[mysqld]
-default-authentication-plugin=mysql_native_password
-
 skip-log-bin
 skip-external-locking
 skip-name-resolve

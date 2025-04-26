@@ -27,7 +27,7 @@ class Event
     #[ORM\Column(type: 'string', nullable: false)]
     private string $template = '';
 
-    #[ORM\Column(type: 'boolean', nullable: false)]
+    #[ORM\Column(type: 'boolean', nullable: false, options: ['default' => false])]
     private bool $needEmail = false;
 
     #[ORM\ManyToOne(targetEntity: User::class)]

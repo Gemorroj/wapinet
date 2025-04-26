@@ -1,7 +1,5 @@
 [mysqld]
 
-default-authentication-plugin=mysql_native_password
-
 skip-log-bin
 skip-external-locking
 skip-name-resolve
