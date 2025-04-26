@@ -69,7 +69,7 @@
         </ul>
     </div>
     <p style="font-weight: bold">
-        Если вы обнаружили информацию, размещённую против правил, пожалуйста, сообщите об этом на email: {{ wapinet_contact_email }}.
+        Если вы обнаружили информацию, размещённую против правил, пожалуйста, сообщите об этом на email: <a href="mailto:{{ wapinet_contact_email | wapinet_email_obfuscate | raw }}">{{ wapinet_contact_email | wapinet_email_obfuscate | raw }}</a>.
     </p>
     <h2>Конфиденциальность</h2>
     <div>
