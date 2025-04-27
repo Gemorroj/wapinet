@@ -2,8 +2,8 @@
 
 namespace App\Form\Type\Email;
 
+use App\Form\Type\CaptchaType;
 use App\Form\Type\FileUrlType;
-use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType as CoreEmailType;

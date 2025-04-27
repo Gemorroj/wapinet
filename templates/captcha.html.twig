@@ -1,12 +1,5 @@
 {% block captcha_widget %}
-    {% if is_human %}
-        -
-    {% else -%}
-        <img id="{{ image_id }}" src="{{ captcha_code }}" alt="код" width="{{ captcha_width }}" height="{{ captcha_height }}" />
-        {% if reload %}
-            <a data-role="button" data-inline="true" data-mini="true" data-icon="refresh" class="captcha-reload" href="#" data-path="{{ captcha_code }}" data-id="{{ image_id }}">Обновить</a>
-        {% endif %}
-        {{ form_widget(form, {'attr': {'autocomplete': 'off'}}) }}
-    {%- endif %}
+    <img id="{{ captcha_id }}" src="{{ captcha_url }}" alt="код" />
+    <a data-role="button" data-inline="true" data-mini="true" data-icon="refresh" class="captcha-reload" href="#" data-id="{{ captcha_id }}">Обновить</a>
+    {{ form_widget(form, {'attr': {'autocomplete': 'off'}}) }}
 {% endblock %}
-

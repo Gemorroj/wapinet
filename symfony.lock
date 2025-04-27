@@ -152,12 +152,6 @@
     "geshi/geshi": {
         "version": "v1.0.9.0"
     },
-    "gregwar/captcha": {
-        "version": "v1.1.5"
-    },
-    "gregwar/captcha-bundle": {
-        "version": "v2.0.4"
-    },
     "imagine/imagine": {
         "version": "v0.7.1"
     },

@@ -3,9 +3,9 @@
 namespace App\Form\Type\File;
 
 use App\Entity\File;
+use App\Form\Type\CaptchaType;
 use App\Form\Type\FileUrlType;
 use App\Form\Type\TagsType;
-use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType as CorePasswordType;

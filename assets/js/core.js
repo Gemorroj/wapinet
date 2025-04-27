@@ -297,7 +297,7 @@ $document.one("pagecreate", "#wapinet_user_profile", function () {
 
     if (vkId) {
         $.post(Routing.generate('vk_api_users_get'), {
-            'v': '5.131',
+            'v': '5.199',
             'fields': 'online,photo_200_orig',
             'user_ids': vkId
         }, Vk.show, 'json');
@@ -403,8 +403,19 @@ $document.on("change", 'input[type="file"]', function (e) {
 $document.on("click", 'a.captcha-reload', function () {
     let $this = $(this);
 
+    /**
+     * @var {HTMLImageElement|undefined} img
+     */
     let img = $(":mobile-pagecontainer").find('#' + $this.data('id'))[0];
-    img.src = $this.data('path') + '?n=' + (new Date()).getTime();
+    if (!img) {
+        console.log('Captcha element not found');
+        return;
+    }
+
+    let url = new URL(img.src);
+    url.searchParams.set('n', (new Date()).getTime());
+
+    img.src = url.toString();
 });
 
 
