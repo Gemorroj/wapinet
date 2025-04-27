@@ -10,7 +10,7 @@ use Doctrine\DBAL\Types\Type;
 
 class FileMetaType extends Type
 {
-    public const TYPE_NAME = 'file_meta';
+    public const string TYPE_NAME = 'file_meta';
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {

@@ -416,8 +416,8 @@ service nginx restart
 ### TODO:
 - ! проверка файлов на virustotal (возможно автоматическая) в файлообменнике (https://docs.virustotal.com/reference/files-scan + https://docs.virustotal.com/reference/analysis)
 - !!! Переделать интерфейс на vue/react/angular (огромная задача. jquery mobile официально мертв - https://blog.jquerymobile.com/2021/10/07/jquery-maintainers-continue-modernization-initiative-with-deprecation-of-jquery-mobile/)
-- Переделать редактор аудиотегов на https://github.com/duncan3dc/meta-audio/issues/3 (когда будут картинки)
-- ! Сделать возможность в обфускаторе загружать файлы
+- Переделать редактор аудиотегов на https://github.com/duncan3dc/meta-audio/issues/3 (когда будут картинки) или ffmpeg (https://dev.to/blueset/read-and-write-tags-of-music-files-with-ffmpeg-5c4a)
+- ! Сделать возможность в php обфускаторе загружать файлы. Или вообще удалить обфускатор из-за ущербности и неактуальности.
 - !! Актуализировать мобильные коды. Найти новые для разных андроидов.
 - Оболочка над nmap https://github.com/willdurand/nmap (работает медленно и выдает мало информации)
 - Проверка на спамеров http://www.stopforumspam.com/usage (https://github.com/Gemorroj/StopSpam)

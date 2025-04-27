@@ -33,6 +33,8 @@ final readonly class PhpObfuscator
      */
     private function cleanCode(string $code): string
     {
+        $code = \trim($code);
+
         // Верх
         if (0 === \stripos($code, '<?php')) {
             $code = \substr($code, 5);
