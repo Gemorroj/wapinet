@@ -32,7 +32,7 @@ final class Bridge
 
     public function getPager(): Pagerfanta
     {
-        $adapter = new Adapter($this->totalFound, $this->getResults());
+        $adapter = new FixedAdapter($this->totalFound, $this->getResults());
 
         return new Pagerfanta($adapter);
     }
