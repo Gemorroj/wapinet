@@ -39,8 +39,11 @@ final class Manticore
             ->from($source)
             ->where('MATCH(\'(@('.\implode(',', $fields).') '.$this->escapeMatch($search).')\')')
             ->orderBy($orderBy, 'DESC')
+            ->setMaxResults(($page - 1) * $this->maxPerPage)
+            ->setFirstResult($this->maxPerPage)
             ->fetchAllAssociative()
         ;
+
         $meta = $this->connection->executeQuery('SHOW META LIKE \'total_found\'')->fetchAssociative();
 
         $bridge = new Bridge($this->entityManager, $entityClass);

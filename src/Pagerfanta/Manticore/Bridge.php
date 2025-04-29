@@ -3,6 +3,7 @@
 namespace App\Pagerfanta\Manticore;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Pagerfanta\Adapter\FixedAdapter;
 use Pagerfanta\Pagerfanta;
 
 final class Bridge
@@ -31,7 +32,7 @@ final class Bridge
 
     public function getPager(): Pagerfanta
     {
-        $adapter = new Adapter($this->totalFound, $this->getResults());
+        $adapter = new FixedAdapter($this->totalFound, $this->getResults());
 
         return new Pagerfanta($adapter);
     }
@@ -46,13 +47,7 @@ final class Bridge
                 ->where($qb->expr()->in('r.'.$this->pkColumn, $this->matchesPks))
                 ->getQuery();
 
-            $unorderedResults = $q->getResult();
-
-            foreach ($this->matchesPks as $pk) {
-                if (isset($unorderedResults[$pk])) {
-                    $results[$pk] = $unorderedResults[$pk];
-                }
-            }
+            $results = $q->getResult();
         }
 
         return $results;
