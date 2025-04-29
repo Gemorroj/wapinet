@@ -110,18 +110,20 @@ class FileController extends AbstractController
         /** @var Manticore $client */
         $client = $this->container->get(Manticore::class);
 
-        $sphinxQl = $client->select($page)
-            ->from(['files'])
-            ->match(['original_file_name', 'description', 'tag_name'], $data['search'])
-        ;
-
         if ('date' === $data['sort']) {
-            $sphinxQl->orderBy('created_at_ts', 'desc');
+            $orderBy = 'created_at_ts';
         } else {
-            $sphinxQl->orderBy('WEIGHT()', 'desc');
+            $orderBy = 'WEIGHT()';
         }
 
-        return $client->getPagerfanta($sphinxQl, File::class);
+        return $client->getPage(
+            File::class,
+            'files',
+            ['original_file_name', 'description', 'tag_name'],
+            $data['search'],
+            $page,
+            $orderBy,
+        );
     }
 
     #[Route(path: '/categories', name: 'file_categories')]

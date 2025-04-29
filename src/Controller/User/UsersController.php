@@ -7,6 +7,7 @@ use App\Form\Type\User\SearchType;
 use App\Repository\UserRepository;
 use App\Service\Manticore;
 use App\Service\Paginate;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,13 +44,7 @@ class UsersController extends AbstractController
                 $search = $request->getSession()->get('users_search');
                 if ($key === $search['key']) {
                     $form->setData($search['data']);
-
-                    $sphinxQl = $manticore->select($page)
-                       ->from(['users'])
-                       ->match(['username', 'email', 'info'], $search['data']['search'])
-                    ;
-
-                    $pagerfanta = $manticore->getPagerfanta($sphinxQl, User::class);
+                    $pagerfanta = $this->searchManticore($manticore, $search['data'], $page);
                 }
             } else {
                 $query = $userRepository->getOnlineUsersQuery();
@@ -64,5 +59,17 @@ class UsersController extends AbstractController
             'pagerfanta' => $pagerfanta,
             'key' => $key,
         ]);
+    }
+
+    private function searchManticore(Manticore $client, array $data, int $page = 1): Pagerfanta
+    {
+        return $client->getPage(
+            User::class,
+            'users',
+            ['username', 'email', 'info'],
+            $data['search'],
+            $page,
+            'WEIGHT()',
+        );
     }
 }

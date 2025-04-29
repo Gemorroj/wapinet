@@ -4,8 +4,13 @@ services:
       context: ./.docker/manticore
       dockerfile: Dockerfile
     container_name: wapinet-manticore
+    restart: always
     ports:
       - "9306:9306" # mysql adapter
+    environment:
+      - CREATE_PLAIN_TABLES=1
+    depends_on:
+      - mysql
     ulimits:
       nproc: 65535
       nofile:

@@ -34,14 +34,12 @@ final readonly class Paginate
 
         $pagerfanta = new Pagerfanta($adapter);
         $pagerfanta->setMaxPerPage($maxPerPage ?? $this->parameterBag->get('wapinet_paginate_maxperpage'));
-        $pagerfanta->setCurrentPage(
-            $this->normalizePage($pagerfanta, $page)
-        );
+        $pagerfanta->setCurrentPage($this->normalizePage($pagerfanta, $page));
 
         return $pagerfanta;
     }
 
-    protected function normalizePage(Pagerfanta $pagerfanta, int $page): int
+    private function normalizePage(Pagerfanta $pagerfanta, int $page): int
     {
         $maxPage = $pagerfanta->getNbPages();
         $minPage = 1;

@@ -168,20 +168,22 @@ class GistController extends AbstractController
         ]);
     }
 
-    private function searchManticore(Manticore $manticore, array $data, int $page = 1): Pagerfanta
+    private function searchManticore(Manticore $client, array $data, int $page = 1): Pagerfanta
     {
-        $sphinxQl = $manticore->select($page)
-            ->from(['gist'])
-            ->match(['subject', 'body'], $data['search'])
-        ;
-
         if ('date' === $data['sort']) {
-            $sphinxQl->orderBy('created_at_ts', 'desc');
+            $orderBy = 'created_at_ts';
         } else {
-            $sphinxQl->orderBy('WEIGHT()', 'desc');
+            $orderBy = 'WEIGHT()';
         }
 
-        return $manticore->getPagerfanta($sphinxQl, Gist::class);
+        return $client->getPage(
+            Gist::class,
+            'gist',
+            ['subject', 'body'],
+            $data['search'],
+            $page,
+            $orderBy,
+        );
     }
 
     #[Route(path: '/edit/{id}', name: 'gist_edit', requirements: ['id' => '\d+'])]

@@ -95,9 +95,6 @@
     "evenement/evenement": {
         "version": "v2.1.0"
     },
-    "foolz/sphinxql-query-builder": {
-        "version": "2.0.0"
-    },
     "friendsofphp/php-cs-fixer": {
         "version": "3.25",
         "recipe": {
