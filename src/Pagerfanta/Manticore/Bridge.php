@@ -47,12 +47,7 @@ final class Bridge
                 ->where($qb->expr()->in('r.'.$this->pkColumn, $this->matchesPks))
                 ->getQuery();
 
-            $unorderedResults = $q->getResult();
-            foreach ($this->matchesPks as $pk) {
-                if (isset($unorderedResults[$pk])) {
-                    $results[$pk] = $unorderedResults[$pk];
-                }
-            }
+            $results = $q->getResult();
         }
 
         return $results;
