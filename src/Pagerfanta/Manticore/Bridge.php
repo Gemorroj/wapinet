@@ -39,7 +39,6 @@ final class Bridge
 
     private function getResults(): array
     {
-        $results = [];
         if ($this->matchesPks) {
             $qb = $this->entityManager->createQueryBuilder();
             $q = $qb->select('r')
@@ -47,9 +46,9 @@ final class Bridge
                 ->where($qb->expr()->in('r.'.$this->pkColumn, $this->matchesPks))
                 ->getQuery();
 
-            $results = $q->getResult();
+            return $q->getArrayResult();
         }
 
-        return $results;
+        return [];
     }
 }
