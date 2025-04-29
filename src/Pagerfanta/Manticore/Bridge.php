@@ -46,7 +46,7 @@ final class Bridge
                 ->where($qb->expr()->in('r.'.$this->pkColumn, $this->matchesPks))
                 ->getQuery();
 
-            return $q->getArrayResult();
+            return $q->getResult();
         }
 
         return [];
