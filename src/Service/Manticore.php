@@ -39,8 +39,8 @@ final class Manticore
             ->from($source)
             ->where('MATCH(\'(@('.\implode(',', $fields).') '.$this->escapeMatch($search).')\')')
             ->orderBy($orderBy, 'DESC')
-            ->setMaxResults(($page - 1) * $this->maxPerPage)
-            ->setFirstResult($this->maxPerPage)
+            ->setFirstResult(($page - 1) * $this->maxPerPage)
+            ->setMaxResults($this->maxPerPage)
             ->fetchAllAssociative()
         ;
 
