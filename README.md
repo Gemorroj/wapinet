@@ -194,9 +194,7 @@ index gist
     charset_table = 0..9, english, russian, _
 }' > /etc/manticoresearch/manticore.conf
 
-echo '0 2 * * * indexer --rotate --all  > /dev/null 2>&1' -> /var/spool/cron/crontabs/manticore
-chown manticore:crontab /var/spool/cron/crontabs/manticore
-chmod 600 /var/spool/cron/crontabs/manticore
+echo '0 * * * * manticore indexer --rotate --all > /dev/null 2>&1' > /etc/cron.d/manticore
 
 
 # composer
