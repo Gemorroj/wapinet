@@ -1,4 +1,4 @@
-FROM mysql:8-debian
+FROM mysql:8
 
 RUN set -xe \
     && rm /etc/apt/sources.list.d/mysql.list \
