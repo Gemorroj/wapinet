@@ -23,7 +23,7 @@
 
         "doctrine/doctrine-bundle": "^2.14.0",
         "doctrine/doctrine-migrations-bundle": "^3.4.1",
-        "doctrine/orm": "^3.3.2",
+        "doctrine/orm": "^3.3.3",
 
         "phpdocumentor/reflection-docblock": "^5.6.2",
         "phpstan/phpdoc-parser": "^2.1.0",
@@ -56,8 +56,8 @@
         "symfony/webpack-encore-bundle": "^2.2",
         "symfony/scheduler": "7.2.*",
 
-        "twig/extra-bundle": "^3.20",
-        "twig/twig": "^3.20",
+        "twig/extra-bundle": "^3.21",
+        "twig/twig": "^3.21.1",
 
         "babdev/pagerfanta-bundle": "^4.5",
         "pagerfanta/doctrine-collections-adapter": "^4.7.1",
@@ -96,7 +96,7 @@
         "symfony/stopwatch": "7.2.*",
         "symfony/var-dumper": "7.2.*",
         "symfony/web-profiler-bundle": "7.2.*",
-        "phpstan/phpstan": "^2.1.13",
+        "phpstan/phpstan": "^2.1.14",
         "phpstan/phpstan-symfony": "^2.0.4",
         "phpstan/phpstan-phpunit": "^2.0.6",
         "phpstan/phpstan-doctrine": "^2.0.2",
