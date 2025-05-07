@@ -1,8 +1,1 @@
-FROM mysql:8
-
-RUN set -xe \
-    && rm /etc/apt/sources.list.d/mysql.list \
-    && apt-get update \
-    && apt-get upgrade -y \
-    && apt-get clean \
-    && rm -rf /tmp/*
+FROM mysql:8.4
