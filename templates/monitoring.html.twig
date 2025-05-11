@@ -261,20 +261,20 @@
                 <div class="card-body">
                     {% if info_mysql %}
                         <dl class="row">
-                            <dt class="col-5 text-end monitoring-label">Версия:</dt>
-                            <dd class="col-7 monitoring-value">{{ info_mysql.globalVariables['version'] }}</dd>
-                            <dt class="col-5 text-end monitoring-label">SQL Mode:</dt>
-                            <dd class="col-7 monitoring-value">{{ info_mysql.globalVariables['sql_mode'] }}</dd>
-                            <dt class="col-5 text-end monitoring-label">Max connections:</dt>
-                            <dd class="col-7 monitoring-value">{{ info_mysql.globalVariables['max_connections']|wapinet_count }}</dd>
-                            <dt class="col-5 text-end monitoring-label">Max used connections:</dt>
-                            <dd class="col-7 monitoring-value">{{ info_mysql.globalStatus['Max_used_connections']|wapinet_count }}</dd>
-                            <dt class="col-5 text-end monitoring-label">Uptime:</dt>
-                            <dd class="col-7 monitoring-value">{{ info_mysql.globalStatus['Uptime']|wapinet_length }}</dd>
-                            <dt class="col-5 text-end monitoring-label">Innodb Buffer Pool Size:</dt>
-                            <dd class="col-7 monitoring-value">{{ info_mysql.globalVariables['innodb_buffer_pool_size']|wapinet_size }}</dd>
-                            <dt class="col-5 text-end monitoring-label">Data Length:</dt>
-                            <dd class="col-7 monitoring-value">
+                            <dt class="col-4 text-end monitoring-label">Версия:</dt>
+                            <dd class="col-8 monitoring-value">{{ info_mysql.globalVariables['version'] }}</dd>
+                            <dt class="col-4 text-end monitoring-label">SQL Mode:</dt>
+                            <dd class="col-8 monitoring-value">{{ info_mysql.globalVariables['sql_mode'] }}</dd>
+                            <dt class="col-4 text-end monitoring-label">Max connections:</dt>
+                            <dd class="col-8 monitoring-value">{{ info_mysql.globalVariables['max_connections']|wapinet_count }}</dd>
+                            <dt class="col-4 text-end monitoring-label">Max used connections:</dt>
+                            <dd class="col-8 monitoring-value">{{ info_mysql.globalStatus['Max_used_connections']|wapinet_count }}</dd>
+                            <dt class="col-4 text-end monitoring-label">Uptime:</dt>
+                            <dd class="col-8 monitoring-value">{{ info_mysql.globalStatus['Uptime']|wapinet_length }}</dd>
+                            <dt class="col-4 text-end monitoring-label">Innodb Buffer Pool Size:</dt>
+                            <dd class="col-8 monitoring-value">{{ info_mysql.globalVariables['innodb_buffer_pool_size']|wapinet_size }}</dd>
+                            <dt class="col-4 text-end monitoring-label">Data Length:</dt>
+                            <dd class="col-8 monitoring-value">
                                 {% for data in info_mysql.dataLength %}
                                     {% if data.tableSchema != 'information_schema' and data.tableSchema != 'performance_schema' %}
                                         <strong>{{ data.tableSchema }}.{{ data.tableName }}</strong>: Data: {{ data.dataLength |wapinet_size }}, Index: {{ data.indexLength |wapinet_size }}<br />
