@@ -241,7 +241,11 @@
                             <dt class="col-5 text-end monitoring-label">Версия:</dt>
                             <dd class="col-7 monitoring-value">{{ info_nginx.nginxVersion }}</dd>
                             <dt class="col-5 text-end monitoring-label">Аргументы:</dt>
-                            <dd class="col-7 monitoring-value">{{ info_nginx.args }}</dd>
+                            <dd class="col-7 monitoring-value">
+                                <button type="button" class="btn btn-default" title="Nging args" onclick="alert('{{ info_nginx.args|split(' ')|join("\\n") }}');">
+                                    {{ info_nginx.args|split(' ')|length|wapinet_count }} всего
+                                </button>
+                            </dd>
                         </dl>
                     {% else %}
                         Не найден
@@ -257,10 +261,18 @@
                 <div class="card-body">
                     {% if info_mysql %}
                         <dl class="row">
-                            <dt class="col-5 text-end monitoring-label">Global Status:</dt>
-                            <dd class="col-7 monitoring-value">{{ info_mysql.globalStatus|json_encode }}</dd>
-                            <dt class="col-5 text-end monitoring-label">Data Length:</dt>
-                            <dd class="col-7 monitoring-value">{{ info_mysql.dataLength|json_encode }}</dd>
+                            <dt class="col-6 text-end monitoring-label">Max used connections:</dt>
+                            <dd class="col-6 monitoring-value">{{ info_mysql.globalStatus['Max_used_connections']|wapinet_count }}</dd>
+                            <dt class="col-6 text-end monitoring-label">Uptime:</dt>
+                            <dd class="col-6 monitoring-value">{{ info_mysql.globalStatus['Uptime']|date('%a дней %h часов %i минут') }}</dd>
+                            <dt class="col-6 text-end monitoring-label">Global Variables:</dt>
+                            <dd class="col-6 monitoring-value">{{ info_mysql.globalVariables|json_encode }}</dd>
+                            <dt class="col-6 text-end monitoring-label">Data Length:</dt>
+                            <dd class="col-6 monitoring-value">
+                                {% for data in info_mysql.dataLength %}
+                                    {{ data|json_encode }}<br />
+                                {% endfor %}
+                            </dd>
                         </dl>
                     {% else %}
                         Не найден
@@ -277,7 +289,9 @@
                     {% if info_manticore %}
                         <dl class="row">
                             <dt class="col-5 text-end monitoring-label">Global Variables:</dt>
-                            <dd class="col-7 monitoring-value">{{ info_manticore.globalVariables|json_encode }}</dd>
+                            <dd class="col-7 monitoring-value">
+                                <pretty-json expand="2">{{ info_manticore.globalVariables|json_encode }}</pretty-json>
+                            </dd>
                             <dt class="col-5 text-end monitoring-label">Status:</dt>
                             <dd class="col-7 monitoring-value">{{ info_manticore.status|json_encode }}</dd>
                             <dt class="col-5 text-end monitoring-label">Settings:</dt>
