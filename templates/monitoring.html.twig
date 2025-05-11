@@ -270,7 +270,7 @@
                             <dt class="col-5 text-end monitoring-label">Max used connections:</dt>
                             <dd class="col-7 monitoring-value">{{ info_mysql.globalStatus['Max_used_connections']|wapinet_count }}</dd>
                             <dt class="col-5 text-end monitoring-label">Uptime:</dt>
-                            <dd class="col-7 monitoring-value">{{ info_mysql.globalStatus['Uptime']|date('%a дней %h часов %i минут') }}</dd>
+                            <dd class="col-7 monitoring-value">{{ info_mysql.globalStatus['Uptime']|wapinet_length }}</dd>
                             <dt class="col-5 text-end monitoring-label">Innodb Buffer Pool Size:</dt>
                             <dd class="col-7 monitoring-value">{{ info_mysql.globalVariables['innodb_buffer_pool_size']|wapinet_size }}</dd>
                             <dt class="col-5 text-end monitoring-label">Data Length:</dt>
@@ -299,7 +299,7 @@
                             <dt class="col-5 text-end monitoring-label">Версия:</dt>
                             <dd class="col-7 monitoring-value">{{ info_manticore.status['version'] }}</dd>
                             <dt class="col-5 text-end monitoring-label">Uptime:</dt>
-                            <dd class="col-7 monitoring-value">{{ info_manticore.status['uptime']|date('%a дней %h часов %i минут') }}</dd>
+                            <dd class="col-7 monitoring-value">{{ info_manticore.status['uptime']|wapinet_length }}</dd>
                             <dt class="col-5 text-end monitoring-label">Поисков:</dt>
                             <dd class="col-7 monitoring-value">{{ info_manticore.status['command_search']|wapinet_count }}</dd>
                         </dl>
