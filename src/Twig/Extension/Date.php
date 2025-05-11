@@ -126,36 +126,36 @@ class Date extends AbstractExtension
 
     public function getLength(int|float|string $seconds): string
     {
-        $length = '';
+        $length = [];
         $d1 = new \DateTime();
         $d2 = new \DateTime('- '.\round($seconds).' seconds');
 
         $iv = $d2->diff($d1);
 
         if ($iv->y) {
-            $length .= $iv->y.'г.';
+            $length[] = $iv->y.'г.';
         }
 
         if ($iv->m) {
-            $length .= $iv->m.'м.';
+            $length[] = $iv->m.'м.';
         }
 
         if ($iv->d) {
-            $length .= $iv->d.'д.';
+            $length[] = $iv->d.'д.';
         }
 
         if ($iv->h) {
-            $length .= $iv->h.'ч.';
+            $length[] = $iv->h.'ч.';
         }
 
         if ($iv->i) {
-            $length .= $iv->i.'мин.';
+            $length[] = $iv->i.'мин.';
         }
 
         if ($iv->s) {
-            $length .= $iv->s.'сек.';
+            $length[] = $iv->s.'сек.';
         }
 
-        return $length;
+        return \implode(' ', $length);
     }
 }
