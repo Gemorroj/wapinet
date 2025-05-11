@@ -3,17 +3,17 @@
 {% block content_title %}Мониторинг{% endblock %}
 
 {% types {
-    info_general: '\Ginfo\Info\General',
-    info_php: '\Ginfo\Info\Php',
-    info_selinux: '?\Ginfo\Info\Selinux',
-    info_cpu: '?\Ginfo\Info\Cpu',
-    info_network: 'list<\Ginfo\Info\Network>',
-    info_disk: '\Ginfo\Info\Disk',
-    info_services: 'list<\Ginfo\Info\Services>',
-    info_memory: '?\Ginfo\Info\Memory',
-    info_nginx: '?\Ginfo\Info\Nginx',
-    info_mysql: '?\Ginfo\Info\Mysql',
-    info_manticore: '?\Ginfo\Info\Manticore',
+    info_general: '\\Ginfo\\Info\\General',
+    info_php: '\\Ginfo\\Info\\Php',
+    info_selinux: '?\\Ginfo\\Info\\Selinux',
+    info_cpu: '?\\Ginfo\\Info\\Cpu',
+    info_network: 'list<\\Ginfo\\Info\\Network>',
+    info_disk: '\\Ginfo\\Info\\Disk',
+    info_services: 'list<\\Ginfo\\Info\\Services>',
+    info_memory: '?\\Ginfo\\Info\\Memory',
+    info_nginx: '?\\Ginfo\\Info\\Nginx',
+    info_mysql: '?\\Ginfo\\Info\\Mysql',
+    info_manticore: '?\\Ginfo\\Info\\Manticore',
 } %}
 
 {% block main %}
@@ -242,7 +242,7 @@
                             <dd class="col-7 monitoring-value">{{ info_nginx.nginxVersion }}</dd>
                             <dt class="col-5 text-end monitoring-label">Аргументы:</dt>
                             <dd class="col-7 monitoring-value">
-                                <button type="button" class="btn btn-default" title="Nginx args" onclick="alert('{{ info_nginx.args|replace(' ', "\\n")|escape('html_attr') }}');">
+                                <button type="button" class="btn btn-default" title="Nginx args" onclick="alert('{{ info_nginx.args|replace({' ', "\\n"})|escape('html_attr') }}');">
                                     {{ info_nginx.args|split(' ')|length|wapinet_count }} всего
                                 </button>
                             </dd>
