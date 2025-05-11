@@ -251,7 +251,7 @@
                             <dt class="col-5 text-end monitoring-label">Процессы:</dt>
                             <dd class="col-7 monitoring-value">
                                 {% for process in info_nginx.processes %}
-                                    <strong>PID: {{ process.pid }}</strong>: VmPeak: {{ process.vmPeak|wapinet_size }}, VmSize: {{ process.vmSize|wapinet_size }}<br />
+                                    <strong>PID {{ process.pid }}</strong>{{ process.master ? '(master)' : '' }}: VmPeak: {{ process.vmPeak|wapinet_size }}, VmSize: {{ process.vmSize|wapinet_size }}<br />
                                 {% endfor %}
                             </dd>
                             <dt class="col-5 text-end monitoring-label">Аргументы:</dt>
