@@ -163,7 +163,7 @@
                         <dd class="col-7 monitoring-value">{{ info_php.realpathCacheSizeUsed|wapinet_size }} использовано из {{ info_php.realpathCacheSizeAllowed|wapinet_size }}</dd>
                         <dt class="col-5 text-end monitoring-label">Расширения PHP:</dt>
                         <dd class="col-7 monitoring-value">
-                            <button type="button" class="btn btn-default" title="PHP modules" onclick="alert('{{ info_php.extensions|sort|join("\\n") }}');">
+                            <button type="button" class="btn btn-default" title="PHP modules" onclick="alert('{{ info_php.extensions|sort|join("\\n")|escape('html_attr') }}');">
                                 {{ info_php.extensions|length|wapinet_count }} всего
                             </button>
                         </dd>
@@ -242,7 +242,7 @@
                             <dd class="col-7 monitoring-value">{{ info_nginx.nginxVersion }}</dd>
                             <dt class="col-5 text-end monitoring-label">Аргументы:</dt>
                             <dd class="col-7 monitoring-value">
-                                <button type="button" class="btn btn-default" title="Nging args" onclick="alert('{{ info_nginx.args|split(' ')|join("\\n") }}');">
+                                <button type="button" class="btn btn-default" title="Nginx args" onclick="alert('{{ info_nginx.args|split(' ')|join("\\n")|escape('html_attr') }}');">
                                     {{ info_nginx.args|split(' ')|length|wapinet_count }} всего
                                 </button>
                             </dd>
@@ -261,16 +261,26 @@
                 <div class="card-body">
                     {% if info_mysql %}
                         <dl class="row">
+                            <dt class="col-6 text-end monitoring-label">Version:</dt>
+                            <dd class="col-6 monitoring-value">{{ info_mysql.globalVariables['version'] }}</dd>
+                            <dt class="col-6 text-end monitoring-label">SQL Mode:</dt>
+                            <dd class="col-6 monitoring-value">{{ info_mysql.globalVariables['sql_mode'] }}</dd>
+                            <dt class="col-6 text-end monitoring-label">Max connections:</dt>
+                            <dd class="col-6 monitoring-value">{{ info_mysql.globalVariables['max_connections']|wapinet_count }}</dd>
                             <dt class="col-6 text-end monitoring-label">Max used connections:</dt>
                             <dd class="col-6 monitoring-value">{{ info_mysql.globalStatus['Max_used_connections']|wapinet_count }}</dd>
+
                             <dt class="col-6 text-end monitoring-label">Uptime:</dt>
                             <dd class="col-6 monitoring-value">{{ info_mysql.globalStatus['Uptime']|date('%a дней %h часов %i минут') }}</dd>
+
                             <dt class="col-6 text-end monitoring-label">Global Variables:</dt>
-                            <dd class="col-6 monitoring-value">{{ info_mysql.globalVariables|json_encode }}</dd>
+                            <dd class="col-6 monitoring-value">{{ info_mysql.globalStatus|json_encode }}</dd>
                             <dt class="col-6 text-end monitoring-label">Data Length:</dt>
                             <dd class="col-6 monitoring-value">
                                 {% for data in info_mysql.dataLength %}
-                                    {{ data|json_encode }}<br />
+                                    {{ data.tableSchema }}.{{ data.tableName }}<br />
+                                    Data: {{ data.dataLength |wapinet_size }}<br />
+                                    Index: {{ data.indexLength |wapinet_size }}<br />
                                 {% endfor %}
                             </dd>
                         </dl>
@@ -289,9 +299,7 @@
                     {% if info_manticore %}
                         <dl class="row">
                             <dt class="col-5 text-end monitoring-label">Global Variables:</dt>
-                            <dd class="col-7 monitoring-value">
-                                <pretty-json expand="2">{{ info_manticore.globalVariables|json_encode }}</pretty-json>
-                            </dd>
+                            <dd class="col-7 monitoring-value">{{ info_manticore.globalVariables|json_encode }}</dd>
                             <dt class="col-5 text-end monitoring-label">Status:</dt>
                             <dd class="col-7 monitoring-value">{{ info_manticore.status|json_encode }}</dd>
                             <dt class="col-5 text-end monitoring-label">Settings:</dt>
