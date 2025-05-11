@@ -238,7 +238,10 @@
                 <div class="card-body">
                     {% if info_nginx %}
                         <dl class="row">
-                            {{ info_nginx|json_encode }}
+                            <dt class="col-5 text-end monitoring-label">Версия:</dt>
+                            <dd class="col-7 monitoring-value">{{ info_nginx.nginxVersion }}</dd>
+                            <dt class="col-5 text-end monitoring-label">Аргументы:</dt>
+                            <dd class="col-7 monitoring-value">{{ info_nginx.args }}</dd>
                         </dl>
                     {% else %}
                         Не найден
@@ -254,7 +257,10 @@
                 <div class="card-body">
                     {% if info_mysql %}
                         <dl class="row">
-                            {{ info_mysql|json_encode }}
+                            <dt class="col-5 text-end monitoring-label">Global Status:</dt>
+                            <dd class="col-7 monitoring-value">{{ info_mysql.globalStatus|json_encode }}</dd>
+                            <dt class="col-5 text-end monitoring-label">Data Length:</dt>
+                            <dd class="col-7 monitoring-value">{{ info_mysql.dataLength|json_encode }}</dd>
                         </dl>
                     {% else %}
                         Не найден
@@ -270,7 +276,14 @@
                 <div class="card-body">
                     {% if info_manticore %}
                         <dl class="row">
-                            {{ info_manticore|json_encode }}
+                            <dt class="col-5 text-end monitoring-label">Global Variables:</dt>
+                            <dd class="col-7 monitoring-value">{{ info_manticore.globalVariables|json_encode }}</dd>
+                            <dt class="col-5 text-end monitoring-label">Status:</dt>
+                            <dd class="col-7 monitoring-value">{{ info_manticore.status|json_encode }}</dd>
+                            <dt class="col-5 text-end monitoring-label">Settings:</dt>
+                            <dd class="col-7 monitoring-value">{{ info_manticore.settings|json_encode }}</dd>
+                            <dt class="col-5 text-end monitoring-label">Agent Status:</dt>
+                            <dd class="col-7 monitoring-value">{{ info_manticore.agentStatus|json_encode }}</dd>
                         </dl>
                     {% else %}
                         Не найден
