@@ -240,6 +240,20 @@
                         <dl class="row">
                             <dt class="col-5 text-end monitoring-label">Версия:</dt>
                             <dd class="col-7 monitoring-value">{{ info_nginx.nginxVersion }}</dd>
+                            <dt class="col-5 text-end monitoring-label">Uptime:</dt>
+                            <dd class="col-7 monitoring-value">
+                                {% for process in info_nginx.processes %}
+                                    {% if process.master %}
+                                        {{ process.uptime|wapinet_length }}
+                                    {% endif %}
+                                {% endfor %}
+                            </dd>
+                            <dt class="col-5 text-end monitoring-label">Процессы:</dt>
+                            <dd class="col-7 monitoring-value">
+                                {% for process in info_nginx.processes %}
+                                    <strong>PID: {{ process.pid }}</strong>: VmPeak: {{ process.vmPeak|wapinet_size }}, VmSize: {{ process.vmSize|wapinet_size }}<br />
+                                {% endfor %}
+                            </dd>
                             <dt class="col-5 text-end monitoring-label">Аргументы:</dt>
                             <dd class="col-7 monitoring-value">
                                 <button type="button" class="btn btn-default" title="Nginx args" onclick="alert('{{ info_nginx.args|escape('js')|replace({'\\u0020': "\\n"}) }}');">
