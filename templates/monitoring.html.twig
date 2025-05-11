@@ -242,7 +242,7 @@
                             <dd class="col-7 monitoring-value">{{ info_nginx.nginxVersion }}</dd>
                             <dt class="col-5 text-end monitoring-label">Аргументы:</dt>
                             <dd class="col-7 monitoring-value">
-                                <button type="button" class="btn btn-default" title="Nginx args" onclick="alert('{{ info_nginx.args|replace({' ': "\\n"})|escape('html_attr') }}');">
+                                <button type="button" class="btn btn-default" title="Nginx args" onclick="alert('{{ info_nginx.args|replace({' ': "\\n"})|escape('js') }}');">
                                     {{ info_nginx.args|split(' ')|length|wapinet_count }} всего
                                 </button>
                             </dd>
