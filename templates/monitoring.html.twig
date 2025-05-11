@@ -272,7 +272,7 @@
                             <dt class="col-6 text-end monitoring-label">Uptime:</dt>
                             <dd class="col-6 monitoring-value">{{ info_mysql.globalStatus['Uptime']|date('%a дней %h часов %i минут') }}</dd>
                             <dt class="col-6 text-end monitoring-label">Innodb Buffer Pool Size:</dt>
-                            <dd class="col-6 monitoring-value">{{ info_mysql.globalVariables['innodb_buffer_pool_size'] wapinet_size }}</dd>
+                            <dd class="col-6 monitoring-value">{{ info_mysql.globalVariables['innodb_buffer_pool_size']|wapinet_size }}</dd>
                             <dt class="col-6 text-end monitoring-label">Data Length:</dt>
                             <dd class="col-6 monitoring-value">
                                 {% for data in info_mysql.dataLength %}
