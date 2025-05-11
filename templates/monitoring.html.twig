@@ -152,7 +152,7 @@
                         <dt class="col-5 text-end monitoring-label">Ядро:</dt>
                         <dd class="col-7 monitoring-value">{{ info_general.kernel }}</dd>
                         <dt class="col-5 text-end monitoring-label">Uptime:</dt>
-                        <dd class="col-7 monitoring-value">{{ info_general.uptime ? info_general.uptime|date('%a дней %h часов %i минут') : 'Неизвестно' }}</dd>
+                        <dd class="col-7 monitoring-value">{{ info_general.uptime ? info_general.uptime|wapinet_length : 'Неизвестно' }}</dd>
                         <dt class="col-5 text-end monitoring-label">Selinux:</dt>
                         <dd class="col-7 monitoring-value">{{ info_selinux ? (info_selinux.enabled ? 'Вкл.' : 'Выкл.') : 'Отсутствует' }}</dd>
                         <dt class="col-5 text-end monitoring-label">PHP:</dt>

@@ -124,14 +124,20 @@ class Date extends AbstractExtension
         return $datetime->format('Hч.iм.sс.');
     }
 
-    public function getLength(int|float|string $seconds): string
+    /**
+     * @param int|float|string|\DateInterval $value seconds or \DateInterval
+     */
+    public function getLength(int|float|string|\DateInterval $value): string
     {
+        if ($value instanceof \DateInterval) {
+            $iv = $value;
+        } else {
+            $d1 = new \DateTime();
+            $d2 = new \DateTime('- '.\round($value).' seconds');
+            $iv = $d2->diff($d1);
+        }
+
         $length = [];
-        $d1 = new \DateTime();
-        $d2 = new \DateTime('- '.\round($seconds).' seconds');
-
-        $iv = $d2->diff($d1);
-
         if ($iv->y) {
             $length[] = $iv->y.'г.';
         }
