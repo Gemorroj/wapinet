@@ -289,11 +289,14 @@
                             <dd class="col-8 monitoring-value">{{ info_mysql.globalVariables['innodb_buffer_pool_size']|wapinet_size }}</dd>
                             <dt class="col-4 text-end monitoring-label">Data Length:</dt>
                             <dd class="col-8 monitoring-value">
+                                {% set data_length = 0 %}
+                                {% set index_length = 0 %}
                                 {% for data in info_mysql.dataLength %}
-                                    {% if data.tableSchema != 'information_schema' and data.tableSchema != 'performance_schema' %}
-                                        <strong>{{ data.tableSchema }}.{{ data.tableName }}</strong>: Data: {{ data.dataLength |wapinet_size }}, Index: {{ data.indexLength |wapinet_size }}<br />
-                                    {% endif %}
+                                    {% set data_length = data_length + data.dataLength %}
+                                    {% set index_length = index_length + data.indexLength %}
                                 {% endfor %}
+                                Data Size: {{ data_length|wapinet_size }}<br />
+                                Index Size: {{ index_length|wapinet_size }}<br />
                             </dd>
                         </dl>
                     {% else %}
