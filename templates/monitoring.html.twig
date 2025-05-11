@@ -163,7 +163,7 @@
                         <dd class="col-7 monitoring-value">{{ info_php.realpathCacheSizeUsed|wapinet_size }} использовано из {{ info_php.realpathCacheSizeAllowed|wapinet_size }}</dd>
                         <dt class="col-5 text-end monitoring-label">Расширения PHP:</dt>
                         <dd class="col-7 monitoring-value">
-                            <button type="button" class="btn btn-default" title="PHP modules" onclick="alert('{{ info_php.extensions|sort|join("\\n")|escape('html_attr') }}');">
+                            <button type="button" class="btn btn-default" title="PHP modules" onclick="alert('{{ info_php.extensions|sort|join(' ')|escape('js')|replace({'\u0020': "\\n"}) }}');">
                                 {{ info_php.extensions|length|wapinet_count }} всего
                             </button>
                         </dd>
@@ -242,7 +242,7 @@
                             <dd class="col-7 monitoring-value">{{ info_nginx.nginxVersion }}</dd>
                             <dt class="col-5 text-end monitoring-label">Аргументы:</dt>
                             <dd class="col-7 monitoring-value">
-                                <button type="button" class="btn btn-default" title="Nginx args" onclick="alert('{{ info_nginx.args|replace({' ': "\\n"})|escape('js') }}');">
+                                <button type="button" class="btn btn-default" title="Nginx args" onclick="alert('{{ info_nginx.args|escape('js')|replace({'\u0020': "\\n"}) }}');">
                                     {{ info_nginx.args|split(' ')|length|wapinet_count }} всего
                                 </button>
                             </dd>
