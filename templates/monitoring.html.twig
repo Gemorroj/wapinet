@@ -163,7 +163,7 @@
                         <dd class="col-7 monitoring-value">{{ info_php.realpathCacheSizeUsed|wapinet_size }} использовано из {{ info_php.realpathCacheSizeAllowed|wapinet_size }}</dd>
                         <dt class="col-5 text-end monitoring-label">Расширения PHP:</dt>
                         <dd class="col-7 monitoring-value">
-                            <button type="button" class="btn btn-default" title="PHP modules" onclick="alert('{{ info_php.extensions|sort|join("\\n")|escape('html_attr') }}');">
+                            <button type="button" class="btn btn-default" title="PHP modules" onclick="alert('{{ info_php.extensions|sort|join("\\n")|escape('html_attr')|raw }}');">
                                 {{ info_php.extensions|length|wapinet_count }} всего
                             </button>
                         </dd>
@@ -242,7 +242,7 @@
                             <dd class="col-7 monitoring-value">{{ info_nginx.nginxVersion }}</dd>
                             <dt class="col-5 text-end monitoring-label">Аргументы:</dt>
                             <dd class="col-7 monitoring-value">
-                                <button type="button" class="btn btn-default" title="Nginx args" onclick="alert('{{ info_nginx.args|split(' ')|join("\\n")|escape('html_attr') }}');">
+                                <button type="button" class="btn btn-default" title="Nginx args" onclick="alert('{{ info_nginx.args|split(' ')|join("\\n")|escape('html_attr')|raw }}');">
                                     {{ info_nginx.args|split(' ')|length|wapinet_count }} всего
                                 </button>
                             </dd>
@@ -274,13 +274,13 @@
                             <dd class="col-6 monitoring-value">{{ info_mysql.globalStatus['Uptime']|date('%a дней %h часов %i минут') }}</dd>
 
                             <dt class="col-6 text-end monitoring-label">Global Variables:</dt>
-                            <dd class="col-6 monitoring-value">{{ info_mysql.globalStatus|json_encode }}</dd>
+                            <dd class="col-6 monitoring-value">{{ info_mysql.globalVariables|json_encode }}</dd>
                             <dt class="col-6 text-end monitoring-label">Data Length:</dt>
                             <dd class="col-6 monitoring-value">
                                 {% for data in info_mysql.dataLength %}
-                                    {{ data.tableSchema }}.{{ data.tableName }}<br />
-                                    Data: {{ data.dataLength |wapinet_size }}<br />
-                                    Index: {{ data.indexLength |wapinet_size }}<br />
+                                    {% if data.tableSchema != 'information_schema' and data.tableSchema != 'performance_schema' %}
+                                        {{ data.tableSchema }}.{{ data.tableName }}: Data: {{ data.dataLength |wapinet_size }}, Index: {{ data.indexLength |wapinet_size }}<br />
+                                    {% endif %}
                                 {% endfor %}
                             </dd>
                         </dl>
