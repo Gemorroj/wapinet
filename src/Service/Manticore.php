@@ -25,6 +25,11 @@ final class Manticore
         ]);
     }
 
+    public function getConnection(): Connection
+    {
+        return $this->connection;
+    }
+
     /**
      * @param string[] $fields
      */

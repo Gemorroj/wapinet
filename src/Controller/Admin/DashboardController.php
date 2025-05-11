@@ -8,6 +8,7 @@ use App\Entity\Guestbook;
 use App\Entity\News;
 use App\Entity\Tag;
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -49,19 +50,24 @@ class DashboardController extends AbstractDashboardController
 
     public function index(): Response
     {
-        $info = $this->container->get(\App\Service\Ginfo::class)->getInfo();
+        $ginfo = $this->container->get(\App\Service\Ginfo::class)->getGinfo();
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = $this->container->get(EntityManagerInterface::class);
+        /** @var \App\Service\Manticore $entityManager */
+        $manticoreService = $this->container->get(\App\Service\Manticore::class);
 
         return $this->render('monitoring.html.twig', [
-            'info' => [
-                'general' => $info->getGeneral(),
-                'php' => $info->getPhp(),
-                'selinux' => $info->getSelinux(),
-                'cpu' => $info->getCpu(),
-                'network' => $info->getNetwork() ?: [],
-                'disk' => $info->getDisk(),
-                'services' => $info->getServices() ?: [],
-                'memory' => $info->getMemory(),
-            ],
+            'info_general' => $ginfo->getGeneral(),
+            'info_php' => $ginfo->getPhp(),
+            'info_selinux' => $ginfo->getSelinux(),
+            'info_cpu' => $ginfo->getCpu(),
+            'info_network' => $ginfo->getNetwork(),
+            'info_disk' => $ginfo->getDisk(),
+            'info_services' => $ginfo->getServices(),
+            'info_memory' => $ginfo->getMemory(),
+            'info_nginx' => $ginfo->getNginx(),
+            'info_mysql' => $ginfo->getMysql($entityManager->getConnection()->getNativeConnection()),
+            'info_manticore' => $ginfo->getManticore($manticoreService->getConnection()->getNativeConnection()),
         ]);
     }
 
@@ -69,6 +75,8 @@ class DashboardController extends AbstractDashboardController
     {
         return parent::getSubscribedServices() + [
             \App\Service\Ginfo::class,
+            \App\Service\Manticore::class,
+            EntityManagerInterface::class,
         ];
     }
 }

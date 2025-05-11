@@ -2,7 +2,6 @@
 
 namespace App\Twig\Extension\Ginfo;
 
-use Ginfo\Common;
 use Ginfo\Info\Service;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -21,6 +20,12 @@ class SearchService extends AbstractExtension
      */
     public function searchService(array $services, string $serviceName): ?Service
     {
-        return Common::searchService($services, $serviceName);
+        foreach ($services as $service) {
+            if ($service->getName() === $serviceName) {
+                return $service;
+            }
+        }
+
+        return null;
     }
 }

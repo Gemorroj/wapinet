@@ -2,22 +2,17 @@
 
 namespace App\Service;
 
-use Ginfo\Info;
-
 final readonly class Ginfo
 {
-    private Info $info;
+    private \Ginfo\Ginfo $ginfo;
 
-    /**
-     * @throws \Ginfo\Exceptions\FatalException
-     */
     public function __construct()
     {
-        $this->info = (new \Ginfo\Ginfo())->getInfo();
+        $this->ginfo = new \Ginfo\Ginfo();
     }
 
-    public function getInfo(): Info
+    public function getGinfo(): \Ginfo\Ginfo
     {
-        return $this->info;
+        return $this->ginfo;
     }
 }
