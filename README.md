@@ -253,6 +253,7 @@ apt install ffmpeg
 ```bash
 server {
     listen 80;
+    listen [::]:80;
 
     server_name wapinet.ru www.wapinet.ru;
 	return 301 https://$server_name$request_uri;
@@ -273,9 +274,12 @@ server {
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_certificate /root/.acme.sh/wapinet.ru/fullchain.cer;
     ssl_certificate_key /root/.acme.sh/wapinet.ru/wapinet.ru.key;
+    ssl_session_timeout 1h;
+    ssl_session_cache shared:SSL:10m;
 
     charset utf-8;
     listen 443 ssl http2;
+    listen [::]:443 ssl http2;
     client_max_body_size 50m;
 
     server_name wapinet.ru www.wapinet.ru;
