@@ -64,7 +64,7 @@
         "pagerfanta/doctrine-orm-adapter": "^4.7.1",
         "pagerfanta/twig": "^4.7.1",
 
-        "easycorp/easyadmin-bundle": "^4.24.6",
+        "easycorp/easyadmin-bundle": "^4.24.7",
         "friendsofsymfony/jsrouting-bundle": "^3.5.2",
         "james-heinrich/getid3": "dev-master",
         "vich/uploader-bundle": "^2.6.1",
@@ -96,8 +96,8 @@
         "symfony/stopwatch": "7.2.*",
         "symfony/var-dumper": "7.2.*",
         "symfony/web-profiler-bundle": "7.2.*",
-        "phpstan/phpstan": "^2.1.14",
-        "phpstan/phpstan-symfony": "^2.0.4",
+        "phpstan/phpstan": "^2.1.16",
+        "phpstan/phpstan-symfony": "^2.0.6",
         "phpstan/phpstan-phpunit": "^2.0.6",
         "phpstan/phpstan-doctrine": "^2.0.3",
         "friendsofphp/php-cs-fixer": "^3.75.0"
