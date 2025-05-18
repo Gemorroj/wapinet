@@ -1800,12 +1800,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/ginfo.git",
-                "reference": "f3db90838630af64e4ce9ccbecdf16316a659e53"
+                "reference": "06d57033ec2278a4a3cb2e2952251c9f5184e82e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/f3db90838630af64e4ce9ccbecdf16316a659e53",
-                "reference": "f3db90838630af64e4ce9ccbecdf16316a659e53",
+                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/06d57033ec2278a4a3cb2e2952251c9f5184e82e",
+                "reference": "06d57033ec2278a4a3cb2e2952251c9f5184e82e",
                 "shasum": ""
             },
             "require": {
@@ -1899,7 +1899,7 @@
                 "issues": "https://github.com/Gemorroj/ginfo/issues",
                 "source": "https://github.com/Gemorroj/ginfo/tree/master"
             },
-            "time": "2025-05-11T18:21:50+00:00"
+            "time": "2025-05-18T19:40:02+00:00"
         },
         {
             "name": "gemorroj/htmlvalidator",
