@@ -416,7 +416,6 @@ service nginx restart
 
 
 ### TODO:
-- !!! переделать СМИ (иносми больше не работает). Добавить ссылок на основные TG каналы типа https://t.me/s/warhistoryalconafter
 - ! проверка файлов на virustotal (возможно автоматическая) в файлообменнике (https://docs.virustotal.com/reference/files-scan + https://docs.virustotal.com/reference/analysis)
 - !!! Переделать интерфейс на vue/react/angular (огромная задача. jquery mobile официально мертв - https://blog.jquerymobile.com/2021/10/07/jquery-maintainers-continue-modernization-initiative-with-deprecation-of-jquery-mobile/)
 - Переделать редактор аудиотегов на https://github.com/duncan3dc/meta-audio/issues/3 (когда будут картинки) или ffmpeg (https://dev.to/blueset/read-and-write-tags-of-music-files-with-ffmpeg-5c4a)

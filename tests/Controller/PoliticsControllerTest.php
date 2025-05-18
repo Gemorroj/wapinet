@@ -4,13 +4,13 @@ namespace App\Tests\Controller;
 
 use App\Tests\WebTestCaseWapinet;
 
-class MassMediaControllerTest extends WebTestCaseWapinet
+class PoliticsControllerTest extends WebTestCaseWapinet
 {
     public function testIndex(): void
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/mass_media');
+        $crawler = $client->request('GET', '/politics');
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

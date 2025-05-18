@@ -28,7 +28,7 @@ class UserPanel implements \Stringable, \JsonSerializable
     private const string ROUTE_CODE = 'code_index';
     private const string ROUTE_UNICODE = 'unicode_index';
     private const string ROUTE_UNICODE_ICONS = 'unicode_icons';
-    private const string ROUTE_MASS_MEDIA = 'mass_media_index';
+    private const string ROUTE_POLITICS = 'politics';
     private const string ROUTE_RATES = 'rates_index';
     private const string ROUTE_MOBILE_CODE = 'mobile_code_index';
     private const string ROUTE_OPEN_SOURCE = 'open_source';
@@ -86,7 +86,7 @@ class UserPanel implements \Stringable, \JsonSerializable
     #[ORM\Column(type: 'boolean', nullable: false, options: ['default' => false])]
     private bool $unicodeIcons = false;
     #[ORM\Column(type: 'boolean', nullable: false, options: ['default' => false])]
-    private bool $massMedia = false;
+    private bool $politics = false;
     #[ORM\Column(type: 'boolean', nullable: false, options: ['default' => false])]
     private bool $rates = false;
     #[ORM\Column(type: 'boolean', nullable: false, options: ['default' => false])]
@@ -204,10 +204,10 @@ class UserPanel implements \Stringable, \JsonSerializable
                 'name' => 'Пиктограммы в Unicode',
                 'enabled' => $this->isUnicodeIcons(),
             ],
-            self::ROUTE_MASS_MEDIA => [
-                'route' => self::ROUTE_MASS_MEDIA,
-                'name' => 'СМИ',
-                'enabled' => $this->isMassMedia(),
+            self::ROUTE_POLITICS => [
+                'route' => self::ROUTE_POLITICS,
+                'name' => 'Политика',
+                'enabled' => $this->isPolitics(),
             ],
             self::ROUTE_RATES => [
                 'route' => self::ROUTE_RATES,
@@ -465,14 +465,14 @@ class UserPanel implements \Stringable, \JsonSerializable
         return $this;
     }
 
-    public function isMassMedia(): bool
+    public function isPolitics(): bool
     {
-        return $this->massMedia;
+        return $this->politics;
     }
 
-    public function setMassMedia(bool $massMedia): self
+    public function setPolitics(bool $politics): self
     {
-        $this->massMedia = $massMedia;
+        $this->politics = $politics;
 
         return $this;
     }

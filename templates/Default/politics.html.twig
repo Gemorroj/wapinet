@@ -1,0 +1,53 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Политика{% endblock %}
+{% block breadcrumbs %}
+    {{wapinet_breadcrumbs()}}
+{% endblock %}
+
+{% block content %}
+    <ul data-role="listview" data-inset="true">
+        <li class="ui-li-has-thumb">
+            <a href="https://t.me/s/ghost_of_novorossia" rel="external">
+                <img src="{{ asset('build/resources/politics/ghost_of_novorossia.png') }}" />
+                <h2>ПриZрак Новороссии</h2>
+                <p>Amat victoria curam. Наши не придут, все наши это мы (с). Владимир Грубник - Бывший хирург, к.мед.н.,диверсант-подпольщик.</p>
+            </a>
+        </li>
+        <li class="ui-li-has-thumb">
+            <a href="https://t.me/s/boris_rozhin" rel="external">
+                <img src="{{ asset('build/resources/politics/boris_rozhin.png') }}" />
+                <h2>Colonelcassad</h2>
+                <p>Авторский канал Бориса Рожина - эксперта Центра военно-политической журналистики.</p>
+            </a>
+        </li>
+        <li class="ui-li-has-thumb">
+            <a href="https://t.me/s/warhistoryalconafter" rel="external">
+                <img src="{{ asset('build/resources/politics/warhistoryalconafter.png') }}" />
+                <h2>Кирилл Фёдоров / Война История Оружие</h2>
+                <p>Официальный канал Кирилла Фёдорова. Новости, политика, обзоры техники и не только, для Вас!!! Новые и архивные материалы! Прямые трансляции с известными в узких кругах и не только! Да здравствует Россия, её Армия и её народ!</p>
+            </a>
+        </li>
+        <li class="ui-li-has-thumb">
+            <a href="https://t.me/s/rybar" rel="external">
+                <img src="{{ asset('build/resources/politics/rybar.png') }}" />
+                <h2>Рыбарь</h2>
+                <p>Вылавливаем интересную нам тему в море сырой информации.</p>
+            </a>
+        </li>
+        <li class="ui-li-has-thumb">
+            <a href="https://t.me/s/dva_majors" rel="external">
+                <img src="{{ asset('build/resources/politics/dva_majors.png') }}" />
+                <h2>Два майора</h2>
+                <p>Честное и объективное освещение СВО, поддержка Фронта, мировые новости, военная аналитика и армейский юмор.</p>
+            </a>
+        </li>
+        <li class="ui-li-has-thumb">
+            <a href="https://t.me/s/rogozin_do" rel="external">
+                <img src="{{ asset('build/resources/politics/rogozin_do.png') }}" />
+                <h2>РОГОЗИН</h2>
+                <p>Сенатор, командир, начальник ЦСН "Барс-Сармат".</p>
+            </a>
+        </li>
+    </ul>
+{% endblock %}

@@ -34,7 +34,7 @@ class PanelType extends AbstractType
         $builder->add('code', CheckboxType::class, ['required' => false, 'label' => 'Конвертирование данных']);
         $builder->add('unicode', CheckboxType::class, ['required' => false, 'label' => 'Конвертер в Unicode']);
         $builder->add('unicodeIcons', CheckboxType::class, ['required' => false, 'label' => 'Пиктограммы в Unicode']);
-        $builder->add('massMedia', CheckboxType::class, ['required' => false, 'label' => 'СМИ']);
+        $builder->add('politics', CheckboxType::class, ['required' => false, 'label' => 'Политика']);
         $builder->add('rates', CheckboxType::class, ['required' => false, 'label' => 'Курсы валют']);
         $builder->add('mobileCode', CheckboxType::class, ['required' => false, 'label' => 'Телефонные коды']);
         $builder->add('openSource', CheckboxType::class, ['required' => false, 'label' => 'Open source разработки']);

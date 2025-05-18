@@ -169,4 +169,19 @@ class DefaultController extends AbstractController
     {
         return $this->render('Default/video_courses.html.twig');
     }
+
+    #[\Deprecated('Obsolete. leave for search robots')]
+    #[Route(path: '/mass_media')]
+    #[Route(path: '/mass_media/rt')]
+    #[Route(path: '/mass_media/inotv')]
+    public function massMediaAction(): Response
+    {
+        return $this->redirectToRoute('politics');
+    }
+
+    #[Route(path: '/politics', name: 'politics')]
+    public function politicsAction(): Response
+    {
+        return $this->render('Default/politics.html.twig');
+    }
 }
