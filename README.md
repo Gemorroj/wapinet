@@ -268,9 +268,6 @@ server {
         return 301 https://forum.$server_name/$1;
     }
 
-    location ~ /\.well-known\/acme-challenge {
-        allow all;
-    }
     location ~ /\. {
         deny all;
     }
