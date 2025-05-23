@@ -357,8 +357,7 @@ server {
     #location ~ \.php$ {
     #    return 404;
     #}
-}' > /etc/angie/sites-available/wapinet.ru.conf
-ln -s /etc/angie/sites-available/wapinet.ru.conf /etc/angie/sites-enabled/wapinet.ru.conf
+}' > /etc/angie/http.d/wapinet.ru.conf
 ```
 
 ### СУБД
