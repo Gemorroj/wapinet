@@ -244,15 +244,17 @@ apt install ffmpeg
 # edit pm.* settings for performance
 
 # edit /etc/angie/angie.conf
+# user  www-data;
 # server_tokens off;
 # gzip  on;
 # gzip_comp_level 2;
 # gzip_min_length 40;
 # gzip_types text/css text/plain application/json text/javascript application/javascript text/xml application/xml application/xml+rss application/x-font-ttf application/x-font-opentype application/vnd.ms-fontobject image/svg+xml image/x-icon font/ttf font/opentype;
+# resolver 127.0.0.53;
+# acme_client wapinet_acme_client https://acme-v02.api.letsencrypt.org/directory;
 ```
 
 ```bash
-# edit /etc/angie/angie.conf user must be www-data
 server {
     listen 80;
     listen [::]:80;
@@ -274,14 +276,16 @@ server {
     }
 
     ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_certificate /root/.acme.sh/wapinet.ru/fullchain.cer;
-    ssl_certificate_key /root/.acme.sh/wapinet.ru/wapinet.ru.key;
+    acme wapinet_acme_client;
+    ssl_certificate $acme_cert_wapinet_acme_client;
+    ssl_certificate_key $acme_cert_key_wapinet_acme_client;
     ssl_session_timeout 1h;
     ssl_session_cache shared:SSL:10m;
 
     charset utf-8;
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
     client_max_body_size 50m;
 
     server_name wapinet.ru www.wapinet.ru;
@@ -399,21 +403,6 @@ chmod 777 ./var/cache
 chmod 777 ./public/media/cache/resolve/thumbnail/static
 chmod 777 ./public/media/cache/thumbnail/static
 chmod 777 ./public/static/file
-```
-
-### SSL сертификаты
-##### Установка
-```bash
-apt install socat
-curl https://get.acme.sh | sh -s email=wapinet@mail.ru
-acme.sh --issue -d wapinet.ru
-systemctl restart angie
-```
-##### Обновление
-```bash
-acme.sh --upgrade
-acme.sh --renew-all --force
-service angie restart
 ```
 
 
