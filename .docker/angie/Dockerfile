@@ -1,4 +1,4 @@
-FROM nginx:mainline-alpine
+FROM docker.angie.software/angie:latest
 
 RUN set -xe \
     && apk update \

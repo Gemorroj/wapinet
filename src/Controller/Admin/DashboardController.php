@@ -65,7 +65,7 @@ class DashboardController extends AbstractDashboardController
             'info_disk' => $ginfo->getDisk(),
             'info_services' => $ginfo->getServices(),
             'info_memory' => $ginfo->getMemory(),
-            'info_nginx' => $ginfo->getNginx(),
+            'info_angie' => $ginfo->getAngie(),
             'info_mysql' => $ginfo->getMysql($entityManager->getConnection()->getNativeConnection()),
             'info_manticore' => $ginfo->getManticore($manticoreService->getConnection()->getNativeConnection()),
         ]);

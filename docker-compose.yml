@@ -67,15 +67,15 @@ services:
     depends_on:
       - php
 
-  nginx:
+  angie:
     build:
-      context: ./.docker/nginx
+      context: ./.docker/angie
       dockerfile: Dockerfile
     volumes:
       - '.:/var/www/app'
-      - '.docker/nginx/app.conf:/etc/nginx/conf.d/default.conf'
+      - '.docker/angie/app.conf:/etc/angie/http.d/default.conf'
     ports:
       - "80:80"
-    container_name: wapinet-nginx
+    container_name: wapinet-angie
     depends_on:
       - php

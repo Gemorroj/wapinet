@@ -11,7 +11,7 @@
     info_disk: '\\Ginfo\\Info\\Disk',
     info_services: 'list<\\Ginfo\\Info\\Services>',
     info_memory: '?\\Ginfo\\Info\\Memory',
-    info_nginx: '?\\Ginfo\\Info\\Nginx',
+    info_angie: '?\\Ginfo\\Info\\Angie',
     info_mysql: '?\\Ginfo\\Info\\Mysql',
     info_manticore: '?\\Ginfo\\Info\\Manticore',
 } %}
@@ -233,16 +233,16 @@
         <div class="col-4">
             <div class="card mb-3">
                 <h3 class="card-header">
-                    Nginx
+                    Angie
                 </h3>
                 <div class="card-body">
-                    {% if info_nginx %}
+                    {% if info_angie %}
                         <dl class="row">
                             <dt class="col-4 text-end monitoring-label">Версия:</dt>
-                            <dd class="col-8 monitoring-value">{{ info_nginx.nginxVersion }}</dd>
+                            <dd class="col-8 monitoring-value">{{ info_angie.angieVersion }}</dd>
                             <dt class="col-4 text-end monitoring-label">Uptime:</dt>
                             <dd class="col-8 monitoring-value">
-                                {% for process in info_nginx.processes %}
+                                {% for process in info_angie.processes %}
                                     {% if process.master %}
                                         {{ process.uptime|wapinet_length }}
                                     {% endif %}
@@ -250,14 +250,14 @@
                             </dd>
                             <dt class="col-4 text-end monitoring-label">Процессы:</dt>
                             <dd class="col-8 monitoring-value">
-                                {% for process in info_nginx.processes %}
+                                {% for process in info_angie.processes %}
                                     <strong>PID {{ process.pid }}</strong>{{ process.master ? ' (master)' : '' }}: VmPeak: {{ process.vmPeak|wapinet_size }}, VmSize: {{ process.vmSize|wapinet_size }}<br />
                                 {% endfor %}
                             </dd>
                             <dt class="col-4 text-end monitoring-label">Аргументы:</dt>
                             <dd class="col-8 monitoring-value">
-                                <button type="button" class="btn btn-default" title="Nginx args" onclick="alert('{{ info_nginx.args|escape('js')|replace({'\\u0020': "\\n"}) }}');">
-                                    {{ info_nginx.args|split(' ')|length|wapinet_count }} всего
+                                <button type="button" class="btn btn-default" title="Angie args" onclick="alert('{{ info_angie.args|escape('js')|replace({'\\u0020': "\\n"}) }}');">
+                                    {{ info_angie.args|split(' ')|length|wapinet_count }} всего
                                 </button>
                             </dd>
                         </dl>
@@ -348,8 +348,8 @@
                             {% endif %}
                         {% endmacro %}
 
-                        <dt class="col-6 text-end monitoring-label">Nginx:</dt>
-                        <dd class="col-6 monitoring-value">{{ macroService.macro_service(info_services|wapinet_ginfo_search_service('nginx.service')) }}</dd>
+                        <dt class="col-6 text-end monitoring-label">Angie:</dt>
+                        <dd class="col-6 monitoring-value">{{ macroService.macro_service(info_services|wapinet_ginfo_search_service('angie.service')) }}</dd>
                         <dt class="col-6 text-end monitoring-label">PHP-Fpm:</dt>
                         <dd class="col-6 monitoring-value">{{ macroService.macro_service(info_services|wapinet_ginfo_search_service('php8.4-fpm.service')) }}</dd>
                         <dt class="col-6 text-end monitoring-label">MySQL:</dt>

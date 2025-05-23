@@ -32,7 +32,7 @@
         "symfony/doctrine-messenger": "7.2.*",
         "symfony/dotenv": "7.2.*",
         "symfony/expression-language": "7.2.*",
-        "symfony/flex": "^2.5.1",
+        "symfony/flex": "^2.7.0",
         "symfony/form": "7.2.*",
         "symfony/framework-bundle": "7.2.*",
         "symfony/http-client": "7.2.*",
@@ -88,7 +88,7 @@
         "gemorroj/php-bittorrent": "^3.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^11.5.20",
+        "phpunit/phpunit": "^11.5.21",
         "symfony/browser-kit": "7.2.*",
         "symfony/css-selector": "7.2.*",
         "symfony/debug-bundle": "7.2.*",
@@ -96,7 +96,7 @@
         "symfony/stopwatch": "7.2.*",
         "symfony/var-dumper": "7.2.*",
         "symfony/web-profiler-bundle": "7.2.*",
-        "phpstan/phpstan": "^2.1.16",
+        "phpstan/phpstan": "^2.1.17",
         "phpstan/phpstan-symfony": "^2.0.6",
         "phpstan/phpstan-phpunit": "^2.0.6",
         "phpstan/phpstan-doctrine": "^2.0.3",

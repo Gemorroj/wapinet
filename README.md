@@ -18,7 +18,8 @@
 apt update && sudo apt dist-upgrade && sudo apt autoremove --purge
 apt install software-properties-common
 add-apt-repository ppa:ondrej/php
-add-apt-repository ppa:ondrej/nginx
+curl -o /etc/apt/trusted.gpg.d/angie-signing.gpg https://angie.software/keys/angie-signing.gpg
+echo "deb https://download.angie.software/angie/$(. /etc/os-release && echo "$ID/$VERSION_ID $VERSION_CODENAME") main" | sudo tee /etc/apt/sources.list.d/angie.list > /dev/null
 apt update && apt dist-upgrade
 hostnamectl set-hostname wapinet.ru
 timedatectl set-timezone UTC
@@ -32,8 +33,8 @@ reboot
 ```bash
 apt install htop mc git unzip
 apt install mysql-client mysql-server
-apt install nginx
-systemctl enable nginx
+apt install angie
+systemctl enable angie
 apt install php8.4-fpm php8.4-curl php8.4-gd php8.4-intl php8.4-mbstring php8.4-mysql php8.4-xml php8.4-zip php8.4-apcu
 
 mysql_secure_installation
@@ -242,7 +243,7 @@ apt install ffmpeg
 # listen.allowed_clients = 127.0.0.1
 # edit pm.* settings for performance
 
-# edit /etc/nginx/nginx.conf
+# edit /etc/angie/angie.conf
 # server_tokens off;
 # gzip  on;
 # gzip_comp_level 2;
@@ -251,6 +252,7 @@ apt install ffmpeg
 ```
 
 ```bash
+# edit /etc/angie/angie.conf user must be www-data
 server {
     listen 80;
     listen [::]:80;
@@ -285,8 +287,8 @@ server {
     server_name wapinet.ru www.wapinet.ru;
     root /var/www/wapinet/public;
 
-    error_log /var/log/nginx/wapinet.error.log;
-    access_log /var/log/nginx/wapinet.access.log;
+    error_log /var/log/angie/wapinet.error.log;
+    access_log /var/log/angie/wapinet.access.log;
 
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
     add_header X-Frame-Options "DENY";
@@ -354,8 +356,8 @@ server {
     #location ~ \.php$ {
     #    return 404;
     #}
-}' > /etc/nginx/sites-available/wapinet.ru.conf
-ln -s /etc/nginx/sites-available/wapinet.ru.conf /etc/nginx/sites-enabled/wapinet.ru.conf
+}' > /etc/angie/sites-available/wapinet.ru.conf
+ln -s /etc/angie/sites-available/wapinet.ru.conf /etc/angie/sites-enabled/wapinet.ru.conf
 ```
 
 ### СУБД
@@ -405,13 +407,13 @@ chmod 777 ./public/static/file
 apt install socat
 curl https://get.acme.sh | sh -s email=wapinet@mail.ru
 acme.sh --issue -d wapinet.ru
-systemctl restart nginx
+systemctl restart angie
 ```
 ##### Обновление
 ```bash
 acme.sh --upgrade
 acme.sh --renew-all --force
-service nginx restart
+service angie restart
 ```
 
 
