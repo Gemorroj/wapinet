@@ -252,7 +252,6 @@ apt install ffmpeg
 ```
 
 ```bash
-# edit /etc/angie/angie.conf user must be www-data
 server {
     listen 80;
     listen [::]:80;
