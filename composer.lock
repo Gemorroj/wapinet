@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "925bd7db1e342b49ef15c2b77c4c1b61",
+    "content-hash": "48c1c42a44e992ff6a851d142b11b8dc",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -1796,16 +1796,16 @@
         },
         {
             "name": "gemorroj/ginfo",
-            "version": "dev-master",
+            "version": "6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/ginfo.git",
-                "reference": "2da65ee55b2785bf63dfaba3b97352df0536f5da"
+                "reference": "e9c529036717fb5cc657ccd11bd70eb42c096ceb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/2da65ee55b2785bf63dfaba3b97352df0536f5da",
-                "reference": "2da65ee55b2785bf63dfaba3b97352df0536f5da",
+                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/e9c529036717fb5cc657ccd11bd70eb42c096ceb",
+                "reference": "e9c529036717fb5cc657ccd11bd70eb42c096ceb",
                 "shasum": ""
             },
             "require": {
@@ -1825,8 +1825,8 @@
                 "ext-pdo_sqlite": "*",
                 "ext-redis": "*",
                 "friendsofphp/php-cs-fixer": "^3.75.0",
-                "phpstan/phpstan": "^2.1.14",
-                "phpunit/phpunit": "^11.5.19"
+                "phpstan/phpstan": "^2.1.17",
+                "phpunit/phpunit": "^11.5.22"
             },
             "suggest": {
                 "ext-apcu": "For APCU",
@@ -1837,7 +1837,6 @@
                 "ext-pdo_sqlite": "For Sqlite",
                 "ext-redis": "For Redis/Valkey"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -1897,9 +1896,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Gemorroj/ginfo/issues",
-                "source": "https://github.com/Gemorroj/ginfo/tree/master"
+                "source": "https://github.com/Gemorroj/ginfo/tree/6.0.0"
             },
-            "time": "2025-05-23T13:05:45+00:00"
+            "time": "2025-06-07T14:18:22+00:00"
         },
         {
             "name": "gemorroj/htmlvalidator",
@@ -12844,7 +12843,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "gemorroj/ginfo": 20,
         "james-heinrich/getid3": 20
     },
     "prefer-stable": true,

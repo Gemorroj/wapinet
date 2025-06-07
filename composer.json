@@ -84,7 +84,7 @@
         "gemorroj/htmlvalidator": "^3.4",
         "gemorroj/cssvalidator": "^3.5",
         "gemorroj/xbbcode": "^2.8.1",
-        "gemorroj/ginfo": "dev-master",
+        "gemorroj/ginfo": "^6.0.0",
         "gemorroj/php-bittorrent": "^3.0"
     },
     "require-dev": {
