@@ -3,7 +3,7 @@
         "@babel/core": "^7.27.4",
         "@babel/preset-env": "^7.27.2",
         "@symfony/webpack-encore": "^5.1.0",
-        "core-js": "^3.42.0",
+        "core-js": "^3.43.0",
         "file-loader": "^6.2.0",
         "regenerator-runtime": "^0.14.1",
         "webpack": "^5.99.9",
