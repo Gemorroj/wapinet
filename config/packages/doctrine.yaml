@@ -28,6 +28,7 @@ doctrine:
         identity_generation_preferences:
             Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
         auto_mapping: true
+        enable_native_lazy_objects: true
         mappings:
             App:
                 type: attribute
