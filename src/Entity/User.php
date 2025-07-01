@@ -405,6 +405,7 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         return $this;
     }
 
+    #[\Deprecated]
     public function eraseCredentials(): void
     {
         $this->plainPassword = null;
@@ -480,10 +481,9 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         $passwordHasher = $passwordHasherFactory->getPasswordHasher($this);
         $hashedPassword = $passwordHasher->hash($plainPassword);
 
-        $this->setSalt(null);
-
-        $this->setPassword($hashedPassword);
-        $this->eraseCredentials();
+        $this->plainPassword = null;
+        $this->salt = null;
+        $this->password = $hashedPassword;
     }
 
     public function jsonSerialize(): array
