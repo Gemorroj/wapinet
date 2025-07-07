@@ -209,12 +209,12 @@ curl -L -o GeoLite2-Country.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/down
 
 # 7zip
 cd /opt
-mkdir 7z2409-linux-x64
-cd /opt/7z2409-linux-x64
-curl -O -L https://7-zip.org/a/7z2409-linux-x64.tar.xz
-tar xJvf 7z2409-linux-x64.tar.xz
-rm -f 7z2409-linux-x64.tar.xz
-/opt/7z2409-linux-x64/7zz i
+mkdir 7z2500-linux-x64
+cd /opt/7z2500-linux-x64
+curl -O -L https://7-zip.org/a/7z2500-linux-x64.tar.xz
+tar xJvf 7z2500-linux-x64.tar.xz
+rm -f 7z2500-linux-x64.tar.xz
+/opt/7z2500-linux-x64/7zz i
 
 # ffmpeg - https://ubuntuhandbook.org/index.php/2024/04/ffmpeg-7-0-ppa-ubuntu/
 add-apt-repository ppa:ubuntuhandbook1/ffmpeg7
