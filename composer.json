@@ -100,7 +100,7 @@
         "phpstan/phpstan-symfony": "^2.0.6",
         "phpstan/phpstan-phpunit": "^2.0.6",
         "phpstan/phpstan-doctrine": "^2.0.3",
-        "friendsofphp/php-cs-fixer": "^3.80"
+        "friendsofphp/php-cs-fixer": "^3.81"
     },
     "config": {
         "allow-plugins": {
