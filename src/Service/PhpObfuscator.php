@@ -2,8 +2,6 @@
 
 namespace App\Service;
 
-use Syntax\Php;
-
 final readonly class PhpObfuscator
 {
     public function obfuscate(string $code, bool $removeComments, bool $removeSpaces): string
