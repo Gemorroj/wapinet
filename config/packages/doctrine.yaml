@@ -20,7 +20,7 @@ doctrine:
             charset: utf8mb4
             collate: utf8mb4_unicode_ci
     orm:
-        auto_generate_proxy_classes: true
+        # auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true
         report_fields_where_declared: true
         validate_xml_mapping: true
@@ -49,7 +49,7 @@ when@prod:
     doctrine:
         orm:
             auto_generate_proxy_classes: false
-            proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
+            #proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
             query_cache_driver:
                 type: pool
                 pool: doctrine.system_cache_pool
