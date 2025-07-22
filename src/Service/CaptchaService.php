@@ -26,6 +26,6 @@ class CaptchaService
 
     public function generatePhrase(int $length = 5): string
     {
-        return (new PhraseBuilder($length))->build();
+        return new PhraseBuilder($length)->build();
     }
 }

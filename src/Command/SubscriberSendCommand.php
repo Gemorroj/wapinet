@@ -65,7 +65,7 @@ class SubscriberSendCommand extends Command
             $variables = $event->getVariables();
             $variables['subject'] = $event->getSubject();
 
-            $email = (new TemplatedEmail())
+            $email = new TemplatedEmail()
                 ->from($robotEmail)
                 ->to($event->getUser()->getEmail())
                 ->subject($siteTitle.' - '.$event->getSubject())

@@ -96,11 +96,11 @@
         "symfony/stopwatch": "7.3.*",
         "symfony/var-dumper": "7.3.*",
         "symfony/web-profiler-bundle": "7.3.*",
-        "phpstan/phpstan": "^2.1.17",
-        "phpstan/phpstan-symfony": "^2.0.6",
-        "phpstan/phpstan-phpunit": "^2.0.6",
-        "phpstan/phpstan-doctrine": "^2.0.3",
-        "friendsofphp/php-cs-fixer": "^3.82"
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-symfony": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpstan/phpstan-doctrine": "^2.0",
+        "friendsofphp/php-cs-fixer": "^3.84"
     },
     "config": {
         "allow-plugins": {

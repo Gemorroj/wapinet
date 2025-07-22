@@ -62,7 +62,7 @@ class EmailController extends AbstractController
 
     private function makeEmail(array $data, string $host): Email
     {
-        $email = (new Email())
+        $email = new Email()
             ->from($data['from'].'@'.$host)
             ->to($data['to'])
             ->subject($data['subject'])

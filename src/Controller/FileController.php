@@ -608,7 +608,7 @@ class FileController extends AbstractController
 
         foreach ($newTagsCollection as $newTag) {
             $file->getFileTags()->add(
-                (new FileTags())->setTag($newTag)->setFile($file)
+                new FileTags()->setTag($newTag)->setFile($file)
             );
         }
     }
@@ -621,7 +621,7 @@ class FileController extends AbstractController
         /** @var Tag $tag */
         foreach ($tags as $tag) {
             $fileTags->add(
-                (new FileTags())->setTag($tag)->setFile($file)
+                new FileTags()->setTag($tag)->setFile($file)
             );
         }
 
