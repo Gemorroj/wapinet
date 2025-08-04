@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "25414d0bfdce2a1a3cdac25cfe3ffaf1",
+    "content-hash": "8c53c546a0667c9174e98e2f0b8129a8",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -1698,26 +1698,26 @@
         },
         {
             "name": "gemorroj/archive7z",
-            "version": "5.7.0",
+            "version": "5.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/Archive7z.git",
-                "reference": "5e627fd6cc8def6125211c16d8bd60cf7e8fde99"
+                "reference": "7cd06d5de4a52cf0f02be9d46bc32f4a1222096f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/Archive7z/zipball/5e627fd6cc8def6125211c16d8bd60cf7e8fde99",
-                "reference": "5e627fd6cc8def6125211c16d8bd60cf7e8fde99",
+                "url": "https://api.github.com/repos/Gemorroj/Archive7z/zipball/7cd06d5de4a52cf0f02be9d46bc32f4a1222096f",
+                "reference": "7cd06d5de4a52cf0f02be9d46bc32f4a1222096f",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0.2",
-                "symfony/process": "^5.4||^6.0||^7.0"
+                "symfony/process": "^5.4||^6.4||^7.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.41",
-                "phpstan/phpstan": "^1.10",
-                "phpunit/phpunit": "^9.6"
+                "friendsofphp/php-cs-fixer": "^3.85.1",
+                "phpstan/phpstan": "^2",
+                "phpunit/phpunit": "^9.6.22"
             },
             "type": "library",
             "autoload": {
@@ -1744,9 +1744,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Gemorroj/Archive7z/issues",
-                "source": "https://github.com/Gemorroj/Archive7z/tree/5.7.0"
+                "source": "https://github.com/Gemorroj/Archive7z/tree/5.8.0"
             },
-            "time": "2023-12-22T13:40:05+00:00"
+            "time": "2025-08-04T09:00:01+00:00"
         },
         {
             "name": "gemorroj/cssvalidator",
