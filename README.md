@@ -217,7 +217,7 @@ rm -f 7z2501-linux-x64.tar.xz
 /opt/7z2501-linux-x64/7zz i
 
 # ffmpeg - https://ubuntuhandbook.org/index.php/2024/04/ffmpeg-7-0-ppa-ubuntu/
-add-apt-repository ppa:ubuntuhandbook1/ffmpeg7
+add-apt-repository ppa:ubuntuhandbook1/ffmpeg8
 apt install ffmpeg
 ```
 

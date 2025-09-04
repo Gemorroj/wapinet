@@ -2446,12 +2446,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JamesHeinrich/getID3.git",
-                "reference": "8cb292333f60be1c0a2ba65acbfdb5f06f174536"
+                "reference": "aed553bcd82c34691dc04fb3f1df50044862d1b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/8cb292333f60be1c0a2ba65acbfdb5f06f174536",
-                "reference": "8cb292333f60be1c0a2ba65acbfdb5f06f174536",
+                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/aed553bcd82c34691dc04fb3f1df50044862d1b1",
+                "reference": "aed553bcd82c34691dc04fb3f1df50044862d1b1",
                 "shasum": ""
             },
             "require": {
@@ -2506,7 +2506,7 @@
                 "issues": "https://github.com/JamesHeinrich/getID3/issues",
                 "source": "https://github.com/JamesHeinrich/getID3/tree/master"
             },
-            "time": "2025-09-02T19:46:28+00:00"
+            "time": "2025-09-04T00:53:38+00:00"
         },
         {
             "name": "jms/metadata",
