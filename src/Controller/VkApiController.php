@@ -18,7 +18,7 @@ class VkApiController extends AbstractController
         $params = $request->request->all();
         $params['access_token'] = $this->getParameter('wapinet_vk_access_token');
 
-        $response = $httpClient->request('GET', 'https://api.vk.com/method/users.get', [
+        $response = $httpClient->request('GET', 'https://api.vk.ru/method/users.get', [
             'query' => $params,
         ]);
         try {
