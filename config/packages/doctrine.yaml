@@ -17,10 +17,9 @@ doctrine:
         charset: utf8mb4
         default_table_options:
             charset: utf8mb4
-            collate: utf8mb4_unicode_ci
+            collation: utf8mb4_unicode_ci
     orm:
         auto_generate_proxy_classes: true
-        enable_lazy_ghost_objects: true
         validate_xml_mapping: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         identity_generation_preferences:

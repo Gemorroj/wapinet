@@ -21,8 +21,8 @@
         "ext-sodium": "*",
         "ext-gd": "*",
 
-        "doctrine/doctrine-bundle": "^2.17",
-        "doctrine/doctrine-migrations-bundle": "^3.4",
+        "doctrine/doctrine-bundle": "^2.18",
+        "doctrine/doctrine-migrations-bundle": "^3.5",
         "doctrine/orm": "^3.5",
 
         "phpdocumentor/reflection-docblock": "^5.6",
