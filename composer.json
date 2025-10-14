@@ -21,7 +21,7 @@
         "ext-sodium": "*",
         "ext-gd": "*",
 
-        "doctrine/doctrine-bundle": "^2.18",
+        "doctrine/doctrine-bundle": "^2.19.x-dev || ^3.0",
         "doctrine/doctrine-migrations-bundle": "^3.5",
         "doctrine/orm": "^3.5",
 

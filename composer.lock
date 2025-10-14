@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce6bc4972c2a5ee83f0e1a718c4821d9",
+    "content-hash": "6ff5d5f4c6fb4e02bc22d2e08ab7ac75",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -463,16 +463,16 @@
         },
         {
             "name": "doctrine/doctrine-bundle",
-            "version": "2.18.0",
+            "version": "2.19.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "cd5d4da6a5f7cf3d8708e17211234657b5eb4e95"
+                "reference": "b385f0253c66bfc4205a7f84071e2e8a45cb0b37"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/cd5d4da6a5f7cf3d8708e17211234657b5eb4e95",
-                "reference": "cd5d4da6a5f7cf3d8708e17211234657b5eb4e95",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/b385f0253c66bfc4205a7f84071e2e8a45cb0b37",
+                "reference": "b385f0253c66bfc4205a7f84071e2e8a45cb0b37",
                 "shasum": ""
             },
             "require": {
@@ -564,7 +564,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/DoctrineBundle/issues",
-                "source": "https://github.com/doctrine/DoctrineBundle/tree/2.18.0"
+                "source": "https://github.com/doctrine/DoctrineBundle/tree/2.19.x"
             },
             "funding": [
                 {
@@ -580,7 +580,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-10-11T04:43:27+00:00"
+            "time": "2025-10-14T05:07:38+00:00"
         },
         {
             "name": "doctrine/doctrine-migrations-bundle",
@@ -13102,6 +13102,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "doctrine/doctrine-bundle": 20,
         "james-heinrich/getid3": 20
     },
     "prefer-stable": true,
