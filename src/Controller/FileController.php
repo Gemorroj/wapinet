@@ -324,6 +324,9 @@ class FileController extends AbstractController
         if ('' === $path) {
             throw $this->createNotFoundException('Не указан файл для скачивания.');
         }
+        if (\str_contains($path, '../')) {
+            throw $this->createAccessDeniedException('Запрещен доступ: "'.$path.'"".');
+        }
 
         $tmpDir = $this->getParameter('kernel.tmp_file_dir');
         $entry = $tmpDir.\DIRECTORY_SEPARATOR.$path;
