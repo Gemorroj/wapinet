@@ -3,7 +3,7 @@
 ##### Лицензия GPL v3
 
 ##### Используются:
-- Symfony 7.2
+- Symfony 7.3
 - Jquery Mobile
 - PHP 8.4
 - MySQL 8.0
