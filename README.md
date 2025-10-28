@@ -89,6 +89,15 @@ searchd
     pid_file = /run/manticore/searchd.pid
     # data_dir = /var/lib/manticore
     binlog_path = # disable logging
+
+    qcache_max_bytes = 32M
+    qcache_thresh_msec = 1000
+    qcache_ttl_sec = 600
+    max_children = 50
+    max_packet_size = 32M
+    read_timeout = 10
+    client_timeout = 30
+    predicted_time_costs = doc=0.1, hit=0.01, skip=0.001, match=0.001
 }
 
 source config
@@ -129,7 +138,7 @@ index files
     type = plain
     source = files
     path = /var/lib/manticore/files
-    morphology = stem_enru, soundex, metaphone
+    morphology = stem_ru, stem_en, soundex
     html_strip = 0
     min_infix_len = 3
     min_word_len = 2
@@ -158,7 +167,7 @@ index users
     type = plain
     source = users
     path = /var/lib/manticore/users
-    morphology = stem_enru, soundex, metaphone
+    morphology = stem_ru, stem_en, soundex
     html_strip = 0
     min_infix_len = 3
     min_word_len = 2
@@ -186,7 +195,7 @@ index gist
     type = plain
     source = gist
     path = /var/lib/manticore/gist
-    morphology = stem_enru, soundex, metaphone
+    morphology = stem_ru, stem_en, soundex
     html_strip = 0
     min_infix_len = 3
     min_word_len = 2
@@ -254,6 +263,12 @@ apt install ffmpeg
 # gzip_types text/css text/plain application/json text/javascript application/javascript text/xml application/xml application/xml+rss application/x-font-ttf application/x-font-opentype application/vnd.ms-fontobject image/svg+xml image/x-icon font/ttf font/opentype;
 # resolver 127.0.0.53;
 # acme_client wapinet_acme_client https://acme-v02.api.letsencrypt.org/directory;
+#
+#    limit_conn_zone $binary_remote_addr zone=perip:10m;
+#    limit_req_zone $binary_remote_addr zone=global_req:10m rate=10r/s;
+#    limit_conn perip 15;
+#    limit_req zone=global_req burst=20 nodelay;
+#
 # server {
 #     charset utf-8;
 #     listen 80;
