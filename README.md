@@ -265,9 +265,7 @@ apt install ffmpeg
 # acme_client wapinet_acme_client https://acme-v02.api.letsencrypt.org/directory;
 #
 #    limit_conn_zone $binary_remote_addr zone=perip:10m;
-#    limit_req_zone $binary_remote_addr zone=global_req:10m rate=10r/s;
-#    limit_conn perip 15;
-#    limit_req zone=global_req burst=20 nodelay;
+#    limit_req_zone $binary_remote_addr zone=php_requests:10m rate=10r/s;
 #
 # server {
 #     charset utf-8;
@@ -372,8 +370,13 @@ server {
     }
 
     location ~ ^/index\.php(/|$) {
+        limit_conn perip 15;
+        limit_req zone=php_requests burst=20 nodelay;
+        limit_req_status 429;
+
         fastcgi_pass unix:/run/php/php8.4-fpm.sock;
-        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        fastcgi_split_path_info ^(.+
+        }\.php)(/.*)$;
         include fastcgi_params;
        # When you are using symlinks to link the document root to the
        # current version of your application, you should pass the real
