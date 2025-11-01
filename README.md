@@ -246,7 +246,7 @@ apt install ffmpeg
 # [apcu]
 # apc.shm_size=64M
 # apc.enabled = on
-# apc.enable_cli = on
+# apc.enable_cli = off
 
 # edit /etc/php/8.4/fpm/pool.d/www.conf
 # listen.allowed_clients = 127.0.0.1
