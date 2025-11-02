@@ -53,6 +53,18 @@ final class ArchiveZip extends Archive
             return false;
         }
 
+        $fileCount = $zip->numFiles;
+        $this->validateFileCount($fileCount);
+
+        for ($i = 0; $i < $fileCount; ++$i) {
+            $filename = $zip->getNameIndex($i);
+            $this->validateArchivePath($filename);
+            $stat = $zip->statIndex($i);
+            if ($stat) {
+                $this->validateFileSize($stat['size']);
+            }
+        }
+
         if (false === $zip->close()) {
             throw new ArchiverException('Не удалось проверить ZIP архив');
         }

@@ -77,22 +77,29 @@ final readonly class File
      */
     public function checkFile(string $directory, string $path, bool $allowDirectory = false): string
     {
+        $directory = \realpath($directory);
+        if (false === $directory) {
+            throw new NotFoundHttpException('Директория не найдена.');
+        }
+
         $path = \str_replace('\\', '/', $path);
 
         if (\str_contains($path, '../')) {
-            throw new AccessDeniedException('Запрещен доступ: "'.$path.'"".');
+            throw new AccessDeniedException('Запрещен доступ: "'.$path.'".');
         }
 
-        $file = \realpath($directory.\DIRECTORY_SEPARATOR.$path);
-
-        if (false === $file) {
-            throw new NotFoundHttpException('Файл не найден: "'.$path.'"".');
+        $fullPath = \realpath($directory.\DIRECTORY_SEPARATOR.$path);
+        if (false === $fullPath) {
+            throw new NotFoundHttpException('Файл не найден: "'.$path.'".');
+        }
+        if (!\str_starts_with($fullPath, $directory)) {
+            throw new AccessDeniedException('Запрещен доступ: "'.$path.'"');
         }
 
-        if (true !== $allowDirectory && true === \is_dir($path)) {
-            throw new AccessDeniedException('Запрещен доступ: "'.$path.'"".');
+        if (!$allowDirectory && \is_dir($fullPath)) {
+            throw new AccessDeniedException('Запрещен доступ: "'.$path.'".');
         }
 
-        return $file;
+        return $fullPath;
     }
 }

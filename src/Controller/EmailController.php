@@ -72,7 +72,11 @@ class EmailController extends AbstractController
             if (false === $handle = @\fopen($data['file']->getPathname(), 'r', false)) {
                 throw new \RuntimeException('Unable to open file.');
             }
-            $email->attach($handle, $data['file']->getClientOriginalName(), $data['file']->getClientMimeType());
+            $basename = \basename($data['file']->getClientOriginalName());
+            if ('' === $basename || '..' === $basename) {
+                $basename = null;
+            }
+            $email->attach($handle, $basename, $data['file']->getClientMimeType());
         }
 
         return $email;

@@ -2,11 +2,15 @@
 
 namespace App\Service\Archiver;
 
+use App\Exception\ArchiverException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\File;
 
 abstract class Archive
 {
+    private const int MAX_FILES = 1000;
+    private const int MAX_FILE_SIZE = 50 * 1024 * 1024;
+
     public function __construct(protected ParameterBagInterface $parameterBag)
     {
     }
@@ -14,6 +18,33 @@ abstract class Archive
     protected function getTmpArchive(string $directory): string
     {
         return $directory.'.tmp';
+    }
+
+    protected function validateArchivePath(string $filename): void
+    {
+        $filename = \str_replace('\\', '/', $filename);
+
+        if (\str_contains($filename, '../')) {
+            throw new ArchiverException('Архив содержит недопустимые пути: '.$filename);
+        }
+
+        if (\str_starts_with($filename, '/')) {
+            throw new ArchiverException('Архив содержит абсолютные пути: '.$filename);
+        }
+    }
+
+    protected function validateFileSize(int $fileSize): void
+    {
+        if ($fileSize > self::MAX_FILE_SIZE) {
+            throw new ArchiverException('Файл в архиве слишком большой: '.$fileSize.' байт');
+        }
+    }
+
+    protected function validateFileCount(int $fileCount): void
+    {
+        if ($fileCount > self::MAX_FILES) {
+            throw new ArchiverException('Архив содержит слишком много файлов: '.$fileCount);
+        }
     }
 
     /**
@@ -25,7 +56,7 @@ abstract class Archive
         ArchiveFileInfo::setArchiveDirectory($archiveDirectory);
 
         $objects = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($directory, \RecursiveDirectoryIterator::SKIP_DOTS),
+            new \RecursiveDirectoryIterator($directory, \FilesystemIterator::SKIP_DOTS),
             \RecursiveIteratorIterator::SELF_FIRST
         );
 

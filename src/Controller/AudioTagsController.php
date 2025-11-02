@@ -42,7 +42,7 @@ class AudioTagsController extends AbstractController
 
                     return $this->redirectToRoute('audio_tags_edit', [
                         'fileName' => $file->getFilename(),
-                        'originalFileName' => $data['file']->getClientOriginalName(),
+                        'originalFileName' => \basename($data['file']->getClientOriginalName()),
                     ]);
                 }
             }

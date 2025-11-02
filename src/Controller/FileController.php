@@ -451,7 +451,10 @@ class FileController extends AbstractController
             }
 
             $data->setHash($hash);
-            $data->setOriginalFileName($file->getClientOriginalName());
+
+            $basename = \basename($file->getClientOriginalName());
+            $basename = '..' === $basename ? '' : $basename;
+            $data->setOriginalFileName($basename);
 
             /** @var MimeGuesser $mimeGuesser */
             $mimeGuesser = $this->container->get(MimeGuesser::class);
@@ -545,7 +548,10 @@ class FileController extends AbstractController
         }
 
         $file->setHash($hash);
-        $file->setOriginalFileName($uploadedFile->getClientOriginalName());
+
+        $basename = \basename($uploadedFile->getClientOriginalName());
+        $basename = '..' === $basename ? '' : $basename;
+        $file->setOriginalFileName($basename);
 
         /** @var MimeGuesser $mimeGuesser */
         $mimeGuesser = $this->container->get(MimeGuesser::class);

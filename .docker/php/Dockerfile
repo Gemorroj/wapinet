@@ -38,11 +38,11 @@ RUN set -xe \
 # 7zip
 RUN set -xe \
     && cd /opt \
-    && mkdir 7z2409-linux-x64 \
-    && cd /opt/7z2409-linux-x64 \
-    && curl -O -L https://7-zip.org/a/7z2409-linux-x64.tar.xz \
-    && tar xJvf 7z2409-linux-x64.tar.xz \
-    && rm -f 7z2409-linux-x64.tar.xz
+    && mkdir 7z2501-linux-x64 \
+    && cd /opt/7z2501-linux-x64 \
+    && curl -O -L https://7-zip.org/a/7z2501-linux-x64.tar.xz \
+    && tar xJvf 7z2501-linux-x64.tar.xz \
+    && rm -f 7z2501-linux-x64.tar.xz
 
 # Cleanup
 RUN set -eux; \

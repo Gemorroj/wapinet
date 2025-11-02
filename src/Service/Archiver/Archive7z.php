@@ -17,7 +17,25 @@ final class Archive7z extends Archive
     {
         $archive7z = new Base7zArchive($file->getPathname(), $this->parameterBag->get('wapinet_7z_path'));
 
-        return $archive7z->isValid();
+        if (!$archive7z->isValid()) {
+            return false;
+        }
+
+        $this->validateArchive($archive7z);
+
+        return true;
+    }
+
+    private function validateArchive(Base7zArchive $archive7z): void
+    {
+        $entries = $archive7z->getEntries();
+
+        $this->validateFileCount(\count($entries));
+
+        foreach ($entries as $entry) {
+            $this->validateArchivePath($entry->getPath());
+            $this->validateFileSize($entry->getSize());
+        }
     }
 
     public function extract(string $directory, File $file): void

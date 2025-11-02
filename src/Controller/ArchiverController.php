@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Exception\ArchiverException;
 use App\Form\Type\Archiver\AddType;
 use App\Service\Archiver\Archive7z;
-use App\Service\Archiver\ArchiveRar;
 use App\Service\Archiver\ArchiveZip;
 use App\Service\Translit;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -109,6 +108,9 @@ class ArchiverController extends AbstractController
     public function downloadFileAction(Request $request, string $archive, string $name): BinaryFileResponse
     {
         $path = $request->get('path');
+        if (!\is_string($path) || '' === $path) {
+            throw $this->createNotFoundException('Не указан файл для скачивания.');
+        }
         $archiveDirectory = $this->checkArchiveDirectory($archive);
 
         $file = new BinaryFileResponse(
@@ -128,6 +130,9 @@ class ArchiverController extends AbstractController
     public function deleteFileAction(Request $request, string $archive, $name): RedirectResponse
     {
         $path = $request->get('path');
+        if (!\is_string($path) || '' === $path) {
+            throw $this->createNotFoundException('Не указан файл для удаления.');
+        }
         $archiveDirectory = $this->checkArchiveDirectory($archive);
 
         $file = $this->container->get(\App\Service\File\File::class)->checkFile($archiveDirectory, $path, true);
@@ -177,12 +182,6 @@ class ArchiverController extends AbstractController
 
             return $archiveDirectory;
         }
-        // $archiveRar = $this->container->get(ArchiveRar::class);
-        // if (true === $archiveRar->isValid($file)) {
-        //    $archiveDirectory = $this->createArchiveDirectory();
-        //    $archiveRar->extract($archiveDirectory, $file);
-        //    return $archiveDirectory;
-        // }
         $archive7z = $this->container->get(Archive7z::class);
         if (true === $archive7z->isValid($file)) {
             $archiveDirectory = $this->createArchiveDirectory();
@@ -235,7 +234,12 @@ class ArchiverController extends AbstractController
      */
     private function addFile(string $directory, UploadedFile $file): File
     {
-        return $file->move($directory, $file->getClientOriginalName());
+        $basename = \basename($file->getClientOriginalName());
+        if ('' === $basename || '..' === $basename) {
+            throw new FileException('Недопустимое имя файла');
+        }
+
+        return $file->move($directory, $basename);
     }
 
     public static function getSubscribedServices(): array
@@ -244,7 +248,6 @@ class ArchiverController extends AbstractController
         $services[Translit::class] = '?'.Translit::class;
         $services[Archive7z::class] = '?'.Archive7z::class;
         $services[ArchiveZip::class] = '?'.ArchiveZip::class;
-        $services[ArchiveRar::class] = '?'.ArchiveRar::class;
         $services[Filesystem::class] = '?'.Filesystem::class;
         $services[\App\Service\File\File::class] = '?'.\App\Service\File\File::class;
 
