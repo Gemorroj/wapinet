@@ -22,7 +22,7 @@ class SearchType extends AbstractType
             ],
             'required' => true,
             'label' => false,
-            'constraints' => [new Length(['min' => 3, 'max' => 5000])],
+            'constraints' => [new Length(min: 3, max: 5000)],
         ]);
 
         $builder->add('sort', ChoiceType::class, [

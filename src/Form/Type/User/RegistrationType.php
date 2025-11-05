@@ -35,7 +35,7 @@ class RegistrationType extends AbstractType
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'required' => true,
-                'constraints' => [new Length(['min' => 6])],
+                'constraints' => [new Length(min: 6)],
                 'type' => PasswordType::class,
                 'attr' => [
                     'minlength' => 6,
