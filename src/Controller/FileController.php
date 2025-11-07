@@ -67,7 +67,7 @@ class FileController extends AbstractController
     #[Route(path: '/search/{key}', name: 'file_search', requirements: ['key' => '[a-zA-Z0-9]+'], defaults: ['key' => null])]
     public function searchAction(Request $request, ?string $key = null): Response
     {
-        $page = (int) $request->get('page', 1);
+        $page = (int) $request->query->get('page', 1);
         $form = $this->createForm(SearchType::class);
         $pagerfanta = null;
 
@@ -142,7 +142,7 @@ class FileController extends AbstractController
         }
         $this->denyAccessUnlessGranted('ROLE_ADMIN', $user);
 
-        $page = (int) $request->get('page', 1);
+        $page = (int) $request->query->get('page', 1);
 
         $query = $fileRepository->getHiddenQuery();
         $pagerfanta = $paginate->paginate($query, $page);
@@ -155,7 +155,7 @@ class FileController extends AbstractController
     #[Route(path: '/tags', name: 'file_tags')]
     public function tagsAction(Request $request, TagRepository $tagRepository, Paginate $paginate): Response
     {
-        $page = (int) $request->get('page', 1);
+        $page = (int) $request->query->get('page', 1);
         $query = $tagRepository->getTagsQuery();
 
         $pagerfanta = $paginate->paginate($query, $page);
@@ -168,7 +168,7 @@ class FileController extends AbstractController
     #[Route(path: '/tags/{tagName}', name: 'file_tag', requirements: ['tagName' => '.+'])]
     public function tagAction(Request $request, string $tagName, TagRepository $tagRepository, FileRepository $fileRepository, Paginate $paginate): Response
     {
-        $page = (int) $request->get('page', 1);
+        $page = (int) $request->query->get('page', 1);
 
         $tag = $tagRepository->getTagByName($tagName);
         if (null === $tag) {
@@ -188,7 +188,7 @@ class FileController extends AbstractController
     #[Route(path: '/users/{username}', name: 'file_user', requirements: ['username' => '.+'])]
     public function userAction(Request $request, string $username, UserRepository $userRepository, FileRepository $fileRepository, Paginate $paginate): Response
     {
-        $page = (int) $request->get('page', 1);
+        $page = (int) $request->query->get('page', 1);
         /** @var User|null $user */
         $user = $userRepository->findOneBy(['username' => $username]);
         if (!$user) {
@@ -208,7 +208,7 @@ class FileController extends AbstractController
     #[Route(path: '/list/{date}/{category}', name: 'file_list', requirements: ['date' => 'all|today|yesterday', 'category' => 'video|audio|image|text|office|archive|android|java'], defaults: ['date' => 'all', 'category' => null])]
     public function listAction(Request $request, Timezone $timezoneHelper, FileRepository $fileRepository, Paginate $paginate, string $date = 'all', ?string $category = null): Response
     {
-        $page = (int) $request->get('page', 1);
+        $page = (int) $request->query->get('page', 1);
 
         $datetimeStart = null;
         $datetimeEnd = null;
@@ -320,7 +320,7 @@ class FileController extends AbstractController
     #[Route(path: '/{id}/download/{name}', name: 'file_archive_download_file', requirements: ['id' => '\d+'])]
     public function archiveDownloadFileAction(Request $request, Filesystem $filesystem, FileRepository $fileRepository, int $id, string $name): BinaryFileResponse
     {
-        $path = (string) \str_replace('\\', '/', $request->get('path', ''));
+        $path = (string) \str_replace('\\', '/', $request->query->get('path', ''));
         if ('' === $path) {
             throw $this->createNotFoundException('Не указан файл для скачивания.');
         }
@@ -640,7 +640,7 @@ class FileController extends AbstractController
     #[Route(path: '/tags_search', name: 'file_tags_search', options: ['expose' => true], defaults: ['_format' => 'json'])]
     public function tagsSearchAction(Request $request, TagRepository $tagRepository): JsonResponse
     {
-        $term = \trim($request->get('term', ''));
+        $term = \trim($request->query->get('term', ''));
         if ('' === $term) {
             return $this->json([]);
         }

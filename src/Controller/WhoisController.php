@@ -33,10 +33,10 @@ class WhoisController extends AbstractController
                     $type = $data['type'];
                     $result = $this->getWhois($whoRdap, $data['query'], $data['type']);
                 }
-            } elseif (null !== $request->get('query')) {
-                $type = $request->get('type', 'WHOIS');
+            } elseif (null !== $request->request->get('query')) {
+                $type = $request->request->get('type', 'WHOIS');
                 $form->setData([
-                    'query' => $request->get('query'),
+                    'query' => $request->request->get('query'),
                     'type' => $type,
                 ]);
                 $data = $form->getData();

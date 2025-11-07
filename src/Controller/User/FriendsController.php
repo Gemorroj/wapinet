@@ -29,7 +29,7 @@ class FriendsController extends AbstractController
             throw $this->createNotFoundException('Пользователь не найден');
         }
 
-        $page = (int) $request->get('page', 1);
+        $page = (int) $request->query->get('page', 1);
 
         $friends = $friendRepository->getFriendsQuery($user);
         $pagerfanta = $paginate->paginate($friends, $page);

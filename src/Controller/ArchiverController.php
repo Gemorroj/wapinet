@@ -107,7 +107,7 @@ class ArchiverController extends AbstractController
     #[Route(path: '/download/{archive}/{name}', name: 'archiver_download_file', requirements: ['archive' => 'archive[a-z0-9]+'])]
     public function downloadFileAction(Request $request, string $archive, string $name): BinaryFileResponse
     {
-        $path = $request->get('path');
+        $path = $request->query->get('path');
         if (!\is_string($path) || '' === $path) {
             throw $this->createNotFoundException('Не указан файл для скачивания.');
         }
@@ -129,7 +129,7 @@ class ArchiverController extends AbstractController
     #[Route(path: '/delete/{archive}/{name}', name: 'archiver_delete_file', requirements: ['archive' => 'archive[a-z0-9]+'], options: ['expose' => true], methods: ['POST'])]
     public function deleteFileAction(Request $request, string $archive, $name): RedirectResponse
     {
-        $path = $request->get('path');
+        $path = $request->query->get('path');
         if (!\is_string($path) || '' === $path) {
             throw $this->createNotFoundException('Не указан файл для удаления.');
         }

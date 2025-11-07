@@ -19,7 +19,7 @@ class EventsController extends AbstractController
         if (!$user) {
             throw $this->createAccessDeniedException();
         }
-        $page = (int) $request->get('page', 1);
+        $page = (int) $request->query->get('page', 1);
 
         $events = $eventRepository->findEventsQuery($user);
 

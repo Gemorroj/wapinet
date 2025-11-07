@@ -23,7 +23,7 @@ class GuestbookController extends AbstractController
     {
         $form = $this->createForm(MessageType::class);
 
-        $page = (int) $request->get('page', 1);
+        $page = (int) $request->query->get('page', 1);
 
         $query = $guestbookRepository->getListQuery();
         $pagerfanta = $paginate->paginate($query, $page);

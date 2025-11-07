@@ -20,7 +20,7 @@ class UsersController extends AbstractController
     #[Route(path: '/users/{key}', name: 'wapinet_users', requirements: ['key' => '[a-zA-Z0-9]+'], defaults: ['key' => null])]
     public function indexAction(Request $request, UserRepository $userRepository, Paginate $paginate, Manticore $manticore, ?string $key = null): Response
     {
-        $page = (int) $request->get('page', 1);
+        $page = (int) $request->query->get('page', 1);
         $form = $this->createForm(SearchType::class);
         $pagerfanta = null;
 
