@@ -18,8 +18,9 @@
 
     <ul id="list-archive" data-role="listview" data-inset="true" data-name="{{ archive }}">
     {% for file in files %}
-        {% set pathView = (file.pathInfo.archiveName ? file.pathInfo.archiveName ~ ' / ' : '') ~ file.filename %}
-        {% set path = (file.pathInfo.archiveName ? file.pathInfo.archiveName ~ '/' : '') ~ file.filename %}
+        {% set archiveName = file.pathInfo.archiveName(archive) %}
+        {% set pathView = (archiveName ? archiveName ~ ' / ' : '') ~ file.filename %}
+        {% set path = (archiveName ? archiveName ~ '/' : '') ~ file.filename %}
 
         {% if file.dir %}
             <li class="directory">

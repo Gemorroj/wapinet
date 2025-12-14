@@ -21,10 +21,11 @@ final class ArchiveZip extends Archive
             throw new ArchiverException('Не удалось добавить комментарий к ZIP архиву');
         }
 
+        $archiveDirectory = \basename($directory);
         foreach ($this->getFiles($directory) as $entry) {
             /** @var ArchiveFileInfo $info */
             $info = $entry->getPathInfo();
-            $dir = $info->getArchiveName();
+            $dir = $info->getArchiveName($archiveDirectory);
             $dir = ('' !== $dir ? $dir.'/' : '');
 
             if (true === $entry->isDir()) {

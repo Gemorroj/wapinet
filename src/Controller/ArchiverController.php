@@ -62,7 +62,7 @@ class ArchiverController extends AbstractController
     public function editAction(Request $request, string $archive): Response
     {
         $form = $this->createForm(AddType::class);
-        $archiveDirectory = $this->checkArchiveDirectory($archive);
+        $archiveDirectory = $this->prepareFullArchiveDirectory($archive);
 
         try {
             $form->handleRequest($request);
@@ -88,7 +88,7 @@ class ArchiverController extends AbstractController
     #[Route(path: '/download/{archive}.zip', name: 'archiver_download', requirements: ['archive' => 'archive[a-z0-9]+'])]
     public function downloadAction(string $archive): BinaryFileResponse
     {
-        $archiveDirectory = $this->checkArchiveDirectory($archive);
+        $archiveDirectory = $this->prepareFullArchiveDirectory($archive);
 
         $name = $archive.'.zip';
         $archiveZip = $this->container->get(ArchiveZip::class);
@@ -111,7 +111,7 @@ class ArchiverController extends AbstractController
         if (!\is_string($path) || '' === $path) {
             throw $this->createNotFoundException('Не указан файл для скачивания.');
         }
-        $archiveDirectory = $this->checkArchiveDirectory($archive);
+        $archiveDirectory = $this->prepareFullArchiveDirectory($archive);
 
         $file = new BinaryFileResponse(
             $this->container->get(\App\Service\File\File::class)->checkFile($archiveDirectory, $path, false)
@@ -133,7 +133,7 @@ class ArchiverController extends AbstractController
         if (!\is_string($path) || '' === $path) {
             throw $this->createNotFoundException('Не указан файл для удаления.');
         }
-        $archiveDirectory = $this->checkArchiveDirectory($archive);
+        $archiveDirectory = $this->prepareFullArchiveDirectory($archive);
 
         $file = $this->container->get(\App\Service\File\File::class)->checkFile($archiveDirectory, $path, true);
 
@@ -201,7 +201,7 @@ class ArchiverController extends AbstractController
     /**
      * @throws FileException
      */
-    private function checkArchiveDirectory(string $archive): string
+    private function prepareFullArchiveDirectory(string $archive): string
     {
         $directory = $this->getParameter('kernel.tmp_archiver_dir').\DIRECTORY_SEPARATOR.$archive;
 
