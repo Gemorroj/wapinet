@@ -11,6 +11,6 @@ class EventsControllerTest extends WebTestCaseWapinet
         $client = static::loginAdmin();
 
         $crawler = $client->request('GET', '/user/events');
-        self::assertSame(200, $client->getResponse()->getStatusCode());
+        static::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

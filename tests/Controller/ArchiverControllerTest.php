@@ -12,7 +12,7 @@ class ArchiverControllerTest extends WebTestCaseWapinet
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/archiver');
-        self::assertSame(200, $client->getResponse()->getStatusCode());
+        static::assertSame(200, $client->getResponse()->getStatusCode());
     }
 
     public function testExtract(): void
@@ -29,14 +29,14 @@ class ArchiverControllerTest extends WebTestCaseWapinet
 
         $client->submit($form);
 
-        $this->assertTrue($client->getResponse()->isRedirection());
+        static::assertTrue($client->getResponse()->isRedirection());
 
         $crawler = $client->followRedirect();
 
         $link = $crawler->filter('ul#list-archive > li > a')->html();
 
-        self::assertStringStartsWith('micro_orc.fbx', $link);
+        static::assertStringStartsWith('micro_orc.fbx', $link);
 
-        self::assertSame(200, $client->getResponse()->getStatusCode());
+        static::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

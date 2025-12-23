@@ -10,9 +10,9 @@ return (new PhpCsFixer\Config())
         '@Symfony' => true,
         '@Symfony:risky' => true,
         '@DoctrineAnnotation' => true,
-        '@PHP82Migration:risky' => true,
-        '@PHP84Migration' => true,
-        '@PHPUnit100Migration:risky' => true,
+        '@PHP8x4Migration:risky' => true,
+        '@PHP8x4Migration' => true,
+        '@PHPUnit11x0Migration:risky' => true,
 
         'combine_consecutive_issets' => true,
         'combine_consecutive_unsets' => true,
