@@ -6,9 +6,12 @@ includes:
 parameters:
     level: 5
     paths:
-        - src
-        - tests
+        - bin/
+        - config/
+        - public/
+        - src/
+        - tests/
     symfony:
-        containerXmlPath: '%rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml'
+        containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml
     doctrine:
         objectManagerLoader: tests/object-manager.php
