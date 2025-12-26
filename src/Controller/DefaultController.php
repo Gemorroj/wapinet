@@ -129,14 +129,14 @@ class DefaultController extends AbstractController
     #[Route(path: '/utilities', name: 'utilities')]
     public function utilitiesAction(): Response
     {
-        return $this->redirectToRoute('index');
+        return $this->redirectToRoute('index', status: 301);
     }
 
     #[\Deprecated('Obsolete. leave for search robots')]
     #[Route(path: '/programming', name: 'programming')]
     public function programmingAction(): Response
     {
-        return $this->redirectToRoute('index');
+        return $this->redirectToRoute('index', status: 301);
     }
 
     #[Route(path: '/open_source', name: 'open_source')]
@@ -155,7 +155,7 @@ class DefaultController extends AbstractController
     #[Route(path: '/downloads', name: 'downloads')]
     public function downloadsAction(): Response
     {
-        return $this->redirectToRoute('index');
+        return $this->redirectToRoute('index', status: 301);
     }
 
     #[Route(path: '/textbook', name: 'textbook')]
@@ -176,7 +176,7 @@ class DefaultController extends AbstractController
     #[Route(path: '/mass_media/inotv')]
     public function massMediaAction(): Response
     {
-        return $this->redirectToRoute('politics');
+        return $this->redirectToRoute('politics', status: 301);
     }
 
     #[Route(path: '/politics', name: 'politics')]
