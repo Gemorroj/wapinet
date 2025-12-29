@@ -43,7 +43,7 @@ class EmailType extends AbstractType
                 'placeholder' => 'email@example.com',
             ],
             'constraints' => [
-                new Email(['mode' => Email::VALIDATION_MODE_HTML5]),
+                new Email(mode: Email::VALIDATION_MODE_HTML5),
             ],
         ]);
         $builder->add('from', TextType::class, [
@@ -54,7 +54,7 @@ class EmailType extends AbstractType
                 'title' => $fromMessage,
             ],
             'constraints' => [
-                new Regex('/^(?!.*@).*/', $fromMessage),
+                new Regex(pattern: '/^(?!.*@).*/', message: $fromMessage),
             ],
         ]);
         $builder->add('subject', TextType::class, [
