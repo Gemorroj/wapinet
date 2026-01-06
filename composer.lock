@@ -2580,16 +2580,16 @@
         },
         {
             "name": "liip/imagine-bundle",
-            "version": "2.17.0",
+            "version": "2.17.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipImagineBundle.git",
-                "reference": "66cb2e12960070f9736d661e2eca0d82d3206166"
+                "reference": "69d2df3c6606495d1878fa190d6c3dc4bc5623b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/66cb2e12960070f9736d661e2eca0d82d3206166",
-                "reference": "66cb2e12960070f9736d661e2eca0d82d3206166",
+                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/69d2df3c6606495d1878fa190d6c3dc4bc5623b6",
+                "reference": "69d2df3c6606495d1878fa190d6c3dc4bc5623b6",
                 "shasum": ""
             },
             "require": {
@@ -2624,6 +2624,7 @@
                 "symfony/form": "^5.4|^6.4|^7.3|^8.0",
                 "symfony/messenger": "^5.4|^6.4|^7.3|^8.0",
                 "symfony/phpunit-bridge": "^7.3",
+                "symfony/runtime": "^5.4|^6.4|^7.3|^8.0",
                 "symfony/templating": "^5.4|^6.4|^7.3|^8.0",
                 "symfony/validator": "^5.4|^6.4|^7.3|^8.0",
                 "symfony/yaml": "^5.4|^6.4|^7.3|^8.0"
@@ -2681,9 +2682,9 @@
             ],
             "support": {
                 "issues": "https://github.com/liip/LiipImagineBundle/issues",
-                "source": "https://github.com/liip/LiipImagineBundle/tree/2.17.0"
+                "source": "https://github.com/liip/LiipImagineBundle/tree/2.17.1"
             },
-            "time": "2026-01-05T14:49:42+00:00"
+            "time": "2026-01-06T09:34:48+00:00"
         },
         {
             "name": "maxmind-db/reader",
