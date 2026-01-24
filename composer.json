@@ -56,13 +56,13 @@
         "symfony/webpack-encore-bundle": "^2.4",
         "symfony/scheduler": "7.4.*",
 
-        "twig/extra-bundle": "^3.22",
-        "twig/twig": "^3.22",
+        "twig/extra-bundle": "^3.23",
+        "twig/twig": "^3.23",
 
         "babdev/pagerfanta-bundle": "^4.6",
-        "pagerfanta/doctrine-collections-adapter": "^4.7",
-        "pagerfanta/doctrine-orm-adapter": "^4.7",
-        "pagerfanta/twig": "^4.7",
+        "pagerfanta/doctrine-collections-adapter": "^4.8",
+        "pagerfanta/doctrine-orm-adapter": "^4.8",
+        "pagerfanta/twig": "^4.8",
 
         "easycorp/easyadmin-bundle": "^4.27",
         "friendsofsymfony/jsrouting-bundle": "^3.6",
@@ -100,7 +100,7 @@
         "phpstan/phpstan-symfony": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
         "phpstan/phpstan-doctrine": "^2.0",
-        "friendsofphp/php-cs-fixer": "^3.92"
+        "friendsofphp/php-cs-fixer": "^3.93"
     },
     "config": {
         "allow-plugins": {

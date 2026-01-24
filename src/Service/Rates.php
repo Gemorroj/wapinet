@@ -31,7 +31,7 @@ final readonly class Rates
         throw new \RuntimeException('Указанная страна не поддерживается');
     }
 
-    protected function getRu(): array
+    private function getRu(): array
     {
         $response = $this->httpClient->request('GET', 'http://www.cbr.ru/scripts/XML_daily.asp');
 
@@ -57,7 +57,7 @@ final readonly class Rates
         ];
     }
 
-    protected function getBy(): array
+    private function getBy(): array
     {
         $response = $this->httpClient->request('GET', 'https://www.nbrb.by/Services/XmlExRates.aspx');
 
@@ -83,7 +83,7 @@ final readonly class Rates
         ];
     }
 
-    protected function getUa(): array
+    private function getUa(): array
     {
         $response = $this->httpClient->request('GET', 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json');
 
@@ -108,7 +108,7 @@ final readonly class Rates
         ];
     }
 
-    protected function getKz(): array
+    private function getKz(): array
     {
         $response = $this->httpClient->request('GET', 'https://www.nationalbank.kz/rss/rates_all.xml');
 

@@ -63,7 +63,7 @@ final readonly class FileUrlDataTransformer implements DataTransformerInterface
         return $uploadedFile;
     }
 
-    protected function getUploadedFile(array $fileDataFromForm): FileUrl|UploadedFile|null
+    private function getUploadedFile(array $fileDataFromForm): FileUrl|UploadedFile|null
     {
         $uploadedFile = null;
 
@@ -71,7 +71,7 @@ final readonly class FileUrlDataTransformer implements DataTransformerInterface
             // UploadedFile|string
             $uploadedFile = $fileDataFromForm['file'];
             // TODO: вероятно эта проверка не нужна
-            if (!($uploadedFile instanceof UploadedFile)) {
+            if (!$uploadedFile instanceof UploadedFile) {
                 throw new TransformationFailedException('Ошибка при загрузке файла');
             }
         }
@@ -117,7 +117,7 @@ final readonly class FileUrlDataTransformer implements DataTransformerInterface
     /**
      * @param string[][] $headers
      */
-    protected function getOriginalName(array $headers, string $url, string $default = 'index.html'): string
+    private function getOriginalName(array $headers, string $url, string $default = 'index.html'): string
     {
         $contentDisposition = $headers['content-disposition'][0] ?? null;
         if ($contentDisposition) {
