@@ -231,7 +231,7 @@ apt install ffmpeg
 ```
 
 ```bash
-# edit /etc/php/8.4/fpm/php.ini & /etc/php/8.4/cli/php.ini
+# edit /etc/php/8.5/fpm/php.ini & /etc/php/8.5/cli/php.ini
 # cgi.fix_pathinfo=0
 # memory_limit = 256M
 # date.timezone = "UTC"
@@ -248,7 +248,7 @@ apt install ffmpeg
 # apc.enabled = on
 # apc.enable_cli = off
 
-# edit /etc/php/8.4/fpm/pool.d/www.conf
+# edit /etc/php/8.5/fpm/pool.d/www.conf
 # listen.allowed_clients = 127.0.0.1
 # pm.status_path = /statusfpm
 # listen = /run/php/php8.5-fpm.sock
