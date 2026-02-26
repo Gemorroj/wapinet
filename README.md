@@ -5,7 +5,7 @@
 ##### Используются:
 - Symfony 8.0
 - Jquery Mobile
-- PHP 8.4
+- PHP 8.5
 - MySQL 8.0
 - Manticore
 - 7zip
@@ -35,7 +35,7 @@ apt install htop mc git unzip
 apt install mysql-client mysql-server
 apt install angie
 systemctl enable angie
-apt install php8.4-fpm php8.4-curl php8.4-gd php8.4-intl php8.4-mbstring php8.4-mysql php8.4-xml php8.4-zip php8.4-apcu
+apt install php8.5-fpm php8.5-curl php8.5-gd php8.5-intl php8.5-mbstring php8.5-mysql php8.5-xml php8.5-zip php8.5-apcu
 
 mysql_secure_installation
 echo '[mysqld]
@@ -251,7 +251,7 @@ apt install ffmpeg
 # edit /etc/php/8.4/fpm/pool.d/www.conf
 # listen.allowed_clients = 127.0.0.1
 # pm.status_path = /statusfpm
-# listen = /run/php/php8.4-fpm.sock
+# listen = /run/php/php8.5-fpm.sock
 # edit pm.* settings for performance
 
 # edit /etc/angie/angie.conf
@@ -276,7 +276,7 @@ apt install ffmpeg
 # 	location = /statusfpm {
 # 		fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
 # 		include fastcgi_params;
-# 		fastcgi_pass unix:/run/php/php8.4-fpm.sock;
+# 		fastcgi_pass unix:/run/php/php8.5-fpm.sock;
 # 		allow 127.0.0.1;
 # 		deny  all;
 #     }
@@ -374,7 +374,7 @@ server {
         limit_req zone=php_requests burst=20 nodelay;
         limit_req_status 429;
 
-        fastcgi_pass unix:/run/php/php8.4-fpm.sock;
+        fastcgi_pass unix:/run/php/php8.5-fpm.sock;
         fastcgi_split_path_info ^(.+
         }\.php)(/.*)$;
         include fastcgi_params;

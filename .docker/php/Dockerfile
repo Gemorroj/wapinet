@@ -1,4 +1,4 @@
-FROM php:8.4-fpm
+FROM php:8.5-fpm
 
 # Update repo and install some utilites
 RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
