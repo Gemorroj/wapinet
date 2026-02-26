@@ -174,9 +174,6 @@
             "config/routes/liip_imagine.yaml"
         ]
     },
-    "masterminds/html5": {
-        "version": "2.7.5"
-    },
     "maxmind-db/reader": {
         "version": "v1.3.0"
     },

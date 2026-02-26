@@ -2,7 +2,6 @@
 
 namespace App\Command;
 
-use App\Entity\Tag;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -10,6 +9,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'app:tags-clear',
@@ -17,8 +17,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class TagsClearCommand extends Command
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly TagRepository $tagRepository,
+        private readonly LoggerInterface $logger,
+    ) {
         parent::__construct();
     }
 
@@ -36,19 +39,36 @@ class TagsClearCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        /** @var TagRepository $repository */
-        $repository = $this->entityManager->getRepository(Tag::class);
+        $io = new SymfonyStyle($input, $output);
+        $rows = $this->tagRepository->findEmptyTags();
 
-        $rows = $repository->findEmptyTags();
+        $progressBar = $io->createProgressBar(\count($rows));
+        $progressBar->start();
+
+        $errorsCount = 0;
         foreach ($rows as $tag) {
-            $this->entityManager->remove($tag);
+            $progressBar->advance();
+
+            try {
+                $this->entityManager->remove($tag);
+            } catch (\Throwable $e) {
+                ++$errorsCount;
+                $this->logger->error($this->getName().': '.$e->getMessage(), ['exception' => $e]);
+            }
         }
 
         $this->entityManager->flush();
+        $progressBar->finish();
 
         $message = 'Deleted '.\count($rows).' tags.';
-        $this->logger->warning($this->getName().': '.$message);
-        $output->writeln($message);
+        $this->logger->notice($this->getName().': '.$message);
+        $io->success($message);
+
+        if ($errorsCount) {
+            $messageError = \sprintf('%d events failed', $errorsCount);
+            $this->logger->error($this->getName().': '.$message);
+            $io->error($messageError);
+        }
 
         return Command::SUCCESS;
     }

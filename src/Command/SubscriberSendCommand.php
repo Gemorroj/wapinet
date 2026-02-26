@@ -12,6 +12,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -26,6 +27,7 @@ class SubscriberSendCommand extends Command
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
+        private readonly EventRepository $eventRepository,
         private readonly MailerInterface $mailer,
         private readonly LoggerInterface $logger,
         private readonly ParameterBagInterface $parameterBag,
@@ -35,23 +37,38 @@ class SubscriberSendCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        /** @var EventRepository $repository */
-        $repository = $this->entityManager->getRepository(Event::class);
+        $io = new SymfonyStyle($input, $output);
+        $rows = $this->eventRepository->findNeedEmail();
 
-        $rows = $repository->findNeedEmail();
-
-        $this->entityManager->beginTransaction();
         $q = $this->entityManager->createQuery('UPDATE App\Entity\Event e SET e.needEmail = 0 WHERE e.id = :id');
 
+        $progressBar = $io->createProgressBar(\count($rows));
+        $progressBar->start();
+
+        $errorsCount = 0;
         foreach ($rows as $row) {
-            $this->sendEmail($row);
-            $q->execute(['id' => $row->getId()]);
+            $progressBar->advance();
+
+            try {
+                $this->sendEmail($row);
+                $q->execute(['id' => $row->getId()]);
+            } catch (\Throwable $e) {
+                ++$errorsCount;
+                $this->logger->error($this->getName().': '.$e->getMessage(), ['exception' => $e]);
+            }
         }
-        $this->entityManager->commit();
+        $this->entityManager->flush();
+        $progressBar->finish();
 
         $message = 'All Emails sent.';
-        $this->logger->warning($this->getName().': '.$message);
-        $output->writeln($message);
+        $this->logger->notice($this->getName().': '.$message);
+        $io->success($message);
+
+        if ($errorsCount) {
+            $messageError = \sprintf('%d events failed', $errorsCount);
+            $this->logger->error($this->getName().': '.$message);
+            $io->error($messageError);
+        }
 
         return Command::SUCCESS;
     }

@@ -8,6 +8,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'app:files-clear-meta',
@@ -34,13 +35,15 @@ class FilesClearMetaCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
+
         $this->entityManager
             ->createQuery('UPDATE App\Entity\File f SET f.meta = NULL')
             ->execute();
 
         $message = 'Meta for all files have been cleared.';
-        $this->logger->warning($this->getName().': '.$message);
-        $output->writeln($message);
+        $this->logger->notice($this->getName().': '.$message);
+        $io->success($message);
 
         return Command::SUCCESS;
     }

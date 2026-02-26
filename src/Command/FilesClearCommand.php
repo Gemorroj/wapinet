@@ -10,6 +10,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -46,6 +47,8 @@ class FilesClearCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
+
         $lifetime = $input->getArgument('lifetime');
         $dateTime = new \DateTime('-'.$lifetime);
 
@@ -82,8 +85,8 @@ class FilesClearCommand extends Command
         }
 
         $message = \sprintf('Files over "%s" are removed. Removed "%d" rows from DB and "%d" files from filesystem.', $lifetime, $dbDeleted, $filesystemDeleted);
-        $this->logger->warning($this->getName().': '.$message);
-        $output->writeln($message);
+        $this->logger->notice($this->getName().': '.$message);
+        $io->success($message);
 
         return Command::SUCCESS;
     }

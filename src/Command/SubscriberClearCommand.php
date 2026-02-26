@@ -9,6 +9,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'app:subscriber-clear',
@@ -38,12 +39,14 @@ class SubscriberClearCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
+
         $lifetime = $input->getArgument('lifetime');
         $count = $this->eventRepository->removeEvents(new \DateTime('-'.$lifetime));
 
         $message = 'Deleted '.$count.' events.';
-        $this->logger->warning($this->getName().': '.$message);
-        $output->writeln($message);
+        $this->logger->notice($this->getName().': '.$message);
+        $io->success($message);
 
         return Command::SUCCESS;
     }

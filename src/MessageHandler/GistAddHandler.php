@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-class GistAddHandler
+readonly class GistAddHandler
 {
     public function __construct(
         private EntityManagerInterface $entityManager,

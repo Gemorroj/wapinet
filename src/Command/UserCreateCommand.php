@@ -40,6 +40,7 @@ class UserCreateCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+
         $email = $input->getArgument('email');
         $username = $input->getArgument('username');
         $plainPassword = $input->getArgument('password');
@@ -56,7 +57,7 @@ class UserCreateCommand extends Command
         $this->entityManager->flush();
 
         $message = 'User created. Id: '.$user->getId();
-        $this->logger->warning($this->getName().': '.$message);
+        $this->logger->notice($this->getName().': '.$message);
         $io->success($message);
 
         return Command::SUCCESS;

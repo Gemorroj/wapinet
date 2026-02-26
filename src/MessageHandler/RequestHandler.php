@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-class RequestHandler
+readonly class RequestHandler
 {
     public function __construct(
         private EntityManagerInterface $entityManager,

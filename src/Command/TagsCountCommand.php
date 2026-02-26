@@ -2,8 +2,7 @@
 
 namespace App\Command;
 
-use App\Entity\FileTags;
-use App\Entity\Tag;
+use App\Repository\FileTagsRepository;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -11,6 +10,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Scheduler\Attribute\AsPeriodicTask;
 
 #[AsCommand(
@@ -20,8 +20,12 @@ use Symfony\Component\Scheduler\Attribute\AsPeriodicTask;
 #[AsPeriodicTask('1 day')]
 class TagsCountCommand extends Command
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly TagRepository $tagRepository,
+        private readonly FileTagsRepository $fileTagsRepository,
+        private readonly LoggerInterface $logger,
+    ) {
         parent::__construct();
     }
 
@@ -39,28 +43,44 @@ class TagsCountCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
+
+        $tags = $this->tagRepository->findAll();
+
+        $progressBar = $io->createProgressBar(\count($tags));
+        $progressBar->start();
+
         $fixedCounts = 0;
-        /** @var TagRepository $repositoryTag */
-        $repositoryTag = $this->entityManager->getRepository(Tag::class);
-        $repositoryFileTags = $this->entityManager->getRepository(FileTags::class);
+        $errorsCount = 0;
+        foreach ($tags as $tag) {
+            $progressBar->advance();
 
-        /** @var Tag $tag */
-        foreach ($repositoryTag->findAll() as $tag) {
-            $fileTags = $repositoryFileTags->findBy(['tag' => $tag]);
-            $count = \count($fileTags);
+            try {
+                $fileTags = $this->fileTagsRepository->findBy(['tag' => $tag]);
+                $count = \count($fileTags);
 
-            if ($count !== $tag->getCount()) {
-                $tag->setCount($count);
-                $this->entityManager->persist($tag);
-                ++$fixedCounts;
+                if ($count !== $tag->getCount()) {
+                    $tag->setCount($count);
+                    $this->entityManager->persist($tag);
+                    ++$fixedCounts;
+                }
+            } catch (\Throwable $e) {
+                ++$errorsCount;
+                $this->logger->error($this->getName().': '.$e->getMessage(), ['exception' => $e]);
             }
         }
 
         $this->entityManager->flush();
 
         $message = 'Fixed '.$fixedCounts.' tags count.';
-        $this->logger->warning($this->getName().': '.$message);
-        $output->writeln($message);
+        $this->logger->notice($this->getName().': '.$message);
+        $io->success($message);
+
+        if ($errorsCount) {
+            $messageError = \sprintf('%d tags failed', $errorsCount);
+            $this->logger->error($this->getName().': '.$message);
+            $io->error($messageError);
+        }
 
         return Command::SUCCESS;
     }
