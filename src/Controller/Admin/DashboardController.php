@@ -2,12 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\File;
-use App\Entity\Gist;
-use App\Entity\Guestbook;
-use App\Entity\News;
-use App\Entity\Tag;
-use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -40,12 +34,13 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Файлы', 'fas fa-folder-open', File::class);
-        yield MenuItem::linkToCrud('Тэги', 'fas fa-folder-open', Tag::class);
-        yield MenuItem::linkToCrud('Новости', 'fas fa-folder-open', News::class);
-        yield MenuItem::linkToCrud('Пользователи', 'fas fa-folder-open', User::class);
-        yield MenuItem::linkToCrud('Блоги', 'fas fa-folder-open', Gist::class);
-        yield MenuItem::linkToCrud('Гостевая', 'fas fa-folder-open', Guestbook::class);
+
+        yield MenuItem::linkTo(FilesCrudController::class, 'Файлы', 'fas fa-folder-open');
+        yield MenuItem::linkTo(TagsCrudController::class, 'Тэги', 'fas fa-folder-open');
+        yield MenuItem::linkTo(NewsCrudController::class, 'Новости', 'fas fa-folder-open');
+        yield MenuItem::linkTo(UsersCrudController::class, 'Пользователи', 'fas fa-folder-open');
+        yield MenuItem::linkTo(GistsCrudController::class, 'Блоги', 'fas fa-folder-open');
+        yield MenuItem::linkTo(GuestbookCrudController::class, 'Гостевая', 'fas fa-folder-open');
     }
 
     public function index(): Response

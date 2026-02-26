@@ -126,7 +126,7 @@ class FilesCrudController extends AbstractCrudController
         return $event;
     }
 
-    public function deleteEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    public function deleteEntity(EntityManagerInterface $entityManager, object $entityInstance): void
     {
         $this->container->get(\App\Service\File\File::class)->cleanupFile($entityInstance);
 
