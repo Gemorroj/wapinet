@@ -942,9 +942,9 @@
   integrity sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==
 
 "@types/node@*":
-  version "25.3.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-25.3.2.tgz#cbc4b963e1b3503eb2bcf7c55bf48c95204918d1"
-  integrity sha512-RpV6r/ij22zRRdyBPcxDeKAzH43phWVKEjL2iksqo1Vz3CuBUrgmPpPhALKiRfU7OMCmeeO9vECBMsV0hMTG8Q==
+  version "25.3.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-25.3.3.tgz#605862544ee7ffd7a936bcbf0135a14012f1e549"
+  integrity sha512-DpzbrH7wIcBaJibpKo9nnSQL0MTRdnWttGyE5haGwK86xgMOkFLp7vEyfQPGLOJh5wNYiJ3V9PmUMDhV9u8kkQ==
   dependencies:
     undici-types "~7.18.0"
 
@@ -1260,9 +1260,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001759:
-  version "1.0.30001774"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001774.tgz#0e576b6f374063abcd499d202b9ba1301be29b70"
-  integrity sha512-DDdwPGz99nmIEv216hKSgLD+D4ikHQHjBC/seF98N9CPqRX4M5mSxT9eTV6oyisnJcuzxtZy4n17yKKQYmYQOA==
+  version "1.0.30001775"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001775.tgz#9572266e3f7f77efee5deac1efeb4795879d1b7f"
+  integrity sha512-s3Qv7Lht9zbVKE9XoTyRG6wVDCKdtOFIjBGg3+Yhn6JaytuNKPIjBMTMIY1AnOH3seL5mvF+x33oGAyK3hVt3A==
 
 chalk@^2.4.2:
   version "2.4.2"
@@ -1605,9 +1605,9 @@ emojis-list@^3.0.0:
   integrity sha512-/kyM18EfinwXZbno9FyUGeFh87KC8HRQBQGildHZbEuRyWFOmv1U10o9BBp8XVZDVNNuQKyIGIu5ZYAAXJ0V2Q==
 
 enhanced-resolve@^5.19.0:
-  version "5.19.0"
-  resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-5.19.0.tgz#6687446a15e969eaa63c2fa2694510e17ae6d97c"
-  integrity sha512-phv3E1Xl4tQOShqSte26C7Fl84EwUdZsyOuSSk9qtAGyyQs2s3jJzComh+Abf4g187lUUAvH+H26omrqia2aGg==
+  version "5.20.0"
+  resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-5.20.0.tgz#323c2a70d2aa7fb4bdfd6d3c24dfc705c581295d"
+  integrity sha512-/ce7+jQ1PQ6rVXwe+jKEg5hW5ciicHwIQUagZkp6IufBoY3YDgdTTY1azVs0qoRgVmvsNB+rbjLJxDAeHHtwsQ==
   dependencies:
     graceful-fs "^4.2.4"
     tapable "^2.3.0"
@@ -2462,9 +2462,9 @@ safe-buffer@^5.1.0:
   integrity sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==
 
 sax@^1.4.1:
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/sax/-/sax-1.4.4.tgz#f29c2bba80ce5b86f4343b4c2be9f2b96627cf8b"
-  integrity sha512-1n3r/tGXO6b6VXMdFT54SHzT9ytu9yr7TaELowdYpMqY/Ao7EnlQGmAQ1+RatX7Tkkdm6hONI2owqNx2aZj5Sw==
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/sax/-/sax-1.5.0.tgz#b5549b671069b7aa392df55ec7574cf411179eb8"
+  integrity sha512-21IYA3Q5cQf089Z6tgaUTr7lDAyzoTPx5HRtbhsME8Udispad8dC/+sziTNugOEx54ilvatQ9YCzl4KQLPcRHA==
 
 schema-utils@^3.0.0:
   version "3.3.0"

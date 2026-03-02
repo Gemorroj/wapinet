@@ -1335,16 +1335,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v5.0.0",
+            "version": "v5.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "e2134a0d1e90245790ac131276bb283077e40562"
+                "reference": "0bd155748233b5bb77c463008813dec325a1ec82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/e2134a0d1e90245790ac131276bb283077e40562",
-                "reference": "e2134a0d1e90245790ac131276bb283077e40562",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/0bd155748233b5bb77c463008813dec325a1ec82",
+                "reference": "0bd155748233b5bb77c463008813dec325a1ec82",
                 "shasum": ""
             },
             "require": {
@@ -1429,7 +1429,7 @@
             ],
             "support": {
                 "issues": "https://github.com/EasyCorp/EasyAdminBundle/issues",
-                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v5.0.0"
+                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v5.0.1"
             },
             "funding": [
                 {
@@ -1437,7 +1437,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-26T07:02:18+00:00"
+            "time": "2026-03-01T18:53:23+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -3236,16 +3236,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "6.0.1",
+            "version": "6.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "2f5cbed597cb261d1ea458f3da3a9ad32e670b1e"
+                "reference": "897b5986ece6b4f9d8413fea345c7d49c757d6bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/2f5cbed597cb261d1ea458f3da3a9ad32e670b1e",
-                "reference": "2f5cbed597cb261d1ea458f3da3a9ad32e670b1e",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/897b5986ece6b4f9d8413fea345c7d49c757d6bf",
+                "reference": "897b5986ece6b4f9d8413fea345c7d49c757d6bf",
                 "shasum": ""
             },
             "require": {
@@ -3295,9 +3295,9 @@
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
             "support": {
                 "issues": "https://github.com/phpDocumentor/ReflectionDocBlock/issues",
-                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/6.0.1"
+                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/6.0.2"
             },
-            "time": "2026-01-20T15:30:42+00:00"
+            "time": "2026-03-01T18:43:49+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -8990,13 +8990,13 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.1",
-                "phpunit/phpunit": "^8.5"
+                "phpunit/phpunit": "^9.6"
             },
             "default-branch": true,
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "ApkParser": "lib"
+                "psr-4": {
+                    "ApkParser\\": "lib/ApkParser/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -9022,7 +9022,7 @@
                 "issues": "https://github.com/tufanbarisyildirim/php-apk-parser/issues",
                 "source": "https://github.com/tufanbarisyildirim/php-apk-parser/tree/master"
             },
-            "time": "2023-10-07T14:16:35+00:00"
+            "time": "2026-02-20T07:18:51+00:00"
         },
         {
             "name": "twig/extra-bundle",
