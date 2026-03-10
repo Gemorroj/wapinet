@@ -66,7 +66,7 @@
 
         "easycorp/easyadmin-bundle": "^5.0",
         "friendsofsymfony/jsrouting-bundle": "^3.6",
-        "james-heinrich/getid3": "dev-master#baf1ae0d3cd1d9280c4f7c2b921c29e61844f3c6",
+        "james-heinrich/getid3": "^1.9.25",
         "vich/uploader-bundle": "^2.9",
         "liip/imagine-bundle": "^2.17",
         "gregwar/captcha": "^1.3",
