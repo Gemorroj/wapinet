@@ -56,8 +56,8 @@
         "symfony/webpack-encore-bundle": "^2.4",
         "symfony/scheduler": "8.0.*",
 
-        "twig/extra-bundle": "^3.23",
-        "twig/twig": "^3.23",
+        "twig/extra-bundle": "^3.24",
+        "twig/twig": "^3.24",
 
         "babdev/pagerfanta-bundle": "^4.6",
         "pagerfanta/doctrine-collections-adapter": "^4.8",
@@ -92,7 +92,7 @@
         "symfony/browser-kit": "8.0.*",
         "symfony/css-selector": "8.0.*",
         "symfony/debug-bundle": "8.0.*",
-        "symfony/maker-bundle": "^1.66",
+        "symfony/maker-bundle": "^1.67",
         "symfony/stopwatch": "8.0.*",
         "symfony/var-dumper": "8.0.*",
         "symfony/web-profiler-bundle": "8.0.*",
