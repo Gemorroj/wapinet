@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0daed1beaade0219946a16ba914d6dab",
+    "content-hash": "56ea12fd4eb034e5196dda35db264d49",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -3829,23 +3829,23 @@
         },
         {
             "name": "stdtabs/phptabs",
-            "version": "1.1.0",
+            "version": "dev-fixes-php-warnings",
             "source": {
                 "type": "git",
-                "url": "https://github.com/stdtabs/phptabs.git",
-                "reference": "f5a0ad3fdc928453417cf2c7f5d8113b3d4b7b54"
+                "url": "https://github.com/Gemorroj/phptabs.git",
+                "reference": "ac8302f4be9a62d3a3fc28fd05e3a9761adbf00e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stdtabs/phptabs/zipball/f5a0ad3fdc928453417cf2c7f5d8113b3d4b7b54",
-                "reference": "f5a0ad3fdc928453417cf2c7f5d8113b3d4b7b54",
+                "url": "https://api.github.com/repos/Gemorroj/phptabs/zipball/ac8302f4be9a62d3a3fc28fd05e3a9761adbf00e",
+                "reference": "ac8302f4be9a62d3a3fc28fd05e3a9761adbf00e",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4"
             },
             "require-dev": {
-                "phpunit/phpunit": "*"
+                "phpunit/phpunit": "<12"
             },
             "type": "library",
             "autoload": {
@@ -3854,34 +3854,22 @@
                     "PhpTabsTest\\": "test/PhpTabs/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL-2.1+"
             ],
             "description": "A PHP library for reading, writing and rendering Guitar Pro and MIDI files",
             "homepage": "https://phptabs.readthedocs.io/",
             "keywords": [
+                "MIDI",
                 "guitar",
-                "midi",
                 "music",
                 "tablature",
                 "tabs"
             ],
             "support": {
-                "issues": "https://github.com/stdtabs/phptabs/issues",
-                "source": "https://github.com/stdtabs/phptabs/tree/1.1.0"
+                "source": "https://github.com/Gemorroj/phptabs/tree/fixes-php-warnings"
             },
-            "funding": [
-                {
-                    "url": "https://github.com/landrok",
-                    "type": "github"
-                },
-                {
-                    "url": "https://ko-fi.com/landrok",
-                    "type": "ko_fi"
-                }
-            ],
-            "time": "2023-12-21T12:51:28+00:00"
+            "time": "2025-12-29T17:06:33+00:00"
         },
         {
             "name": "symfony/asset",
@@ -13023,6 +13011,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "james-heinrich/getid3": 20,
+        "stdtabs/phptabs": 20,
         "tufanbarisyildirim/php-apk-parser": 20
     },
     "prefer-stable": true,
