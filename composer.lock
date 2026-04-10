@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed27b9ee8c79e6528f75c9758de75582",
+    "content-hash": "0daed1beaade0219946a16ba914d6dab",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -2456,16 +2456,16 @@
         },
         {
             "name": "james-heinrich/getid3",
-            "version": "v1.9.25",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JamesHeinrich/getID3.git",
-                "reference": "fefffe762b02be155dcc32eec57feff8a49bc4b5"
+                "reference": "5b381c0367c9b2de077c8227c6adc2a3d772692c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/fefffe762b02be155dcc32eec57feff8a49bc4b5",
-                "reference": "fefffe762b02be155dcc32eec57feff8a49bc4b5",
+                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/5b381c0367c9b2de077c8227c6adc2a3d772692c",
+                "reference": "5b381c0367c9b2de077c8227c6adc2a3d772692c",
                 "shasum": ""
             },
             "require": {
@@ -2491,6 +2491,7 @@
                 "ext-xml": "XML extension is required for graphic modules to analyze the XML metadata.",
                 "ext-zlib": "Zlib extension is required for archive modules and compressed metadata."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2517,9 +2518,9 @@
             ],
             "support": {
                 "issues": "https://github.com/JamesHeinrich/getID3/issues",
-                "source": "https://github.com/JamesHeinrich/getID3/tree/v1.9.25"
+                "source": "https://github.com/JamesHeinrich/getID3/tree/master"
             },
-            "time": "2026-03-10T11:56:47+00:00"
+            "time": "2026-03-26T14:37:56+00:00"
         },
         {
             "name": "jms/metadata",
@@ -13021,6 +13022,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "james-heinrich/getid3": 20,
         "tufanbarisyildirim/php-apk-parser": 20
     },
     "prefer-stable": true,
