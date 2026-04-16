@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe2bfbfeea33a66314c0263961d2fe4e",
+    "content-hash": "67910eaec3886a3b02d5a32ae21db96f",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -2081,33 +2081,33 @@
         },
         {
             "name": "gemorroj/whordap",
-            "version": "2.1.0",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/whordap.git",
-                "reference": "afea8344ef93c562cd052643cad1498b82f01e4c"
+                "reference": "39608167c7113caca11dd0092c756954e177a750"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/whordap/zipball/afea8344ef93c562cd052643cad1498b82f01e4c",
-                "reference": "afea8344ef93c562cd052643cad1498b82f01e4c",
+                "url": "https://api.github.com/repos/Gemorroj/whordap/zipball/39608167c7113caca11dd0092c756954e177a750",
+                "reference": "39608167c7113caca11dd0092c756954e177a750",
                 "shasum": ""
             },
             "require": {
-                "algo26-matthias/idna-convert": "^4.2",
+                "algo26-matthias/idna-convert": "^4.2.1",
                 "ext-curl": "*",
                 "ext-pcre": "*",
                 "php": ">=8.4",
                 "psr/cache": "^3.0.0",
                 "psr/log": "^3.0.2",
-                "symfony/polyfill-mbstring": "^1.33"
+                "symfony/polyfill-mbstring": "^1.36"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.93",
-                "phpstan/phpstan": "^2.1.37",
-                "phpunit/phpunit": "^12.5.7",
-                "symfony/cache": "^7.4 || ^8.0",
-                "symfony/console": "^7.4 || ^8.0"
+                "friendsofphp/php-cs-fixer": "^3.95",
+                "phpstan/phpstan": "^2.1.48",
+                "phpunit/phpunit": "^13.1.5",
+                "symfony/cache": "^7.4.8 || ^8.0.8",
+                "symfony/console": "^7.4.8 || ^8.0.8"
             },
             "suggest": {
                 "ext-mbstring": "*"
@@ -2137,9 +2137,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Gemorroj/whordap/issues",
-                "source": "https://github.com/Gemorroj/whordap/tree/2.1.0"
+                "source": "https://github.com/Gemorroj/whordap/tree/2.2.0"
             },
-            "time": "2026-01-25T10:23:32+00:00"
+            "time": "2026-04-16T12:45:44+00:00"
         },
         {
             "name": "gemorroj/xbbcode",

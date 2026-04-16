@@ -76,7 +76,7 @@
         "riverline/multipart-parser": "^2.2",
         "stdtabs/phptabs": "dev-fixes-php-warnings",
 
-        "gemorroj/whordap": "^2.1",
+        "gemorroj/whordap": "^2.2",
         "gemorroj/stop-spam": "^3.5",
         "gemorroj/archive7z": "^5.9",
         "gemorroj/m3u-parser": "^6.1",
