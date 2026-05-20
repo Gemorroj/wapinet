@@ -57,7 +57,7 @@
         "symfony/scheduler": "8.0.*",
 
         "twig/extra-bundle": "^3.24",
-        "twig/twig": "^3.24",
+        "twig/twig": "^3.26",
 
         "babdev/pagerfanta-bundle": "^4.6",
         "pagerfanta/doctrine-collections-adapter": "^4.8",
