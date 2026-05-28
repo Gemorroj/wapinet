@@ -57,7 +57,7 @@
         "symfony/scheduler": "8.0.*",
 
         "twig/extra-bundle": "^3.24",
-        "twig/twig": "^3.26",
+        "twig/twig": "^3.27",
 
         "babdev/pagerfanta-bundle": "^4.6",
         "pagerfanta/doctrine-collections-adapter": "^4.8",
@@ -96,7 +96,7 @@
         "symfony/stopwatch": "8.0.*",
         "symfony/var-dumper": "8.0.*",
         "symfony/web-profiler-bundle": "8.0.*",
-        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan": "^2.2",
         "phpstan/phpstan-symfony": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
         "phpstan/phpstan-doctrine": "^2.0",

@@ -6,7 +6,7 @@
         "core-js": "^3.49.0",
         "regenerator-runtime": "^0.14.1",
         "webpack": "^5.107.2",
-        "webpack-cli": "^7.0.2"
+        "webpack-cli": "^7.0.3"
     },
     "browserslist": {
         "production": [
