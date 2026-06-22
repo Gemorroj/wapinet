@@ -64,7 +64,7 @@
         "pagerfanta/doctrine-orm-adapter": "^4.8",
         "pagerfanta/twig": "^4.8",
 
-        "easycorp/easyadmin-bundle": "^5.0",
+        "easycorp/easyadmin-bundle": "^5.1",
         "friendsofsymfony/jsrouting-bundle": "^3.6",
         "james-heinrich/getid3": "dev-master",
         "vich/uploader-bundle": "^2.9",
