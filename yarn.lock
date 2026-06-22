@@ -803,10 +803,10 @@
     picocolors "^1.1.1"
     string-width "^4.2.3"
 
-"@symfony/webpack-encore@^7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@symfony/webpack-encore/-/webpack-encore-7.0.0.tgz#b092a22c16da12445e1e044f32a655dd37ee4b95"
-  integrity sha512-oTjNRjCRIG4ysP8N2H4ljUUCRsXN9ejSsK6eEXYvw+aRBMQA+LDwasLj/MaJd4N1Rrs25Vifw9NWofFboC0RNA==
+"@symfony/webpack-encore@^7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@symfony/webpack-encore/-/webpack-encore-7.1.0.tgz#1cabbe76172d57160e4b6154be36ac98b11afc18"
+  integrity sha512-PBRZmv9YtjtA8t8OjhylmauL5y1+QLb+S4NEmHyQ7GMVlVWGvn4KXAia/A7r/m04sF6EoseXKGs45DCCof04TA==
   dependencies:
     "@kocal/friendly-errors-webpack-plugin" "^3.0.0"
     babel-loader "^10.0.0"
@@ -821,7 +821,7 @@
     style-loader "^4.0.0"
     tapable "^2.2.1"
     tmp "^0.2.7"
-    webpack-manifest-plugin "^5.0.1"
+    webpack-manifest-plugin "^6.0.1"
     yargs-parser "^21.0.0"
 
 "@types/estree@^1.0.8":
@@ -1823,11 +1823,6 @@ shebang-regex@^3.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-3.0.0.tgz#ae16f1644d873ecad843b0307b143362d4c42172"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
-source-list-map@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/source-list-map/-/source-list-map-2.0.1.tgz#3993bd873bfc48479cca9ea3a547835c7c154b34"
-  integrity sha512-qnQ7gVMxGNxsiL4lEuJwe/To8UnK7fAnmbGEEH8RpLouuKbeEm0lhbQVFIrNSuB+G7tVrAlVsZgETT5nljf+Iw==
-
 source-map-js@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.2.1.tgz#1ce5650fddd87abc099eda37dcff024c2667ae46"
@@ -1841,7 +1836,7 @@ source-map-support@~0.5.20:
     buffer-from "^1.0.0"
     source-map "^0.6.0"
 
-source-map@0.6.1, source-map@^0.6.0, source-map@^0.6.1:
+source-map@0.6.1, source-map@^0.6.0:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
   integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
@@ -1981,13 +1976,13 @@ webpack-cli@^7.0.3:
     rechoir "^0.8.0"
     webpack-merge "^6.0.1"
 
-webpack-manifest-plugin@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/webpack-manifest-plugin/-/webpack-manifest-plugin-5.0.1.tgz#8d401fec7fa587cba5af561eb60e39d6a8050e8a"
-  integrity sha512-xTlX7dC3hrASixA2inuWFMz6qHsNi6MT3Uiqw621sJjRTShtpMjbDYhPPZBwWUKdIYKIjSq9em6+uzWayf38aQ==
+webpack-manifest-plugin@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/webpack-manifest-plugin/-/webpack-manifest-plugin-6.0.1.tgz#8db0b6b75bd8635fcee657f025dff3bc9ba77fb4"
+  integrity sha512-R0p/8/IJVY5hIhQtkeWUQugalVpIwojc09eb14zGq+oiZOCmN5paAz2NBJfd+6v9eBbxAS3YMjc2ov8UMlCDLQ==
   dependencies:
     tapable "^2.0.0"
-    webpack-sources "^2.2.0"
+    webpack-sources "^3.3.3"
 
 webpack-merge@^6.0.1:
   version "6.0.1"
@@ -1998,15 +1993,7 @@ webpack-merge@^6.0.1:
     flat "^5.0.2"
     wildcard "^2.0.1"
 
-webpack-sources@^2.2.0:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-2.3.1.tgz#570de0af163949fe272233c2cefe1b56f74511fd"
-  integrity sha512-y9EI9AO42JjEcrTJFOYmVywVZdKVUfOvDUPsJea5GIr1JOEGFVqwlY2K098fFoIjOkDzHn2AjRvM8dsBZu+gCA==
-  dependencies:
-    source-list-map "^2.0.1"
-    source-map "^0.6.1"
-
-webpack-sources@^3.5.0:
+webpack-sources@^3.3.3, webpack-sources@^3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-3.5.0.tgz#87bf7f5801a4e985b1f1c92b64b9620a02f76d08"
   integrity sha512-HPuy+uuoTCaaoEoI1LQ3JN9+vrPBvEesnnX1jADHy728cHSMlq4wUc4afYqahq2B1mhQVZxCXOkNTnXltr+2vQ==
