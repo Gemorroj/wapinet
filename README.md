@@ -3,10 +3,10 @@
 ##### Лицензия GPL v3
 
 ##### Используются:
-- Symfony 8.0
+- Symfony 8.1
 - Jquery Mobile
 - PHP 8.5
-- MySQL 8.0
+- MySQL 8.4
 - Manticore
 - 7zip
 - ffmpeg
@@ -31,6 +31,10 @@ reboot
 ```
 
 ```bash
+cd /
+wget https://dev.mysql.com/get/mysql-apt-config_0.8.40-1_all.deb
+sudo dpkg -i mysql-apt-config_0.8.40-1_all.deb
+
 apt install htop mc git unzip
 apt install mysql-client mysql-server
 apt install angie
@@ -43,17 +47,13 @@ skip-log-bin
 skip-external-locking
 skip-name-resolve
 
-transaction_write_set_extraction=OFF
-
 innodb_file_per_table=1
 max_connections=50
 innodb_flush_log_at_trx_commit=2
 innodb_buffer_pool_size=512M
 innodb_buffer_pool_instances=1
-innodb_log_file_size=76M
 key_buffer_size=0
 innodb_flush_method = O_DIRECT
-
 
 table_open_cache=2000
 tmp_table_size=76M
