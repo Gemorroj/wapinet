@@ -76,7 +76,6 @@ class FileUrlDataTransformerTest extends WebTestCaseWapinet
         $fileUrlDataTransformer = new FileUrlDataTransformer($parameterBag, $httpClient);
 
         $method = new \ReflectionMethod($fileUrlDataTransformer, 'getOriginalName');
-        $method->setAccessible(true);
 
         $result = $method->invoke($fileUrlDataTransformer, $headers, $url);
         static::assertSame($expectedFilename, $result);

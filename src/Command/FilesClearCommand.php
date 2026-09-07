@@ -3,17 +3,18 @@
 namespace App\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
+use Vich\UploaderBundle\Command\CleanupCommand;
 
 #[AsCommand(
     name: 'app:files-clear',
@@ -33,14 +34,16 @@ class FilesClearCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDefinition([
-                new InputArgument('lifetime', InputArgument::OPTIONAL, 'The lifetime timeout', '1 year'),
-            ])
+            ->addArgument('lifetime', InputArgument::OPTIONAL, 'The lifetime timeout', '1 year')
+            ->addOption('cleanup-min-age', null, InputOption::VALUE_REQUIRED, 'Minimum age in minutes for orphaned files removed by vich:cleanup', CleanupCommand::DEFAULT_MIN_AGE_MINUTES)
             ->setHelp(
                 <<<EOT
                     The <info>app:files-clear</info> command removes old files:
 
                       <info>php bin/console app:files-clear "1 year"</info>
+
+                    Orphaned files (present on disk, but not referenced in DB) are
+                    removed via the <info>vich:cleanup</info> command.
                     EOT
             );
     }
@@ -52,8 +55,6 @@ class FilesClearCommand extends Command
         $lifetime = $input->getArgument('lifetime');
         $dateTime = new \DateTime('-'.$lifetime);
 
-        // see config/packages/vich_uploader.yaml
-        $uploadDir = $this->parameterBag->get('kernel.project_dir').'/public/static/file';
         $cacheDir = $this->parameterBag->get('kernel.project_dir').'/public/media/cache/thumbnail/static/file';
 
         // удаляем из БД
@@ -65,29 +66,21 @@ class FilesClearCommand extends Command
         // полностью чистим кэш (превьюшки)
         $this->filesystem->remove($cacheDir);
 
-        // удаляем осиротевшие файлы (которые есть в файловой системе, но нет в БД)
-        $filesystemDeleted = 0;
-        $q = $this->entityManager->createQuery('SELECT 1 FROM App\Entity\File f WHERE (f.createdAt BETWEEN :dateFrom AND :dateTo) AND f.fileName = :fileName');
-        foreach (Finder::create()->in($uploadDir)->depth('>2')->files()->getIterator() as $file) {
-            // see src/Uploader/Naming/FileDirectoryNamer.php
-
-            $date = \str_replace('/', '-', \substr($file->getPath(), -10));
-
-            $r = $q->setParameter('dateFrom', $date.' 00:00:00')
-                ->setParameter('dateTo', $date.'  23:59:59')
-                ->setParameter('fileName', $file->getFilename())
-                ->getOneOrNullResult(Query::HYDRATE_SINGLE_SCALAR);
-
-            if (!$r) {
-                $this->filesystem->remove($file);
-                ++$filesystemDeleted;
-            }
-        }
-
-        $message = \sprintf('Files over "%s" are removed. Removed "%d" rows from DB and "%d" files from filesystem.', $lifetime, $dbDeleted, $filesystemDeleted);
+        $message = \sprintf('Files over "%s" are removed. Removed "%d" rows from DB.', $lifetime, $dbDeleted);
         $this->logger->notice($this->getName().': '.$message);
         $io->success($message);
 
-        return Command::SUCCESS;
+        // удаляем осиротевшие файлы через vich:cleanup
+        // (DQL DELETE выше не вызывает Doctrine-листенеры Vich, поэтому ставшие
+        // бесхозными файлы на диске подбирает именно эта команда)
+        $application = $this->getApplication();
+        if (null === $application) {
+            throw new \LogicException('Command application is not set.');
+        }
+
+        return $application->find('vich:cleanup')->run(new ArrayInput([
+            '--force' => true,
+            '--min-age' => $input->getOption('cleanup-min-age'),
+        ]), $output);
     }
 }

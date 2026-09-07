@@ -57,8 +57,6 @@ services:
         tags:
             - { name: pagerfanta.view, alias: default }
 
-    App\Uploader\Naming\FileDirectoryNamer:
-        public: true
-
     App\Service\File\Meta:
-        $imagine: '@liip_imagine'
+        arguments:
+            $imagine: '@liip_imagine'

@@ -9,7 +9,6 @@
 
 # Assets
 /public/static/file/*
-!public/static/file/index.html
 /public/media/cache/resolve/thumbnail/static/*
 !public/media/cache/resolve/thumbnail/static/index.html
 /public/media/cache/thumbnail/static/*
