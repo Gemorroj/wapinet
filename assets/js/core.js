@@ -147,7 +147,7 @@ const Vk = {
             "can_access_closed": true,
             "is_closed": false,
             "online": 0,
-            "photo_200_orig": "https://example.com"
+            "photo_200": "https://example.com"
         }
     ]
 }
@@ -183,7 +183,7 @@ const Vk = {
 
             let str = `
                 <a rel="external" href="https://vk.ru/id${user.id}">
-                    <img src="${user.photo_200_orig}" />
+                    <img src="${user.photo_200}" />
                 </a><br />
                 <span>${user.first_name} ${user.last_name}</span><br />
             `;
@@ -298,7 +298,7 @@ $document.one("pagecreate", "#wapinet_user_profile", function () {
     if (vkId) {
         $.post(Routing.generate('vk_api_users_get'), {
             'v': '5.199',
-            'fields': 'online,photo_200_orig',
+            'fields': 'online,photo_200',
             'user_ids': vkId
         }, Vk.show, 'json');
     }
