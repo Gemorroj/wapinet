@@ -182,7 +182,7 @@ const Vk = {
             let user = Vk.data.response[0];
 
             let str = `
-                <a rel="external" href="https://vk.com/id${user.id}">
+                <a rel="external" href="https://vk.ru/id${user.id}">
                     <img src="${user.photo_200_orig}" />
                 </a><br />
                 <span>${user.first_name} ${user.last_name}</span><br />
