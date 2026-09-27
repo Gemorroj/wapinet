@@ -152,9 +152,6 @@
     "imagine/imagine": {
         "version": "v0.7.1"
     },
-    "jakeasmith/http_build_url": {
-        "version": "1.0.1"
-    },
     "james-heinrich/getid3": {
         "version": "1.9.x-dev"
     },
