@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6b85bf493e078bf94aff813c41c7758a",
+    "content-hash": "215005309f7ce3aa7e371c5f3d8ec555",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -1743,16 +1743,16 @@
         },
         {
             "name": "gemorroj/ginfo",
-            "version": "6.1.0",
+            "version": "6.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/ginfo.git",
-                "reference": "1b76052846faaefa3cf97462ac57caecb63f3f6c"
+                "reference": "892abad664b6425833ffef908a565748740adc14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/1b76052846faaefa3cf97462ac57caecb63f3f6c",
-                "reference": "1b76052846faaefa3cf97462ac57caecb63f3f6c",
+                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/892abad664b6425833ffef908a565748740adc14",
+                "reference": "892abad664b6425833ffef908a565748740adc14",
                 "shasum": ""
             },
             "require": {
@@ -1771,9 +1771,9 @@
                 "ext-pdo_pgsql": "*",
                 "ext-pdo_sqlite": "*",
                 "ext-redis": "*",
-                "friendsofphp/php-cs-fixer": "^3.93",
-                "phpstan/phpstan": "^2.1.37",
-                "phpunit/phpunit": "^11.5||^12.5"
+                "friendsofphp/php-cs-fixer": "^3.95",
+                "phpstan/phpstan": "^2.3",
+                "phpunit/phpunit": "^11.5||^12.5||^13"
             },
             "suggest": {
                 "ext-apcu": "For APCU",
@@ -1843,9 +1843,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Gemorroj/ginfo/issues",
-                "source": "https://github.com/Gemorroj/ginfo/tree/6.1.0"
+                "source": "https://github.com/Gemorroj/ginfo/tree/6.2.0"
             },
-            "time": "2026-01-25T11:07:59+00:00"
+            "time": "2026-10-11T17:32:49+00:00"
         },
         {
             "name": "gemorroj/htmlvalidator",
