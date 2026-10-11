@@ -1641,10 +1641,12 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  * }
  * @psalm-type BabdevPagerfantaConfig = array{
  *     default_view?: scalar|Param|null, // Default: "default"
+ *     default_sequential_view?: scalar|Param|null, // The view to render pagers which the default view cannot render (i.e. cursor pagers with a numbered view), defaults to the "<default_view>_sequential" view when one exists // Default: null
  *     default_twig_template?: scalar|Param|null, // Default: "@BabDevPagerfanta/default.html.twig"
  *     exceptions_strategy?: array{
  *         out_of_range_page?: "to_http_not_found"|"custom"|Param, // Default: "to_http_not_found"
  *         not_valid_current_page?: "to_http_not_found"|"custom"|Param, // Default: "to_http_not_found"
+ *         invalid_cursor?: "to_http_bad_request"|"custom"|Param, // Default: "to_http_bad_request"
  *     },
  * }
  * @psalm-type TwigComponentConfig = array{

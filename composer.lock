@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eb1bcd5e8a3e47035e559c71a3d88316",
+    "content-hash": "0779376e14ec46fe1e65f804b99a9c08",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -65,37 +65,38 @@
         },
         {
             "name": "babdev/pagerfanta-bundle",
-            "version": "v4.6.0",
+            "version": "v4.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BabDev/PagerfantaBundle.git",
-                "reference": "ea3eb6a3f9d838de73254683b1a57014877d2ff3"
+                "reference": "11718785bb773e44da2ec295cdc3540706b1edf5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BabDev/PagerfantaBundle/zipball/ea3eb6a3f9d838de73254683b1a57014877d2ff3",
-                "reference": "ea3eb6a3f9d838de73254683b1a57014877d2ff3",
+                "url": "https://api.github.com/repos/BabDev/PagerfantaBundle/zipball/11718785bb773e44da2ec295cdc3540706b1edf5",
+                "reference": "11718785bb773e44da2ec295cdc3540706b1edf5",
                 "shasum": ""
             },
             "require": {
-                "pagerfanta/core": "^3.7 || ^4.0",
+                "pagerfanta/core": "^4.10",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0",
-                "symfony/config": "^5.4 || ^6.4 || ^7.3 || ^8.0",
-                "symfony/dependency-injection": "^5.4 || ^6.4 || ^7.3 || ^8.0",
-                "symfony/http-foundation": "^5.4 || ^6.4 || ^7.3 || ^8.0",
-                "symfony/http-kernel": "^5.4 || ^6.4 || ^7.3 || ^8.0",
-                "symfony/property-access": "^5.4 || ^6.4 || ^7.3 || ^8.0",
-                "symfony/routing": "^5.4 || ^6.4 || ^7.3 || ^8.0"
+                "symfony/config": "^5.4 || ^6.4 || ^7.4 || ^8.1",
+                "symfony/dependency-injection": "^5.4 || ^6.4 || ^7.4 || ^8.1",
+                "symfony/deprecation-contracts": "^2.5 || ^3.0",
+                "symfony/http-foundation": "^5.4 || ^6.4 || ^7.4 || ^8.1",
+                "symfony/http-kernel": "^5.4 || ^6.4 || ^7.4 || ^8.1",
+                "symfony/property-access": "^5.4 || ^6.4 || ^7.4 || ^8.1",
+                "symfony/routing": "^5.4 || ^6.4 || ^7.4 || ^8.1"
             },
             "conflict": {
                 "jms/serializer": "<3.18",
                 "jms/serializer-bundle": "<4.2",
-                "pagerfanta/twig": "<3.7",
-                "symfony/serializer": "<5.4 || >=6.0,<6.4 || >=7.0,<7.3",
-                "symfony/translation": "<5.4 || >=6.0,<6.4 || >=7.0,<7.3",
-                "symfony/twig-bridge": "<5.4 || >=6.0,<6.4 || >=7.0,<7.3",
-                "symfony/twig-bundle": "<5.4 || >=6.0,<6.4 || >=7.0,<7.3",
+                "pagerfanta/twig": "<4.10",
+                "symfony/serializer": "<5.4 || >=6.0,<6.4 || >=7.0,<7.4 || ~8.0.0",
+                "symfony/translation": "<5.4 || >=6.0,<6.4 || >=7.0,<7.4 || ~8.0.0",
+                "symfony/twig-bridge": "<5.4 || >=6.0,<6.4 || >=7.0,<7.4 || ~8.0.0",
+                "symfony/twig-bundle": "<5.4 || >=6.0,<6.4 || >=7.0,<7.4 || ~8.0.0",
                 "twig/twig": "<2.13",
                 "white-october/pagerfanta-bundle": "*"
             },
@@ -103,16 +104,16 @@
                 "jms/serializer": "^3.18",
                 "jms/serializer-bundle": "^4.2 || ^5.0",
                 "matthiasnoback/symfony-dependency-injection-test": "^6.2",
-                "pagerfanta/twig": "^3.7 || ^4.0",
+                "pagerfanta/twig": "^4.10",
                 "phpstan/extension-installer": "^1.3",
-                "phpstan/phpstan": "2.1.32",
-                "phpstan/phpstan-phpunit": "2.0.8",
-                "phpstan/phpstan-symfony": "2.0.9",
-                "phpunit/phpunit": "10.5.58 || 11.5.44 || 12.4.4",
-                "symfony/serializer": "^5.4 || ^6.4 || ^7.3 || ^8.0",
-                "symfony/translation": "^5.4 || ^6.4 || ^7.3 || ^8.0",
-                "symfony/twig-bridge": "^5.4 || ^6.4 || ^7.3 || ^8.0",
-                "symfony/twig-bundle": "^5.4 || ^6.4 || ^7.3 || ^8.0",
+                "phpstan/phpstan": "2.3.1",
+                "phpstan/phpstan-phpunit": "2.1.1",
+                "phpstan/phpstan-symfony": "2.1.0",
+                "phpunit/phpunit": "10.5.66 || 11.5.57 || 12.5.38",
+                "symfony/serializer": "^5.4 || ^6.4 || ^7.4 || ^8.1",
+                "symfony/translation": "^5.4 || ^6.4 || ^7.4 || ^8.1",
+                "symfony/twig-bridge": "^5.4 || ^6.4 || ^7.4 || ^8.1",
+                "symfony/twig-bundle": "^5.4 || ^6.4 || ^7.4 || ^8.1",
                 "twig/twig": "^2.13 || ^3.0"
             },
             "suggest": {
@@ -139,7 +140,7 @@
             ],
             "support": {
                 "issues": "https://github.com/BabDev/PagerfantaBundle/issues",
-                "source": "https://github.com/BabDev/PagerfantaBundle/tree/v4.6.0"
+                "source": "https://github.com/BabDev/PagerfantaBundle/tree/v4.7.0"
             },
             "funding": [
                 {
@@ -147,7 +148,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-11-29T13:01:51+00:00"
+            "time": "2026-10-09T13:00:20+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -1101,16 +1102,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "3.7.4",
+            "version": "3.7.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "84e21e325e3da22e46d7facbccdc9258f2332b1e"
+                "reference": "00c2fd70da291cca1ec75f4dae5344fe3df588fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/84e21e325e3da22e46d7facbccdc9258f2332b1e",
-                "reference": "84e21e325e3da22e46d7facbccdc9258f2332b1e",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/00c2fd70da291cca1ec75f4dae5344fe3df588fa",
+                "reference": "00c2fd70da291cca1ec75f4dae5344fe3df588fa",
                 "shasum": ""
             },
             "require": {
@@ -1185,9 +1186,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/3.7.4"
+                "source": "https://github.com/doctrine/orm/tree/3.7.5"
             },
-            "time": "2026-10-05T18:31:26+00:00"
+            "time": "2026-10-09T05:58:13+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -1941,25 +1942,25 @@
         },
         {
             "name": "gemorroj/php-bittorrent",
-            "version": "3.1.0",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/php-bittorrent.git",
-                "reference": "03bae51954ed36ecdea7767dacc26a6c9528ab69"
+                "reference": "3571a026a475df4102aed2e4368511f3fbb713b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/php-bittorrent/zipball/03bae51954ed36ecdea7767dacc26a6c9528ab69",
-                "reference": "03bae51954ed36ecdea7767dacc26a6c9528ab69",
+                "url": "https://api.github.com/repos/Gemorroj/php-bittorrent/zipball/3571a026a475df4102aed2e4368511f3fbb713b0",
+                "reference": "3571a026a475df4102aed2e4368511f3fbb713b0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.4"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.93",
-                "phpstan/phpstan": "^2.1",
-                "phpunit/phpunit": "^12.5"
+                "friendsofphp/php-cs-fixer": "^3.95",
+                "phpstan/phpstan": "^2.3",
+                "phpunit/phpunit": "^12.5||^13"
             },
             "type": "library",
             "autoload": {
@@ -1987,22 +1988,22 @@
                 "torrent"
             ],
             "support": {
-                "source": "https://github.com/Gemorroj/php-bittorrent/tree/3.1.0"
+                "source": "https://github.com/Gemorroj/php-bittorrent/tree/4.0.0"
             },
-            "time": "2026-01-25T10:46:34+00:00"
+            "time": "2026-10-11T12:47:33+00:00"
         },
         {
             "name": "gemorroj/stop-spam",
-            "version": "3.5.0",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/StopSpam.git",
-                "reference": "02cff0d415b4afe9e5880ca32120106e8f4c01e7"
+                "reference": "8ef9b043320917dd09e64606a53d1f770fdcfdea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/StopSpam/zipball/02cff0d415b4afe9e5880ca32120106e8f4c01e7",
-                "reference": "02cff0d415b4afe9e5880ca32120106e8f4c01e7",
+                "url": "https://api.github.com/repos/Gemorroj/StopSpam/zipball/8ef9b043320917dd09e64606a53d1f770fdcfdea",
+                "reference": "8ef9b043320917dd09e64606a53d1f770fdcfdea",
                 "shasum": ""
             },
             "require": {
@@ -2010,8 +2011,8 @@
                 "symfony/http-client": "^7.4||^8.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.93",
-                "phpunit/phpunit": "^11.5||^12.5"
+                "friendsofphp/php-cs-fixer": "^3.95",
+                "phpunit/phpunit": "^11.5||^12.5||^13"
             },
             "type": "library",
             "autoload": {
@@ -2039,31 +2040,31 @@
             ],
             "support": {
                 "issues": "https://github.com/Gemorroj/StopSpam/issues",
-                "source": "https://github.com/Gemorroj/StopSpam/tree/3.5.0"
+                "source": "https://github.com/Gemorroj/StopSpam/tree/4.0.0"
             },
-            "time": "2026-01-25T10:33:38+00:00"
+            "time": "2026-10-11T08:43:37+00:00"
         },
         {
             "name": "gemorroj/syntax",
-            "version": "4.5.0",
+            "version": "4.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/Syntax.git",
-                "reference": "813695160deaf3b5014c0b0ded49fdb4922d2438"
+                "reference": "acf93f5edb4b52e74f40dc83a0d20c8de2b899b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/Syntax/zipball/813695160deaf3b5014c0b0ded49fdb4922d2438",
-                "reference": "813695160deaf3b5014c0b0ded49fdb4922d2438",
+                "url": "https://api.github.com/repos/Gemorroj/Syntax/zipball/acf93f5edb4b52e74f40dc83a0d20c8de2b899b3",
+                "reference": "acf93f5edb4b52e74f40dc83a0d20c8de2b899b3",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.2",
-                "symfony/process": "^7.4||^8.0"
+                "symfony/process": "^7.4.8||^8.0.8"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.93",
-                "phpunit/phpunit": "^11.5||^12.5"
+                "friendsofphp/php-cs-fixer": "^3.95",
+                "phpunit/phpunit": "^11.5||^12.5||^13"
             },
             "type": "library",
             "autoload": {
@@ -2083,37 +2084,37 @@
             "description": "PHP code syntax checker.",
             "support": {
                 "issues": "https://github.com/Gemorroj/Syntax/issues",
-                "source": "https://github.com/Gemorroj/Syntax/tree/4.5.0"
+                "source": "https://github.com/Gemorroj/Syntax/tree/4.5.1"
             },
-            "time": "2026-01-25T10:28:56+00:00"
+            "time": "2026-10-10T21:51:21+00:00"
         },
         {
             "name": "gemorroj/whordap",
-            "version": "2.2.0",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/whordap.git",
-                "reference": "39608167c7113caca11dd0092c756954e177a750"
+                "reference": "d1e762bd49a83a4893c937952caee6c5a72c2fa6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/whordap/zipball/39608167c7113caca11dd0092c756954e177a750",
-                "reference": "39608167c7113caca11dd0092c756954e177a750",
+                "url": "https://api.github.com/repos/Gemorroj/whordap/zipball/d1e762bd49a83a4893c937952caee6c5a72c2fa6",
+                "reference": "d1e762bd49a83a4893c937952caee6c5a72c2fa6",
                 "shasum": ""
             },
             "require": {
-                "algo26-matthias/idna-convert": "^4.2.1",
+                "algo26-matthias/idna-convert": "^4.2.2",
                 "ext-curl": "*",
                 "ext-pcre": "*",
                 "php": ">=8.4",
                 "psr/cache": "^3.0.0",
                 "psr/log": "^3.0.2",
-                "symfony/polyfill-mbstring": "^1.36"
+                "symfony/polyfill-mbstring": "^1.43"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.95",
-                "phpstan/phpstan": "^2.1.48",
-                "phpunit/phpunit": "^13.1.5",
+                "phpstan/phpstan": "^2.3.1",
+                "phpunit/phpunit": "^13.4.1",
                 "symfony/cache": "^7.4.8 || ^8.0.8",
                 "symfony/console": "^7.4.8 || ^8.0.8"
             },
@@ -2145,22 +2146,22 @@
             ],
             "support": {
                 "issues": "https://github.com/Gemorroj/whordap/issues",
-                "source": "https://github.com/Gemorroj/whordap/tree/2.2.0"
+                "source": "https://github.com/Gemorroj/whordap/tree/2.3.1"
             },
-            "time": "2026-04-16T12:45:44+00:00"
+            "time": "2026-10-10T21:13:23+00:00"
         },
         {
             "name": "gemorroj/xbbcode",
-            "version": "2.9.0",
+            "version": "2.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/xBBCode.git",
-                "reference": "b836d78071a0479e3d38ae93bb10c96dcd3ef1af"
+                "reference": "41c8e8596a1758eac24c3c4c126f3649248f17ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/xBBCode/zipball/b836d78071a0479e3d38ae93bb10c96dcd3ef1af",
-                "reference": "b836d78071a0479e3d38ae93bb10c96dcd3ef1af",
+                "url": "https://api.github.com/repos/Gemorroj/xBBCode/zipball/41c8e8596a1758eac24c3c4c126f3649248f17ac",
+                "reference": "41c8e8596a1758eac24c3c4c126f3649248f17ac",
                 "shasum": ""
             },
             "require": {
@@ -2168,8 +2169,8 @@
                 "php": ">=8.2"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.93",
-                "phpunit/phpunit": "^11.5||^12.5"
+                "friendsofphp/php-cs-fixer": "^3.95",
+                "phpunit/phpunit": "^11.5||^12.5||^13"
             },
             "type": "library",
             "autoload": {
@@ -2198,9 +2199,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Gemorroj/xBBCode/issues",
-                "source": "https://github.com/Gemorroj/xBBCode/tree/2.9.0"
+                "source": "https://github.com/Gemorroj/xBBCode/tree/2.10.1"
             },
-            "time": "2026-01-25T10:16:08+00:00"
+            "time": "2026-10-10T18:33:54+00:00"
         },
         {
             "name": "geoip2/geoip2",
@@ -2432,12 +2433,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JamesHeinrich/getID3.git",
-                "reference": "c92863b10a64655316caa5e53109222acc1188bf"
+                "reference": "9ee5678f1cfb68f6ccc9efc08511c61cbdb78b5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/c92863b10a64655316caa5e53109222acc1188bf",
-                "reference": "c92863b10a64655316caa5e53109222acc1188bf",
+                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/9ee5678f1cfb68f6ccc9efc08511c61cbdb78b5a",
+                "reference": "9ee5678f1cfb68f6ccc9efc08511c61cbdb78b5a",
                 "shasum": ""
             },
             "require": {
@@ -2492,7 +2493,7 @@
                 "issues": "https://github.com/JamesHeinrich/getID3/issues",
                 "source": "https://github.com/JamesHeinrich/getID3/tree/master"
             },
-            "time": "2026-10-02T23:26:21+00:00"
+            "time": "2026-10-09T02:38:40+00:00"
         },
         {
             "name": "jms/metadata",
@@ -2889,21 +2890,22 @@
         },
         {
             "name": "pagerfanta/core",
-            "version": "v4.9.0",
+            "version": "v4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/core.git",
-                "reference": "b636b080cf91c8cbe16a59ef79977e2300edd522"
+                "reference": "5fceafafedf5a78080c4ee82ab36e32c6d614b8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/core/zipball/b636b080cf91c8cbe16a59ef79977e2300edd522",
-                "reference": "b636b080cf91c8cbe16a59ef79977e2300edd522",
+                "url": "https://api.github.com/repos/Pagerfanta/core/zipball/5fceafafedf5a78080c4ee82ab36e32c6d614b8e",
+                "reference": "5fceafafedf5a78080c4ee82ab36e32c6d614b8e",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": "^8.1"
+                "php": "^8.1",
+                "symfony/deprecation-contracts": "^2.1 || ^3.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^10.5"
@@ -2926,27 +2928,27 @@
                 "pagerfanta"
             ],
             "support": {
-                "source": "https://github.com/Pagerfanta/core/tree/v4.9.0"
+                "source": "https://github.com/Pagerfanta/core/tree/v4.10.0"
             },
-            "time": "2026-09-08T17:43:17+00:00"
+            "time": "2026-10-09T12:41:36+00:00"
         },
         {
             "name": "pagerfanta/doctrine-collections-adapter",
-            "version": "v4.9.0",
+            "version": "v4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/doctrine-collections-adapter.git",
-                "reference": "94aea87014ae1a57461c924e7a9b80c5c1b53387"
+                "reference": "090ea2b5666b9e242e9bbc73fa08dc31407752d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/doctrine-collections-adapter/zipball/94aea87014ae1a57461c924e7a9b80c5c1b53387",
-                "reference": "94aea87014ae1a57461c924e7a9b80c5c1b53387",
+                "url": "https://api.github.com/repos/Pagerfanta/doctrine-collections-adapter/zipball/090ea2b5666b9e242e9bbc73fa08dc31407752d6",
+                "reference": "090ea2b5666b9e242e9bbc73fa08dc31407752d6",
                 "shasum": ""
             },
             "require": {
                 "doctrine/collections": "^1.8 || ^2.0 || ^3.0",
-                "pagerfanta/core": "^3.7 || ^4.0",
+                "pagerfanta/core": "^4.10",
                 "php": "^8.1"
             },
             "require-dev": {
@@ -2972,27 +2974,27 @@
                 "pagerfanta"
             ],
             "support": {
-                "source": "https://github.com/Pagerfanta/doctrine-collections-adapter/tree/v4.9.0"
+                "source": "https://github.com/Pagerfanta/doctrine-collections-adapter/tree/v4.10.0"
             },
-            "time": "2026-01-22T13:58:52+00:00"
+            "time": "2026-10-09T12:41:36+00:00"
         },
         {
             "name": "pagerfanta/doctrine-orm-adapter",
-            "version": "v4.9.0",
+            "version": "v4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/doctrine-orm-adapter.git",
-                "reference": "fa932e852e5e56c33b3d380379f18dbcdcd816c8"
+                "reference": "16db882fde8707ed7cd0f413a9d08969c8ff595d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/doctrine-orm-adapter/zipball/fa932e852e5e56c33b3d380379f18dbcdcd816c8",
-                "reference": "fa932e852e5e56c33b3d380379f18dbcdcd816c8",
+                "url": "https://api.github.com/repos/Pagerfanta/doctrine-orm-adapter/zipball/16db882fde8707ed7cd0f413a9d08969c8ff595d",
+                "reference": "16db882fde8707ed7cd0f413a9d08969c8ff595d",
                 "shasum": ""
             },
             "require": {
                 "doctrine/orm": "^2.14 || ^3.0",
-                "pagerfanta/core": "^3.7 || ^4.0",
+                "pagerfanta/core": "^4.10",
                 "php": "^8.1"
             },
             "require-dev": {
@@ -3019,27 +3021,28 @@
                 "pagerfanta"
             ],
             "support": {
-                "source": "https://github.com/Pagerfanta/doctrine-orm-adapter/tree/v4.9.0"
+                "source": "https://github.com/Pagerfanta/doctrine-orm-adapter/tree/v4.10.0"
             },
-            "time": "2026-09-08T18:05:46+00:00"
+            "time": "2026-10-09T12:41:36+00:00"
         },
         {
             "name": "pagerfanta/twig",
-            "version": "v4.9.0",
+            "version": "v4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/twig.git",
-                "reference": "28a9b75cabd246bd27c266ba62b742d45a4183f9"
+                "reference": "bb752154488ed04ab3609f6819ae1dad93e043c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/twig/zipball/28a9b75cabd246bd27c266ba62b742d45a4183f9",
-                "reference": "28a9b75cabd246bd27c266ba62b742d45a4183f9",
+                "url": "https://api.github.com/repos/Pagerfanta/twig/zipball/bb752154488ed04ab3609f6819ae1dad93e043c2",
+                "reference": "bb752154488ed04ab3609f6819ae1dad93e043c2",
                 "shasum": ""
             },
             "require": {
-                "pagerfanta/core": "^3.7 || ^4.0",
+                "pagerfanta/core": "^4.10",
                 "php": "^8.1",
+                "symfony/deprecation-contracts": "^2.1 || ^3.0",
                 "twig/twig": "^2.13 || ^3.0"
             },
             "require-dev": {
@@ -3063,9 +3066,9 @@
                 "pagerfanta"
             ],
             "support": {
-                "source": "https://github.com/Pagerfanta/twig/tree/v4.9.0"
+                "source": "https://github.com/Pagerfanta/twig/tree/v4.10.0"
             },
-            "time": "2025-03-08T02:17:34+00:00"
+            "time": "2026-10-09T12:41:36+00:00"
         },
         {
             "name": "php-ffmpeg/php-ffmpeg",
@@ -10439,11 +10442,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.3.0",
+            "version": "2.3.1",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b1f9890d9af53a25c58129e78f0aadd31f90d7f4",
-                "reference": "b1f9890d9af53a25c58129e78f0aadd31f90d7f4",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/6155239b488e95d26d1ebd95c6b4bb294d7f09db",
+                "reference": "6155239b488e95d26d1ebd95c6b4bb294d7f09db",
                 "shasum": ""
             },
             "require": {
@@ -10499,7 +10502,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-06T06:15:36+00:00"
+            "time": "2026-10-08T21:09:11+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",

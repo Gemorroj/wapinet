@@ -76,16 +76,16 @@
         "riverline/multipart-parser": "^2.2",
         "stdtabs/phptabs": "dev-fixes-php-warnings",
 
-        "gemorroj/whordap": "^2.2",
-        "gemorroj/stop-spam": "^3.5",
+        "gemorroj/whordap": "^2.3.1",
+        "gemorroj/stop-spam": "^4.0",
         "gemorroj/archive7z": "^5.9",
         "gemorroj/m3u-parser": "^6.1",
-        "gemorroj/syntax": "^4.5",
+        "gemorroj/syntax": "^4.5.1",
         "gemorroj/htmlvalidator": "^3.5",
         "gemorroj/cssvalidator": "^3.6",
-        "gemorroj/xbbcode": "^2.9",
+        "gemorroj/xbbcode": "^2.10.1",
         "gemorroj/ginfo": "^6.1.0",
-        "gemorroj/php-bittorrent": "^3.1"
+        "gemorroj/php-bittorrent": "^4.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^13.3",

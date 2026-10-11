@@ -36,7 +36,7 @@ final readonly class StopSpam
             return;
         }
 
-        $item = $response->getFlowingIp();
+        $item = $response->getSingleIp();
         if (null === $item) {
             return;
         }
