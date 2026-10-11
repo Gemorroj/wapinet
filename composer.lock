@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0779376e14ec46fe1e65f804b99a9c08",
+    "content-hash": "6b85bf493e078bf94aff813c41c7758a",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -1697,16 +1697,16 @@
         },
         {
             "name": "gemorroj/cssvalidator",
-            "version": "3.6.0",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/CSSValidator.git",
-                "reference": "ec4e18041ca440b639040a38d80ae3c248ea6d6f"
+                "reference": "d13c9dceb0e622d77400f319e0e1ba85a1c2daa5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/CSSValidator/zipball/ec4e18041ca440b639040a38d80ae3c248ea6d6f",
-                "reference": "ec4e18041ca440b639040a38d80ae3c248ea6d6f",
+                "url": "https://api.github.com/repos/Gemorroj/CSSValidator/zipball/d13c9dceb0e622d77400f319e0e1ba85a1c2daa5",
+                "reference": "d13c9dceb0e622d77400f319e0e1ba85a1c2daa5",
                 "shasum": ""
             },
             "require": {
@@ -1716,13 +1716,13 @@
                 "symfony/http-client": "^7.4||^8.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.93",
-                "phpunit/phpunit": "^11.5||^12.5"
+                "friendsofphp/php-cs-fixer": "^3.95",
+                "phpunit/phpunit": "^11.5||^12.5||^13"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "CSSValidator\\": "src"
+                    "CSSValidator\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1737,9 +1737,9 @@
             "description": "W3C CSS Validator service.",
             "support": {
                 "issues": "https://github.com/Gemorroj/CSSValidator/issues",
-                "source": "https://github.com/Gemorroj/CSSValidator/tree/3.6.0"
+                "source": "https://github.com/Gemorroj/CSSValidator/tree/4.0.0"
             },
-            "time": "2026-01-25T11:18:09+00:00"
+            "time": "2026-10-11T16:01:28+00:00"
         },
         {
             "name": "gemorroj/ginfo",
@@ -1849,25 +1849,25 @@
         },
         {
             "name": "gemorroj/htmlvalidator",
-            "version": "3.5.0",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/HTMLValidator.git",
-                "reference": "fffbaf117f57429b48dec87c664ce849701a4336"
+                "reference": "a25293c4d64c8c9320c2a5e8a9309975699ed9c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/HTMLValidator/zipball/fffbaf117f57429b48dec87c664ce849701a4336",
-                "reference": "fffbaf117f57429b48dec87c664ce849701a4336",
+                "url": "https://api.github.com/repos/Gemorroj/HTMLValidator/zipball/a25293c4d64c8c9320c2a5e8a9309975699ed9c0",
+                "reference": "a25293c4d64c8c9320c2a5e8a9309975699ed9c0",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1",
+                "php": ">=8.2",
                 "symfony/http-client": "^7.4||^8.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.93",
-                "phpunit/phpunit": "^11.5||^12.5"
+                "friendsofphp/php-cs-fixer": "^3.95",
+                "phpunit/phpunit": "^11.5||^12.5||^13"
             },
             "type": "library",
             "autoload": {
@@ -1887,31 +1887,31 @@
             "description": "W3C HTML Validator service.",
             "support": {
                 "issues": "https://github.com/Gemorroj/HTMLValidator/issues",
-                "source": "https://github.com/Gemorroj/HTMLValidator/tree/3.5.0"
+                "source": "https://github.com/Gemorroj/HTMLValidator/tree/4.0.0"
             },
-            "time": "2026-01-25T11:02:35+00:00"
+            "time": "2026-10-11T15:15:55+00:00"
         },
         {
             "name": "gemorroj/m3u-parser",
-            "version": "6.1.0",
+            "version": "6.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/M3uParser.git",
-                "reference": "2a009c7512a9741f20391765be19ca04a2d8060f"
+                "reference": "469a75031a1552bcc0018b5161dccd00d6bef4cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/M3uParser/zipball/2a009c7512a9741f20391765be19ca04a2d8060f",
-                "reference": "2a009c7512a9741f20391765be19ca04a2d8060f",
+                "url": "https://api.github.com/repos/Gemorroj/M3uParser/zipball/469a75031a1552bcc0018b5161dccd00d6bef4cb",
+                "reference": "469a75031a1552bcc0018b5161dccd00d6bef4cb",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.2"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.93",
-                "phpstan/phpstan": "^2.1",
-                "phpunit/phpunit": "^11.5||^12.5"
+                "friendsofphp/php-cs-fixer": "^3.95",
+                "phpstan/phpstan": "^2.3",
+                "phpunit/phpunit": "^11.5||^12.5||^13"
             },
             "type": "library",
             "autoload": {
@@ -1936,9 +1936,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Gemorroj/M3uParser/issues",
-                "source": "https://github.com/Gemorroj/M3uParser/tree/6.1.0"
+                "source": "https://github.com/Gemorroj/M3uParser/tree/6.2.0"
             },
-            "time": "2026-01-25T10:50:47+00:00"
+            "time": "2026-10-11T13:41:06+00:00"
         },
         {
             "name": "gemorroj/php-bittorrent",

@@ -4,7 +4,7 @@ namespace App\Service;
 
 use CSSValidator\CSSValidator as W3CService;
 use CSSValidator\Exception as W3CServiceException;
-use CSSValidator\Options as W3CServiceOptions;
+use CSSValidator\Options\Options as W3CServiceOptions;
 use CSSValidator\Response as W3CServiceResponse;
 use Symfony\Component\HttpFoundation\File\File;
 
