@@ -16,3 +16,6 @@ Symfony 8.1 / PHP 8.5 проект (сайт wapinet.ru).
 - PHP-CS-Fixer: `php vendor/bin/php-cs-fixer fix`
 - Миграции: `php bin/console doctrine:migrations:migrate`
 - Кэш: `php bin/console cache:clear`
+
+## Соглашения
+- Сообщения коммитов соответствуют [Conventional Commits](https://www.conventionalcommits.org/).
