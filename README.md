@@ -43,6 +43,8 @@ apt install php8.5-fpm php8.5-curl php8.5-gd php8.5-intl php8.5-mbstring php8.5-
 
 mysql_secure_installation
 echo '[mysqld]
+bind-address = 127.0.0.1,::1
+mysqlx-bind-address = 127.0.0.1,::1
 skip-log-bin
 skip-external-locking
 skip-name-resolve
