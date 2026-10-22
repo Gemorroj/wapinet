@@ -222,9 +222,9 @@ curl -L -o GeoLite2-Country.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/down
 cd /opt
 mkdir 7z2605-linux-x64
 cd /opt/7z2605-linux-x64
-curl -O -L https://7-zip.org/a/7z2605-linux-x64.tar.xz
-tar xJvf 7z2605-linux-x64.tar.xz
-rm -f 7z2605-linux-x64.tar.xz
+curl -fL -o 7z.tar.xz "https://github.com/ip7z/7zip/releases/download/26.05/7z2605-linux-x64.tar.xz"
+tar xJf 7z.tar.xz
+rm -f 7z.tar.xz
 /opt/7z2605-linux-x64/7zz i
 
 # ffmpeg - https://ubuntuhandbook.org/index.php/2024/04/ffmpeg-7-0-ppa-ubuntu/
