@@ -101,7 +101,7 @@ final class TagRepository extends ServiceEntityRepository
     public function findEmptyTags(): array
     {
         return $this->createQueryBuilder('t')
-            ->where('t.count = 0')
+            ->where('NOT EXISTS (SELECT ft.id FROM App\Entity\FileTags ft WHERE ft.tag = t)')
             ->getQuery()
             ->getResult();
     }

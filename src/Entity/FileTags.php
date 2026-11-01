@@ -15,11 +15,11 @@ class FileTags implements \JsonSerializable
     #[ORM\Column(type: 'integer', nullable: false)]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: File::class, cascade: ['persist', 'remove'], inversedBy: 'fileTags')]
+    #[ORM\ManyToOne(targetEntity: File::class, cascade: ['persist'], inversedBy: 'fileTags')]
     #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     private ?File $file = null;
 
-    #[ORM\ManyToOne(targetEntity: Tag::class, cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: Tag::class, cascade: ['persist'])]
     #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     private ?Tag $tag = null;
 

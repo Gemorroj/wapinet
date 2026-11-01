@@ -562,7 +562,9 @@ class FileController extends AbstractController
         $file->setBrowser($request->headers->get('User-Agent', ''));
 
         if (null !== $file->getPlainPassword()) {
-            $file->setFileTags(new ArrayCollection()); // не задаем тэги для запароленых файлов
+            // у запароленных файлов не может быть тэгов (см. editFileData)
+            $file->setTags(new ArrayCollection());
+            $file->setFileTags(new ArrayCollection());
 
             $passwordHasher = $passwordHasherFactory->getPasswordHasher($file);
             $hashedPassword = $passwordHasher->hash($file->getPlainPassword());
