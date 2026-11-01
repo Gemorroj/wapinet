@@ -1,4 +1,7 @@
 {
+    "dependencies": {
+        "pretty-json-custom-element": "^1.1.19"
+    },
     "devDependencies": {
         "@babel/core": "^8.0.10",
         "@babel/preset-env": "^8.0.7",

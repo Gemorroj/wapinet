@@ -9,7 +9,7 @@ import FileEdit from "./module/file/edit";
 import FileSwiper from "./module/file/swiper";
 import FileUpload from "./module/file/upload";
 import FileView from "./module/file/view";
-
+import "pretty-json-custom-element";
 
 const Loader = {
     readFile: function (file, callback) {

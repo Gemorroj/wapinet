@@ -1552,6 +1552,11 @@ pretty-error@^4.0.0:
     lodash "^4.17.20"
     renderkid "^3.0.0"
 
+pretty-json-custom-element@^1.1.19:
+  version "1.1.19"
+  resolved "https://registry.yarnpkg.com/pretty-json-custom-element/-/pretty-json-custom-element-1.1.19.tgz#dcf68dd614fbfc0abe0200b74d7c377bf7c075bc"
+  integrity sha512-32vIBhVCjTGiEF2yWN/UhWxewcyPzAyioeCZGIx1hVclc/ogDih9VjhssSmD+F2MGkgJvN2lcCC5fx5u6FRziA==
+
 rechoir@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/rechoir/-/rechoir-1.0.0.tgz#7302d3ef55a2aae97b0de22ae61147002780870e"
