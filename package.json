@@ -1,4 +1,5 @@
 {
+    "type": "module",
     "dependencies": {
         "pretty-json-custom-element": "^1.1.19"
     },

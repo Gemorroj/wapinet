@@ -1,6 +1,6 @@
 "use strict";
 
-import {Autocomplete} from "../../core";
+import {Autocomplete} from "../../core.js";
 
 const FileEdit = {
     pageCreate: function () {

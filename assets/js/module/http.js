@@ -1,6 +1,6 @@
 "use strict";
 
-import {Helper} from "../core";
+import {Helper} from "../core.js";
 
 const Http = {
     pageCreate: function () {

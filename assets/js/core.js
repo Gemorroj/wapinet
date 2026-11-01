@@ -1,14 +1,14 @@
 "use strict";
 
-import PhpObfuscator from "./module/php_obfuscator";
-import Http from "./module/http";
-import Guestbook from "./module/guestbook";
-import Gist from "./module/gist";
-import Archiver from "./module/archiver";
-import FileEdit from "./module/file/edit";
-import FileSwiper from "./module/file/swiper";
-import FileUpload from "./module/file/upload";
-import FileView from "./module/file/view";
+import PhpObfuscator from "./module/php_obfuscator.js";
+import Http from "./module/http.js";
+import Guestbook from "./module/guestbook.js";
+import Gist from "./module/gist.js";
+import Archiver from "./module/archiver.js";
+import FileEdit from "./module/file/edit.js";
+import FileSwiper from "./module/file/swiper.js";
+import FileUpload from "./module/file/upload.js";
+import FileView from "./module/file/view.js";
 import "pretty-json-custom-element";
 
 const Loader = {
