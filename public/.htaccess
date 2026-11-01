@@ -36,6 +36,9 @@ DirectoryIndex index.php
     RewriteCond %{REQUEST_URI}::$0 ^(/.+)/(.*)::\2$
     RewriteRule .* - [E=BASE:%1]
 
+    # Legacy: static files used to be served from /build/resources/
+    RewriteRule ^build/resources/(.*)$ %{ENV:BASE}/resources/$1 [R=301,L]
+
     # Sets the HTTP_AUTHORIZATION header removed by Apache
     RewriteCond %{HTTP:Authorization} .+
     RewriteRule ^ - [E=HTTP_AUTHORIZATION:%0]

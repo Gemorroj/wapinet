@@ -304,6 +304,11 @@ server {
         return 301 https://forum.$server_name/$1;
     }
 
+    # Canonical host: www -> non-www
+    if ($host = www.wapinet.ru) {
+        return 301 https://wapinet.ru$request_uri;
+    }
+
     location ~ /\. {
         deny all;
     }
@@ -347,6 +352,10 @@ server {
     location /bundles/ {
         access_log off;
         expires 30d;
+    }
+    location /build/resources/ {
+        # Legacy: static files used to be served from /build/resources/
+        rewrite ^/build/resources/(.*)$ /resources/$1 permanent;
     }
     location /build/ {
         access_log off;
