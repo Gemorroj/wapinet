@@ -5,28 +5,32 @@
 }
 
 a.wapinet-logo {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-left: auto;
     margin-right: auto;
-    text-align: center;
     width: 200px;
     height: 40px;
-    background-image: url('../images/georg_lent_200.png');
-    background-repeat: no-repeat;
-    background-position: center;
+}
+a.wapinet-logo img {
+    display: block;
+    width: 200px;
+    height: 35px;
 }
 img.image-preview {
     width: 80px;
     height: auto;
 }
 span.avatar-online {
-    background-image: url('../images/online.png');
     display: block;
     height: 15px;
     width: 15px;
     position: absolute;
     margin-left: 68px;
     margin-top: -18px;
+    border-radius: 50%;
+    background-color: #0b0;
 }
 span.avatar-online-list {
     margin-left: -33px;

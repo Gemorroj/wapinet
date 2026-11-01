@@ -352,15 +352,24 @@ server {
         access_log off;
         expires 30d;
     }
-    location /media/ {
+    location /resources/ {
         access_log off;
         expires 30d;
+    }
+    location /media/cache/resolve/ {
+        # on-demand thumbnail generation: goes to PHP and must not be cached
+        access_log off;
 
         try_files $uri /index.php$is_args$args;
     }
-    location ~ ^/static/ {
+    location /media/ {
+        access_log off;
+        expires 30d;
+    }
+    location /static/ {
         # Скачивание всех файлов (в т.ч. и txt, html и проч. в обменнике), чтобы потенциальный html/js код не выполнился в браузере
         add_header Content-Disposition "attachment";
+        add_header X-Content-Type-Options nosniff;
         access_log off;
         expires 30d;
     }
@@ -377,8 +386,7 @@ server {
         limit_req_status 429;
 
         fastcgi_pass unix:/run/php/php8.5-fpm.sock;
-        fastcgi_split_path_info ^(.+
-        }\.php)(/.*)$;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
        # When you are using symlinks to link the document root to the
        # current version of your application, you should pass the real

@@ -118,3 +118,12 @@ DirectoryIndex index.php
 
     </IfModule>
 </IfModule>
+
+# Force download for files from the file sharing service (/static/)
+<IfModule mod_setenvif.c>
+    <IfModule mod_headers.c>
+        SetEnvIf Request_URI "^/static/" WAPINET_ATTACHMENT
+        Header set Content-Disposition "attachment" env=WAPINET_ATTACHMENT
+        Header set X-Content-Type-Options "nosniff" env=WAPINET_ATTACHMENT
+    </IfModule>
+</IfModule>

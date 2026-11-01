@@ -20,7 +20,7 @@ class Bbcode extends AbstractExtension
             new TwigFilter('wapinet_bbcode_parse', function (string $text): string {
                 // хост нужен для email
                 $host = $this->requestContext->getHost();
-                $xbbcode = new Xbbcode('//'.$host.'/build/resources/xbbcode');
+                $xbbcode = new Xbbcode('//'.$host.'/resources/xbbcode');
                 $xbbcode->setTagHandler('spoiler', WapinetSpoiler::class);
                 $xbbcode->parse($text);
 
