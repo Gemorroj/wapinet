@@ -31,8 +31,10 @@ RUN set -eux; \
 
 # GeoIP
 RUN set -xe \
-    && curl -L -o /GeoLite2-City.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-City.mmdb \
-    && chmod 644 /GeoLite2-City.mmdb
+    && mkdir -p /var/www \
+    && curl -fL -o /var/www/GeoLite2-City.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-City.mmdb \
+    && curl -fL -o /var/www/GeoLite2-ASN.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-ASN.mmdb \
+    && chmod 644 /var/www/GeoLite2-City.mmdb /var/www/GeoLite2-ASN.mmdb
 
 # 7zip
 RUN set -xe \
