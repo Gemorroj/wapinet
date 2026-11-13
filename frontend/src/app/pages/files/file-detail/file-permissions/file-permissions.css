@@ -1,0 +1,71 @@
+.file-permissions {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.file-permissions__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.file-permissions__permission {
+    display: grid;
+    gap: 0.25rem;
+    padding-block: 0.5rem;
+}
+
+.file-permissions__permission:first-child {
+    padding-block-start: 0;
+}
+
+.file-permissions__permission:last-child {
+    padding-block-end: 0;
+}
+
+.file-permissions__permission + .file-permissions__permission {
+    border-block-start: 1px solid var(--tui-border-normal);
+}
+
+.file-permissions__head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    align-items: center;
+}
+
+.file-permissions__name {
+    color: var(--tui-text-primary);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.8125rem;
+}
+
+.file-permissions__description {
+    margin: 0;
+    color: var(--tui-text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+}
+
+.file-permissions__details > summary {
+    color: var(--tui-text-action);
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.file-permissions__compact {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+    gap: 0.25rem 1rem;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--tui-text-secondary);
+    font:
+        0.75rem/1.5 ui-monospace,
+        SFMono-Regular,
+        Menlo,
+        Consolas,
+        monospace;
+    overflow-wrap: anywhere;
+}

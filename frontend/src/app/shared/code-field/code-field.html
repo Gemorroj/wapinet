@@ -1,0 +1,19 @@
+<tui-textfield>
+    <label tuiLabel>{{ label() }}</label>
+    <textarea
+        tuiTextarea
+        [attr.name]="name()"
+        [attr.rows]="rows()"
+        [minRows]="rows()"
+        [maxRows]="rows() + 6"
+        [attr.maxlength]="limit() ?? null"
+        [placeholder]="placeholder()"
+        [ngModelOptions]="{ standalone: true }"
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+        [ngModel]="value()"
+        (ngModelChange)="valueChange.emit($event)"
+    ></textarea>
+</tui-textfield>

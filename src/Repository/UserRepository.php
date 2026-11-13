@@ -9,7 +9,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
-use Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserInterface;
+use Symfony\Component\Clock\ClockInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
@@ -23,7 +23,7 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  */
 final class UserRepository extends ServiceEntityRepository implements UserLoaderInterface, PasswordUpgraderInterface
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private readonly ClockInterface $clock)
     {
         parent::__construct($registry, User::class);
     }
@@ -33,16 +33,18 @@ final class UserRepository extends ServiceEntityRepository implements UserLoader
         return $this->createQueryBuilder('u')
             ->where('u.enabled = 1')
             ->andWhere('u.lastActivity > :lastActivity')
-            ->setParameter('lastActivity', new \DateTime('now -'.User::LIFETIME))
-            ->orderBy('u.username', 'ASC')
+            ->setParameter('lastActivity', $this->clock->now()->modify('-'.User::LIFETIME))
+            ->orderBy('u.username', \SortDirection::Ascending)
             ->getQuery();
     }
 
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
-        if ($user instanceof LegacyPasswordAuthenticatedUserInterface) {
-            $user->setSalt(null);
+        if (!$user instanceof User) {
+            throw new \InvalidArgumentException('Expected an instance of '.User::class.'.');
         }
+
+        $user->setSalt(null);
         $user->setPassword($newHashedPassword);
 
         $this->getEntityManager()->persist($user);

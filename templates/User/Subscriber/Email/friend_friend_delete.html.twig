@@ -2,8 +2,9 @@
 
 {% block content %}
     {% if friend.isFemale %}
-        Ваша подруга <a href="{{ url('wapinet_user_profile', {'username': friend.username}) }}">{{ friend.username }}</a> удалила из друзей <a href="{{ url('wapinet_user_profile', {'username': friend_friend.username}) }}">{{ friend_friend.username }}</a>.
+        Ваша подруга <a href="{{ absolute_url('/') }}user/profile/{{ friend.username }}">{{ friend.username }}</a> удалила из друзей <a href="{{ absolute_url('/') }}user/profile/{{ friend_friend.username }}">{{ friend_friend.username }}</a>.
     {% else %}
-        Ваш друг <a href="{{ url('wapinet_user_profile', {'username': friend.username}) }}">{{ friend.username }}</a> удалил из друзей <a href="{{ url('wapinet_user_profile', {'username': friend_friend.username}) }}">{{ friend_friend.username }}</a>.
+        Ваш друг <a href="{{ absolute_url('/') }}user/profile/{{ friend.username }}">{{ friend.username }}</a> удалил из друзей <a href="{{ absolute_url('/') }}user/profile/{{ friend_friend.username }}">{{ friend_friend.username }}</a>.
     {% endif %}
 {% endblock %}
+

@@ -1,0 +1,23 @@
+<section class="categories app-page">
+    <h1 class="app-sr-only">Категории</h1>
+    <app-breadcrumbs [items]="breadcrumbs" />
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    }
+
+    <div class="app-chips">
+        @for (item of categories; track item.key) {
+            <a tuiChip [routerLink]="['/files']" [queryParams]="{ category: item.key }">
+                {{ item.label }}
+                @if (count(item.key) !== null) {
+                    <span tuiBadge>{{ count(item.key) }}</span>
+                }
+            </a>
+        }
+    </div>
+</section>

@@ -1,0 +1,344 @@
+<section class="file-detail app-page">
+    <app-breadcrumbs [items]="breadcrumbs()" />
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    }
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    @if (passwordRequired()) {
+        <form tuiCardLarge="normal" appearance="floating" (ngSubmit)="unlock()">
+            <h2 tuiTitle>Файл защищён паролем</h2>
+
+            <tui-textfield>
+                <label tuiLabel>Пароль</label>
+                <input tuiInput type="password" name="password" maxlength="100" [ngModel]="password()" (ngModelChange)="password.set($event)" />
+            </tui-textfield>
+
+            <button tuiButton type="submit" size="s" [disabled]="unlocking()">Открыть</button>
+        </form>
+    }
+
+    @if (file(); as item) {
+        <article tuiCardLarge="normal" appearance="floating" class="file-detail__card" [class.file-detail__card_no-preview]="!hasPreview(item)">
+            @if (hasPreview(item)) {
+                <div class="file-detail__preview">
+                    @if (isImage(item)) {
+                        @if (item.hasPassword) {
+                            <img [src]="item.links.thumbnailUrl ?? item.links.url" [alt]="item.name" />
+                        } @else {
+                            <a
+                                class="file-detail__preview-link"
+                                [routerLink]="['/files/swiper', item.id]"
+                                [attr.aria-label]="'Открыть ' + item.name + ' на весь экран'"
+                                title="Открыть на весь экран"
+                            >
+                                <img [src]="item.links.thumbnailUrl ?? item.links.url" [alt]="item.name" />
+                                <span class="file-detail__preview-expand">
+                                    <tui-icon icon="@tui.maximize-2" />
+                                </span>
+                            </a>
+                        }
+                    } @else if (item.category === 'video') {
+                        @if (item.content.playableVideo) {
+                            <video controls preload="metadata">
+                                @if (item.links.convertedUrl) {
+                                    <source [src]="item.links.convertedUrl" type="video/mp4" />
+                                }
+                                <source [src]="item.links.url" [attr.type]="item.mimeType" />
+                            </video>
+                        } @else if (item.links.thumbnailUrl) {
+                            <img [src]="item.links.thumbnailUrl" [alt]="item.name" />
+                        } @else {
+                            <span tuiBadge>{{ categoryLabel(item.category) }}</span>
+                        }
+                    } @else if (item.category === 'audio') {
+                        <div class="file-detail__audio">
+                            @if (item.links.thumbnailUrl) {
+                                <img class="file-detail__cover" [src]="item.links.thumbnailUrl" [alt]="item.name" />
+                            }
+
+                            @if (item.content.playableAudio) {
+                                <audio controls preload="metadata">
+                                    @if (item.links.convertedUrl) {
+                                        <source [src]="item.links.convertedUrl" type="audio/mpeg" />
+                                    }
+                                    <source [src]="item.links.url" [attr.type]="item.mimeType" />
+                                </audio>
+                            } @else {
+                                <span tuiBadge>{{ categoryLabel(item.category) }}</span>
+                            }
+                        </div>
+                    } @else if ((item.category === 'android' || item.category === 'java') && item.links.thumbnailUrl) {
+                        <img [src]="item.links.thumbnailUrl" [alt]="item.name" />
+                    } @else {
+                        <span tuiBadge>{{ categoryLabel(item.category) }}</span>
+                    }
+                </div>
+            }
+
+            <div class="file-detail__body">
+                @if (item.content.conversionPending) {
+                    <div tuiNotification appearance="info">
+                        @if (conversionPollingStalled()) {
+                            Файл всё ещё конвертируется. Обновите страницу позже, чтобы увидеть плеер.
+                        } @else {
+                            Файл конвертируется в {{ item.category === 'audio' ? 'MP3' : 'MP4' }}. Плеер появится на этой странице автоматически.
+                        }
+                    </div>
+                }
+
+                <div class="file-detail__title">
+                    <tui-icon class="file-detail__type-icon" [icon]="typeIcon(item)" />
+                    <h1 class="file-detail__name" tuiTitle>{{ item.name }}</h1>
+
+                    @if (item.hidden) {
+                        <span tuiBadge>На модерации</span>
+                    }
+                    @if (item.hasPassword) {
+                        <span tuiBadge appearance="warning">Пароль</span>
+                    }
+                </div>
+
+                <div class="file-detail__description" appCodeHighlight [innerHTML]="item.descriptionHtml"></div>
+
+                <div class="app-actions">
+                    <button tuiButton size="s" (click)="download()" [disabled]="downloading()">
+                        <tui-icon icon="@tui.download" />
+                        Скачать
+                    </button>
+
+                    @if (item.links.convertedUrl) {
+                        <a tuiButton size="s" appearance="flat" [href]="item.links.convertedUrl" [attr.download]="item.name + '.' + item.links.convertedFormat">
+                            <tui-icon icon="@tui.download" />
+                            Скачать {{ item.links.convertedFormat === 'mp3' ? 'MP3' : 'MP4' }}
+                        </a>
+                    }
+
+                    @if (item.navigation.prevId) {
+                        <a
+                            tuiButton
+                            size="s"
+                            appearance="flat"
+                            [routerLink]="['/files', item.navigation.prevId]"
+                            aria-label="Предыдущий файл"
+                            title="Предыдущий файл"
+                        >
+                            <tui-icon icon="@tui.chevron-left" />
+                        </a>
+                    }
+
+                    @if (item.navigation.nextId) {
+                        <a
+                            tuiButton
+                            size="s"
+                            appearance="flat"
+                            [routerLink]="['/files', item.navigation.nextId]"
+                            aria-label="Следующий файл"
+                            title="Следующий файл"
+                        >
+                            <tui-icon icon="@tui.chevron-right" />
+                        </a>
+                    }
+
+                    @if (item.canEdit) {
+                        <button tuiButton size="s" appearance="flat" (click)="edit()">
+                            <tui-icon icon="@tui.pencil" />
+                            Редактировать
+                        </button>
+                    }
+
+                    @if (isAdmin() && item.hidden) {
+                        <button tuiButton size="s" (click)="publish()" [disabled]="publishing()">
+                            <tui-icon icon="@tui.eye" />
+                            Открыть доступ
+                        </button>
+                    }
+
+                    @if (item.canDelete) {
+                        @if (pendingDelete()) {
+                            <button tuiButton size="s" appearance="primary-destructive" (click)="confirmDelete()" [disabled]="deleting()">
+                                <tui-icon icon="@tui.trash" />
+                                Точно удалить
+                            </button>
+                            <button tuiButton size="s" appearance="flat" (click)="pendingDelete.set(false)">
+                                <tui-icon icon="@tui.x" />
+                                Отмена
+                            </button>
+                        } @else {
+                            <button tuiButton size="s" appearance="flat-destructive" (click)="pendingDelete.set(true)">
+                                <tui-icon icon="@tui.trash" />
+                                Удалить
+                            </button>
+                        }
+                    }
+                </div>
+
+                <dl class="app-meta">
+                    <dt>Размер</dt>
+                    <dd>{{ size(item.size) }}</dd>
+                    <dt>Тип</dt>
+                    <dd>{{ item.mimeType }}</dd>
+                    <dt>Загружен</dt>
+                    <dd>{{ item.createdAt | relativeDate }}</dd>
+                    @if (item.updatedAt) {
+                        <dt>Обновлён</dt>
+                        <dd>{{ item.updatedAt | relativeDate }}</dd>
+                    }
+                    @if (item.user) {
+                        <dt>Автор</dt>
+                        <dd>
+                            <a [routerLink]="['/files']" [queryParams]="{ user: item.user.username }">
+                                {{ item.user.username }}
+                            </a>
+                        </dd>
+                    }
+                    <dt>Просмотры</dt>
+                    <dd>{{ item.countViews }}</dd>
+                    @if (item.lastViewAt) {
+                        <dt>Последний просмотр</dt>
+                        <dd>{{ item.lastViewAt | relativeDate }}</dd>
+                    }
+                    <dt class="file-detail__md5">
+                        <app-info-hint text="Message Digest 5 — 128-битный алгоритм хеширования. Хеш рассчитан по содержимому файла." label="Что такое MD5" />
+                        MD5
+                    </dt>
+                    <dd class="file-detail__hash">
+                        <span class="file-detail__hash-value" [title]="item.hash">{{ shortHash(item.hash) }}</span>
+                        <button
+                            tuiButton
+                            type="button"
+                            size="s"
+                            appearance="flat"
+                            class="file-detail__copy"
+                            [class.file-detail__copy_copied]="copyStatus() === 'success'"
+                            (click)="copyHash(item.hash)"
+                            [attr.aria-label]="copyStatus() === 'success' ? 'Скопировано' : 'Скопировать MD5'"
+                            [attr.title]="copyStatus() === 'success' ? 'Скопировано' : 'Скопировать MD5'"
+                        >
+                            <tui-icon [icon]="copyStatus() === 'success' ? '@tui.check' : '@tui.copy'" />
+                        </button>
+                    </dd>
+                    @for (entry of metaEntries(); track $index) {
+                        <dt>{{ entry.label }}</dt>
+                        <dd>{{ entry.value }}</dd>
+                    }
+                </dl>
+
+                @if (item.tags.length) {
+                    <div class="file-detail__tags">
+                        @for (tag of item.tags; track tag) {
+                            <a tuiChip [routerLink]="['/files']" [queryParams]="{ tag }">{{ tag }}</a>
+                        }
+                    </div>
+                }
+
+                <app-file-permissions [permissions]="item.content.permissions" />
+            </div>
+        </article>
+
+        @if (item.category === 'playlist') {
+            <section tuiCardLarge="normal" appearance="floating">
+                <div class="app-section-head">
+                    <h2 tuiTitle="m">Содержимое плейлиста</h2>
+                    @if (item.content.playlist.length) {
+                        <span tuiBadge appearance="neutral">{{ item.content.playlist.length }}</span>
+                    }
+                </div>
+
+                @if (item.content.playlist.length) {
+                    <div class="file-detail__list">
+                        @for (track of item.content.playlist; track $index) {
+                            <div tuiCell>
+                                <div tuiTitle>
+                                    {{ track.title }}
+                                    @if (track.path !== track.title) {
+                                        <div tuiSubtitle>{{ track.path }}</div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                } @else {
+                    <div tuiNotification>Не удалось прочитать плейлист.</div>
+                }
+            </section>
+        }
+
+        @if (item.category === 'torrent') {
+            <section tuiCardLarge="normal" appearance="floating">
+                <div class="app-section-head">
+                    <h2 tuiTitle="m">Содержимое торрента</h2>
+                    @if (item.content.torrent.length) {
+                        <span tuiBadge appearance="neutral">{{ item.content.torrent.length }}</span>
+                    }
+                </div>
+
+                @if (item.content.torrent.length) {
+                    <div class="file-detail__list">
+                        @for (entry of item.content.torrent; track $index) {
+                            <div tuiCell>
+                                <div tuiTitle>
+                                    {{ entry.path }}
+                                    <div tuiSubtitle>{{ size(entry.size) }}</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                } @else {
+                    <div tuiNotification>Не удалось прочитать торрент.</div>
+                }
+            </section>
+        }
+
+        @if (item.category === 'archive') {
+            <section tuiCardLarge="normal" appearance="floating">
+                <div class="app-section-head">
+                    <h2 tuiTitle="m">Содержимое архива</h2>
+                    @if (archiveEntries().length) {
+                        <span tuiBadge appearance="neutral">{{ archiveEntries().length }}</span>
+                    }
+                </div>
+
+                @if (archiveError()) {
+                    <div tuiNotification appearance="negative">{{ archiveError() }}</div>
+                }
+
+                @if (archivePasswordRequired()) {
+                    <form tuiCardLarge="normal" appearance="floating" (ngSubmit)="unlockArchive()">
+                        <p>Архив защищён паролем.</p>
+
+                        <tui-textfield>
+                            <label tuiLabel>Пароль архива</label>
+                            <input
+                                tuiInput
+                                type="password"
+                                name="archivePassword"
+                                [ngModel]="archivePassword()"
+                                (ngModelChange)="archivePassword.set($event)"
+                            />
+                        </tui-textfield>
+
+                        <button tuiButton type="submit" size="s" [disabled]="archiveLoading()">Открыть архив</button>
+                    </form>
+                } @else if (archiveLoading()) {
+                    <tui-loader [loading]="true" />
+                } @else {
+                    <app-archive-list [entries]="archiveEntries()" [busyPath]="archiveDownloading()" (entryAction)="downloadArchiveEntry($event)" />
+                }
+            </section>
+        }
+
+        <app-vk-comments [xid]="'file-' + item.id" />
+    }
+
+    @if (copyStatus(); as status) {
+        <div class="file-detail__toast" [class.file-detail__toast_error]="status === 'error'" role="status" aria-live="polite">
+            <tui-icon [icon]="status === 'error' ? '@tui.circle-alert' : '@tui.check'" />
+            {{ status === 'error' ? 'Не удалось скопировать MD5' : 'MD5 скопирован' }}
+        </div>
+    }
+</section>

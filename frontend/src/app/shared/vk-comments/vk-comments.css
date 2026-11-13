@@ -1,0 +1,11 @@
+:host {
+    display: block;
+}
+
+/**
+ * VK renders the widget in light colors only: there is no theme option and the
+ * iframe ignores `prefers-color-scheme`.
+ */
+.vk-comments {
+    min-block-size: 1px;
+}

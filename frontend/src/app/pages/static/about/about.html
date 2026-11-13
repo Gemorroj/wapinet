@@ -1,0 +1,40 @@
+<section class="about app-page">
+    <h1 class="app-sr-only">О сайте</h1>
+    <app-breadcrumbs [items]="breadcrumbs" />
+
+    <div tuiCardLarge="normal" appearance="floating" class="about__content">
+        <p>
+            Сайт <em>wapinet.ru</em> появился в 2006 году. Был написан на
+            <abbr title="Wireless Markup Language — язык разметки для беспроводных устройств">WML</abbr> без использования скриптовых языков, затем постепенно
+            переписывался с использованием <abbr title="PHP: Hypertext Preprocessor — PHP: препроцессор гипертекста">PHP</abbr> и
+            <abbr title="Extensible Hypertext Markup Language — расширяемый язык гипертекстовой разметки">XHTML</abbr>.
+        </p>
+
+        <p>
+            В 2013 году сайт был полностью переписан на
+            <a tuiLink href="https://symfony.com" target="_blank" rel="noopener noreferrer">Symfony</a>, а интерфейс — на
+            <abbr title="Прототипно-ориентированный сценарный язык программирования">JavaScript</abbr>-фреймворк
+            <a tuiLink href="https://jquerymobile.com" target="_blank" rel="noopener noreferrer">jQuery Mobile</a>.
+        </p>
+
+        <p>
+            Сейчас сайт работает на Symfony, интерфейс — на
+            <a tuiLink href="https://angular.dev" target="_blank" rel="noopener noreferrer">Angular</a> и
+            <a tuiLink href="https://taiga-ui.dev" target="_blank" rel="noopener noreferrer">Taiga UI</a>. Интерфейс создан с помощью нейросети.
+        </p>
+
+        <p>
+            Исходный код распространяется под лицензией
+            <a tuiLink href="https://spdx.org/licenses/GPL-3.0-or-later.html" target="_blank" rel="noopener noreferrer"
+                ><abbr title="GNU General Public License">GPL</abbr> v3</a
+            >. Репозиторий находится на <a tuiLink href="https://github.com/Gemorroj/wapinet" target="_blank" rel="noopener noreferrer">GitHub</a>.
+        </p>
+
+        <div class="about__logos">
+            <img src="https://php.net/images/logo.php?refresh" alt="PHP" loading="lazy" />
+            <img src="https://symfony.com/logos/symfony_black_02.png" alt="Symfony" loading="lazy" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Jquery-mobile-logo.png" alt="jQuery Mobile" loading="lazy" />
+            <img src="https://angular.dev/assets/images/press-kit/angular_wordmark_gradient.png" alt="Angular" loading="lazy" />
+        </div>
+    </div>
+</section>

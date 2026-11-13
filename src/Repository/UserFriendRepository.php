@@ -30,8 +30,8 @@ final class UserFriendRepository extends ServiceEntityRepository
             ->where('f.user = :user')
             ->setParameter('user', $user)
             ->innerJoin('f.friend', 'u', Join::WITH, 'u.enabled = 1')
-            ->orderBy('u.lastActivity', 'DESC')
-            ->addOrderBy('u.username', 'ASC')
+            ->orderBy('u.lastActivity', \SortDirection::Descending)
+            ->addOrderBy('u.username', \SortDirection::Ascending)
             ->getQuery();
     }
 

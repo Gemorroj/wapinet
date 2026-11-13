@@ -1,0 +1,8 @@
+.ip-insight__flag {
+    inline-size: 1rem;
+    block-size: 0.75rem;
+    margin-inline-end: 0.375rem;
+    border-radius: 2px;
+    object-fit: cover;
+    vertical-align: -0.0625rem;
+}

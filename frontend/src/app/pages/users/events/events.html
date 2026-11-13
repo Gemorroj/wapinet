@@ -1,0 +1,49 @@
+<section class="events app-page">
+    <h1 class="app-sr-only">События</h1>
+    <app-breadcrumbs [items]="breadcrumbs" />
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    }
+
+    <div class="app-list">
+        @for (event of items(); track event.id) {
+            @if (event.url) {
+                @if (isSpaUrl(event.url)) {
+                    <a tuiCell [routerLink]="event.url">
+                        <ng-container *ngTemplateOutlet="row; context: { $implicit: event }" />
+                    </a>
+                } @else {
+                    <a tuiCell [href]="event.url" target="_blank" rel="noopener noreferrer">
+                        <ng-container *ngTemplateOutlet="row; context: { $implicit: event }" />
+                    </a>
+                }
+            } @else {
+                <div tuiCell>
+                    <ng-container *ngTemplateOutlet="row; context: { $implicit: event }" />
+                </div>
+            }
+        } @empty {
+            @if (!loading()) {
+                <div tuiNotification>Событий нет.</div>
+            }
+        }
+    </div>
+
+    <app-pagination [total]="total()" [perPage]="perPage()" [page]="page()" (pageChange)="goToPage($event)" />
+</section>
+
+<ng-template #row let-event>
+    <div tuiTitle>
+        {{ event.subject }}
+        <div tuiSubtitle>{{ event.createdAt | relativeDate }}</div>
+    </div>
+
+    @if (event.url) {
+        <tui-icon tuiAccessories icon="@tui.chevron-right" class="events__chevron" />
+    }
+</ng-template>

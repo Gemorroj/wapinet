@@ -7,7 +7,7 @@ namespace App\Repository;
 use App\Entity\Gist;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -34,15 +34,52 @@ final class GistRepository extends ServiceEntityRepository
         return $this->count([]);
     }
 
-    public function getListQuery(?User $user = null): Query
+    public function getApiListQueryBuilder(?User $user = null, string $sort = 'newest'): QueryBuilder
     {
-        $qb = $this->createQueryBuilder('g');
-        if ($user) {
-            $qb->where('g.user = :user');
-            $qb->setParameter('user', $user);
-        }
-        $qb->orderBy('g.id', 'DESC');
+        $queryBuilder = $this->createQueryBuilder('g')
+            ->leftJoin('g.user', 'u')
+            ->addSelect('u');
 
-        return $qb->getQuery();
+        if (null !== $user) {
+            $queryBuilder->andWhere('g.user = :user')->setParameter('user', $user);
+        }
+
+        return $queryBuilder->orderBy('g.id', 'oldest' === $sort ? \SortDirection::Ascending : \SortDirection::Descending);
+    }
+
+    /**
+     * @param list<int> $ids
+     *
+     * @return Gist[]
+     */
+    public function findByIds(array $ids): array
+    {
+        if ([] === $ids) {
+            return [];
+        }
+
+        $gists = $this->createQueryBuilder('g')
+            ->leftJoin('g.user', 'u')
+            ->addSelect('u')
+            ->where('g.id IN (:ids)')
+            ->setParameter('ids', $ids)
+            ->getQuery()
+            ->getResult();
+
+        $byId = [];
+
+        foreach ($gists as $gist) {
+            $byId[(int) $gist->getId()] = $gist;
+        }
+
+        $ordered = [];
+
+        foreach ($ids as $id) {
+            if (isset($byId[$id])) {
+                $ordered[] = $byId[$id];
+            }
+        }
+
+        return $ordered;
     }
 }

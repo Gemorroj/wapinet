@@ -1,0 +1,27 @@
+<section class="login app-page">
+    <app-breadcrumbs [items]="breadcrumbs" />
+
+    @if (registered()) {
+        <div tuiNotification appearance="positive">Регистрация завершена. Войдите с новыми данными.</div>
+    }
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    <form tuiCardLarge="normal" appearance="floating" (ngSubmit)="submit()">
+        <h1 class="app-form-title">Вход</h1>
+
+        <tui-textfield>
+            <label tuiLabel>Логин</label>
+            <input tuiInput name="username" autocomplete="username" maxlength="180" [(ngModel)]="username" required />
+        </tui-textfield>
+
+        <tui-textfield>
+            <label tuiLabel>Пароль</label>
+            <input tuiInput type="password" name="password" autocomplete="current-password" maxlength="4096" [(ngModel)]="password" required />
+        </tui-textfield>
+
+        <button tuiButton type="submit" size="s" [disabled]="loading()">Войти</button>
+    </form>
+</section>

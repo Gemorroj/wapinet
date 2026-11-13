@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\DBAL\Types\FileMetaType;
 use App\Entity\File\Meta;
+use App\Enum\FileConversion;
+use App\Enum\FileMime;
 use App\Repository\FileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -31,14 +32,14 @@ class File implements PasswordAuthenticatedUserInterface, \JsonSerializable
     #[ORM\Column(type: 'string', length: 500)]
     private string $browser = '';
 
-    #[ORM\Column(type: 'datetime', nullable: false)]
-    private ?\DateTime $createdAt = null;
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
+    private \DateTimeImmutable $createdAt;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?\DateTime $updatedAt = null;
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?\DateTime $lastViewAt = null;
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $lastViewAt = null;
 
     #[ORM\Column(type: 'integer', nullable: false)]
     private int $countViews = 0;
@@ -70,8 +71,8 @@ class File implements PasswordAuthenticatedUserInterface, \JsonSerializable
     #[ORM\Column(type: 'string', nullable: false)]
     private string $hash = '';
 
-    #[ORM\Column(type: FileMetaType::TYPE_NAME, nullable: true)]
-    private ?Meta $meta = null;
+    #[ORM\Column(type: 'json', nullable: true)]
+    private ?array $meta = null;
 
     #[ORM\Column(type: 'boolean', nullable: false, options: ['default' => true])]
     private bool $hidden = true;
@@ -93,6 +94,7 @@ class File implements PasswordAuthenticatedUserInterface, \JsonSerializable
 
     public function __construct()
     {
+        $this->createdAt = new \DateTimeImmutable();
         $this->fileTags = new ArrayCollection();
         $this->tags = new ArrayCollection();
     }
@@ -152,12 +154,12 @@ class File implements PasswordAuthenticatedUserInterface, \JsonSerializable
 
     public function getMeta(): ?Meta
     {
-        return $this->meta;
+        return null === $this->meta ? null : Meta::create($this->meta);
     }
 
     public function setMeta(?Meta $meta = null): self
     {
-        $this->meta = $meta;
+        $this->meta = $meta?->jsonSerialize();
 
         return $this;
     }
@@ -238,37 +240,29 @@ class File implements PasswordAuthenticatedUserInterface, \JsonSerializable
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    #[ORM\PrePersist]
-    public function setCreatedAtValue(): self
-    {
-        $this->createdAt = new \DateTime();
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTime
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
     public function setUpdatedAtValue(): self
     {
-        $this->updatedAt = new \DateTime();
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
 
-    public function getLastViewAt(): ?\DateTime
+    public function getLastViewAt(): ?\DateTimeImmutable
     {
         return $this->lastViewAt;
     }
 
-    public function setLastViewAt(\DateTime $lastViewAt): self
+    public function setLastViewAt(\DateTimeImmutable $lastViewAt): self
     {
         $this->lastViewAt = $lastViewAt;
 
@@ -409,12 +403,12 @@ class File implements PasswordAuthenticatedUserInterface, \JsonSerializable
 
     public function isImage(): bool
     {
-        return \str_starts_with($this->getMimeType(), 'image/') || 'application/postscript' === $this->getMimeType() || 'application/illustrator' === $this->getMimeType() || 'application/vnd.adobe.illustrator' === $this->getMimeType();
+        return \str_starts_with($this->getMimeType(), 'image/') || \in_array($this->getMimeType(), FileMime::IMAGE_EXTRA, true);
     }
 
     public function isVideo(): bool
     {
-        return \str_starts_with($this->getMimeType(), 'video/') || 'application/vnd.rn-realmedia' === $this->getMimeType() || 'application/vnd.rn-realmedia-vbr' === $this->getMimeType();
+        return \str_starts_with($this->getMimeType(), 'video/') || \in_array($this->getMimeType(), FileMime::VIDEO_EXTRA, true);
     }
 
     public function isAudio(): bool
@@ -439,86 +433,42 @@ class File implements PasswordAuthenticatedUserInterface, \JsonSerializable
 
     public function isArchive(): bool
     {
-        return \in_array($this->getMimeType(), [
-            'application/zip', 'application/x-zip', 'application/x-zip-compressed', // zip
-            'application/x-rar-compressed', 'application/x-rar', 'application/vnd.rar', // rar
-            'application/x-bzip', // bz
-            'application/x-bzip2', 'application/x-bz2', // bz2
-            'application/x-7z-compressed', // 7z
-            'application/x-tar', // tar
-            'application/vnd.ms-cab-compressed', 'zz-application/zz-winassoc-cab', // cab
-            'application/x-cd-image', 'application/x-gamecube-iso-image', 'application/x-gamecube-rom', 'application/x-iso9660-image', 'application/x-saturn-rom', 'application/x-sega-cd-rom', 'application/x-wbfs', 'application/x-wia', 'application/x-wii-iso-image', 'application/x-wii-rom', // iso
-            'application/x-gzip', 'application/gzip', // gz
-            'application/x-ace', 'application/x-ace-compressed', // ace
-            'application/x-lha', 'application/x-lzh-compressed', // lzh
-        ], true);
-    }
-
-    public function isFlash(): bool
-    {
-        return 'application/x-shockwave-flash' === $this->getMimeType()
-            || 'application/futuresplash' === $this->getMimeType()
-            || 'application/vnd.adobe.flash.movie' === $this->getMimeType();
+        return \in_array($this->getMimeType(), FileMime::ARCHIVE, true);
     }
 
     public function isJavaApp(): bool
     {
-        return \in_array($this->getMimeType(), [
-            'application/java-archive',
-            'application/x-java-archive',
-            'application/x-jar',
-        ], true) && !\str_ends_with($this->getFileName(), '.apk');
+        return \in_array($this->getMimeType(), FileMime::JAVA, true) && !\str_ends_with($this->getFileName(), '.apk');
     }
 
     public function isAndroidApp(): bool
     {
-        return 'application/vnd.android.package-archive' === $this->getMimeType() || (\in_array($this->getMimeType(), ['application/java-archive', 'application/zip', 'application/x-zip', 'application/x-zip-compressed'], true) && \str_ends_with($this->getFileName(), '.apk'));
-    }
-
-    public function isSymbianApp(): bool
-    {
-        return 'application/vnd.symbian.install' === $this->getMimeType() || 'x-epoc/x-sisx-app' === $this->getMimeType();
+        return \in_array($this->getMimeType(), FileMime::ANDROID, true) || (\in_array($this->getMimeType(), [...FileMime::JAVA, ...FileMime::ZIP], true) && \str_ends_with($this->getFileName(), '.apk'));
     }
 
     public function isWindowsApp(): bool
     {
-        return \in_array($this->getMimeType(), [
-            'application/x-msdownload',
-            'application/x-ms-dos-executable',
-            'application/x-dosexec',
-        ], true);
+        return \in_array($this->getMimeType(), FileMime::WINDOWS, true);
     }
 
     public function isPdf(): bool
     {
-        return \in_array($this->getMimeType(), [
-            'application/pdf',
-            'application/acrobat',
-            'application/nappdf',
-            'application/x-pdf',
-            'image/pdf',
-        ], true);
+        return \in_array($this->getMimeType(), FileMime::PDF, true);
     }
 
     public function isWord(): bool
     {
-        return \in_array($this->getMimeType(), [
-            'application/msword', 'application/vnd.ms-word', 'application/x-msword', 'zz-application/zz-winassoc-doc', // doc
-            'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // docx
-        ], true);
+        return \in_array($this->getMimeType(), FileMime::WORD, true);
     }
 
     public function isRtf(): bool
     {
-        return 'application/rtf' === $this->getMimeType() || 'text/rtf' === $this->getMimeType();
+        return \in_array($this->getMimeType(), FileMime::RTF, true);
     }
 
     public function isExcel(): bool
     {
-        return \in_array($this->getMimeType(), [
-            'application/vnd.ms-excel', 'application/msexcel', 'application/x-msexcel', 'zz-application/zz-winassoc-xls', // xls
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // xlsx
-        ], true);
+        return \in_array($this->getMimeType(), FileMime::EXCEL, true);
     }
 
     public function is3gp(): bool
@@ -657,7 +607,7 @@ class File implements PasswordAuthenticatedUserInterface, \JsonSerializable
 
     public function isTorrent(): bool
     {
-        return 'application/x-bittorrent' === $this->getMimeType();
+        return \in_array($this->getMimeType(), FileMime::TORRENT, true);
     }
 
     public function isMidi(): bool
@@ -667,15 +617,7 @@ class File implements PasswordAuthenticatedUserInterface, \JsonSerializable
 
     public function isPlaylist(): bool
     {
-        return \in_array($this->getMimeType(), [
-            'audio/x-mpegurl',
-            'application/m3u',
-            'application/vnd.apple.mpegurl',
-            'audio/m3u',
-            'audio/mpegurl',
-            'audio/x-m3u',
-            'audio/x-mp3-playlist',
-        ], true);
+        return \in_array($this->getMimeType(), FileMime::PLAYLIST, true);
     }
 
     public function isPlayableVideo(): bool
@@ -690,6 +632,22 @@ class File implements PasswordAuthenticatedUserInterface, \JsonSerializable
             || $this->isWmv()
             || $this->isMov()
         );
+    }
+
+    /**
+     * Target format for files browsers cannot play natively.
+     */
+    public function getConversion(): ?FileConversion
+    {
+        if ($this->isAmr()) {
+            return FileConversion::Mp3;
+        }
+
+        if ($this->isVideo() && ($this->is3gp() || $this->isAvi() || $this->isWmv() || $this->isMov() || $this->isFlv())) {
+            return FileConversion::Mp4;
+        }
+
+        return null;
     }
 
     public function isMov(): bool

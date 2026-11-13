@@ -1,0 +1,33 @@
+<section class="users app-page">
+    <h1 class="app-sr-only">Пользователи</h1>
+    <app-breadcrumbs [items]="breadcrumbs" />
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    <form class="users__search" (ngSubmit)="submitSearch()">
+        <tui-textfield class="users__search-field" tuiTextfieldSize="s">
+            <input
+                tuiInput
+                name="search"
+                maxlength="180"
+                placeholder="Поиск по имени"
+                aria-label="Поиск по имени"
+                [ngModel]="search()"
+                (ngModelChange)="search.set($event)"
+            />
+            <button tuiButton type="submit" size="s" appearance="flat" [disabled]="loading()" aria-label="Найти">
+                <tui-icon icon="@tui.search" />
+            </button>
+        </tui-textfield>
+    </form>
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    }
+
+    <app-user-list [items]="items()" [loading]="loading()" emptyText="Пользователей нет." />
+
+    <app-pagination [total]="total()" [perPage]="perPage()" [page]="page()" (pageChange)="goToPage($event)" />
+</section>

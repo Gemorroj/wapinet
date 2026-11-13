@@ -16,5 +16,16 @@ framework:
         system: cache.adapter.system
 
         # Namespaced pools use the above "app" backend by default
-        #pools:
-            #my.dedicated.cache: null
+        pools:
+            cache.whordap:
+                adapter: cache.adapter.filesystem
+                default_lifetime: 86400
+            cache.dns:
+                adapter: cache.adapter.filesystem
+                default_lifetime: 86400
+            cache.ip_reputation:
+                adapter: cache.adapter.filesystem
+                default_lifetime: 3600
+            cache.peeringdb:
+                adapter: cache.adapter.filesystem
+                default_lifetime: 86400

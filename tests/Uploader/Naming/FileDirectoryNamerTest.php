@@ -21,7 +21,7 @@ class FileDirectoryNamerTest extends TestCase
     public function testDirectoryNameFromEntityCreatedAt(): void
     {
         $file = new File();
-        $this->setCreatedAt($file, new \DateTime('2024-02-29 12:00:00'));
+        $this->setCreatedAt($file, new \DateTimeImmutable('2024-02-29 12:00:00'));
 
         static::assertSame('2024/02/29', $this->namer->directoryName($file, $this->mapping));
     }
@@ -37,7 +37,7 @@ class FileDirectoryNamerTest extends TestCase
     public function testNullCreatedAtFallsBackToToday(): void
     {
         // createdAt is null until Doctrine PrePersist fills it
-        $today = new \DateTime()->format('Y/m/d');
+        $today = new \DateTimeImmutable()->format('Y/m/d');
 
         static::assertSame($today, $this->namer->directoryName(new File(), $this->mapping));
         static::assertSame($today, $this->namer->directoryName([], $this->mapping));
@@ -45,7 +45,7 @@ class FileDirectoryNamerTest extends TestCase
 
     public function testObjectWithoutCreatedAtFallsBackToToday(): void
     {
-        $today = new \DateTime()->format('Y/m/d');
+        $today = new \DateTimeImmutable()->format('Y/m/d');
 
         static::assertSame($today, $this->namer->directoryName(new \stdClass(), $this->mapping));
     }
@@ -55,12 +55,12 @@ class FileDirectoryNamerTest extends TestCase
         // vich:cleanup builds "dir/fileName" and compares it with storage paths:
         // a leading slash would mark every file as orphaned
         $file = new File();
-        $this->setCreatedAt($file, new \DateTime('2024-01-15'));
+        $this->setCreatedAt($file, new \DateTimeImmutable('2024-01-15'));
 
         static::assertStringStartsNotWith('/', $this->namer->directoryName($file, $this->mapping));
     }
 
-    private function setCreatedAt(File $file, \DateTime $createdAt): void
+    private function setCreatedAt(File $file, \DateTimeImmutable $createdAt): void
     {
         $property = new \ReflectionProperty(File::class, 'createdAt');
         $property->setValue($file, $createdAt);

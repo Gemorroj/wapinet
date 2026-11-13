@@ -1,0 +1,39 @@
+.source-view {
+    max-block-size: 24rem;
+    border: 1px solid var(--app-border);
+    border-radius: var(--tui-radius-m);
+    background: var(--tui-background-neutral-1);
+    font-size: 0.8125rem;
+    overflow: auto;
+}
+
+.source-view__line {
+    display: grid;
+    grid-template-columns: 3.25rem minmax(0, 1fr);
+    min-inline-size: max-content;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 1.25rem;
+}
+
+.source-view__number {
+    padding: 0.125rem 0.5rem;
+    border-inline-end: 1px solid var(--app-border);
+    color: var(--tui-text-secondary);
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+    user-select: none;
+}
+
+.source-view__text {
+    padding: 0.125rem 0.75rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    white-space: pre;
+}
+
+.source-view__line_error {
+    background: color-mix(in srgb, var(--tui-status-negative) 14%, transparent);
+}
+
+.source-view__line_warning {
+    background: color-mix(in srgb, var(--tui-status-warning) 14%, transparent);
+}

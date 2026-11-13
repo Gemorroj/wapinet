@@ -1,0 +1,229 @@
+<section class="http app-page">
+    <h1 class="app-sr-only">HTTP-клиент</h1>
+    <app-breadcrumbs [items]="breadcrumbs" />
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    <form tuiCardLarge="normal" appearance="floating" (ngSubmit)="send()">
+        <h2 class="app-form-title">HTTP-клиент</h2>
+        <p class="app-hint">Запрос выполняется с сервера. Приватные и служебные адреса заблокированы.</p>
+
+        <div class="http__request">
+            <tui-textfield tuiChevron [tuiTextfieldCleaner]="false">
+                <label tuiLabel>Метод</label>
+                <input tuiSelect name="methodSelect" [ngModel]="methodOption()" (ngModelChange)="setMethodOption($event)" />
+                <tui-data-list-wrapper *tuiDropdown [items]="methodOptions" />
+            </tui-textfield>
+
+            <tui-textfield>
+                <label tuiLabel>URL</label>
+                <input
+                    tuiInput
+                    name="url"
+                    maxlength="2048"
+                    placeholder="https://api.example.com/resource"
+                    [ngModel]="url()"
+                    (ngModelChange)="url.set($event)"
+                />
+            </tui-textfield>
+        </div>
+
+        @if (customMethod()) {
+            <tui-textfield>
+                <label tuiLabel>Свой метод</label>
+                <input
+                    tuiInput
+                    name="method"
+                    maxlength="32"
+                    placeholder="PROPFIND"
+                    [ngModel]="method()"
+                    (ngModelChange)="method.set($event)"
+                    (blur)="normalizeMethod()"
+                />
+            </tui-textfield>
+        }
+
+        <div class="http__options">
+            <tui-textfield>
+                <label tuiLabel>Таймаут, с</label>
+                <input tuiInput type="number" name="timeout" min="1" max="30" [ngModel]="timeout()" (ngModelChange)="timeout.set(+$event)" />
+            </tui-textfield>
+
+            <tui-textfield tuiChevron>
+                <label tuiLabel>Версия</label>
+                <input tuiSelect name="httpVersion" [ngModel]="httpVersion()" (ngModelChange)="httpVersion.set($event)" />
+                <tui-data-list-wrapper *tuiDropdown [items]="httpVersions" />
+            </tui-textfield>
+        </div>
+
+        <app-code-field label="Заголовки" name="headers" [rows]="5" [value]="headers()" (valueChange)="headers.set($event)" placeholder="Accept: */*" />
+
+        <div class="http__headers-actions">
+            <p class="app-hint">По одному заголовку на строку: <code>Name: value</code>. Служебные Content-Length и Transfer-Encoding игнорируются.</p>
+
+            <button
+                tuiButton
+                type="button"
+                size="s"
+                appearance="flat"
+                [tuiDropdown]="headerMenu"
+                tuiDropdownAlign="start"
+                [tuiDropdownOpen]="headerMenuOpen()"
+                (tuiDropdownOpenChange)="headerMenuOpen.set($event)"
+            >
+                Добавить заголовок
+            </button>
+        </div>
+
+        <ng-template #headerMenu>
+            <tui-data-list>
+                @for (preset of headerPresets; track preset) {
+                    <button tuiOption type="button" (click)="addHeader(preset)">{{ preset }}</button>
+                }
+            </tui-data-list>
+        </ng-template>
+
+        @if (headerError(); as error) {
+            <p class="http__header-error">{{ error }}</p>
+        }
+
+        <app-code-field label="Тело" name="body" [rows]="6" [value]="body()" (valueChange)="body.set($event)" />
+
+        <div class="http__checkboxes">
+            <label class="http__checkbox">
+                <input tuiCheckbox type="checkbox" name="base64" [ngModel]="base64Body()" (ngModelChange)="base64Body.set($event)" />
+                Тело в base64
+            </label>
+
+            <label class="http__checkbox">
+                <input tuiCheckbox type="checkbox" name="verifyTls" [ngModel]="verifyTls()" (ngModelChange)="verifyTls.set($event)" />
+                Проверять TLS-сертификат
+            </label>
+        </div>
+
+        @if (!verifyTls()) {
+            <p class="app-hint">Сертификат не проверяется — подходит только для тестовых стендов.</p>
+        }
+
+        <div class="app-actions">
+            <button tuiButton type="submit" size="s" [disabled]="loading() || null !== headerError()">Отправить</button>
+        </div>
+    </form>
+
+    <section tuiCardLarge="normal" appearance="floating" class="http__curl">
+        <h2 tuiTitle="m">cURL</h2>
+        <p class="app-hint">
+            Импорт заполняет метод, URL, заголовки и тело из команды. Поддерживаются распространённые флаги; shell-переменные и файлы не читаются.
+        </p>
+
+        <div class="http__curl-actions">
+            <button tuiButton type="button" size="s" appearance="flat" [class.http__curl-active]="'import' === curlMode()" (click)="toggleCurl('import')">
+                Импорт
+            </button>
+            <button tuiButton type="button" size="s" appearance="flat" [class.http__curl-active]="'export' === curlMode()" (click)="toggleCurl('export')">
+                Экспорт
+            </button>
+        </div>
+
+        @if ('import' === curlMode()) {
+            <app-code-field
+                label="Команда cURL"
+                name="curlImport"
+                [rows]="6"
+                [value]="curlInput()"
+                (valueChange)="curlInput.set($event)"
+                placeholder="curl --request POST 'https://api.example.com' --header 'Accept: application/json'"
+            />
+
+            @if (curlError(); as message) {
+                <p class="http__curl-error">{{ message }}</p>
+            }
+
+            <div class="app-actions">
+                <button tuiButton type="button" size="s" [disabled]="!curlInput().trim()" (click)="applyCurl()">Заполнить запрос</button>
+            </div>
+        } @else if ('export' === curlMode()) {
+            <app-code-block [code]="curlExport().command" />
+
+            <div class="app-actions">
+                <button tuiButton type="button" size="s" (click)="copyCurl()">{{ curlCopied() ? 'Скопировано' : 'Копировать' }}</button>
+            </div>
+        }
+
+        @if (curlWarnings().length) {
+            <ul class="http__curl-warnings">
+                @for (warning of curlWarnings(); track warning) {
+                    <li>{{ warning }}</li>
+                }
+            </ul>
+        }
+
+        @if ('export' === curlMode() && curlExport().warnings.length) {
+            <ul class="http__curl-warnings">
+                @for (warning of curlExport().warnings; track warning) {
+                    <li>{{ warning }}</li>
+                }
+            </ul>
+        }
+    </section>
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    }
+
+    @if (result(); as item) {
+        <section tuiCardLarge="normal" appearance="floating">
+            <div class="app-section-head">
+                <h2 tuiTitle="m">Ответ</h2>
+                <span [class]="'http__status ' + statusClass()">{{ item.status }} {{ item.statusText }}</span>
+            </div>
+
+            <dl class="app-meta">
+                <dt>Время</dt>
+                <dd>{{ item.time }} мс</dd>
+                <dt>Размер</dt>
+                <dd>
+                    {{ sizeLabel() }}
+                    @if (item.truncated) {
+                        , обрезано до 2 МБ
+                    }
+                </dd>
+                @if (item.httpVersion) {
+                    <dt>HTTP</dt>
+                    <dd>{{ item.httpVersion }}</dd>
+                }
+                @if (item.contentType) {
+                    <dt>Content-Type</dt>
+                    <dd>{{ item.contentType }}</dd>
+                }
+            </dl>
+
+            @if (item.location) {
+                <button tuiButton type="button" size="s" appearance="flat" (click)="follow(item.location)">Перейти по Location: {{ item.location }}</button>
+            }
+        </section>
+
+        <app-tool-result title="Заголовки ответа" [text]="responseHeaders()" filename="headers.txt">
+            <dl class="app-meta http__headers">
+                @for (header of item.headers; track header.name + header.value) {
+                    <dt>{{ header.name }}</dt>
+                    <dd>{{ header.value }}</dd>
+                }
+            </dl>
+        </app-tool-result>
+
+        @if (item.binary) {
+            <section tuiCardLarge="normal" appearance="floating">
+                <h2 tuiTitle="m">Тело ответа</h2>
+                <p class="app-hint">Бинарные данные, {{ sizeLabel() }}. В браузере не показываются.</p>
+                <button tuiButton type="button" size="s" (click)="downloadBinary()">Скачать</button>
+            </section>
+        } @else {
+            <app-tool-result title="Тело ответа" [text]="item.body ?? null" filename="body.txt">
+                <app-code-block [code]="item.body ?? ''" [language]="item.bodyLanguage ?? null" />
+            </app-tool-result>
+        }
+    }
+</section>

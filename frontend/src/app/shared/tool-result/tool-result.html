@@ -1,0 +1,20 @@
+<section tuiCardLarge="normal" appearance="floating" class="tool-result">
+    <div class="app-section-head">
+        <h2 tuiTitle="m">{{ title() }}</h2>
+
+        <div class="tool-result__actions">
+            <button tuiButton type="button" size="s" appearance="flat" [disabled]="!text()" (click)="copy()">
+                <tui-icon [icon]="copied() ? '@tui.check' : '@tui.copy'" />
+                {{ copied() ? 'Скопировано' : 'Копировать' }}
+            </button>
+            <button tuiButton type="button" size="s" appearance="flat" [disabled]="!text()" (click)="download()">
+                <tui-icon icon="@tui.download" />
+                Скачать
+            </button>
+        </div>
+    </div>
+
+    <div class="tool-result__body">
+        <ng-content />
+    </div>
+</section>

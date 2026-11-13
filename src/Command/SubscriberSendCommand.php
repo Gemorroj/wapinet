@@ -13,7 +13,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Scheduler\Attribute\AsPeriodicTask;
@@ -30,7 +30,10 @@ class SubscriberSendCommand extends Command
         private readonly EventRepository $eventRepository,
         private readonly MailerInterface $mailer,
         private readonly LoggerInterface $logger,
-        private readonly ParameterBagInterface $parameterBag,
+        #[Autowire('%wapinet_title%')]
+        private readonly string $siteTitle,
+        #[Autowire('%env(ROBOT_EMAIL)%')]
+        private readonly string $robotEmail,
     ) {
         parent::__construct();
     }
@@ -76,16 +79,13 @@ class SubscriberSendCommand extends Command
     protected function sendEmail(Event $event): void
     {
         try {
-            $siteTitle = $this->parameterBag->get('wapinet_title');
-            $robotEmail = $this->parameterBag->get('wapinet_robot_email');
-
             $variables = $event->getVariables();
             $variables['subject'] = $event->getSubject();
 
             $email = new TemplatedEmail()
-                ->from($robotEmail)
+                ->from($this->robotEmail)
                 ->to($event->getUser()->getEmail())
-                ->subject($siteTitle.' - '.$event->getSubject())
+                ->subject($this->siteTitle.' - '.$event->getSubject())
                 ->htmlTemplate('User/Subscriber/Email/'.$event->getTemplate().'.html.twig')
                 ->context($variables)
             ;

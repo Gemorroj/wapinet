@@ -1,0 +1,19 @@
+@if (open()) {
+    <tui-drawer class="app-filter-drawer" [overlay]="true" direction="end">
+        <header>
+            <div class="app-filter-drawer__header">
+                <h2 tuiTitle>{{ title() }}</h2>
+                <button tuiButton type="button" size="s" appearance="flat" (click)="closed.emit()">Закрыть</button>
+            </div>
+        </header>
+
+        <div class="app-filter-drawer__body">
+            <ng-content />
+        </div>
+
+        <footer class="app-filter-drawer__footer">
+            <button tuiButton size="s" type="button" (click)="applied.emit()">Применить</button>
+            <button tuiButton size="s" type="button" appearance="secondary" (click)="clear.emit()">Сбросить</button>
+        </footer>
+    </tui-drawer>
+}

@@ -1,0 +1,186 @@
+<section class="files app-page">
+    <h1 class="app-sr-only">Файлообменник</h1>
+    <app-breadcrumbs [items]="breadcrumbs" />
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+    @if (notice()) {
+        <div tuiNotification appearance="info">{{ notice() }}</div>
+    }
+    @if (isAdmin() && !hiddenFilter && (hiddenCount() ?? 0) > 0) {
+        <div tuiNotification appearance="warning">
+            Файлов на модерации: {{ hiddenCount() }}.
+            <a routerLink="/files/hidden">Открыть скрытые</a>
+        </div>
+    }
+    @if (hiddenFilter) {
+        <div tuiNotification appearance="info">Скрытые файлы. Опубликуйте те, которые прошли проверку.</div>
+    }
+
+    <div class="files__toolbar">
+        <tui-textfield class="files__search" tuiTextfieldSize="s">
+            <input tuiInput [(ngModel)]="q" maxlength="255" (keyup.enter)="search()" placeholder="Поиск файлов" aria-label="Поиск файлов" />
+            <button tuiButton type="button" size="s" appearance="flat" (click)="search()" aria-label="Найти">
+                <tui-icon icon="@tui.search" />
+            </button>
+        </tui-textfield>
+
+        <button tuiButton type="button" size="s" appearance="secondary" (click)="filtersOpen.set(true)" aria-label="Фильтры">
+            <tui-icon icon="@tui.sliders-horizontal" />
+            <span class="files__toolbar-label">Фильтры</span>
+            @if (activeFilterCount() > 0) {
+                <span tuiBadge size="s">{{ activeFilterCount() }}</span>
+            }
+        </button>
+
+        <a tuiButton size="s" routerLink="/files/upload" aria-label="Загрузить файл">
+            <tui-icon icon="@tui.upload" />
+            <span class="files__toolbar-label">Загрузить</span>
+        </a>
+    </div>
+
+    <app-filter-drawer [open]="filtersOpen()" (closed)="filtersOpen.set(false)" (applied)="applyFilters()" (clear)="resetFilters()">
+        <div class="files__filter-grid">
+            <tui-textfield>
+                <label tuiLabel>Категория</label>
+                <select tuiSelect [items]="categories" [ngModel]="categoryOption()" (ngModelChange)="setCategoryOption($event)"></select>
+            </tui-textfield>
+
+            <tui-textfield>
+                <label tuiLabel>Дата</label>
+                <select tuiSelect [items]="dates" [ngModel]="dateOption()" (ngModelChange)="setDateOption($event)"></select>
+            </tui-textfield>
+
+            <tui-textfield>
+                <label tuiLabel>Сортировка</label>
+                <select tuiSelect [items]="sorts" [ngModel]="sortOption()" (ngModelChange)="setSortOption($event)"></select>
+            </tui-textfield>
+        </div>
+
+        <tui-textfield tuiChevron>
+            <label tuiLabel>Тег</label>
+            <input
+                tuiComboBox
+                maxlength="255"
+                [strict]="false"
+                [ngModel]="tag"
+                (ngModelChange)="onTagChange($event)"
+                (input)="onTagInput($event)"
+                (focus)="onTagFocus()"
+                (keyup.enter)="applyFilters()"
+            />
+            <tui-data-list-wrapper *tuiDropdown [items]="tagSuggestions()" />
+        </tui-textfield>
+
+        <tui-textfield>
+            <label tuiLabel>Пользователь</label>
+            <input tuiInput maxlength="180" placeholder="Точное имя" [(ngModel)]="user" (keyup.enter)="applyFilters()" />
+        </tui-textfield>
+
+        <div class="files__filter-toggles">
+            <button tuiChip type="button" [appearance]="mine ? 'primary' : 'neutral'" (click)="toggleMine()">Мои файлы</button>
+            @if (isAdmin()) {
+                <button tuiChip type="button" [appearance]="hiddenFilter ? 'primary' : 'neutral'" (click)="toggleHidden()">Скрытые</button>
+            }
+        </div>
+    </app-filter-drawer>
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    }
+
+    <div class="app-list">
+        @for (file of items(); track file.id) {
+            <div tuiCell>
+                @if (file.thumbnailUrl) {
+                    <div tuiAvatar size="l" [round]="false">
+                        <img [src]="file.thumbnailUrl" [alt]="file.name" loading="lazy" />
+                    </div>
+                } @else {
+                    <div tuiAvatar size="l" [round]="false">
+                        <tui-icon [icon]="icon(file)" />
+                    </div>
+                }
+
+                <div tuiTitle>
+                    <a [routerLink]="['/files', file.id]">{{ file.name }}</a>
+                    @if (file.description) {
+                        <div tuiSubtitle>{{ file.description }}</div>
+                    }
+                    <div tuiSubtitle>
+                        {{ size(file.size) }}
+                        @if (metaNumber(file, 'width') !== null && metaNumber(file, 'height') !== null) {
+                            · {{ metaNumber(file, 'width') }}×{{ metaNumber(file, 'height') }}
+                        }
+                        @if (metaNumber(file, 'duration') !== null) {
+                            · {{ duration(metaNumber(file, 'duration')) }}
+                        }
+                        · {{ file.createdAt | relativeDate }}
+                        @if (file.user) {
+                            · {{ file.user.username }}
+                        }
+                    </div>
+                </div>
+
+                <div tuiAccessories class="files__accessories">
+                    @if (file.hidden) {
+                        <span tuiBadge appearance="warning">На модерации</span>
+                    }
+                    @if (file.hasPassword) {
+                        <span tuiBadge appearance="warning">Пароль</span>
+                    }
+
+                    <button tuiButton type="button" size="s" appearance="flat" (click)="download(file)" aria-label="Скачать" title="Скачать">
+                        <tui-icon icon="@tui.download" />
+                    </button>
+
+                    @if (auth.authenticated()) {
+                        <a tuiButton size="s" appearance="flat" [routerLink]="['/files', file.id, 'edit']" aria-label="Изменить" title="Изменить">
+                            <tui-icon icon="@tui.pencil" />
+                        </a>
+
+                        @if (isAdmin() && file.hidden) {
+                            <button tuiButton type="button" size="s" appearance="flat" (click)="publish(file)" aria-label="Опубликовать" title="Опубликовать">
+                                <tui-icon icon="@tui.eye" />
+                            </button>
+                        }
+
+                        @if (pendingDelete() === file.id) {
+                            <button tuiButton type="button" size="s" appearance="primary-destructive" (click)="confirmDelete(file)">Удалить</button>
+                            <button tuiButton type="button" size="s" appearance="secondary" (click)="pendingDelete.set(null)">Отмена</button>
+                        } @else {
+                            <button
+                                tuiButton
+                                type="button"
+                                size="s"
+                                appearance="flat-destructive"
+                                (click)="pendingDelete.set(file.id)"
+                                aria-label="Удалить"
+                                title="Удалить"
+                            >
+                                <tui-icon icon="@tui.trash" />
+                            </button>
+                        }
+                    }
+                </div>
+            </div>
+        } @empty {
+            @if (!loading()) {
+                <div tuiNotification>Файлов не найдено.</div>
+            }
+        }
+    </div>
+
+    <app-pagination [total]="total()" [perPage]="perPage" [page]="page()" (pageChange)="goToPage($event)" />
+
+    <nav class="files__subnav" aria-label="Разделы файлообменника">
+        <a routerLink="/files/tags">Теги</a>
+        <a routerLink="/files/categories">Категории</a>
+        <a routerLink="/files/statistic">Статистика</a>
+        <a routerLink="/files/information">Информация</a>
+        @if (isAdmin()) {
+            <a routerLink="/files/hidden">Скрытые</a>
+        }
+    </nav>
+</section>

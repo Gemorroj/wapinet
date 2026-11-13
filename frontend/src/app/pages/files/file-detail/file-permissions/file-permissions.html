@@ -1,0 +1,44 @@
+@if (permissions().length) {
+    <div class="file-permissions">
+        <div class="app-section-head">
+            <h2 tuiTitle="s">Права доступа</h2>
+            <span tuiBadge appearance="neutral">{{ permissions().length }}</span>
+        </div>
+
+        @if (risky().length) {
+            <ul class="file-permissions__list">
+                @for (permission of risky(); track permission.name) {
+                    <li class="file-permissions__permission">
+                        <div class="file-permissions__head">
+                            <code class="file-permissions__name">{{ permission.name }}</code>
+                            @if (permission.danger) {
+                                <span tuiBadge appearance="negative">Опасно</span>
+                            }
+                            @if (permission.warning) {
+                                <span tuiBadge appearance="warning">Внимание</span>
+                            }
+                            @if (permission.cost) {
+                                <span tuiBadge appearance="warning">Платно</span>
+                            }
+                        </div>
+                        @if (permission.description) {
+                            <p class="file-permissions__description">{{ permission.description }}</p>
+                        }
+                    </li>
+                }
+            </ul>
+        }
+
+        @if (other().length) {
+            <details class="file-permissions__details">
+                <summary>Остальные разрешения ({{ other().length }})</summary>
+
+                <ul class="file-permissions__compact">
+                    @for (permission of other(); track permission.name) {
+                        <li [attr.title]="permission.description || null">{{ permission.name }}</li>
+                    }
+                </ul>
+            </details>
+        }
+    </div>
+}

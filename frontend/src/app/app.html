@@ -1,0 +1,96 @@
+<tui-root>
+    <header class="app-header">
+        <div class="app-header-inner">
+            <a class="app-logo" routerLink="/">wapinet<span>.ru</span></a>
+
+            <nav class="app-nav" aria-label="Основная навигация">
+                @for (item of navItems; track item.link) {
+                    @if (item.external) {
+                        <a tuiLink [href]="item.link" target="_blank" rel="noopener noreferrer">{{ item.label }}</a>
+                    } @else {
+                        <a
+                            tuiLink
+                            [routerLink]="item.link"
+                            routerLinkActive="app-link_active"
+                            ariaCurrentWhenActive="page"
+                            [routerLinkActiveOptions]="{ exact: item.link === '/' }"
+                        >
+                            {{ item.label }}
+                        </a>
+                    }
+                }
+            </nav>
+
+            <nav class="app-user" aria-label="Учётная запись">
+                @if (auth.authenticated()) {
+                    @if (auth.user(); as user) {
+                        <a tuiLink [routerLink]="['/user/profile', user.username]">{{ user.username }}</a>
+                    }
+                    <button tuiButton size="s" appearance="secondary" type="button" (click)="logout()">Выйти</button>
+                } @else {
+                    <a tuiLink routerLink="/login">Войти</a>
+                    <a tuiLink routerLink="/registration">Регистрация</a>
+                }
+            </nav>
+
+            <button
+                tuiButton
+                size="s"
+                appearance="flat"
+                class="app-menu-button"
+                type="button"
+                aria-label="Меню"
+                [tuiDropdown]="menu"
+                tuiDropdownAlign="end"
+                [tuiDropdownOpen]="menuOpen()"
+                (tuiDropdownOpenChange)="menuOpen.set($event)"
+            >
+                <tui-icon icon="@tui.menu" />
+            </button>
+        </div>
+    </header>
+
+    <ng-template #menu>
+        <tui-data-list>
+            @for (item of navItems; track item.link) {
+                @if (item.external) {
+                    <a tuiOption [href]="item.link" target="_blank" rel="noopener noreferrer" (click)="closeMenu()">{{ item.label }}</a>
+                } @else {
+                    <a tuiOption [routerLink]="item.link" (click)="closeMenu()">{{ item.label }}</a>
+                }
+            }
+
+            @if (auth.authenticated()) {
+                @if (auth.user(); as user) {
+                    <a tuiOption [routerLink]="['/user/profile', user.username]" (click)="closeMenu()">{{ user.username }}</a>
+                }
+                <button tuiOption type="button" (click)="logout()">Выйти</button>
+            } @else {
+                <a tuiOption routerLink="/login" (click)="closeMenu()">Войти</a>
+                <a tuiOption routerLink="/registration" (click)="closeMenu()">Регистрация</a>
+            }
+        </tui-data-list>
+    </ng-template>
+
+    <main class="app-main">
+        <a class="app-ribbon" routerLink="/" aria-label="wapinet.ru">
+            <img src="/resources/georg_lent_200.png" alt="" width="200" height="35" />
+        </a>
+
+        <router-outlet />
+    </main>
+
+    <footer class="app-footer">
+        <div class="app-footer-inner">
+            <a tuiLink routerLink="/online">Онлайн: {{ stats()?.online ?? '—' }}</a>
+
+            <nav class="app-footer-links" aria-label="Дополнительно">
+                <a tuiLink routerLink="/about">О сайте</a>
+                <a tuiLink routerLink="/open-source">Open source</a>
+                <a tuiLink routerLink="/textbook">Учебники</a>
+                <a tuiLink routerLink="/video-courses">Видео-курсы</a>
+                <a tuiLink href="https://github.com/Gemorroj/wapinet" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </nav>
+        </div>
+    </footer>
+</tui-root>

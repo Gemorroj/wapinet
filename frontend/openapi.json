@@ -1,0 +1,4849 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Wapinet API",
+        "description": "REST API for the Wapinet SPA",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/archiver/create": {
+            "post": {
+                "operationId": "post_api_archiver_create",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ArchiveSourceRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Archive with the uploaded file",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ArchiveResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid file, unsupported link or limit exceeded"
+                    },
+                    "429": {
+                        "description": "Too many archiver requests"
+                    },
+                    "503": {
+                        "description": "Not enough free disk space"
+                    }
+                }
+            }
+        },
+        "/api/archiver/extract": {
+            "post": {
+                "operationId": "post_api_archiver_extract",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ArchiveSourceRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Archive with extracted files",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ArchiveResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unsupported archive, unsafe paths or limit exceeded"
+                    },
+                    "429": {
+                        "description": "Too many archiver requests"
+                    },
+                    "503": {
+                        "description": "Not enough free disk space"
+                    }
+                }
+            }
+        },
+        "/api/archiver/{archive}": {
+            "get": {
+                "operationId": "get_api_archiver_show",
+                "parameters": [
+                    {
+                        "name": "archive",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "archive[a-z0-9]{8,32}"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Archive contents",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ArchiveResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Archive not found or expired"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "delete_api_archiver_remove",
+                "parameters": [
+                    {
+                        "name": "archive",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "archive[a-z0-9]{8,32}"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Archive deleted"
+                    },
+                    "404": {
+                        "description": "Archive not found or expired"
+                    }
+                }
+            }
+        },
+        "/api/archiver/{archive}/files": {
+            "post": {
+                "operationId": "post_api_archiver_add",
+                "parameters": [
+                    {
+                        "name": "archive",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "archive[a-z0-9]{8,32}"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ArchiveSourceRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Archive contents after adding the file",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ArchiveResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Archive not found or expired"
+                    },
+                    "422": {
+                        "description": "Invalid file or limit exceeded"
+                    },
+                    "429": {
+                        "description": "Too many archiver requests"
+                    },
+                    "503": {
+                        "description": "Not enough free disk space"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "delete_api_archiver_delete",
+                "parameters": [
+                    {
+                        "name": "path",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "archive",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "archive[a-z0-9]{8,32}"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Archive contents after removing the entry",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ArchiveResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unsafe path"
+                    },
+                    "404": {
+                        "description": "Archive or entry not found"
+                    }
+                }
+            }
+        },
+        "/api/archiver/{archive}/download": {
+            "get": {
+                "operationId": "get_api_archiver_download",
+                "parameters": [
+                    {
+                        "name": "archive",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "archive[a-z0-9]{8,32}"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ZIP archive with all files",
+                        "content": {
+                            "application/zip": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Archive not found or expired"
+                    }
+                }
+            }
+        },
+        "/api/archiver/{archive}/file": {
+            "get": {
+                "operationId": "get_api_archiver_file",
+                "parameters": [
+                    {
+                        "name": "path",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "archive",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "archive[a-z0-9]{8,32}"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "One file from the archive",
+                        "content": {
+                            "application/octet-stream": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unsafe path"
+                    },
+                    "404": {
+                        "description": "Archive or entry not found"
+                    }
+                }
+            }
+        },
+        "/api/audio-tags": {
+            "post": {
+                "tags": ["Audio tags"],
+                "operationId": "post_api_audio_tags_create",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AudioTagsCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Uploaded audio file and its tags",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AudioTagsInfoResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid audio file, unsupported link or validation error"
+                    },
+                    "429": {
+                        "description": "Too many audio tag requests"
+                    }
+                }
+            }
+        },
+        "/api/audio-tags/{id}": {
+            "get": {
+                "tags": ["Audio tags"],
+                "operationId": "get_api_audio_tags_show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "[a-f0-9]{32}"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Audio file information and tags",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AudioTagsInfoResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "File not found or expired"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Audio tags"],
+                "operationId": "post_api_audio_tags_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "[a-f0-9]{32}"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AudioTagsUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated audio file information and tags",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AudioTagsInfoResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "File not found or expired"
+                    },
+                    "422": {
+                        "description": "Unsupported format or validation error"
+                    },
+                    "429": {
+                        "description": "Too many audio tag requests"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Audio tags"],
+                "operationId": "delete_api_audio_tags_delete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "[a-f0-9]{32}"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Temporary file removed"
+                    }
+                }
+            }
+        },
+        "/api/audio-tags/{id}/clear": {
+            "post": {
+                "tags": ["Audio tags"],
+                "operationId": "post_api_audio_tags_clear",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "[a-f0-9]{32}"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Audio file information after clearing all tags",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AudioTagsInfoResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "File not found or expired"
+                    },
+                    "422": {
+                        "description": "Unsupported format"
+                    },
+                    "429": {
+                        "description": "Too many audio tag requests"
+                    }
+                }
+            }
+        },
+        "/api/audio-tags/{id}/download": {
+            "get": {
+                "tags": ["Audio tags"],
+                "operationId": "get_api_audio_tags_download",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "[a-f0-9]{32}"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Audio file download",
+                        "content": {
+                            "application/octet-stream": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "File not found or expired"
+                    }
+                }
+            }
+        },
+        "/api/audio-tags/{id}/cover": {
+            "get": {
+                "tags": ["Audio tags"],
+                "operationId": "get_api_audio_tags_cover",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "[a-f0-9]{32}"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Embedded cover art",
+                        "content": {
+                            "image/*": {}
+                        }
+                    },
+                    "404": {
+                        "description": "Cover not found"
+                    }
+                }
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "Issues an API token for valid credentials.",
+                "operationId": "post_api_auth_login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Issued API token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TokenResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    },
+                    "429": {
+                        "description": "Too many login attempts"
+                    }
+                }
+            }
+        },
+        "/api/auth/logout": {
+            "post": {
+                "tags": ["Auth"],
+                "operationId": "post_api_auth_logout",
+                "responses": {
+                    "204": {
+                        "description": "Current token revoked"
+                    }
+                }
+            }
+        },
+        "/api/auth/tokens": {
+            "get": {
+                "tags": ["Auth"],
+                "operationId": "get_api_auth_tokens",
+                "responses": {
+                    "200": {
+                        "description": "Active API tokens of the current user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiTokenListResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/tokens/{id}": {
+            "delete": {
+                "tags": ["Auth"],
+                "operationId": "delete_api_auth_token_revoke",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Token revoked"
+                    },
+                    "403": {
+                        "description": "Access denied"
+                    },
+                    "404": {
+                        "description": "Token not found"
+                    }
+                }
+            }
+        },
+        "/api/auth/register": {
+            "post": {
+                "tags": ["Auth"],
+                "operationId": "post_api_auth_register",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Registered user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RegisterResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Captcha verification failed"
+                    },
+                    "422": {
+                        "description": "Validation error, username or email is already taken"
+                    },
+                    "429": {
+                        "description": "Too many registration attempts"
+                    }
+                }
+            }
+        },
+        "/api/bbcode/preview": {
+            "post": {
+                "tags": ["BBCode"],
+                "operationId": "post_api_bbcode_preview",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BbcodePreviewRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Rendered BBCode",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BbcodePreviewResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "429": {
+                        "description": "Too many preview requests"
+                    }
+                }
+            }
+        },
+        "/api/browser-info": {
+            "get": {
+                "operationId": "get_api_browser_info_show",
+                "parameters": [
+                    {
+                        "name": "webrtc",
+                        "in": "query",
+                        "description": "Comma-separated IP addresses discovered through WebRTC",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Information the server can see about the client request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BrowserInfoResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/config": {
+            "get": {
+                "tags": ["System"],
+                "operationId": "get_api_config",
+                "responses": {
+                    "200": {
+                        "description": "Public client configuration",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConfigResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/css-validator": {
+            "post": {
+                "operationId": "post_api_css_validator_validate",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CssValidatorRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "CSS validation result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidatorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "429": {
+                        "description": "Too many validation requests"
+                    },
+                    "502": {
+                        "description": "W3C validator is unavailable"
+                    }
+                }
+            }
+        },
+        "/api/files": {
+            "get": {
+                "tags": ["Files"],
+                "operationId": "get_api_files_list",
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "required": false,
+                        "style": "deepObject",
+                        "explode": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/FileFilterQuery",
+                            "default": {
+                                "q": null,
+                                "category": null,
+                                "date": "all",
+                                "tag": null,
+                                "user": null,
+                                "mine": false,
+                                "hidden": null
+                            }
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "exclusiveMinimum": 0
+                        }
+                    },
+                    {
+                        "name": "perPage",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 20,
+                            "maximum": 100,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "newest",
+                            "enum": ["newest", "oldest", "name", "views", "relevance"]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated list of files",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FileListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "Search is unavailable"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Files"],
+                "operationId": "post_api_files_create",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FileCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "File uploaded",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FileResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Captcha verification failed"
+                    },
+                    "409": {
+                        "description": "A file with identical content already exists"
+                    },
+                    "422": {
+                        "description": "Validation failed"
+                    },
+                    "429": {
+                        "description": "Too many uploads"
+                    },
+                    "503": {
+                        "description": "Captcha service is unavailable"
+                    }
+                }
+            }
+        },
+        "/api/files/statistics": {
+            "get": {
+                "tags": ["Files"],
+                "operationId": "get_api_files_statistics",
+                "responses": {
+                    "200": {
+                        "description": "File statistics",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FileStatisticsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/files/{id}": {
+            "get": {
+                "tags": ["Files"],
+                "operationId": "get_api_files_show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "File details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FileResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "File password required or invalid"
+                    },
+                    "404": {
+                        "description": "File not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Files"],
+                "operationId": "delete_api_files_delete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "File deleted"
+                    },
+                    "403": {
+                        "description": "Access denied"
+                    }
+                }
+            },
+            "patch": {
+                "tags": ["Files"],
+                "operationId": "patch_api_files_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FileUpdateRequest"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FileUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated file",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FileResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Access denied"
+                    },
+                    "409": {
+                        "description": "A file with identical content already exists"
+                    },
+                    "422": {
+                        "description": "Validation failed"
+                    }
+                }
+            }
+        },
+        "/api/files/{id}/download": {
+            "get": {
+                "tags": ["Files"],
+                "operationId": "get_api_files_download",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "File contents",
+                        "content": {
+                            "application/octet-stream": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "File password required or invalid"
+                    },
+                    "404": {
+                        "description": "File not found"
+                    }
+                }
+            }
+        },
+        "/api/files/{id}/archive": {
+            "get": {
+                "tags": ["Files"],
+                "operationId": "get_api_files_archive",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Archive entries",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ArchiveListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Archive password required or invalid"
+                    },
+                    "404": {
+                        "description": "File not found"
+                    },
+                    "422": {
+                        "description": "Unable to read the archive"
+                    }
+                }
+            }
+        },
+        "/api/files/{id}/archive/entry": {
+            "get": {
+                "tags": ["Files"],
+                "operationId": "get_api_files_archive_entry",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Archive entry contents",
+                        "content": {
+                            "application/octet-stream": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Archive password required or invalid"
+                    },
+                    "404": {
+                        "description": "Archive entry not found"
+                    },
+                    "422": {
+                        "description": "Unable to read the archive"
+                    }
+                }
+            }
+        },
+        "/api/gists": {
+            "get": {
+                "tags": ["Gists"],
+                "operationId": "get_api_gists_list",
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "required": false,
+                        "style": "deepObject",
+                        "explode": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/GistFilterQuery",
+                            "default": {
+                                "q": null,
+                                "user": null
+                            }
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "exclusiveMinimum": 0
+                        }
+                    },
+                    {
+                        "name": "perPage",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 20,
+                            "maximum": 100,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "newest",
+                            "enum": ["newest", "oldest", "relevance"]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated list of blog posts",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GistListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "Search engine is unavailable"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Gists"],
+                "operationId": "post_api_gists_create",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GistCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created blog post",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GistResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Spam detected"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "429": {
+                        "description": "Too many blog posts"
+                    }
+                }
+            }
+        },
+        "/api/gists/{id}": {
+            "get": {
+                "tags": ["Gists"],
+                "operationId": "get_api_gists_show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Blog post",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GistResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Blog post not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Gists"],
+                "operationId": "delete_api_gists_delete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Blog post deleted"
+                    },
+                    "403": {
+                        "description": "Access denied"
+                    },
+                    "404": {
+                        "description": "Blog post not found"
+                    }
+                }
+            },
+            "patch": {
+                "tags": ["Gists"],
+                "operationId": "patch_api_gists_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GistUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated blog post",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GistResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Access denied"
+                    },
+                    "404": {
+                        "description": "Blog post not found"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/guestbook": {
+            "get": {
+                "tags": ["Guestbook"],
+                "operationId": "get_api_guestbook_list",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated guestbook messages",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GuestbookListResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Guestbook"],
+                "operationId": "post_api_guestbook_create",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GuestbookCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created guestbook message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GuestbookMessageResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Captcha or spam verification failed"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "429": {
+                        "description": "Too many messages"
+                    }
+                }
+            }
+        },
+        "/api/guestbook/{id}/insight": {
+            "get": {
+                "tags": ["Guestbook"],
+                "operationId": "get_api_guestbook_insight",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "IP insight for an anonymous guestbook message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IpInsightResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Message not found or message has an author"
+                    },
+                    "429": {
+                        "description": "Too many insight requests"
+                    }
+                }
+            }
+        },
+        "/api/hash": {
+            "post": {
+                "operationId": "post_api_hash_compute",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/HashRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Hashes of the remote file",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HashResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error or blocked URL"
+                    },
+                    "429": {
+                        "description": "Too many hash requests"
+                    },
+                    "502": {
+                        "description": "The remote file is unavailable"
+                    }
+                }
+            }
+        },
+        "/api/health": {
+            "get": {
+                "tags": ["System"],
+                "operationId": "get_api_health",
+                "responses": {
+                    "200": {
+                        "description": "Service status",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "ok"
+                                        },
+                                        "symfony": {
+                                            "type": "string",
+                                            "example": "8.1.10"
+                                        },
+                                        "time": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "Database unavailable"
+                    }
+                }
+            }
+        },
+        "/api/home": {
+            "get": {
+                "tags": ["Home"],
+                "operationId": "get_api_home_show",
+                "responses": {
+                    "200": {
+                        "description": "Home page counters",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HomeResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/html-validator": {
+            "post": {
+                "operationId": "post_api_html_validator_validate",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ValidatorRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "HTML validation result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidatorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "429": {
+                        "description": "Too many validation requests"
+                    },
+                    "502": {
+                        "description": "W3C validator is unavailable"
+                    }
+                }
+            }
+        },
+        "/api/http": {
+            "post": {
+                "operationId": "post_api_http_send",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/HttpCallRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Executed HTTP request and received response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HttpCallResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error or blocked destination"
+                    },
+                    "429": {
+                        "description": "Too many HTTP requests"
+                    }
+                }
+            }
+        },
+        "/api/me": {
+            "get": {
+                "tags": ["Auth"],
+                "operationId": "get_api_me",
+                "responses": {
+                    "200": {
+                        "description": "Current user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/news": {
+            "get": {
+                "tags": ["News"],
+                "operationId": "get_api_news_list",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated news",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NewsListResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/news/{id}": {
+            "get": {
+                "tags": ["News"],
+                "operationId": "get_api_news_show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "\\d+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "News item",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NewsResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "News not found"
+                    }
+                }
+            }
+        },
+        "/api/online": {
+            "get": {
+                "tags": ["Online"],
+                "operationId": "get_api_online_list",
+                "responses": {
+                    "200": {
+                        "description": "Current online sessions",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OnlineListResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/php-obfuscator": {
+            "get": {
+                "operationId": "get_api_php_obfuscator_info",
+                "responses": {
+                    "200": {
+                        "description": "Supported PHP version and maximum code size",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ObfuscatorInfoResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_api_php_obfuscator_obfuscate",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ObfuscatorRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Obfuscated PHP code",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ObfuscatorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "PHP syntax error or validation error"
+                    },
+                    "429": {
+                        "description": "Too many obfuscation requests"
+                    },
+                    "502": {
+                        "description": "Obfuscated code could not be verified"
+                    }
+                }
+            }
+        },
+        "/api/php-validator": {
+            "get": {
+                "operationId": "get_api_php_validator_info",
+                "responses": {
+                    "200": {
+                        "description": "Supported PHP version",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PhpValidatorInfoResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_api_php_validator_validate",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ValidatorRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "PHP syntax check result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidatorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "429": {
+                        "description": "Too many validation requests"
+                    },
+                    "502": {
+                        "description": "PHP CLI is unavailable"
+                    }
+                }
+            }
+        },
+        "/api/tags": {
+            "get": {
+                "tags": ["Tags"],
+                "operationId": "get_api_tags_list",
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "required": false,
+                        "style": "deepObject",
+                        "explode": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/TagFilterQuery",
+                            "default": {
+                                "q": null
+                            }
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "exclusiveMinimum": 0
+                        }
+                    },
+                    {
+                        "name": "perPage",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 50,
+                            "maximum": 100,
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated list of tags",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TagListResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": ["Users"],
+                "operationId": "get_api_users_list",
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "required": false,
+                        "style": "deepObject",
+                        "explode": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/UserFilterQuery",
+                            "default": {
+                                "search": null
+                            }
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "exclusiveMinimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Users online or found by search",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "Search engine is unavailable"
+                    }
+                }
+            }
+        },
+        "/api/users/events": {
+            "get": {
+                "tags": ["Users"],
+                "operationId": "get_api_users_events",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Events of the current user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EventListResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/subscriber": {
+            "get": {
+                "tags": ["Users"],
+                "operationId": "get_api_users_subscriber",
+                "responses": {
+                    "200": {
+                        "description": "E-mail subscription settings of the current user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SubscriberResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Users"],
+                "operationId": "put_api_users_subscriber_update",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SubscriberUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated subscription settings",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SubscriberResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/profile": {
+            "put": {
+                "tags": ["Users"],
+                "operationId": "put_api_users_profile_update",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProfileUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated profile of the current user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserProfileResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/users/{username}/friends": {
+            "get": {
+                "tags": ["Users"],
+                "operationId": "get_api_users_friends",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "[^/]+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Friends of the user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Users"],
+                "operationId": "post_api_users_friends_add",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "[^/]+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Friend added"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "409": {
+                        "description": "User is already a friend"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Users"],
+                "operationId": "delete_api_users_friends_delete",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "[^/]+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Friend removed"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "409": {
+                        "description": "User is not a friend"
+                    }
+                }
+            }
+        },
+        "/api/users/{username}": {
+            "get": {
+                "tags": ["Users"],
+                "operationId": "get_api_users_show",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "[^/]+"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User profile",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserProfileResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/api/whois": {
+            "post": {
+                "operationId": "post_api_whois_lookup",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WhoisRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "WHOIS/RDAP lookup result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WhoisResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "429": {
+                        "description": "Too many lookup requests"
+                    },
+                    "502": {
+                        "description": "WHOIS/RDAP service is unavailable"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ArchiveSourceRequest": {
+                "properties": {
+                    "files": {
+                        "type": ["array", "null"],
+                        "items": {
+                            "type": "string",
+                            "format": "binary"
+                        },
+                        "default": [],
+                        "maxItems": 20
+                    },
+                    "url": {
+                        "type": ["string", "null"],
+                        "format": "uri",
+                        "default": null
+                    }
+                },
+                "type": "object"
+            },
+            "AudioTagsCreateRequest": {
+                "properties": {
+                    "files": {
+                        "type": ["array", "null"],
+                        "items": {
+                            "type": "string",
+                            "format": "binary"
+                        },
+                        "default": [],
+                        "maxItems": 1
+                    },
+                    "url": {
+                        "type": ["string", "null"],
+                        "format": "uri",
+                        "default": null
+                    }
+                },
+                "type": "object"
+            },
+            "AudioTagsUpdateRequest": {
+                "properties": {
+                    "title": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 255
+                    },
+                    "albumArtist": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 255
+                    },
+                    "artist": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 255
+                    },
+                    "album": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 255
+                    },
+                    "year": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 32
+                    },
+                    "trackNumber": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 32
+                    },
+                    "urlUser": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 255
+                    },
+                    "genre": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 255
+                    },
+                    "comment": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 10000
+                    },
+                    "composer": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 255
+                    },
+                    "discNumber": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 32
+                    },
+                    "copyright": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 255
+                    },
+                    "lyrics": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 20000
+                    },
+                    "bpm": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 16
+                    },
+                    "isrc": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 32
+                    },
+                    "removeOtherTags": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "removePicture": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "picture": {
+                        "type": ["string", "null"],
+                        "format": "binary",
+                        "default": null
+                    },
+                    "pictureUrl": {
+                        "type": ["string", "null"],
+                        "format": "uri",
+                        "default": null
+                    }
+                },
+                "type": "object"
+            },
+            "RegisterRequest": {
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "default": "",
+                        "maxLength": 180,
+                        "minLength": 3
+                    },
+                    "email": {
+                        "type": "string",
+                        "default": "",
+                        "maxLength": 180
+                    },
+                    "password": {
+                        "type": "string",
+                        "default": "",
+                        "maxLength": 4096,
+                        "minLength": 6
+                    },
+                    "captchaToken": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 4096
+                    }
+                },
+                "type": "object"
+            },
+            "BbcodePreviewRequest": {
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "default": "",
+                        "maxLength": 100000
+                    }
+                },
+                "type": "object"
+            },
+            "ProfileType": {
+                "type": "string",
+                "enum": ["none", "css1", "css2", "css21", "css3", "svg", "svgbasic", "svgtiny", "mobile", "atsc-tv", "tv"]
+            },
+            "WarningType": {
+                "type": "string",
+                "enum": ["2", "1", "0", "no"]
+            },
+            "CssValidatorRequest": {
+                "properties": {
+                    "code": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 262144
+                    },
+                    "url": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 2048
+                    },
+                    "profile": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/ProfileType"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "default": null
+                    },
+                    "warnings": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/WarningType"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "default": null
+                    }
+                },
+                "type": "object"
+            },
+            "FileFilterQuery": {
+                "properties": {
+                    "q": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 255
+                    },
+                    "category": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "enum": ["video", "audio", "image", "text", "office", "archive", "android", "java", "windows", "playlist", "torrent", "other"]
+                    },
+                    "date": {
+                        "type": "string",
+                        "default": "all",
+                        "enum": ["all", "today", "yesterday"]
+                    },
+                    "tag": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 255
+                    },
+                    "user": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 180
+                    },
+                    "mine": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "hidden": {
+                        "type": ["boolean", "null"],
+                        "default": null
+                    }
+                },
+                "type": "object"
+            },
+            "FileListQuery": {
+                "properties": {
+                    "filter": {
+                        "$ref": "#/components/schemas/FileFilterQuery",
+                        "default": {
+                            "q": null,
+                            "category": null,
+                            "date": "all",
+                            "tag": null,
+                            "user": null,
+                            "mine": false,
+                            "hidden": null
+                        }
+                    },
+                    "page": {
+                        "type": "integer",
+                        "default": 1,
+                        "exclusiveMinimum": 0
+                    },
+                    "perPage": {
+                        "type": "integer",
+                        "default": 20,
+                        "maximum": 100,
+                        "minimum": 1
+                    },
+                    "sort": {
+                        "type": "string",
+                        "default": "newest",
+                        "enum": ["newest", "oldest", "name", "views", "relevance"]
+                    }
+                },
+                "type": "object"
+            },
+            "FileCreateRequest": {
+                "properties": {
+                    "file": {
+                        "type": ["string", "null"],
+                        "format": "binary",
+                        "default": null
+                    },
+                    "url": {
+                        "type": ["string", "null"],
+                        "format": "uri",
+                        "default": null
+                    },
+                    "description": {
+                        "type": "string",
+                        "default": "",
+                        "maxLength": 5000
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "default": [],
+                        "maxItems": 30
+                    },
+                    "password": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 100
+                    },
+                    "captchaToken": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 4096
+                    }
+                },
+                "type": "object"
+            },
+            "FileUpdateRequest": {
+                "properties": {
+                    "description": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 5000
+                    },
+                    "tags": {
+                        "type": ["array", "null"],
+                        "items": {
+                            "type": "string"
+                        },
+                        "default": null,
+                        "maxItems": 30
+                    },
+                    "password": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 100
+                    },
+                    "file": {
+                        "type": ["string", "null"],
+                        "format": "binary",
+                        "default": null
+                    },
+                    "url": {
+                        "type": ["string", "null"],
+                        "format": "uri",
+                        "default": null
+                    },
+                    "hidden": {
+                        "type": ["boolean", "null"],
+                        "default": null
+                    }
+                },
+                "type": "object"
+            },
+            "GistFilterQuery": {
+                "properties": {
+                    "q": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 5000
+                    },
+                    "user": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 180
+                    }
+                },
+                "type": "object"
+            },
+            "GistListQuery": {
+                "properties": {
+                    "filter": {
+                        "$ref": "#/components/schemas/GistFilterQuery",
+                        "default": {
+                            "q": null,
+                            "user": null
+                        }
+                    },
+                    "page": {
+                        "type": "integer",
+                        "default": 1,
+                        "exclusiveMinimum": 0
+                    },
+                    "perPage": {
+                        "type": "integer",
+                        "default": 20,
+                        "maximum": 100,
+                        "minimum": 1
+                    },
+                    "sort": {
+                        "type": "string",
+                        "default": "newest",
+                        "enum": ["newest", "oldest", "relevance"]
+                    }
+                },
+                "type": "object"
+            },
+            "GistCreateRequest": {
+                "properties": {
+                    "subject": {
+                        "type": "string",
+                        "default": "",
+                        "maxLength": 5000,
+                        "minLength": 1
+                    },
+                    "body": {
+                        "type": "string",
+                        "default": "",
+                        "maxLength": 5000,
+                        "minLength": 1
+                    },
+                    "bCheck": {
+                        "type": ["string", "null"],
+                        "default": null
+                    }
+                },
+                "type": "object"
+            },
+            "GistUpdateRequest": {
+                "properties": {
+                    "subject": {
+                        "type": "string",
+                        "default": "",
+                        "maxLength": 5000,
+                        "minLength": 1
+                    },
+                    "body": {
+                        "type": "string",
+                        "default": "",
+                        "maxLength": 5000,
+                        "minLength": 1
+                    }
+                },
+                "type": "object"
+            },
+            "GuestbookCreateRequest": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "default": "",
+                        "maxLength": 5000,
+                        "minLength": 1
+                    },
+                    "captchaToken": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 4096
+                    },
+                    "bCheck": {
+                        "type": ["string", "null"],
+                        "default": null
+                    }
+                },
+                "type": "object"
+            },
+            "HashRequest": {
+                "required": ["url", "algorithms"],
+                "properties": {
+                    "url": {
+                        "type": "string",
+                        "maxLength": 2048
+                    },
+                    "algorithms": {
+                        "type": "array",
+                        "items": {
+                            "enum": [
+                                "md5",
+                                "sha1",
+                                "sha224",
+                                "sha256",
+                                "sha384",
+                                "sha512",
+                                "sha512-224",
+                                "sha512-256",
+                                "sha3-224",
+                                "sha3-256",
+                                "sha3-384",
+                                "sha3-512",
+                                "ripemd160",
+                                "crc32",
+                                "crc32c"
+                            ]
+                        },
+                        "maxItems": 15,
+                        "minItems": 1
+                    }
+                },
+                "type": "object"
+            },
+            "ValidatorRequest": {
+                "properties": {
+                    "code": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 262144
+                    },
+                    "url": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 2048
+                    }
+                },
+                "type": "object"
+            },
+            "HttpCallRequest": {
+                "properties": {
+                    "url": {
+                        "type": "string",
+                        "default": "",
+                        "maxLength": 2048
+                    },
+                    "method": {
+                        "type": "string",
+                        "default": "GET",
+                        "maxLength": 32
+                    },
+                    "headers": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 16384
+                    },
+                    "body": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 1048576
+                    },
+                    "bodyEncoding": {
+                        "type": "string",
+                        "default": "text",
+                        "enum": ["text", "base64"]
+                    },
+                    "timeout": {
+                        "type": "integer",
+                        "default": 10,
+                        "maximum": 30,
+                        "minimum": 1
+                    },
+                    "httpVersion": {
+                        "type": "string",
+                        "default": "auto",
+                        "enum": ["auto", "1.1", "2", "3"]
+                    },
+                    "verifyTls": {
+                        "type": "boolean",
+                        "default": true
+                    }
+                },
+                "type": "object"
+            },
+            "ObfuscatorLevel": {
+                "type": "string",
+                "enum": ["light", "normal", "max"]
+            },
+            "ObfuscatorRequest": {
+                "properties": {
+                    "code": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 262144
+                    },
+                    "url": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 2048
+                    },
+                    "removeComments": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "level": {
+                        "$ref": "#/components/schemas/ObfuscatorLevel",
+                        "default": "max"
+                    }
+                },
+                "type": "object"
+            },
+            "TagFilterQuery": {
+                "properties": {
+                    "q": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 255
+                    }
+                },
+                "type": "object"
+            },
+            "TagListQuery": {
+                "properties": {
+                    "filter": {
+                        "$ref": "#/components/schemas/TagFilterQuery",
+                        "default": {
+                            "q": null
+                        }
+                    },
+                    "page": {
+                        "type": "integer",
+                        "default": 1,
+                        "exclusiveMinimum": 0
+                    },
+                    "perPage": {
+                        "type": "integer",
+                        "default": 50,
+                        "maximum": 100,
+                        "minimum": 1
+                    }
+                },
+                "type": "object"
+            },
+            "UserFilterQuery": {
+                "properties": {
+                    "search": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 180
+                    }
+                },
+                "type": "object"
+            },
+            "UserListQuery": {
+                "properties": {
+                    "filter": {
+                        "$ref": "#/components/schemas/UserFilterQuery",
+                        "default": {
+                            "search": null
+                        }
+                    },
+                    "page": {
+                        "type": "integer",
+                        "default": 1,
+                        "exclusiveMinimum": 0
+                    }
+                },
+                "type": "object"
+            },
+            "SubscriberUpdateRequest": {
+                "properties": {
+                    "emailNews": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "emailFriends": {
+                        "type": "boolean",
+                        "default": false
+                    }
+                },
+                "type": "object"
+            },
+            "ProfileUpdateRequest": {
+                "properties": {
+                    "sex": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "enum": ["m", "f"]
+                    },
+                    "birthday": {
+                        "type": ["string", "null"],
+                        "default": null
+                    },
+                    "timezone": {
+                        "type": ["string", "null"],
+                        "default": null
+                    },
+                    "country": {
+                        "type": ["string", "null"],
+                        "default": null
+                    },
+                    "vk": {
+                        "type": ["string", "null"],
+                        "pattern": "[a-z0-9_]*",
+                        "default": null,
+                        "maxLength": 255
+                    },
+                    "info": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 5000
+                    }
+                },
+                "type": "object"
+            },
+            "WhoisRequest": {
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "default": "",
+                        "maxLength": 255
+                    },
+                    "protocol": {
+                        "type": "string",
+                        "default": "auto",
+                        "enum": ["auto", "rdap", "whois"]
+                    }
+                },
+                "type": "object"
+            },
+            "ArchiveEntryResponse": {
+                "required": ["path", "size", "isDirectory", "isEncrypted"],
+                "properties": {
+                    "path": {
+                        "type": "string"
+                    },
+                    "size": {
+                        "type": "integer"
+                    },
+                    "isDirectory": {
+                        "type": "boolean"
+                    },
+                    "isEncrypted": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "ArchiveResponse": {
+                "required": ["archive", "items", "size"],
+                "properties": {
+                    "archive": {
+                        "type": "string"
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ArchiveEntryResponse"
+                        }
+                    },
+                    "size": {
+                        "type": "integer"
+                    },
+                    "format": {
+                        "type": ["string", "null"],
+                        "default": null
+                    },
+                    "sourceSize": {
+                        "type": ["integer", "null"],
+                        "default": null
+                    }
+                },
+                "type": "object"
+            },
+            "AudioTagsTagsResponse": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "default": ""
+                    },
+                    "albumArtist": {
+                        "type": "string",
+                        "default": ""
+                    },
+                    "artist": {
+                        "type": "string",
+                        "default": ""
+                    },
+                    "album": {
+                        "type": "string",
+                        "default": ""
+                    },
+                    "year": {
+                        "type": "string",
+                        "default": ""
+                    },
+                    "trackNumber": {
+                        "type": "string",
+                        "default": ""
+                    },
+                    "urlUser": {
+                        "type": "string",
+                        "default": ""
+                    },
+                    "genre": {
+                        "type": "string",
+                        "default": ""
+                    },
+                    "comment": {
+                        "type": "string",
+                        "default": ""
+                    },
+                    "composer": {
+                        "type": "string",
+                        "default": ""
+                    },
+                    "discNumber": {
+                        "type": "string",
+                        "default": ""
+                    },
+                    "copyright": {
+                        "type": "string",
+                        "default": ""
+                    },
+                    "lyrics": {
+                        "type": "string",
+                        "default": ""
+                    },
+                    "bpm": {
+                        "type": "string",
+                        "default": ""
+                    },
+                    "isrc": {
+                        "type": "string",
+                        "default": ""
+                    },
+                    "hasPicture": {
+                        "type": "boolean",
+                        "default": false
+                    }
+                },
+                "type": "object"
+            },
+            "AudioTagsOtherTagResponse": {
+                "required": ["name", "value"],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "AudioTagsInfoResponse": {
+                "required": ["id", "originalName", "size", "format", "tagFormats", "tags", "otherTags", "canWrite"],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "originalName": {
+                        "type": "string"
+                    },
+                    "size": {
+                        "type": "integer"
+                    },
+                    "duration": {
+                        "type": ["number", "null"],
+                        "format": "float"
+                    },
+                    "format": {
+                        "type": "string"
+                    },
+                    "bitrate": {
+                        "type": ["integer", "null"]
+                    },
+                    "bitrateMode": {
+                        "type": ["string", "null"]
+                    },
+                    "sampleRate": {
+                        "type": ["integer", "null"]
+                    },
+                    "channelMode": {
+                        "type": ["string", "null"]
+                    },
+                    "tagFormats": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "tags": {
+                        "$ref": "#/components/schemas/AudioTagsTagsResponse"
+                    },
+                    "otherTags": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AudioTagsOtherTagResponse"
+                        }
+                    },
+                    "canWrite": {
+                        "type": "boolean"
+                    },
+                    "readOnlyReason": {
+                        "type": ["string", "null"]
+                    }
+                },
+                "type": "object"
+            },
+            "LoginRequest": {
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "default": "",
+                        "maxLength": 180
+                    },
+                    "password": {
+                        "type": "string",
+                        "default": "",
+                        "maxLength": 4096
+                    },
+                    "deviceName": {
+                        "type": ["string", "null"],
+                        "default": null,
+                        "maxLength": 100
+                    }
+                },
+                "type": "object"
+            },
+            "UserResponse": {
+                "required": ["id", "username", "email", "roles"],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "TokenResponse": {
+                "required": ["token", "expiresAt", "user"],
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    },
+                    "expiresAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/UserResponse"
+                    }
+                },
+                "type": "object"
+            },
+            "ApiTokenResponse": {
+                "required": ["id", "name", "createdAt", "expiresAt", "current"],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "expiresAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastUsedAt": {
+                        "type": ["string", "null"],
+                        "format": "date-time"
+                    },
+                    "current": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "ApiTokenListResponse": {
+                "required": ["items"],
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ApiTokenResponse"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "RegisterResponse": {
+                "required": ["username"],
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "BbcodePreviewResponse": {
+                "required": ["html"],
+                "properties": {
+                    "html": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "BrowserGeoDatabase": {
+                "required": ["type", "buildDate"],
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "buildDate": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "BrowserGeoInfo": {
+                "required": ["inEuropeanUnion"],
+                "properties": {
+                    "continent": {
+                        "type": ["string", "null"]
+                    },
+                    "continentCode": {
+                        "type": ["string", "null"]
+                    },
+                    "country": {
+                        "type": ["string", "null"]
+                    },
+                    "countryCode": {
+                        "type": ["string", "null"]
+                    },
+                    "region": {
+                        "type": ["string", "null"]
+                    },
+                    "city": {
+                        "type": ["string", "null"]
+                    },
+                    "postalCode": {
+                        "type": ["string", "null"]
+                    },
+                    "latitude": {
+                        "type": ["number", "null"],
+                        "format": "float"
+                    },
+                    "longitude": {
+                        "type": ["number", "null"],
+                        "format": "float"
+                    },
+                    "accuracyRadius": {
+                        "type": ["integer", "null"]
+                    },
+                    "timezone": {
+                        "type": ["string", "null"]
+                    },
+                    "registeredCountry": {
+                        "type": ["string", "null"]
+                    },
+                    "registeredCountryCode": {
+                        "type": ["string", "null"]
+                    },
+                    "inEuropeanUnion": {
+                        "type": "boolean"
+                    },
+                    "network": {
+                        "type": ["string", "null"]
+                    }
+                },
+                "type": "object"
+            },
+            "BrowserIpReputation": {
+                "required": ["appears", "torExit"],
+                "properties": {
+                    "appears": {
+                        "type": "boolean"
+                    },
+                    "confidence": {
+                        "type": ["number", "null"],
+                        "format": "float"
+                    },
+                    "frequency": {
+                        "type": ["number", "null"],
+                        "format": "float"
+                    },
+                    "lastSeen": {
+                        "type": ["string", "null"]
+                    },
+                    "torExit": {
+                        "type": "boolean"
+                    },
+                    "country": {
+                        "type": ["string", "null"]
+                    },
+                    "asn": {
+                        "type": ["integer", "null"]
+                    },
+                    "delegated": {
+                        "type": ["string", "null"]
+                    }
+                },
+                "type": "object"
+            },
+            "IpInsightResponse": {
+                "required": ["ip"],
+                "properties": {
+                    "ip": {
+                        "type": "string"
+                    },
+                    "geo": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/BrowserGeoInfo"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "reputation": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/BrowserIpReputation"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "ptr": {
+                        "type": ["string", "null"]
+                    },
+                    "asn": {
+                        "type": ["integer", "null"]
+                    },
+                    "network": {
+                        "type": ["string", "null"]
+                    },
+                    "organization": {
+                        "type": ["string", "null"]
+                    },
+                    "kind": {
+                        "type": ["string", "null"]
+                    },
+                    "dnsProvider": {
+                        "type": "string",
+                        "default": ""
+                    }
+                },
+                "type": "object"
+            },
+            "BrowserIpGeo": {
+                "required": ["ip"],
+                "properties": {
+                    "ip": {
+                        "type": "string"
+                    },
+                    "geo": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/BrowserGeoInfo"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object"
+            },
+            "BrowserVpnInfo": {
+                "required": ["suspicious", "torExit", "proxyHeaders", "countryMismatch", "blacklisted", "signals"],
+                "properties": {
+                    "suspicious": {
+                        "type": "boolean"
+                    },
+                    "torExit": {
+                        "type": "boolean"
+                    },
+                    "proxyHeaders": {
+                        "type": "boolean"
+                    },
+                    "countryMismatch": {
+                        "type": "boolean"
+                    },
+                    "blacklisted": {
+                        "type": "boolean"
+                    },
+                    "signals": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "BrowserInfoResponse": {
+                "required": ["method", "uri", "https", "proxyGeo", "webrtcGeo", "vpn", "headers"],
+                "properties": {
+                    "ip": {
+                        "type": ["string", "null"]
+                    },
+                    "ipHost": {
+                        "type": ["string", "null"]
+                    },
+                    "proxy": {
+                        "type": ["string", "null"]
+                    },
+                    "proxyHost": {
+                        "type": ["string", "null"]
+                    },
+                    "phoneNumber": {
+                        "type": ["string", "null"]
+                    },
+                    "userAgent": {
+                        "type": ["string", "null"]
+                    },
+                    "remotePort": {
+                        "type": ["string", "null"]
+                    },
+                    "remoteUser": {
+                        "type": ["string", "null"]
+                    },
+                    "referer": {
+                        "type": ["string", "null"]
+                    },
+                    "encoding": {
+                        "type": ["string", "null"]
+                    },
+                    "cache": {
+                        "type": ["string", "null"]
+                    },
+                    "connection": {
+                        "type": ["string", "null"]
+                    },
+                    "via": {
+                        "type": ["string", "null"]
+                    },
+                    "httpProtocol": {
+                        "type": ["string", "null"]
+                    },
+                    "accept": {
+                        "type": ["string", "null"]
+                    },
+                    "language": {
+                        "type": ["string", "null"]
+                    },
+                    "charset": {
+                        "type": ["string", "null"]
+                    },
+                    "dnt": {
+                        "type": ["string", "null"]
+                    },
+                    "method": {
+                        "type": "string"
+                    },
+                    "uri": {
+                        "type": "string"
+                    },
+                    "serverName": {
+                        "type": ["string", "null"]
+                    },
+                    "serverPort": {
+                        "type": ["string", "null"]
+                    },
+                    "https": {
+                        "type": "boolean"
+                    },
+                    "geoDatabase": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/BrowserGeoDatabase"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "insight": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/IpInsightResponse"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "proxyGeo": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BrowserIpGeo"
+                        }
+                    },
+                    "webrtcGeo": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BrowserIpGeo"
+                        }
+                    },
+                    "vpn": {
+                        "$ref": "#/components/schemas/BrowserVpnInfo"
+                    },
+                    "headers": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "CaptchaConfigResponse": {
+                "required": ["enabled", "siteKey"],
+                "properties": {
+                    "enabled": {
+                        "type": "boolean"
+                    },
+                    "siteKey": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "CountryResponse": {
+                "required": ["code", "name"],
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "TimezoneResponse": {
+                "required": ["id", "name"],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ConfigResponse": {
+                "required": ["captcha", "countries", "timezones"],
+                "properties": {
+                    "captcha": {
+                        "$ref": "#/components/schemas/CaptchaConfigResponse"
+                    },
+                    "countries": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CountryResponse"
+                        }
+                    },
+                    "timezones": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TimezoneResponse"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "ValidatorMessageResponse": {
+                "required": ["severity", "message"],
+                "properties": {
+                    "severity": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": ["string", "null"]
+                    },
+                    "line": {
+                        "type": ["integer", "null"]
+                    },
+                    "column": {
+                        "type": ["integer", "null"]
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "extract": {
+                        "type": ["string", "null"]
+                    }
+                },
+                "type": "object"
+            },
+            "ValidatorResponse": {
+                "required": ["valid", "messages"],
+                "properties": {
+                    "valid": {
+                        "type": "boolean"
+                    },
+                    "messages": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ValidatorMessageResponse"
+                        }
+                    },
+                    "source": {
+                        "type": ["string", "null"],
+                        "default": null
+                    },
+                    "documentType": {
+                        "type": ["string", "null"],
+                        "default": null
+                    },
+                    "encoding": {
+                        "type": ["string", "null"],
+                        "default": null
+                    },
+                    "profile": {
+                        "type": ["string", "null"],
+                        "default": null
+                    },
+                    "phpVersion": {
+                        "type": ["string", "null"],
+                        "default": null
+                    }
+                },
+                "type": "object"
+            },
+            "UserSummary": {
+                "required": ["id", "username"],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "username": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "FileListItem": {
+                "required": ["id", "name", "description", "size", "mimeType", "category", "createdAt", "hasPassword", "hidden", "url"],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "size": {
+                        "type": "integer"
+                    },
+                    "mimeType": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "user": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/UserSummary"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "hasPassword": {
+                        "type": "boolean"
+                    },
+                    "hidden": {
+                        "type": "boolean"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "thumbnailUrl": {
+                        "type": ["string", "null"]
+                    },
+                    "meta": {
+                        "oneOf": [
+                            {
+                                "type": "array",
+                                "items": {}
+                            },
+                            {
+                                "type": "object",
+                                "additionalProperties": {}
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object"
+            },
+            "FileListResponse": {
+                "required": ["items", "total", "page", "perPage"],
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FileListItem"
+                        }
+                    },
+                    "total": {
+                        "type": "integer"
+                    },
+                    "page": {
+                        "type": "integer"
+                    },
+                    "perPage": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "FileLinks": {
+                "required": ["url", "downloadUrl"],
+                "properties": {
+                    "url": {
+                        "type": "string"
+                    },
+                    "downloadUrl": {
+                        "type": "string"
+                    },
+                    "thumbnailUrl": {
+                        "type": ["string", "null"]
+                    },
+                    "convertedUrl": {
+                        "type": ["string", "null"]
+                    },
+                    "convertedFormat": {
+                        "type": ["string", "null"]
+                    }
+                },
+                "type": "object"
+            },
+            "FileNavigation": {
+                "properties": {
+                    "prevId": {
+                        "type": ["integer", "null"]
+                    },
+                    "nextId": {
+                        "type": ["integer", "null"]
+                    }
+                },
+                "type": "object"
+            },
+            "PlaylistEntry": {
+                "required": ["title", "path"],
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "TorrentEntry": {
+                "required": ["path", "size"],
+                "properties": {
+                    "path": {
+                        "type": "string"
+                    },
+                    "size": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "FilePermission": {
+                "required": ["name", "description", "danger", "warning", "cost"],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "danger": {
+                        "type": "boolean"
+                    },
+                    "warning": {
+                        "type": "boolean"
+                    },
+                    "cost": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "FileContent": {
+                "required": ["playableAudio", "playableVideo", "conversionPending", "playlist", "torrent", "permissions"],
+                "properties": {
+                    "playableAudio": {
+                        "type": "boolean"
+                    },
+                    "playableVideo": {
+                        "type": "boolean"
+                    },
+                    "conversionPending": {
+                        "type": "boolean"
+                    },
+                    "playlist": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PlaylistEntry"
+                        }
+                    },
+                    "torrent": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TorrentEntry"
+                        }
+                    },
+                    "permissions": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FilePermission"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "FileResponse": {
+                "required": [
+                    "id",
+                    "name",
+                    "description",
+                    "descriptionHtml",
+                    "size",
+                    "mimeType",
+                    "category",
+                    "createdAt",
+                    "countViews",
+                    "hasPassword",
+                    "hidden",
+                    "hash",
+                    "tags",
+                    "canEdit",
+                    "canDelete",
+                    "links",
+                    "navigation",
+                    "content"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "descriptionHtml": {
+                        "type": "string"
+                    },
+                    "size": {
+                        "type": "integer"
+                    },
+                    "mimeType": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": ["string", "null"],
+                        "format": "date-time"
+                    },
+                    "lastViewAt": {
+                        "type": ["string", "null"],
+                        "format": "date-time"
+                    },
+                    "countViews": {
+                        "type": "integer"
+                    },
+                    "user": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/UserSummary"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "hasPassword": {
+                        "type": "boolean"
+                    },
+                    "hidden": {
+                        "type": "boolean"
+                    },
+                    "hash": {
+                        "type": "string"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "meta": {
+                        "type": ["object", "null"],
+                        "additionalProperties": {}
+                    },
+                    "canEdit": {
+                        "type": "boolean"
+                    },
+                    "canDelete": {
+                        "type": "boolean"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/FileLinks"
+                    },
+                    "navigation": {
+                        "$ref": "#/components/schemas/FileNavigation"
+                    },
+                    "content": {
+                        "$ref": "#/components/schemas/FileContent"
+                    }
+                },
+                "type": "object"
+            },
+            "FileStatisticsUser": {
+                "required": ["username", "uploads"],
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "uploads": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "FileStatisticsResponse": {
+                "required": ["countFiles", "sizeFiles", "countViews", "users", "categories"],
+                "properties": {
+                    "countFiles": {
+                        "type": "integer"
+                    },
+                    "sizeFiles": {
+                        "type": "integer"
+                    },
+                    "countViews": {
+                        "type": "integer"
+                    },
+                    "users": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FileStatisticsUser"
+                        }
+                    },
+                    "categories": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "ArchiveListResponse": {
+                "required": ["items"],
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ArchiveEntryResponse"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "GistListItem": {
+                "required": ["id", "subject", "createdAt", "avatarUrl", "isOnline", "canEdit", "canDelete"],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "subject": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": ["string", "null"],
+                        "format": "date-time"
+                    },
+                    "user": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/UserSummary"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "avatarUrl": {
+                        "type": "string"
+                    },
+                    "isOnline": {
+                        "type": "boolean"
+                    },
+                    "canEdit": {
+                        "type": "boolean"
+                    },
+                    "canDelete": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "GistListResponse": {
+                "required": ["items", "total", "page", "perPage"],
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/GistListItem"
+                        }
+                    },
+                    "total": {
+                        "type": "integer"
+                    },
+                    "page": {
+                        "type": "integer"
+                    },
+                    "perPage": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "GistResponse": {
+                "required": ["id", "subject", "body", "bodyHtml", "createdAt", "avatarUrl", "isOnline", "canEdit", "canDelete"],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "subject": {
+                        "type": "string"
+                    },
+                    "body": {
+                        "type": "string"
+                    },
+                    "bodyHtml": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": ["string", "null"],
+                        "format": "date-time"
+                    },
+                    "user": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/UserSummary"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "avatarUrl": {
+                        "type": "string"
+                    },
+                    "isOnline": {
+                        "type": "boolean"
+                    },
+                    "canEdit": {
+                        "type": "boolean"
+                    },
+                    "canDelete": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "GuestbookMessageResponse": {
+                "required": ["id", "message", "messageHtml", "createdAt", "avatarUrl", "isOnline"],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "messageHtml": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "user": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/UserSummary"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "avatarUrl": {
+                        "type": "string"
+                    },
+                    "isOnline": {
+                        "type": "boolean"
+                    },
+                    "ip": {
+                        "type": ["string", "null"]
+                    },
+                    "browser": {
+                        "type": ["string", "null"]
+                    },
+                    "countryCode": {
+                        "type": ["string", "null"]
+                    },
+                    "countryName": {
+                        "type": ["string", "null"]
+                    }
+                },
+                "type": "object"
+            },
+            "GuestbookListResponse": {
+                "required": ["items", "total", "page", "perPage"],
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/GuestbookMessageResponse"
+                        }
+                    },
+                    "total": {
+                        "type": "integer"
+                    },
+                    "page": {
+                        "type": "integer"
+                    },
+                    "perPage": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "HashResponse": {
+                "required": ["hashes"],
+                "properties": {
+                    "hashes": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "HomeResponse": {
+                "required": ["files", "gists", "guestbook", "online"],
+                "properties": {
+                    "files": {
+                        "type": "integer"
+                    },
+                    "gists": {
+                        "type": "integer"
+                    },
+                    "guestbook": {
+                        "type": "integer"
+                    },
+                    "online": {
+                        "type": "integer"
+                    },
+                    "newsLastDate": {
+                        "type": ["string", "null"],
+                        "format": "date-time"
+                    },
+                    "forumTopics": {
+                        "type": ["integer", "null"]
+                    },
+                    "forumPosts": {
+                        "type": ["integer", "null"]
+                    }
+                },
+                "type": "object"
+            },
+            "HttpCallHeader": {
+                "required": ["name", "value"],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "HttpCallResponse": {
+                "required": ["status", "statusText", "url", "time", "size", "truncated", "binary", "headers"],
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "statusText": {
+                        "type": "string"
+                    },
+                    "httpVersion": {
+                        "type": ["string", "null"]
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "type": ["string", "null"]
+                    },
+                    "time": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "size": {
+                        "type": "integer"
+                    },
+                    "truncated": {
+                        "type": "boolean"
+                    },
+                    "contentType": {
+                        "type": ["string", "null"]
+                    },
+                    "bodyLanguage": {
+                        "type": ["string", "null"]
+                    },
+                    "binary": {
+                        "type": "boolean"
+                    },
+                    "body": {
+                        "type": ["string", "null"]
+                    },
+                    "bodyBase64": {
+                        "type": ["string", "null"]
+                    },
+                    "headers": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/HttpCallHeader"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "NewsListItemResponse": {
+                "required": ["id", "subject", "createdAt"],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "subject": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": ["string", "null"],
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "NewsListResponse": {
+                "required": ["items", "total", "page", "perPage"],
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/NewsListItemResponse"
+                        }
+                    },
+                    "total": {
+                        "type": "integer"
+                    },
+                    "page": {
+                        "type": "integer"
+                    },
+                    "perPage": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "NewsResponse": {
+                "required": ["id", "subject", "body", "bodyHtml", "createdAt"],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "subject": {
+                        "type": "string"
+                    },
+                    "body": {
+                        "type": "string"
+                    },
+                    "bodyHtml": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": ["string", "null"],
+                        "format": "date-time"
+                    },
+                    "createdBy": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/UserSummary"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object"
+            },
+            "OnlineItemResponse": {
+                "required": ["id", "datetime", "browser"],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "datetime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "browser": {
+                        "type": "string"
+                    },
+                    "ip": {
+                        "type": ["string", "null"]
+                    },
+                    "path": {
+                        "type": ["string", "null"]
+                    }
+                },
+                "type": "object"
+            },
+            "OnlineListResponse": {
+                "required": ["items", "count"],
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/OnlineItemResponse"
+                        }
+                    },
+                    "count": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "ObfuscatorInfoResponse": {
+                "required": ["phpVersion", "maxCodeSize"],
+                "properties": {
+                    "phpVersion": {
+                        "type": "string"
+                    },
+                    "maxCodeSize": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "ObfuscatorResponse": {
+                "required": ["code", "sourceSize", "resultSize"],
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "sourceSize": {
+                        "type": "integer"
+                    },
+                    "resultSize": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "PhpValidatorInfoResponse": {
+                "required": ["phpVersion"],
+                "properties": {
+                    "phpVersion": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "TagListItem": {
+                "required": ["id", "name", "count"],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "count": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "TagListResponse": {
+                "required": ["items", "total", "page", "perPage"],
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TagListItem"
+                        }
+                    },
+                    "total": {
+                        "type": "integer"
+                    },
+                    "page": {
+                        "type": "integer"
+                    },
+                    "perPage": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "UserListItem": {
+                "required": ["id", "username", "avatarUrl", "isOnline"],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "avatarUrl": {
+                        "type": "string"
+                    },
+                    "isOnline": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "UserListResponse": {
+                "required": ["items", "total", "page", "perPage"],
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserListItem"
+                        }
+                    },
+                    "total": {
+                        "type": "integer"
+                    },
+                    "page": {
+                        "type": "integer"
+                    },
+                    "perPage": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "EventResponse": {
+                "required": ["id", "createdAt", "subject", "template"],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "subject": {
+                        "type": "string"
+                    },
+                    "template": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": ["string", "null"]
+                    }
+                },
+                "type": "object"
+            },
+            "EventListResponse": {
+                "required": ["items", "total", "page", "perPage"],
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/EventResponse"
+                        }
+                    },
+                    "total": {
+                        "type": "integer"
+                    },
+                    "page": {
+                        "type": "integer"
+                    },
+                    "perPage": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "SubscriberResponse": {
+                "required": ["emailNews", "emailFriends"],
+                "properties": {
+                    "emailNews": {
+                        "type": "boolean"
+                    },
+                    "emailFriends": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "UserCounters": {
+                "required": ["files", "gists", "friends"],
+                "properties": {
+                    "files": {
+                        "type": "integer"
+                    },
+                    "gists": {
+                        "type": "integer"
+                    },
+                    "friends": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "VkProfile": {
+                "required": ["id", "name", "photoUrl", "isOnline"],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "photoUrl": {
+                        "type": "string"
+                    },
+                    "isOnline": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "UserProfileResponse": {
+                "required": ["id", "username", "avatarUrl", "isOnline", "createdAt", "isFriend", "canEdit", "counters"],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "avatarUrl": {
+                        "type": "string"
+                    },
+                    "isOnline": {
+                        "type": "boolean"
+                    },
+                    "sex": {
+                        "type": ["string", "null"]
+                    },
+                    "birthday": {
+                        "type": ["string", "null"]
+                    },
+                    "country": {
+                        "type": ["string", "null"]
+                    },
+                    "countryName": {
+                        "type": ["string", "null"]
+                    },
+                    "timezone": {
+                        "type": ["string", "null"]
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastActivity": {
+                        "type": ["string", "null"],
+                        "format": "date-time"
+                    },
+                    "vk": {
+                        "type": ["string", "null"]
+                    },
+                    "info": {
+                        "type": ["string", "null"]
+                    },
+                    "infoHtml": {
+                        "type": ["string", "null"]
+                    },
+                    "isFriend": {
+                        "type": "boolean"
+                    },
+                    "canEdit": {
+                        "type": "boolean"
+                    },
+                    "counters": {
+                        "$ref": "#/components/schemas/UserCounters"
+                    },
+                    "vkProfile": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/VkProfile"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object"
+            },
+            "WhoisField": {
+                "required": ["label", "value"],
+                "properties": {
+                    "label": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "WhoisEvent": {
+                "required": ["action", "date"],
+                "properties": {
+                    "action": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "WhoisContact": {
+                "required": ["role"],
+                "properties": {
+                    "role": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": ["string", "null"]
+                    },
+                    "organization": {
+                        "type": ["string", "null"]
+                    },
+                    "email": {
+                        "type": ["string", "null"]
+                    }
+                },
+                "type": "object"
+            },
+            "WhoisDnsRecord": {
+                "required": ["type", "value"],
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "WhoisIpInfo": {
+                "required": ["ip"],
+                "properties": {
+                    "ip": {
+                        "type": "string"
+                    },
+                    "hostname": {
+                        "type": ["string", "null"]
+                    },
+                    "geo": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/BrowserGeoInfo"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object"
+            },
+            "WhoisHostInfo": {
+                "required": ["hostname", "ips", "confirmed"],
+                "properties": {
+                    "hostname": {
+                        "type": "string"
+                    },
+                    "ips": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "confirmed": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "WhoisDnsInfo": {
+                "required": ["records", "ips", "hosts"],
+                "properties": {
+                    "records": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/WhoisDnsRecord"
+                        }
+                    },
+                    "ips": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/WhoisIpInfo"
+                        }
+                    },
+                    "hosts": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/WhoisHostInfo"
+                        }
+                    },
+                    "provider": {
+                        "type": "string",
+                        "default": ""
+                    }
+                },
+                "type": "object"
+            },
+            "WhoisResponse": {
+                "required": ["query", "kind", "protocol", "server", "raw", "details", "statuses", "events", "nameservers", "contacts", "dns"],
+                "properties": {
+                    "query": {
+                        "type": "string"
+                    },
+                    "kind": {
+                        "type": "string"
+                    },
+                    "protocol": {
+                        "type": "string"
+                    },
+                    "server": {
+                        "type": "string"
+                    },
+                    "raw": {
+                        "type": "string"
+                    },
+                    "details": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/WhoisField"
+                        }
+                    },
+                    "statuses": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "events": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/WhoisEvent"
+                        }
+                    },
+                    "nameservers": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "contacts": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/WhoisContact"
+                        }
+                    },
+                    "dns": {
+                        "$ref": "#/components/schemas/WhoisDnsInfo"
+                    },
+                    "insight": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/IpInsightResponse"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Audio tags"
+        },
+        {
+            "name": "Auth"
+        },
+        {
+            "name": "BBCode"
+        },
+        {
+            "name": "System"
+        },
+        {
+            "name": "Files"
+        },
+        {
+            "name": "Gists"
+        },
+        {
+            "name": "Guestbook"
+        },
+        {
+            "name": "Home"
+        },
+        {
+            "name": "News"
+        },
+        {
+            "name": "Online"
+        },
+        {
+            "name": "Tags"
+        },
+        {
+            "name": "Users"
+        }
+    ]
+}

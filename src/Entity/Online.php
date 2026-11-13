@@ -15,8 +15,8 @@ class Online
     #[ORM\Column(type: 'integer', nullable: false)]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'datetime', nullable: false)]
-    private ?\DateTime $datetime = null;
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
+    private \DateTimeImmutable $datetime;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $ip = '';
@@ -26,6 +26,11 @@ class Online
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $path = '';
+
+    public function __construct()
+    {
+        $this->datetime = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -51,14 +56,14 @@ class Online
         return $this;
     }
 
-    public function setDatetime(\DateTime $datetime): self
+    public function setDatetime(\DateTimeImmutable $datetime): self
     {
         $this->datetime = $datetime;
 
         return $this;
     }
 
-    public function getDatetime(): \DateTime
+    public function getDatetime(): \DateTimeImmutable
     {
         return $this->datetime;
     }

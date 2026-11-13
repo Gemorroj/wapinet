@@ -1,0 +1,22 @@
+.about__content {
+    display: grid;
+    gap: 1rem;
+    max-inline-size: 48rem;
+}
+
+.about__content p {
+    margin: 0;
+}
+
+.about__logos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.about__logos img {
+    max-block-size: 2.5rem;
+    max-inline-size: 8rem;
+    object-fit: contain;
+}

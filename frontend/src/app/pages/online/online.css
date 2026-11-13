@@ -1,0 +1,4 @@
+.online__actions span {
+    color: var(--tui-text-secondary);
+    font-size: 0.875rem;
+}

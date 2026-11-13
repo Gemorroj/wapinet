@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Dto\Api\File\FileListQuery;
 use App\Entity\File;
 use App\Entity\Tag;
 use App\Entity\User;
+use App\Enum\FileCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
@@ -20,13 +22,21 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  * @method File[]    findAll()
  * @method File[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-final class FileRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
+class FileRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, File::class);
     }
 
+    /**
+     * @return array{
+     *     count_files: int|string,
+     *     size_files: int|string|null,
+     *     count_views: int|string|null,
+     *     users: list<array{username: string, uploads: int|string}>
+     * }
+     */
     public function getStatistic(int $maxUsers = 10): array
     {
         $em = $this->getEntityManager();
@@ -37,7 +47,7 @@ final class FileRepository extends ServiceEntityRepository implements PasswordUp
         $users = $em->createQuery('
             SELECT u.username, COUNT(f.id) AS uploads
             FROM App\Entity\File f
-            INNER JOIN App\Entity\User u WITH f.user = u
+            INNER JOIN App\Entity\User u ON f.user = u
             WHERE u.enabled = 1
             GROUP BY u.id
             ORDER BY uploads DESC
@@ -112,7 +122,7 @@ final class FileRepository extends ServiceEntityRepository implements PasswordUp
         $queryBuilder = $this->createQueryBuilder('f')
             ->where('f.password IS NULL')
             ->andWhere('f.hidden = 0')
-            ->orderBy('f.id', 'DESC');
+            ->orderBy('f.id', \SortDirection::Descending);
 
         if ($datetimeStart) {
             $queryBuilder->andWhere('f.createdAt > :date_start');
@@ -132,7 +142,7 @@ final class FileRepository extends ServiceEntityRepository implements PasswordUp
     {
         $queryBuilder = $this->createQueryBuilder('f')
             ->andWhere('f.hidden = 1')
-            ->orderBy('f.id', 'DESC');
+            ->orderBy('f.id', \SortDirection::Descending);
 
         return $queryBuilder->getQuery();
     }
@@ -147,7 +157,7 @@ final class FileRepository extends ServiceEntityRepository implements PasswordUp
             ->andWhere('f.password IS NULL')
             ->andWhere('f.hidden = 0')
             ->setParameter('id', $id)
-            ->orderBy('f.id', 'ASC')
+            ->orderBy('f.id', \SortDirection::Ascending)
             ->setMaxResults(1);
 
         $this->addCategoryMime($queryBuilder, $category);
@@ -165,7 +175,7 @@ final class FileRepository extends ServiceEntityRepository implements PasswordUp
             ->andWhere('f.password IS NULL')
             ->andWhere('f.hidden = 0')
             ->setParameter('id', $id)
-            ->orderBy('f.id', 'DESC')
+            ->orderBy('f.id', \SortDirection::Descending)
             ->setMaxResults(1);
 
         $this->addCategoryMime($queryBuilder, $category);
@@ -173,133 +183,16 @@ final class FileRepository extends ServiceEntityRepository implements PasswordUp
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 
-    private function addCategoryMime(QueryBuilder $qb, ?string $mimeType): void
+    private function addCategoryMime(QueryBuilder $qb, ?string $category): void
     {
-        switch ($mimeType) {
-            case 'video':
-                $qb->andWhere('f.mimeType LIKE :video OR f.mimeType IN(:flash, :flv, :a3gpp, :a3gppencrypted, :axrn3gppamr, :axrn3gppamrencrypted, :axrn3gppamrwb, :axrn3gppamrwbencrypted, :a3gpp2, :awmv)');
-                $qb->setParameter('video', 'video/%');
-                $qb->setParameter('flash', 'application/x-flash-video');
-                $qb->setParameter('flv', 'flv-application/octet-stream');
-                $qb->setParameter('a3gpp', 'audio/3gpp');
-                $qb->setParameter('a3gppencrypted', 'audio/3gpp-encrypted');
-                $qb->setParameter('axrn3gppamr', 'audio/x-rn-3gpp-amr');
-                $qb->setParameter('axrn3gppamrencrypted', 'audio/x-rn-3gpp-amr-encrypted');
-                $qb->setParameter('axrn3gppamrwb', 'audio/x-rn-3gpp-amr-wb');
-                $qb->setParameter('axrn3gppamrwbencrypted', 'audio/x-rn-3gpp-amr-wb-encrypted');
-                $qb->setParameter('a3gpp2', 'audio/3gpp2');
-                $qb->setParameter('awmv', 'audio/x-ms-wmv');
-                break;
-            case 'audio':
-                $qb->andWhere('f.mimeType LIKE :audio OR f.mimeType IN(:flash)');
-                $qb->setParameter('audio', 'audio/%');
-                $qb->setParameter('flash', 'application/x-flash-audio');
-                break;
-            case 'image':
-                $qb->andWhere('f.mimeType LIKE :image OR f.mimeType IN(:postscript, :illustrator, :adobeillustrator)');
-                $qb->setParameter('image', 'image/%');
-                $qb->setParameter('postscript', 'application/postscript');
-                $qb->setParameter('illustrator', 'application/illustrator');
-                $qb->setParameter('adobeillustrator', 'application/vnd.adobe.illustrator');
-                break;
-            case 'text':
-                $qb->andWhere('f.mimeType LIKE :text OR f.mimeType IN(:axml, :txml, :json, :xphp, :xhttpdphp, :xpython, :xpython3, :csv, :perl, :sql, :xsql, :yaml, :xsh, :xshellscript)');
-                $qb->setParameter('text', 'text/%');
-                $qb->setParameter('axml', 'application/xml');
-                $qb->setParameter('txml', 'text/xml');
-                $qb->setParameter('json', 'application/json');
-                $qb->setParameter('xphp', 'application/x-php');
-                $qb->setParameter('xhttpdphp', 'application/x-httpd-php');
-                $qb->setParameter('xpython', 'text/x-python');
-                $qb->setParameter('xpython3', 'text/x-python3');
-                $qb->setParameter('csv', 'application/csv');
-                $qb->setParameter('perl', 'application/x-perl');
-                $qb->setParameter('sql', 'application/sql');
-                $qb->setParameter('xsql', 'application/x-sql');
-                $qb->setParameter('yaml', 'application/x-yaml');
-                $qb->setParameter('xsh', 'application/x-sh');
-                $qb->setParameter('xshellscript', 'application/x-shellscript');
-                break;
-            case 'office':
-                $qb->andWhere('f.mimeType IN(:pdf, :acrobat, :nappdf, :xpdf, :ipdf, :msword, :vndmsword, :xmsword, :zzwinassocdoc, :docx, :vndmsexcel, :msexcel, :xmsexcel, :zzwinassocxls, :xlsx, :artf, :trtf, :vndmspowerpoint, :mspowerpoint, :powerpoint, :xmspowerpoint, :pptx, :xmsaccess, :mdb, :msaccess, :vndmsaccess1, :vndmsaccess2, :xmdb, :zzwinassocmdb)');
-                $qb->setParameter('pdf', 'application/pdf');
-                $qb->setParameter('acrobat', 'application/acrobat');
-                $qb->setParameter('nappdf', 'application/nappdf');
-                $qb->setParameter('xpdf', 'application/x-pdf');
-                $qb->setParameter('ipdf', 'image/pdf');
-                $qb->setParameter('msword', 'application/msword');
-                $qb->setParameter('vndmsword', 'application/vnd.ms-word');
-                $qb->setParameter('xmsword', 'application/x-msword');
-                $qb->setParameter('zzwinassocdoc', 'zz-application/zz-winassoc-doc');
-                $qb->setParameter('docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-                $qb->setParameter('vndmsexcel', 'application/vnd.ms-excel');
-                $qb->setParameter('msexcel', 'application/msexcel');
-                $qb->setParameter('xmsexcel', 'application/x-msexcel');
-                $qb->setParameter('zzwinassocxls', 'zz-application/zz-winassoc-xls');
-                $qb->setParameter('xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-                $qb->setParameter('artf', 'application/rtf');
-                $qb->setParameter('trtf', 'text/rtf');
-                $qb->setParameter('vndmspowerpoint', 'application/vnd.ms-powerpoint');
-                $qb->setParameter('mspowerpoint', 'application/mspowerpoint');
-                $qb->setParameter('powerpoint', 'application/powerpoint');
-                $qb->setParameter('xmspowerpoint', 'application/x-mspowerpoint');
-                $qb->setParameter('pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation');
-                $qb->setParameter('xmsaccess', 'application/x-msaccess');
-                $qb->setParameter('mdb', 'application/mdb');
-                $qb->setParameter('msaccess', 'application/msaccess');
-                $qb->setParameter('vndmsaccess1', 'application/vnd.ms-access');
-                $qb->setParameter('vndmsaccess2', 'application/vnd.msaccess');
-                $qb->setParameter('xmdb', 'application/x-mdb');
-                $qb->setParameter('zzwinassocmdb', 'zz-application/zz-winassoc-mdb');
-                break;
-            case 'archive':
-                $qb->andWhere('f.fileName NOT LIKE \'%.apk\'');
-                $qb->andWhere('f.mimeType IN(:zip, :xzip, :xzipcompressed, :xrarcompressed, :xrar, :vndrar, :xbzip, :xbzip2, :xbz2, :p7z, :mscab, :zzcab, :tar, :xgzip, :gzip, :xace, :xacecompressed, :xlha, :xlzhcompressed, :iso1, :iso2, :iso3, :iso4, :iso5, :iso6, :iso7, :iso8, :iso9, :iso10)');
-                $qb->setParameter('zip', 'application/zip'); // zip
-                $qb->setParameter('xzip', 'application/x-zip'); // zip
-                $qb->setParameter('xzipcompressed', 'application/x-zip-compressed'); // zip
-                $qb->setParameter('xrarcompressed', 'application/x-rar-compressed'); // rar
-                $qb->setParameter('xrar', 'application/x-rar'); // rar
-                $qb->setParameter('vndrar', 'application/vnd.rar'); // rar
-                $qb->setParameter('xbzip', 'application/x-bzip'); // bz
-                $qb->setParameter('xbzip2', 'application/x-bzip2'); // bz2
-                $qb->setParameter('xbz2', 'application/x-bz2'); // bz2
-                $qb->setParameter('p7z', 'application/x-7z-compressed'); // 7z
-                $qb->setParameter('mscab', 'application/vnd.ms-cab-compressed'); // cab
-                $qb->setParameter('zzcab', 'zz-application/zz-winassoc-cab'); // cab
-                $qb->setParameter('tar', 'application/x-tar');
-                $qb->setParameter('xgzip', 'application/x-gzip'); // gz
-                $qb->setParameter('gzip', 'application/gzip'); // gz
-                $qb->setParameter('xace', 'application/x-ace'); // ace
-                $qb->setParameter('xacecompressed', 'application/x-ace-compressed'); // ace
-                $qb->setParameter('xlha', 'application/x-lha'); // lzh
-                $qb->setParameter('xlzhcompressed', 'application/x-lzh-compressed'); // lzh
-                $qb->setParameter('iso1', 'application/x-cd-image');
-                $qb->setParameter('iso2', 'application/x-gamecube-iso-image');
-                $qb->setParameter('iso3', 'application/x-gamecube-rom');
-                $qb->setParameter('iso4', 'application/x-iso9660-image');
-                $qb->setParameter('iso5', 'application/x-saturn-rom');
-                $qb->setParameter('iso6', 'application/x-sega-cd-rom');
-                $qb->setParameter('iso7', 'application/x-wbfs');
-                $qb->setParameter('iso8', 'application/x-wia');
-                $qb->setParameter('iso9', 'application/x-wii-iso-image');
-                $qb->setParameter('iso10', 'application/x-wii-rom');
-                break;
-            case 'android':
-                $qb->andWhere('f.mimeType = :android OR (f.mimeType IN(:java, :zip, :xzip, :xzipcompressed) AND f.fileName LIKE \'%.apk\')');
-                $qb->setParameter('android', 'application/vnd.android.package-archive');
-                $qb->setParameter('java', 'application/java-archive'); // jar
-                $qb->setParameter('zip', 'application/zip'); // zip
-                $qb->setParameter('xzip', 'application/x-zip'); // zip
-                $qb->setParameter('xzipcompressed', 'application/x-zip-compressed'); // zip
-                break;
-            case 'java':
-                $qb->andWhere('f.fileName NOT LIKE \'%.apk\'');
-                $qb->andWhere('f.mimeType IN(:java, :xjava, :jar)');
-                $qb->setParameter('java', 'application/java-archive');
-                $qb->setParameter('xjava', 'application/x-java-archive');
-                $qb->setParameter('jar', 'application/x-jar');
-                break;
+        if (null === $category) {
+            return;
+        }
+
+        $parsed = FileCategory::tryFrom($category);
+
+        if (null !== $parsed) {
+            FileCategoryFilter::apply($qb, $parsed);
         }
     }
 
@@ -313,7 +206,7 @@ final class FileRepository extends ServiceEntityRepository implements PasswordUp
             ->andWhere('f.password IS NULL')
             ->andWhere('f.hidden = 0')
 
-            ->orderBy('f.id', 'DESC')
+            ->orderBy('f.id', \SortDirection::Descending)
         ;
 
         return $queryBuilder->getQuery();
@@ -329,14 +222,122 @@ final class FileRepository extends ServiceEntityRepository implements PasswordUp
             ->andWhere('f.password IS NULL')
             ->andWhere('f.hidden = 0')
 
-            ->orderBy('f.id', 'DESC')
+            ->orderBy('f.id', \SortDirection::Descending)
         ;
 
         return $queryBuilder->getQuery();
     }
 
+    /**
+     * @param list<int> $ids
+     *
+     * @return File[]
+     */
+    public function findPublicByIds(array $ids): array
+    {
+        if ([] === $ids) {
+            return [];
+        }
+
+        $files = $this->createQueryBuilder('f')
+            ->leftJoin('f.user', 'u')
+            ->addSelect('u')
+            ->where('f.id IN (:ids)')
+            ->andWhere('f.hidden = 0')
+            ->andWhere('f.password IS NULL')
+            ->setParameter('ids', $ids)
+            ->getQuery()
+            ->getResult();
+
+        $byId = [];
+
+        foreach ($files as $file) {
+            $byId[(int) $file->getId()] = $file;
+        }
+
+        $ordered = [];
+
+        foreach ($ids as $id) {
+            if (isset($byId[$id])) {
+                $ordered[] = $byId[$id];
+            }
+        }
+
+        return $ordered;
+    }
+
+    public function getApiListQueryBuilder(FileListQuery $query, ?User $viewer): QueryBuilder
+    {
+        $queryBuilder = $this->createQueryBuilder('f')
+            ->leftJoin('f.user', 'u')
+            ->addSelect('u');
+
+        $isAdmin = null !== $viewer && $viewer->isAdmin();
+
+        if ($query->filter->mine) {
+            $queryBuilder->andWhere('f.user = :mine')->setParameter('mine', $viewer);
+        } elseif (!$isAdmin) {
+            $queryBuilder
+                ->andWhere('f.hidden = 0')
+                ->andWhere('f.password IS NULL');
+        }
+
+        if (null !== $query->filter->hidden) {
+            $queryBuilder->andWhere('f.hidden = :hidden')->setParameter('hidden', $query->filter->hidden);
+        }
+
+        if (null !== $query->filter->q && '' !== \trim($query->filter->q)) {
+            $queryBuilder
+                ->andWhere('f.originalFileName LIKE :q OR f.description LIKE :q')
+                ->setParameter('q', '%'.\addcslashes(\trim($query->filter->q), '%_').'%');
+        }
+
+        if (null !== $query->filter->category) {
+            $this->addCategoryMime($queryBuilder, $query->filter->category);
+        }
+
+        if (null !== $query->filter->tag && '' !== $query->filter->tag) {
+            $queryBuilder
+                ->innerJoin('f.fileTags', 'ft')
+                ->innerJoin('ft.tag', 't')
+                ->andWhere('t.name = :tag')
+                ->setParameter('tag', $query->filter->tag);
+        }
+
+        if (null !== $query->filter->user && '' !== $query->filter->user) {
+            $queryBuilder
+                ->andWhere('u.username = :username')
+                ->setParameter('username', $query->filter->user);
+        }
+
+        if ('today' === $query->filter->date) {
+            $queryBuilder
+                ->andWhere('f.createdAt >= :dateStart')
+                ->setParameter('dateStart', new \DateTimeImmutable('today'));
+        } elseif ('yesterday' === $query->filter->date) {
+            $queryBuilder
+                ->andWhere('f.createdAt >= :dateStart')
+                ->andWhere('f.createdAt < :dateEnd')
+                ->setParameter('dateStart', new \DateTimeImmutable('yesterday'))
+                ->setParameter('dateEnd', new \DateTimeImmutable('today'));
+        }
+
+        match ($query->sort) {
+            'oldest' => $queryBuilder->orderBy('f.id', \SortDirection::Ascending),
+            'name' => $queryBuilder->orderBy('f.originalFileName', \SortDirection::Ascending)->addOrderBy('f.id', \SortDirection::Descending),
+            'views' => $queryBuilder->orderBy('f.countViews', \SortDirection::Descending)->addOrderBy('f.id', \SortDirection::Descending),
+            default => $queryBuilder->orderBy('f.id', \SortDirection::Descending),
+        };
+
+        return $queryBuilder;
+    }
+
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
+        if (!$user instanceof File) {
+            throw new \InvalidArgumentException('Expected an instance of '.File::class.'.');
+        }
+
         $user->setPassword($newHashedPassword);
 
         $this->getEntityManager()->persist($user);

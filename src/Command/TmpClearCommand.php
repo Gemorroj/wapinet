@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Scheduler\Attribute\AsPeriodicTask;
@@ -22,7 +22,8 @@ use Symfony\Component\Scheduler\Attribute\AsPeriodicTask;
 class TmpClearCommand extends Command
 {
     public function __construct(
-        private readonly ParameterBagInterface $parameterBag,
+        #[Autowire('%kernel.tmp_dir%')]
+        private readonly string $tmpDir,
         private readonly Filesystem $filesystem,
         private readonly LoggerInterface $logger,
     ) {
@@ -49,9 +50,8 @@ class TmpClearCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $lifetime = $input->getArgument('lifetime');
-        $tmpDir = $this->parameterBag->get('kernel.tmp_dir');
 
-        $oldFiles = Finder::create()->date('< now - '.$lifetime)->in($tmpDir);
+        $oldFiles = Finder::create()->date('< now - '.$lifetime)->in($this->tmpDir);
         $oldFileCount = $oldFiles->count();
         $this->filesystem->remove($oldFiles);
 

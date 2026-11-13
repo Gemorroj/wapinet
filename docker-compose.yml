@@ -7,6 +7,7 @@ services:
     restart: always
     ports:
       - "9306:9306" # mysql adapter
+      - "9308:9308" # http json api
     environment:
       - CREATE_PLAIN_TABLES=1
     depends_on:

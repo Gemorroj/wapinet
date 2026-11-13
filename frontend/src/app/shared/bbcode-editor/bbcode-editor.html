@@ -1,0 +1,53 @@
+<div class="bbcode-editor">
+    @if (mode() === 'edit') {
+        <tui-textfield>
+            <label tuiLabel>{{ label() }}</label>
+            @if (limit(); as max) {
+                <textarea
+                    #textarea
+                    tuiTextarea
+                    [attr.name]="name()"
+                    [limit]="max"
+                    [minRows]="rows()"
+                    [maxRows]="maxRows()"
+                    [placeholder]="placeholder()"
+                    [ngModelOptions]="{ standalone: true }"
+                    [ngModel]="value()"
+                    (ngModelChange)="valueChange.emit($event)"
+                ></textarea>
+            } @else {
+                <textarea
+                    #textarea
+                    tuiTextarea
+                    [attr.name]="name()"
+                    [minRows]="rows()"
+                    [maxRows]="maxRows()"
+                    [placeholder]="placeholder()"
+                    [ngModelOptions]="{ standalone: true }"
+                    [ngModel]="value()"
+                    (ngModelChange)="valueChange.emit($event)"
+                ></textarea>
+            }
+        </tui-textfield>
+    } @else {
+        @if (loading()) {
+            <tui-loader [loading]="true" />
+        }
+
+        @if (error()) {
+            <div tuiNotification appearance="negative">{{ error() }}</div>
+        }
+
+        @if (html()) {
+            <div class="bbcode-editor__preview" appCodeHighlight [innerHTML]="html()"></div>
+        }
+    }
+
+    @if (canPreview()) {
+        <div class="bbcode-editor__actions">
+            <button tuiButton type="button" size="xs" appearance="flat" (click)="switchMode('preview' === mode() ? 0 : 1)">
+                {{ 'preview' === mode() ? 'Редактировать' : 'Предпросмотр' }}
+            </button>
+        </div>
+    }
+</div>

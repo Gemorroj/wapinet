@@ -1,0 +1,105 @@
+.validator__options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 0.75rem;
+}
+
+.validator__messages {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.validator__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.validator__meta {
+    margin-block: 0.5rem 0;
+}
+
+.validator__source {
+    display: grid;
+    gap: 0.5rem;
+    margin-block-start: 0.75rem;
+}
+
+.validator__source h3 {
+    margin: 0;
+}
+
+.validator__message {
+    padding: 0.625rem 0.75rem;
+    border: 1px solid var(--app-border);
+    border-inline-start: 3px solid var(--tui-border-normal);
+    border-radius: var(--tui-radius-m);
+}
+
+.validator__message_error {
+    border-inline-start-color: var(--tui-status-negative);
+}
+
+.validator__message_warning {
+    border-inline-start-color: var(--tui-status-warning);
+}
+
+.validator__message-head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+    align-items: baseline;
+    margin-block-end: 0.25rem;
+    font-size: 0.8125rem;
+}
+
+.validator__severity {
+    font-weight: 600;
+}
+
+.validator__message_error .validator__severity {
+    color: var(--tui-status-negative);
+}
+
+.validator__message_warning .validator__severity {
+    color: var(--tui-status-warning);
+}
+
+.validator__place,
+.validator__type {
+    color: var(--tui-text-secondary);
+}
+
+.validator__place {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+}
+
+.validator__place:hover {
+    color: var(--tui-text-action);
+}
+
+.validator__message-text {
+    margin: 0;
+    font-size: 0.875rem;
+    overflow-wrap: anywhere;
+}
+
+.validator__extract {
+    margin: 0.5rem 0 0;
+    padding: 0.5rem 0.625rem;
+    border-radius: var(--tui-radius-s);
+    background: var(--tui-background-neutral-1);
+    font-size: 0.8125rem;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.validator__extract code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}

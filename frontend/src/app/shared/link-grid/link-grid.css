@@ -1,0 +1,16 @@
+.link-grid__item {
+    display: grid;
+    gap: 0.25rem;
+    align-content: start;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--tui-radius-m);
+}
+
+.link-grid__item:hover {
+    background: var(--app-surface-subtle);
+}
+
+.link-grid__item > [tuiCell] {
+    margin: 0;
+    padding: 0;
+}

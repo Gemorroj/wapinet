@@ -2,16 +2,13 @@
 
 namespace App\Service\Archiver;
 
-use App\Exception\ArchiverException;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use App\Service\Archiver\ArchiverException;
+use App\Service\ByteSize;
 use Symfony\Component\HttpFoundation\File\File;
 
 abstract class Archive
 {
-    private const int MAX_FILES = 1000;
-    private const int MAX_FILE_SIZE = 50 * 1024 * 1024;
-
-    public function __construct(protected ParameterBagInterface $parameterBag)
+    public function __construct(protected ArchiveLimits $limits)
     {
     }
 
@@ -35,15 +32,22 @@ abstract class Archive
 
     protected function validateFileSize(int $fileSize): void
     {
-        if ($fileSize > self::MAX_FILE_SIZE) {
-            throw new ArchiverException('Файл в архиве слишком большой: '.$fileSize.' байт');
+        if ($fileSize > $this->limits->maxFileSize) {
+            throw new ArchiverException('Файл в архиве больше '.ByteSize::format($fileSize).', максимум '.ByteSize::format($this->limits->maxFileSize).'.');
         }
     }
 
     protected function validateFileCount(int $fileCount): void
     {
-        if ($fileCount > self::MAX_FILES) {
-            throw new ArchiverException('Архив содержит слишком много файлов: '.$fileCount);
+        if ($fileCount > $this->limits->maxFiles) {
+            throw new ArchiverException('Архив содержит '.$fileCount.' файлов, максимум '.$this->limits->maxFiles.'.');
+        }
+    }
+
+    protected function validateTotalSize(int $totalSize): void
+    {
+        if ($totalSize > $this->limits->maxTotalSize) {
+            throw new ArchiverException('Распакованный архив больше '.ByteSize::format($totalSize).', максимум '.ByteSize::format($this->limits->maxTotalSize).'.');
         }
     }
 

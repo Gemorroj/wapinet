@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table]
 #[ORM\Entity(repositoryClass: EventRepository::class)]
-#[ORM\HasLifecycleCallbacks]
 class Event
 {
     #[ORM\Id]
@@ -15,8 +14,8 @@ class Event
     #[ORM\Column(type: 'integer', nullable: false)]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'datetime', nullable: false)]
-    private ?\DateTime $createdAt = null;
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
+    private \DateTimeImmutable $createdAt;
 
     #[ORM\Column(type: 'string', nullable: false)]
     private string $subject = '';
@@ -41,22 +40,19 @@ class Event
         return $this;
     }
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
-    }
-
-    #[ORM\PrePersist]
-    public function setCreatedAtValue(): self
-    {
-        $this->createdAt = new \DateTime();
-
-        return $this;
     }
 
     public function setSubject(string $subject): self

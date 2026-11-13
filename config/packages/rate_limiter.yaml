@@ -1,0 +1,153 @@
+framework:
+    rate_limiter:
+        # POST /api/files — загрузка файла; ключ: пользователь или IP
+        api_files_upload:
+            policy: sliding_window
+            limit: 100
+            interval: '1 hour'
+        # POST /api/auth/register — регистрация; ключ: IP
+        api_auth_register:
+            policy: sliding_window
+            limit: 20
+            interval: '1 hour'
+        # POST /api/guestbook — добавление сообщения; ключ: пользователь или IP
+        api_guestbook_create:
+            policy: sliding_window
+            limit: 100
+            interval: '1 hour'
+        # GET /api/guestbook/{id}/insight — сведения об IP автора; ключ: IP
+        api_guestbook_insight:
+            policy: sliding_window
+            limit: 30
+            interval: '1 minute'
+        # POST /api/gists — публикация; ключ: пользователь
+        api_gists_create:
+            policy: sliding_window
+            limit: 60
+            interval: '1 hour'
+        # POST /api/bbcode/preview — живой предпросмотр; ключ: пользователь или IP
+        api_bbcode_preview:
+            policy: sliding_window
+            limit: 30
+            interval: '1 minute'
+        # POST /api/audio-tags — загрузка и запись тегов аудио; ключ: IP
+        api_audio_tags:
+            policy: sliding_window
+            limit: 60
+            interval: '1 hour'
+        # POST /api/hash — хэширование файла по ссылке; ключ: IP
+        api_hash_compute:
+            policy: sliding_window
+            limit: 100
+            interval: '1 hour'
+        # POST /api/http — выполнение HTTP-запроса; ключ: IP
+        api_http_send:
+            policy: sliding_window
+            limit: 200
+            interval: '1 hour'
+        # POST /api/whois — WHOIS/RDAP-запрос; ключ: IP
+        api_whois_lookup:
+            policy: sliding_window
+            limit: 60
+            interval: '1 hour'
+        # POST /api/php-obfuscator — обфускация; ключ: IP
+        api_obfuscator_run:
+            policy: sliding_window
+            limit: 100
+            interval: '1 hour'
+        # POST /api/php-validator — проверка синтаксиса PHP; ключ: IP
+        api_php_validator_run:
+            policy: sliding_window
+            limit: 100
+            interval: '1 hour'
+        # POST /api/html-validator — проверка HTML через W3C; ключ: IP
+        api_html_validator_run:
+            policy: sliding_window
+            limit: 60
+            interval: '1 hour'
+        # POST /api/css-validator — проверка CSS через W3C; ключ: IP
+        api_css_validator_run:
+            policy: sliding_window
+            limit: 60
+            interval: '1 hour'
+        # POST /api/archiver — создание, распаковка, добавление файлов; ключ: IP
+        api_archiver_write:
+            policy: sliding_window
+            limit: 100
+            interval: '1 hour'
+        # GET /api/archiver/{archive}/download — скачивание; ключ: IP
+        api_archiver_download:
+            policy: sliding_window
+            limit: 120
+            interval: '1 hour'
+
+when@test:
+    framework:
+        rate_limiter:
+            api_files_upload:
+                policy: sliding_window
+                limit: 1000
+                interval: '1 hour'
+            api_auth_register:
+                policy: sliding_window
+                limit: 1000
+                interval: '1 hour'
+            api_guestbook_create:
+                policy: sliding_window
+                limit: 1000
+                interval: '1 hour'
+            api_guestbook_insight:
+                policy: sliding_window
+                limit: 1000
+                interval: '1 minute'
+            api_gists_create:
+                policy: sliding_window
+                limit: 1000
+                interval: '1 hour'
+            api_bbcode_preview:
+                policy: sliding_window
+                limit: 1000
+                interval: '1 minute'
+            api_audio_tags:
+                policy: sliding_window
+                limit: 1000
+                interval: '1 hour'
+            api_hash_compute:
+                policy: sliding_window
+                limit: 1000
+                interval: '1 hour'
+            api_http_send:
+                policy: sliding_window
+                limit: 1000
+                interval: '1 hour'
+            api_whois_lookup:
+                policy: sliding_window
+                limit: 1000
+                interval: '1 hour'
+            api_obfuscator_run:
+                policy: sliding_window
+                limit: 1000
+                interval: '1 hour'
+            api_php_validator_run:
+                policy: sliding_window
+                limit: 1000
+                interval: '1 hour'
+            api_html_validator_run:
+                policy: sliding_window
+                limit: 1000
+                interval: '1 hour'
+            api_css_validator_run:
+                policy: sliding_window
+                limit: 1000
+                interval: '1 hour'
+            api_archiver_write:
+                policy: sliding_window
+                limit: 1000
+                interval: '1 hour'
+            api_archiver_download:
+                policy: sliding_window
+                limit: 1000
+                interval: '1 hour'
+
+
+

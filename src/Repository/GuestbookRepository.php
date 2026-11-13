@@ -32,7 +32,7 @@ final class GuestbookRepository extends ServiceEntityRepository
     public function getListQuery(): Query
     {
         return $this->createQueryBuilder('g')
-            ->orderBy('g.id', 'DESC')
+            ->orderBy('g.id', \SortDirection::Descending)
             ->getQuery();
     }
 }

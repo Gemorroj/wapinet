@@ -1,0 +1,33 @@
+.profile__card {
+    display: grid;
+    gap: 1rem;
+}
+
+.profile__head {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    min-inline-size: 0;
+}
+
+.profile__country {
+    display: flex;
+    gap: 0.375rem;
+    align-items: center;
+}
+
+.profile__flag {
+    inline-size: 1.25rem;
+    block-size: auto;
+    border-radius: 0.125rem;
+}
+
+.profile__info {
+    overflow-wrap: anywhere;
+}
+
+.profile__icon {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+    color: var(--tui-text-secondary);
+}

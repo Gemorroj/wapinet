@@ -1,0 +1,53 @@
+.audio-tags__fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 0.75rem;
+}
+
+.audio-tags__cover {
+    max-inline-size: 12rem;
+    max-block-size: 12rem;
+    border: 1px solid var(--app-border);
+    border-radius: var(--tui-radius-m);
+    object-fit: contain;
+}
+
+.audio-tags__cover-edit {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.audio-tags__option {
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.audio-tags__advanced > summary {
+    margin-block-end: 0.75rem;
+    color: var(--tui-text-action);
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.audio-tags__advanced-body {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.audio-tags__other {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.audio-tags__other-list {
+    max-block-size: 16rem;
+    overflow: auto;
+}
+
+.audio-tags__danger {
+    display: grid;
+    gap: 0.5rem;
+    padding-block-start: 0.75rem;
+    border-block-start: 1px solid var(--tui-border-normal);
+}

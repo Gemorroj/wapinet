@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Filesystem\Filesystem;
 use Vich\UploaderBundle\Command\CleanupCommand;
 
@@ -25,7 +25,8 @@ class FilesClearCommand extends Command
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly Filesystem $filesystem,
-        private readonly ParameterBagInterface $parameterBag,
+        #[Autowire('%kernel.project_dir%')]
+        private readonly string $projectDir,
         private readonly LoggerInterface $logger,
     ) {
         parent::__construct();
@@ -55,7 +56,7 @@ class FilesClearCommand extends Command
         $lifetime = $input->getArgument('lifetime');
         $dateTime = new \DateTime('-'.$lifetime);
 
-        $cacheDir = $this->parameterBag->get('kernel.project_dir').'/public/media/cache/thumbnail/static/file';
+        $cacheDir = $this->projectDir.'/public/media/cache/thumbnail/static/file';
 
         // удаляем из БД
         $dbDeleted = $this->entityManager

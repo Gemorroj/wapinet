@@ -1,0 +1,16 @@
+<section class="friends app-page">
+    <h1 class="app-sr-only">Друзья {{ username() }}</h1>
+    <app-breadcrumbs [items]="breadcrumbs()" />
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    }
+
+    <app-user-list [items]="items()" [loading]="loading()" emptyText="Друзей нет." />
+
+    <app-pagination [total]="total()" [perPage]="perPage()" [page]="page()" (pageChange)="goToPage($event)" />
+</section>

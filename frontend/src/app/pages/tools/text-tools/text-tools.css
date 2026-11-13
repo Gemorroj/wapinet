@@ -1,0 +1,5 @@
+.text-tools__operations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+}

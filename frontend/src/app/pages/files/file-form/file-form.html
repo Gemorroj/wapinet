@@ -1,0 +1,105 @@
+<section class="file-form app-page">
+    <app-breadcrumbs [items]="breadcrumbs()" />
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    }
+
+    @if (currentFile(); as current) {
+        <section tuiCardLarge="normal" appearance="floating" class="file-form__current">
+            <h2 tuiTitle="m">Текущий файл</h2>
+
+            <div class="file-form__current-file">
+                @if (isImage(current)) {
+                    <a [routerLink]="['/files', current.id]">
+                        <img class="file-form__current-preview" [src]="previewUrl(current)" [alt]="current.name" />
+                    </a>
+                }
+
+                <div class="file-form__current-info">
+                    <a [routerLink]="['/files', current.id]">{{ current.name }}</a>
+                    <span class="file-form__current-size">{{ size(current.size) }}</span>
+                </div>
+            </div>
+
+            <p class="app-hint">
+                Чтобы заменить файл, выберите новый файл или укажите ссылку ниже. Если оставить источник пустым, изменятся только описание, теги и пароль.
+            </p>
+        </section>
+    }
+
+    @if (!editing() || currentFile()?.canEdit) {
+        <form tuiCardLarge="normal" appearance="floating" (ngSubmit)="save()" (focusin)="captchaActive.set(true)">
+            <h1 class="app-form-title">{{ editing() ? 'Редактирование файла' : 'Загрузка файла' }}</h1>
+
+            <app-file-source
+                [files]="selectedFiles()"
+                (filesChange)="selectFile($event)"
+                [loading]="saving()"
+                [url]="sourceUrl()"
+                (urlChange)="sourceUrl.set($event)"
+            />
+
+            <app-bbcode-editor label="Описание" name="description" [limit]="5000" [value]="description()" (valueChange)="description.set($event)" />
+
+            <div class="file-form__row">
+                <tui-textfield multi>
+                    <label tuiLabel>Теги</label>
+                    <input
+                        tuiInputChip
+                        name="tags"
+                        maxlength="255"
+                        [unique]="true"
+                        [ngModel]="tags()"
+                        (ngModelChange)="setTags($event)"
+                        (input)="onTagInput($event)"
+                    />
+                    @if (suggestions().length) {
+                        <tui-data-list-wrapper *tuiDropdown [items]="suggestions()" />
+                    }
+                    <tui-input-chip *tuiItem="let item" />
+                </tui-textfield>
+
+                <tui-textfield>
+                    <label tuiLabel>Пароль (необязательно)</label>
+                    <input tuiInput type="password" name="password" maxlength="100" [ngModel]="password()" (ngModelChange)="password.set($event)" />
+                    @if (editing()) {
+                        <label class="file-form__password-clear" title="Удалить пароль">
+                            <input
+                                tuiCheckbox
+                                type="checkbox"
+                                name="removePassword"
+                                [ngModel]="removePassword()"
+                                (ngModelChange)="removePassword.set($event)"
+                            />
+                            Удалить
+                        </label>
+                    }
+                </tui-textfield>
+            </div>
+
+            @if (!auth.authenticated()) {
+                <p class="app-hint">Файл будет опубликован после проверки администратором.</p>
+
+                @if (captchaActive()) {
+                    @if (appConfig.config()?.captcha?.enabled) {
+                        <app-captcha [siteKey]="appConfig.config()?.captcha?.siteKey ?? ''" (token)="captchaToken.set($event)" (failed)="onCaptchaFailed()" />
+                    } @else if (appConfig.config() === null) {
+                        <p>Загрузка проверки:</p>
+                    }
+                }
+            }
+
+            <div class="app-actions">
+                <button tuiButton type="submit" size="s" [disabled]="saving()">
+                    {{ saving() ? 'Сохраняем…' : editing() ? 'Сохранить' : 'Загрузить' }}
+                </button>
+                <button tuiButton type="button" size="s" appearance="flat" (click)="cancel()">Отмена</button>
+            </div>
+        </form>
+    }
+</section>

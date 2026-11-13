@@ -1,0 +1,9 @@
+<div class="user-avatar">
+    <div tuiAvatar [size]="size()">
+        <img [src]="avatarUrl()" [alt]="alt()" loading="lazy" />
+    </div>
+
+    @if (isOnline()) {
+        <span tuiBadge appearance="positive" class="online-badge" [attr.aria-label]="onlineLabel()"></span>
+    }
+</div>

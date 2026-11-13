@@ -8,12 +8,8 @@ doctrine:
 
         profiling_collect_backtrace: '%kernel.debug%'
 
-        types:
-            file_meta: App\DBAL\Types\FileMetaType
-
         mapping_types:
             enum: string
-            file_meta: json
         charset: utf8mb4
         default_table_options:
             charset: utf8mb4
@@ -30,7 +26,6 @@ doctrine:
                 is_bundle: false
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
-                alias: App
 
 when@test:
     doctrine:

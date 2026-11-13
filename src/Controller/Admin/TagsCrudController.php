@@ -5,13 +5,12 @@ namespace App\Controller\Admin;
 use App\Entity\Tag;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class TagsCrudController extends AbstractCrudController
+class TagsCrudController extends AbstractWapinetCrudController
 {
     public static function getEntityFqcn(): string
     {
@@ -20,9 +19,8 @@ class TagsCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-        return $crud
-            ->setSearchFields(['id', 'name', 'count'])
-            ->setDefaultSort(['id' => 'DESC']);
+        return parent::configureCrud($crud)
+            ->setSearchFields(['id', 'name', 'count']);
     }
 
     public function configureActions(Actions $actions): Actions
@@ -34,13 +32,13 @@ class TagsCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $name = TextField::new('name', 'Имя');
-        $count = IntegerField::new('count', 'Использовано раз');
+        $count = IntegerField::new('count', 'Использовано раз')->setTextAlign('right');
         $id = IdField::new('id', 'ID');
         $createdAt = DateTimeField::new('createdAt', 'Дата создания');
-        $updatedAt = DateTimeField::new('updatedAt');
+        $updatedAt = DateTimeField::new('updatedAt', 'Дата обновления')->formatValue(static fn (?\DateTimeImmutable $value): string => $value?->format('d.m.Y H:i') ?? '—');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$name, $createdAt, $count];
+            return [$name, $count, $createdAt];
         }
         if (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $name, $count, $createdAt, $updatedAt];
@@ -53,5 +51,15 @@ class TagsCrudController extends AbstractCrudController
         }
 
         return [];
+    }
+
+    protected function singularLabel(): string
+    {
+        return 'Тег';
+    }
+
+    protected function pluralLabel(): string
+    {
+        return 'Теги';
     }
 }

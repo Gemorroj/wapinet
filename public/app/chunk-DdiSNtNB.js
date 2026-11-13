@@ -1,0 +1,1 @@
+import{c as Y}from"./chunk--HPFeEGm.js";import{Jt as Ri,Lr as h,Ri as te,Zn as _Y,fa as zI,fi as nr}from"./chunk-Dc9jLWKG.js";function y(){let o=h(Y,{optional:!0}),f=o?.control()||h(nr,{optional:!0}),p=zI(_Y(f,h(Ri)),{requireSync:!0});return te(()=>{let r=o?.child();return r?r.value():p()})}export{y as t};

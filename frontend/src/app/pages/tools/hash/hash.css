@@ -1,0 +1,57 @@
+.hash__modes,
+.hash__algorithms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+}
+
+.hash__results {
+    display: grid;
+    gap: 0.25rem;
+}
+
+.hash__row {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr) auto;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.hash__guide {
+    grid-template-columns: minmax(11rem, max-content) minmax(0, 1fr);
+}
+
+.hash__facts {
+    margin: 0;
+    padding-inline-start: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.hash__label {
+    color: var(--tui-text-secondary);
+}
+
+.hash__value {
+    overflow-wrap: anywhere;
+    font-family: var(--tui-font-text-mono, monospace);
+}
+
+@media (max-width: 40rem) {
+    .hash__row {
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .hash__label {
+        grid-column: 1 / -1;
+    }
+
+    .hash__guide {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.125rem;
+    }
+
+    .hash__guide dd {
+        margin-block-end: 0.5rem;
+    }
+}

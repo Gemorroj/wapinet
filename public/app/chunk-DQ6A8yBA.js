@@ -1,0 +1,1 @@
+function i(a){let t=Math.max(0,Math.round(a)),r=Math.floor(t/3600),n=Math.floor(t%3600/60),o=t%60;return r>0?`${r}:${String(n).padStart(2,`0`)}:${String(o).padStart(2,`0`)}`:`${n}:${String(o).padStart(2,`0`)}`}export{i as t};

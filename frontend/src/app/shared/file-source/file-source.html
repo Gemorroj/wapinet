@@ -1,0 +1,60 @@
+<div class="file-source">
+    <div class="file-source__modes">
+        <button tuiChip type="button" [disabled]="loading" [appearance]="mode() === 'file' ? 'primary' : 'neutral'" (click)="useFile()">Файл</button>
+        <button tuiChip type="button" [disabled]="loading" [appearance]="mode() === 'url' ? 'primary' : 'neutral'" (click)="useUrl()">Ссылка</button>
+    </div>
+
+    @if (mode() === 'file') {
+        <div
+            class="file-source__drop"
+            [class.file-source__drop_dragging]="dragging()"
+            (dragenter)="dragEnter($event)"
+            (dragover)="dragOver($event)"
+            (dragleave)="dragLeave($event)"
+            (drop)="drop($event)"
+        >
+            <label tuiInputFiles="l">
+                <input
+                    tuiAppearance="file"
+                    type="file"
+                    [attr.accept]="accept || null"
+                    [multiple]="multiple"
+                    [disabled]="loading"
+                    (change)="selectFiles($event)"
+                />
+            </label>
+
+            @if (multiple) {
+                @if (files.length) {
+                    <ul class="file-source__list">
+                        @for (item of files; track item.name + item.size) {
+                            <li class="file-source__name">
+                                {{ item.name }}
+                                <span class="file-source__size">{{ size(item.size) }}</span>
+                            </li>
+                        }
+                    </ul>
+                }
+            } @else if (files.length) {
+                <p class="file-source__name">
+                    {{ files[0].name }}
+                    <span class="file-source__size">{{ size(files[0].size) }}</span>
+                </p>
+            }
+        </div>
+    } @else {
+        <tui-textfield>
+            <label tuiLabel>Ссылка на файл</label>
+            <input tuiInput type="url" placeholder="https://example.com/file.zip" [disabled]="loading" [ngModel]="url" (ngModelChange)="setUrl($event)" />
+        </tui-textfield>
+
+        <p class="app-hint">Файл будет скачан сервером по ссылке.</p>
+    }
+
+    @if (loading) {
+        <div class="file-source__loading">
+            <tui-loader [loading]="true" />
+            Загружаем…
+        </div>
+    }
+</div>

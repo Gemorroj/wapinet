@@ -32,7 +32,7 @@ final class EventRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('e')
             ->where('e.needEmail = 1')
-            ->orderBy('e.id', 'ASC')
+            ->orderBy('e.id', \SortDirection::Ascending)
             ->getQuery()
             ->getResult();
     }
@@ -42,7 +42,7 @@ final class EventRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('e')
             ->where('e.user = :user')
             ->setParameter('user', $user)
-            ->orderBy('e.id', 'DESC')
+            ->orderBy('e.id', \SortDirection::Descending)
             ->getQuery();
     }
 

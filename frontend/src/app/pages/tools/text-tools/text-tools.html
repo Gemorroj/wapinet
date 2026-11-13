@@ -1,0 +1,50 @@
+<section class="text-tools app-page">
+    <h1 class="app-sr-only">{{ pageTitle() }}</h1>
+    <app-breadcrumbs [items]="breadcrumbs()" />
+
+    <tui-tabs [activeItemIndex]="groupIndex()" (activeItemIndexChange)="selectGroup($event)">
+        @for (tab of tabs; track tab.id) {
+            <button tuiTab type="button">{{ tab.label }}</button>
+        }
+    </tui-tabs>
+
+    <div tuiCardLarge="normal" appearance="floating">
+        <h2 class="app-form-title">Инструменты текста</h2>
+
+        <div class="text-tools__operations">
+            @for (operation of operations(); track operation.id) {
+                <button tuiChip type="button" [appearance]="selected().id === operation.id ? 'primary' : 'neutral'" (click)="selectOperation(operation.id)">
+                    {{ operation.label }}
+                </button>
+            }
+        </div>
+
+        @if (selected().hint; as hint) {
+            <p class="app-hint">{{ hint }}</p>
+        }
+
+        <app-code-field
+            label="Исходный текст"
+            name="text"
+            [rows]="10"
+            [value]="text()"
+            (valueChange)="text.set($event)"
+            placeholder="Вставьте текст для преобразования"
+        />
+
+        @if (result().error; as error) {
+            <div tuiNotification appearance="negative">{{ error }}</div>
+        }
+
+        <p class="app-hint">
+            Нужен разбор отдельного символа, code points или HTML/JS/CSS escape?
+            <a routerLink="/unicode/inspector">Инспектор Unicode</a>.
+        </p>
+    </div>
+
+    @if (hasResult()) {
+        <app-tool-result title="Результат" [text]="result().value" filename="text.txt">
+            <app-code-block [code]="result().value" [language]="resultLanguage()" />
+        </app-tool-result>
+    }
+</section>

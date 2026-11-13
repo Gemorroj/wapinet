@@ -1,0 +1,412 @@
+<section class="unicode app-page">
+    <h1 class="app-sr-only">{{ pageTitle() }}</h1>
+    <app-breadcrumbs [items]="breadcrumbs()" />
+
+    <tui-tabs [activeItemIndex]="tabIndex()" (activeItemIndexChange)="selectTab($event)">
+        @for (tab of tabs; track tab) {
+            <button tuiTab type="button">{{ tab }}</button>
+        }
+    </tui-tabs>
+
+    @switch (tabIndex()) {
+        @case (0) {
+            <div tuiCardLarge="normal" appearance="floating">
+                <h2 class="app-form-title">Конвертер Unicode</h2>
+
+                <div class="unicode__mode">
+                    <button tuiChip type="button" [appearance]="mode() === 'encode' ? 'primary' : 'neutral'" (click)="setMode('encode')">Кодировать</button>
+                    <button tuiChip type="button" [appearance]="mode() === 'decode' ? 'primary' : 'neutral'" (click)="setMode('decode')">Декодировать</button>
+                </div>
+
+                <app-code-field label="Текст" name="text" [rows]="8" [value]="text()" (valueChange)="text.set($event)" />
+
+                @if (mode() === 'encode') {
+                    <tui-textfield tuiChevron>
+                        <label tuiLabel>Формат</label>
+                        <input tuiSelect name="format" [ngModel]="formatValue()" (ngModelChange)="setFormat($event)" />
+                        <tui-data-list-wrapper *tuiDropdown [items]="formatOptions()" />
+                    </tui-textfield>
+
+                    <div class="unicode__options">
+                        <label class="unicode__checkbox">
+                            <input tuiCheckbox type="checkbox" name="latin" [ngModel]="latin()" (ngModelChange)="latin.set($event)" />
+                            Заменить на латиницу
+                        </label>
+
+                        <label class="unicode__checkbox">
+                            <input tuiCheckbox type="checkbox" name="zerofill" [ngModel]="trimLeadingZeros()" (ngModelChange)="trimLeadingZeros.set($event)" />
+                            Убрать ведущие нули
+                        </label>
+
+                        <label class="unicode__checkbox">
+                            <input tuiCheckbox type="checkbox" name="html" [ngModel]="escapeHtml()" (ngModelChange)="escapeHtml.set($event)" />
+                            Экранировать спецсимволы HTML
+                        </label>
+                    </div>
+                } @else {
+                    <tui-textfield tuiChevron>
+                        <label tuiLabel>Формат</label>
+                        <input tuiSelect name="decodeFormat" [ngModel]="formatValue()" (ngModelChange)="setFormat($event)" />
+                        <tui-data-list-wrapper *tuiDropdown [items]="formatOptions()" />
+                    </tui-textfield>
+                }
+
+                <p class="app-hint">
+                    @if (mode() === 'encode') {
+                        Не-ASCII символы превращаются в выбранный формат. ASCII, пробелы и переводы строк остаются как есть.
+                    } @else {
+                        Поддерживаются HTML-мнемоники, JS/CSS escape и запись вида <code>U+1F600</code>.
+                    }
+                </p>
+
+                <dl class="unicode__stats">
+                    <div>
+                        <dt>Графемы</dt>
+                        <dd>{{ stats().graphemes }}</dd>
+                    </div>
+                    <div>
+                        <dt>Code points</dt>
+                        <dd>{{ stats().codePoints }}</dd>
+                    </div>
+                    <div>
+                        <dt>UTF-16</dt>
+                        <dd>{{ stats().utf16 }}</dd>
+                    </div>
+                    <div>
+                        <dt>UTF-8</dt>
+                        <dd>{{ stats().utf8 }} байт</dd>
+                    </div>
+                </dl>
+            </div>
+
+            @if ('' !== text()) {
+                <app-tool-result [title]="resultTitle()" [filename]="resultFilename()" [text]="result()">
+                    <app-code-block [code]="result()" />
+                </app-tool-result>
+            } @else {
+                <div tuiCardLarge="normal" appearance="floating">
+                    <p class="app-hint">Введите текст выше — результат появится сразу.</p>
+                </div>
+            }
+        }
+
+        @case (1) {
+            <div tuiCardLarge="normal" appearance="floating">
+                <h2 class="app-form-title">Справочник символов</h2>
+                <p class="app-hint">
+                    Поиск по символу, названию, мнемонике, <code>U+2190</code>, <code>&amp;#x2190;</code> или <code>\u2190</code>. Нажмите на значение, чтобы
+                    скопировать его.
+                </p>
+            </div>
+
+            <div class="unicode__search">
+                <div tuiCardLarge="normal" appearance="floating">
+                    <tui-textfield>
+                        <label tuiLabel>Поиск</label>
+                        <input tuiInput name="query" placeholder="стрелка, &larr;, 2190" [ngModel]="query()" (ngModelChange)="query.set($event)" />
+                    </tui-textfield>
+
+                    <div class="unicode__categories">
+                        <button tuiChip type="button" [appearance]="activeSection() === null ? 'primary' : 'neutral'" (click)="selectSection(null)">Все</button>
+                        @for (title of sectionTitles; track title; let index = $index) {
+                            <button tuiChip type="button" [appearance]="activeSection() === index ? 'primary' : 'neutral'" (click)="selectSection(index)">
+                                {{ title }}
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            @for (section of sections(); track section.title) {
+                <div tuiCardLarge="normal" appearance="floating">
+                    <h2 tuiTitle="m">{{ section.title }}</h2>
+
+                    @if ('Эмодзи: флаги' === section.title) {
+                        <p class="app-hint">
+                            На Windows флаги могут отображаться как код страны (RU, US, EU): это ограничение системного шрифта, а не данных. На Android, iOS и
+                            macOS они отображаются как флаги.
+                        </p>
+                    }
+
+                    @if ('table' === section.layout) {
+                        <div class="unicode__scroll">
+                            <table class="unicode__table">
+                                <thead>
+                                    <tr>
+                                        <th>Символ</th>
+                                        <th>Наименование</th>
+                                        <th>Мнемоника</th>
+                                        <th>Код</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (item of section.items; track item.symbol + item.name) {
+                                        <tr>
+                                            <td>
+                                                <button
+                                                    type="button"
+                                                    class="unicode__value unicode__symbol"
+                                                    [class.unicode__value_copied]="isCopied(item.symbol)"
+                                                    [title]="symbolTitle(item)"
+                                                    (click)="copy(item.symbol)"
+                                                >
+                                                    {{ displaySymbol(item) }}
+                                                </button>
+                                            </td>
+                                            <td>{{ item.name }}</td>
+                                            <td>
+                                                <span class="unicode__lines">
+                                                    @for (value of htmlValues(item); track value) {
+                                                        <button
+                                                            type="button"
+                                                            class="unicode__value unicode__mono"
+                                                            [class.unicode__value_copied]="isCopied(value)"
+                                                            (click)="copy(value)"
+                                                        >
+                                                            {{ value }}
+                                                        </button>
+                                                    } @empty {
+                                                        <span class="unicode__empty">-</span>
+                                                    }
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="unicode__lines">
+                                                    @for (value of codeValues(item); track value) {
+                                                        <button
+                                                            type="button"
+                                                            class="unicode__value unicode__mono"
+                                                            [class.unicode__value_copied]="isCopied(value)"
+                                                            (click)="copy(value)"
+                                                        >
+                                                            {{ value }}
+                                                        </button>
+                                                    }
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    } @else {
+                        <div class="unicode__grid">
+                            @for (item of section.items; track item.symbol + item.name) {
+                                <div class="unicode__item">
+                                    <button
+                                        type="button"
+                                        class="unicode__value unicode__symbol"
+                                        [class.unicode__value_copied]="isCopied(item.symbol)"
+                                        [title]="symbolTitle(item)"
+                                        (click)="copy(item.symbol)"
+                                    >
+                                        {{ displaySymbol(item) }}
+                                    </button>
+
+                                    @if (item.name) {
+                                        <span class="unicode__name">{{ item.name }}</span>
+                                    }
+
+                                    @for (value of htmlValues(item); track value) {
+                                        <button
+                                            type="button"
+                                            class="unicode__value unicode__mono"
+                                            [class.unicode__value_copied]="isCopied(value)"
+                                            (click)="copy(value)"
+                                        >
+                                            {{ value }}
+                                        </button>
+                                    }
+
+                                    @for (value of codeValues(item); track value) {
+                                        <button
+                                            type="button"
+                                            class="unicode__value unicode__mono"
+                                            [class.unicode__value_copied]="isCopied(value)"
+                                            (click)="copy(value)"
+                                        >
+                                            {{ value }}
+                                        </button>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            } @empty {
+                <div tuiCardLarge="normal" appearance="floating">
+                    <p class="app-hint">Ничего не найдено. Попробуйте другой запрос.</p>
+                </div>
+            }
+        }
+
+        @case (2) {
+            <div tuiCardLarge="normal" appearance="floating">
+                <h2 class="app-form-title">Инспектор символа</h2>
+                <p class="app-hint">Вставьте символ, эмодзи или текст. Для каждой графемы покажем code points, HTML, JS/CSS escape, UTF-8 и UTF-16.</p>
+
+                <app-code-field label="Символ или текст" name="inspect" [rows]="3" [value]="inspectText()" (valueChange)="inspectText.set($event)" />
+
+                <dl class="unicode__stats">
+                    <div>
+                        <dt>Графемы</dt>
+                        <dd>{{ inspectStats().graphemes }}</dd>
+                    </div>
+                    <div>
+                        <dt>Code points</dt>
+                        <dd>{{ inspectStats().codePoints }}</dd>
+                    </div>
+                    <div>
+                        <dt>UTF-16</dt>
+                        <dd>{{ inspectStats().utf16 }}</dd>
+                    </div>
+                    <div>
+                        <dt>UTF-8</dt>
+                        <dd>{{ inspectStats().utf8 }} байт</dd>
+                    </div>
+                </dl>
+
+                <p class="app-hint">
+                    Нужно закодировать текст в Base64, URL или JSON?
+                    <a routerLink="/text-tools">Инструменты текста</a>.
+                </p>
+            </div>
+
+            @if (inspectRows().length) {
+                <div tuiCardLarge="normal" appearance="floating">
+                    <h2 tuiTitle="m">Разбор по графемам</h2>
+
+                    <div class="unicode__scroll">
+                        <table class="unicode__table">
+                            <thead>
+                                <tr>
+                                    <th>Символ</th>
+                                    <th>Code points</th>
+                                    <th>HTML</th>
+                                    <th>JS</th>
+                                    <th>CSS</th>
+                                    <th>UTF-8</th>
+                                    <th>UTF-16</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (row of inspectRows(); track $index) {
+                                    <tr>
+                                        <td>
+                                            <button
+                                                type="button"
+                                                class="unicode__value unicode__symbol"
+                                                [class.unicode__value_copied]="isCopied(row.symbol)"
+                                                [title]="row.codePoints.join(' ')"
+                                                (click)="copy(row.symbol)"
+                                            >
+                                                {{ displayValue(row.symbol) }}
+                                            </button>
+                                        </td>
+                                        <td>{{ row.codePoints.join(' ') }}</td>
+                                        <td>
+                                            <button
+                                                type="button"
+                                                class="unicode__value unicode__mono"
+                                                [class.unicode__value_copied]="isCopied(row.html)"
+                                                (click)="copy(row.html)"
+                                            >
+                                                {{ row.html }}
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button
+                                                type="button"
+                                                class="unicode__value unicode__mono"
+                                                [class.unicode__value_copied]="isCopied(row.js)"
+                                                (click)="copy(row.js)"
+                                            >
+                                                {{ row.js }}
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button
+                                                type="button"
+                                                class="unicode__value unicode__mono"
+                                                [class.unicode__value_copied]="isCopied(row.css)"
+                                                (click)="copy(row.css)"
+                                            >
+                                                {{ row.css }}
+                                            </button>
+                                        </td>
+                                        <td class="unicode__mono">{{ row.utf8 }}</td>
+                                        <td>{{ row.utf16 }}</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @if (inspectTruncated()) {
+                        <p class="app-hint">Показаны первые 100 графем.</p>
+                    }
+                </div>
+            } @else {
+                <div tuiCardLarge="normal" appearance="floating">
+                    <p class="app-hint">Вставьте символ или текст выше.</p>
+                </div>
+            }
+        }
+
+        @default {
+            <app-help-section title="Что такое Unicode">
+                <p class="app-text">
+                    Unicode — стандарт кодирования символов. Каждому символу назначается code point вида
+                    <code>U+1F600</code>. Диапазон code points — от <code>U+0000</code> до <code>U+10FFFF</code>.
+                </p>
+
+                <dl class="app-meta">
+                    <dt>Code point</dt>
+                    <dd>Число, которое идентифицирует символ в стандарте Unicode.</dd>
+                    <dt>UTF-8</dt>
+                    <dd>Кодировка переменной длины: 1–4 байта на code point.</dd>
+                    <dt>UTF-16</dt>
+                    <dd>Кодировка из 16-битных code units; символы выше <code>U+FFFF</code> занимают суррогатную пару.</dd>
+                    <dt>Графема</dt>
+                    <dd>То, что человек воспринимает как один символ. Может состоять из нескольких code points.</dd>
+                    <dt>Нормализация</dt>
+                    <dd>Приведение текста к NFC/NFD, чтобы одинаковые по смыслу символы сравнивались корректно.</dd>
+                </dl>
+            </app-help-section>
+
+            <app-help-section title="Почему это важно">
+                <p class="app-text">
+                    Эмодзи, флаги, диакритические знаки и ZWJ-последовательности состоят из нескольких code points. Поэтому «длина строки» в байтах, UTF-16 и
+                    графемах может отличаться. Для HTML используйте numeric/named entities, для JS —
+                    <code>\u&#123;...&#125;</code> или суррогатную пару, для CSS — escape вида <code>\1F600</code>.
+                </p>
+            </app-help-section>
+
+            <app-help-section title="Чего это не делает">
+                <p class="app-text">Не переводит текст, не проверяет орфографию и не заменяет текстовый редактор.</p>
+            </app-help-section>
+
+            <app-help-section title="Ограничения">
+                <p class="app-text">
+                    Отображение зависит от шрифта и браузера: некоторые символы и эмодзи могут выглядеть по-разному или отсутствовать в системе.
+                </p>
+            </app-help-section>
+
+            <app-help-section title="Полезные ссылки">
+                <p class="app-text">
+                    Первоисточник — <a href="https://www.unicode.org/" target="_blank" rel="noopener noreferrer">unicode.org</a>; таблица символов —
+                    <a href="https://www.unicode.org/charts/" target="_blank" rel="noopener noreferrer">unicode.org/charts</a>; эмодзи —
+                    <a href="https://unicode.org/emoji/charts/full-emoji-list.html" target="_blank" rel="noopener noreferrer">полный список эмодзи</a>.
+                </p>
+                <p class="app-text">
+                    Спецификации:
+                    <a href="https://www.unicode.org/reports/tr44/" target="_blank" rel="noopener noreferrer">UAX #44 (UCD)</a>,
+                    <a href="https://www.unicode.org/reports/tr29/" target="_blank" rel="noopener noreferrer">UAX #29 (сегментация)</a>,
+                    <a href="https://www.unicode.org/reports/tr15/" target="_blank" rel="noopener noreferrer">UAX #15 (нормализация)</a>,
+                    <a href="https://www.unicode.org/reports/tr51/" target="_blank" rel="noopener noreferrer">UTS #51 (эмодзи)</a>,
+                    <a href="https://www.rfc-editor.org/rfc/rfc3629" target="_blank" rel="noopener noreferrer">RFC 3629 (UTF-8)</a>.
+                </p>
+            </app-help-section>
+        }
+    }
+</section>

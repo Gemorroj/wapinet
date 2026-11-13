@@ -1,0 +1,64 @@
+<section class="edit app-page">
+    <app-breadcrumbs [items]="breadcrumbs" />
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    } @else {
+        <form tuiCardLarge="normal" appearance="floating" class="edit__form" (ngSubmit)="submit()">
+            <h1 class="app-form-title">Редактирование профиля</h1>
+
+            <tui-textfield tuiChevron>
+                <label tuiLabel>Пол</label>
+                <input tuiSelect [ngModel]="sex()" (ngModelChange)="sex.set($event)" name="sex" />
+                <tui-data-list-wrapper *tuiDropdown [items]="sexOptions" />
+            </tui-textfield>
+
+            <tui-textfield>
+                <label tuiLabel>Дата рождения</label>
+                <input tuiInput type="date" name="birthday" [ngModel]="birthday()" (ngModelChange)="birthday.set($event)" />
+            </tui-textfield>
+
+            <tui-textfield tuiChevron>
+                <label tuiLabel>Временная зона</label>
+                <input tuiSelect [ngModel]="timezone()" (ngModelChange)="timezone.set($event)" name="timezone" />
+                <tui-data-list-wrapper *tuiDropdown [items]="timezoneOptions()" />
+            </tui-textfield>
+
+            <tui-textfield tuiChevron [content]="countrySelected">
+                <label tuiLabel>Страна</label>
+                <input tuiSelect [ngModel]="country()" (ngModelChange)="country.set($event)" name="country" />
+                <tui-data-list-wrapper *tuiDropdown [items]="countryOptions()" [itemContent]="countryOption" />
+            </tui-textfield>
+
+            <ng-template #countrySelected let-item>
+                @if (item?.value) {
+                    <img class="edit__flag" [src]="flagUrl(item.value)" [alt]="item?.label ?? ''" [title]="item?.label ?? ''" />
+                }
+                {{ item?.label }}
+            </ng-template>
+
+            <ng-template #countryOption let-item>
+                @if (item.value) {
+                    <img class="edit__flag" [src]="flagUrl(item.value)" [alt]="item.label" [title]="item.label" />
+                }
+                {{ item.label }}
+            </ng-template>
+
+            <tui-textfield>
+                <label tuiLabel>ID ВКонтакте</label>
+                <input tuiInput name="vk" maxlength="255" placeholder="id123456789" [ngModel]="vk()" (ngModelChange)="vk.set($event)" />
+            </tui-textfield>
+
+            <app-bbcode-editor label="Дополнительная информация" name="info" [limit]="5000" [value]="info()" (valueChange)="info.set($event)" />
+
+            <div class="app-actions">
+                <button tuiButton type="submit" size="s" [disabled]="saving()">Сохранить</button>
+                <a tuiButton size="s" appearance="flat" [routerLink]="['/user/profile', username()]">Отмена</a>
+            </div>
+        </form>
+    }
+</section>

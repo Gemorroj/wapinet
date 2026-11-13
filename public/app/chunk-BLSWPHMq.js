@@ -1,0 +1,1 @@
+var r=[`КБ`,`МБ`,`ГБ`];function i(e){if(e<1024)return`${e} \u0411`;let t=e/1024,n=0;for(;t>=1024&&n<r.length-1;)t/=1024,n++;return`${t.toFixed(t>=10?0:1)} ${r[n]}`}export{i as t};

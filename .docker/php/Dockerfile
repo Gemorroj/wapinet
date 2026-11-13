@@ -31,15 +31,15 @@ RUN set -eux; \
 
 # GeoIP
 RUN set -xe \
-    && curl -L -o /GeoLite2-Country.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-Country.mmdb \
-    && chmod 644 /GeoLite2-Country.mmdb
+    && curl -L -o /GeoLite2-City.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-City.mmdb \
+    && chmod 644 /GeoLite2-City.mmdb
 
 # 7zip
 RUN set -xe \
     && cd /opt \
-    && mkdir 7z2605-linux-x64 \
-    && cd /opt/7z2605-linux-x64 \
-    && curl -fL -o 7z.tar.xz "https://github.com/ip7z/7zip/releases/download/26.05/7z2605-linux-x64.tar.xz" \
+    && mkdir 7z2606-linux-x64 \
+    && cd /opt/7z2606-linux-x64 \
+    && curl -fL -o 7z.tar.xz "https://github.com/ip7z/7zip/releases/download/26.06/7z2606-linux-x64.tar.xz" \
     && tar xJf 7z.tar.xz \
     && rm -f 7z.tar.xz
 

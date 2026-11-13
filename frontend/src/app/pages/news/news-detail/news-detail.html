@@ -1,0 +1,30 @@
+<section class="news-detail app-page">
+    <app-breadcrumbs [items]="breadcrumbs()" />
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    }
+
+    @if (news(); as item) {
+        <h1 class="app-title">{{ item.subject }}</h1>
+
+        <article class="app-comment">
+            <header class="app-comment__head">
+                <span class="app-comment__meta">Опубликовано {{ item.createdAt | relativeDate }}</span>
+                @if (item.updatedAt) {
+                    <span class="app-comment__meta">Обновлено {{ item.updatedAt | relativeDate }}</span>
+                }
+            </header>
+
+            <div class="app-comment__body">
+                <div class="news-detail__content" appCodeHighlight [innerHTML]="item.bodyHtml"></div>
+            </div>
+        </article>
+
+        <app-vk-comments [xid]="'news-' + item.id" />
+    }
+</section>
