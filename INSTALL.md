@@ -202,7 +202,7 @@ index gist
     charset_table = 0..9, english, russian, _
 }' > /etc/manticoresearch/manticore.conf
 
-echo '0 * * * * manticore indexer --rotate --all' > /etc/cron.d/manticore
+echo '0 2 * * * manticore /usr/bin/indexer --rotate --all >> /var/log/manticore/indexer.log 2>&1' > /etc/cron.d/manticore
 
 
 # composer
