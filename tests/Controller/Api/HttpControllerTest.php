@@ -33,4 +33,3 @@ final class HttpControllerTest extends WebTestCaseWapinet
         static::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }
-

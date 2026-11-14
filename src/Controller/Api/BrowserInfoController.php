@@ -67,6 +67,3 @@ final class BrowserInfoController extends AbstractController
         return $ips;
     }
 }
-
-
-

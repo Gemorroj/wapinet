@@ -145,4 +145,3 @@ final readonly class UserService
         return null !== $value && '' !== \trim($value) ? \trim($value) : null;
     }
 }
-

@@ -94,4 +94,3 @@ final class HashControllerTest extends WebTestCaseWapinet
         static::assertResponseStatusCodeSame(422);
     }
 }
-

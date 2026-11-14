@@ -4,9 +4,9 @@ namespace App\Service\FileContent;
 
 use App\Entity\File as EntityFile;
 use App\Entity\File\Meta as FileMeta;
-use App\Service\FileContent\Apk as ApkHelper;
-use App\Service\FileContent\Backend\Ffmpeg as FfmpegHelper;
-use App\Service\FileContent\Backend\Midi as MidiHelper;
+use App\Service\FileContent\Android\Apk as ApkHelper;
+use App\Service\FileContent\Audio\Midi as MidiHelper;
+use App\Service\FileContent\Ffmpeg as FfmpegHelper;
 use App\Service\FileContent\Torrent as TorrentHelper;
 use Imagine\Image\AbstractImagine;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -80,7 +80,10 @@ final readonly class MetadataExtractor
 
         if ($file->isMidi()) {
             $duration = $this->midiHelper->getDuration($file->getFile()->getPathname());
-            $fileMeta->set('duration', $duration);
+
+            if (null !== $duration) {
+                $fileMeta->set('duration', $duration);
+            }
 
             return $fileMeta;
         }

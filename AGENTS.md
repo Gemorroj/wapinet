@@ -56,5 +56,6 @@ Symfony 8.2 / PHP 8.5 + Angular 22 / Taiga UI 5 (сайт wapinet.ru).
 
 ## Правила изменений
 
+- Тесты повторяют структуру `src`: путь файла и namespace совпадают с тестируемым классом.
 - Новый код покрывать тестами: backend — PHPUnit, frontend — Vitest/Angular TestBed с моками API.
 - Использовать возможности PhpStorm: инспекции, реформат, run configurations, Xdebug.

@@ -6,9 +6,9 @@ namespace App\Controller\Api;
 
 use App\Dto\Api\Archiver\ArchiveResponse;
 use App\Dto\Api\Archiver\ArchiveSourceRequest;
-use App\Service\Api\RateLimit;
 use App\Service\Api\Archiver\Archiver;
 use App\Service\Api\Archiver\ArchiveSourceResolver;
+use App\Service\Api\RateLimit;
 use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -223,7 +223,3 @@ final class ArchiverController extends AbstractController
         return $response;
     }
 }
-
-
-
-

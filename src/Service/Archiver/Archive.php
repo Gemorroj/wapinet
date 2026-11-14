@@ -2,7 +2,6 @@
 
 namespace App\Service\Archiver;
 
-use App\Service\Archiver\ArchiverException;
 use App\Service\ByteSize;
 use Symfony\Component\HttpFoundation\File\File;
 

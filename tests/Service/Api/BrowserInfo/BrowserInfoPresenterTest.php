@@ -92,5 +92,3 @@ final class BrowserInfoPresenterTest extends TestCase
         );
     }
 }
-
-

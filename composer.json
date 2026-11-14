@@ -66,7 +66,6 @@
         "geoip2/geoip2": "^3.4",
         "php-ffmpeg/php-ffmpeg": "^1.4",
         "riverline/multipart-parser": "^2.3",
-        "stdtabs/phptabs": "dev-fixes-php-warnings",
 
         "gemorroj/whordap": "dev-master",
         "gemorroj/stop-spam": "^4.0",
@@ -98,12 +97,6 @@
         "phpstan/phpstan-doctrine": "^2.1",
         "friendsofphp/php-cs-fixer": "^3.95"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/Gemorroj/phptabs"
-        }
-    ],
     "config": {
         "allow-plugins": {
             "php-http/discovery": true,

@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\File;
 use App\Entity\User;
-use App\Service\File\FileManager;
+use App\Service\FileManager;
 use App\Twig\Extension\Size;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminRoute;

@@ -32,7 +32,8 @@ final class PhpCodeObfuscatorTest extends TestCase
     }
 
     public function testAddsOpeningTagWhenMissing(): void
-    {        $result = new PhpCodeObfuscator()->obfuscate('echo 1 + 1;');
+    {
+        $result = new PhpCodeObfuscator()->obfuscate('echo 1 + 1;');
 
         self::assertStringStartsWith('<?php', $result);
     }
@@ -55,5 +56,3 @@ final class PhpCodeObfuscatorTest extends TestCase
         new PhpCodeObfuscator()->obfuscate('<?php if (');
     }
 }
-
-

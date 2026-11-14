@@ -80,4 +80,3 @@ final readonly class IpReputationLookup
         );
     }
 }
-

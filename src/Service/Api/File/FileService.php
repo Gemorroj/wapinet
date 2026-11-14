@@ -12,7 +12,7 @@ use App\Message\FileConvertMessage;
 use App\Message\FilePrepareMessage;
 use App\Repository\FileRepository;
 use App\Repository\TagRepository;
-use App\Service\File\FileManager as FileHelper;
+use App\Service\FileManager as FileHelper;
 use App\Service\MimeGuesser;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

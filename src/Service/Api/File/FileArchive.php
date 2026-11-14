@@ -2,7 +2,7 @@
 
 namespace App\Service\Api\File;
 
-use App\Dto\Api\Archive\ArchiveEntryResponse;
+use App\Dto\Api\ArchiveEntryResponse;
 use App\Entity\File;
 use App\Service\Archiver\Archive7z;
 use Archive7z\Model\Entry;

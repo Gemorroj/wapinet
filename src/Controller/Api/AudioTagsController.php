@@ -8,8 +8,8 @@ use App\Dto\Api\AudioTags\AudioTagsCreateRequest;
 use App\Dto\Api\AudioTags\AudioTagsInfoResponse;
 use App\Dto\Api\AudioTags\AudioTagsUpdateRequest;
 use App\Service\Api\AudioTags\AudioTagsException;
-use App\Service\Api\AudioTags\AudioTagsManager;
 use App\Service\Api\AudioTags\AudioTagsNotFoundException;
+use App\Service\Api\AudioTags\AudioTagsService;
 use App\Service\Api\AudioTags\AudioTagsStorage;
 use App\Service\Api\RateLimit;
 use App\Service\Translit;
@@ -51,14 +51,14 @@ final class AudioTagsController extends AbstractController
         #[MapRequestPayload(mapWhenEmpty: true)]
         AudioTagsCreateRequest $payload,
         Request $request,
-        AudioTagsManager $manager,
+        AudioTagsService $service,
         #[Autowire(service: 'limiter.api_audio_tags')]
         RateLimiterFactory $limiter,
     ): JsonResponse {
         RateLimit::consumeForIp($limiter, $request);
 
         try {
-            return $this->json($manager->create($payload), Response::HTTP_CREATED);
+            return $this->json($service->create($payload), Response::HTTP_CREATED);
         } catch (AudioTagsException $exception) {
             throw new UnprocessableEntityHttpException($exception->getMessage(), $exception);
         }
@@ -71,10 +71,10 @@ final class AudioTagsController extends AbstractController
         content: new Model(type: AudioTagsInfoResponse::class),
     )]
     #[OA\Response(response: 404, description: 'File not found or expired')]
-    public function show(string $id, AudioTagsManager $manager): JsonResponse
+    public function show(string $id, AudioTagsService $service): JsonResponse
     {
         try {
-            return $this->json($manager->info($id));
+            return $this->json($service->info($id));
         } catch (AudioTagsNotFoundException $exception) {
             throw new NotFoundHttpException($exception->getMessage(), $exception);
         }
@@ -101,14 +101,14 @@ final class AudioTagsController extends AbstractController
         #[MapRequestPayload(mapWhenEmpty: true)]
         AudioTagsUpdateRequest $payload,
         Request $request,
-        AudioTagsManager $manager,
+        AudioTagsService $service,
         #[Autowire(service: 'limiter.api_audio_tags')]
         RateLimiterFactory $limiter,
     ): JsonResponse {
         RateLimit::consumeForIp($limiter, $request);
 
         try {
-            return $this->json($manager->update($id, $payload));
+            return $this->json($service->update($id, $payload));
         } catch (AudioTagsNotFoundException $exception) {
             throw new NotFoundHttpException($exception->getMessage(), $exception);
         } catch (AudioTagsException $exception) {
@@ -128,14 +128,14 @@ final class AudioTagsController extends AbstractController
     public function clear(
         string $id,
         Request $request,
-        AudioTagsManager $manager,
+        AudioTagsService $service,
         #[Autowire(service: 'limiter.api_audio_tags')]
         RateLimiterFactory $limiter,
     ): JsonResponse {
         RateLimit::consumeForIp($limiter, $request);
 
         try {
-            return $this->json($manager->clearTags($id));
+            return $this->json($service->clearTags($id));
         } catch (AudioTagsNotFoundException $exception) {
             throw new NotFoundHttpException($exception->getMessage(), $exception);
         } catch (AudioTagsException $exception) {
@@ -183,10 +183,10 @@ final class AudioTagsController extends AbstractController
         content: new OA\MediaType(mediaType: 'image/*'),
     )]
     #[OA\Response(response: 404, description: 'Cover not found')]
-    public function cover(string $id, AudioTagsManager $manager): Response
+    public function cover(string $id, AudioTagsService $service): Response
     {
         try {
-            $cover = $manager->cover($id);
+            $cover = $service->cover($id);
         } catch (AudioTagsNotFoundException $exception) {
             throw new NotFoundHttpException($exception->getMessage(), $exception);
         }
@@ -199,9 +199,9 @@ final class AudioTagsController extends AbstractController
 
     #[Route('/{id}', name: 'delete', requirements: ['id' => '[a-f0-9]{32}'], methods: ['DELETE'])]
     #[OA\Response(response: 204, description: 'Temporary file removed')]
-    public function delete(string $id, AudioTagsManager $manager): Response
+    public function delete(string $id, AudioTagsService $service): Response
     {
-        $manager->delete($id);
+        $service->delete($id);
 
         return new Response(null, Response::HTTP_NO_CONTENT);
     }

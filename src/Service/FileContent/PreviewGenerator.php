@@ -6,6 +6,10 @@ namespace App\Service\FileContent;
 
 use App\Entity\File;
 use App\Enum\FileMime;
+use App\Service\FileContent\Android\AndroidApp;
+use App\Service\FileContent\Audio\AudioProcessor;
+use App\Service\FileContent\Java\JavaApp;
+use App\Service\FileContent\Video\VideoProcessor;
 use App\Service\FileSystem\Storage;
 
 /**
@@ -22,8 +26,8 @@ class PreviewGenerator
     private const string MISSING_SUFFIX = '.no-preview';
 
     public function __construct(
-        private readonly Video $video,
-        private readonly Audio $audio,
+        private readonly VideoProcessor $video,
+        private readonly AudioProcessor $audio,
         private readonly JavaApp $javaApp,
         private readonly AndroidApp $androidApp,
         private readonly Storage $storage,

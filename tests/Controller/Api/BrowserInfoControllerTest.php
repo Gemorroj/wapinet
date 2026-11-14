@@ -48,4 +48,3 @@ final class BrowserInfoControllerTest extends WebTestCaseWapinet
         static::assertStringNotContainsString('session=secret', (string) \json_encode($data));
     }
 }
-

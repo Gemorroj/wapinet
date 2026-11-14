@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Service\Api\BrowserInfo;
 
-use App\Dto\Api\Network\BrowserGeoInfo;
 use App\Dto\Api\BrowserInfo\BrowserInfoResponse;
 use App\Dto\Api\BrowserInfo\BrowserIpGeo;
 use App\Dto\Api\BrowserInfo\BrowserIpReputation;
 use App\Dto\Api\BrowserInfo\BrowserVpnInfo;
+use App\Dto\Api\Network\BrowserGeoInfo;
 use App\Service\Network\DnsLookup;
 use App\Service\Network\IpAddress;
 use App\Service\Network\IpGeoLookup;
@@ -263,5 +263,3 @@ final readonly class BrowserInfoPresenter
         return null === $value || '' === $value ? null : (string) $value;
     }
 }
-
-

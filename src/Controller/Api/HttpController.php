@@ -6,8 +6,8 @@ namespace App\Controller\Api;
 
 use App\Dto\Api\Http\HttpCallRequest;
 use App\Dto\Api\Http\HttpCallResponse;
-use App\Service\Api\RateLimit;
 use App\Service\Api\Http\HttpRequester;
+use App\Service\Api\RateLimit;
 use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,7 +46,3 @@ final class HttpController extends AbstractController
         return $this->json($requester->send($payload));
     }
 }
-
-
-
-

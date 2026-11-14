@@ -7,4 +7,3 @@ namespace App\Service\Api\Obfuscator;
 final class ObfuscatorException extends \RuntimeException
 {
 }
-

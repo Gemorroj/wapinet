@@ -130,5 +130,3 @@ final readonly class WhoisDnsLookup implements WhoisDnsLookupInterface
         return \array_values($result);
     }
 }
-
-

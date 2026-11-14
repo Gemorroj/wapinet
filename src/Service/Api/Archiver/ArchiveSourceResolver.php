@@ -27,5 +27,3 @@ final readonly class ArchiveSourceResolver
         return [$this->remoteFileFetcher->fetch((string) $source->url)];
     }
 }
-
-

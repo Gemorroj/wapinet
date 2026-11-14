@@ -40,4 +40,3 @@ final readonly class FileUploadGuard
         }
     }
 }
-

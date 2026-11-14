@@ -2,7 +2,7 @@
 
 namespace App\Dto\Api\File;
 
-use App\Dto\Api\Archive\ArchiveEntryResponse;
+use App\Dto\Api\ArchiveEntryResponse;
 
 final readonly class ArchiveListResponse
 {

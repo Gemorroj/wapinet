@@ -7,8 +7,8 @@ namespace App\Service\Api\Validator;
 use App\Dto\Api\Validator\ValidatorMessageResponse;
 use App\Dto\Api\Validator\ValidatorRequest;
 use App\Dto\Api\Validator\ValidatorResponse;
-use App\Service\Api\CodeSourceLoader;
 use App\Service\CssValidator;
+use App\Service\FileContent\SourceLoader;
 use App\Service\HtmlValidator;
 use App\Service\PhpValidator;
 use CSSValidator\Options\ProfileType;
@@ -23,7 +23,7 @@ final readonly class ValidatorRunner implements ValidatorRunnerInterface
         private PhpValidator $phpValidator,
         private HtmlValidator $htmlValidator,
         private CssValidator $cssValidator,
-        private CodeSourceLoader $sourceLoader,
+        private SourceLoader $sourceLoader,
     ) {
     }
 

@@ -7,8 +7,8 @@ namespace App\Controller\Api;
 use App\Dto\Api\Validator\CssValidatorRequest;
 use App\Dto\Api\Validator\ValidatorResponse;
 use App\Service\Api\RateLimit;
-use App\Service\Api\CodeSourceException;
 use App\Service\Api\Validator\ValidatorRunnerInterface;
+use App\Service\FileContent\SourceException;
 use CSSValidator\Exception as CssValidatorException;
 use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
@@ -51,13 +51,10 @@ final class CssValidatorController extends AbstractController
 
         try {
             return $this->json($runner->validateCss($payload->code, $payload->url, $payload->profile, $payload->warnings));
-        } catch (CodeSourceException $exception) {
+        } catch (SourceException $exception) {
             throw new UnprocessableEntityHttpException($exception->getMessage(), $exception);
         } catch (CssValidatorException $exception) {
             throw new HttpException(Response::HTTP_BAD_GATEWAY, 'Сервис проверки W3C недоступен.', $exception);
         }
     }
 }
-
-
-

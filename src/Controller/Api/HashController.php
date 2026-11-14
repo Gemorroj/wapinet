@@ -6,8 +6,8 @@ namespace App\Controller\Api;
 
 use App\Dto\Api\Hash\HashRequest;
 use App\Dto\Api\Hash\HashResponse;
-use App\Service\Api\RateLimit;
 use App\Service\Api\Hash\UrlHasher;
+use App\Service\Api\RateLimit;
 use App\Service\FileSystem\RemoteFileException;
 use App\Service\Network\OutboundUrlBlockedException;
 use Nelmio\ApiDocBundle\Attribute\Model;
@@ -58,7 +58,3 @@ final class HashController extends AbstractController
         }
     }
 }
-
-
-
-

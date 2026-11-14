@@ -118,4 +118,3 @@ final class PhpObfuscatorControllerTest extends WebTestCaseWapinet
         static::assertResponseStatusCodeSame(422);
     }
 }
-

@@ -22,4 +22,3 @@ final readonly class ObfuscatorRequest
     ) {
     }
 }
-

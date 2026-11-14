@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Service\Api\Archiver;
 
-use App\Dto\Api\Archive\ArchiveEntryResponse;
+use App\Dto\Api\ArchiveEntryResponse;
 use App\Dto\Api\Archiver\ArchiveResponse;
 use App\Entity\File\FileUrl;
-use App\Service\Archiver\ArchiverException;
 use App\Service\Archiver\Archive7z;
 use App\Service\Archiver\ArchiveLimits;
+use App\Service\Archiver\ArchiverException;
 use App\Service\Archiver\ArchiveZip;
 use App\Service\ByteSize;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -398,5 +398,3 @@ final readonly class Archiver
         return 'archive'.\bin2hex(\random_bytes(8));
     }
 }
-
-

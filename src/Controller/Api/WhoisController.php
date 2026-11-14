@@ -65,7 +65,3 @@ final class WhoisController extends AbstractController
         }
     }
 }
-
-
-
-

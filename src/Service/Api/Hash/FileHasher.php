@@ -43,7 +43,7 @@ final readonly class FileHasher
      */
     public function hash(string $path, array $algorithms): array
     {
-        $handle = @\fopen($path, 'rb');
+        $handle = @\fopen($path, 'r');
 
         if (false === $handle) {
             throw new \RuntimeException('Не удалось открыть файл для чтения.');
@@ -86,4 +86,3 @@ final readonly class FileHasher
         return $hashes;
     }
 }
-

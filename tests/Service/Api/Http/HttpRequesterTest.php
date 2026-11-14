@@ -231,5 +231,3 @@ final class HttpRequesterTest extends TestCase
         return new HttpRequester($client, new OutboundUrlGuard(new DnsLookup($client, new ArrayAdapter())));
     }
 }
-
-

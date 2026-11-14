@@ -66,4 +66,3 @@ final readonly class GistService
         $this->entityManager->flush();
     }
 }
-

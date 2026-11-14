@@ -7,4 +7,3 @@ namespace App\Service\Api\Whois;
 final class WhoisException extends \Exception
 {
 }
-

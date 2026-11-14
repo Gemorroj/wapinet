@@ -120,5 +120,3 @@ final class ValidatorRunnerTest extends TestCase
         self::assertSame(5, $result->messages[1]->line);
     }
 }
-
-

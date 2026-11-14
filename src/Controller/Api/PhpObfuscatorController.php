@@ -7,11 +7,11 @@ namespace App\Controller\Api;
 use App\Dto\Api\Obfuscator\ObfuscatorInfoResponse;
 use App\Dto\Api\Obfuscator\ObfuscatorRequest;
 use App\Dto\Api\Obfuscator\ObfuscatorResponse;
-use App\Service\Api\CodeSourceException;
-use App\Service\Api\CodeSourceLoader;
 use App\Service\Api\Obfuscator\ObfuscatorException;
 use App\Service\Api\Obfuscator\ObfuscatorRunner;
 use App\Service\Api\RateLimit;
+use App\Service\FileContent\SourceException;
+use App\Service\FileContent\SourceLoader;
 use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -59,7 +59,7 @@ final class PhpObfuscatorController extends AbstractController
         ObfuscatorRequest $payload,
         Request $request,
         ObfuscatorRunner $runner,
-        CodeSourceLoader $sourceLoader,
+        SourceLoader $sourceLoader,
         #[Autowire(service: 'limiter.api_obfuscator_run')]
         RateLimiterFactory $obfuscatorLimiter,
     ): JsonResponse {
@@ -70,7 +70,7 @@ final class PhpObfuscatorController extends AbstractController
             $result = $runner->run($code, $payload->removeComments, $payload->level);
 
             return $this->json(new ObfuscatorResponse($result, \strlen($code), \strlen($result)));
-        } catch (CodeSourceException|ObfuscatorException $exception) {
+        } catch (SourceException|ObfuscatorException $exception) {
             throw new UnprocessableEntityHttpException($exception->getMessage(), $exception);
         } catch (\Exception $exception) {
             throw new HttpException(Response::HTTP_BAD_GATEWAY, 'Не удалось проверить результат обфускации.', $exception);

@@ -11,4 +11,3 @@ interface WhoisGatewayInterface
      */
     public function lookup(string $query, string $protocol): array;
 }
-

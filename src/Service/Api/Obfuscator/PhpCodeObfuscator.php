@@ -62,4 +62,3 @@ final readonly class PhpCodeObfuscator implements PhpCodeObfuscatorInterface
         return $code;
     }
 }
-

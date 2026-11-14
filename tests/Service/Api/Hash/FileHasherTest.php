@@ -92,5 +92,3 @@ final class FileHasherTest extends TestCase
         new FileHasher()->hash($this->path.'-missing', ['md5']);
     }
 }
-
-

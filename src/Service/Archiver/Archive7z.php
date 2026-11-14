@@ -2,7 +2,6 @@
 
 namespace App\Service\Archiver;
 
-use App\Service\Archiver\ArchiverException;
 use Archive7z\Archive7z as Base7zArchive;
 use Archive7z\Config\Options;
 use Archive7z\Exception\ExceptionInterface;

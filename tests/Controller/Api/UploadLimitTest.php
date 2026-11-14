@@ -42,4 +42,3 @@ final class UploadLimitTest extends WebTestCaseWapinet
         return \json_decode((string) $client->getResponse()->getContent(), true, 512, \JSON_THROW_ON_ERROR);
     }
 }
-

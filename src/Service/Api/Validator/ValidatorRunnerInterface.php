@@ -21,5 +21,3 @@ interface ValidatorRunnerInterface
         ?WarningType $warnings = null,
     ): ValidatorResponse;
 }
-
-

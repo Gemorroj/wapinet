@@ -47,5 +47,3 @@ final readonly class WhoisLookup
         );
     }
 }
-
-

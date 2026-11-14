@@ -383,5 +383,3 @@ final class WhoisParser
         return \trim($value);
     }
 }
-
-

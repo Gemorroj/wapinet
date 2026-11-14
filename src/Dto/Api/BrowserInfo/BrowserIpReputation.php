@@ -18,4 +18,3 @@ final readonly class BrowserIpReputation
     ) {
     }
 }
-

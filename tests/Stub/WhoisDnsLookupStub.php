@@ -14,5 +14,3 @@ final class WhoisDnsLookupStub implements WhoisDnsLookupInterface
         return WhoisDnsInfo::empty();
     }
 }
-
-

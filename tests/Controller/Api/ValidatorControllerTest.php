@@ -156,4 +156,3 @@ final class ValidatorControllerTest extends WebTestCaseWapinet
         static::assertResponseStatusCodeSame(422);
     }
 }
-

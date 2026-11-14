@@ -68,4 +68,3 @@ final class WhoisControllerTest extends WebTestCaseWapinet
         static::assertResponseStatusCodeSame(422);
     }
 }
-

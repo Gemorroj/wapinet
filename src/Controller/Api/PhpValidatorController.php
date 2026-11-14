@@ -7,9 +7,9 @@ namespace App\Controller\Api;
 use App\Dto\Api\Validator\PhpValidatorInfoResponse;
 use App\Dto\Api\Validator\ValidatorRequest;
 use App\Dto\Api\Validator\ValidatorResponse;
-use App\Service\Api\CodeSourceException;
 use App\Service\Api\RateLimit;
 use App\Service\Api\Validator\ValidatorRunnerInterface;
+use App\Service\FileContent\SourceException;
 use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -64,7 +64,7 @@ final class PhpValidatorController extends AbstractController
 
         try {
             return $this->json($runner->validatePhp($payload->code, $payload->url));
-        } catch (CodeSourceException $exception) {
+        } catch (SourceException $exception) {
             throw new UnprocessableEntityHttpException($exception->getMessage(), $exception);
         } catch (\Exception $exception) {
             throw new HttpException(Response::HTTP_BAD_GATEWAY, 'Не удалось проверить PHP-код.', $exception);

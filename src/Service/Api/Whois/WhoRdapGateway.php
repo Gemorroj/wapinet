@@ -52,4 +52,3 @@ final readonly class WhoRdapGateway implements WhoisGatewayInterface
         return new WhoRdapClient(new NetworkClient($this->cache, null, $transport));
     }
 }
-

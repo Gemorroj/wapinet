@@ -8,8 +8,8 @@ use App\Entity\File;
 use App\Enum\FileConversion;
 use App\Message\FileConvertMessage;
 use App\Repository\FileRepository;
-use App\Service\FileContent\Audio;
-use App\Service\FileContent\Video;
+use App\Service\FileContent\Audio\AudioProcessor;
+use App\Service\FileContent\Video\VideoProcessor;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Vich\UploaderBundle\Storage\StorageInterface;
 
@@ -19,8 +19,8 @@ readonly class FileConvertHandler
     public function __construct(
         private FileRepository $fileRepository,
         private StorageInterface $storage,
-        private Audio $audio,
-        private Video $video,
+        private AudioProcessor $audio,
+        private VideoProcessor $video,
     ) {
     }
 

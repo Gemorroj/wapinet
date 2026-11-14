@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Service\FileContent\Backend\Ginfo;
+use App\Service\Health\Ginfo;
 use App\Service\Health\MessengerHealth;
 use App\Service\Search\ManticoreSearchEngine;
 use Doctrine\ORM\EntityManagerInterface;

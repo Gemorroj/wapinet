@@ -299,9 +299,6 @@
     "spatie/temporary-directory": {
         "version": "2.0.0"
     },
-    "stdtabs/phptabs": {
-        "version": "dev-master"
-    },
     "symfony/asset": {
         "version": "v4.0.8"
     },

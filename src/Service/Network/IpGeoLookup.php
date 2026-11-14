@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Network;
 
-use App\Dto\Api\Network\BrowserGeoInfo;
 use App\Dto\Api\BrowserInfo\BrowserGeoDatabase;
+use App\Dto\Api\Network\BrowserGeoInfo;
 use App\Service\Geoip2;
 
 final readonly class IpGeoLookup
@@ -60,4 +60,3 @@ final readonly class IpGeoLookup
         );
     }
 }
-

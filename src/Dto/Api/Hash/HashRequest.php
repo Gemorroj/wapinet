@@ -24,5 +24,3 @@ final readonly class HashRequest
     ) {
     }
 }
-
-

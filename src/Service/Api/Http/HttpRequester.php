@@ -363,5 +363,3 @@ final readonly class HttpRequester
         };
     }
 }
-
-

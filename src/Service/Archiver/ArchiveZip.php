@@ -2,7 +2,6 @@
 
 namespace App\Service\Archiver;
 
-use App\Service\Archiver\ArchiverException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\File\File;
 

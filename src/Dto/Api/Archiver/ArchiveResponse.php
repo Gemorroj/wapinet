@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Dto\Api\Archiver;
 
-use App\Dto\Api\Archive\ArchiveEntryResponse;
+use App\Dto\Api\ArchiveEntryResponse;
 
 final readonly class ArchiveResponse
 {
@@ -20,4 +20,3 @@ final readonly class ArchiveResponse
     ) {
     }
 }
-

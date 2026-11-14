@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aeae8368e416b9ff5eb7f0488e225f38",
+    "content-hash": "1c6a499ef205ee609b31716b051b55a3",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -3909,60 +3909,6 @@
             ],
             "time": "2026-06-22T07:55:44+00:00",
             "published-time": "2026-06-22T07:55:53+00:00"
-        },
-        {
-            "name": "stdtabs/phptabs",
-            "version": "dev-fixes-php-warnings",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Gemorroj/phptabs.git",
-                "reference": "ac8302f4be9a62d3a3fc28fd05e3a9761adbf00e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/phptabs/zipball/ac8302f4be9a62d3a3fc28fd05e3a9761adbf00e",
-                "reference": "ac8302f4be9a62d3a3fc28fd05e3a9761adbf00e",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "<12"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PhpTabs\\": "src/PhpTabs/",
-                    "PhpTabsTest\\": "test/PhpTabs/"
-                }
-            },
-            "license": [
-                "LGPL-2.1+"
-            ],
-            "description": "A PHP library for reading, writing and rendering Guitar Pro and MIDI files",
-            "homepage": "https://phptabs.readthedocs.io/",
-            "keywords": [
-                "MIDI",
-                "guitar",
-                "music",
-                "tablature",
-                "tabs"
-            ],
-            "support": {
-                "source": "https://github.com/Gemorroj/phptabs/tree/fixes-php-warnings"
-            },
-            "funding": [
-                {
-                    "type": "github",
-                    "url": "https://github.com/landrok"
-                },
-                {
-                    "type": "ko_fi",
-                    "url": "https://ko-fi.com/landrok"
-                }
-            ],
-            "time": "2025-12-29T17:06:33+00:00"
         },
         {
             "name": "symfony/asset",
@@ -13503,7 +13449,6 @@
         "gemorroj/whordap": 20,
         "gemorroj/xbbcode": 20,
         "james-heinrich/getid3": 20,
-        "stdtabs/phptabs": 20,
         "symfony/asset": 10,
         "symfony/browser-kit": 10,
         "symfony/console": 10,

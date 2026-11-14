@@ -10,5 +10,3 @@ interface WhoisDnsLookupInterface
 {
     public function lookup(string $query, string $kind): WhoisDnsInfo;
 }
-
-

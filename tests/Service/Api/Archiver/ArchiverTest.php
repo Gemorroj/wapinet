@@ -263,5 +263,3 @@ final class ArchiverTest extends TestCase
         return new UploadedFile($path, $name, null, null, true);
     }
 }
-
-

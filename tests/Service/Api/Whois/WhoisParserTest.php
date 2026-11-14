@@ -154,4 +154,3 @@ final class WhoisParserTest extends TestCase
         static::assertCount(2, $response->events);
     }
 }
-
