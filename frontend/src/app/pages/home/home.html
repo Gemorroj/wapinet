@@ -14,42 +14,38 @@
         ></audio>
     </header>
 
-    @if (stats(); as data) {
-        <section tuiCardLarge="normal" appearance="floating">
-            <div class="home__grid">
-                <a tuiCell routerLink="/files">
-                    <tui-icon icon="@tui.folder" class="home__icon" />
-                    <div tuiTitle>
-                        Файлообменник
-                        <div tuiSubtitle>Файлов: {{ data.files }}</div>
-                    </div>
-                </a>
-                <a tuiCell href="https://forum.wapinet.ru" target="_blank" rel="noopener noreferrer">
-                    <tui-icon icon="@tui.messages-square" class="home__icon" />
-                    <div tuiTitle>
-                        Форум
-                        @if (data.forumTopics !== null) {
-                            <div tuiSubtitle>{{ data.forumTopics }} тем · {{ data.forumPosts }} сообщений</div>
-                        }
-                    </div>
-                </a>
-                <a tuiCell routerLink="/gist">
-                    <tui-icon icon="@tui.notebook-pen" class="home__icon" />
-                    <div tuiTitle>
-                        Блоги
-                        <div tuiSubtitle>{{ data.gists }} записей</div>
-                    </div>
-                </a>
-                <a tuiCell routerLink="/guestbook">
-                    <tui-icon icon="@tui.message-circle" class="home__icon" />
-                    <div tuiTitle>
-                        Гостевая
-                        <div tuiSubtitle>{{ data.guestbook }} сообщений</div>
-                    </div>
-                </a>
-            </div>
-        </section>
-    }
+    <section tuiCardLarge="normal" appearance="floating">
+        <div class="home__grid">
+            <a tuiCell routerLink="/files">
+                <tui-icon icon="@tui.folder" class="home__icon" />
+                <div tuiTitle>
+                    Файлообменник
+                    <div tuiSubtitle>Файлов: {{ stats()?.files ?? '—' }}</div>
+                </div>
+            </a>
+            <a tuiCell href="https://forum.wapinet.ru" target="_blank" rel="noopener noreferrer">
+                <tui-icon icon="@tui.messages-square" class="home__icon" />
+                <div tuiTitle>
+                    Форум
+                    <div tuiSubtitle>{{ stats()?.forumTopics ?? '—' }} тем · {{ stats()?.forumPosts ?? '—' }} сообщений</div>
+                </div>
+            </a>
+            <a tuiCell routerLink="/gist">
+                <tui-icon icon="@tui.notebook-pen" class="home__icon" />
+                <div tuiTitle>
+                    Блоги
+                    <div tuiSubtitle>{{ stats()?.gists ?? '—' }} записей</div>
+                </div>
+            </a>
+            <a tuiCell routerLink="/guestbook">
+                <tui-icon icon="@tui.message-circle" class="home__icon" />
+                <div tuiTitle>
+                    Гостевая
+                    <div tuiSubtitle>{{ stats()?.guestbook ?? '—' }} сообщений</div>
+                </div>
+            </a>
+        </div>
+    </section>
 
     <section tuiCardLarge="normal" appearance="floating">
         <h2 tuiTitle="m">Файлы</h2>

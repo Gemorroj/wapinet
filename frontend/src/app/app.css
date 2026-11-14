@@ -2,6 +2,26 @@
     display: block;
 }
 
+.app-skip-link {
+    position: absolute;
+    inset-block-start: -100%;
+    inset-inline-start: 1rem;
+    z-index: 100;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--tui-border-normal);
+    border-radius: var(--tui-radius-s);
+    background: var(--app-surface);
+    color: var(--tui-text-primary);
+}
+
+.app-skip-link:focus {
+    inset-block-start: 0.5rem;
+}
+
+.app-main:focus {
+    outline: none;
+}
+
 .app-header {
     position: sticky;
     inset-block-start: 0;
@@ -135,6 +155,10 @@
 
     .app-menu-button {
         display: inline-flex;
+        margin-inline-start: 0;
+    }
+
+    .app-theme {
         margin-inline-start: auto;
     }
 

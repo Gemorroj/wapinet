@@ -1,6 +1,6 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, effect, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { TuiButton, TuiDataList, TuiDropdown, TuiIcon, TuiLink, TuiRoot } from '@taiga-ui/core';
+import { TUI_DARK_MODE, TuiButton, TuiDataList, TuiDropdown, TuiIcon, TuiLink, TuiRoot } from '@taiga-ui/core';
 
 import { Auth } from './core/auth/auth';
 import { SiteStats } from './core/api/site-stats';
@@ -19,6 +19,7 @@ interface NavItem {
 })
 export class App implements OnInit {
     protected readonly auth = inject(Auth);
+    protected readonly dark = inject(TUI_DARK_MODE);
     private readonly router = inject(Router);
     private readonly siteStats = inject(SiteStats);
 
@@ -33,12 +34,22 @@ export class App implements OnInit {
     protected readonly stats = this.siteStats.value;
     protected readonly menuOpen = signal(false);
 
+    constructor() {
+        effect(() => {
+            document.documentElement.setAttribute('tuiTheme', this.dark() ? 'dark' : 'light');
+        });
+    }
+
     async ngOnInit(): Promise<void> {
         await this.siteStats.load();
     }
 
     protected closeMenu(): void {
         this.menuOpen.set(false);
+    }
+
+    protected toggleTheme(): void {
+        this.dark.update((value) => !value);
     }
 
     protected async logout(): Promise<void> {

@@ -1,3 +1,12 @@
+.files__name {
+    display: inline-block;
+    max-inline-size: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+}
+
 .files__toolbar {
     position: sticky;
     inset-block-start: 3.5rem;

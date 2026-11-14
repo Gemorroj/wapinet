@@ -345,45 +345,38 @@ body [tuiCardLarge][data-appearance='floating'] {
     border-block-start: 1px solid var(--app-border);
 }
 
-@media (prefers-color-scheme: dark) {
-    :root,
-    body,
-    body[tuitheme] {
-        --app-canvas: #151b23;
-        --app-surface: #212830;
-        --app-surface-subtle: #262c36;
-        --app-border: #3d444d;
+:root[tuiTheme='dark'],
+:root[tuiTheme='dark'] body,
+body[tuitheme='dark'] {
+    --app-canvas: #151b23;
+    --app-surface: #212830;
+    --app-surface-subtle: #262c36;
+    --app-border: #3d444d;
 
-        --tui-text-primary: #f0f6fc;
-        --tui-text-secondary: #9198a1;
-        --tui-text-tertiary: #656c76;
-        --tui-background-base: var(--app-surface);
-        --tui-background-base-alt: var(--app-canvas);
-        --tui-background-elevation-1: var(--app-surface);
-        --tui-background-neutral-1: var(--app-surface-subtle);
-        --tui-border-normal: var(--app-border);
-        --tui-background-accent-1: #4493f8;
-        --tui-background-accent-1-hover: #58a6ff;
-        --tui-background-accent-1-pressed: #1f6feb;
-        --tui-text-action: #4493f8;
-        --tui-text-action-hover: #58a6ff;
-        --tui-status-positive: #3fb950;
-        --xbbcode-code-background: #151b23;
-        --xbbcode-code-text-color: #f0f6fc;
-        --xbbcode-code-border-color: #3d444d;
-        --xbbcode-code-footer-border-color: #3d444d;
-        --xbbcode-code-footer-text-color: #9198a1;
-        --hljs-comment: #9198a1;
-        --hljs-keyword: #ff7b72;
-        --hljs-string: #a5d6ff;
-        --hljs-number: #79c0ff;
-        --hljs-title: #d2a8ff;
-        --hljs-attr: #79c0ff;
-        --hljs-built-in: #ffa657;
-        --hljs-meta: #9198a1;
-        --hljs-deletion: #ffa198;
-        --hljs-addition: #7ee787;
-    }
+    --tui-text-primary: #f0f6fc;
+    --tui-text-secondary: #9198a1;
+    --tui-text-tertiary: #656c76;
+    --tui-background-base: var(--app-surface);
+    --tui-background-base-alt: var(--app-canvas);
+    --tui-background-elevation-1: var(--app-surface);
+    --tui-background-neutral-1: var(--app-surface-subtle);
+    --tui-border-normal: var(--app-border);
+    --tui-background-accent-1: #4493f8;
+    --tui-background-accent-1-hover: #58a6ff;
+    --tui-background-accent-1-pressed: #1f6feb;
+    --tui-text-action: #4493f8;
+    --tui-text-action-hover: #58a6ff;
+    --tui-status-positive: #3fb950;
+    --hljs-comment: #9198a1;
+    --hljs-keyword: #ff7b72;
+    --hljs-string: #a5d6ff;
+    --hljs-number: #79c0ff;
+    --hljs-title: #d2a8ff;
+    --hljs-attr: #79c0ff;
+    --hljs-built-in: #ffa657;
+    --hljs-meta: #9198a1;
+    --hljs-deletion: #ffa198;
+    --hljs-addition: #7ee787;
 }
 
 .hljs {

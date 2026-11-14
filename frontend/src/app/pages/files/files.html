@@ -104,7 +104,9 @@
                 }
 
                 <div tuiTitle>
-                    <a [routerLink]="['/files', file.id]">{{ file.name }}</a>
+                    <a [routerLink]="['/files', file.id]" [title]="file.name">
+                        <span class="files__name">{{ file.name }}</span>
+                    </a>
                     @if (file.description) {
                         <div tuiSubtitle>{{ file.description }}</div>
                     }

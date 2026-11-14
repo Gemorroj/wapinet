@@ -47,5 +47,21 @@ describe('App', () => {
         expect(text).toContain('Файлообменник');
         expect(text).toContain('Форум');
         expect(text).toContain('Онлайн: 5');
+        expect(fixture.nativeElement.querySelector('.app-skip-link')?.getAttribute('href')).toBe('#main-content');
+    });
+
+    it('switches the theme', async () => {
+        const fixture = TestBed.createComponent(App);
+
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        const button = fixture.nativeElement.querySelector('.app-theme') as HTMLButtonElement;
+        const initial = document.documentElement.getAttribute('tuiTheme');
+
+        button.click();
+        fixture.detectChanges();
+
+        expect(document.documentElement.getAttribute('tuiTheme')).not.toBe(initial);
     });
 });

@@ -1,4 +1,6 @@
 <tui-root>
+    <a class="app-skip-link" href="#main-content">Перейти к содержимому</a>
+
     <header class="app-header">
         <div class="app-header-inner">
             <a class="app-logo" routerLink="/">wapinet<span>.ru</span></a>
@@ -32,6 +34,18 @@
                     <a tuiLink routerLink="/registration">Регистрация</a>
                 }
             </nav>
+
+            <button
+                tuiButton
+                size="s"
+                appearance="flat"
+                class="app-theme"
+                type="button"
+                [attr.aria-label]="dark() ? 'Светлая тема' : 'Тёмная тема'"
+                (click)="toggleTheme()"
+            >
+                <tui-icon [icon]="dark() ? '@tui.sun' : '@tui.moon'" />
+            </button>
 
             <button
                 tuiButton
@@ -72,7 +86,7 @@
         </tui-data-list>
     </ng-template>
 
-    <main class="app-main">
+    <main id="main-content" class="app-main" tabindex="-1">
         <a class="app-ribbon" routerLink="/" aria-label="wapinet.ru">
             <img src="/resources/georg_lent_200.png" alt="" width="200" height="35" />
         </a>
@@ -89,7 +103,6 @@
                 <a tuiLink routerLink="/open-source">Open source</a>
                 <a tuiLink routerLink="/textbook">Учебники</a>
                 <a tuiLink routerLink="/video-courses">Видео-курсы</a>
-                <a tuiLink href="https://github.com/Gemorroj/wapinet" target="_blank" rel="noopener noreferrer">GitHub</a>
             </nav>
         </div>
     </footer>
