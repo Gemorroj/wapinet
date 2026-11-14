@@ -2088,12 +2088,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/xBBCode.git",
-                "reference": "27d08c9c387f5014ba3d35274a311a433225c59f"
+                "reference": "af0794cefaf9b5fd0e66ec72a99d394fe2a89d82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/xBBCode/zipball/27d08c9c387f5014ba3d35274a311a433225c59f",
-                "reference": "27d08c9c387f5014ba3d35274a311a433225c59f",
+                "url": "https://api.github.com/repos/Gemorroj/xBBCode/zipball/af0794cefaf9b5fd0e66ec72a99d394fe2a89d82",
+                "reference": "af0794cefaf9b5fd0e66ec72a99d394fe2a89d82",
                 "shasum": ""
             },
             "require": {
@@ -2134,8 +2134,8 @@
                 "issues": "https://github.com/Gemorroj/xBBCode/issues",
                 "source": "https://github.com/Gemorroj/xBBCode/tree/master"
             },
-            "time": "2026-11-14T19:27:37+00:00",
-            "published-time": "2026-11-14T19:27:46+00:00"
+            "time": "2026-11-14T19:42:55+00:00",
+            "published-time": "2026-11-14T19:43:05+00:00"
         },
         {
             "name": "geoip2/geoip2",
