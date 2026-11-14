@@ -1,4 +1,4 @@
-<tui-breadcrumbs [itemsLimit]="4">
+<tui-breadcrumbs [itemsLimit]="items.length + 2">
     @for (item of items; track $index; let last = $last) {
         <ng-template tuiItem>
             @if (item.link && !last) {

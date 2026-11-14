@@ -7,13 +7,26 @@ import { TuiCell, TuiIcon, TuiLoader, TuiNotificationDirective, TuiTitle } from 
 import { EventResponse } from '../../../api/generated/models';
 import { describeError } from '../../../core/api/problem-details';
 import { UsersApi } from '../../../core/api/users-api';
+import { AccountNav } from '../account-nav/account-nav';
 import { Breadcrumb, Breadcrumbs } from '../../../shared/breadcrumbs/breadcrumbs';
 import { RelativeDatePipe } from '../../../shared/relative-date/relative-date.pipe';
 import { Pagination } from '../../../shared/pagination/pagination';
 import { readPage } from '../../../core/router/page-query';
 
 @Component({
-    imports: [NgTemplateOutlet, Pagination, Breadcrumbs, RelativeDatePipe, RouterLink, TuiCell, TuiIcon, TuiLoader, TuiNotificationDirective, TuiTitle],
+    imports: [
+        AccountNav,
+        NgTemplateOutlet,
+        Pagination,
+        Breadcrumbs,
+        RelativeDatePipe,
+        RouterLink,
+        TuiCell,
+        TuiIcon,
+        TuiLoader,
+        TuiNotificationDirective,
+        TuiTitle,
+    ],
     selector: 'app-user-events',
     styleUrl: './events.css',
     templateUrl: './events.html',
@@ -24,7 +37,7 @@ export class UserEvents implements OnInit {
     private readonly router = inject(Router);
     private readonly destroyRef = inject(DestroyRef);
 
-    protected readonly breadcrumbs: Breadcrumb[] = [{ label: 'Главная', link: '/' }, { label: 'События' }];
+    protected readonly breadcrumbs: Breadcrumb[] = [{ label: 'Главная', link: '/' }, { label: 'Профиль', link: '/user/profile' }, { label: 'События' }];
     protected readonly items = signal<EventResponse[]>([]);
     protected readonly total = signal(0);
     protected readonly page = signal(1);

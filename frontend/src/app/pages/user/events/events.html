@@ -2,6 +2,8 @@
     <h1 class="app-sr-only">События</h1>
     <app-breadcrumbs [items]="breadcrumbs" />
 
+    <app-account-nav />
+
     @if (error()) {
         <div tuiNotification appearance="negative">{{ error() }}</div>
     }
@@ -29,7 +31,7 @@
             }
         } @empty {
             @if (!loading()) {
-                <div tuiNotification>Событий нет.</div>
+                <div tuiNotification>Событий не найдено.</div>
             }
         }
     </div>

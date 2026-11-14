@@ -69,18 +69,43 @@ describe('UserProfile', () => {
         expect(text).toContain('Файлы');
         expect(text).toContain('Блоги');
         expect(text).toContain('Друзья');
-        expect(
-            Array.from(fixture.nativeElement.querySelectorAll('.app-list [tuiBadge]') as NodeListOf<HTMLElement>)
-                .map((badge) => badge.textContent?.trim())
-                .filter((text): text is string => !!text),
-        ).toEqual(['3', '1', '2']);
+        expect(text).toContain('Файлов: 3');
+        expect(text).toContain('Записей: 1');
+        expect(text).toContain('Друзей: 2');
+        expect(text).toContain('На сайте с 01.01.2026');
+        expect(text).toContain('Онлайн');
         expect(text).toContain('ВКонтакте');
         expect(text).toContain('Павел');
-        expect((fixture.nativeElement.querySelector('.profile__vk-link img') as HTMLImageElement).src).toContain('https://vk.example/photo.jpg');
+        expect((fixture.nativeElement.querySelector('.profile__vk img') as HTMLImageElement).src).toContain('https://vk.example/photo.jpg');
         expect(text).toContain('Подписки');
-        expect(text).toContain('Редактировать');
-        expect(text).not.toContain('онлайн');
+        expect(text).toContain('Редактирование');
         expect(fixture.nativeElement.querySelectorAll('.online-badge').length).toBe(2);
+
+        fixture.destroy();
+    });
+
+    it('omits empty fields from the meta line', async () => {
+        profile.mockResolvedValueOnce({
+            ...profileData,
+            birthday: null,
+            country: null,
+            countryName: null,
+            infoHtml: null,
+            lastActivity: null,
+            sex: null,
+            vk: null,
+            vkProfile: null,
+        });
+
+        const fixture = TestBed.createComponent(UserProfile);
+
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        const text = fixture.nativeElement.textContent as string;
+
+        expect(text).not.toContain('Не указан');
+        expect(fixture.nativeElement.querySelector('.profile__vk')).toBeNull();
 
         fixture.destroy();
     });

@@ -27,7 +27,7 @@
         <tui-loader [loading]="true" />
     }
 
-    <app-user-list [items]="items()" [loading]="loading()" emptyText="Пользователей нет." />
+    <app-user-list [items]="items()" [loading]="loading()" emptyText="Пользователей не найдено." />
 
     <app-pagination [total]="total()" [perPage]="perPage()" [page]="page()" (pageChange)="goToPage($event)" />
 </section>

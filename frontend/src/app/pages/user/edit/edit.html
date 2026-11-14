@@ -1,6 +1,8 @@
 <section class="edit app-page">
     <app-breadcrumbs [items]="breadcrumbs" />
 
+    <app-account-nav />
+
     @if (error()) {
         <div tuiNotification appearance="negative">{{ error() }}</div>
     }

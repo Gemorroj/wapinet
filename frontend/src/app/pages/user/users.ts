@@ -9,7 +9,7 @@ import { describeError } from '../../core/api/problem-details';
 import { UsersApi } from '../../core/api/users-api';
 import { Breadcrumb, Breadcrumbs } from '../../shared/breadcrumbs/breadcrumbs';
 import { Pagination } from '../../shared/pagination/pagination';
-import { UserList } from '../../shared/user-list/user-list';
+import { UserList } from './user-list/user-list';
 import { readPage } from '../../core/router/page-query';
 
 @Component({

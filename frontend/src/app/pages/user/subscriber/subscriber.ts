@@ -6,10 +6,11 @@ import { TuiCardLarge } from '@taiga-ui/layout';
 
 import { describeError } from '../../../core/api/problem-details';
 import { UsersApi } from '../../../core/api/users-api';
+import { AccountNav } from '../account-nav/account-nav';
 import { Breadcrumb, Breadcrumbs } from '../../../shared/breadcrumbs/breadcrumbs';
 
 @Component({
-    imports: [Breadcrumbs, FormsModule, RouterLink, TuiButton, TuiCardLarge, TuiCheckbox, TuiLoader, TuiNotificationDirective],
+    imports: [AccountNav, Breadcrumbs, FormsModule, RouterLink, TuiButton, TuiCardLarge, TuiCheckbox, TuiLoader, TuiNotificationDirective],
     selector: 'app-user-subscriber',
     styleUrl: './subscriber.css',
     templateUrl: './subscriber.html',

@@ -1,9 +1,8 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, LowerCasePipe } from '@angular/common';
 import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TuiButton, TuiCell, TuiIcon, TuiLoader, TuiNotificationDirective, TuiTitle } from '@taiga-ui/core';
-import { TuiBadge } from '@taiga-ui/kit/components/badge';
 import { TuiCardLarge } from '@taiga-ui/layout';
 
 import { UserProfileResponse } from '../../../api/generated/models';
@@ -11,6 +10,7 @@ import { Auth } from '../../../core/auth/auth';
 import { countryFlagUrl } from '../../../core/browser/country-flag';
 import { describeError } from '../../../core/api/problem-details';
 import { UsersApi } from '../../../core/api/users-api';
+import { AccountNav } from '../account-nav/account-nav';
 import { Breadcrumb, Breadcrumbs } from '../../../shared/breadcrumbs/breadcrumbs';
 import { CodeHighlightDirective } from '../../../shared/code-highlight/code-highlight.directive';
 import { RelativeDatePipe } from '../../../shared/relative-date/relative-date.pipe';
@@ -18,12 +18,13 @@ import { UserAvatar } from '../../../shared/user-avatar/user-avatar';
 
 @Component({
     imports: [
+        AccountNav,
         Breadcrumbs,
         CodeHighlightDirective,
         DatePipe,
+        LowerCasePipe,
         RelativeDatePipe,
         RouterLink,
-        TuiBadge,
         TuiButton,
         TuiCardLarge,
         TuiCell,

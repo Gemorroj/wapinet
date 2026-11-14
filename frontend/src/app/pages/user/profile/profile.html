@@ -10,99 +10,100 @@
     }
 
     @if (profile(); as item) {
-        <section tuiCardLarge="normal" appearance="floating" class="profile__card">
-            <div class="profile__head">
-                <app-user-avatar [avatarUrl]="item.avatarUrl" [alt]="item.username" [isOnline]="item.isOnline" size="xl" />
-                <h1 class="app-title">{{ item.username }}</h1>
-            </div>
+        @if (item.canEdit) {
+            <app-account-nav />
+        }
 
-            <dl class="app-meta">
-                <dt>Пол</dt>
-                <dd>{{ sexLabel(item.sex) }}</dd>
-                <dt>Дата рождения</dt>
-                <dd>{{ item.birthday ? (item.birthday | date: 'dd.MM.yyyy') : 'Не указана' }}</dd>
-                <dt>Страна</dt>
-                <dd class="profile__country">
-                    @if (item.country) {
-                        <img class="profile__flag" [src]="flagUrl(item.country)" [alt]="item.countryName ?? ''" [title]="item.countryName ?? ''" />
-                    }
-                    {{ item.countryName ?? 'Не указана' }}
-                </dd>
-                <dt>Дата регистрации</dt>
-                <dd>{{ item.createdAt | relativeDate }}</dd>
-                <dt>Активность</dt>
-                <dd>{{ item.lastActivity ? (item.lastActivity | relativeDate) : 'Не заходил' }}</dd>
-            </dl>
+        <section tuiCardLarge="normal" appearance="floating" class="profile__card">
+            <header class="profile__head">
+                <app-user-avatar [avatarUrl]="item.avatarUrl" [alt]="item.username" [isOnline]="item.isOnline" size="xl" />
+
+                <div class="profile__identity">
+                    <h1 class="app-title">{{ item.username }}</h1>
+
+                    <div class="profile__meta">
+                        @if (item.isOnline) {
+                            <span class="profile__online">Онлайн</span>
+                        } @else if (item.lastActivity) {
+                            <span>Был(а) в сети {{ item.lastActivity | relativeDate | lowercase }}</span>
+                        }
+                        @if (item.sex) {
+                            <span>{{ sexLabel(item.sex) }}</span>
+                        }
+                        @if (item.birthday) {
+                            <span>{{ item.birthday | date: 'dd.MM.yyyy' }}</span>
+                        }
+                        @if (item.country) {
+                            <span class="profile__country">
+                                <img class="profile__flag" [src]="flagUrl(item.country)" [alt]="item.countryName ?? ''" [title]="item.countryName ?? ''" />
+                                {{ item.countryName }}
+                            </span>
+                        }
+                        <span>На сайте с {{ item.createdAt | date: 'dd.MM.yyyy' }}</span>
+                    </div>
+                </div>
+
+                @if (!item.canEdit) {
+                    <div class="app-actions profile__actions">
+                        <button tuiButton size="s" type="button" (click)="toggleFriend()" [disabled]="friendBusy()">
+                            <tui-icon [icon]="item.isFriend ? '@tui.user-minus' : '@tui.user-plus'" />
+                            {{ item.isFriend ? 'Удалить из друзей' : 'Добавить в друзья' }}
+                        </button>
+                    </div>
+                }
+            </header>
 
             @if (item.infoHtml) {
                 <div class="profile__info" appCodeHighlight [innerHTML]="item.infoHtml"></div>
             }
-        </section>
 
-        <div class="app-list">
-            <a tuiCell [routerLink]="['/files']" [queryParams]="{ user: item.username }">
-                <tui-icon icon="@tui.folder" class="profile__icon" />
-                <div tuiTitle>Файлы</div>
-                <span tuiBadge tuiAccessories>{{ item.counters.files }}</span>
-            </a>
-            <a tuiCell [routerLink]="['/gist/users', item.username]">
-                <tui-icon icon="@tui.notebook-pen" class="profile__icon" />
-                <div tuiTitle>Блоги</div>
-                <span tuiBadge tuiAccessories>{{ item.counters.gists }}</span>
-            </a>
-            <a tuiCell [routerLink]="['/user/friends/list', item.username]">
-                <tui-icon icon="@tui.users" class="profile__icon" />
-                <div tuiTitle>Друзья</div>
-                <span tuiBadge tuiAccessories>{{ item.counters.friends }}</span>
-            </a>
-            @if (item.canEdit) {
-                <a tuiCell routerLink="/user/events">
-                    <tui-icon icon="@tui.calendar" class="profile__icon" />
-                    <div tuiTitle>События</div>
-                </a>
-                <a tuiCell routerLink="/user/subscriber/edit">
-                    <tui-icon icon="@tui.bell" class="profile__icon" />
-                    <div tuiTitle>Подписки</div>
-                </a>
-            }
             @if (item.vk) {
-                <a tuiCell class="profile__vk-link" [href]="'https://vk.com/' + item.vk" target="_blank" rel="noopener noreferrer">
+                <a class="profile__vk" [href]="'https://vk.com/' + item.vk" target="_blank" rel="noopener noreferrer">
                     @if (item.vkProfile; as vk) {
                         @if (vk.photoUrl) {
-                            <app-user-avatar [avatarUrl]="vk.photoUrl" [alt]="vk.name" [isOnline]="vk.isOnline" onlineLabel="Онлайн во ВКонтакте" />
+                            <app-user-avatar [avatarUrl]="vk.photoUrl" [alt]="vk.name" [isOnline]="vk.isOnline" size="m" onlineLabel="Онлайн во ВКонтакте" />
                         } @else {
                             <tui-icon icon="@tui.users" class="profile__icon" />
                         }
-                        <div tuiTitle>
-                            {{ vk.name }}
-                            <div tuiSubtitle>ВКонтакте</div>
-                        </div>
-                        @if (!vk.photoUrl && vk.isOnline) {
-                            <span tuiBadge tuiAccessories appearance="positive" class="online-badge" aria-label="Онлайн во ВКонтакте"></span>
-                        }
+                        <span class="profile__vk-text">
+                            <span class="profile__vk-name">{{ vk.name }}</span>
+                            <span class="profile__vk-hint">ВКонтакте</span>
+                        </span>
                     } @else {
                         <tui-icon icon="@tui.users" class="profile__icon" />
-                        <div tuiTitle>
-                            {{ item.vk }}
-                            <div tuiSubtitle>ВКонтакте</div>
-                        </div>
+                        <span class="profile__vk-text">
+                            <span class="profile__vk-name">{{ item.vk }}</span>
+                            <span class="profile__vk-hint">ВКонтакте</span>
+                        </span>
                     }
+                    <tui-icon icon="@tui.external-link" class="profile__vk-icon" />
                 </a>
             }
-        </div>
+        </section>
 
-        <div class="app-actions">
-            @if (item.canEdit) {
-                <a tuiButton size="s" routerLink="/user/edit">
-                    <tui-icon icon="@tui.pencil" />
-                    Редактировать
-                </a>
-            } @else {
-                <button tuiButton size="s" type="button" (click)="toggleFriend()" [disabled]="friendBusy()">
-                    <tui-icon [icon]="item.isFriend ? '@tui.user-minus' : '@tui.user-plus'" />
-                    {{ item.isFriend ? 'Удалить из друзей' : 'Добавить в друзья' }}
-                </button>
-            }
+        <h2 class="app-sr-only">Разделы</h2>
+        <div class="app-grid profile__grid">
+            <a tuiCell [routerLink]="['/files']" [queryParams]="{ user: item.username }">
+                <tui-icon icon="@tui.folder" class="profile__icon" />
+                <div tuiTitle>
+                    Файлы
+                    <div tuiSubtitle>Файлов: {{ item.counters.files }}</div>
+                </div>
+            </a>
+            <a tuiCell [routerLink]="['/gist/users', item.username]">
+                <tui-icon icon="@tui.notebook-pen" class="profile__icon" />
+                <div tuiTitle>
+                    Блоги
+                    <div tuiSubtitle>Записей: {{ item.counters.gists }}</div>
+                </div>
+            </a>
+            <a tuiCell [routerLink]="['/user/friends/list', item.username]">
+                <tui-icon icon="@tui.users" class="profile__icon" />
+                <div tuiTitle>
+                    Друзья
+                    <div tuiSubtitle>Друзей: {{ item.counters.friends }}</div>
+                </div>
+            </a>
         </div>
     }
 </section>

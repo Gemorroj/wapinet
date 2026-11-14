@@ -12,6 +12,7 @@ import { Auth } from '../../../core/auth/auth';
 import { countryFlagUrl } from '../../../core/browser/country-flag';
 import { describeError } from '../../../core/api/problem-details';
 import { UsersApi } from '../../../core/api/users-api';
+import { AccountNav } from '../account-nav/account-nav';
 import { Breadcrumb, Breadcrumbs } from '../../../shared/breadcrumbs/breadcrumbs';
 import { BbcodeEditor } from '../../../shared/bbcode-editor/bbcode-editor';
 
@@ -24,6 +25,7 @@ interface SelectOption<T extends string = string> {
 
 @Component({
     imports: [
+        AccountNav,
         Breadcrumbs,
         BbcodeEditor,
         FormsModule,
