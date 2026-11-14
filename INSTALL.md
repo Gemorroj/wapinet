@@ -344,10 +344,6 @@ server {
         access_log off;
         expires 30d;
     }
-    location = /apple-touch-icon.png {
-        access_log off;
-        expires 30d;
-    }
     location /bundles/ {
         access_log off;
         expires 30d;

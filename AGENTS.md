@@ -29,7 +29,7 @@ Symfony 8.2 / PHP 8.5 + Angular 22 / Taiga UI 5 (сайт wapinet.ru).
 - OpenAPI-клиент: `cd frontend && npm run api:sync`
 - E2E: `cd frontend && npm run e2e`; браузер из `CHROME_BIN` (локально — Yandex Browser), иначе `npm run e2e:install`
 - Dev-сервер: `cd frontend && $env:API_TARGET='http://localhost'; npm start` (PowerShell)
-- Docker: `docker-compose.yml` (mysql, manticore, php-fpm, messenger, angie)
+- Docker: `docker-compose.yml` + `docker-compose.override.yml` (mysql, manticore, php-fpm, messenger, angie, frontend, mailpit); сайт — :80, HMR — :4200, письма — :8025
 
 ## Коммиты
 
