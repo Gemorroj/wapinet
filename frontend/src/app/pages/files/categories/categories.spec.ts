@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideTaiga } from '@taiga-ui/core';
 
-import { FilesApi } from '../../../core/files-api';
+import { FilesApi } from '../../../core/api/files-api';
 import { FileCategories } from './categories';
 
 describe('FileCategories', () => {

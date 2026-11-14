@@ -4,7 +4,7 @@ import { TuiAppearance, TuiInput, TuiLoader } from '@taiga-ui/core';
 import { TuiChip } from '@taiga-ui/kit/components/chip';
 import { TuiInputFiles } from '@taiga-ui/kit/components/files';
 
-import { formatBytes } from '../../core/format-bytes';
+import { formatBytes } from '../../core/format/format-bytes';
 
 /**
  * Single source of truth for file selection: one `files` array for both modes.

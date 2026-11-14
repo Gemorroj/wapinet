@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideTaiga } from '@taiga-ui/core';
 
-import { OnlineApi } from '../../core/online-api';
+import { OnlineApi } from '../../core/api/online-api';
 import { Online } from './online';
 
 describe('Online', () => {

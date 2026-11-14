@@ -3,7 +3,7 @@ import { TuiTitle } from '@taiga-ui/core';
 import { TuiCardLarge } from '@taiga-ui/layout';
 
 import { IpInsightResponse } from '../../api/generated/models';
-import { countryFlagUrl, geoCountryLabel } from '../../core/country-flag';
+import { countryFlagUrl, geoCountryLabel } from '../../core/browser/country-flag';
 import { InfoHint } from '../info-hint/info-hint';
 import { IpBadges } from '../ip-badges/ip-badges';
 

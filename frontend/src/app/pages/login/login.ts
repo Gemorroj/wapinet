@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TuiButton, TuiInput, TuiNotificationDirective } from '@taiga-ui/core';
 import { TuiCardLarge } from '@taiga-ui/layout';
 
-import { Auth } from '../../core/auth';
+import { Auth } from '../../core/auth/auth';
 import { Breadcrumb, Breadcrumbs } from '../../shared/breadcrumbs/breadcrumbs';
 
 @Component({

@@ -4,8 +4,8 @@ import { provideRouter } from '@angular/router';
 import { provideTaiga } from '@taiga-ui/core';
 
 import { AppConfigService } from '../../core/app-config';
-import { UsersApi } from '../../core/users-api';
-import { YandexCaptcha } from '../../core/yandex-captcha';
+import { UsersApi } from '../../core/api/users-api';
+import { YandexCaptcha } from '../../core/auth/yandex-captcha';
 import { Registration } from './registration';
 
 @Component({ template: '' })

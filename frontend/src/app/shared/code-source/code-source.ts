@@ -1,7 +1,7 @@
 import { Component, input, output, signal } from '@angular/core';
 import { TuiChip } from '@taiga-ui/kit/components/chip';
 
-import { CodeSource } from '../../core/code-source';
+import { CodeSource } from '../../core/api/code-source';
 import { CodeField } from '../code-field/code-field';
 import { FileSource } from '../file-source/file-source';
 

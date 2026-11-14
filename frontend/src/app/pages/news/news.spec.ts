@@ -3,7 +3,7 @@ import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/route
 import { provideTaiga } from '@taiga-ui/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { NewsApi } from '../../core/news-api';
+import { NewsApi } from '../../core/api/news-api';
 import { News } from './news';
 
 describe('News', () => {

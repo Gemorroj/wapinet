@@ -4,8 +4,8 @@ import { provideTaiga } from '@taiga-ui/core';
 import { Subject, of } from 'rxjs';
 
 import { FileResponse } from '../../../api/generated/models';
-import { Auth } from '../../../core/auth';
-import { FilesApi } from '../../../core/files-api';
+import { Auth } from '../../../core/auth/auth';
+import { FilesApi } from '../../../core/api/files-api';
 import { FileDetail } from './file-detail';
 
 describe('FileDetail', () => {

@@ -4,7 +4,7 @@ import { provideTaiga } from '@taiga-ui/core';
 import { Subject } from 'rxjs';
 
 import { FileResponse } from '../../../api/generated/models';
-import { FilesApi } from '../../../core/files-api';
+import { FilesApi } from '../../../core/api/files-api';
 import { FileSwiper } from './swiper';
 
 describe('FileSwiper', () => {

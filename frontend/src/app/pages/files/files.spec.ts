@@ -3,8 +3,8 @@ import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/route
 import { provideTaiga } from '@taiga-ui/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { Auth } from '../../core/auth';
-import { FilesApi } from '../../core/files-api';
+import { Auth } from '../../core/auth/auth';
+import { FilesApi } from '../../core/api/files-api';
 import { Files } from './files';
 
 describe('Files', () => {

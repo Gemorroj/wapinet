@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { TuiCell, TuiIcon, TuiTitle } from '@taiga-ui/core';
 import { TuiCardLarge } from '@taiga-ui/layout';
 
-import { SiteStats } from '../../core/site-stats';
+import { SiteStats } from '../../core/api/site-stats';
 
 @Component({
     imports: [RouterLink, TuiCardLarge, TuiCell, TuiIcon, TuiTitle],

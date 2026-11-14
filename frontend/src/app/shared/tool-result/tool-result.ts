@@ -2,8 +2,8 @@ import { Component, OnDestroy, inject, input, signal } from '@angular/core';
 import { TuiButton, TuiIcon, TuiTitle } from '@taiga-ui/core';
 import { TuiCardLarge } from '@taiga-ui/layout';
 
-import { copyText } from '../../core/clipboard';
-import { saveBlob } from '../../core/download';
+import { copyText } from '../../core/browser/clipboard';
+import { saveBlob } from '../../core/browser/download';
 
 @Component({
     imports: [TuiButton, TuiCardLarge, TuiIcon, TuiTitle],

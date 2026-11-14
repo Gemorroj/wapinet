@@ -4,9 +4,9 @@ import { provideTaiga } from '@taiga-ui/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { AppConfigService } from '../../core/app-config';
-import { Auth } from '../../core/auth';
-import { GuestbookApi } from '../../core/guestbook-api';
-import { YandexCaptcha } from '../../core/yandex-captcha';
+import { Auth } from '../../core/auth/auth';
+import { GuestbookApi } from '../../core/api/guestbook-api';
+import { YandexCaptcha } from '../../core/auth/yandex-captcha';
 import { Guestbook } from './guestbook';
 
 describe('Guestbook', () => {

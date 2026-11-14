@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router, convertToParamMap, provideRouter } from '@angular/router';
 import { provideTaiga } from '@taiga-ui/core';
 
-import { Auth } from '../../core/auth';
+import { Auth } from '../../core/auth/auth';
 import { Login } from './login';
 
 describe('Login', () => {

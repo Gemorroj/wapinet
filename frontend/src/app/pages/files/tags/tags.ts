@@ -7,11 +7,11 @@ import { TuiBadge } from '@taiga-ui/kit/components/badge';
 import { TuiChip } from '@taiga-ui/kit/components/chip';
 
 import { TagListItem } from '../../../api/generated/models';
-import { describeError } from '../../../core/problem-details';
-import { TagsApi } from '../../../core/tags-api';
+import { describeError } from '../../../core/api/problem-details';
+import { TagsApi } from '../../../core/api/tags-api';
 import { Breadcrumb, Breadcrumbs } from '../../../shared/breadcrumbs/breadcrumbs';
 import { Pagination } from '../../../shared/pagination/pagination';
-import { readPage } from '../../../core/page-query';
+import { readPage } from '../../../core/router/page-query';
 
 @Component({
     imports: [Pagination, Breadcrumbs, FormsModule, RouterLink, TuiBadge, TuiButton, TuiChip, TuiInput, TuiLoader, TuiNotificationDirective],

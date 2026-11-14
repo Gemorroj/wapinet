@@ -5,9 +5,9 @@ import { provideTaiga } from '@taiga-ui/core';
 
 import { FileResponse } from '../../../api/generated/models';
 import { AppConfigService } from '../../../core/app-config';
-import { Auth } from '../../../core/auth';
-import { FilesApi } from '../../../core/files-api';
-import { TagsApi } from '../../../core/tags-api';
+import { Auth } from '../../../core/auth/auth';
+import { FilesApi } from '../../../core/api/files-api';
+import { TagsApi } from '../../../core/api/tags-api';
 import { FileForm } from './file-form';
 
 @Component({ template: '' })

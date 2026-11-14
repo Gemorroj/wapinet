@@ -4,12 +4,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TuiCell, TuiLoader, TuiNotificationDirective, TuiTitle } from '@taiga-ui/core';
 
 import { NewsListItemResponse } from '../../api/generated/models';
-import { NewsApi } from '../../core/news-api';
-import { describeError } from '../../core/problem-details';
+import { NewsApi } from '../../core/api/news-api';
+import { describeError } from '../../core/api/problem-details';
 import { Breadcrumb, Breadcrumbs } from '../../shared/breadcrumbs/breadcrumbs';
 import { RelativeDatePipe } from '../../shared/relative-date/relative-date.pipe';
 import { Pagination } from '../../shared/pagination/pagination';
-import { readPage } from '../../core/page-query';
+import { readPage } from '../../core/router/page-query';
 
 @Component({
     imports: [Pagination, Breadcrumbs, RelativeDatePipe, RouterLink, TuiCell, TuiLoader, TuiNotificationDirective, TuiTitle],

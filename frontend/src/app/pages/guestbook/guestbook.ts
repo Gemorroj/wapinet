@@ -7,10 +7,10 @@ import { TuiCardLarge } from '@taiga-ui/layout';
 
 import { GuestbookMessageResponse, IpInsightResponse } from '../../api/generated/models';
 import { AppConfigService } from '../../core/app-config';
-import { Auth } from '../../core/auth';
-import { countryFlagUrl } from '../../core/country-flag';
-import { GuestbookApi } from '../../core/guestbook-api';
-import { describeError } from '../../core/problem-details';
+import { Auth } from '../../core/auth/auth';
+import { countryFlagUrl } from '../../core/browser/country-flag';
+import { GuestbookApi } from '../../core/api/guestbook-api';
+import { describeError } from '../../core/api/problem-details';
 import { Breadcrumb, Breadcrumbs } from '../../shared/breadcrumbs/breadcrumbs';
 import { BbcodeEditor } from '../../shared/bbcode-editor/bbcode-editor';
 import { Captcha } from '../../shared/captcha/captcha';
@@ -19,7 +19,7 @@ import { IpBadges } from '../../shared/ip-badges/ip-badges';
 import { RelativeDatePipe } from '../../shared/relative-date/relative-date.pipe';
 import { UserAvatar } from '../../shared/user-avatar/user-avatar';
 import { Pagination } from '../../shared/pagination/pagination';
-import { readPage } from '../../core/page-query';
+import { readPage } from '../../core/router/page-query';
 
 @Component({
     imports: [

@@ -5,8 +5,8 @@ import { TuiBadge } from '@taiga-ui/kit/components/badge';
 import { TuiChip } from '@taiga-ui/kit/components/chip';
 
 import { FileStatisticsResponse } from '../../../api/generated/models';
-import { FilesApi } from '../../../core/files-api';
-import { describeError } from '../../../core/problem-details';
+import { FilesApi } from '../../../core/api/files-api';
+import { describeError } from '../../../core/api/problem-details';
 import { Breadcrumb, Breadcrumbs } from '../../../shared/breadcrumbs/breadcrumbs';
 
 const CATEGORIES: Array<{ key: string; label: string }> = [

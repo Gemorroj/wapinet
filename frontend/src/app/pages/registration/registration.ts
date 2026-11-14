@@ -5,8 +5,8 @@ import { TuiButton, TuiInput, TuiNotificationDirective } from '@taiga-ui/core';
 import { TuiCardLarge } from '@taiga-ui/layout';
 
 import { AppConfigService } from '../../core/app-config';
-import { describeError } from '../../core/problem-details';
-import { UsersApi } from '../../core/users-api';
+import { describeError } from '../../core/api/problem-details';
+import { UsersApi } from '../../core/api/users-api';
 import { Breadcrumb, Breadcrumbs } from '../../shared/breadcrumbs/breadcrumbs';
 import { Captcha } from '../../shared/captcha/captcha';
 

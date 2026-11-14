@@ -3,8 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { TuiButton, TuiLoader, TuiNotificationDirective, TuiTextfield } from '@taiga-ui/core';
 import { TuiTextarea } from '@taiga-ui/kit/components/textarea';
 
-import { BbcodeApi } from '../../core/bbcode-api';
-import { describeError } from '../../core/problem-details';
+import { BbcodeApi } from '../../core/api/bbcode-api';
+import { describeError } from '../../core/api/problem-details';
 import { CodeHighlightDirective } from '../code-highlight/code-highlight.directive';
 
 @Component({

@@ -4,8 +4,8 @@ import { TuiButton, TuiIcon, TuiLoader } from '@taiga-ui/core';
 import { TuiCardLarge } from '@taiga-ui/layout';
 
 import { FileResponse } from '../../../api/generated/models';
-import { FilesApi } from '../../../core/files-api';
-import { describeError } from '../../../core/problem-details';
+import { FilesApi } from '../../../core/api/files-api';
+import { describeError } from '../../../core/api/problem-details';
 
 @Component({
     imports: [RouterLink, TuiButton, TuiIcon, TuiCardLarge, TuiLoader],

@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, inject, input, output } from '@angular/core';
 
-import { YandexCaptcha } from '../../core/yandex-captcha';
+import { YandexCaptcha } from '../../core/auth/yandex-captcha';
 
 @Component({
     selector: 'app-captcha',

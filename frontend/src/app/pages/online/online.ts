@@ -3,8 +3,8 @@ import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { TuiButton, TuiCell, TuiIcon, TuiLoader, TuiNotificationDirective, TuiTitle } from '@taiga-ui/core';
 
 import { OnlineItemResponse } from '../../api/generated/models';
-import { OnlineApi } from '../../core/online-api';
-import { describeError } from '../../core/problem-details';
+import { OnlineApi } from '../../core/api/online-api';
+import { describeError } from '../../core/api/problem-details';
 import { Breadcrumb, Breadcrumbs } from '../../shared/breadcrumbs/breadcrumbs';
 import { RelativeDatePipe } from '../../shared/relative-date/relative-date.pipe';
 

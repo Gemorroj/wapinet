@@ -2,8 +2,8 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TuiButton, TuiDataList, TuiDropdown, TuiIcon, TuiLink, TuiRoot } from '@taiga-ui/core';
 
-import { Auth } from './core/auth';
-import { SiteStats } from './core/site-stats';
+import { Auth } from './core/auth/auth';
+import { SiteStats } from './core/api/site-stats';
 
 interface NavItem {
     readonly label: string;

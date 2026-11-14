@@ -5,11 +5,11 @@ import { provideTaiga, tuiAssetsPathProvider } from '@taiga-ui/core';
 import { TUI_LANGUAGE, TUI_RUSSIAN_LANGUAGE } from '@taiga-ui/i18n';
 import { tuiBreadcrumbsOptionsProvider } from '@taiga-ui/kit/components/breadcrumbs';
 
-import { Auth } from './core/auth';
-import { authInterceptor } from './core/auth-interceptor';
+import { Auth } from './core/auth/auth';
+import { authInterceptor } from './core/auth/auth-interceptor';
 import { routes } from './app.routes';
-import { API_URL } from './core/api-url';
-import { ToolRouteReuseStrategy } from './core/tool-route-reuse-strategy';
+import { API_URL } from './core/api/api-url';
+import { ToolRouteReuseStrategy } from './core/router/tool-route-reuse-strategy';
 
 export const appConfig: ApplicationConfig = {
     providers: [

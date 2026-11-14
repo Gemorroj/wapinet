@@ -3,7 +3,7 @@ import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/route
 import { provideTaiga } from '@taiga-ui/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { TagsApi } from '../../../core/tags-api';
+import { TagsApi } from '../../../core/api/tags-api';
 import { Tags } from './tags';
 
 describe('Tags', () => {

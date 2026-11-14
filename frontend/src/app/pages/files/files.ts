@@ -11,15 +11,15 @@ import { TuiDataListWrapper } from '@taiga-ui/kit/components/data-list-wrapper';
 import { TuiNativeSelect } from '@taiga-ui/kit/components/select';
 import { TuiChevron } from '@taiga-ui/kit/directives/chevron';
 
-import { Auth } from '../../core/auth';
+import { Auth } from '../../core/auth/auth';
 import { FileListItem } from '../../api/generated/models';
-import { saveBlob } from '../../core/download';
-import { fileIcon } from '../../core/file-icon';
-import { FilesApi } from '../../core/files-api';
-import { formatBytes } from '../../core/format-bytes';
-import { formatDuration } from '../../core/format-duration';
-import { describeError } from '../../core/problem-details';
-import { TagsApi } from '../../core/tags-api';
+import { saveBlob } from '../../core/browser/download';
+import { fileIcon } from '../../core/browser/file-icon';
+import { FilesApi } from '../../core/api/files-api';
+import { formatBytes } from '../../core/format/format-bytes';
+import { formatDuration } from '../../core/format/format-duration';
+import { describeError } from '../../core/api/problem-details';
+import { TagsApi } from '../../core/api/tags-api';
 import { Breadcrumb, Breadcrumbs } from '../../shared/breadcrumbs/breadcrumbs';
 import { FilterDrawer } from '../../shared/filter-drawer/filter-drawer';
 import { RelativeDatePipe } from '../../shared/relative-date/relative-date.pipe';
@@ -67,7 +67,7 @@ const SORTS: Array<{ value: Sort; label: string }> = [
     { value: 'relevance', label: 'По релевантности' },
 ];
 import { Pagination } from '../../shared/pagination/pagination';
-import { readPage } from '../../core/page-query';
+import { readPage } from '../../core/router/page-query';
 
 @Component({
     imports: [

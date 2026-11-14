@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, computed, input, output } from '@an
 import { TuiButton, TuiIcon, TuiNotificationDirective } from '@taiga-ui/core';
 import { TuiBadge } from '@taiga-ui/kit/components/badge';
 
-import { fileIcon } from '../../core/file-icon';
-import { formatBytes } from '../../core/format-bytes';
+import { fileIcon } from '../../core/browser/file-icon';
+import { formatBytes } from '../../core/format/format-bytes';
 
 export interface ArchiveEntryView {
     path: string;

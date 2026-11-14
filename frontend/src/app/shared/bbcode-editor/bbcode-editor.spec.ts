@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideTaiga } from '@taiga-ui/core';
 
-import { BbcodeApi } from '../../core/bbcode-api';
+import { BbcodeApi } from '../../core/api/bbcode-api';
 import { BbcodeEditor } from './bbcode-editor';
 
 describe('BbcodeEditor', () => {

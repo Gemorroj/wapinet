@@ -4,8 +4,8 @@ import { provideRouter } from '@angular/router';
 import { provideTaiga } from '@taiga-ui/core';
 
 import { App } from './app';
-import { Auth } from './core/auth';
-import { HomeApi } from './core/home-api';
+import { Auth } from './core/auth/auth';
+import { HomeApi } from './core/api/home-api';
 
 describe('App', () => {
     let authenticated: WritableSignal<boolean>;

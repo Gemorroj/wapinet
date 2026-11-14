@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { TuiLoader, TuiNotificationDirective } from '@taiga-ui/core';
 
 import { NewsResponse } from '../../../api/generated/models';
-import { NewsApi } from '../../../core/news-api';
-import { describeError } from '../../../core/problem-details';
+import { NewsApi } from '../../../core/api/news-api';
+import { describeError } from '../../../core/api/problem-details';
 import { Breadcrumb, Breadcrumbs } from '../../../shared/breadcrumbs/breadcrumbs';
 import { CodeHighlightDirective } from '../../../shared/code-highlight/code-highlight.directive';
 import { RelativeDatePipe } from '../../../shared/relative-date/relative-date.pipe';

@@ -8,11 +8,11 @@ import { TuiCardLarge } from '@taiga-ui/layout';
 
 import { FileResponse } from '../../../api/generated/models';
 import { AppConfigService } from '../../../core/app-config';
-import { Auth } from '../../../core/auth';
-import { FilesApi } from '../../../core/files-api';
-import { formatBytes } from '../../../core/format-bytes';
-import { describeError } from '../../../core/problem-details';
-import { TagsApi } from '../../../core/tags-api';
+import { Auth } from '../../../core/auth/auth';
+import { FilesApi } from '../../../core/api/files-api';
+import { formatBytes } from '../../../core/format/format-bytes';
+import { describeError } from '../../../core/api/problem-details';
+import { TagsApi } from '../../../core/api/tags-api';
 import { Breadcrumb, Breadcrumbs } from '../../../shared/breadcrumbs/breadcrumbs';
 import { BbcodeEditor } from '../../../shared/bbcode-editor/bbcode-editor';
 import { Captcha } from '../../../shared/captcha/captcha';

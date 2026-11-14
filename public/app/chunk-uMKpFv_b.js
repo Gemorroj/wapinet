@@ -1,0 +1,1 @@
+import{bt as X,dt as K,it as Bt}from"./main-YTR6VI42.js";import{Bt as R,Lr as h}from"./chunk-Dc9jLWKG.js";var p=class i{api=h(Bt);list(e=1){return this.api.invoke(K,{page:e})}show(e){return this.api.invoke(X,{id:String(e)})}static ɵfac=function(a){return new(a||i)};static ɵprov=R({token:i,factory:i.ɵfac,providedIn:`root`})};export{p as t};

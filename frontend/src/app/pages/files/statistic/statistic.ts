@@ -4,9 +4,9 @@ import { TuiCell, TuiLoader, TuiNotificationDirective, TuiTitle } from '@taiga-u
 import { TuiBadge } from '@taiga-ui/kit/components/badge';
 
 import { FileStatisticsResponse } from '../../../api/generated/models';
-import { FilesApi } from '../../../core/files-api';
-import { formatBytes } from '../../../core/format-bytes';
-import { describeError } from '../../../core/problem-details';
+import { FilesApi } from '../../../core/api/files-api';
+import { formatBytes } from '../../../core/format/format-bytes';
+import { describeError } from '../../../core/api/problem-details';
 import { Breadcrumb, Breadcrumbs } from '../../../shared/breadcrumbs/breadcrumbs';
 
 @Component({

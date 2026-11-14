@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideTaiga } from '@taiga-ui/core';
 
-import { HomeApi } from '../../core/home-api';
+import { HomeApi } from '../../core/api/home-api';
 import { Home } from './home';
 
 describe('Home', () => {
