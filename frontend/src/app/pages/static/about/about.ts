@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { TuiLink } from '@taiga-ui/core';
+import { RouterLink } from '@angular/router';
+import { TuiLink, TuiTitle } from '@taiga-ui/core';
 import { TuiCardLarge } from '@taiga-ui/layout';
 
 import { Breadcrumb, Breadcrumbs } from '../../../shared/breadcrumbs/breadcrumbs';
 
 @Component({
-    imports: [Breadcrumbs, TuiCardLarge, TuiLink],
+    imports: [Breadcrumbs, RouterLink, TuiCardLarge, TuiLink, TuiTitle],
     selector: 'app-about',
     styleUrl: './about.css',
     templateUrl: './about.html',

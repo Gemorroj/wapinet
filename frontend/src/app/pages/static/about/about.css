@@ -8,15 +8,32 @@
     margin: 0;
 }
 
-.about__logos {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    align-items: center;
+.about__lead {
+    font: var(--tui-typography-body-l);
 }
 
-.about__logos img {
-    max-block-size: 2.5rem;
-    max-inline-size: 8rem;
-    object-fit: contain;
+.about__timeline {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.about__era {
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    gap: 1rem;
+    align-items: baseline;
+}
+
+.about__year {
+    font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 30rem) {
+    .about__era {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.25rem;
+    }
 }

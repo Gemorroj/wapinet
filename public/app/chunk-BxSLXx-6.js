@@ -1,0 +1,1 @@
+import{St as Z,it as Bt}from"./main-T3FLH33U.js";import{Bt as R,Lr as h}from"./chunk-Dc9jLWKG.js";var n=class e{api=h(Bt);list(r={}){return this.api.invoke(Z,r)}static ɵfac=function(p){return new(p||e)};static ɵprov=R({token:e,factory:e.ɵfac,providedIn:`root`})};export{n as t};
