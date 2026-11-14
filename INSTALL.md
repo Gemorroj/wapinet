@@ -180,11 +180,13 @@ source gist:config
         SELECT g.id, \
         g.subject, \
         g.body, \
+        g.user_id, \
         UNIX_TIMESTAMP(g.created_at) AS created_at_ts \
         FROM gist AS g
 
     sql_field_string = subject
     sql_field_string = body
+    sql_attr_uint = user_id
     sql_attr_timestamp = created_at_ts
 }
 
