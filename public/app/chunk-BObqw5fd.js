@@ -1,1 +1,0 @@
-import{c as Y}from"./chunk-DlTblF-6.js";import{Ar as h,Gt as Ri,Pi as te,Xt as SY,ci as nr,ha as zI}from"./chunk-DXNVDZ5Q.js";function y(){let o=h(Y,{optional:!0}),f=o?.control()||h(nr,{optional:!0}),p=zI(SY(f,h(Ri)),{requireSync:!0});return te(()=>{let r=o?.child();return r?r.value():p()})}export{y as t};

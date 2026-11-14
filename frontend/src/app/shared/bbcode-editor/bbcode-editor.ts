@@ -1,14 +1,61 @@
 import { Component, ElementRef, ViewChild, computed, inject, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TuiButton, TuiLoader, TuiNotificationDirective, TuiTextfield } from '@taiga-ui/core';
+import { TuiButton, TuiDialog, TuiIcon, TuiLoader, TuiNotificationDirective, TuiTextfield } from '@taiga-ui/core';
 import { TuiTextarea } from '@taiga-ui/kit/components/textarea';
 
 import { BbcodeApi } from '../../core/api/bbcode-api';
 import { describeError } from '../../core/api/problem-details';
 import { CodeHighlightDirective } from '../code-highlight/code-highlight.directive';
 
+interface HelpItem {
+    readonly tag: string;
+    readonly meaning: string;
+}
+
+interface HelpGroup {
+    readonly title: string;
+    readonly items: readonly HelpItem[];
+}
+
+const HELP_GROUPS: readonly HelpGroup[] = [
+    {
+        title: 'Текст',
+        items: [
+            { tag: '[b]жирный[/b]', meaning: 'жирный' },
+            { tag: '[i]курсив[/i]', meaning: 'курсив' },
+            { tag: '[u]подчёркнутый[/u]', meaning: 'подчёркнутый' },
+            { tag: '[s]зачёркнутый[/s]', meaning: 'зачёркнутый' },
+            { tag: '[color=red]цветной[/color]', meaning: 'цвет' },
+            { tag: '[size=5]крупный[/size]', meaning: 'размер, 1–7' },
+        ],
+    },
+    {
+        title: 'Ссылки и медиа',
+        items: [
+            { tag: '[url=адрес]текст[/url]', meaning: 'ссылка' },
+            { tag: '[url]адрес[/url]', meaning: 'ссылка с адресом в тексте' },
+            { tag: '[email]почта[/email]', meaning: 'e-mail' },
+            { tag: '[img]адрес[/img]', meaning: 'картинка' },
+            { tag: '[youtube]ID[/youtube]', meaning: 'видео YouTube' },
+            { tag: '[vk]ссылка[/vk]', meaning: 'видео ВКонтакте' },
+            { tag: '[rutube]ссылка[/rutube]', meaning: 'видео Rutube' },
+        ],
+    },
+    {
+        title: 'Блоки',
+        items: [
+            { tag: '[quote]цитата[/quote]', meaning: 'цитата' },
+            { tag: '[quote=Автор]цитата[/quote]', meaning: 'цитата с автором' },
+            { tag: '[code=php]код[/code]', meaning: 'код с подсветкой' },
+            { tag: '[spoiler]текст[/spoiler]', meaning: 'спойлер' },
+            { tag: '[list][*]пункт[/list]', meaning: 'список' },
+            { tag: '[table][tr][td]ячейка[/td][/tr][/table]', meaning: 'таблица' },
+        ],
+    },
+];
+
 @Component({
-    imports: [CodeHighlightDirective, FormsModule, TuiButton, TuiLoader, TuiNotificationDirective, TuiTextarea, TuiTextfield],
+    imports: [CodeHighlightDirective, FormsModule, TuiButton, TuiDialog, TuiIcon, TuiLoader, TuiNotificationDirective, TuiTextarea, TuiTextfield],
     selector: 'app-bbcode-editor',
     styleUrl: './bbcode-editor.css',
     templateUrl: './bbcode-editor.html',
@@ -27,6 +74,8 @@ export class BbcodeEditor {
 
     private readonly api = inject(BbcodeApi);
 
+    protected readonly helpGroups = HELP_GROUPS;
+    protected readonly helpOpen = signal(false);
     protected readonly mode = signal<'edit' | 'preview'>('edit');
     protected readonly html = signal<string | null>(null);
     protected readonly previewedText = signal<string | null>(null);
@@ -39,13 +88,17 @@ export class BbcodeEditor {
         setTimeout(() => this.textarea?.nativeElement.focus());
     }
 
-    protected async switchMode(index: number): Promise<void> {
-        if (0 === index) {
+    protected async switchMode(): Promise<void> {
+        if ('preview' === this.mode()) {
             this.mode.set('edit');
 
             return;
         }
 
+        await this.preview();
+    }
+
+    private async preview(): Promise<void> {
         const text = this.value().trim();
 
         if ('' === text) {

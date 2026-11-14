@@ -1,0 +1,1 @@
+import{c as Y}from"./chunk-ChG98AAI.js";import{$i as te,$t as Ri,Ur as h,Xi as t7,qn as YI,vi as nr}from"./chunk-AlapRMvP.js";function y(){let o=h(Y,{optional:!0}),f=o?.control()||h(nr,{optional:!0}),p=YI(t7(f,h(Ri)),{requireSync:!0});return te(()=>{let r=o?.child();return r?r.value():p()})}export{y as t};

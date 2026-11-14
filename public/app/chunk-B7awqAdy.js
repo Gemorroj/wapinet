@@ -1,1 +1,0 @@
-import{bt as X,dt as K,it as Bt}from"./main-B6VZD6MR.js";import{Ar as h,Bt as R}from"./chunk-DXNVDZ5Q.js";var p=class i{api=h(Bt);list(e=1){return this.api.invoke(K,{page:e})}show(e){return this.api.invoke(X,{id:String(e)})}static ɵfac=function(a){return new(a||i)};static ɵprov=R({token:i,factory:i.ɵfac,providedIn:`root`})};export{p as t};
