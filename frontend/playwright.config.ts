@@ -5,6 +5,8 @@ const executablePath = process.env['CHROME_BIN'];
 export default defineConfig({
     testDir: './e2e',
     timeout: 30_000,
+    // The dev server serves several workers at once; a cold API response can take longer than the default 5s.
+    expect: { timeout: 10_000 },
     fullyParallel: true,
     forbidOnly: !!process.env['CI'],
     retries: process.env['CI'] ? 2 : 0,

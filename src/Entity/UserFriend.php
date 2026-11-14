@@ -6,6 +6,7 @@ use App\Repository\UserFriendRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table]
+#[ORM\UniqueConstraint(name: 'UNIQ_USER_FRIEND', columns: ['user_id', 'friend_id'])]
 #[ORM\Entity(repositoryClass: UserFriendRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class UserFriend implements \Stringable, \JsonSerializable

@@ -17,6 +17,7 @@ use Vich\UploaderBundle\Mapping\Attribute as Vich;
 #[Vich\Uploadable]
 #[ORM\Table]
 #[ORM\Index(name: 'hash_idx', columns: ['hash'])]
+#[ORM\Index(name: 'views_idx', columns: ['count_views'])]
 #[ORM\Entity(repositoryClass: FileRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class File implements PasswordAuthenticatedUserInterface, \JsonSerializable
