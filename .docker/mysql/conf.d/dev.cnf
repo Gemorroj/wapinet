@@ -1,0 +1,11 @@
+[mysqld]
+# dev: минимум ресурсов, без binlog и нативного AIO (WSL, сетевые ФС)
+skip-log-bin
+skip-name-resolve
+innodb-use-native-aio=0
+innodb_flush_log_at_trx_commit=2
+innodb_buffer_pool_size=76M
+innodb_buffer_pool_instances=1
+innodb_redo_log_capacity=32M
+innodb_fast_shutdown=0
+max_connections=100

@@ -12,40 +12,65 @@
 - ffmpeg
 - systemd
 
-### Обновление зависимостей + пересборка
-```
-composer update --with-all-dependencies --no-blocking
-cd frontend
-npm update
-npm run api:sync
-npm run build
+### Локальная разработка в Docker
+
+`docker-compose.yml` — только для dev. Нужен `.env.local` (не коммитится): скопируйте `.env.dist` и укажите контейнерные хосты:
+
+```dotenv
+DATABASE_URL="mysql://root:@mysql:3306/wapinet?serverVersion=8.4"
+MANTICORE_HOST=manticore
+MAILER_DSN=smtp://mailpit:1025
+PHP_PATH=/usr/local/bin/php
+P7Z_PATH=/usr/local/bin/7zz
 ```
 
-### Frontend (Angular)
+Compose задаёт только контейнерные переменные; остальное приложение читает из `.env.local` (реальный env перекрывает dotenv, поэтому дублировать настройки в compose нельзя). В dev MySQL — `root` без пароля, как в `.env.dist`; имя БД `wapinet` указано ещё и в `.docker/manticore/manticore.conf` (индексатор).
+
+```bash
+docker compose up -d --build
+```
+
+`init` при старте выставляет владельцев каталогов, ставит Composer-зависимости и миграции обеих БД; остальные сервисы ждут его (логи — `docker compose logs init`, повтор — `docker compose run --rm init`). PHP и Node работают от владельца исходников (`1000:1000`); другой UID: `LOCAL_UID=$(id -u) LOCAL_GID=$(id -g) docker compose up -d --build`.
+
+Порты только на `127.0.0.1`: `:80` — собранный SPA, API и `/admin`; `:4200` — Angular с HMR; `:8025` — Mailpit; `:3306` — MySQL (root без пароля).
+
+Тестам в контейнере нужен `.env.test.local` с `DATABASE_URL` на `mysql`; тестовая БД создаётся на пустом volume, для существующего — `docker compose exec mysql sh /docker-entrypoint-initdb.d/10-test-database.sh`.
+
+Свежие образы и пакеты: `docker compose pull --ignore-buildable && docker compose up -d --build` (в PHP-образе `apt-get upgrade`; правки `.docker/php/conf.d` тоже требуют пересборки).
+
+### Сборка и проверки
+
+```bash
+docker compose exec php composer update --with-all-dependencies --no-blocking
+docker compose exec frontend npm update
+docker compose exec frontend npm ci # после изменения lock-файла
+
+docker compose exec php php vendor/bin/phpunit
+docker compose exec php php vendor/bin/phpstan analyse
+docker compose exec -e CI=1 frontend npm test -- --watch=false
+docker compose exec frontend npm run test:scripts
+docker compose exec frontend npm run format:check
+
+docker compose exec frontend npm run api:sync # OpenAPI → TS-клиент, backend должен быть запущен
+docker compose exec frontend npm run build # собирает public/app
+```
+
+Контейнер `frontend` сам ставит зависимости, если `node_modules` пуст (`docker compose exec frontend npm ci` — после обновления lock-файла). После правок фоновых обработчиков — `docker compose restart messenger scheduler`.
+
+### Frontend без Docker
 
 ```bash
 cd frontend
 npm ci
-
-# dev-server на :4200; /api и статика проксируются на backend
-# API_TARGET по умолчанию http://localhost; при другом локальном адресе задайте его
-npm start
-# PowerShell: $env:API_TARGET = "http://your-local-host"; npm start
-
-npm run build        # production-сборка в public/app (base href /, assets /app/)
+npm start # API_TARGET=http://your-local-host npm start
+npm run build
 ```
 
-По умолчанию `proxy.conf.js` смотрит на `http://localhost`; локальный домен задаётся через `API_TARGET`, в git он не попадает.
-Сборка `public/app` коммитится в репозиторий, на проде Node не нужен.
-Страницы SPA открываются с корня сайта, статика — из `public/app`.
-
+`proxy.conf.js` по умолчанию смотрит на `http://localhost`. Сборка `public/app` коммитится: на проде Node не нужен, SPA открывается с корня сайта, статика — из `public/app`.
 
 ### Поиск (Manticore)
 
-Приложение работает с Manticore через HTTP JSON (`MANTICORE_HOST:MANTICORE_HTTP_PORT`, по умолчанию `9308`).
-Поиск всегда идёт через Manticore: fallback на Doctrine LIKE нет. При недоступном Manticore API файлов возвращает `503`, а страницы поиска gists/users показывают ошибку.
-Индексы `files`, `users` и `gist` собираются из MySQL по cron; после изменения схемы нужен `manticore indexer --rotate --all`.
-
+Приложение работает с Manticore только через HTTP JSON (`MANTICORE_HOST:MANTICORE_HTTP_PORT`) — fallback на Doctrine LIKE нет: при недоступном Manticore API файлов отдаёт `503`, поиск gists/users показывает ошибку. Таблицы `files`, `users`, `gist` создаются при старте dev-контейнера, индексы обновляются вручную: `docker compose exec manticore indexer --rotate --all`.
 
 Установка и настройка сервера (Ubuntu 24.04, MySQL, PHP, Angie, Manticore, systemd) — в [`INSTALL.md`](INSTALL.md).
 
@@ -55,12 +80,13 @@ npm run build        # production-сборка в public/app (base href /, asset
 - Rate limit: `config/packages/rate_limiter.yaml`; при превышении API отдаёт `429` с `Retry-After`, текст для пользователя строит клиент.
 - Временные каталоги `var/tmp`, `var/tmp/archiver`, `var/tmp/audio-tags`, `var/tmp/file` создаёт `Kernel` при сборке контейнера; старые файлы чистит `app:tmp-clear`.
 - Фоновые задачи (превью, метаданные, конвертация) — через Messenger: `messenger:consume async`.
-
+- Периодические задачи — отдельный worker `messenger:consume scheduler_default`. В dev состояние расписания хранится на диске и сохраняется при перезапуске worker; пропущенная задача выполняется один раз.
 
 ### Идеи
 
 #### Отложено
 
+- FrankenPHP!
 - Файлы: проверка на VirusTotal (по кнопке и автоматически), вставка из clipboard, превью изображений в списке, SHA-256 рядом с MD5 (с backfill).
 - HTTP-клиент: история, коллекции, окружения, тайминги.
 - WHOIS: SPF, DMARC, DKIM по селектору, CAA, DNSSEC, TLS, HTTP-статус.

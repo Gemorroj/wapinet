@@ -1,37 +1,69 @@
 name: wapinet
 
+# Настройки приложения — в .env.local (env перекрывает dotenv), здесь только контейнерные переменные.
+x-php: &php
+    image: wapinet-php:dev
+    build:
+        context: ./.docker/php
+        args:
+            LOCAL_UID: ${LOCAL_UID:-1000}
+            LOCAL_GID: ${LOCAL_GID:-1000}
+    user: www-data
+    volumes:
+        - '.:/var/www/wapinet'
+    environment:
+        XDEBUG_MODE: ${XDEBUG_MODE:-off}
+    extra_hosts:
+        - 'host.docker.internal:host-gateway'
+
 services:
     mysql:
-        build: ./.docker/mysql
-        command: [--innodb-use-native-aio=0, --skip-mysqlx]
+        image: mysql:8.4
+        command: ['--skip-mysqlx']
         restart: unless-stopped
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-            MYSQL_DATABASE: ${MYSQL_DATABASE:-wapinet}
-            MYSQL_USER: ${MYSQL_USER:-wapinet}
-            MYSQL_PASSWORD: ${MYSQL_PASSWORD:-passwoRt}
+            MYSQL_DATABASE: wapinet
         volumes:
             - 'mysql_data:/var/lib/mysql'
-            - '.docker/mysql/server.cnf:/etc/mysql/my.cnf'
+            - './.docker/mysql/conf.d:/etc/mysql/conf.d:ro'
+            - './.docker/mysql/init:/docker-entrypoint-initdb.d:ro'
         ports:
-            - '${MYSQL_PORT:-3306}:3306'
+            - '127.0.0.1:${MYSQL_PORT:-3306}:3306'
         healthcheck:
             test: ['CMD', 'mysqladmin', 'ping', '-h', '127.0.0.1', '-uroot', '--silent']
             interval: 5s
             timeout: 3s
             retries: 30
 
-    manticore:
-        build: ./.docker/manticore
-        restart: unless-stopped
-        environment:
-            CREATE_PLAIN_TABLES: '1'
+    # Одноразовая подготовка: права, composer, миграции
+    init:
+        <<: *php
+        user: root
+        volumes:
+            - '.:/var/www/wapinet'
+            - 'frontend_node_modules:/var/www/wapinet/frontend/node_modules'
+            - 'frontend_npm_cache:/var/cache/npm'
+        command: ['sh', '.docker/php/init.sh']
         depends_on:
             mysql:
                 condition: service_healthy
+
+    manticore:
+        image: manticoresearch/manticore
+        restart: unless-stopped
+        # от пользователя образа: иначе entrypoint делает chown и конфиг с хоста становится root'овым
+        user: manticore
+        command: ['searchd', '-c', '/etc/manticoresearch/manticore.conf.sh', '--nodetach']
+        environment:
+            # таблицы создаются при старте; обновление — indexer --rotate --all
+            CREATE_PLAIN_TABLES: 'files;users;gist'
+        depends_on:
+            init:
+                condition: service_completed_successfully
         ports:
-            - '${MANTICORE_MYSQL_PORT:-9306}:9306' # mysql adapter
-            - '${MANTICORE_HTTP_PORT:-9308}:9308' # http json api
+            - '127.0.0.1:${MANTICORE_MYSQL_PORT:-9306}:9306'
+            - '127.0.0.1:${MANTICORE_HTTP_PORT:-9308}:9308'
         ulimits:
             nproc: 65535
             nofile:
@@ -41,46 +73,77 @@ services:
                 soft: -1
                 hard: -1
         volumes:
-            - './.docker/manticore/manticore.conf:/etc/manticoresearch/manticore.conf'
+            - './.docker/manticore/manticore.conf:/etc/manticoresearch/manticore.conf:ro'
             - 'manticore_data:/var/lib/manticore'
 
     php:
-        build: ./.docker/php
+        <<: *php
         restart: unless-stopped
-        volumes:
-            - '.:/var/www/wapinet'
-            - './.docker/php/php.ini:/usr/local/etc/php/php.ini'
-            - './.docker/php/php-fpm.conf:/usr/local/etc/php-fpm.conf'
-            - './.docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini'
-        extra_hosts:
-            - 'host.docker.internal:host-gateway'
         depends_on:
-            mysql:
-                condition: service_healthy
-            manticore:
-                condition: service_started
+            init:
+                condition: service_completed_successfully
 
     messenger:
-        build: ./.docker/php
+        <<: *php
         restart: unless-stopped
-        volumes:
-            - '.:/var/www/wapinet'
         command: ['php', 'bin/console', 'messenger:consume', 'async', '--time-limit=3600', '--memory-limit=256M']
+        stop_grace_period: 60s
         depends_on:
-            mysql:
-                condition: service_healthy
+            init:
+                condition: service_completed_successfully
+
+    scheduler:
+        <<: *php
+        restart: unless-stopped
+        command: ['php', 'bin/console', 'messenger:consume', 'scheduler_default', '--time-limit=3600', '--memory-limit=256M']
+        stop_grace_period: 60s
+        depends_on:
+            init:
+                condition: service_completed_successfully
 
     angie:
-        build: ./.docker/angie
+        image: docker.angie.software/angie
         restart: unless-stopped
         volumes:
             - '.:/var/www/wapinet'
             - './.docker/angie/wapinet.conf:/etc/angie/http.d/default.conf'
         ports:
-            - '${HTTP_PORT:-80}:80'
+            - '127.0.0.1:${HTTP_PORT:-80}:80'
         depends_on:
             - php
+
+    frontend:
+        image: node:26-alpine
+        working_dir: /var/www/wapinet/frontend
+        user: '${LOCAL_UID:-1000}:${LOCAL_GID:-1000}'
+        restart: unless-stopped
+        volumes:
+            - '.:/var/www/wapinet'
+            - 'frontend_node_modules:/var/www/wapinet/frontend/node_modules'
+            - 'frontend_npm_cache:/var/cache/npm'
+        environment:
+            API_TARGET: http://angie
+            NPM_CONFIG_CACHE: /var/cache/npm
+        command: ['sh', '-ec', '[ -x node_modules/.bin/ng ] || npm ci --no-audit --no-fund; exec npm start -- --host 0.0.0.0 --port 4200']
+        ports:
+            - '127.0.0.1:${FRONTEND_PORT:-4200}:4200'
+        depends_on:
+            init:
+                condition: service_completed_successfully
+            angie:
+                condition: service_started
+
+    mailpit:
+        image: axllent/mailpit:latest
+        restart: unless-stopped
+        environment:
+            MP_MAX_MESSAGES: '500'
+        ports:
+            - '127.0.0.1:${MAILPIT_SMTP_PORT:-1025}:1025'
+            - '127.0.0.1:${MAILPIT_UI_PORT:-8025}:8025'
 
 volumes:
     mysql_data:
     manticore_data:
+    frontend_node_modules:
+    frontend_npm_cache:

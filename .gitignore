@@ -1,12 +1,6 @@
 # PHPStorm
 .idea/
 
-### docker
-.docker/mysql/data/*
-!.docker/mysql/data/.gitkeep
-.docker/manticore/data/*
-!.docker/manticore/data/.gitkeep
-
 # Assets
 /public/static/file/*
 /public/media/cache/resolve/thumbnail/static/*

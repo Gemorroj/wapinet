@@ -4,6 +4,10 @@ SPA на Angular 22 и Taiga UI 5. Работает с Symfony REST API по `/a
 
 ## Быстрый старт
 
+Для Docker команды выполняются из корня репозитория: `docker compose up -d --build`, затем `docker compose exec frontend npm run build` или `docker compose exec frontend npm run api:sync`. Dev-сервер уже запущен на `http://localhost:4200`. Подробности и инициализация БД — в [основном README](../README.md#локальная-разработка-в-docker).
+
+Без Docker:
+
 ```bash
 npm ci
 npm start        # http://localhost:4200
@@ -41,6 +45,8 @@ npm run api:gen    # перегенерировать по существующ�
 
 `openapi.json` хранится в репозитории, поэтому клиент можно обновить без запущенного backend.
 
+`api:doc` и `api:sync` требуют работающий backend: адрес берётся из `API_TARGET` (по умолчанию `http://localhost`, в Docker — `http://angie`). Ошибка загрузки схемы сохраняет прежний `openapi.json`. Для генерации по уже сохранённой схеме достаточно `api:gen`.
+
 Загрузка файлов с тегами собирается вручную в `src/app/core/api/files-api.ts`: PHP разбирает повторяющиеся поля в массив только при нотации `tags[]`, которую сгенерированный клиент не создаёт.
 
 Источник файла выбирается общим компонентом `src/app/shared/file-source`: локальные файлы, drag-and-drop или ссылка. Сервер скачивает файл по ссылке сам.
@@ -53,6 +59,7 @@ npm run api:gen    # перегенерировать по существующ�
 
 ```bash
 CI=1 npm test -- --watch=false   # Vitest + Angular TestBed, API замокан
+npm run test:scripts            # проверки экспорта OpenAPI
 npm run e2e                      # Playwright-смоук
 npm run format:check             # Prettier
 npm run icons:check              # иконки Taiga UI на месте
