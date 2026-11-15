@@ -12,7 +12,8 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-reco
 	&& rm -rf /var/lib/apt/lists/*
 
 # Composer
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+ENV COMPOSER_ALLOW_SUPERUSER=1
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
 # https://github.com/mlocati/docker-php-extension-installer
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
@@ -49,5 +50,5 @@ RUN set -xe \
 RUN set -eux; \
 	rm -rf /tmp/*
 
-WORKDIR /var/www/app
+WORKDIR /var/www/wapinet
 
