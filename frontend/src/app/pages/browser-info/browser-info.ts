@@ -1,3 +1,4 @@
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TuiIcon, TuiLoader, TuiNotificationDirective, TuiTitle } from '@taiga-ui/core';
@@ -5,8 +6,12 @@ import { TuiCardLarge } from '@taiga-ui/layout';
 
 import { BrowserGeoInfo, BrowserInfoResponse } from '../../api/generated/models';
 import { BrowserInfoApi } from '../../core/api/browser-info-api';
+import { capabilityRows } from '../../core/browser/capabilities';
+import { utcOffsetNow } from '../../core/browser/clock';
 import { countryFlagUrl, geoCountryLabel } from '../../core/browser/country-flag';
 import { AudioFingerprint, WebRtcFingerprint, audioFingerprint, canvasFingerprint, webrtcFingerprint } from '../../core/browser/fingerprint';
+import { MediaInfo, mediaSupport } from '../../core/browser/media';
+import { permissionRows } from '../../core/browser/permissions';
 import { describeError } from '../../core/api/problem-details';
 import { Breadcrumb, Breadcrumbs } from '../../shared/breadcrumbs/breadcrumbs';
 import { InfoHint } from '../../shared/info-hint/info-hint';
@@ -44,7 +49,7 @@ interface UserAgentData {
 }
 
 @Component({
-    imports: [Breadcrumbs, InfoHint, IpInsight, RouterLink, ToolResult, TuiCardLarge, TuiIcon, TuiLoader, TuiNotificationDirective, TuiTitle],
+    imports: [Breadcrumbs, InfoHint, IpInsight, NgTemplateOutlet, RouterLink, ToolResult, TuiCardLarge, TuiIcon, TuiLoader, TuiNotificationDirective, TuiTitle],
     selector: 'app-browser-info',
     styleUrl: './browser-info.css',
     templateUrl: './browser-info.html',
@@ -59,6 +64,9 @@ export class BrowserInfo implements OnInit {
     protected readonly webrtcInfo = signal<WebRtcFingerprint | null | undefined>(undefined);
     protected readonly highEntropy = signal<InfoRow[]>([]);
     protected readonly client = computed(() => [...this.clientBase, ...this.highEntropy()]);
+    protected readonly capabilities = capabilityRows();
+    protected readonly mediaInfo = signal<MediaInfo | null | undefined>(undefined);
+    protected readonly permissionInfo = signal<InfoRow[] | null | undefined>(undefined);
     protected readonly server = signal<BrowserInfoResponse | null>(null);
     protected readonly loading = signal(false);
     protected readonly error = signal<string | null>(null);
@@ -234,6 +242,8 @@ export class BrowserInfo implements OnInit {
         Память: 'navigator.deviceMemory',
         'Точек касания': 'navigator.maxTouchPoints',
         'Часовой пояс': 'Intl.DateTimeFormat().resolvedOptions().timeZone',
+        'Дата и время': 'new Date().toLocaleString()',
+        'Смещение UTC': 'new Date().getTimezoneOffset()',
         Кодировка: 'document.characterSet',
         'WebGL-производитель': 'gl.getParameter(UNMASKED_VENDOR_WEBGL)',
         'WebGL-рендерер': 'gl.getParameter(UNMASKED_RENDERER_WEBGL)',
@@ -252,6 +262,7 @@ export class BrowserInfo implements OnInit {
         const languages = navigator.languages ?? [];
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         const orientation = this.orientation(screen.orientation?.type);
+        const now = new Date();
 
         this.clientBase = this.withSources(
             this.rows([
@@ -280,6 +291,8 @@ export class BrowserInfo implements OnInit {
                 ['Память', navigatorWithData.deviceMemory ? `${navigatorWithData.deviceMemory} ГБ` : null],
                 ['Точек касания', navigator.maxTouchPoints?.toString()],
                 ['Часовой пояс', timezone],
+                ['Дата и время', now.toLocaleString('ru-RU', { dateStyle: 'short', timeStyle: 'medium' })],
+                ['Смещение UTC', utcOffsetNow()],
                 ['Кодировка', document.characterSet],
                 ['WebGL-производитель', webgl?.vendor],
                 ['WebGL-рендерер', webgl?.renderer],
@@ -293,6 +306,8 @@ export class BrowserInfo implements OnInit {
     ngOnInit(): void {
         void this.load();
         void this.loadFingerprints();
+        void this.loadMedia();
+        void this.loadPermissions();
     }
 
     private async load(webrtc: readonly string[] = []): Promise<void> {
@@ -330,6 +345,22 @@ export class BrowserInfo implements OnInit {
 
         if (webrtc?.stun.length) {
             void this.load(webrtc.stun);
+        }
+    }
+
+    private async loadMedia(): Promise<void> {
+        try {
+            this.mediaInfo.set(await mediaSupport());
+        } catch {
+            this.mediaInfo.set(null);
+        }
+    }
+
+    private async loadPermissions(): Promise<void> {
+        try {
+            this.permissionInfo.set(await permissionRows());
+        } catch {
+            this.permissionInfo.set(null);
         }
     }
 

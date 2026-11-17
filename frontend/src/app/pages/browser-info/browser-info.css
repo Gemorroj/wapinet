@@ -16,6 +16,12 @@
     min-inline-size: 0;
 }
 
+.browser-info__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
 .browser-info__empty {
     margin: 0;
     color: var(--tui-text-secondary);

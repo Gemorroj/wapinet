@@ -155,4 +155,26 @@ describe('BrowserInfo', () => {
 
         expect(text).toContain('8.8.8.8 (dns.google) — США (US), Маунтин-Вью');
     });
+
+    it('renders platform, media and permission blocks', async () => {
+        const fixture = TestBed.createComponent(BrowserInfo);
+
+        await fixture.whenStable();
+        await new Promise((resolve) => setTimeout(resolve));
+        fixture.detectChanges();
+
+        const text = fixture.nativeElement.textContent as string;
+
+        expect(text).toContain('Возможности платформы');
+        expect(text).toContain('WebAssembly');
+        expect(text).toContain('WebGPU');
+        expect(text).toContain('Медиа и кодеки');
+        expect(text).toContain('MP4 (H.264)');
+        expect(text).toContain('FLAC');
+        expect(text).toContain('Encrypted Media Extensions');
+        expect(text).toContain('Разрешения');
+        expect(text).toContain('Дата и время');
+        expect(text).toMatch(/UTC[+-]\d{2}:\d{2}/);
+        expect(fixture.nativeElement.querySelectorAll('.browser-info__group').length).toBeGreaterThanOrEqual(2);
+    });
 });

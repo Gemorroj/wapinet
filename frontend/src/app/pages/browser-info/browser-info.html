@@ -18,17 +18,16 @@
         <h2 tuiTitle="m">Браузер</h2>
         <p class="app-hint">Источник: JavaScript API — <code>navigator</code>, <code>screen</code>, <code>window</code>, WebGL.</p>
 
-        <dl class="app-meta">
-            @for (item of client(); track item.label) {
-                <dt>
-                    @if (item.source) {
-                        <app-info-hint [text]="item.source" [label]="'Источник данных: ' + item.label" />
-                    }
-                    <span class="browser-info__label">{{ item.label }}</span>
-                </dt>
-                <dd>{{ item.value }}</dd>
-            }
-        </dl>
+        <ng-container *ngTemplateOutlet="metaRows; context: { $implicit: client() }" />
+    </section>
+
+    <section tuiCardLarge="normal" appearance="floating">
+        <h2 tuiTitle="m">Возможности платформы</h2>
+        <p class="app-hint">
+            Источник: наличие API в <code>window</code> и <code>navigator</code>. Часть возможностей работает только по HTTPS и после разрешения пользователя.
+        </p>
+
+        <ng-container *ngTemplateOutlet="metaRows; context: { $implicit: capabilities }" />
     </section>
 
     <section tuiCardLarge="normal" appearance="floating">
@@ -80,6 +79,36 @@
             </dl>
         } @else {
             <p class="browser-info__empty">Аудио-отпечаток недоступен в этом браузере.</p>
+        }
+    </section>
+
+    <section tuiCardLarge="normal" appearance="floating">
+        <h2 tuiTitle="m">Медиа и кодеки</h2>
+        <p class="app-hint">
+            Источник: <code>canPlayType</code>, MediaSource Extensions и Encrypted Media Extensions. «Возможно» — браузер не уверен, что воспроизведёт поток.
+        </p>
+
+        @if (undefined === mediaInfo()) {
+            <p class="browser-info__empty">Проверяем…</p>
+        } @else if (mediaInfo(); as media) {
+            <div class="browser-info__group">
+                <h3 tuiTitle="s">Видео</h3>
+                <ng-container *ngTemplateOutlet="metaRows; context: { $implicit: media.video }" />
+            </div>
+
+            <div class="browser-info__group">
+                <h3 tuiTitle="s">Аудио</h3>
+                <ng-container *ngTemplateOutlet="metaRows; context: { $implicit: media.audio }" />
+            </div>
+
+            @if (media.drm.length) {
+                <div class="browser-info__group">
+                    <h3 tuiTitle="s">Защита контента</h3>
+                    <ng-container *ngTemplateOutlet="metaRows; context: { $implicit: media.drm }" />
+                </div>
+            }
+        } @else {
+            <p class="browser-info__empty">Медиа-возможности недоступны в этом браузере.</p>
         }
     </section>
 
@@ -202,8 +231,37 @@
         }
     </section>
 
+    <section tuiCardLarge="normal" appearance="floating">
+        <h2 tuiTitle="m">Разрешения</h2>
+        <p class="app-hint">
+            Источник: Permissions API. Состояние читается без запроса к пользователю; «не поддерживается» означает, что браузер не знает такое разрешение.
+        </p>
+
+        @if (undefined === permissionInfo()) {
+            <p class="browser-info__empty">Проверяем…</p>
+        } @else if (permissionInfo(); as permissions) {
+            <ng-container *ngTemplateOutlet="metaRows; context: { $implicit: permissions }" />
+        } @else {
+            <p class="browser-info__empty">Permissions API недоступен в этом браузере.</p>
+        }
+    </section>
+
     <app-tool-result title="HTTP-заголовки" [text]="rawHeaders()" filename="browser-headers.txt">
         <p class="app-hint">Источник: заголовки, которые прислал клиент. Значения авторизации и cookies скрыты.</p>
         <pre class="browser-info__raw">{{ rawHeaders() || 'Заголовки не получены.' }}</pre>
     </app-tool-result>
 </section>
+
+<ng-template #metaRows let-items>
+    <dl class="app-meta">
+        @for (item of items; track item.label) {
+            <dt>
+                @if (item.source) {
+                    <app-info-hint [text]="item.source" [label]="'Источник данных: ' + item.label" />
+                }
+                <span class="browser-info__label">{{ item.label }}</span>
+            </dt>
+            <dd>{{ item.value }}</dd>
+        }
+    </dl>
+</ng-template>
