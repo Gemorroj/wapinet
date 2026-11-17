@@ -1,0 +1,1 @@
+import{bt as K,kt as X,pt as Bt}from"./main-M4O2G5O3.js";import{Ur as h,Yt as R}from"./chunk-CmMJhLRb.js";var p=class i{api=h(Bt);list(e=1){return this.api.invoke(K,{page:e})}show(e){return this.api.invoke(X,{id:String(e)})}static ɵfac=function(a){return new(a||i)};static ɵprov=R({token:i,factory:i.ɵfac,providedIn:`root`})};export{p as t};

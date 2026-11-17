@@ -1,1 +1,0 @@
-import{jt as Z,pt as Bt}from"./main-HBU2WILB.js";import{Ur as h,Yt as R}from"./chunk-CmMJhLRb.js";var n=class e{api=h(Bt);list(r={}){return this.api.invoke(Z,r)}static ɵfac=function(p){return new(p||e)};static ɵprov=R({token:e,factory:e.ɵfac,providedIn:`root`})};export{n as t};
