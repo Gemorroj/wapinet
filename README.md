@@ -34,9 +34,7 @@ docker compose up -d --build
 
 Порты только на `127.0.0.1`: `:80` — собранный SPA, API и `/admin`; `:4200` — Angular с HMR; `:8025` — Mailpit; `:3306` — MySQL (root без пароля).
 
-Тестам в контейнере нужен `.env.test.local` с `DATABASE_URL` на `mysql`; тестовая БД создаётся на пустом volume, для существующего — `docker compose exec mysql sh /docker-entrypoint-initdb.d/10-test-database.sh`.
-
-Свежие образы и пакеты: `docker compose pull --ignore-buildable && docker compose up -d --build` (в PHP-образе `apt-get upgrade`; правки `.docker/php/conf.d` тоже требуют пересборки).
+Тестовая БД создаётся на пустом volume, для существующего — `docker compose exec mysql sh /docker-entrypoint-initdb.d/10-test-database.sh`.
 
 ### Сборка и проверки
 
@@ -57,17 +55,6 @@ docker compose exec frontend npm run build # собирает public/app
 
 Контейнер `frontend` сам ставит зависимости, если `node_modules` пуст (`docker compose exec frontend npm ci` — после обновления lock-файла). После правок фоновых обработчиков — `docker compose restart messenger scheduler`.
 
-### Frontend без Docker
-
-```bash
-cd frontend
-npm ci
-npm start # API_TARGET=http://your-local-host npm start
-npm run build
-```
-
-`proxy.conf.js` по умолчанию смотрит на `http://localhost`. Сборка `public/app` коммитится: на проде Node не нужен, SPA открывается с корня сайта, статика — из `public/app`.
-
 ### Поиск (Manticore)
 
 Приложение работает с Manticore только через HTTP JSON (`MANTICORE_HOST:MANTICORE_HTTP_PORT`) — fallback на Doctrine LIKE нет: при недоступном Manticore API файлов отдаёт `503`, поиск gists/users показывает ошибку. Таблицы `files`, `users`, `gist` создаются при старте dev-контейнера, индексы обновляются вручную: `docker compose exec manticore indexer --rotate --all`.
@@ -87,6 +74,7 @@ npm run build
 #### Отложено
 
 - FrankenPHP!
+- Перенести форум. Упростить и мигрировать в основную ветку wapinet.
 - Файлы: проверка на VirusTotal (по кнопке и автоматически), вставка из clipboard, превью изображений в списке, SHA-256 рядом с MD5 (с backfill).
 - HTTP-клиент: история, коллекции, окружения, тайминги.
 - WHOIS: SPF, DMARC, DKIM по селектору, CAA, DNSSEC, TLS, HTTP-статус.
