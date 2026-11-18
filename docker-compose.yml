@@ -124,7 +124,8 @@ services:
         environment:
             API_TARGET: http://angie
             NPM_CONFIG_CACHE: /var/cache/npm
-        command: ['sh', '-ec', '[ -x node_modules/.bin/ng ] || npm ci --no-audit --no-fund; exec npm start -- --host 0.0.0.0 --port 4200']
+        # npm ci, если node_modules пуст или старше package-lock.json
+        command: ['sh', '-ec', '[ -x node_modules/.bin/ng ] && [ node_modules/.package-lock.json -nt package-lock.json ] || npm ci --no-audit --no-fund; exec npm start -- --host 0.0.0.0 --port 4200']
         ports:
             - '127.0.0.1:${FRONTEND_PORT:-4200}:4200'
         depends_on:

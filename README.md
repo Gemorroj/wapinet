@@ -41,7 +41,7 @@ docker compose up -d --build
 ```bash
 docker compose exec php composer update --with-all-dependencies --no-blocking
 docker compose exec frontend npm update
-docker compose exec frontend npm ci # после изменения lock-файла
+docker compose restart frontend
 
 docker compose exec php php vendor/bin/phpunit
 docker compose exec php php vendor/bin/phpstan analyse
@@ -53,7 +53,7 @@ docker compose exec frontend npm run api:sync # OpenAPI → TS-клиент, bac
 docker compose exec frontend npm run build # собирает public/app
 ```
 
-Контейнер `frontend` сам ставит зависимости, если `node_modules` пуст (`docker compose exec frontend npm ci` — после обновления lock-файла). После правок фоновых обработчиков — `docker compose restart messenger scheduler`.
+Контейнер `frontend` при старте сам ставит зависимости, если `node_modules` пуст или изменился `package-lock.json`. После правок фоновых обработчиков — `docker compose restart messenger scheduler`.
 
 ### Поиск (Manticore)
 
