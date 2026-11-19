@@ -3,7 +3,7 @@ set -eu
 
 # Temporary application directories under var/tmp are created by Kernel.
 mkdir -p var public/static/file public/media/cache public/bundles vendor
-chown -R www-data:www-data var public/static/file public/media/cache public/bundles vendor frontend/node_modules /var/cache/npm
+chown -R www-data:www-data var public/static/file public/media/cache public/bundles vendor
 chmod -R u+rwX,g+rwX,o-rwx var
 chmod -R u+rwX,go+rX,go-w public/static/file public/media/cache
 

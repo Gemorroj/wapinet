@@ -40,6 +40,7 @@ docker compose up -d --build
 
 ```bash
 docker compose exec php composer update --with-all-dependencies --no-blocking
+docker compose exec frontend ./node_modules/.bin/ng update --allow-dirty
 docker compose exec frontend npm update
 docker compose restart frontend
 
