@@ -110,7 +110,7 @@ class DashboardController extends AbstractDashboardController
             'info_disk' => $ginfo->getDisk(),
             'info_services' => $this->indexServices($ginfo->getServices()),
             'info_memory' => $ginfo->getMemory(),
-            'info_angie' => $ginfo->getAngie(),
+            'info_frankenphp' => $ginfo->getFrankenphp(),
             'info_mysql' => $ginfo->getMysql($this->entityManager->getConnection()->getNativeConnection()),
             'info_manticore' => $manticoreInfo,
             'info_messenger' => $this->messengerHealth->counts(),

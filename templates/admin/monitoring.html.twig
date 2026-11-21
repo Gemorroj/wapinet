@@ -25,7 +25,7 @@
     info_disk: '\\Ginfo\\Info\\Disk',
     info_services: 'array<string, \\Ginfo\\Info\\Service>',
     info_memory: '?\\Ginfo\\Info\\Memory',
-    info_angie: '?\\Ginfo\\Info\\Angie',
+    info_frankenphp: '?\\Ginfo\\Info\\WebServer\\Frankenphp',
     info_mysql: '\\Ginfo\\Info\\Mysql',
     info_manticore: '\\Ginfo\\Info\\Manticore',
 } %}
@@ -58,127 +58,6 @@
 {% endif %}
 
 <div class="container-fluid">
-    {% if info_php.fpm.enabled %}
-        <div class="row">
-            <div class="col">
-                <dl class="row">
-                    <dt class="col-7 text-end monitoring-label">PHP-FPM process manager:</dt>
-                    <dd class="col-5 monitoring-value">{{ info_php.fpm.processManager }}</dd>
-                </dl>
-            </div>
-            <div class="col">
-                <dl class="row">
-                    <dt class="col-7 text-end monitoring-label">PHP-FPM Memory Peak:</dt>
-                    <dd class="col-5 monitoring-value">{{ info_php.fpm.memoryPeak|wapinet_size }}</dd>
-                </dl>
-            </div>
-            <div class="col">
-                <dl class="row">
-                    <dt class="col-7 text-end monitoring-label">PHP-FPM start time:</dt>
-                    <dd class="col-5 monitoring-value">{{ info_php.fpm.startTime|wapinet_datetime }}</dd>
-                </dl>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <dl class="row">
-                    <dt class="col-7 text-end monitoring-label">Принято соединений:</dt>
-                    <dd class="col-5 monitoring-value">{{ info_php.fpm.acceptedConnections|wapinet_count }}</dd>
-                </dl>
-            </div>
-            <div class="col">
-                <dl class="row">
-                    <dt class="col-7 text-end monitoring-label">Активных процессов:</dt>
-                    <dd class="col-5 monitoring-value">{{ info_php.fpm.activeProcesses|wapinet_count }}</dd>
-                </dl>
-            </div>
-            <div class="col">
-                <dl class="row">
-                    <dt class="col-7 text-end monitoring-label">Простаивающих процессов:</dt>
-                    <dd class="col-5 monitoring-value">{{ info_php.fpm.idleProcesses|wapinet_count }}</dd>
-                </dl>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <dl class="row">
-                    <dt class="col-7 text-end monitoring-label">Max активных процессов:</dt>
-                    <dd class="col-5 monitoring-value">{{ info_php.fpm.maxActiveProcesses|wapinet_count }}</dd>
-                </dl>
-            </div>
-            <div class="col">
-                <dl class="row">
-                    <dt class="col-7 text-end monitoring-label">Max потомков:</dt>
-                    <dd class="col-5 monitoring-value">{{ info_php.fpm.maxChildrenReached|wapinet_count }}</dd>
-                </dl>
-            </div>
-            <div class="col">
-                <dl class="row">
-                    <dt class="col-7 text-end monitoring-label">Медленных запросов:</dt>
-                    <dd class="col-5 monitoring-value">{{ info_php.fpm.slowRequests|wapinet_count }}</dd>
-                </dl>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <div class="d-grid gap-2">
-                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" href="#collapseProcesses" aria-expanded="false" aria-controls="collapseProcesses">
-                        Processes ({{ info_php.fpm.processes|length|wapinet_count }})
-                    </button>
-                </div>
-
-                <div class="collapse" id="collapseProcesses">
-                    {% for process in info_php.fpm.processes %}
-                        <div class="card card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <dl class="row">
-                                        <dd class="col">{{ process.lastRequestScript }}</dd>
-                                    </dl>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <dl class="row">
-                                        <dt class="col-5 text-end monitoring-label">Start time:</dt>
-                                        <dd class="col-7 monitoring-value">{{ process.startTime|wapinet_datetime }}</dd>
-                                    </dl>
-                                </div>
-                                <div class="col">
-                                    <dl class="row">
-                                        <dt class="col-7 text-end monitoring-label">Состояние:</dt>
-                                        <dd class="col-5 monitoring-value">{{ process.state }}</dd>
-                                    </dl>
-                                </div>
-                                <div class="col">
-                                    <dl class="row">
-                                        <dt class="col-7 text-end monitoring-label">Запросов:</dt>
-                                        <dd class="col-5 monitoring-value">{{ process.requests|wapinet_count }}</dd>
-                                    </dl>
-                                </div>
-                                <div class="col">
-                                    <dl class="row">
-                                        <dt class="col-7 text-end monitoring-label">Last Request Memory:</dt>
-                                        <dd class="col-5 monitoring-value">{{ process.lastRequestMemory|wapinet_size }}</dd>
-                                    </dl>
-                                </div>
-                                <div class="col">
-                                    <dl class="row">
-                                        <dt class="col-7 text-end monitoring-label">Last Request CPU:</dt>
-                                        <dd class="col-5 monitoring-value">{{ process.lastRequestCpu|wapinet_count(2) }}</dd>
-                                    </dl>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-        <br />
-    {% endif %}
-
     <div class="row justify-content-between">
         <div class="col-4">
             <div class="card mb-3">
@@ -284,34 +163,85 @@
         <div class="col-4">
             <div class="card mb-3">
                 <h3 class="card-header">
-                    Angie
+                    FrankenPHP
                 </h3>
                 <div class="card-body">
-                    {% if info_angie %}
+                    {% if info_frankenphp %}
                         <dl class="row">
                             <dt class="col-4 text-end monitoring-label">Версия:</dt>
-                            <dd class="col-8 monitoring-value">{{ info_angie.angieVersion }}</dd>
+                            <dd class="col-8 monitoring-value">{{ info_frankenphp.version }}</dd>
                             <dt class="col-4 text-end monitoring-label">Uptime:</dt>
                             <dd class="col-8 monitoring-value">
-                                {% for process in info_angie.processes %}
+                                {% for process in info_frankenphp.processes %}
                                     {% if process.master %}
-                                        {{ process.uptime|wapinet_length }}
+                                        {{ process.uptime is not null ? process.uptime|wapinet_length : '—' }}
                                     {% endif %}
+                                {% else %}
+                                    —
                                 {% endfor %}
                             </dd>
                             <dt class="col-4 text-end monitoring-label">Процессы:</dt>
                             <dd class="col-8 monitoring-value">
-                                {% for process in info_angie.processes %}
+                                {% for process in info_frankenphp.processes %}
                                     <strong>PID {{ process.pid }}</strong>{{ process.master ? ' (master)' : '' }}: VmPeak: {{ process.vmPeak|wapinet_size }}, VmSize: {{ process.vmSize|wapinet_size }}<br />
                                 {% endfor %}
                             </dd>
-                            <dt class="col-4 text-end monitoring-label">Аргументы:</dt>
+                            <dt class="col-4 text-end monitoring-label">Модули:</dt>
                             <dd class="col-8 monitoring-value">
-                                <button type="button" class="btn btn-default" title="Angie args" onclick="alert('{{ info_angie.args|escape('js')|replace({'\\u0020': "\\n"}) }}');">
-                                    {{ info_angie.args|split(' ')|length|wapinet_count }} всего
+                                <button type="button" class="btn btn-default" title="FrankenPHP modules" onclick="alert('{{ info_frankenphp.listModules|sort|join(' ')|escape('js')|replace({'\\u0020': "\\n"}) }}');">
+                                    {{ info_frankenphp.listModules|length|wapinet_count }} всего
                                 </button>
                             </dd>
+                            <dt class="col-4 text-end monitoring-label">Потоки:</dt>
+                            <dd class="col-8 monitoring-value">
+                                {{ info_frankenphp.threads|length|wapinet_count }}
+                                {% if info_frankenphp.reservedThreadCount %}
+                                    (reserved: {{ info_frankenphp.reservedThreadCount|wapinet_count }})
+                                {% endif %}
+                            </dd>
                         </dl>
+
+                        {% if info_frankenphp.threads %}
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" href="#collapseFrankenphpThreads" aria-expanded="false" aria-controls="collapseFrankenphpThreads">
+                                    Threads ({{ info_frankenphp.threads|length|wapinet_count }})
+                                </button>
+                            </div>
+                            <div class="collapse" id="collapseFrankenphpThreads">
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Состояние</th>
+                                                <th>Запросов</th>
+                                                <th>Память</th>
+                                                <th>Текущий запрос</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for thread in info_frankenphp.threads %}
+                                                <tr>
+                                                    <td>{{ thread.index }}</td>
+                                                    <td>{{ thread.state }}{% if thread.busy %} (busy){% endif %}</td>
+                                                    <td>{{ thread.requestCount|wapinet_count }}</td>
+                                                    <td>{{ thread.memoryUsage|wapinet_size }}</td>
+                                                    <td class="text-break">
+                                                        {% if thread.currentUri %}
+                                                            {{ thread.currentMethod }} {{ thread.currentUri }}
+                                                        {% else %}
+                                                            —
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        {% else %}
+                            <twig:ea:Badge color="warning">Admin API недоступен</twig:ea:Badge>
+                        {% endif %}
                     {% else %}
                         Не найден
                     {% endif %}
@@ -475,10 +405,8 @@
                     <dl class="row">
                         {% import _self as macroService %}
 
-                        <dt class="col-6 text-end monitoring-label">Angie:</dt>
-                        <dd class="col-6 monitoring-value">{{ macroService.macro_service(info_services['angie.service'] ?? null) }}</dd>
-                        <dt class="col-6 text-end monitoring-label">PHP-Fpm:</dt>
-                        <dd class="col-6 monitoring-value">{{ macroService.macro_service(info_services['php8.5-fpm.service'] ?? null) }}</dd>
+                        <dt class="col-6 text-end monitoring-label">FrankenPHP:</dt>
+                        <dd class="col-6 monitoring-value">{{ macroService.macro_service(info_services['frankenphp.service'] ?? null) }}</dd>
                         <dt class="col-6 text-end monitoring-label">MySQL:</dt>
                         <dd class="col-6 monitoring-value">{{ macroService.macro_service(info_services['mysql.service'] ?? null) }}</dd>
                         <dt class="col-6 text-end monitoring-label">Messenger:</dt>

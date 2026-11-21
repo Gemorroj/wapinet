@@ -1,0 +1,71 @@
+{
+	frankenphp {
+		num_threads 2
+		max_threads 8
+		max_wait_time 30s
+	}
+}
+
+:8080 {
+	root * /var/www/wapinet/public
+	encode zstd gzip
+
+	request_body {
+		max_size 50MiB
+	}
+
+	log {
+		format console
+	}
+
+	@hidden {
+		path_regexp hidden (^|/)\.
+		not path /.well-known/*
+	}
+	respond @hidden 404
+
+	@php path /api /api/* /admin /admin/* /media/cache/resolve /media/cache/resolve/* /index.php /_profiler /_profiler/* /_wdt /_wdt/*
+	handle @php {
+		php_server {
+			root /var/www/wapinet/public
+			try_files {path} index.php
+			worker {
+				file /var/www/wapinet/public/index.php
+				num 4
+				env FRANKENPHP_WORKER 1
+				env FRANKENPHP_LOOP_MAX 500
+				watch /var/www/wapinet/src
+				watch /var/www/wapinet/config
+				watch /var/www/wapinet/templates
+				watch /var/www/wapinet/public/index.php
+			}
+		}
+	}
+
+	@static path /static /static/*
+	handle @static {
+		log_skip
+		header Content-Disposition "attachment"
+		header X-Content-Type-Options "nosniff"
+		header Cache-Control "public, max-age=2592000"
+		file_server
+	}
+
+	@appIndex path /app/index.html
+	handle @appIndex {
+		header Cache-Control "no-cache"
+		file_server
+	}
+
+	@assets path /app/* /bundles/* /resources/* /media/*
+	handle @assets {
+		log_skip
+		header Cache-Control "public, max-age=2592000"
+		file_server
+	}
+
+	handle {
+		try_files {path} /app/index.html
+		file_server
+	}
+}

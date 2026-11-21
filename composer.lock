@@ -1611,12 +1611,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/ginfo.git",
-                "reference": "651610fddcfb9a8d0466bc51d71bc8a31c84e90d"
+                "reference": "08ba28ec071e6d0aac8a4dc68df4e2d1f078aa9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/651610fddcfb9a8d0466bc51d71bc8a31c84e90d",
-                "reference": "651610fddcfb9a8d0466bc51d71bc8a31c84e90d",
+                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/08ba28ec071e6d0aac8a4dc68df4e2d1f078aa9d",
+                "reference": "08ba28ec071e6d0aac8a4dc68df4e2d1f078aa9d",
                 "shasum": ""
             },
             "require": {
@@ -1685,6 +1685,7 @@
                 "disk",
                 "elasticsearch",
                 "fpm",
+                "frankenphp",
                 "health",
                 "httpd",
                 "info",
@@ -1717,8 +1718,8 @@
                 "issues": "https://github.com/Gemorroj/ginfo/issues",
                 "source": "https://github.com/Gemorroj/ginfo/tree/master"
             },
-            "time": "2026-11-10T17:09:04+00:00",
-            "published-time": "2026-11-10T17:09:15+00:00"
+            "time": "2026-11-21T15:25:31+00:00",
+            "published-time": "2026-11-21T15:25:40+00:00"
         },
         {
             "name": "gemorroj/htmlvalidator",
@@ -3156,21 +3157,21 @@
         },
         {
             "name": "php-ffmpeg/php-ffmpeg",
-            "version": "v1.4.0",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-FFMpeg/PHP-FFMpeg.git",
-                "reference": "41fa00949ea2758cd34f076a8030df7198d57759"
+                "reference": "e0c44467b2a67c739f9dce2500ec8096e8f622db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-FFMpeg/PHP-FFMpeg/zipball/41fa00949ea2758cd34f076a8030df7198d57759",
-                "reference": "41fa00949ea2758cd34f076a8030df7198d57759",
+                "url": "https://api.github.com/repos/PHP-FFMpeg/PHP-FFMpeg/zipball/e0c44467b2a67c739f9dce2500ec8096e8f622db",
+                "reference": "e0c44467b2a67c739f9dce2500ec8096e8f622db",
                 "shasum": ""
             },
             "require": {
                 "evenement/evenement": "^3.0",
-                "php": "^8.0 || ^8.1 || ^8.2 || ^8.3 || ^8.4 || ^8.5",
+                "php": "^8.0 || ^8.1 || ^8.2 || ^8.3 || ^8.4 || ^8.5 || ^8.6",
                 "psr/log": "^1.0 || ^2.0 || ^3.0",
                 "spatie/temporary-directory": "^2.0",
                 "symfony/cache": "^5.4 || ^6.0 || ^7.0 || ^8.0",
@@ -3239,10 +3240,10 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-FFMpeg/PHP-FFMpeg/issues",
-                "source": "https://github.com/PHP-FFMpeg/PHP-FFMpeg/tree/v1.4.0"
+                "source": "https://github.com/PHP-FFMpeg/PHP-FFMpeg/tree/v1.5.0"
             },
-            "time": "2026-01-19T21:15:14+00:00",
-            "published-time": "2026-01-19T21:16:07+00:00"
+            "time": "2026-11-21T14:51:03+00:00",
+            "published-time": "2026-11-21T14:53:07+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
