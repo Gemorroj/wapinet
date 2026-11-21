@@ -1,6 +1,5 @@
-FROM php:8.5-fpm
+FROM dunglas/frankenphp:1-php8.5
 
-# upgrade: dev-образ со свежими пакетами на момент сборки
 RUN set -eux; \
     apt-get update; \
     apt-get upgrade -y; \
@@ -11,16 +10,14 @@ RUN set -eux; \
         git \
         htop \
         mc \
+        util-linux \
         ffmpeg \
         unzip; \
     rm -rf /var/lib/apt/lists/*
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV COMPOSER_HOME=/var/www/.composer
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
-
-# PIE не подходит: ставит только Composer-пакеты, а gd/intl/zip/pcntl/pdo_mysql — bundled-расширения,
-# и системные зависимости не тянет. Поэтому mlocati/docker-php-extension-installer.
-COPY --from=mlocati/php-extension-installer:2 /usr/bin/install-php-extensions /usr/local/bin/
 
 RUN set -eux; \
     install-php-extensions \
@@ -49,15 +46,16 @@ WORKDIR /var/www/wapinet
 ARG LOCAL_UID=1000
 ARG LOCAL_GID=1000
 
-# UID/GID как у владельца bind-mount'а; FPM работает сразу от www-data
+# UID/GID как у владельца bind-mount'а.
 RUN set -eux; \
     groupmod -o -g "${LOCAL_GID}" www-data; \
     usermod -o -u "${LOCAL_UID}" -g "${LOCAL_GID}" www-data; \
-    mkdir -p /var/www/.composer; \
-    chown www-data:www-data /var/www/.composer; \
-    ln -s /opt/7z2606-linux-x64/7zz /usr/local/bin/7zz; \
-    sed -i '/^user = /d; /^group = /d' /usr/local/etc/php-fpm.d/www.conf
+    mkdir -p /var/www/.composer /config/caddy /data/caddy; \
+    chown -R www-data:www-data /var/www/.composer /config /data; \
+    ln -s /opt/7z2606-linux-x64/7zz /usr/local/bin/7zz
 
 COPY conf.d/ /usr/local/etc/php/conf.d/
 
 USER www-data
+
+EXPOSE 8080

@@ -6,6 +6,7 @@
 - Symfony 8.2
 - Angular 22 + Taiga UI 5 (SPA, `frontend/`)
 - PHP 8.5
+- FrankenPHP (Caddy) в worker mode
 - MySQL 8.4
 - Manticore
 - 7zip
@@ -20,19 +21,19 @@
 DATABASE_URL="mysql://root:@mysql:3306/wapinet?serverVersion=8.4"
 MANTICORE_HOST=manticore
 MAILER_DSN=smtp://mailpit:1025
-PHP_PATH=/usr/local/bin/php
 P7Z_PATH=/usr/local/bin/7zz
+PHP_PATH=/usr/local/bin/php
 ```
 
-Compose задаёт только контейнерные переменные; остальное приложение читает из `.env.local` (реальный env перекрывает dotenv, поэтому дублировать настройки в compose нельзя). В dev MySQL — `root` без пароля, как в `.env.dist`; имя БД `wapinet` указано ещё и в `.docker/manticore/manticore.conf` (индексатор).
+Compose задаёт только контейнерные переменные; остальное приложение читает из `.env.local` (реальный env перекрывает dotenv, поэтому дублировать настройки в compose нельзя). В dev MySQL — `root` без пароля, как в `.env.dist`; имя БД `wapinet` указано ещё и в `.docker/manticore/manticore.conf` (индексатор). FrankenPHP в контейнере `php` отдаёт SPA, API и `/admin`; отдельного nginx нет.
 
 ```bash
-docker compose up -d --build
+docker compose up -d --build --remove-orphans
 ```
 
 `init` при старте выставляет владельцев каталогов, ставит Composer-зависимости и миграции обеих БД; остальные сервисы ждут его (логи — `docker compose logs init`, повтор — `docker compose run --rm init`). PHP и Node работают от владельца исходников (`1000:1000`); другой UID: `LOCAL_UID=$(id -u) LOCAL_GID=$(id -g) docker compose up -d --build`.
 
-Порты только на `127.0.0.1`: `:80` — собранный SPA, API и `/admin`; `:4200` — Angular с HMR; `:8025` — Mailpit; `:3306` — MySQL (root без пароля).
+Порты только на `127.0.0.1`: `:80` — FrankenPHP с собранным SPA, API и `/admin`; `:4200` — Angular с HMR; `:8025` — Mailpit; `:3306` — MySQL (root без пароля).
 
 Тестовая БД создаётся на пустом volume, для существующего — `docker compose exec mysql sh /docker-entrypoint-initdb.d/10-test-database.sh`.
 
@@ -60,11 +61,11 @@ docker compose exec frontend npm run build # собирает public/app
 
 Приложение работает с Manticore только через HTTP JSON (`MANTICORE_HOST:MANTICORE_HTTP_PORT`) — fallback на Doctrine LIKE нет: при недоступном Manticore API файлов отдаёт `503`, поиск gists/users показывает ошибку. Таблицы `files`, `users`, `gist` создаются при старте dev-контейнера, индексы обновляются вручную: `docker compose exec manticore indexer --rotate --all`.
 
-Установка и настройка сервера (Ubuntu 24.04, MySQL, PHP, Angie, Manticore, systemd) — в [`INSTALL.md`](INSTALL.md).
+Установка и настройка сервера (Ubuntu 24.04, MySQL, FrankenPHP, Manticore, systemd) — в [`INSTALL.md`](INSTALL.md).
 
 ### Лимиты и фоновые задачи
 
-- Загрузка файлов: до 20 файлов за запрос, до 50 МиБ на файл; архиватор — 1000 файлов, 50 МиБ на файл, 250 МиБ на архив.
+- Загрузка файлов: до 50 МиБ; архиватор — до 20 файлов за запрос, суммарно до 50 МиБ (post_max_size 55M); в архиве — до 1000 файлов, 50 МиБ на файл, 250 МиБ на архив.
 - Rate limit: `config/packages/rate_limiter.yaml`; при превышении API отдаёт `429` с `Retry-After`, текст для пользователя строит клиент.
 - Временные каталоги `var/tmp`, `var/tmp/archiver`, `var/tmp/audio-tags`, `var/tmp/file` создаёт `Kernel` при сборке контейнера; старые файлы чистит `app:tmp-clear`.
 - Фоновые задачи (превью, метаданные, конвертация) — через Messenger: `messenger:consume async`.
@@ -74,10 +75,9 @@ docker compose exec frontend npm run build # собирает public/app
 
 #### Отложено
 
-- FrankenPHP!
 - Политика: ссылки на каналы в MAX.
 - Видео-курсы: ссылки на RuTube и VK.
-- Страница полезных ссылок: внешние ресурсы для разработчиков (пример — https://externals.io/).
+- Страница полезных ссылок: внешние ресурсы для разработчиков (пример — https://externals.io/ https://3v4l.org).
 - Аудио-теги: переделать на медиа комбайн полностью в браузере - TagLib-wasm + MediaBunny
 - Перенести форум. Упростить и мигрировать в основную ветку wapinet.
 - Файлы: проверка на VirusTotal (по кнопке и автоматически), вставка из clipboard, превью изображений в списке, SHA-256 рядом с MD5 (с backfill).

@@ -11,6 +11,7 @@ x-php: &php
     user: www-data
     volumes:
         - '.:/var/www/wapinet'
+        - './.docker/frankenphp/Caddyfile:/etc/frankenphp/Caddyfile:ro'
     environment:
         XDEBUG_MODE: ${XDEBUG_MODE:-off}
     extra_hosts:
@@ -43,6 +44,8 @@ services:
         volumes:
             - '.:/var/www/wapinet'
         command: ['sh', '.docker/php/init.sh']
+        healthcheck:
+            test: ['CMD', 'true']
         depends_on:
             mysql:
                 condition: service_healthy
@@ -77,6 +80,9 @@ services:
     php:
         <<: *php
         restart: unless-stopped
+        ports:
+            - '127.0.0.1:${HTTP_PORT:-80}:8080'
+        stop_grace_period: 30s
         depends_on:
             init:
                 condition: service_completed_successfully
@@ -85,6 +91,8 @@ services:
         <<: *php
         restart: unless-stopped
         command: ['php', 'bin/console', 'messenger:consume', 'async', '--time-limit=3600', '--memory-limit=256M']
+        healthcheck:
+            test: ['CMD', 'true']
         stop_grace_period: 60s
         depends_on:
             init:
@@ -94,21 +102,12 @@ services:
         <<: *php
         restart: unless-stopped
         command: ['php', 'bin/console', 'messenger:consume', 'scheduler_default', '--time-limit=3600', '--memory-limit=256M']
+        healthcheck:
+            test: ['CMD', 'true']
         stop_grace_period: 60s
         depends_on:
             init:
                 condition: service_completed_successfully
-
-    angie:
-        image: docker.angie.software/angie
-        restart: unless-stopped
-        volumes:
-            - '.:/var/www/wapinet'
-            - './.docker/angie/wapinet.conf:/etc/angie/http.d/default.conf'
-        ports:
-            - '127.0.0.1:${HTTP_PORT:-80}:80'
-        depends_on:
-            - php
 
     frontend:
         image: node:26-alpine
@@ -118,7 +117,7 @@ services:
         volumes:
             - '.:/var/www/wapinet'
         environment:
-            API_TARGET: http://angie
+            API_TARGET: http://php:8080
         # npm ci, если node_modules пуст или старше package-lock.json
         command: ['sh', '-ec', '[ -x node_modules/.bin/ng ] && [ node_modules/.package-lock.json -nt package-lock.json ] || npm ci --no-audit --no-fund; exec npm start -- --host 0.0.0.0 --port 4200']
         ports:
@@ -126,7 +125,7 @@ services:
         depends_on:
             init:
                 condition: service_completed_successfully
-            angie:
+            php:
                 condition: service_started
 
     mailpit:

@@ -4,16 +4,23 @@ namespace App\Service;
 
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
+use Syntax\Checker\TokenizerChecker;
 use Syntax\Php;
 
 final readonly class PhpValidator
 {
+    private Php $syntax;
+
     public function __construct(
         #[Autowire('%env(PHP_PATH)%')]
-        private string $phpPath,
-        #[Autowire('%kernel.tmp_dir%')]
-        private string $tmpDir,
+        string $phpPath,
     ) {
+        if ('' === $phpPath) {
+            throw new \InvalidArgumentException('PHP_PATH must not be empty.');
+        }
+
+        // TODO: replace with new CliChecker($phpPath) when FrankenPHP/PHP 8.6 supports "-l".
+        $this->syntax = new Php(new TokenizerChecker());
     }
 
     /**
@@ -21,10 +28,7 @@ final readonly class PhpValidator
      */
     public function validateFile(BaseFile $file): array
     {
-        $syntax = new Php();
-        $syntax->setCli($this->phpPath);
-
-        return $syntax->checkFile($file->getPathname());
+        return $this->syntax->checkFile($file->getPathname());
     }
 
     /**
@@ -32,10 +36,6 @@ final readonly class PhpValidator
      */
     public function validateFragment(string $source): array
     {
-        $syntax = new Php();
-        $syntax->setCli($this->phpPath);
-        $syntax->setTempDirectory($this->tmpDir);
-
-        return $syntax->check($source);
+        return $this->syntax->check($source);
     }
 }

@@ -35,7 +35,7 @@ final class ObfuscatorRunnerTest extends TestCase
         $obfuscator = $this->createStub(PhpCodeObfuscatorInterface::class);
         $obfuscator->method('obfuscate')->willReturn($result);
 
-        $validator = new PhpValidator(\PHP_BINARY, \sys_get_temp_dir());
+        $validator = new PhpValidator(\PHP_BINARY);
 
         return new ObfuscatorRunner($obfuscator, $validator, new NullLogger());
     }

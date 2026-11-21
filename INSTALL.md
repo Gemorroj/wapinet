@@ -2,13 +2,13 @@
 
 Актуально для Ubuntu 24.04. Обзор проекта — в [`README.md`](README.md).
 
+Стек продакшена: FrankenPHP (Caddy) в worker mode, MySQL, Manticore, systemd.
+
+## Система
+
 ```bash
 apt update && sudo apt dist-upgrade && sudo apt autoremove --purge
-apt install software-properties-common
-add-apt-repository ppa:ondrej/php
-curl -o /etc/apt/trusted.gpg.d/angie-signing.gpg https://angie.software/keys/angie-signing.gpg
-echo "deb https://download.angie.software/angie/$(. /etc/os-release && echo "$ID/$VERSION_ID $VERSION_CODENAME") main" | sudo tee /etc/apt/sources.list.d/angie.list > /dev/null
-apt update && apt dist-upgrade
+apt install software-properties-common curl git unzip htop mc
 hostnamectl set-hostname wapinet.ru
 timedatectl set-timezone UTC
 
@@ -18,19 +18,21 @@ timedatectl set-timezone UTC
 reboot
 ```
 
+## MySQL
+
 ```bash
 cd /
 wget https://dev.mysql.com/get/mysql-apt-config_0.8.40-1_all.deb
-sudo dpkg -i mysql-apt-config_0.8.40-1_all.deb
-
-apt install htop mc git unzip
+dpkg -i mysql-apt-config_0.8.40-1_all.deb
+apt update
 apt install mysql-client mysql-server
-apt install angie
-systemctl enable angie
-apt install php8.5-fpm php8.5-curl php8.5-gd php8.5-intl php8.5-mbstring php8.5-mysql php8.5-xml php8.5-zip php8.5-apcu
 
 mysql_secure_installation
-echo '[mysqld]
+```
+
+```bash
+cat > /etc/mysql/mysql.conf.d/z_wapinet.cnf <<'EOF'
+[mysqld]
 bind-address = 127.0.0.1,::1
 mysqlx-bind-address = 127.0.0.1,::1
 skip-log-bin
@@ -54,17 +56,25 @@ max_heap_table_size=48M
 join_buffer_size=3M
 
 innodb_fast_shutdown=0
-' > /etc/mysql/mysql.conf.d/z_wapinet.cnf
+EOF
 
-# manticore
+systemctl restart mysql
+```
+
+## Manticore
+
+```bash
 apt install default-libmysqlclient-dev
 curl -O -L https://repo.manticoresearch.com/manticore-repo.noarch.deb
 dpkg -i manticore-repo.noarch.deb
 rm manticore-repo.noarch.deb
+apt update
 apt install manticore manticore-extra
-systemctl enable manticore
+```
 
-echo 'common {
+```bash
+cat > /etc/manticoresearch/manticore.conf <<'EOF'
+common {
     plugin_dir = /usr/local/lib/manticore
 }
 indexer
@@ -205,245 +215,373 @@ index gist
     expand_keywords = 1
     index_exact_words = 1
     charset_table = 0..9, english, russian, _
-}' > /etc/manticoresearch/manticore.conf
+}
+EOF
 
-echo '0 2 * * * manticore /usr/bin/indexer --rotate --all >> /var/log/manticore/indexer.log 2>&1' > /etc/cron.d/manticore
+cat > /etc/cron.d/manticore <<'EOF'
+0 2 * * * manticore /usr/bin/indexer --rotate --all >> /var/log/manticore/indexer.log 2>&1
+EOF
 
+systemctl enable manticore
+systemctl restart manticore
 
-# composer
+# После импорта данных и после каждого изменения данных:
+# sudo -u manticore /usr/bin/indexer --rotate --all
+```
+
+## FrankenPHP
+
+```bash
+VERSION=85
+curl -fsSL "https://pkg.henderkes.com/api/packages/${VERSION}/debian/repository.key" \
+  -o "/etc/apt/keyrings/static-php${VERSION}.asc"
+echo "deb [signed-by=/etc/apt/keyrings/static-php${VERSION}.asc] https://pkg.henderkes.com/api/packages/${VERSION}/debian php-zts main" \
+  | tee /etc/apt/sources.list.d/static-php${VERSION}.list
+apt update
+apt install frankenphp
+systemctl stop frankenphp
+
+apt install \
+  php-zts-apcu \
+  php-zts-curl \
+  php-zts-gd \
+  php-zts-intl \
+  php-zts-mbstring \
+  php-zts-mysql \
+  php-zts-xml \
+  php-zts-zip \
+  php-zts-sodium \
+  php-zts-opcache
+```
+
+Прослойка для `php`:
+
+```bash
+cat > /usr/local/bin/php <<'PHP'
+#!/usr/bin/env bash
+set -euo pipefail
+
+args=()
+passthrough=0
+expect_d_value=0
+
+for arg in "$@"; do
+    if (( passthrough )); then
+        args+=("$arg")
+        continue
+    fi
+
+    if [ "$arg" = "--" ]; then
+        passthrough=1
+        args+=("$arg")
+        continue
+    fi
+
+    if (( expect_d_value )); then
+        expect_d_value=0
+        continue
+    fi
+
+    case "$arg" in
+        -d)
+            expect_d_value=1
+            ;;
+        -d\ *|-d*)
+            ;;
+        *)
+            args+=("$arg")
+            ;;
+    esac
+done
+
+exec /usr/bin/frankenphp php-cli "${args[@]}"
+PHP
+chmod 755 /usr/local/bin/php
+```
+
+`frankenphp php-cli` не поддерживает `-d`, поэтому wrapper их отбрасывает; `--` и аргументы после него передаются как есть.
+
+Для PECL-расширений, которых нет в `php-zts-*`, можно использовать PIE:
+
+```bash
+apt install pie-zts
+pie-zts install vendor/package
+```
+
+Проверка PHP и расширений:
+
+```bash
+php -v
+php --ini
+php -r 'foreach (["apcu","gd","intl","pdo_mysql","sodium","simplexml","zip","curl","mbstring","opcache","pcntl"] as $e) printf("%s=%s\n", $e, extension_loaded($e) ? "ok" : "MISSING");'
+```
+
+Пути deb-пакета: `/etc/php-zts/php.ini`, `/etc/php-zts/conf.d/*.ini`, `/etc/frankenphp/Caddyfile`. Если `php --ini` показывает другие пути — использовать их.
+
+Composer:
+
+```bash
 cd /var/www
 curl -L -o composer.phar https://getcomposer.org/download/latest-stable/composer.phar
 chmod 755 composer.phar
+```
 
-# geoip database
+## GeoIP, 7zip, ffmpeg
+
+```bash
 cd /var/www
 curl -L -o GeoLite2-City.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-City.mmdb
 curl -L -o GeoLite2-ASN.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-ASN.mmdb
 
-# 7zip
 cd /opt
 mkdir 7z2606-linux-x64
-cd /opt/7z2606-linux-x64
+cd 7z2606-linux-x64
 curl -fL -o 7z.tar.xz "https://github.com/ip7z/7zip/releases/download/26.06/7z2606-linux-x64.tar.xz"
 tar xJf 7z.tar.xz
 rm -f 7z.tar.xz
 /opt/7z2606-linux-x64/7zz i
+ln -sf /opt/7z2606-linux-x64/7zz /usr/local/bin/7zz
 
-# ffmpeg - https://ubuntuhandbook.org/index.php/2024/04/ffmpeg-7-0-ppa-ubuntu/
 add-apt-repository ppa:ubuntuhandbook1/ffmpeg9
+apt update
 apt install ffmpeg
 ```
 
-```bash
-# edit /etc/php/8.5/fpm/php.ini & /etc/php/8.5/cli/php.ini
-# cgi.fix_pathinfo=0
-# memory_limit = 256M
-# date.timezone = "UTC"
-# post_max_size = 50M
-# upload_max_filesize = 50M
-# opcache.enable=1
-# opcache.enable_cli=1
-# opcache.memory_consumption=256
-# opcache.interned_strings_buffer=18
-# opcache.max_accelerated_files=100000
-# opcache.validate_timestamps=0
-# [apcu]
-# apc.shm_size=64M
-# apc.enabled = on
-# apc.enable_cli = off
-
-# edit /etc/php/8.5/fpm/pool.d/www.conf
-# listen.allowed_clients = 127.0.0.1
-# pm.status_path = /statusfpm
-# listen = /run/php/php8.5-fpm.sock
-# edit pm.* settings for performance
-
-# edit /etc/angie/angie.conf
-# user  www-data;
-# server_tokens off;
-# gzip  on;
-# gzip_comp_level 2;
-# gzip_min_length 40;
-# gzip_types text/css text/plain application/json text/javascript application/javascript text/xml application/xml application/xml+rss application/x-font-ttf application/x-font-opentype application/vnd.ms-fontobject image/svg+xml image/x-icon font/ttf font/opentype;
-# resolver 127.0.0.53;
-# acme_client wapinet_acme_client https://acme-v02.api.letsencrypt.org/directory;
-#
-#    limit_conn_zone $binary_remote_addr zone=perip:10m;
-#    limit_req_zone $binary_remote_addr zone=php_requests:10m rate=10r/s;
-#
-# server {
-#     charset utf-8;
-#     listen 80;
-#     server_name  localhost;
-#     access_log off;
-# 
-# 	location = /statusfpm {
-# 		fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-# 		include fastcgi_params;
-# 		fastcgi_pass unix:/run/php/php8.5-fpm.sock;
-# 		allow 127.0.0.1;
-# 		deny  all;
-#     }
-#     location /status/ {
-#         api /status/;
-#         allow 127.0.0.1;
-#         deny  all;
-# 	}
-# }
-```
-
-```bash
-server {
-    listen 80;
-    listen [::]:80;
-
-    server_name wapinet.ru www.wapinet.ru;
-	return 301 https://$server_name$request_uri;
-}
-
-server {
-    if ($request_uri ~ "/forum/(.*)") {
-        return 301 https://forum.$server_name/$1;
-    }
-
-    # Canonical host: www -> non-www
-    if ($host = www.wapinet.ru) {
-        return 301 https://wapinet.ru$request_uri;
-    }
-
-    location ~ /\. {
-        deny all;
-    }
-
-    ssl_protocols TLSv1.2 TLSv1.3;
-    acme wapinet_acme_client;
-    ssl_certificate $acme_cert_wapinet_acme_client;
-    ssl_certificate_key $acme_cert_key_wapinet_acme_client;
-    ssl_session_timeout 1h;
-    ssl_session_cache shared:SSL:10m;
-
-    charset utf-8;
-    listen 443 ssl;
-    listen [::]:443 ssl;
-    http2 on;
-    client_max_body_size 50m;
-
-    server_name wapinet.ru www.wapinet.ru;
-    root /var/www/wapinet/public;
-
-    error_log /var/log/angie/wapinet.error.log;
-    access_log /var/log/angie/wapinet.access.log;
-
-    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
-    add_header X-Frame-Options "DENY";
-    add_header X-Content-Type-Options nosniff;
-
-    # Кэширование
-    location = /favicon.ico {
-        access_log off;
-        expires 30d;
-    }
-    location = /robots.txt {
-        access_log off;
-        expires 30d;
-    }
-    location /bundles/ {
-        access_log off;
-        expires 30d;
-    }
-    location = / {
-        try_files /app/index.html =404;
-    }
-    # API and admin requests are handled by Symfony.
-    location ~ ^/(api|admin|_profiler|_wdt)(/|$) {
-        try_files $uri /index.php$is_args$args;
-    }
-    location /app/ {
-        try_files $uri =404;
-    }
-    location /resources/ {
-        access_log off;
-        expires 30d;
-    }
-    location /media/cache/resolve/ {
-        # on-demand thumbnail generation: goes to PHP and must not be cached
-        access_log off;
-
-        try_files $uri /index.php$is_args$args;
-    }
-    location /media/ {
-        access_log off;
-        expires 30d;
-    }
-    location /static/ {
-        # Скачивание всех файлов (в т.ч. и txt, html и проч. в обменнике), чтобы потенциальный html/js код не выполнился в браузере
-        add_header Content-Disposition "attachment";
-        add_header X-Content-Type-Options nosniff;
-        access_log off;
-        expires 30d;
-    }
-
-
-    location / {
-        # Client-side routes are served by the SPA shell;
-        # API endpoints are matched by the locations above.
-        try_files $uri /app/index.html;
-    }
-
-    location ~ ^/index\.php(/|$) {
-        limit_conn perip 15;
-        limit_req zone=php_requests burst=20 nodelay;
-        limit_req_status 429;
-
-        fastcgi_pass unix:/run/php/php8.5-fpm.sock;
-        fastcgi_split_path_info ^(.+\.php)(/.*)$;
-        include fastcgi_params;
-       # When you are using symlinks to link the document root to the
-       # current version of your application, you should pass the real
-       # application path instead of the path to the symlink to PHP
-       # FPM.
-       # Otherwise, PHP OPcache may not properly detect changes to
-       # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
-       # for more information).
-       fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-       fastcgi_param DOCUMENT_ROOT $realpath_root;
-       # Prevents URIs that include the front controller. This will 404:
-       # http://domain.tld/index.php/some-path
-       # Remove the internal directive to allow URIs like this
-       internal;
-   }
-
-    #location ~ \.php$ {
-    #    return 404;
-    #}
-}' > /etc/angie/http.d/wapinet.ru.conf
-```
-
-### СУБД
-
-```bash
-mysql -u root -p
-CREATE USER 'wapinet'@'localhost' IDENTIFIED BY 'password';
-GRANT ALL ON wapinet.* TO 'wapinet'@'localhost';
-GRANT SELECT ON forum.* TO 'wapinet'@'localhost';
-quit
-mysql -u wapinet -p wapinet < wapinet.sql
-```
-
-### Установка сайта
+## Установка сайта
 
 ```bash
 cd /var/www
 git clone https://github.com/Gemorroj/wapinet.git
 cd wapinet
-cp .env.dist .env
-# edit .env
-../composer.phar install --no-dev --optimize-autoloader --apcu-autoloader
-rm -rf ./var/cache/*
-rm -rf ./var/log/*
-rm -rf ./var/tmp/*
-service php-fpm restart
 
+cp .env.dist .env
+# edit .env: APP_ENV=prod, APP_DEBUG=0, DATABASE_URL, MANTICORE_HOST,
+# MAILER_DSN, PHP_PATH=/usr/local/bin/php, P7Z_PATH=/usr/local/bin/7zz и т.д.
+```
+
+```bash
+install -d /etc/php-zts/conf.d
+cat > /etc/php-zts/conf.d/99-wapinet.ini <<'INI'
+memory_limit = -1
+max_execution_time = 0
+max_input_time = -1
+
+post_max_size = 55M
+upload_max_filesize = 50M
+
+date.timezone = UTC
+expose_php = Off
+display_errors = Off
+log_errors = On
+
+session.save_path = /var/www/wapinet/var/sessions
+
+realpath_cache_size = 16M
+realpath_cache_ttl = 600
+
+opcache.enable = 1
+opcache.enable_cli = 1
+opcache.memory_consumption = 256
+opcache.interned_strings_buffer = 18
+opcache.max_accelerated_files = 100000
+opcache.validate_timestamps = 0
+
+apc.enabled = 1
+apc.shm_size = 64M
+apc.enable_cli = 0
+INI
+
+install -d /etc/frankenphp
+cat > /etc/frankenphp/Caddyfile <<'CADDY'
+{
+    email robot@wapinet.ru
+
+    frankenphp {
+        num_threads 2
+        max_threads 12
+        max_wait_time 30s
+
+        worker {
+            file /var/www/wapinet/public/index.php
+            num 8
+            env FRANKENPHP_WORKER 1
+            env FRANKENPHP_LOOP_MAX 500
+        }
+    }
+}
+
+wapinet.ru {
+    root * /var/www/wapinet/public
+    encode zstd br gzip
+
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        X-Frame-Options "DENY"
+        X-Content-Type-Options "nosniff"
+        -Server
+    }
+
+    request_body {
+        max_size 55MiB
+    }
+
+    log {
+        format json
+    }
+
+    @hidden {
+        path_regexp hidden (^|/)\.
+        not path /.well-known/*
+    }
+    respond @hidden 404
+
+    @forum path_regexp forum ^/forum(.*)$
+    redir @forum https://forum.wapinet.ru{re.forum.1} 301
+
+    @php path /api /api/* /admin /admin/* /media/cache/resolve /media/cache/resolve/* /index.php /_profiler /_profiler/* /_wdt /_wdt/*
+    handle @php {
+        php_server {
+            root /var/www/wapinet/public
+            try_files {path} index.php
+        }
+    }
+
+    @static path /static /static/*
+    handle @static {
+        log_skip
+        header Content-Disposition "attachment"
+        header X-Content-Type-Options "nosniff"
+        header Cache-Control "public, max-age=2592000"
+        file_server
+    }
+
+    @appIndex path /app /app/ /app/index.html
+    handle @appIndex {
+        header Cache-Control "no-cache"
+        file_server
+    }
+
+    @assets path /app/* /bundles/* /resources/* /media/*
+    handle @assets {
+        log_skip
+        header Cache-Control "public, max-age=2592000"
+        file_server
+    }
+
+    handle {
+        try_files {path} /app/index.html
+        header Cache-Control "no-cache"
+        file_server
+    }
+}
+
+www.wapinet.ru {
+    redir https://wapinet.ru{uri} 301
+}
+CADDY
+
+
+install -d /etc/systemd/system/frankenphp.service.d
+cat > /etc/systemd/system/frankenphp.service.d/wapinet.conf <<'UNIT'
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/wapinet
+
+Environment=APP_ENV=prod
+Environment=APP_DEBUG=0
+Environment=XDG_DATA_HOME=/var/lib/frankenphp
+Environment=XDG_CONFIG_HOME=/var/lib/frankenphp
+Environment=GODEBUG=cgocheck=0
+
+MemoryMax=1800M
+TimeoutStopSec=60s
+Restart=always
+RestartSec=3s
+
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+LimitNOFILE=1048576
+UNIT
+
+install -d -o www-data -g www-data /var/lib/frankenphp
+install -d -o www-data -g www-data -m 0700 var/sessions
+
+systemctl daemon-reload
+```
+
+Зависимости и кэш:
+
+```bash
+cd /var/www/wapinet
+php ../composer.phar install --no-dev --optimize-autoloader
+php bin/console about
+php bin/console cache:clear --env=prod
+php bin/console cache:warmup --env=prod
+```
+
+Права на записываемые каталоги:
+
+```bash
+mkdir -p public/static/file \
+  public/media/cache/resolve/thumbnail/static \
+  public/media/cache/thumbnail/static
+chown -R www-data:www-data var public/static/file public/media/cache
+chmod -R u+rwX,g+rwX,o-rwx var
+chmod -R u+rwX,go+rX,go-w public/static/file public/media/cache
+```
+
+## СУБД
+
+```bash
+mysql -u root -p
+```
+
+```sql
+CREATE DATABASE IF NOT EXISTS wapinet
+    CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+CREATE USER 'wapinet'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL ON wapinet.* TO 'wapinet'@'localhost';
+GRANT SELECT ON forum.* TO 'wapinet'@'localhost';
+QUIT;
+```
+
+```bash
+mysql -u wapinet -p wapinet < wapinet.sql
+
+# Первичная индексация Manticore и загрузка таблиц в searchd
+sudo -u manticore /usr/bin/indexer --rotate --all
+systemctl restart manticore
+```
+
+## Запуск FrankenPHP
+
+DNS для `wapinet.ru`/`www.wapinet.ru` уже должен указывать на сервер, порты 80/443 открыты:
+
+```bash
+systemctl enable frankenphp
+systemctl start frankenphp
+systemctl status frankenphp
+journalctl -u frankenphp -f
+```
+
+Проверка HTTPS и worker mode:
+
+```bash
+curl -I https://wapinet.ru
+curl -s https://wapinet.ru/api/health
+```
+
+Если используется firewall:
+
+```bash
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw allow 443/udp
+```
+
+## Messenger и scheduler
+
+```bash
 cp bin/messenger/messenger.service.dist bin/messenger/messenger.service
 cp bin/messenger/scheduler.service.dist bin/messenger/scheduler.service
 # edit bin/messenger/messenger.service
@@ -451,13 +589,22 @@ cp bin/messenger/scheduler.service.dist bin/messenger/scheduler.service
 ln -s /var/www/wapinet/bin/messenger/messenger.service /etc/systemd/system/messenger.service
 ln -s /var/www/wapinet/bin/messenger/scheduler.service /etc/systemd/system/scheduler.service
 systemctl daemon-reload
-systemctl enable messenger
-systemctl enable scheduler
-
-chmod 777 ./var/log
-chmod 777 ./var/tmp
-chmod 777 ./var/cache
-chmod 777 ./public/media/cache/resolve/thumbnail/static
-chmod 777 ./public/media/cache/thumbnail/static
-chmod 777 ./public/static/file
+systemctl enable --now messenger scheduler
 ```
+
+
+## Обновление
+
+```bash
+cd /var/www/wapinet
+git pull
+php ../composer.phar install --no-dev --optimize-autoloader
+php bin/console cache:clear --env=prod
+php bin/console cache:warmup --env=prod
+chown -R www-data:www-data var
+chmod -R u+rwX,g+rwX,o-rwx var
+systemctl restart messenger scheduler
+systemctl restart frankenphp
+```
+
+`systemctl reload frankenphp` перезагружает только Caddyfile. После изменения PHP-кода нужен `restart`: в `opcache.validate_timestamps=0` старый код иначе останется в OPcache/worker’ах.
