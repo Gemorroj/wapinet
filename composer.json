@@ -71,7 +71,7 @@
         "gemorroj/stop-spam": "^4.0",
         "gemorroj/archive7z": "dev-master",
         "gemorroj/m3u-parser": "^6.2",
-        "gemorroj/syntax": "^4.5.1",
+        "gemorroj/syntax": "dev-master",
         "gemorroj/htmlvalidator": "^4.0",
         "gemorroj/cssvalidator": "^4.0",
         "gemorroj/xbbcode": "dev-master",

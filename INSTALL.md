@@ -254,7 +254,7 @@ apt install \
   php-zts-opcache
 ```
 
-Прослойка для `php` (`-l` выполняет `bin/php-lint.php`, не исполняя проверяемый файл):
+Прослойка для `php`:
 
 ```bash
 cat > /usr/local/bin/php <<'PHP'
@@ -262,14 +262,18 @@ cat > /usr/local/bin/php <<'PHP'
 set -euo pipefail
 
 args=()
-lint_file=""
-expect_lint_file=0
+passthrough=0
 expect_d_value=0
 
 for arg in "$@"; do
-    if (( expect_lint_file )); then
-        lint_file="$arg"
-        expect_lint_file=0
+    if (( passthrough )); then
+        args+=("$arg")
+        continue
+    fi
+
+    if [ "$arg" = "--" ]; then
+        passthrough=1
+        args+=("$arg")
         continue
     fi
 
@@ -284,28 +288,18 @@ for arg in "$@"; do
             ;;
         -d\ *|-d*)
             ;;
-        -l)
-            expect_lint_file=1
-            ;;
         *)
             args+=("$arg")
             ;;
     esac
 done
 
-if (( expect_lint_file )); then
-    echo 'Missing input file for -l' >&2
-    exit 1
-fi
-
-if [ -n "$lint_file" ]; then
-    exec /usr/bin/frankenphp php-cli /var/www/wapinet/bin/php-lint.php "$lint_file"
-fi
-
 exec /usr/bin/frankenphp php-cli "${args[@]}"
 PHP
 chmod 755 /usr/local/bin/php
 ```
+
+`frankenphp php-cli` не поддерживает `-d`, поэтому wrapper их отбрасывает; `--` и аргументы после него передаются как есть.
 
 Для PECL-расширений, которых нет в `php-zts-*`, можно использовать PIE:
 

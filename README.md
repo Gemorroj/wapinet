@@ -21,8 +21,8 @@
 DATABASE_URL="mysql://root:@mysql:3306/wapinet?serverVersion=8.4"
 MANTICORE_HOST=manticore
 MAILER_DSN=smtp://mailpit:1025
-PHP_PATH=/usr/local/bin/php
 P7Z_PATH=/usr/local/bin/7zz
+PHP_PATH=/usr/local/bin/php
 ```
 
 Compose задаёт только контейнерные переменные; остальное приложение читает из `.env.local` (реальный env перекрывает dotenv, поэтому дублировать настройки в compose нельзя). В dev MySQL — `root` без пароля, как в `.env.dist`; имя БД `wapinet` указано ещё и в `.docker/manticore/manticore.conf` (индексатор). FrankenPHP в контейнере `php` отдаёт SPA, API и `/admin`; отдельного nginx нет.
@@ -77,7 +77,7 @@ docker compose exec frontend npm run build # собирает public/app
 
 - Политика: ссылки на каналы в MAX.
 - Видео-курсы: ссылки на RuTube и VK.
-- Страница полезных ссылок: внешние ресурсы для разработчиков (пример — https://externals.io/).
+- Страница полезных ссылок: внешние ресурсы для разработчиков (пример — https://externals.io/ https://3v4l.org).
 - Аудио-теги: переделать на медиа комбайн полностью в браузере - TagLib-wasm + MediaBunny
 - Перенести форум. Упростить и мигрировать в основную ветку wapinet.
 - Файлы: проверка на VirusTotal (по кнопке и автоматически), вставка из clipboard, превью изображений в списке, SHA-256 рядом с MD5 (с backfill).

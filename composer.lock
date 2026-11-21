@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3f5d102d72ef9a97500bd69ac4fac6fa",
+    "content-hash": "51b4e7c18952b4a263ea9d569745dcab",
     "packages": [
         {
             "name": "algo26-matthias/idna-convert",
@@ -1611,12 +1611,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/ginfo.git",
-                "reference": "08ba28ec071e6d0aac8a4dc68df4e2d1f078aa9d"
+                "reference": "2c28457a6e44fd10acc0e4f26b2019d9f7c1f000"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/08ba28ec071e6d0aac8a4dc68df4e2d1f078aa9d",
-                "reference": "08ba28ec071e6d0aac8a4dc68df4e2d1f078aa9d",
+                "url": "https://api.github.com/repos/Gemorroj/ginfo/zipball/2c28457a6e44fd10acc0e4f26b2019d9f7c1f000",
+                "reference": "2c28457a6e44fd10acc0e4f26b2019d9f7c1f000",
                 "shasum": ""
             },
             "require": {
@@ -1718,8 +1718,8 @@
                 "issues": "https://github.com/Gemorroj/ginfo/issues",
                 "source": "https://github.com/Gemorroj/ginfo/tree/master"
             },
-            "time": "2026-11-21T15:25:31+00:00",
-            "published-time": "2026-11-21T15:25:40+00:00"
+            "time": "2026-11-21T16:58:40+00:00",
+            "published-time": "2026-11-21T16:58:47+00:00"
         },
         {
             "name": "gemorroj/htmlvalidator",
@@ -1976,19 +1976,20 @@
         },
         {
             "name": "gemorroj/syntax",
-            "version": "4.5.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gemorroj/Syntax.git",
-                "reference": "acf93f5edb4b52e74f40dc83a0d20c8de2b899b3"
+                "reference": "fa0519bc8680fe867d4ec15d4f9c01438b09d739"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gemorroj/Syntax/zipball/acf93f5edb4b52e74f40dc83a0d20c8de2b899b3",
-                "reference": "acf93f5edb4b52e74f40dc83a0d20c8de2b899b3",
+                "url": "https://api.github.com/repos/Gemorroj/Syntax/zipball/fa0519bc8680fe867d4ec15d4f9c01438b09d739",
+                "reference": "fa0519bc8680fe867d4ec15d4f9c01438b09d739",
                 "shasum": ""
             },
             "require": {
+                "ext-tokenizer": "*",
                 "php": ">=8.2",
                 "symfony/process": "^7.4.8||^8.0.8"
             },
@@ -1996,6 +1997,7 @@
                 "friendsofphp/php-cs-fixer": "^3.95",
                 "phpunit/phpunit": "^11.5||^12.5||^13"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -2014,10 +2016,10 @@
             "description": "PHP code syntax checker.",
             "support": {
                 "issues": "https://github.com/Gemorroj/Syntax/issues",
-                "source": "https://github.com/Gemorroj/Syntax/tree/4.5.1"
+                "source": "https://github.com/Gemorroj/Syntax/tree/master"
             },
-            "time": "2026-10-10T21:51:21+00:00",
-            "published-time": "2026-10-10T21:54:09+00:00"
+            "time": "2026-11-21T17:00:45+00:00",
+            "published-time": "2026-11-21T17:01:06+00:00"
         },
         {
             "name": "gemorroj/whordap",
@@ -13451,6 +13453,7 @@
         "gemorroj/archive7z": 20,
         "gemorroj/ginfo": 20,
         "gemorroj/php-obfuscator": 20,
+        "gemorroj/syntax": 20,
         "gemorroj/whordap": 20,
         "gemorroj/xbbcode": 20,
         "james-heinrich/getid3": 20,
