@@ -138,7 +138,7 @@ final class MetadataExtractorTest extends TestCase
     private function extractor(): MetadataExtractor
     {
         return new MetadataExtractor(
-            new Ffmpeg($this->binary('FFMPEG_PATH'), $this->binary('FFPROBE_PATH'), 1),
+            new Ffmpeg($this->binary('FFMPEG_PATH'), $this->binary('FFPROBE_PATH')),
             new Apk(),
             new Torrent(),
             new Imagine(),

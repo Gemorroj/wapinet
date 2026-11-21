@@ -161,13 +161,13 @@ final class VideoProcessorTest extends TestCase
 
     private function video(): TestableVideo
     {
-        return new TestableVideo(new Ffmpeg('/bin/false', '/bin/false', 1), $this->storage, new NullLogger(), 5);
+        return new TestableVideo(new Ffmpeg('/bin/false', '/bin/false'), $this->storage, new NullLogger(), 5);
     }
 
     private function realVideo(): VideoProcessor
     {
         return new VideoProcessor(
-            new Ffmpeg($this->binary('FFMPEG_PATH'), $this->binary('FFPROBE_PATH'), 1),
+            new Ffmpeg($this->binary('FFMPEG_PATH'), $this->binary('FFPROBE_PATH')),
             $this->storage,
             new NullLogger(),
             0,
@@ -208,7 +208,7 @@ final class VideoProcessorTest extends TestCase
 
         $method = new \ReflectionMethod(VideoProcessor::class, 'getScreenshotSecond');
 
-        return $method->invoke(new VideoProcessor(new Ffmpeg('/bin/false', '/bin/false', 1), $this->storage, new NullLogger(), 5), $media);
+        return $method->invoke(new VideoProcessor(new Ffmpeg('/bin/false', '/bin/false'), $this->storage, new NullLogger(), 5), $media);
     }
 
     private function file(int $size): string

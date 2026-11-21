@@ -10,7 +10,6 @@ parameters:
     .container.dumper.inline_factories: true # performance optimization. see https://symfony.com/doc/current/performance.html#dump-the-service-container-into-a-single-file
     locale: 'ru'
     wapinet_title: 'WEB мастерская wapinet.ru'
-    wapinet_threads_count: 3
 
     wapinet_paginate_maxperpage: 10
     wapinet_user_last_activity_delay: 60

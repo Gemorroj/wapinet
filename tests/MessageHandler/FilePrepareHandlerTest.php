@@ -51,7 +51,7 @@ class FilePrepareHandlerTest extends TestCase
             $storage,
             $this->createStub(EntityManagerInterface::class),
             new MetadataExtractor(
-                new Ffmpeg('/usr/bin/ffmpeg', '/usr/bin/ffprobe', 3),
+                new Ffmpeg('/usr/bin/ffmpeg', '/usr/bin/ffprobe'),
                 new Apk(),
                 new Torrent(),
                 $this->createStub(AbstractImagine::class),

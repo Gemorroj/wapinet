@@ -54,7 +54,7 @@ class AudioProcessorTest extends TestCase
     private function audio(): AudioProcessor
     {
         return new AudioProcessor(
-            new Ffmpeg('/usr/bin/ffmpeg', '/usr/bin/ffprobe', 3),
+            new Ffmpeg('/usr/bin/ffmpeg', '/usr/bin/ffprobe'),
             new Getid3(),
             new Storage($this->directory.'/public'),
             new NullLogger(),

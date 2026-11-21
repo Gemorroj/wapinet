@@ -51,7 +51,7 @@ final class FfmpegTest extends TestCase
 
     private function ffmpeg(): Ffmpeg
     {
-        return new Ffmpeg($this->binary('FFMPEG_PATH'), $this->binary('FFPROBE_PATH'), 1);
+        return new Ffmpeg($this->binary('FFMPEG_PATH'), $this->binary('FFPROBE_PATH'));
     }
 
     private function video(): string

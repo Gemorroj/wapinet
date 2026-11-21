@@ -17,8 +17,6 @@ final class Ffmpeg
         private readonly string $ffmpegPath,
         #[Autowire('%env(FFPROBE_PATH)%')]
         private readonly string $ffprobePath,
-        #[Autowire('%wapinet_threads_count%')]
-        private readonly int $threads,
     ) {
     }
 
@@ -27,7 +25,7 @@ final class Ffmpeg
         $this->ffmpeg = $this->ffmpeg ?: FFmpegOriginal::create([
             'ffmpeg.binaries' => $this->ffmpegPath,
             'ffprobe.binaries' => $this->ffprobePath,
-            'ffmpeg.threads' => $this->threads,
+            'ffmpeg.threads' => 0, // 0 -autodetect
         ]);
 
         return $this->ffmpeg;
@@ -36,9 +34,7 @@ final class Ffmpeg
     public function getFfprobe(): FFProbe
     {
         $this->ffprobe = $this->ffprobe ?: FFProbe::create([
-            'ffmpeg.binaries' => $this->ffmpegPath,
             'ffprobe.binaries' => $this->ffprobePath,
-            'ffmpeg.threads' => $this->threads,
         ]);
 
         return $this->ffprobe;
