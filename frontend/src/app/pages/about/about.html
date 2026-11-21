@@ -1,0 +1,51 @@
+<section class="about app-page">
+    <h1 class="app-sr-only">О сайте</h1>
+    <app-breadcrumbs [items]="breadcrumbs" />
+
+    <div tuiCardLarge="normal" appearance="floating" class="about__content">
+        <p class="about__lead">
+            Сайт <em>wapinet.ru</em> появился в 2006 году. Сейчас это личный проект для отработки навыков и тестирования технологий — файлообменник, сетевые и
+            текстовые инструменты, блоги, гостевая, форум и другие разделы.
+        </p>
+
+        <ol class="about__timeline">
+            <li class="about__era">
+                <time class="about__year" datetime="2006" tuiTitle="s">2006</time>
+                <p>
+                    Первая версия — на
+                    <abbr title="Wireless Markup Language — язык разметки для беспроводных устройств">WML</abbr> без использования скриптовых языков. Постепенно
+                    сайт переписывался на <abbr title="PHP: Hypertext Preprocessor — PHP: препроцессор гипертекста">PHP</abbr> и
+                    <abbr title="Extensible Hypertext Markup Language — расширяемый язык гипертекстовой разметки">XHTML</abbr>.
+                </p>
+            </li>
+
+            <li class="about__era">
+                <time class="about__year" datetime="2013" tuiTitle="s">2013</time>
+                <p>
+                    Полное переписывание: бэкенд — на
+                    <a tuiLink href="https://symfony.com" target="_blank" rel="noopener noreferrer">Symfony</a>, интерфейс — на
+                    <abbr title="Прототипно-ориентированный сценарный язык программирования">JavaScript</abbr>-фреймворке
+                    <a tuiLink href="https://jquerymobile.com" target="_blank" rel="noopener noreferrer">jQuery Mobile</a>.
+                </p>
+            </li>
+
+            <li class="about__era">
+                <time class="about__year" datetime="2026" tuiTitle="s">2026</time>
+                <p>
+                    Интерфейс переписан на
+                    <a tuiLink href="https://angular.dev" target="_blank" rel="noopener noreferrer">Angular</a> и
+                    <a tuiLink href="https://taiga-ui.dev" target="_blank" rel="noopener noreferrer">Taiga UI</a>, бэкенд переведён на REST. Рефакторинг
+                    выполнялся в PhpStorm с OpenCode и DeepSeek.
+                </p>
+            </li>
+        </ol>
+
+        <p>
+            Исходный код распространяется под лицензией
+            <a tuiLink href="https://spdx.org/licenses/GPL-3.0-or-later.html" target="_blank" rel="noopener noreferrer"
+                ><abbr title="GNU General Public License">GPL</abbr> v3</a
+            >. Репозиторий — на <a tuiLink href="https://github.com/Gemorroj/wapinet" target="_blank" rel="noopener noreferrer">GitHub</a>. Связаться можно
+            через <a tuiLink routerLink="/guestbook">гостевую</a>.
+        </p>
+    </div>
+</section>

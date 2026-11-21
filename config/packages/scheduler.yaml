@@ -1,0 +1,13 @@
+when@dev:
+    framework:
+        scheduler:
+            use_messenger_routing: true
+            schedules:
+                default:
+                    stateful: true
+                    cache_pool: cache.scheduler_state
+                    process_only_last_missed_run: true
+        cache:
+            pools:
+                cache.scheduler_state:
+                    adapter: cache.adapter.filesystem

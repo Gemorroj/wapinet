@@ -1,0 +1,49 @@
+.file-form__current {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.file-form__current-file {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+}
+
+.file-form__current-preview {
+    display: block;
+    max-inline-size: 12rem;
+    max-block-size: 12rem;
+    border-radius: 0.5rem;
+    object-fit: cover;
+}
+
+.file-form__current-info {
+    display: grid;
+    gap: 0.25rem;
+}
+
+.file-form__current-size {
+    color: var(--tui-text-secondary);
+}
+
+.file-form__row {
+    display: grid;
+    gap: 0.75rem;
+}
+
+@media (min-width: 48rem) {
+    .file-form__row {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+}
+
+.file-form__password-clear {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+    pointer-events: auto;
+    white-space: nowrap;
+    font-size: 0.75rem;
+    color: var(--tui-text-secondary);
+}

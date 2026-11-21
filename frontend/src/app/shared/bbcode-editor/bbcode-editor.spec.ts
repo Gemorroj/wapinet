@@ -1,0 +1,65 @@
+import { TestBed } from '@angular/core/testing';
+import { provideTaiga } from '@taiga-ui/core';
+
+import { BbcodeApi } from '../../core/api/bbcode-api';
+import { BbcodeEditor } from './bbcode-editor';
+
+describe('BbcodeEditor', () => {
+    const preview = vi.fn().mockResolvedValue({ html: '<strong class="bb">жирный</strong>' });
+
+    beforeEach(async () => {
+        preview.mockClear();
+
+        await TestBed.configureTestingModule({
+            imports: [BbcodeEditor],
+            providers: [{ provide: BbcodeApi, useValue: { preview } }, provideTaiga()],
+        }).compileComponents();
+    });
+
+    it('renders BBCode preview', async () => {
+        const fixture = TestBed.createComponent(BbcodeEditor);
+
+        fixture.componentRef.setInput('label', 'Сообщение');
+        fixture.componentRef.setInput('name', 'message');
+        fixture.componentRef.setInput('value', '[b]жирный[/b]');
+        fixture.componentRef.setInput('placeholder', 'Напишите сообщение…');
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        const textarea = fixture.nativeElement.querySelector('textarea[name="message"]') as HTMLTextAreaElement;
+
+        expect(textarea.value).toBe('[b]жирный[/b]');
+        expect(textarea.placeholder).toBe('Напишите сообщение…');
+        expect(fixture.nativeElement.querySelector('.bbcode-editor__help')?.getAttribute('aria-label')).toBe('Справка по BBCode');
+
+        const previewButton = fixture.nativeElement.querySelector('.bbcode-editor__mode') as HTMLButtonElement;
+
+        expect(previewButton.textContent?.trim()).toContain('Предпросмотр');
+        expect(previewButton.disabled).toBe(false);
+
+        previewButton.click();
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        expect(preview).toHaveBeenCalledWith('[b]жирный[/b]');
+        expect(fixture.nativeElement.querySelector('.bbcode-editor__preview')?.textContent).toContain('жирный');
+        expect(fixture.nativeElement.querySelector('textarea[name="message"]')).toBeNull();
+        expect((fixture.nativeElement.querySelector('.bbcode-editor__mode') as HTMLButtonElement).textContent?.trim()).toContain('Редактировать');
+
+        fixture.destroy();
+    });
+
+    it('disables the preview switch for empty text', async () => {
+        const fixture = TestBed.createComponent(BbcodeEditor);
+
+        fixture.componentRef.setInput('label', 'Сообщение');
+        fixture.componentRef.setInput('name', 'message');
+        fixture.componentRef.setInput('value', '   ');
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        expect((fixture.nativeElement.querySelector('.bbcode-editor__mode') as HTMLButtonElement).disabled).toBe(true);
+
+        fixture.destroy();
+    });
+});

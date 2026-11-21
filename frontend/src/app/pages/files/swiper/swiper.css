@@ -1,0 +1,73 @@
+.swiper {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap: 0.5rem;
+    padding: 1rem;
+    overflow: auto;
+    background: #0b0f14;
+    color: #f0f6fc;
+}
+
+.swiper__close {
+    position: absolute;
+    inset-block-start: 1rem;
+    inset-inline-end: 1rem;
+    z-index: 1;
+}
+
+.swiper__loading {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+}
+
+.swiper__error {
+    display: grid;
+    gap: 0.75rem;
+    align-self: center;
+    justify-self: center;
+    justify-items: center;
+    max-inline-size: 32rem;
+    color: var(--tui-text-primary);
+    text-align: center;
+}
+
+.swiper__error p {
+    margin: 0;
+}
+
+.swiper__stage {
+    display: grid;
+    place-items: center;
+    min-height: 0;
+}
+
+.swiper__image {
+    max-inline-size: 100%;
+    max-block-size: 100%;
+    object-fit: contain;
+}
+
+.swiper__bar {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: center;
+    justify-items: center;
+}
+
+.swiper__title {
+    max-inline-size: 100%;
+    overflow: hidden;
+    color: inherit;
+    font-size: 0.875rem;
+    opacity: 0.9;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

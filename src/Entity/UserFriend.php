@@ -6,6 +6,7 @@ use App\Repository\UserFriendRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table]
+#[ORM\UniqueConstraint(name: 'UNIQ_USER_FRIEND', columns: ['user_id', 'friend_id'])]
 #[ORM\Entity(repositoryClass: UserFriendRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class UserFriend implements \Stringable, \JsonSerializable
@@ -15,11 +16,11 @@ class UserFriend implements \Stringable, \JsonSerializable
     #[ORM\Column(type: 'integer', nullable: false)]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'datetime', nullable: false)]
-    private ?\DateTime $createdAt = null;
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
+    private \DateTimeImmutable $createdAt;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?\DateTime $updatedAt = null;
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'friends')]
     #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false)]
@@ -29,25 +30,22 @@ class UserFriend implements \Stringable, \JsonSerializable
     #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false)]
     private User $friend;
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    #[ORM\PrePersist]
-    public function setCreatedAtValue(): self
-    {
-        $this->createdAt = new \DateTime();
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTime
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
@@ -55,7 +53,7 @@ class UserFriend implements \Stringable, \JsonSerializable
     #[ORM\PreUpdate]
     public function setUpdatedAtValue(): self
     {
-        $this->updatedAt = new \DateTime();
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }

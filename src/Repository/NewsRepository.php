@@ -27,14 +27,14 @@ final class NewsRepository extends ServiceEntityRepository
     public function getAllBuilder(): Query
     {
         return $this->createQueryBuilder('news')
-            ->orderBy('news.id', 'DESC')
+            ->orderBy('news.id', \SortDirection::Descending)
             ->getQuery();
     }
 
     public function getLastNews(): ?News
     {
         return $this->createQueryBuilder('news')
-            ->orderBy('news.id', 'DESC')
+            ->orderBy('news.id', \SortDirection::Descending)
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();

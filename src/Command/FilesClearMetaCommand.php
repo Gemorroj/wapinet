@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -45,6 +46,12 @@ class FilesClearMetaCommand extends Command
         $this->logger->notice($this->getName().': '.$message);
         $io->success($message);
 
-        return Command::SUCCESS;
+        // Meta is built by the worker now, so the files have to be queued again.
+        $application = $this->getApplication();
+        if (null === $application) {
+            throw new \LogicException('Command application is not set.');
+        }
+
+        return $application->find('app:files:prepare-pending')->run(new ArrayInput([]), $output);
     }
 }

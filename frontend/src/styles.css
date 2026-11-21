@@ -1,0 +1,454 @@
+:root,
+body,
+body[tuitheme] {
+    --tui-typography-family-text: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+
+    /* GitHub-like tonal surfaces */
+    --app-canvas: #eef1f4;
+    --app-surface: #ffffff;
+    --app-surface-subtle: #f6f8fa;
+    --app-border: #d1d9e0;
+
+    --tui-text-primary: #1f2328;
+    --tui-text-secondary: #59636e;
+    --tui-text-tertiary: #818b98;
+    --tui-background-base: var(--app-surface);
+    --tui-background-base-alt: var(--app-canvas);
+    --tui-background-elevation-1: var(--app-surface);
+    --tui-background-elevation-2: var(--app-surface);
+    --tui-background-neutral-1: var(--app-surface-subtle);
+    --tui-border-normal: var(--app-border);
+    --tui-background-accent-1: #0969da;
+    --tui-background-accent-1-hover: #0860ca;
+    --tui-background-accent-1-pressed: #0550ae;
+    --tui-text-action: #0969da;
+    --tui-text-action-hover: #0550ae;
+    --tui-status-positive: #1a7f37;
+
+    --hljs-comment: #59636e;
+    --hljs-keyword: #cf222e;
+    --hljs-string: #0a3069;
+    --hljs-number: #0550ae;
+    --hljs-title: #6639ba;
+    --hljs-attr: #0550ae;
+    --hljs-built-in: #0550ae;
+    --hljs-meta: #59636e;
+    --hljs-deletion: #82071e;
+    --hljs-addition: #116329;
+}
+
+body {
+    margin: 0;
+    min-height: 100dvh;
+    font-family: var(--tui-typography-family-text);
+    background: var(--app-canvas);
+    color: var(--tui-text-primary);
+}
+
+:where(a:not([tuiLink]):not([tuiButton]):not([tuiCell])) {
+    color: var(--tui-text-action);
+}
+
+/*
+ * Taiga paints the whole root with --tui-background-base, which is the surface
+ * color used by inputs and other controls. The page canvas is a separate,
+ * darker layer, so the opaque root fill is replaced with it.
+ */
+body tui-root {
+    display: block;
+    min-height: 100dvh;
+    background: var(--app-canvas);
+    border-image: none;
+}
+
+tui-root .t-root-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+}
+
+/* Page root: consistent vertical rhythm across sections. */
+.app-page {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+}
+
+/* Taiga cells use content-box; inside grid lists the horizontal padding would overflow the track. */
+[tuiCell] {
+    box-sizing: border-box;
+}
+
+/* Let long cell subtitles wrap instead of forcing the whole cell wider than the viewport. */
+.app-list > [tuiCell] > [tuiTitle] {
+    min-inline-size: 0;
+}
+
+abbr[title] {
+    text-decoration: underline dotted;
+    cursor: help;
+}
+
+[tuiBadge].online-badge {
+    inline-size: 0.625rem;
+    min-inline-size: 0.625rem;
+    block-size: 0.625rem;
+    min-block-size: 0.625rem;
+    padding: 0;
+    border-radius: 50%;
+    --t-bg: var(--tui-status-positive);
+    box-shadow: 0 0 0 2px var(--tui-background-base);
+}
+
+/* GitHub-like list box: rows are flush with each other and share hairline dividers. */
+.app-list,
+.app-grid {
+    min-inline-size: 0;
+    overflow: hidden;
+    border: 1px solid var(--app-border);
+    border-radius: 0.375rem;
+    background: var(--app-surface);
+}
+
+.app-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.app-list > [tuiCell] {
+    margin: 0;
+    padding: 0.75rem 1rem;
+    border-radius: 0;
+    transition-duration: 0.12s;
+}
+
+.app-list > [tuiCell] + [tuiCell] {
+    border-block-start: 1px solid var(--tui-border-normal);
+}
+
+.app-list > :not([tuiCell]) {
+    margin: 0.75rem 1rem;
+}
+
+/* Row hover: the whole row reacts, and its title turns into a link color. */
+.app-list > [tuiCell]:hover {
+    background: var(--app-surface-subtle);
+}
+
+.app-list > a[tuiCell],
+.app-list [tuiTitle] a {
+    color: var(--tui-text-primary);
+    text-decoration: none;
+}
+
+.app-list > a[tuiCell]:hover,
+.app-list > [tuiCell]:hover [tuiTitle] a,
+.app-list [tuiTitle] a:hover {
+    color: var(--tui-text-action);
+}
+
+.app-list [tuiTitle] a:hover {
+    text-decoration: underline;
+}
+
+/* Stretched title link: the whole row is clickable, actions stay above it. */
+.app-list > [tuiCell] [tuiTitle] > a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.app-list > [tuiCell] [tuiAccessories] {
+    position: relative;
+    z-index: 1;
+}
+
+/* Links in the meta line (for example the author) must stay above the stretched title link. */
+.app-list > [tuiCell] [tuiSubtitle] a {
+    position: relative;
+    z-index: 2;
+}
+
+/* Directory grid: compact cards in the same flat surface as lists. */
+.app-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 0.25rem;
+    padding: 0.25rem;
+}
+
+.app-grid > [tuiCell] {
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--tui-radius-m);
+    transition-duration: 0.12s;
+}
+
+.app-grid > [tuiCell]:hover {
+    background: var(--app-surface-subtle);
+}
+
+/* Compact wrap of chips inside a flat surface. */
+.app-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    min-inline-size: 0;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--app-border);
+    border-radius: 0.375rem;
+    background: var(--app-surface);
+}
+
+/* GitHub-like flat surfaces: cards are separated by borders, not shadows. */
+body [tuiCardLarge][data-appearance='floating'] {
+    --tui-shadow-medium: none;
+    --tui-shadow-medium-hover: none;
+
+    border: 1px solid var(--tui-border-normal);
+    border-radius: 0.375rem;
+    background: var(--app-surface);
+}
+
+/* Plain content title: no extra surface or vertical chrome above the content. */
+.app-title {
+    margin: 0;
+    color: var(--tui-text-primary);
+    font: var(--tui-typography-heading-h5);
+    overflow-wrap: anywhere;
+}
+
+/* Heading inside a form card, so the page has an accessible title without a separate top block. */
+.app-form-title {
+    margin: 0;
+    color: var(--tui-text-primary);
+    font: var(--tui-typography-heading-h6);
+}
+
+/* Muted supporting text under controls. */
+.app-hint {
+    margin: 0;
+    color: var(--tui-text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+}
+
+.app-hint code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* Body text of documentation blocks: full contrast, unlike a hint under a control. */
+.app-text {
+    margin: 0;
+    color: var(--tui-text-primary);
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.app-text code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* Row of buttons or links under a form section. */
+.app-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+    align-items: center;
+}
+
+/* Key-value metadata rows: muted labels, tabular values and a stable label column. */
+.app-meta {
+    display: grid;
+    grid-template-columns: minmax(7rem, 9rem) minmax(0, 1fr);
+    gap: 0.375rem 1rem;
+    margin: 0;
+}
+
+.app-meta dt {
+    color: var(--tui-text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+}
+
+.app-meta dd {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+/* Section heading with an optional counter or action. */
+.app-section-head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* Accessible page title for list and content pages that have no visible heading. */
+.app-sr-only {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* GitHub-like comment: a compact header bar above the body. */
+.app-comment {
+    overflow: hidden;
+    border: 1px solid var(--app-border);
+    border-radius: 0.375rem;
+    background: var(--app-surface);
+}
+
+.app-comment__head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-block-end: 1px solid var(--app-border);
+    background: var(--app-surface-subtle);
+    font-size: 0.875rem;
+}
+
+.app-comment__author {
+    color: var(--tui-text-primary);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.app-comment__author:hover {
+    color: var(--tui-text-action);
+    text-decoration: underline;
+}
+
+.app-comment__meta {
+    color: var(--tui-text-secondary);
+    font-size: 0.8125rem;
+}
+
+.app-comment__body {
+    padding: 1rem;
+    overflow-wrap: anywhere;
+}
+
+.app-comment__footer {
+    padding: 1rem;
+    border-block-start: 1px solid var(--app-border);
+}
+
+:root[tuiTheme='dark'],
+:root[tuiTheme='dark'] body,
+body[tuitheme='dark'] {
+    --app-canvas: #151b23;
+    --app-surface: #212830;
+    --app-surface-subtle: #262c36;
+    --app-border: #3d444d;
+
+    --tui-text-primary: #f0f6fc;
+    --tui-text-secondary: #9198a1;
+    --tui-text-tertiary: #656c76;
+    --tui-background-base: var(--app-surface);
+    --tui-background-base-alt: var(--app-canvas);
+    --tui-background-elevation-1: var(--app-surface);
+    --tui-background-neutral-1: var(--app-surface-subtle);
+    --tui-border-normal: var(--app-border);
+    --tui-background-accent-1: #4493f8;
+    --tui-background-accent-1-hover: #58a6ff;
+    --tui-background-accent-1-pressed: #1f6feb;
+    --tui-text-action: #4493f8;
+    --tui-text-action-hover: #58a6ff;
+    --tui-status-positive: #3fb950;
+    --hljs-comment: #9198a1;
+    --hljs-keyword: #ff7b72;
+    --hljs-string: #a5d6ff;
+    --hljs-number: #79c0ff;
+    --hljs-title: #d2a8ff;
+    --hljs-attr: #79c0ff;
+    --hljs-built-in: #ffa657;
+    --hljs-meta: #9198a1;
+    --hljs-deletion: #ffa198;
+    --hljs-addition: #7ee787;
+}
+
+.hljs {
+    color: var(--tui-text-primary);
+    background: transparent;
+}
+
+.hljs-comment,
+.hljs-quote {
+    color: var(--hljs-comment);
+    font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-section,
+.hljs-link {
+    color: var(--hljs-keyword);
+    font-weight: 600;
+}
+
+.hljs-string,
+.hljs-regexp {
+    color: var(--hljs-string);
+}
+
+.hljs-number,
+.hljs-symbol,
+.hljs-bullet {
+    color: var(--hljs-number);
+}
+
+.hljs-title,
+.hljs-title.class_,
+.hljs-title.function_ {
+    color: var(--hljs-title);
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-selector-attr,
+.hljs-selector-class {
+    color: var(--hljs-attr);
+}
+
+.hljs-built_in,
+.hljs-type {
+    color: var(--hljs-built-in);
+}
+
+.hljs-meta,
+.hljs-meta .hljs-keyword {
+    color: var(--hljs-meta);
+}
+
+.hljs-deletion {
+    color: var(--hljs-deletion);
+}
+
+.hljs-addition {
+    color: var(--hljs-addition);
+}
+
+/* Wapinet-specific spoiler summary styling; native details behavior comes from xBBCode. */
+details.bb_spoiler > summary {
+    color: var(--tui-text-action);
+    font-weight: 600;
+}
+
+details.bb_spoiler[open] > summary {
+    margin-block-end: 0.5rem;
+}

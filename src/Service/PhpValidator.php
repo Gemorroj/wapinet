@@ -2,14 +2,18 @@
 
 namespace App\Service;
 
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
 use Syntax\Php;
 
 final readonly class PhpValidator
 {
-    public function __construct(private ParameterBagInterface $parameterBag)
-    {
+    public function __construct(
+        #[Autowire('%env(PHP_PATH)%')]
+        private string $phpPath,
+        #[Autowire('%kernel.tmp_dir%')]
+        private string $tmpDir,
+    ) {
     }
 
     /**
@@ -17,10 +21,8 @@ final readonly class PhpValidator
      */
     public function validateFile(BaseFile $file): array
     {
-        $cli = $this->parameterBag->get('wapinet_php_path');
-
         $syntax = new Php();
-        $syntax->setCli($cli);
+        $syntax->setCli($this->phpPath);
 
         return $syntax->checkFile($file->getPathname());
     }
@@ -30,11 +32,9 @@ final readonly class PhpValidator
      */
     public function validateFragment(string $source): array
     {
-        $cli = $this->parameterBag->get('wapinet_php_path');
-
         $syntax = new Php();
-        $syntax->setCli($cli);
-        $syntax->setTempDirectory($this->parameterBag->get('kernel.tmp_dir'));
+        $syntax->setCli($this->phpPath);
+        $syntax->setTempDirectory($this->tmpDir);
 
         return $syntax->check($source);
     }

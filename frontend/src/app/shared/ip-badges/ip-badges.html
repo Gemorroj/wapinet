@@ -1,0 +1,7 @@
+@if (showKind() && kindLabel(); as kind) {
+    <span tuiBadge size="s" [appearance]="kindAppearance()">{{ kind }}</span>
+}
+
+@for (signal of signals(); track signal.label) {
+    <span tuiBadge size="s" [appearance]="signal.appearance">{{ signal.label }}</span>
+}

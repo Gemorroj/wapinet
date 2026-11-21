@@ -14,7 +14,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 #[AsCommand(name: 'vich:cleanup')]
@@ -110,16 +109,13 @@ class FilesClearCommandTest extends TestCase
         $filesystem = $this->createMock(Filesystem::class);
         $filesystem->expects($this->once())->method('remove')->with(self::CACHE_DIR);
 
-        $parameterBag = $this->createStub(ParameterBagInterface::class);
-        $parameterBag->method('get')->willReturn(self::PROJECT_DIR);
-
         $logger = $this->createStub(LoggerInterface::class);
 
         $cleanup = new FakeCleanupCommand();
         $application = new Application();
         $application->addCommand($cleanup);
 
-        $command = new FilesClearCommand($entityManager, $filesystem, $parameterBag, $logger);
+        $command = new FilesClearCommand($entityManager, $filesystem, self::PROJECT_DIR, $logger);
         $command->setApplication($application);
 
         return ['tester' => new CommandTester($command), 'cleanup' => $cleanup, 'filesystem' => $filesystem];

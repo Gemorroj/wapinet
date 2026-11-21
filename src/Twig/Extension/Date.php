@@ -16,7 +16,6 @@ class Date extends AbstractExtension
     {
         return [
             new TwigFilter('wapinet_date', $this->getDate(...)),
-            new TwigFilter('wapinet_time', $this->getTime(...)),
             new TwigFilter('wapinet_datetime', $this->getDateTime(...)),
             new TwigFilter('wapinet_length', $this->getLength(...)),
         ];
@@ -103,25 +102,6 @@ class Date extends AbstractExtension
 
         // return $datetime->format('d.m.Y H:i:s');
         return $datetime->format('d.m.Y H:i');
-    }
-
-    public function getTime(\DateTimeInterface|array|null $originalDatetime): string
-    {
-        if (!$originalDatetime) {
-            return '';
-        }
-
-        if (\is_array($originalDatetime)) {
-            $datetime = new \DateTime($originalDatetime['date'], new \DateTimeZone($originalDatetime['timezone']));
-        } else {
-            $datetime = \DateTime::createFromInterface($originalDatetime);
-        }
-        $timezone = $this->timezoneHelper->getTimezone();
-        if ($timezone) {
-            $datetime->setTimezone($timezone);
-        }
-
-        return $datetime->format('Hч.iм.sс.');
     }
 
     public function getLength(int|float|string $seconds): string

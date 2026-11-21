@@ -2,11 +2,19 @@
 
 namespace App\Service\Archiver;
 
-use App\Exception\ArchiverException;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\File\File;
 
 final class ArchiveZip extends Archive
 {
+    public function __construct(
+        ArchiveLimits $limits,
+        #[Autowire('%wapinet_archiver_comment%')]
+        private readonly string $comment,
+    ) {
+        parent::__construct($limits);
+    }
+
     public function create(string $directory): File
     {
         $tmpArchive = $this->getTmpArchive($directory);
@@ -17,30 +25,45 @@ final class ArchiveZip extends Archive
             throw new ArchiverException('Не удалось создать ZIP архив', $result);
         }
 
-        if (false === $zip->setArchiveComment($this->parameterBag->get('wapinet_archiver_comment'))) {
-            throw new ArchiverException('Не удалось добавить комментарий к ZIP архиву');
-        }
+        try {
+            if (false === $zip->setArchiveComment($this->comment)) {
+                throw new ArchiverException('Не удалось добавить комментарий к ZIP архиву');
+            }
 
-        $archiveDirectory = \basename($directory);
-        foreach ($this->getFiles($directory) as $entry) {
-            /** @var ArchiveFileInfo $info */
-            $info = $entry->getPathInfo();
-            $dir = $info->getArchiveName($archiveDirectory);
-            $dir = ('' !== $dir ? $dir.'/' : '');
+            $archiveDirectory = \basename($directory);
+            $totalSize = 0;
 
-            if (true === $entry->isDir()) {
-                if (false === $zip->addEmptyDir($dir.$entry->getFilename())) {
-                    throw new ArchiverException('Не удалось добавить директорию в ZIP архив');
-                }
-            } else {
-                if (false === $zip->addFile($entry->getPathname(), $dir.$entry->getFilename())) {
-                    throw new ArchiverException('Не удалось добавить файл в ZIP архив');
+            foreach ($this->getFiles($directory) as $entry) {
+                /** @var ArchiveFileInfo $info */
+                $info = $entry->getPathInfo();
+                $dir = $info->getArchiveName($archiveDirectory);
+                $dir = ('' !== $dir ? $dir.'/' : '');
+
+                if (true === $entry->isDir()) {
+                    if (false === $zip->addEmptyDir($dir.$entry->getFilename())) {
+                        throw new ArchiverException('Не удалось добавить директорию в ZIP архив');
+                    }
+                } else {
+                    $size = (int) $entry->getSize();
+                    $this->validateFileSize($size);
+                    $totalSize += $size;
+
+                    if (false === $zip->addFile($entry->getPathname(), $dir.$entry->getFilename())) {
+                        throw new ArchiverException('Не удалось добавить файл в ZIP архив');
+                    }
                 }
             }
-        }
 
-        if (false === $zip->close()) {
-            throw new ArchiverException('Не удалось создать ZIP архив');
+            $this->validateTotalSize($totalSize);
+
+            if (false === $zip->close()) {
+                throw new ArchiverException('Не удалось создать ZIP архив');
+            }
+        } catch (\Throwable $exception) {
+            @$zip->close();
+            @\unlink($tmpArchive);
+
+            throw $exception;
         }
 
         return new File($tmpArchive);
@@ -57,14 +80,19 @@ final class ArchiveZip extends Archive
         $fileCount = $zip->numFiles;
         $this->validateFileCount($fileCount);
 
+        $totalSize = 0;
+
         for ($i = 0; $i < $fileCount; ++$i) {
             $filename = $zip->getNameIndex($i);
             $this->validateArchivePath($filename);
             $stat = $zip->statIndex($i);
             if ($stat) {
                 $this->validateFileSize($stat['size']);
+                $totalSize += $stat['size'];
             }
         }
+
+        $this->validateTotalSize($totalSize);
 
         if (false === $zip->close()) {
             throw new ArchiverException('Не удалось проверить ZIP архив');

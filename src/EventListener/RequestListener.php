@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\EventListener;
 
 use App\Message\RequestMessage;
+use Symfony\Component\Clock\ClockInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -15,7 +16,8 @@ final readonly class RequestListener
 {
     public function __construct(
         private TokenStorageInterface $tokenStorage,
-        private MessageBusInterface $messageBus
+        private MessageBusInterface $messageBus,
+        private ClockInterface $clock,
     ) {
     }
 
@@ -26,14 +28,19 @@ final readonly class RequestListener
         }
 
         $request = $event->getRequest();
-        $routeName = $request->attributes->get('_route', '');
-        if ('fos_js_routing_js' === $routeName || '_' === $routeName[0]) {
+        $routeName = (string) $request->attributes->get('_route', '');
+        if (\str_starts_with($routeName, '_')) {
             return;
         }
 
         $userIdentifier = $this->tokenStorage->getToken()?->getUser()?->getUserIdentifier();
+
+        if (null === $userIdentifier) {
+            return;
+        }
+
         $this->messageBus->dispatch(new RequestMessage(
-            new \DateTime(),
+            $this->clock->now(),
             $request->getClientIp() ?? '',
             $request->headers->get('User-Agent', ''),
             $request->getPathInfo(),

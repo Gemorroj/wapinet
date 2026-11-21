@@ -1,0 +1,23 @@
+<section tuiCardLarge="normal" appearance="floating">
+    <div class="app-section-head">
+        <h2 tuiTitle="m">Сеть и репутация</h2>
+        <app-ip-badges [insight]="insight()" [showKind]="false" />
+    </div>
+
+    <dl class="app-meta">
+        @for (row of rows(); track row.label) {
+            <dt>
+                @if (row.hint) {
+                    <app-info-hint [text]="row.hint" [label]="'Что значит: ' + row.label" />
+                }
+                {{ row.label }}
+            </dt>
+            <dd>
+                @if (row.flag) {
+                    <img class="ip-insight__flag" [src]="row.flag" [alt]="row.flagAlt ?? ''" [title]="row.flagAlt ?? ''" loading="lazy" />
+                }
+                {{ row.value }}
+            </dd>
+        }
+    </dl>
+</section>

@@ -1,11 +1,8 @@
 # PHPStorm
 .idea/
 
-### docker
-.docker/mysql/data/*
-!.docker/mysql/data/.gitkeep
-.docker/manticore/data/*
-!.docker/manticore/data/.gitkeep
+# AI
+.ai/
 
 # Assets
 /public/static/file/*
@@ -40,10 +37,3 @@
 
 ### phpstan
 phpstan.neon
-
-###> symfony/webpack-encore-bundle ###
-/node_modules/
-#/public/build/
-npm-debug.log
-yarn-error.log
-###< symfony/webpack-encore-bundle ###

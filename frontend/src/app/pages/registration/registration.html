@@ -1,0 +1,49 @@
+<section class="registration app-page">
+    <app-breadcrumbs [items]="breadcrumbs" />
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    <form tuiCardLarge="normal" appearance="floating" class="registration__form" (ngSubmit)="submit()" (focusin)="captchaActive.set(true)">
+        <h1 class="app-form-title">Регистрация</h1>
+
+        <tui-textfield>
+            <label tuiLabel>Username</label>
+            <input tuiInput name="username" autocomplete="username" minlength="3" maxlength="180" [(ngModel)]="username" required />
+        </tui-textfield>
+
+        <tui-textfield>
+            <label tuiLabel>E-mail</label>
+            <input tuiInput type="email" name="email" autocomplete="email" maxlength="180" [(ngModel)]="email" required />
+        </tui-textfield>
+
+        <tui-textfield>
+            <label tuiLabel>Пароль</label>
+            <input tuiInput type="password" name="password" autocomplete="new-password" maxlength="4096" minlength="6" [(ngModel)]="password" required />
+        </tui-textfield>
+
+        <tui-textfield>
+            <label tuiLabel>Пароль ещё раз</label>
+            <input
+                tuiInput
+                type="password"
+                name="passwordRepeat"
+                autocomplete="new-password"
+                maxlength="4096"
+                minlength="6"
+                [(ngModel)]="passwordRepeat"
+                required
+            />
+        </tui-textfield>
+
+        @if (appConfig.config()?.captcha?.enabled && captchaActive()) {
+            <app-captcha [siteKey]="appConfig.config()?.captcha?.siteKey ?? ''" (token)="captchaToken.set($event)" (failed)="onCaptchaFailed()" />
+        }
+
+        <div class="app-actions">
+            <button tuiButton type="submit" size="s" [disabled]="loading()">Зарегистрироваться</button>
+            <a tuiButton size="s" appearance="flat" routerLink="/login">Уже есть аккаунт</a>
+        </div>
+    </form>
+</section>

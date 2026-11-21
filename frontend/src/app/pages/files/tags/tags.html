@@ -1,0 +1,35 @@
+<section class="tags app-page">
+    <h1 class="app-sr-only">Теги</h1>
+    <app-breadcrumbs [items]="breadcrumbs" />
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    <div class="tags__row">
+        <tui-textfield class="tags__search">
+            <label tuiLabel>Поиск тега</label>
+            <input tuiInput [(ngModel)]="q" maxlength="255" (keyup.enter)="search()" />
+        </tui-textfield>
+        <button tuiButton type="button" size="s" (click)="search()">Найти</button>
+    </div>
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    }
+
+    <div class="app-chips">
+        @for (item of items(); track item.id) {
+            <a tuiChip [routerLink]="['/files']" [queryParams]="{ tag: item.name }" [attr.title]="item.name">
+                {{ item.name }}
+                <span tuiBadge>{{ item.count }}</span>
+            </a>
+        } @empty {
+            @if (!loading()) {
+                <div tuiNotification>Тегов не найдено.</div>
+            }
+        }
+    </div>
+
+    <app-pagination [total]="total()" [perPage]="perPage" [page]="page()" (pageChange)="goToPage($event)" />
+</section>

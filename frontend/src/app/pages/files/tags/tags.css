@@ -1,0 +1,11 @@
+.tags__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: flex-end;
+}
+
+.tags__search {
+    flex: 1;
+    min-width: 12rem;
+}

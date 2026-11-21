@@ -1,0 +1,36 @@
+.gists__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.gists__search {
+    flex: 1 1 16rem;
+    min-inline-size: 0;
+}
+
+.gists__sorts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.gists__filter-toggles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.gists__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+    align-items: center;
+}
+
+@media (max-width: 40rem) {
+    .gists__toolbar-label {
+        display: none;
+    }
+}

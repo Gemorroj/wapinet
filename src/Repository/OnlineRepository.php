@@ -23,7 +23,24 @@ final class OnlineRepository extends ServiceEntityRepository
         parent::__construct($registry, Online::class);
     }
 
-    public function cleanup(\DateTime $lifetime): void
+    /**
+     * @return Online[]
+     */
+    public function getRecent(int $limit = 500): array
+    {
+        return $this->createQueryBuilder('o')
+            ->orderBy('o.datetime', \SortDirection::Descending)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countAll(): int
+    {
+        return $this->count([]);
+    }
+
+    public function cleanup(\DateTimeInterface $lifetime): void
     {
         $this->getEntityManager()->createQuery('DELETE FROM App\Entity\Online o WHERE o.datetime < :lifetime')
              ->setParameter('lifetime', $lifetime)

@@ -1,0 +1,48 @@
+<section class="online app-page">
+    <h1 class="app-sr-only">Онлайн</h1>
+    <app-breadcrumbs [items]="breadcrumbs" />
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    <div class="app-actions online__actions">
+        <button tuiButton type="button" size="s" (click)="load()" [disabled]="loading()">
+            <tui-icon icon="@tui.refresh-cw" />
+            Обновить
+        </button>
+        <span>Всего: {{ count() }}</span>
+        @if (lastUpdated(); as updated) {
+            <span>Обновлено: {{ updated | date: 'HH:mm:ss' }}</span>
+        }
+    </div>
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    }
+
+    <div class="app-list">
+        @for (item of items(); track item.id) {
+            <div tuiCell>
+                <div tuiTitle>
+                    {{ item.datetime | relativeDate }}
+                    <div tuiSubtitle>{{ item.browser }}</div>
+                    @if (item.ip || item.path) {
+                        <div tuiSubtitle>
+                            @if (item.ip) {
+                                IP: {{ item.ip }}
+                            }
+                            @if (item.path) {
+                                · {{ item.path }}
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        } @empty {
+            @if (!loading()) {
+                <div tuiNotification>Сейчас никого нет.</div>
+            }
+        }
+    </div>
+</section>

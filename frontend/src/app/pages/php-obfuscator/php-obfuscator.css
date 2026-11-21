@@ -1,0 +1,17 @@
+.php-obfuscator__levels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.php-obfuscator__option {
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.php-obfuscator__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}

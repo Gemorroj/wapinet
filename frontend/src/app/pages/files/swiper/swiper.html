@@ -1,0 +1,54 @@
+<section class="swiper">
+    <h1 class="app-sr-only">{{ file()?.name ?? 'Просмотр файла' }}</h1>
+
+    <a tuiButton size="s" appearance="secondary" class="swiper__close" [routerLink]="['/files', fileId]" aria-label="Закрыть просмотр" title="Закрыть">
+        <tui-icon icon="@tui.x" />
+    </a>
+
+    @if (loading()) {
+        <div class="swiper__loading">
+            <tui-loader [loading]="true" />
+        </div>
+    }
+
+    @if (error()) {
+        <div tuiCardLarge="normal" appearance="floating" class="swiper__error">
+            <p>{{ error() }}</p>
+            <a tuiButton size="s" routerLink="/files">К файлам</a>
+        </div>
+    }
+
+    @if (file(); as item) {
+        <div class="swiper__stage">
+            <img class="swiper__image" [src]="item.links.url" [alt]="item.name" />
+        </div>
+
+        <div class="swiper__bar">
+            <button
+                tuiButton
+                size="s"
+                appearance="secondary"
+                (click)="goPrev()"
+                [disabled]="!item.navigation.prevId"
+                aria-label="Предыдущий файл"
+                title="Предыдущий файл"
+            >
+                <tui-icon icon="@tui.chevron-left" />
+            </button>
+
+            <a class="swiper__title" [routerLink]="['/files', item.id]" [attr.title]="item.name">{{ item.name }}</a>
+
+            <button
+                tuiButton
+                size="s"
+                appearance="secondary"
+                (click)="goNext()"
+                [disabled]="!item.navigation.nextId"
+                aria-label="Следующий файл"
+                title="Следующий файл"
+            >
+                <tui-icon icon="@tui.chevron-right" />
+            </button>
+        </div>
+    }
+</section>

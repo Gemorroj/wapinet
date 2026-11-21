@@ -1,0 +1,29 @@
+:host {
+    display: inline-flex;
+    flex: 0 0 auto;
+    margin-block-start: 0.0625rem;
+}
+
+.info-hint {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 1.125rem;
+    block-size: 1.125rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--tui-text-secondary);
+    cursor: help;
+}
+
+.info-hint:hover,
+.info-hint:focus-visible {
+    color: var(--tui-text-primary);
+}
+
+.info-hint tui-icon {
+    inline-size: 0.875rem;
+    block-size: 0.875rem;
+}

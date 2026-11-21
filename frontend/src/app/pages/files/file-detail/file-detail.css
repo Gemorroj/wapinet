@@ -1,0 +1,199 @@
+.file-detail__preview {
+    display: grid;
+    place-items: center;
+    align-self: start;
+    min-block-size: 12rem;
+}
+
+.file-detail__preview img,
+.file-detail__preview video {
+    max-inline-size: 100%;
+    max-block-size: 70vh;
+}
+
+.file-detail__preview-link {
+    position: relative;
+    display: block;
+    max-inline-size: 100%;
+    line-height: 0;
+    cursor: zoom-in;
+}
+
+.file-detail__preview-expand {
+    position: absolute;
+    inset-block-end: 0.5rem;
+    inset-inline-end: 0.5rem;
+    display: grid;
+    place-items: center;
+    inline-size: 2rem;
+    block-size: 2rem;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    opacity: 0.8;
+    transition:
+        opacity 0.15s,
+        background 0.15s;
+}
+
+.file-detail__preview-link:hover .file-detail__preview-expand,
+.file-detail__preview-link:focus-visible .file-detail__preview-expand {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.file-detail__preview-expand tui-icon {
+    inline-size: 1.125rem;
+    block-size: 1.125rem;
+}
+
+.file-detail__preview video {
+    inline-size: 100%;
+}
+
+.file-detail__preview audio {
+    inline-size: 100%;
+}
+
+.file-detail__audio {
+    display: grid;
+    gap: 0.75rem;
+    inline-size: 100%;
+}
+
+.file-detail__cover {
+    justify-self: center;
+    border-radius: var(--tui-radius-m);
+}
+
+.file-detail__preview .file-detail__cover {
+    max-block-size: 20rem;
+}
+
+@media (max-width: 50rem) {
+    .file-detail__preview .file-detail__cover {
+        max-block-size: 16rem;
+    }
+}
+
+.file-detail__body {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.file-detail__title {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.file-detail__type-icon {
+    flex: 0 0 auto;
+    color: var(--tui-text-secondary);
+    font-size: 1.5rem;
+}
+
+.file-detail__name {
+    min-inline-size: 0;
+    margin: 0;
+    font: var(--tui-typography-heading-h6);
+    overflow-wrap: anywhere;
+}
+
+.file-detail__description {
+    margin: 0;
+    color: var(--tui-text-secondary);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.file-detail__description :is(p, ul, ol) {
+    margin-block: 0 0.5rem;
+}
+
+.file-detail__description :last-child {
+    margin-block-end: 0;
+}
+
+.file-detail__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+}
+
+.file-detail__hash {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.125rem;
+    align-items: center;
+    min-inline-size: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.8125rem;
+}
+
+.file-detail__hash-value {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+.file-detail__copy {
+    flex: 0 0 auto;
+}
+
+.file-detail__copy_copied tui-icon {
+    color: var(--tui-status-positive);
+}
+
+.file-detail__toast {
+    position: fixed;
+    inset-block-end: 1.25rem;
+    inset-inline: 0;
+    z-index: 100;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    inline-size: fit-content;
+    max-inline-size: calc(100vw - 2rem);
+    margin-inline: auto;
+    padding: 0.625rem 1rem;
+    border: 1px solid var(--app-border);
+    border-radius: 0.375rem;
+    background: var(--app-surface);
+    box-shadow: var(--tui-shadow-small);
+    color: var(--tui-text-primary);
+    font-size: 0.875rem;
+}
+
+.file-detail__toast tui-icon {
+    flex: 0 0 auto;
+    color: var(--tui-status-positive);
+}
+
+.file-detail__toast_error tui-icon {
+    color: var(--tui-status-negative);
+}
+
+.file-detail__list {
+    display: grid;
+    gap: 0.25rem;
+}
+
+.file-detail__md5 {
+    display: flex;
+    gap: 0.25rem;
+    align-items: flex-start;
+}
+
+@media (min-width: 48rem) {
+    .file-detail__card {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        align-items: start;
+    }
+
+    .file-detail__card_no-preview {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

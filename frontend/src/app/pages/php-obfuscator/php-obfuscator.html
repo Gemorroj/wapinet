@@ -1,0 +1,101 @@
+<section class="php-obfuscator app-page">
+    <h1 class="app-sr-only">{{ tabs[tabIndex()]?.title }}</h1>
+    <app-breadcrumbs [items]="breadcrumbs()" />
+
+    <tui-tabs [activeItemIndex]="tabIndex()" (activeItemIndexChange)="selectTab($event)">
+        @for (tab of tabs; track tab.id) {
+            <button tuiTab type="button">{{ tab.label }}</button>
+        }
+    </tui-tabs>
+
+    @if (tabIndex() === 0) {
+        <div tuiCardLarge="normal" appearance="floating">
+            <h2 class="app-form-title">PHP-обфускатор</h2>
+
+            <app-code-source
+                #sourcePanel
+                label="PHP-код"
+                placeholder="Вставьте PHP-код, тег <?php можно не указывать"
+                accept=".php,.phtml,.txt"
+                [rows]="14"
+                [code]="code()"
+                [loading]="loading()"
+                (codeChange)="setCode($event)"
+                (changed)="onSourceChanged()"
+                (error)="error.set($event)"
+            />
+
+            <div class="php-obfuscator__levels">
+                @for (preset of levels; track preset.value) {
+                    <button tuiChip type="button" [appearance]="level() === preset.value ? 'primary' : 'neutral'" (click)="setLevel(preset.value)">
+                        {{ preset.label }}
+                    </button>
+                }
+            </div>
+
+            <p class="app-hint">{{ levelHint() }}</p>
+
+            <label class="php-obfuscator__option">
+                <input tuiCheckbox type="checkbox" name="removeComments" [ngModel]="removeComments()" (ngModelChange)="removeComments.set($event)" />
+                Удалять комментарии
+            </label>
+
+            <div class="php-obfuscator__actions">
+                <button tuiButton type="button" size="m" [disabled]="loading()" (click)="obfuscate()">Обфусцировать</button>
+            </div>
+
+            <p class="app-hint">Обфускация затрудняет чтение кода, но не заменяет ionCube или SourceGuardian.</p>
+
+            @if (error(); as message) {
+                <div tuiNotification appearance="negative">{{ message }}</div>
+            }
+        </div>
+
+        @if (loading()) {
+            <div tuiCardLarge="normal" appearance="floating">
+                <tui-loader [loading]="true" />
+            </div>
+        } @else if (result()) {
+            <app-tool-result title="Результат" [text]="result()" filename="obfuscated.php">
+                @if (sizeInfo(); as size) {
+                    <p class="app-hint">{{ size }}</p>
+                }
+                <app-code-block [code]="result()" language="php" />
+            </app-tool-result>
+        }
+    } @else {
+        <app-help-section title="Что делает обфускация">
+            <p class="app-text">
+                Код разбирается в синтаксическое дерево и печатается заново. В зависимости от уровня переименовываются переменные, кодируются вызовы функций,
+                строки и числа, удаляются комментарии. Поведение программы не меняется, дополнительных расширений PHP не требуется.
+            </p>
+        </app-help-section>
+
+        <app-help-section title="Уровни">
+            <dl class="app-meta">
+                <dt>Лёгкая</dt>
+                <dd>Кодируются числа; комментарии удаляются по желанию.</dd>
+                <dt>Обычная</dt>
+                <dd>Кодируются строки и числа; комментарии удаляются по желанию.</dd>
+                <dt>Максимальная</dt>
+                <dd>Переименовываются переменные, кодируются вызовы, строки и числа.</dd>
+            </dl>
+        </app-help-section>
+
+        <app-help-section title="Чего она не делает">
+            <p class="app-text">
+                Это не шифрование и не защита от копирования. Исходный код можно восстановить: обфускация лишь повышает стоимость разбора. Для коммерческой
+                защиты используют ionCube или SourceGuardian.
+            </p>
+        </app-help-section>
+
+        <app-help-section title="Ограничения">
+            <dl class="app-meta">
+                <dt>Версия PHP</dt>
+                <dd>PHP до {{ phpVersion() || 'текущей версии' }}.</dd>
+                <dt>Размер кода</dt>
+                <dd>{{ maxCodeSizeKb() ? 'до ' + maxCodeSizeKb() + ' КБ' : 'ограничен' }}.</dd>
+            </dl>
+        </app-help-section>
+    }
+</section>

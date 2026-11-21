@@ -30,11 +30,11 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     #[ORM\Column(type: 'boolean', nullable: false, options: ['default' => true])]
     private bool $enabled = true;
 
-    #[ORM\Column(type: 'datetime', nullable: false)]
-    private ?\DateTime $createdAt = null;
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
+    private \DateTimeImmutable $createdAt;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?\DateTime $updatedAt = null;
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(type: 'string', length: 180, unique: true, nullable: false)]
     #[Assert\Length(min: 3, max: 180)]
@@ -61,15 +61,15 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     #[ORM\Column(type: 'simple_array', nullable: true)]
     private ?array $roles = null;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?\DateTime $lastActivity = null;
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $lastActivity = null;
 
-    #[ORM\Column(type: 'string', nullable: true, columnDefinition: 'ENUM(\'m\', \'f\') DEFAULT NULL')]
+    #[ORM\Column(type: 'string', length: 1, nullable: true)]
     #[Assert\Choice(choices: [self::SEX_MALE, self::SEX_FEMALE])]
     private ?string $sex = null;
 
-    #[ORM\Column(type: 'date', nullable: true)]
-    private ?\DateTime $birthday = null;
+    #[ORM\Column(type: 'date_immutable', nullable: true)]
+    private ?\DateTimeImmutable $birthday = null;
 
     #[ORM\Column(type: 'string', length: 5000, nullable: true)]
     #[Assert\Length(max: 5000)]
@@ -86,10 +86,6 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $vk = null;
 
-    #[ORM\OneToOne(targetEntity: UserPanel::class, cascade: ['persist'], orphanRemoval: true)]
-    #[ORM\JoinColumn(name: 'panel_id', referencedColumnName: 'id', unique: true, nullable: true)]
-    private ?UserPanel $panel = null;
-
     #[ORM\OneToOne(targetEntity: UserSubscriber::class, cascade: ['persist'], orphanRemoval: true)]
     #[ORM\JoinColumn(name: 'subscriber_id', referencedColumnName: 'id', unique: true, nullable: true)]
     private ?UserSubscriber $subscriber = null;
@@ -98,18 +94,19 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
      * @var Collection<UserFriend>
      */
     #[ORM\OneToMany(targetEntity: UserFriend::class, mappedBy: 'user', cascade: ['persist', 'remove'], orphanRemoval: true)]
-    #[ORM\OrderBy(['id' => 'DESC'])]
+    #[ORM\OrderBy(['id' => \SortDirection::Descending])]
     private Collection $friends;
 
     /**
      * @var Collection<UserFriend>
      */
     #[ORM\OneToMany(targetEntity: UserFriend::class, mappedBy: 'friend')]
-    #[ORM\OrderBy(['id' => 'DESC'])]
+    #[ORM\OrderBy(['id' => \SortDirection::Descending])]
     private Collection $friended;
 
     public function __construct()
     {
+        $this->createdAt = new \DateTimeImmutable();
         $this->friends = new ArrayCollection();
         $this->friended = new ArrayCollection();
     }
@@ -167,7 +164,7 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     public function getCountryName(): ?string
     {
         if (null !== $this->getCountry()) {
-            return Countries::getName($this->getCountry());
+            return Countries::getName($this->getCountry(), 'ru');
         }
 
         return null;
@@ -185,23 +182,13 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         return $this;
     }
 
-    public function isOnline(): bool
+    public function isOnline(?\DateTimeImmutable $now = null): bool
     {
         $lastActivity = $this->getLastActivity();
 
-        return $lastActivity && ($lastActivity > new \DateTime('now -'.self::LIFETIME));
-    }
+        $now ??= new \DateTimeImmutable();
 
-    public function setPanel(?UserPanel $panel): self
-    {
-        $this->panel = $panel;
-
-        return $this;
-    }
-
-    public function getPanel(): ?UserPanel
-    {
-        return $this->panel;
+        return $lastActivity && ($lastActivity > $now->modify('-'.self::LIFETIME));
     }
 
     public function setSubscriber(?UserSubscriber $subscriber): self
@@ -228,21 +215,21 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         return $this;
     }
 
-    public function setBirthday(?\DateTime $birthday = null): self
+    public function setBirthday(?\DateTimeImmutable $birthday = null): self
     {
         $this->birthday = $birthday;
 
         return $this;
     }
 
-    public function getBirthday(): ?\DateTime
+    public function getBirthday(): ?\DateTimeImmutable
     {
         return $this->birthday;
     }
 
     public function setSex(?string $sex): self
     {
-        if (self::SEX_MALE !== $sex && self::SEX_FEMALE !== $sex) {
+        if (null !== $sex && self::SEX_MALE !== $sex && self::SEX_FEMALE !== $sex) {
             throw new \InvalidArgumentException('Invalid gender');
         }
 
@@ -256,20 +243,12 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         return $this->sex;
     }
 
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    #[ORM\PrePersist]
-    public function setCreatedAtValue(): self
-    {
-        $this->createdAt = new \DateTime();
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTime
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
@@ -277,19 +256,19 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
     #[ORM\PreUpdate]
     public function setUpdatedAtValue(): self
     {
-        $this->updatedAt = new \DateTime();
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
 
-    public function setLastActivity(?\DateTime $lastActivity): self
+    public function setLastActivity(?\DateTimeImmutable $lastActivity): self
     {
         $this->lastActivity = $lastActivity;
 
         return $this;
     }
 
-    public function getLastActivity(): ?\DateTime
+    public function getLastActivity(): ?\DateTimeImmutable
     {
         return $this->lastActivity;
     }
@@ -316,6 +295,13 @@ class User implements UserInterface, EquatableInterface, LegacyPasswordAuthentic
         $roles[] = 'ROLE_USER';
 
         return \array_unique($roles);
+    }
+
+    public function isAdmin(): bool
+    {
+        $roles = $this->getRoles();
+
+        return \in_array('ROLE_ADMIN', $roles, true) || \in_array('ROLE_SUPER_ADMIN', $roles, true);
     }
 
     /**

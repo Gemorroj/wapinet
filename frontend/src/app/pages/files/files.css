@@ -1,0 +1,80 @@
+.files__name {
+    display: inline-block;
+    max-inline-size: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+}
+
+.files__toolbar {
+    position: sticky;
+    inset-block-start: 3.5rem;
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    padding-block: 0.5rem;
+    margin-block: -0.5rem;
+    background: var(--app-canvas);
+}
+
+.files__search {
+    flex: 1;
+    min-width: 10rem;
+}
+
+.files__subnav {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    font-size: 0.875rem;
+}
+
+.files__subnav a {
+    color: var(--tui-text-secondary);
+}
+
+.files__subnav a:hover {
+    color: var(--tui-text-primary);
+}
+
+.files__filter-grid {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.files__filter-toggles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+@media (max-width: 50rem) {
+    .files__toolbar {
+        flex-wrap: nowrap;
+    }
+
+    .files__toolbar-label {
+        display: none;
+    }
+}
+
+.files__accessories {
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    justify-content: flex-end;
+}
+
+@media (max-width: 50rem) {
+    .app-list > [tuiCell] {
+        flex-wrap: wrap;
+    }
+
+    .files__accessories {
+        flex-basis: 100%;
+        justify-content: space-between;
+    }
+}

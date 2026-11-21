@@ -1,0 +1,54 @@
+.home__hero {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.home__hero h1 {
+    margin: 0;
+}
+
+.home__subtitle {
+    margin: 0.25rem 0 0;
+    color: var(--tui-text-secondary);
+}
+
+.home__player {
+    flex: 1 1 18rem;
+    max-inline-size: 32rem;
+    block-size: 2.5rem;
+}
+
+.home__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    grid-auto-rows: max-content;
+    gap: 0.25rem;
+    margin-inline: -0.5rem;
+}
+
+[tuiCardLarge] .home__grid > a[tuiCell] {
+    box-sizing: border-box;
+    margin: 0;
+    border-radius: var(--tui-radius-s);
+}
+
+.home__icon {
+    margin-inline-end: 0.75rem;
+    font-size: 1.25rem;
+    color: var(--tui-text-secondary);
+}
+
+@media (max-width: 50rem) {
+    .home__player {
+        max-inline-size: none;
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .home__grid a:hover {
+        background: var(--tui-background-neutral-1);
+    }
+}

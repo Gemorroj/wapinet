@@ -1,0 +1,21 @@
+<div class="code-source">
+    <div class="code-source__modes">
+        <button tuiChip type="button" [disabled]="loading()" [appearance]="'code' === mode() ? 'primary' : 'neutral'" (click)="useCode()">Код</button>
+        <button tuiChip type="button" [disabled]="loading()" [appearance]="'file' === mode() ? 'primary' : 'neutral'" (click)="useFile()">
+            Файл или ссылка
+        </button>
+    </div>
+
+    @if ('code' === mode()) {
+        <app-code-field [label]="label()" name="code" [rows]="rows()" [value]="code()" [placeholder]="placeholder()" (valueChange)="setCode($event)" />
+    } @else {
+        <app-file-source
+            [accept]="accept()"
+            [files]="files()"
+            [url]="url()"
+            [loading]="loading()"
+            (filesChange)="setFiles($event)"
+            (urlChange)="setUrl($event)"
+        />
+    }
+</div>

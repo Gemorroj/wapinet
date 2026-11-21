@@ -6,6 +6,7 @@ use App\Repository\FileTagsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table]
+#[ORM\UniqueConstraint(name: 'UNIQ_FILE_TAGS', columns: ['file_id', 'tag_id'])]
 #[ORM\Entity(repositoryClass: FileTagsRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class FileTags implements \JsonSerializable

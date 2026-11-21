@@ -1,0 +1,131 @@
+<section class="guestbook app-page">
+    <h1 class="app-sr-only">Гостевая</h1>
+    <app-breadcrumbs [items]="breadcrumbs" />
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    @if (notice()) {
+        <div tuiNotification appearance="positive">{{ notice() }}</div>
+    }
+
+    <form tuiCardLarge="normal" appearance="floating" (ngSubmit)="submit()" (focusin)="captchaActive.set(true)">
+        <app-bbcode-editor
+            label="Сообщение"
+            name="message"
+            [rows]="3"
+            [maxRows]="12"
+            placeholder="Напишите сообщение…"
+            [limit]="5000"
+            [value]="message()"
+            (valueChange)="message.set($event)"
+        />
+
+        <input class="guestbook__honeypot" name="bCheck" tabindex="-1" autocomplete="off" [ngModel]="bCheck()" (ngModelChange)="bCheck.set($event)" />
+
+        @if (!auth.authenticated() && captchaActive()) {
+            @if (appConfig.config()?.captcha?.enabled) {
+                <app-captcha [siteKey]="appConfig.config()?.captcha?.siteKey ?? ''" (token)="captchaToken.set($event)" (failed)="onCaptchaFailed()" />
+            } @else if (appConfig.config() === null) {
+                <p class="app-hint">Загрузка проверки…</p>
+            }
+        }
+
+        <div class="app-actions">
+            <button tuiButton type="submit" size="s" [disabled]="sending()">Отправить</button>
+        </div>
+    </form>
+
+    @if (!loading()) {
+        <p class="guestbook__summary">Всего: {{ total() }}</p>
+    }
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    }
+
+    <div class="guestbook__list">
+        @for (item of items(); track item.id) {
+            <article class="app-comment">
+                <header class="app-comment__head">
+                    <app-user-avatar size="m" [avatarUrl]="item.avatarUrl" [alt]="item.user?.username ?? 'Anonymous'" [isOnline]="item.isOnline" />
+
+                    @if (item.user; as user) {
+                        <a class="app-comment__author" [routerLink]="['/user/profile', user.username]">{{ user.username }}</a>
+                    } @else {
+                        <button
+                            type="button"
+                            class="guestbook__anonymous"
+                            [attr.aria-expanded]="openAnonymous() === item.id"
+                            (click)="toggleAnonymous(item.id)"
+                        >
+                            <span>Анонимно</span>
+                            @if (item.countryCode) {
+                                <img
+                                    class="guestbook__flag"
+                                    [src]="flagUrl(item.countryCode)"
+                                    [alt]="item.countryName ?? ''"
+                                    [title]="item.countryName ?? ''"
+                                    loading="lazy"
+                                />
+                            }
+                        </button>
+                    }
+
+                    <span class="app-comment__meta">{{ item.createdAt | relativeDate }}</span>
+
+                    <button type="button" class="guestbook__reply" (click)="reply(item)">Ответить</button>
+                </header>
+
+                <div class="app-comment__body">
+                    @if (!item.user && openAnonymous() === item.id) {
+                        <dl class="app-meta guestbook__anonymous-info">
+                            @if (item.ip) {
+                                <dt>IP</dt>
+                                <dd>
+                                    <a [routerLink]="['/whois']" [queryParams]="{ query: item.ip, protocol: 'auto' }">{{ item.ip }}</a>
+                                </dd>
+                            }
+                            @if (item.browser) {
+                                <dt>Браузер</dt>
+                                <dd>{{ item.browser }}</dd>
+                            }
+                            @if (loadingInsight() === item.id) {
+                                <dt>Сеть</dt>
+                                <dd>Определяем…</dd>
+                            } @else if (insights()[item.id]; as insight) {
+                                @if (insight.kind || insight.reputation?.torExit || insight.reputation?.appears) {
+                                    <dt>Сеть</dt>
+                                    <dd><app-ip-badges [insight]="insight" [colored]="true" /></dd>
+                                }
+                                @if (insight.organization) {
+                                    <dt>Оператор</dt>
+                                    <dd>{{ insight.organization }}</dd>
+                                }
+                                @if (insight.asn) {
+                                    <dt>ASN</dt>
+                                    <dd>{{ insight.asn }}</dd>
+                                }
+                                @if (insight.ptr) {
+                                    <dt>PTR</dt>
+                                    <dd>
+                                        <a [routerLink]="['/whois']" [queryParams]="{ query: insight.ptr, protocol: 'auto' }">{{ insight.ptr }}</a>
+                                    </dd>
+                                }
+                            }
+                        </dl>
+                    }
+
+                    <div class="guestbook__text" appCodeHighlight [innerHTML]="item.messageHtml"></div>
+                </div>
+            </article>
+        } @empty {
+            @if (!loading()) {
+                <div tuiNotification>Сообщений нет.</div>
+            }
+        }
+    </div>
+
+    <app-pagination [total]="total()" [perPage]="perPage()" [page]="page()" (pageChange)="goToPage($event)" />
+</section>

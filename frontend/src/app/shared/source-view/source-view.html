@@ -1,0 +1,13 @@
+<div class="source-view">
+    @for (line of lines(); track $index) {
+        <div
+            class="source-view__line"
+            [id]="lineId($index + 1)"
+            [class.source-view__line_error]="isError($index + 1)"
+            [class.source-view__line_warning]="isWarning($index + 1)"
+        >
+            <span class="source-view__number">{{ $index + 1 }}</span>
+            <code class="source-view__text">{{ line || ' ' }}</code>
+        </div>
+    }
+</div>

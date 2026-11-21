@@ -1,0 +1,22 @@
+.app-filter-drawer {
+    z-index: 30;
+}
+
+.app-filter-drawer__header {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.app-filter-drawer__body {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+}
+
+.app-filter-drawer__footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}

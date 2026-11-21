@@ -1,0 +1,267 @@
+<section class="browser-info app-page">
+    <h1 class="app-sr-only">Информация о браузере</h1>
+    <app-breadcrumbs [items]="breadcrumbs" />
+
+    <p class="browser-info__note">
+        Так вас видят сайты в интернете: данные, которые браузер отдаёт через JavaScript, и всё, что сервер узнаёт из HTTP-запроса.
+    </p>
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    }
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    <section tuiCardLarge="normal" appearance="floating">
+        <h2 tuiTitle="m">Браузер</h2>
+        <p class="app-hint">Источник: JavaScript API — <code>navigator</code>, <code>screen</code>, <code>window</code>, WebGL.</p>
+
+        <ng-container *ngTemplateOutlet="metaRows; context: { $implicit: client() }" />
+    </section>
+
+    <section tuiCardLarge="normal" appearance="floating">
+        <h2 tuiTitle="m">Возможности платформы</h2>
+        <p class="app-hint">
+            Источник: наличие API в <code>window</code> и <code>navigator</code>. Часть возможностей работает только по HTTPS и после разрешения пользователя.
+        </p>
+
+        <ng-container *ngTemplateOutlet="metaRows; context: { $implicit: capabilities }" />
+    </section>
+
+    <section tuiCardLarge="normal" appearance="floating">
+        <h2 tuiTitle="m">Canvas-отпечаток</h2>
+        <p class="app-hint">Источник: отрисовка тестового изображения через Canvas API.</p>
+
+        @if (canvasInfo; as canvas) {
+            <img class="browser-info__canvas" [src]="canvas.image" alt="Изображение для Canvas-отпечатка" />
+            <dl class="app-meta">
+                <dt>
+                    <app-info-hint text="canvas.toDataURL()" label="Источник данных: хэш Canvas" />
+                    <span class="browser-info__label">Хэш</span>
+                </dt>
+                <dd>{{ canvas.hash }}</dd>
+                <dt>
+                    <app-info-hint text="canvas.toDataURL().length" label="Источник данных: размер данных Canvas" />
+                    <span class="browser-info__label">Размер данных</span>
+                </dt>
+                <dd>{{ canvas.size }} байт</dd>
+            </dl>
+        } @else {
+            <p class="browser-info__empty">Canvas недоступен в этом браузере.</p>
+        }
+    </section>
+
+    <section tuiCardLarge="normal" appearance="floating">
+        <h2 tuiTitle="m">Аудио-отпечаток</h2>
+        <p class="app-hint">Источник: рендеринг тестового сигнала через OfflineAudioContext.</p>
+
+        @if (undefined === audioInfo()) {
+            <p class="browser-info__empty">Вычисляем…</p>
+        } @else if (audioInfo(); as audio) {
+            <dl class="app-meta">
+                <dt>
+                    <app-info-hint text="OfflineAudioContext" label="Источник данных: хэш аудио" />
+                    <span class="browser-info__label">Хэш</span>
+                </dt>
+                <dd>{{ audio.hash }}</dd>
+                <dt>
+                    <app-info-hint text="AudioBuffer.getChannelData()" label="Источник данных: сумма аудиосигнала" />
+                    <span class="browser-info__label">Сумма сигнала</span>
+                </dt>
+                <dd>{{ audio.value.toFixed(8) }}</dd>
+                <dt>
+                    <app-info-hint text="AudioBuffer.sampleRate" label="Источник данных: частота дискретизации" />
+                    <span class="browser-info__label">Частота дискретизации</span>
+                </dt>
+                <dd>{{ audio.sampleRate }} Гц</dd>
+            </dl>
+        } @else {
+            <p class="browser-info__empty">Аудио-отпечаток недоступен в этом браузере.</p>
+        }
+    </section>
+
+    <section tuiCardLarge="normal" appearance="floating">
+        <h2 tuiTitle="m">Медиа и кодеки</h2>
+        <p class="app-hint">
+            Источник: <code>canPlayType</code>, MediaSource Extensions и Encrypted Media Extensions. «Возможно» — браузер не уверен, что воспроизведёт поток.
+        </p>
+
+        @if (undefined === mediaInfo()) {
+            <p class="browser-info__empty">Проверяем…</p>
+        } @else if (mediaInfo(); as media) {
+            <div class="browser-info__group">
+                <h3 tuiTitle="s">Видео</h3>
+                <ng-container *ngTemplateOutlet="metaRows; context: { $implicit: media.video }" />
+            </div>
+
+            <div class="browser-info__group">
+                <h3 tuiTitle="s">Аудио</h3>
+                <ng-container *ngTemplateOutlet="metaRows; context: { $implicit: media.audio }" />
+            </div>
+
+            @if (media.drm.length) {
+                <div class="browser-info__group">
+                    <h3 tuiTitle="s">Защита контента</h3>
+                    <ng-container *ngTemplateOutlet="metaRows; context: { $implicit: media.drm }" />
+                </div>
+            }
+        } @else {
+            <p class="browser-info__empty">Медиа-возможности недоступны в этом браузере.</p>
+        }
+    </section>
+
+    <section tuiCardLarge="normal" appearance="floating">
+        <h2 tuiTitle="m">WebRTC</h2>
+        <p class="app-hint">Источник: ICE-кандидаты браузера через STUN.</p>
+
+        @if (undefined === webrtcInfo()) {
+            <p class="browser-info__empty">Проверяем…</p>
+        } @else if (null === webrtcInfo()) {
+            <p class="browser-info__empty">WebRTC недоступен в этом браузере.</p>
+        } @else {
+            <dl class="app-meta">
+                @for (item of webrtcRows(); track item.label + item.value) {
+                    <dt>
+                        @if (item.source) {
+                            <app-info-hint [text]="item.source" [label]="'Источник данных: ' + item.label" />
+                        }
+                        <span class="browser-info__label">{{ item.label }}</span>
+                    </dt>
+                    <dd>
+                        @if (item.flag) {
+                            <img class="browser-info__flag" [src]="item.flag" [alt]="item.flagAlt ?? ''" [title]="item.flagAlt ?? ''" loading="lazy" />
+                        }
+                        @if (item.link) {
+                            <a [routerLink]="['/whois']" [queryParams]="{ query: item.link, protocol: 'auto' }">{{ item.value }}</a>
+                        } @else {
+                            {{ item.value }}
+                        }
+                    </dd>
+                }
+            </dl>
+
+            @if (webrtcLeak(); as leak) {
+                <p class="browser-info__verdict" [class.browser-info__verdict_alert]="leak.alert">
+                    <tui-icon [icon]="leak.alert ? '@tui.circle-alert' : '@tui.circle-check'" />
+                    {{ leak.text }}
+                </p>
+            }
+        }
+    </section>
+
+    <section tuiCardLarge="normal" appearance="floating">
+        <h2 tuiTitle="m">Соединение</h2>
+        <p class="app-hint">Источник: HTTP-запрос, который сервер получил от вашего клиента.</p>
+
+        @if (connectionRows().length) {
+            <dl class="app-meta">
+                @for (item of connectionRows(); track item.label) {
+                    <dt>
+                        @if (item.source) {
+                            <app-info-hint [text]="item.source" [label]="'Источник данных: ' + item.label" />
+                        }
+                        <span class="browser-info__label">{{ item.label }}</span>
+                    </dt>
+                    <dd>
+                        @if (item.flag) {
+                            <img class="browser-info__flag" [src]="item.flag" [alt]="item.flagAlt ?? ''" [title]="item.flagAlt ?? ''" loading="lazy" />
+                        }
+                        @if (item.link) {
+                            <a [routerLink]="['/whois']" [queryParams]="{ query: item.link, protocol: 'auto' }">{{ item.value }}</a>
+                        } @else {
+                            {{ item.value }}
+                        }
+                    </dd>
+                }
+            </dl>
+        }
+    </section>
+
+    <section tuiCardLarge="normal" appearance="floating">
+        <h2 tuiTitle="m">Геолокация по IP</h2>
+        <p class="app-hint">{{ geoSource() }}</p>
+
+        @if (geoRows().length) {
+            <dl class="app-meta">
+                @for (item of geoRows(); track item.label) {
+                    <dt>{{ item.label }}</dt>
+                    <dd>
+                        @if (item.flag) {
+                            <img class="browser-info__flag" [src]="item.flag" [alt]="item.flagAlt ?? ''" [title]="item.flagAlt ?? ''" loading="lazy" />
+                        }
+                        @if (item.link) {
+                            <a [routerLink]="['/whois']" [queryParams]="{ query: item.link, protocol: 'auto' }">{{ item.value }}</a>
+                        } @else {
+                            {{ item.value }}
+                        }
+                    </dd>
+                }
+            </dl>
+        } @else {
+            <p class="browser-info__empty">Геоданные недоступны: IP локальный, служебный или отсутствует в базе.</p>
+        }
+    </section>
+
+    @if (server()?.insight; as insight) {
+        <app-ip-insight [insight]="insight" [showGeo]="false" />
+    } @else if (server()) {
+        <section tuiCardLarge="normal" appearance="floating">
+            <h2 tuiTitle="m">Сеть и репутация</h2>
+            <p class="browser-info__empty">Данные о провайдере и типе сети недоступны.</p>
+        </section>
+    }
+
+    <section tuiCardLarge="normal" appearance="floating">
+        <h2 tuiTitle="m">Признаки VPN и прокси</h2>
+        <p class="app-hint">Источник: MaxMind City, StopForumSpam и заголовки запроса.</p>
+
+        <p class="browser-info__verdict" [class.browser-info__verdict_alert]="vpn()?.suspicious">
+            <tui-icon [icon]="vpn()?.suspicious ? '@tui.circle-alert' : '@tui.circle-check'" />
+            {{ vpnSummary() }}
+        </p>
+
+        @if (vpn()?.signals?.length) {
+            <ul class="browser-info__signals">
+                @for (signal of vpn()?.signals; track signal) {
+                    <li>{{ signal }}</li>
+                }
+            </ul>
+        }
+    </section>
+
+    <section tuiCardLarge="normal" appearance="floating">
+        <h2 tuiTitle="m">Разрешения</h2>
+        <p class="app-hint">
+            Источник: Permissions API. Состояние читается без запроса к пользователю; «не поддерживается» означает, что браузер не знает такое разрешение.
+        </p>
+
+        @if (undefined === permissionInfo()) {
+            <p class="browser-info__empty">Проверяем…</p>
+        } @else if (permissionInfo(); as permissions) {
+            <ng-container *ngTemplateOutlet="metaRows; context: { $implicit: permissions }" />
+        } @else {
+            <p class="browser-info__empty">Permissions API недоступен в этом браузере.</p>
+        }
+    </section>
+
+    <app-tool-result title="HTTP-заголовки" [text]="rawHeaders()" filename="browser-headers.txt">
+        <p class="app-hint">Источник: заголовки, которые прислал клиент. Значения авторизации и cookies скрыты.</p>
+        <pre class="browser-info__raw">{{ rawHeaders() || 'Заголовки не получены.' }}</pre>
+    </app-tool-result>
+</section>
+
+<ng-template #metaRows let-items>
+    <dl class="app-meta">
+        @for (item of items; track item.label) {
+            <dt>
+                @if (item.source) {
+                    <app-info-hint [text]="item.source" [label]="'Источник данных: ' + item.label" />
+                }
+                <span class="browser-info__label">{{ item.label }}</span>
+            </dt>
+            <dd>{{ item.value }}</dd>
+        }
+    </dl>
+</ng-template>

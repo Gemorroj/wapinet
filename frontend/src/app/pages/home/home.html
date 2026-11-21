@@ -1,0 +1,157 @@
+<section class="home app-page">
+    <header class="home__hero">
+        <div>
+            <h1 tuiTitle="l">Wapinet</h1>
+            <p class="home__subtitle">Сервисы и инструменты для разработчиков.</p>
+        </div>
+
+        <audio
+            class="home__player"
+            controls
+            preload="none"
+            title="Ты забыл, брат — Александр Скляр и группа «Ва-Банкъ»"
+            src="/resources/Aleksandr_Sklyar_i_gr_Va-Bank_-_Ty_zabyl_brat.mp3"
+        ></audio>
+    </header>
+
+    <section tuiCardLarge="normal" appearance="floating">
+        <div class="home__grid">
+            <a tuiCell routerLink="/files">
+                <tui-icon icon="@tui.folder" class="home__icon" />
+                <div tuiTitle>
+                    Файлообменник
+                    <div tuiSubtitle>Файлов: {{ stats()?.files ?? '—' }}</div>
+                </div>
+            </a>
+            <a tuiCell href="https://forum.wapinet.ru" target="_blank" rel="noopener noreferrer">
+                <tui-icon icon="@tui.messages-square" class="home__icon" />
+                <div tuiTitle>
+                    Форум
+                    <div tuiSubtitle>{{ stats()?.forumTopics ?? '—' }} тем · {{ stats()?.forumPosts ?? '—' }} сообщений</div>
+                </div>
+            </a>
+            <a tuiCell routerLink="/gist">
+                <tui-icon icon="@tui.notebook-pen" class="home__icon" />
+                <div tuiTitle>
+                    Блоги
+                    <div tuiSubtitle>{{ stats()?.gists ?? '—' }} записей</div>
+                </div>
+            </a>
+            <a tuiCell routerLink="/guestbook">
+                <tui-icon icon="@tui.message-circle" class="home__icon" />
+                <div tuiTitle>
+                    Гостевая
+                    <div tuiSubtitle>{{ stats()?.guestbook ?? '—' }} сообщений</div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section tuiCardLarge="normal" appearance="floating">
+        <h2 tuiTitle="m">Файлы</h2>
+
+        <div class="home__grid">
+            <a tuiCell routerLink="/archiver">
+                <tui-icon icon="@tui.archive" class="home__icon" />
+                <div tuiTitle>Архиватор</div>
+            </a>
+            <a tuiCell routerLink="/audio_tags">
+                <tui-icon icon="@tui.music" class="home__icon" />
+                <div tuiTitle>Редактор аудио-тегов</div>
+            </a>
+        </div>
+    </section>
+
+    <section tuiCardLarge="normal" appearance="floating">
+        <h2 tuiTitle="m">Сеть</h2>
+
+        <div class="home__grid">
+            <a tuiCell routerLink="/http">
+                <tui-icon icon="@tui.globe" class="home__icon" />
+                <div tuiTitle>HTTP-клиент</div>
+            </a>
+            <a tuiCell routerLink="/whois">
+                <tui-icon icon="@tui.search" class="home__icon" />
+                <div tuiTitle>WHOIS / RDAP</div>
+            </a>
+            <a tuiCell routerLink="/browser_info">
+                <tui-icon icon="@tui.monitor" class="home__icon" />
+                <div tuiTitle>Информация о браузере</div>
+            </a>
+        </div>
+    </section>
+
+    <section tuiCardLarge="normal" appearance="floating">
+        <h2 tuiTitle="m">Текст</h2>
+
+        <div class="home__grid">
+            <a tuiCell routerLink="/text-tools">
+                <tui-icon icon="@tui.arrow-left-right" class="home__icon" />
+                <div tuiTitle>
+                    Инструменты текста
+                    <div tuiSubtitle>Base64, JSON, URL, hex, регистр</div>
+                </div>
+            </a>
+            <a tuiCell routerLink="/unicode">
+                <tui-icon icon="@tui.languages" class="home__icon" />
+                <div tuiTitle>
+                    Unicode
+                    <div tuiSubtitle>символы, эмодзи и их коды</div>
+                </div>
+            </a>
+            <a tuiCell routerLink="/hash">
+                <tui-icon icon="@tui.hash" class="home__icon" />
+                <div tuiTitle>
+                    Хэши
+                    <div tuiSubtitle>MD5, SHA-2, SHA3 и CRC32</div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section tuiCardLarge="normal" appearance="floating">
+        <h2 tuiTitle="m">Код</h2>
+
+        <div class="home__grid">
+            <a tuiCell routerLink="/php_obfuscator">
+                <tui-icon icon="@tui.lock" class="home__icon" />
+                <div tuiTitle>PHP-обфускатор</div>
+            </a>
+            <a tuiCell routerLink="/php_validator">
+                <tui-icon icon="@tui.file-code" class="home__icon" />
+                <div tuiTitle>PHP-валидатор</div>
+            </a>
+            <a tuiCell routerLink="/html_validator">
+                <tui-icon icon="@tui.file-code" class="home__icon" />
+                <div tuiTitle>HTML-валидатор</div>
+            </a>
+            <a tuiCell routerLink="/css_validator">
+                <tui-icon icon="@tui.file-code" class="home__icon" />
+                <div tuiTitle>CSS-валидатор</div>
+            </a>
+        </div>
+    </section>
+
+    <section tuiCardLarge="normal" appearance="floating">
+        <h2 tuiTitle="m">Материалы</h2>
+
+        <div class="home__grid">
+            <a tuiCell routerLink="/open-source">
+                <tui-icon icon="@tui.code" class="home__icon" />
+                <div tuiTitle>Open source разработки</div>
+            </a>
+            <a tuiCell routerLink="/textbook">
+                <tui-icon icon="@tui.book-open" class="home__icon" />
+                <div tuiTitle>Учебники</div>
+            </a>
+            <a tuiCell routerLink="/video-courses">
+                <tui-icon icon="@tui.play" class="home__icon" />
+                <div tuiTitle>Видео-курсы</div>
+            </a>
+            <a tuiCell routerLink="/politics">
+                <tui-icon icon="@tui.landmark" class="home__icon" />
+                <div tuiTitle>Политика</div>
+            </a>
+        </div>
+    </section>
+</section>

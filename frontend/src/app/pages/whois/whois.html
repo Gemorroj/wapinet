@@ -1,0 +1,239 @@
+<section class="whois app-page">
+    <h1 class="app-sr-only">WHOIS / RDAP</h1>
+    <app-breadcrumbs [items]="breadcrumbs" />
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    <form tuiCardLarge="normal" appearance="floating" (ngSubmit)="lookup()">
+        <h2 class="app-form-title">WHOIS / RDAP</h2>
+        <p class="app-hint">
+            Домен, IP, CIDR или ASN. По умолчанию сначала
+            <abbr title="Registration Data Access Protocol — структурированный протокол регистрационных данных">RDAP</abbr>, при ошибке —
+            <abbr title="Whois — текстовый протокол запроса регистрационных данных">WHOIS</abbr>.
+        </p>
+
+        <tui-textfield>
+            <label tuiLabel>Запрос</label>
+            <input tuiInput name="query" maxlength="255" placeholder="example.com, 8.8.8.8, AS15169" [ngModel]="query()" (ngModelChange)="query.set($event)" />
+        </tui-textfield>
+
+        <div class="whois__protocol" role="group" aria-label="Протокол">
+            <button tuiChip type="button" [appearance]="protocol() === 'auto' ? 'primary' : 'neutral'" (click)="protocol.set('auto')">Авто</button>
+            <button tuiChip type="button" [appearance]="protocol() === 'rdap' ? 'primary' : 'neutral'" (click)="protocol.set('rdap')">RDAP</button>
+            <button tuiChip type="button" [appearance]="protocol() === 'whois' ? 'primary' : 'neutral'" (click)="protocol.set('whois')">WHOIS</button>
+        </div>
+
+        <div class="app-actions">
+            <button tuiButton type="submit" size="s" [disabled]="loading()">Проверить</button>
+            <button tuiButton type="button" size="s" appearance="flat" [disabled]="loading()" (click)="myIp()">Мой IP</button>
+        </div>
+    </form>
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    }
+
+    @if (result(); as item) {
+        <section tuiCardLarge="normal" appearance="floating">
+            <div class="app-section-head">
+                <h2 tuiTitle="m">Результат</h2>
+                <span class="whois__badge">{{ protocolLabel() }}</span>
+                <span class="whois__kind">{{ kindLabel() }}</span>
+            </div>
+
+            <p class="whois__source">
+                Сервер: <code>{{ item.server }}</code>
+            </p>
+
+            @if (expiry(); as value) {
+                <p class="whois__expiry-line">
+                    {{ value.eventLabel }}: {{ value.date | date: 'dd.MM.yyyy' }} ·
+                    <span [class]="'whois__expiry ' + value.tone">{{ value.label }}</span>
+                </p>
+            }
+
+            @if (item.details.length) {
+                <dl class="app-meta whois__details">
+                    @for (field of item.details; track field.label) {
+                        <dt>
+                            @if (fieldHint(field.label); as hint) {
+                                <app-info-hint [text]="hint" [label]="'Что значит: ' + field.label" />
+                            }
+                            {{ field.label }}
+                        </dt>
+                        <dd>
+                            @if (detailFlag(field); as flag) {
+                                <img class="whois__flag" [src]="flag" [alt]="field.value" [title]="field.value" loading="lazy" />
+                            }
+                            {{ field.value }}
+                        </dd>
+                    }
+                </dl>
+            }
+
+            @if (item.statuses.length) {
+                <div class="whois__statuses">
+                    @for (status of item.statuses; track status) {
+                        <span [class]="'whois__status ' + statusTone(status)" [title]="statusTitle(status) ?? ''">{{ status }}</span>
+                    }
+                </div>
+            }
+        </section>
+
+        @if (item.dns.records.length || item.dns.ips.length) {
+            <section tuiCardLarge="normal" appearance="floating">
+                <div class="app-section-head">
+                    <h2 tuiTitle="m">DNS и IP-адреса</h2>
+                    @if (item.dns.provider) {
+                        <span class="whois__dns-provider">{{ item.dns.provider }} DNS</span>
+                    }
+                </div>
+
+                @if (item.dns.records.length) {
+                    <ul class="whois__records">
+                        @for (record of item.dns.records; track record.type + record.value) {
+                            <li>
+                                <abbr class="whois__record-type" [title]="recordTitle(record.type)">{{ record.type }}</abbr>
+                                @if (recordPrefix(record); as prefix) {
+                                    <span class="whois__record-prefix">{{ prefix }}</span>
+                                }
+                                <a class="whois__link" [routerLink]="['/whois']" [queryParams]="{ query: recordHost(record), protocol: 'auto' }">
+                                    <code>{{ recordHost(record) }}</code>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                }
+
+                @if (item.dns.ips.length) {
+                    <ul class="whois__ip-list">
+                        @for (ip of item.dns.ips; track ip.ip) {
+                            <li class="whois__ip">
+                                @if (flag(ip.geo); as flagUrl) {
+                                    <img
+                                        class="whois__flag"
+                                        [src]="flagUrl"
+                                        [alt]="countryLabel(ip.geo) ?? ''"
+                                        [title]="countryLabel(ip.geo) ?? ''"
+                                        loading="lazy"
+                                    />
+                                }
+                                <a class="whois__link" [routerLink]="['/whois']" [queryParams]="{ query: ip.ip, protocol: 'auto' }">
+                                    <code>{{ ip.ip }}</code>
+                                </a>
+                                @if (countryLabel(ip.geo); as country) {
+                                    <span>{{ country }}</span>
+                                }
+                                @if (ip.hostname) {
+                                    <a class="whois__reverse whois__link" [routerLink]="['/whois']" [queryParams]="{ query: ip.hostname, protocol: 'auto' }">
+                                        {{ ip.hostname }}
+                                    </a>
+                                }
+                            </li>
+                        }
+                    </ul>
+                }
+            </section>
+        }
+
+        @if (item.dns.hosts.length) {
+            <section tuiCardLarge="normal" appearance="floating">
+                <div class="app-section-head">
+                    <h2 tuiTitle="m">Домены на IP</h2>
+                    @if (item.dns.provider) {
+                        <span class="whois__dns-provider">{{ item.dns.provider }} DNS</span>
+                    }
+                    <app-info-hint
+                        text="PTR-имя — обратная DNS-запись. «Подтверждён» означает, что имя резолвится обратно в этот IP."
+                        label="О доменах на IP"
+                    />
+                </div>
+
+                <ul class="whois__ip-list">
+                    @for (host of item.dns.hosts; track host.hostname) {
+                        <li class="whois__ip">
+                            <a class="whois__link" [routerLink]="['/whois']" [queryParams]="{ query: host.hostname, protocol: 'auto' }">
+                                <code>{{ host.hostname }}</code>
+                            </a>
+                            <span class="whois__status">{{ host.confirmed ? 'подтверждён' : 'не подтверждён' }}</span>
+                            @if (host.ips.length) {
+                                <span class="whois__reverse">
+                                    @for (ip of host.ips; track ip) {
+                                        <a class="whois__link" [routerLink]="['/whois']" [queryParams]="{ query: ip, protocol: 'auto' }">
+                                            {{ ip }}
+                                        </a>
+                                        @if (!$last) {
+                                            ,
+                                        }
+                                    }
+                                </span>
+                            }
+                        </li>
+                    }
+                </ul>
+            </section>
+        }
+
+        @if (item.insight; as insight) {
+            <app-ip-insight [insight]="insight" [showPtr]="false" />
+        }
+
+        @if (item.events.length) {
+            <section tuiCardLarge="normal" appearance="floating">
+                <h2 tuiTitle="m">События</h2>
+
+                <dl class="app-meta">
+                    @for (event of item.events; track event.action + event.date) {
+                        <dt>{{ event.action }}</dt>
+                        <dd>{{ event.date | date: 'dd.MM.yyyy' }}</dd>
+                    }
+                </dl>
+            </section>
+        }
+
+        @if (item.nameservers.length) {
+            <section tuiCardLarge="normal" appearance="floating">
+                <h2 tuiTitle="m">DNS-серверы</h2>
+
+                <ul class="whois__list">
+                    @for (nameserver of item.nameservers; track nameserver) {
+                        <li>
+                            <a class="whois__link" [routerLink]="['/whois']" [queryParams]="{ query: nameserver, protocol: 'auto' }">
+                                <code>{{ nameserver }}</code>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </section>
+        }
+
+        @if (item.contacts.length) {
+            <section tuiCardLarge="normal" appearance="floating">
+                <h2 tuiTitle="m">Контакты</h2>
+
+                <dl class="app-meta">
+                    @for (contact of item.contacts; track contact.role + (contact.email ?? contact.name ?? '')) {
+                        <dt>{{ roleLabel(contact.role) }}</dt>
+                        <dd class="whois__contact">
+                            @if (contact.name) {
+                                <span>{{ contact.name }}</span>
+                            }
+                            @if (contact.organization && contact.organization !== contact.name) {
+                                <span>{{ contact.organization }}</span>
+                            }
+                            @if (contact.email) {
+                                <a [href]="'mailto:' + contact.email">{{ contact.email }}</a>
+                            }
+                        </dd>
+                    }
+                </dl>
+            </section>
+        }
+
+        <app-tool-result title="Сырой ответ" [text]="item.raw" [filename]="'whois-' + item.kind + '.txt'">
+            <app-code-block [code]="item.raw" [language]="'rdap' === item.protocol ? 'json' : null" />
+        </app-tool-result>
+    }
+</section>

@@ -1,0 +1,124 @@
+.profile__card {
+    display: grid;
+    gap: 1rem;
+}
+
+.profile__head {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.25rem 1rem;
+    align-items: center;
+}
+
+.profile__identity {
+    display: grid;
+    gap: 0.125rem;
+    min-inline-size: 0;
+}
+
+/* Inline meta line: only filled fields, separated by a middle dot. */
+.profile__meta {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 0.5rem;
+    row-gap: 0.125rem;
+    margin: 0;
+    color: var(--tui-text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+}
+
+.profile__meta > * + *::before {
+    content: '·';
+    margin-inline-end: 0.5rem;
+    color: var(--tui-text-tertiary);
+}
+
+.profile__online {
+    color: var(--tui-text-positive);
+}
+
+.profile__country {
+    display: inline-flex;
+    gap: 0.375rem;
+    align-items: center;
+}
+
+.profile__flag {
+    inline-size: 1.25rem;
+    block-size: auto;
+    border-radius: 0.125rem;
+}
+
+.profile__actions {
+    justify-content: flex-end;
+}
+
+.profile__info {
+    overflow-wrap: anywhere;
+}
+
+/* Social profile: a quiet row under the bio instead of another list box. */
+.profile__vk {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    padding-block-start: 0.875rem;
+    border-block-start: 1px solid var(--tui-border-normal);
+    color: var(--tui-text-primary);
+    text-decoration: none;
+}
+
+.profile__vk:hover .profile__vk-name {
+    text-decoration: underline;
+}
+
+.profile__vk-text {
+    display: grid;
+    gap: 0.125rem;
+    min-inline-size: 0;
+}
+
+.profile__vk-hint {
+    color: var(--tui-text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+}
+
+.profile__vk-icon {
+    inline-size: 0.875rem;
+    block-size: 0.875rem;
+    color: var(--tui-text-tertiary);
+}
+
+.profile__icon {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+    color: var(--tui-text-secondary);
+}
+
+/* Three counters must fill the row instead of leaving an empty cell. */
+.profile__grid {
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+@media (max-width: 50rem) {
+    .profile__head {
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: start;
+    }
+
+    .profile__actions {
+        grid-column: 2 / -1;
+        justify-content: flex-start;
+    }
+
+    /* Dots at the start of a wrapped line read as noise on narrow screens. */
+    .profile__meta {
+        column-gap: 0.75rem;
+    }
+
+    .profile__meta > * + *::before {
+        content: none;
+    }
+}

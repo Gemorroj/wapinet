@@ -1,0 +1,36 @@
+<section class="subscriber app-page">
+    <app-breadcrumbs [items]="breadcrumbs" />
+
+    <app-account-nav />
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    @if (saved()) {
+        <div tuiNotification appearance="positive">Настройки сохранены.</div>
+    }
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    }
+
+    <form tuiCardLarge="normal" appearance="floating" class="subscriber__form" (ngSubmit)="submit()">
+        <h1 class="app-form-title">Подписки</h1>
+
+        <label class="subscriber__check">
+            <input tuiCheckbox type="checkbox" name="emailNews" [ngModel]="emailNews()" (ngModelChange)="emailNews.set($event)" />
+            Присылать E-mail о новостях сайта
+        </label>
+
+        <label class="subscriber__check">
+            <input tuiCheckbox type="checkbox" name="emailFriends" [ngModel]="emailFriends()" (ngModelChange)="emailFriends.set($event)" />
+            Присылать E-mail о действиях друзей
+        </label>
+
+        <div class="app-actions">
+            <button tuiButton type="submit" size="s" [disabled]="saving()">Сохранить</button>
+            <a tuiButton size="s" appearance="flat" routerLink="/user/profile">Отмена</a>
+        </div>
+    </form>
+</section>

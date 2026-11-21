@@ -1,0 +1,42 @@
+<section class="statistic app-page">
+    <h1 class="app-sr-only">Статистика</h1>
+    <app-breadcrumbs [items]="breadcrumbs" />
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    }
+
+    @if (statistics(); as data) {
+        <div class="app-list">
+            <div tuiCell>
+                <div tuiTitle>Файлов</div>
+                <div tuiTitle>{{ data.countFiles }}</div>
+            </div>
+            <div tuiCell>
+                <div tuiTitle>Объём</div>
+                <div tuiTitle>{{ size(data.sizeFiles) }}</div>
+            </div>
+            <div tuiCell>
+                <div tuiTitle>Просмотров</div>
+                <div tuiTitle>{{ data.countViews }}</div>
+            </div>
+        </div>
+
+        @if (data.users.length) {
+            <h2 tuiTitle="m">Активные пользователи</h2>
+
+            <div class="app-list">
+                @for (user of data.users; track user.username) {
+                    <a tuiCell [routerLink]="['/files']" [queryParams]="{ user: user.username }">
+                        <div tuiTitle>{{ user.username }}</div>
+                        <span tuiBadge appearance="neutral">{{ user.uploads }}</span>
+                    </a>
+                }
+            </div>
+        }
+    }
+</section>

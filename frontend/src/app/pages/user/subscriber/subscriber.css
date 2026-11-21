@@ -1,0 +1,9 @@
+.subscriber__form {
+    max-inline-size: 36rem;
+}
+
+.subscriber__check {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}

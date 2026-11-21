@@ -1,0 +1,105 @@
+(() => {
+    const selector = 'textarea[data-bbcode-preview]';
+    const endpoint = '{{ path('api_bbcode_preview') }}';
+
+    const decorate = (textarea) => {
+        if ('1' === textarea.dataset.bbcodePreviewReady) {
+            return;
+        }
+
+        textarea.dataset.bbcodePreviewReady = '1';
+
+        const toolbar = document.createElement('div');
+        toolbar.className = 'd-flex gap-2 mb-2';
+
+        const editButton = document.createElement('button');
+        editButton.type = 'button';
+        editButton.className = 'btn btn-sm btn-secondary active';
+        editButton.textContent = 'Редактировать';
+
+        const previewButton = document.createElement('button');
+        previewButton.type = 'button';
+        previewButton.className = 'btn btn-sm btn-outline-secondary';
+        previewButton.textContent = 'Предпросмотр';
+
+        toolbar.append(editButton, previewButton);
+
+        const preview = document.createElement('div');
+        preview.className = 'border rounded p-3 d-none';
+        preview.setAttribute('aria-live', 'polite');
+
+        const error = document.createElement('div');
+        error.className = 'text-danger small mt-2 d-none';
+
+        textarea.before(toolbar);
+        textarea.after(preview);
+        preview.after(error);
+
+        const updatePreviewButton = () => {
+            previewButton.disabled = '' === textarea.value.trim();
+        };
+
+        const showEdit = () => {
+            textarea.classList.remove('d-none');
+            preview.classList.add('d-none');
+            error.classList.add('d-none');
+            editButton.classList.add('active');
+            previewButton.classList.remove('active');
+        };
+
+        const showPreview = async () => {
+            const text = textarea.value.trim();
+
+            if ('' === text) {
+                showEdit();
+                return;
+            }
+
+            previewButton.disabled = true;
+            previewButton.textContent = 'Загрузка…';
+            error.classList.add('d-none');
+
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text: textarea.value }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Не удалось получить предпросмотр.');
+                }
+
+                const data = await response.json();
+
+                preview.innerHTML = data.html ?? '';
+                textarea.classList.add('d-none');
+                preview.classList.remove('d-none');
+                editButton.classList.remove('active');
+                previewButton.classList.add('active');
+            } catch (exception) {
+                error.textContent = exception instanceof Error ? exception.message : 'Не удалось получить предпросмотр.';
+                error.classList.remove('d-none');
+            } finally {
+                previewButton.disabled = false;
+                previewButton.textContent = 'Предпросмотр';
+            }
+        };
+
+        editButton.addEventListener('click', showEdit);
+        previewButton.addEventListener('click', showPreview);
+        textarea.addEventListener('input', updatePreviewButton);
+        updatePreviewButton();
+    };
+
+    const init = () => document.querySelectorAll(selector).forEach(decorate);
+
+    if ('loading' === document.readyState) {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();

@@ -1,0 +1,31 @@
+<section class="gist-form app-page">
+    <app-breadcrumbs [items]="breadcrumbs()" />
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    }
+
+    <form tuiCardLarge="normal" appearance="floating" (ngSubmit)="save()">
+        <h1 class="app-form-title">{{ editing() ? 'Редактирование записи' : 'Новая запись' }}</h1>
+
+        <tui-textfield>
+            <label tuiLabel>Тема</label>
+            <input tuiInput name="subject" maxlength="5000" [ngModel]="subject()" (ngModelChange)="subject.set($event)" />
+        </tui-textfield>
+
+        <app-bbcode-editor label="Текст" name="body" [limit]="5000" [value]="body()" (valueChange)="body.set($event)" />
+
+        <input class="gist-form__honeypot" name="bCheck" tabindex="-1" autocomplete="off" [ngModel]="bCheck()" (ngModelChange)="bCheck.set($event)" />
+
+        <div class="app-actions">
+            <button tuiButton type="submit" size="s" [disabled]="saving()">
+                {{ editing() ? 'Сохранить' : 'Опубликовать' }}
+            </button>
+            <button tuiButton type="button" size="s" appearance="flat" (click)="cancel()">Отмена</button>
+        </div>
+    </form>
+</section>

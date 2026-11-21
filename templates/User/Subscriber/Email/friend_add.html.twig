@@ -2,8 +2,9 @@
 
 {% block content %}
     {% if friend.isFemale %}
-        Вас добавила в друзья <a href="{{ url('wapinet_user_profile', {'username': friend.username}) }}">{{ friend.username }}</a>.
+        Вас добавила в друзья <a href="{{ absolute_url('/') }}user/profile/{{ friend.username }}">{{ friend.username }}</a>.
     {% else %}
-        Вас добавил в друзья <a href="{{ url('wapinet_user_profile', {'username': friend.username}) }}">{{ friend.username }}</a>.
+        Вас добавил в друзья <a href="{{ absolute_url('/') }}user/profile/{{ friend.username }}">{{ friend.username }}</a>.
     {% endif %}
 {% endblock %}
+

@@ -34,19 +34,34 @@ final class TagRepository extends ServiceEntityRepository
         $qb->where('t.name LIKE :search');
         $qb->setParameter('search', $search);
 
-        $qb->orderBy('t.count', 'DESC');
-        $qb->addOrderBy('t.name', 'ASC');
+        $qb->orderBy('t.count', \SortDirection::Descending);
+        $qb->addOrderBy('t.name', \SortDirection::Ascending);
 
         $qb->setMaxResults($limit);
 
         return $qb->getQuery()->execute();
     }
 
+    public function getApiListQueryBuilder(?string $search = null): \Doctrine\ORM\QueryBuilder
+    {
+        $queryBuilder = $this->createQueryBuilder('t');
+
+        if (null !== $search && '' !== \trim($search)) {
+            $queryBuilder
+                ->andWhere('t.name LIKE :search')
+                ->setParameter('search', '%'.\addcslashes(\trim($search), '%_').'%');
+        }
+
+        return $queryBuilder
+            ->orderBy('t.count', \SortDirection::Descending)
+            ->addOrderBy('t.name', \SortDirection::Ascending);
+    }
+
     public function getTagsQuery(): \Doctrine\ORM\Query
     {
         return $this->createQueryBuilder('t')
-            ->orderBy('t.count', 'DESC')
-            ->addOrderBy('t.name', 'ASC')
+            ->orderBy('t.count', \SortDirection::Descending)
+            ->addOrderBy('t.name', \SortDirection::Ascending)
             ->getQuery();
     }
 

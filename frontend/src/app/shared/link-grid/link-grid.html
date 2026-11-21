@@ -1,0 +1,34 @@
+<div class="app-grid">
+    @for (item of items(); track item.href) {
+        @if (item.extraLinks?.length) {
+            <div class="link-grid__item">
+                <a tuiCell [href]="item.href" target="_blank" rel="noopener noreferrer">
+                    <ng-container *ngTemplateOutlet="cell; context: { $implicit: item }" />
+                </a>
+
+                @for (extra of item.extraLinks; track extra.href) {
+                    <a tuiLink [href]="extra.href" target="_blank" rel="noopener noreferrer">{{ extra.label }}</a>
+                }
+            </div>
+        } @else {
+            <a tuiCell [href]="item.href" target="_blank" rel="noopener noreferrer">
+                <ng-container *ngTemplateOutlet="cell; context: { $implicit: item }" />
+            </a>
+        }
+    }
+</div>
+
+<ng-template #cell let-item>
+    @if (item.avatarUrl) {
+        <div tuiAvatar size="l" [round]="false">
+            <img [src]="item.avatarUrl" [alt]="item.avatarAlt ?? item.title" [style.object-fit]="imageFit()" loading="lazy" />
+        </div>
+    }
+
+    <div tuiTitle>
+        {{ item.title }}
+        @if (item.subtitle) {
+            <div tuiSubtitle>{{ item.subtitle }}</div>
+        }
+    </div>
+</ng-template>

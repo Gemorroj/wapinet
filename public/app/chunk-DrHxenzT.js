@@ -1,0 +1,1 @@
+function n(r){return`/resources/taiga-ui/icons/flags/${r.toLowerCase()}.svg`}function o(r){return r?r.countryCode?r.country?`${r.country} (${r.countryCode})`:r.countryCode:r.country??null:null}export{o as n,n as t};

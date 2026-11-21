@@ -1,0 +1,27 @@
+:host {
+    display: block;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow: hidden;
+}
+
+tui-breadcrumbs {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+}
+
+/* Long file names must not widen the page; the full name is available in the title. */
+.breadcrumbs__current {
+    display: inline-block;
+    max-inline-size: 18rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+}
+
+@media (max-width: 50rem) {
+    .breadcrumbs__current {
+        max-inline-size: 8rem;
+    }
+}

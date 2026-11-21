@@ -1,0 +1,10 @@
+.code-source {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.code-source__modes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}

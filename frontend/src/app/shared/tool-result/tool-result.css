@@ -1,0 +1,11 @@
+.tool-result__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-inline-start: auto;
+}
+
+.tool-result__body {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+}

@@ -1,0 +1,11 @@
+.users__search {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: flex-end;
+}
+
+.users__search-field {
+    flex: 1;
+    min-inline-size: 12rem;
+}

@@ -1,0 +1,32 @@
+<section class="news app-page">
+    <h1 class="app-sr-only">Новости</h1>
+    <app-breadcrumbs [items]="breadcrumbs" />
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    }
+
+    <div class="app-list">
+        @for (item of items(); track item.id) {
+            <a tuiCell [routerLink]="['/news', item.id]">
+                <div tuiTitle>
+                    {{ item.subject }}
+                    <div tuiSubtitle>{{ item.createdAt | relativeDate }}</div>
+                    @if (item.updatedAt) {
+                        <div tuiSubtitle>Обновлено {{ item.updatedAt | relativeDate }}</div>
+                    }
+                </div>
+            </a>
+        } @empty {
+            @if (!loading()) {
+                <div tuiNotification>Новостей пока нет.</div>
+            }
+        }
+    </div>
+
+    <app-pagination [total]="total()" [perPage]="perPage()" [page]="page()" (pageChange)="goToPage($event)" />
+</section>

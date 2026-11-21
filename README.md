@@ -3,8 +3,8 @@
 ##### Лицензия GPL v3
 
 ##### Используются:
-- Symfony 8.1
-- Jquery Mobile
+- Symfony 8.2
+- Angular 22 + Taiga UI 5 (SPA, `frontend/`)
 - PHP 8.5
 - MySQL 8.4
 - Manticore
@@ -12,459 +12,102 @@
 - ffmpeg
 - systemd
 
+### Локальная разработка в Docker
 
-### Базовая установка (актуально для Ubuntu 24.04)
-```bash
-apt update && sudo apt dist-upgrade && sudo apt autoremove --purge
-apt install software-properties-common
-add-apt-repository ppa:ondrej/php
-curl -o /etc/apt/trusted.gpg.d/angie-signing.gpg https://angie.software/keys/angie-signing.gpg
-echo "deb https://download.angie.software/angie/$(. /etc/os-release && echo "$ID/$VERSION_ID $VERSION_CODENAME") main" | sudo tee /etc/apt/sources.list.d/angie.list > /dev/null
-apt update && apt dist-upgrade
-hostnamectl set-hostname wapinet.ru
-timedatectl set-timezone UTC
+`docker-compose.yml` — только для dev. Нужен `.env.local` (не коммитится): скопируйте `.env.dist` и укажите контейнерные хосты:
 
-# edit /etc/hosts to associate domain to ip address without dns requests. see https://www.linode.com/docs/guides/getting-started/#update-your-systems-hosts-file
-# edit /etc/ssh/sshd_config - set `Port 2200`
-# edit /root/.ssh/authorized_keys - add public key
-reboot
+```dotenv
+DATABASE_URL="mysql://root:@mysql:3306/wapinet?serverVersion=8.4"
+MANTICORE_HOST=manticore
+MAILER_DSN=smtp://mailpit:1025
+PHP_PATH=/usr/local/bin/php
+P7Z_PATH=/usr/local/bin/7zz
 ```
 
-```bash
-cd /
-wget https://dev.mysql.com/get/mysql-apt-config_0.8.40-1_all.deb
-sudo dpkg -i mysql-apt-config_0.8.40-1_all.deb
-
-apt install htop mc git unzip
-apt install mysql-client mysql-server
-apt install angie
-systemctl enable angie
-apt install php8.5-fpm php8.5-curl php8.5-gd php8.5-intl php8.5-mbstring php8.5-mysql php8.5-xml php8.5-zip php8.5-apcu
-
-mysql_secure_installation
-echo '[mysqld]
-bind-address = 127.0.0.1,::1
-mysqlx-bind-address = 127.0.0.1,::1
-skip-log-bin
-skip-external-locking
-skip-name-resolve
-
-innodb_file_per_table=1
-max_connections=50
-innodb_flush_log_at_trx_commit=2
-innodb_buffer_pool_size=512M
-innodb_buffer_pool_instances=1
-key_buffer_size=0
-innodb_flush_method = O_DIRECT
-
-table_open_cache=2000
-tmp_table_size=76M
-max_heap_table_size=76M
-join_buffer_size = 2M
-
-innodb_fast_shutdown = 0
-' > /etc/mysql/mysql.conf.d/z_wapinet.cnf
-
-# manticore
-apt install default-libmysqlclient-dev
-curl -O -L https://repo.manticoresearch.com/manticore-repo.noarch.deb
-dpkg -i manticore-repo.noarch.deb
-rm manticore-repo.noarch.deb
-apt install manticore manticore-extra
-systemctl enable manticore
-
-echo 'common {
-    plugin_dir = /usr/local/lib/manticore
-}
-indexer
-{
-    mem_limit = 128M
-}
-searchd
-{
-    # listen = localhost:9312
-    listen = localhost:9306:mysql
-    # listen = localhost:9308:http
-    log = /var/log/manticore/searchd.log
-    query_log = /var/log/manticore/query.log
-    query_log_format = sphinxql
-    pid_file = /run/manticore/searchd.pid
-    # data_dir = /var/lib/manticore
-    binlog_path = # disable logging
-
-    qcache_max_bytes = 32M
-    qcache_thresh_msec = 1000
-    qcache_ttl_sec = 600
-    max_children = 50
-    max_packet_size = 32M
-    read_timeout = 10
-    client_timeout = 30
-    predicted_time_costs = doc=0.1, hit=0.01, skip=0.001, match=0.001
-}
-
-source config
-{
-    type = mysql
-    sql_host = localhost
-    sql_user = wapinet
-    sql_pass = password
-    sql_db = wapinet
-    sql_port = 3306
-    sql_query_pre = SET NAMES utf8mb4
-}
-
-source files:config
-{
-    sql_query = \
-        SELECT f.id, \
-        f.description, \
-        f.original_file_name, \
-        UNIX_TIMESTAMP(f.created_at) AS created_at_ts, \
-        ( \
-            SELECT GROUP_CONCAT(t.name SEPARATOR " ") \
-            FROM tag AS t \
-            WHERE t.id IN(SELECT file_tags.tag_id FROM file_tags WHERE file_tags.file_id = f.id) \
-        ) AS tag_name \
-        FROM file AS f \
-        WHERE f.password IS NULL \
-        AND f.hidden = 0
-
-    sql_field_string = description
-    sql_field_string = original_file_name
-    sql_field_string = tag_name
-    sql_attr_timestamp = created_at_ts
-}
-
-index files
-{
-    type = plain
-    source = files
-    path = /var/lib/manticore/files
-    morphology = stem_ru, stem_en, soundex
-    html_strip = 0
-    min_infix_len = 3
-    min_word_len = 2
-    expand_keywords = 1
-    index_exact_words = 1
-    charset_table = 0..9, english, russian, _
-}
-
-source users:config
-{
-    sql_query = \
-        SELECT u.id, \
-        u.username, \
-        u.email, \
-        u.info \
-        FROM user AS u \
-        WHERE u.enabled = 1
-
-    sql_field_string = username
-    sql_field_string = email
-    sql_field_string = info
-}
-
-index users
-{
-    type = plain
-    source = users
-    path = /var/lib/manticore/users
-    morphology = stem_ru, stem_en, soundex
-    html_strip = 0
-    min_infix_len = 3
-    min_word_len = 2
-    expand_keywords = 1
-    index_exact_words = 1
-    charset_table = 0..9, english, russian, _
-}
-
-source gist:config
-{
-    sql_query = \
-        SELECT g.id, \
-        g.subject, \
-        g.body, \
-        UNIX_TIMESTAMP(g.created_at) AS created_at_ts \
-        FROM gist AS g
-
-    sql_field_string = subject
-    sql_field_string = body
-    sql_attr_timestamp = created_at_ts
-}
-
-index gist
-{
-    type = plain
-    source = gist
-    path = /var/lib/manticore/gist
-    morphology = stem_ru, stem_en, soundex
-    html_strip = 0
-    min_infix_len = 3
-    min_word_len = 2
-    expand_keywords = 1
-    index_exact_words = 1
-    charset_table = 0..9, english, russian, _
-}' > /etc/manticoresearch/manticore.conf
-
-echo '0 * * * * manticore indexer --rotate --all' > /etc/cron.d/manticore
-
-
-# composer
-cd /var/www
-curl -L -o composer.phar https://getcomposer.org/download/latest-stable/composer.phar
-chmod 755 composer.phar
-
-# geoip database
-cd /var/www
-curl -L -o GeoLite2-Country.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-Country.mmdb
-
-# 7zip
-cd /opt
-mkdir 7z2605-linux-x64
-cd /opt/7z2605-linux-x64
-curl -fL -o 7z.tar.xz "https://github.com/ip7z/7zip/releases/download/26.05/7z2605-linux-x64.tar.xz"
-tar xJf 7z.tar.xz
-rm -f 7z.tar.xz
-/opt/7z2605-linux-x64/7zz i
-
-# ffmpeg - https://ubuntuhandbook.org/index.php/2024/04/ffmpeg-7-0-ppa-ubuntu/
-add-apt-repository ppa:ubuntuhandbook1/ffmpeg9
-apt install ffmpeg
-```
+Compose задаёт только контейнерные переменные; остальное приложение читает из `.env.local` (реальный env перекрывает dotenv, поэтому дублировать настройки в compose нельзя). В dev MySQL — `root` без пароля, как в `.env.dist`; имя БД `wapinet` указано ещё и в `.docker/manticore/manticore.conf` (индексатор).
 
 ```bash
-# edit /etc/php/8.5/fpm/php.ini & /etc/php/8.5/cli/php.ini
-# cgi.fix_pathinfo=0
-# memory_limit = 256M
-# date.timezone = "UTC"
-# post_max_size = 50M
-# upload_max_filesize = 50M
-# opcache.enable=1
-# opcache.enable_cli=1
-# opcache.memory_consumption=256
-# opcache.interned_strings_buffer=18
-# opcache.max_accelerated_files=100000
-# opcache.validate_timestamps=0
-# [apcu]
-# apc.shm_size=64M
-# apc.enabled = on
-# apc.enable_cli = off
-
-# edit /etc/php/8.5/fpm/pool.d/www.conf
-# listen.allowed_clients = 127.0.0.1
-# pm.status_path = /statusfpm
-# listen = /run/php/php8.5-fpm.sock
-# edit pm.* settings for performance
-
-# edit /etc/angie/angie.conf
-# user  www-data;
-# server_tokens off;
-# gzip  on;
-# gzip_comp_level 2;
-# gzip_min_length 40;
-# gzip_types text/css text/plain application/json text/javascript application/javascript text/xml application/xml application/xml+rss application/x-font-ttf application/x-font-opentype application/vnd.ms-fontobject image/svg+xml image/x-icon font/ttf font/opentype;
-# resolver 127.0.0.53;
-# acme_client wapinet_acme_client https://acme-v02.api.letsencrypt.org/directory;
-#
-#    limit_conn_zone $binary_remote_addr zone=perip:10m;
-#    limit_req_zone $binary_remote_addr zone=php_requests:10m rate=10r/s;
-#
-# server {
-#     charset utf-8;
-#     listen 80;
-#     server_name  localhost;
-#     access_log off;
-# 
-# 	location = /statusfpm {
-# 		fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-# 		include fastcgi_params;
-# 		fastcgi_pass unix:/run/php/php8.5-fpm.sock;
-# 		allow 127.0.0.1;
-# 		deny  all;
-#     }
-#     location /status/ {
-#         api /status/;
-#         allow 127.0.0.1;
-#         deny  all;
-# 	}
-# }
+docker compose up -d --build
 ```
+
+`init` при старте выставляет владельцев каталогов, ставит Composer-зависимости и миграции обеих БД; остальные сервисы ждут его (логи — `docker compose logs init`, повтор — `docker compose run --rm init`). PHP и Node работают от владельца исходников (`1000:1000`); другой UID: `LOCAL_UID=$(id -u) LOCAL_GID=$(id -g) docker compose up -d --build`.
+
+Порты только на `127.0.0.1`: `:80` — собранный SPA, API и `/admin`; `:4200` — Angular с HMR; `:8025` — Mailpit; `:3306` — MySQL (root без пароля).
+
+Тестовая БД создаётся на пустом volume, для существующего — `docker compose exec mysql sh /docker-entrypoint-initdb.d/10-test-database.sh`.
+
+### Сборка и проверки
 
 ```bash
-server {
-    listen 80;
-    listen [::]:80;
+docker compose exec php composer update --with-all-dependencies --no-blocking
+docker compose exec frontend ./node_modules/.bin/ng update --allow-dirty
+docker compose exec frontend npm update
+docker compose restart frontend
 
-    server_name wapinet.ru www.wapinet.ru;
-	return 301 https://$server_name$request_uri;
-}
+docker compose exec php php vendor/bin/phpunit
+docker compose exec php php vendor/bin/phpstan analyse
+docker compose exec -e CI=1 frontend npm test -- --watch=false
+docker compose exec frontend npm run test:scripts
+docker compose exec frontend npm run format:check
 
-server {
-    if ($request_uri ~ "/forum/(.*)") {
-        return 301 https://forum.$server_name/$1;
-    }
-
-    # Canonical host: www -> non-www
-    if ($host = www.wapinet.ru) {
-        return 301 https://wapinet.ru$request_uri;
-    }
-
-    location ~ /\. {
-        deny all;
-    }
-
-    ssl_protocols TLSv1.2 TLSv1.3;
-    acme wapinet_acme_client;
-    ssl_certificate $acme_cert_wapinet_acme_client;
-    ssl_certificate_key $acme_cert_key_wapinet_acme_client;
-    ssl_session_timeout 1h;
-    ssl_session_cache shared:SSL:10m;
-
-    charset utf-8;
-    listen 443 ssl;
-    listen [::]:443 ssl;
-    http2 on;
-    client_max_body_size 50m;
-
-    server_name wapinet.ru www.wapinet.ru;
-    root /var/www/wapinet/public;
-
-    error_log /var/log/angie/wapinet.error.log;
-    access_log /var/log/angie/wapinet.access.log;
-
-    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
-    add_header X-Frame-Options "DENY";
-    add_header X-Content-Type-Options nosniff;
-
-    # Кэширование
-    location = /favicon.ico {
-        access_log off;
-        expires 30d;
-    }
-    location = /robots.txt {
-        access_log off;
-        expires 30d;
-    }
-    location = /apple-touch-icon.png {
-        access_log off;
-        expires 30d;
-    }
-    location /bundles/ {
-        access_log off;
-        expires 30d;
-    }
-    location /build/resources/ {
-        # Legacy: static files used to be served from /build/resources/
-        rewrite ^/build/resources/(.*)$ /resources/$1 permanent;
-    }
-    location /build/ {
-        access_log off;
-        expires 30d;
-    }
-    location /resources/ {
-        access_log off;
-        expires 30d;
-    }
-    location /media/cache/resolve/ {
-        # on-demand thumbnail generation: goes to PHP and must not be cached
-        access_log off;
-
-        try_files $uri /index.php$is_args$args;
-    }
-    location /media/ {
-        access_log off;
-        expires 30d;
-    }
-    location /static/ {
-        # Скачивание всех файлов (в т.ч. и txt, html и проч. в обменнике), чтобы потенциальный html/js код не выполнился в браузере
-        add_header Content-Disposition "attachment";
-        add_header X-Content-Type-Options nosniff;
-        access_log off;
-        expires 30d;
-    }
-
-
-    location / {
-        # try to serve file directly, fallback to index.php
-        try_files $uri /index.php$is_args$args;
-    }
-
-    location ~ ^/index\.php(/|$) {
-        limit_conn perip 15;
-        limit_req zone=php_requests burst=20 nodelay;
-        limit_req_status 429;
-
-        fastcgi_pass unix:/run/php/php8.5-fpm.sock;
-        fastcgi_split_path_info ^(.+\.php)(/.*)$;
-        include fastcgi_params;
-       # When you are using symlinks to link the document root to the
-       # current version of your application, you should pass the real
-       # application path instead of the path to the symlink to PHP
-       # FPM.
-       # Otherwise, PHP OPcache may not properly detect changes to
-       # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
-       # for more information).
-       fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-       fastcgi_param DOCUMENT_ROOT $realpath_root;
-       # Prevents URIs that include the front controller. This will 404:
-       # http://domain.tld/index.php/some-path
-       # Remove the internal directive to allow URIs like this
-       internal;
-   }
-
-    #location ~ \.php$ {
-    #    return 404;
-    #}
-}' > /etc/angie/http.d/wapinet.ru.conf
+docker compose exec frontend npm run api:sync # OpenAPI → TS-клиент, backend должен быть запущен
+docker compose exec frontend npm run build # собирает public/app
 ```
 
-### СУБД
-```bash
-mysql -u root -p
-CREATE USER 'wapinet'@'localhost' IDENTIFIED BY 'password';
-GRANT ALL ON wapinet.* TO 'wapinet'@'localhost';
-GRANT SELECT ON forum.* TO 'wapinet'@'localhost';
-quit
-mysql -u wapinet -p wapinet < wapinet.sql
-```
+Контейнер `frontend` при старте сам ставит зависимости, если `node_modules` пуст или изменился `package-lock.json`. После правок фоновых обработчиков — `docker compose restart messenger scheduler`.
 
-### Установка сайта
-```bash
-cd /var/www
-git clone https://github.com/Gemorroj/wapinet.git
-cd wapinet
-cp .env.dist .env
-# edit .env
-../composer.phar install --no-dev --optimize-autoloader --apcu-autoloader
-rm -rf ./var/cache/*
-rm -rf ./var/log/*
-rm -rf ./var/tmp/*
-service php-fpm restart
+### Поиск (Manticore)
 
-cp bin/messenger/messenger.service.dist bin/messenger/messenger.service
-cp bin/messenger/scheduler.service.dist bin/messenger/scheduler.service
-# edit bin/messenger/messenger.service
-# edit bin/messenger/scheduler.service
-ln -s /var/www/wapinet/bin/messenger/messenger.service /etc/systemd/system/messenger.service
-ln -s /var/www/wapinet/bin/messenger/scheduler.service /etc/systemd/system/scheduler.service
-systemctl daemon-reload
-systemctl enable messenger
-systemctl enable scheduler
+Приложение работает с Manticore только через HTTP JSON (`MANTICORE_HOST:MANTICORE_HTTP_PORT`) — fallback на Doctrine LIKE нет: при недоступном Manticore API файлов отдаёт `503`, поиск gists/users показывает ошибку. Таблицы `files`, `users`, `gist` создаются при старте dev-контейнера, индексы обновляются вручную: `docker compose exec manticore indexer --rotate --all`.
 
-chmod 777 ./var/log
-chmod 777 ./var/tmp
-chmod 777 ./var/cache
-chmod 777 ./public/media/cache/resolve/thumbnail/static
-chmod 777 ./public/media/cache/thumbnail/static
-chmod 777 ./public/static/file
-```
+Установка и настройка сервера (Ubuntu 24.04, MySQL, PHP, Angie, Manticore, systemd) — в [`INSTALL.md`](INSTALL.md).
 
+### Лимиты и фоновые задачи
 
-### TODO:
-- ! проверка файлов на virustotal (возможно автоматическая) в файлообменнике (https://docs.virustotal.com/reference/files-scan + https://docs.virustotal.com/reference/analysis)
-- !!! Переделать интерфейс на vue/react/angular (огромная задача. jquery mobile официально мертв - https://blog.jquerymobile.com/2021/10/07/jquery-maintainers-continue-modernization-initiative-with-deprecation-of-jquery-mobile/)
-- Переделать редактор аудиотегов на https://github.com/duncan3dc/meta-audio/issues/3 (когда будут картинки) или ffmpeg (https://dev.to/blueset/read-and-write-tags-of-music-files-with-ffmpeg-5c4a)
-- ! Сделать возможность в php обфускаторе загружать файлы. Или вообще удалить обфускатор из-за ущербности и неактуальности.
-- !! Актуализировать мобильные коды. Найти новые для разных андроидов.
-- Оболочка над nmap https://github.com/willdurand/nmap (работает медленно и выдает мало информации)
-- Проверка на спамеров http://www.stopforumspam.com/usage (https://github.com/Gemorroj/StopSpam)
+- Загрузка файлов: до 20 файлов за запрос, до 50 МиБ на файл; архиватор — 1000 файлов, 50 МиБ на файл, 250 МиБ на архив.
+- Rate limit: `config/packages/rate_limiter.yaml`; при превышении API отдаёт `429` с `Retry-After`, текст для пользователя строит клиент.
+- Временные каталоги `var/tmp`, `var/tmp/archiver`, `var/tmp/audio-tags`, `var/tmp/file` создаёт `Kernel` при сборке контейнера; старые файлы чистит `app:tmp-clear`.
+- Фоновые задачи (превью, метаданные, конвертация) — через Messenger: `messenger:consume async`.
+- Периодические задачи — отдельный worker `messenger:consume scheduler_default`. В dev состояние расписания хранится на диске и сохраняется при перезапуске worker; пропущенная задача выполняется один раз.
+
+### Идеи
+
+#### Отложено
+
+- FrankenPHP!
+- Политика: ссылки на каналы в MAX.
+- Видео-курсы: ссылки на RuTube и VK.
+- Страница полезных ссылок: внешние ресурсы для разработчиков (пример — https://externals.io/).
+- Аудио-теги: переделать на медиа комбайн полностью в браузере - TagLib-wasm + MediaBunny
+- Перенести форум. Упростить и мигрировать в основную ветку wapinet.
+- Файлы: проверка на VirusTotal (по кнопке и автоматически), вставка из clipboard, превью изображений в списке, SHA-256 рядом с MD5 (с backfill).
+- WHOIS: SPF, DMARC, DKIM по селектору, CAA, DNSSEC, TLS, HTTP-статус.
+- HTTP-клиент: история, коллекции, окружения, тайминги.
+- Архиватор: выборочная распаковка, поиск по содержимому, preview.
+- Админка: failed-сообщения и scheduler, очистка кэша, переиндексация Manticore, тестовое письмо, разделение `ROLE_ADMIN`/`ROLE_SUPER_ADMIN`.
+- Инструменты: конвертер Unix timestamp; Markdown preview (низкий приоритет).
+- BBCode → Markdown: миграция легаси-разметки. В базе ~1344 записи с BBCode из 10383 (гостевая 1308, блоги 17,
+  новости 10, описания файлов 5, «О себе» 4); используются `[quote=Автор]` (901), `[url]` (389), `[img]` (20),
+  `[code]` (11), `[hide]` (7), `[b]/[i]/[s]/[color]/[br]` (15), `[youtube]` (1); списков и таблиц нет. План:
+  колонка `format` (`bbcode`/`markdown`) в таблицах, `ContentRenderer` с двумя рендерерами (`league/commonmark`
+  + GFM), новые записи в Markdown, старые рендерятся как сейчас; затем одноразовый конвертер по AST
+  (`Xbbcode::getTree()`) с `--dry-run`, отчётом расхождений и сохранением оригинала в `legacy_source`; после —
+  переиндексация Manticore и удаление BBCode-рендерера. Маппинг: `[url=адрес]текст[/url]` → `[текст](адрес)`,
+  `[url]адрес[/url]` → `<адрес>`, `[img]адрес[/img]` → `![](адрес)`, `[code=php]` → огороженный блок с языком,
+  `[hide]` → `<details>`, `[quote=Автор]` → `> **Автор:**`. Отдельное решение нужно по автору цитаты: в Markdown
+  это не стандартная конструкция, а 901 запись — в основном ответы через «Ответить».
+
+#### Отклонено
+
+- JWT decoder/encoder — не нужен.
+- Отдельный каталог `/tools` — группировки на главной достаточно.
+- Главная: дата последней новости и правило «показывать, только если не старше года» — сайт обновляется редко, дата в блоке не нужна.
+- Телефонные коды — раздел удалён, актуализировать нечего.
+- Browser Info: история/сравнение визитов, экспорт, рекомендации по приватности.
+- Главная: поиск/command palette, недавние, избранное.
+- Админка: 2FA, журнал действий, список сессий.
+- Социальные функции, комментарии, рейтинги.
+- Password generator, QR, UUID отдельными разделами.
+- Сетевой сканер и оболочка над nmap.
+- Полная Unicode Character Database в SPA.
+- Экспорт отчёта WHOIS.

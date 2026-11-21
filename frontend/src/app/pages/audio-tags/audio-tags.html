@@ -1,0 +1,332 @@
+<section class="audio-tags app-page">
+    <h1 class="app-sr-only">{{ tabs[tabIndex()]?.title }}</h1>
+    <app-breadcrumbs [items]="breadcrumbs()" />
+
+    @if (error(); as message) {
+        <div tuiNotification appearance="negative">{{ message }}</div>
+    }
+
+    @if (notice(); as message) {
+        <div tuiNotification appearance="positive">{{ message }}</div>
+    }
+
+    <tui-tabs [activeItemIndex]="tabIndex()" (activeItemIndexChange)="selectTab($event)">
+        @for (tab of tabs; track tab.id) {
+            <button tuiTab type="button">{{ tab.label }}</button>
+        }
+    </tui-tabs>
+
+    @if (tabIndex() === 0) {
+        @if (loading()) {
+            <div tuiCardLarge="normal" appearance="floating">
+                <tui-loader [loading]="true" />
+            </div>
+        } @else if (info(); as current) {
+            <div tuiCardLarge="normal" appearance="floating">
+                <div class="app-section-head">
+                    <h2 tuiTitle="m">Файл</h2>
+
+                    <div class="app-actions">
+                        @if (coverDownloadUrl(); as url) {
+                            <a tuiButton size="s" appearance="flat" [href]="url" download>Скачать обложку</a>
+                        }
+                        @if (downloadUrl(); as url) {
+                            <a tuiButton size="s" appearance="flat" [href]="url" download>Скачать</a>
+                        }
+                        @if (pendingReset()) {
+                            <button tuiButton type="button" size="s" appearance="primary-destructive" [disabled]="resetting()" (click)="reset()">
+                                {{ resetting() ? 'Удаляем…' : 'Удалить и выбрать другой' }}
+                            </button>
+                            <button tuiButton type="button" size="s" appearance="flat" [disabled]="resetting()" (click)="pendingReset.set(false)">
+                                Отмена
+                            </button>
+                        } @else {
+                            <button tuiButton type="button" size="s" appearance="flat-destructive" (click)="pendingReset.set(true)">
+                                Удалить временный файл
+                            </button>
+                        }
+                    </div>
+                </div>
+
+                <dl class="app-meta">
+                    <dt>Имя</dt>
+                    <dd>{{ current.originalName }}</dd>
+                    <dt>Формат</dt>
+                    <dd>{{ current.format || '—' }}</dd>
+                    <dt>Битрейт</dt>
+                    <dd>{{ bitrate(current) }}</dd>
+                    <dt>Частота</dt>
+                    <dd>{{ sampleRate(current) }}</dd>
+                    <dt>Каналы</dt>
+                    <dd>{{ current.channelMode || '—' }}</dd>
+                    <dt>Размер</dt>
+                    <dd>{{ size(current.size) }}</dd>
+                    <dt>Длительность</dt>
+                    <dd>{{ duration(current) }}</dd>
+                    <dt>Теги</dt>
+                    <dd>{{ current.tagFormats.length ? current.tagFormats.join(', ') : 'запись не поддерживается' }}</dd>
+                </dl>
+
+                @if (coverSrc(); as cover) {
+                    <img class="audio-tags__cover" [src]="cover" [alt]="current.tags.title || current.originalName" />
+                }
+            </div>
+
+            <form tuiCardLarge="normal" appearance="floating" (ngSubmit)="update()">
+                <div class="app-section-head">
+                    <h2 class="app-form-title">Теги</h2>
+
+                    <div class="app-actions">
+                        <button tuiButton type="button" size="s" appearance="flat" (click)="fillFromFilename()">Заполнить из имени</button>
+                    </div>
+                </div>
+
+                <div class="audio-tags__fields">
+                    <tui-textfield>
+                        <label tuiLabel>Название</label>
+                        <input tuiInput name="title" maxlength="255" [ngModel]="title()" (ngModelChange)="title.set($event)" />
+                    </tui-textfield>
+
+                    <tui-textfield>
+                        <label tuiLabel>Исполнитель</label>
+                        <input tuiInput name="artist" maxlength="255" [ngModel]="artist()" (ngModelChange)="artist.set($event)" />
+                    </tui-textfield>
+
+                    <tui-textfield>
+                        <label tuiLabel>Альбомный исполнитель</label>
+                        <input tuiInput name="albumArtist" maxlength="255" [ngModel]="albumArtist()" (ngModelChange)="albumArtist.set($event)" />
+                    </tui-textfield>
+
+                    <tui-textfield>
+                        <label tuiLabel>Альбом</label>
+                        <input tuiInput name="album" maxlength="255" [ngModel]="album()" (ngModelChange)="album.set($event)" />
+                    </tui-textfield>
+
+                    <tui-textfield>
+                        <label tuiLabel>Год</label>
+                        <input tuiInput name="year" maxlength="32" [ngModel]="year()" (ngModelChange)="year.set($event)" />
+                    </tui-textfield>
+
+                    <tui-textfield>
+                        <label tuiLabel>Номер трека</label>
+                        <input
+                            tuiInput
+                            name="trackNumber"
+                            maxlength="32"
+                            inputmode="numeric"
+                            [ngModel]="trackNumber()"
+                            (ngModelChange)="trackNumber.set($event)"
+                        />
+                    </tui-textfield>
+
+                    <tui-textfield tuiChevron>
+                        <label tuiLabel>Жанр</label>
+                        <input
+                            tuiComboBox
+                            name="genre"
+                            maxlength="255"
+                            [strict]="false"
+                            [ngModel]="genre()"
+                            (ngModelChange)="genre.set($event)"
+                            (input)="onGenreInput($event)"
+                            (focus)="genreQuery.set('')"
+                        />
+                        <tui-data-list-wrapper *tuiDropdown [items]="genreSuggestions()" />
+                    </tui-textfield>
+
+                    <tui-textfield>
+                        <label tuiLabel>Ссылка</label>
+                        <input tuiInput name="urlUser" maxlength="255" [ngModel]="urlUser()" (ngModelChange)="urlUser.set($event)" />
+                    </tui-textfield>
+                </div>
+
+                <tui-textfield>
+                    <label tuiLabel>Комментарий</label>
+                    <textarea tuiTextarea name="comment" rows="3" maxlength="10000" [ngModel]="comment()" (ngModelChange)="comment.set($event)"></textarea>
+                </tui-textfield>
+
+                <details class="audio-tags__advanced">
+                    <summary>Дополнительные теги</summary>
+
+                    <div class="audio-tags__advanced-body">
+                        <div class="audio-tags__fields">
+                            <tui-textfield>
+                                <label tuiLabel>Композитор</label>
+                                <input tuiInput name="composer" maxlength="255" [ngModel]="composer()" (ngModelChange)="composer.set($event)" />
+                            </tui-textfield>
+
+                            <tui-textfield>
+                                <label tuiLabel>Номер диска</label>
+                                <input
+                                    tuiInput
+                                    name="discNumber"
+                                    maxlength="32"
+                                    inputmode="numeric"
+                                    [ngModel]="discNumber()"
+                                    (ngModelChange)="discNumber.set($event)"
+                                />
+                            </tui-textfield>
+
+                            <tui-textfield>
+                                <label tuiLabel>BPM</label>
+                                <input tuiInput name="bpm" maxlength="16" inputmode="decimal" [ngModel]="bpm()" (ngModelChange)="bpm.set($event)" />
+                            </tui-textfield>
+
+                            <tui-textfield>
+                                <label tuiLabel>ISRC</label>
+                                <input tuiInput name="isrc" maxlength="32" [ngModel]="isrc()" (ngModelChange)="isrc.set($event)" />
+                            </tui-textfield>
+
+                            <tui-textfield>
+                                <label tuiLabel>Копирайт</label>
+                                <input tuiInput name="copyright" maxlength="255" [ngModel]="copyright()" (ngModelChange)="copyright.set($event)" />
+                            </tui-textfield>
+                        </div>
+
+                        <tui-textfield>
+                            <label tuiLabel>Текст песни</label>
+                            <textarea tuiTextarea name="lyrics" rows="6" maxlength="20000" [ngModel]="lyrics()" (ngModelChange)="lyrics.set($event)"></textarea>
+                        </tui-textfield>
+
+                        <p class="app-hint">Заполняется не во всех форматах: для MP3 — ID3v2, для FLAC и OGG — Vorbis comments, для MPC — APE.</p>
+                    </div>
+                </details>
+
+                <div class="audio-tags__cover-edit">
+                    <h3 tuiTitle="s">Обложка</h3>
+
+                    @if (coverPreview(); as cover) {
+                        <img class="audio-tags__cover" [src]="cover" [alt]="current.tags.title || current.originalName" />
+                    }
+
+                    @if (!removePicture()) {
+                        <app-file-source
+                            accept="image/*"
+                            [files]="coverFiles()"
+                            [url]="coverUrl()"
+                            [loading]="saving()"
+                            (filesChange)="setCoverFiles($event)"
+                            (urlChange)="setCoverUrl($event)"
+                        />
+                    }
+
+                    <label class="audio-tags__option">
+                        <input tuiCheckbox type="checkbox" name="removePicture" [ngModel]="removePicture()" (ngModelChange)="removePicture.set($event)" />
+                        Удалить обложку
+                    </label>
+                </div>
+
+                @if (current.otherTags.length) {
+                    <div class="audio-tags__other">
+                        <h3 tuiTitle="s">Другие теги</h3>
+                        <p class="app-hint">Поля, которые не редактируются формой. Они сохраняются как есть, пока не включена очистка.</p>
+
+                        <dl class="app-meta audio-tags__other-list">
+                            @for (tag of current.otherTags; track tag.name) {
+                                <dt>
+                                    <code>{{ tag.name }}</code>
+                                </dt>
+                                <dd>{{ tag.value }}</dd>
+                            }
+                        </dl>
+
+                        <label class="audio-tags__option">
+                            <input
+                                tuiCheckbox
+                                type="checkbox"
+                                name="removeOtherTags"
+                                [ngModel]="removeOtherTags()"
+                                (ngModelChange)="removeOtherTags.set($event)"
+                            />
+                            Удалить другие теги при сохранении
+                        </label>
+                    </div>
+                }
+
+                @if (!current.canWrite) {
+                    <div tuiNotification appearance="warning">
+                        {{ current.readOnlyReason || 'Этот формат доступен только для чтения.' }}
+                    </div>
+                }
+
+                <div class="app-actions">
+                    <button tuiButton type="submit" size="m" [disabled]="saving() || !current.canWrite">
+                        {{ saving() ? 'Сохраняем…' : 'Сохранить' }}
+                    </button>
+                </div>
+
+                @if (current.canWrite) {
+                    <div class="audio-tags__danger">
+                        <h3 tuiTitle="s">Очистка</h3>
+                        <p class="app-hint">Удаляет все теги и обложку из файла. Отменить это действие нельзя.</p>
+
+                        <div class="app-actions">
+                            @if (pendingClear()) {
+                                <button tuiButton type="button" size="s" appearance="primary-destructive" [disabled]="clearing()" (click)="clearTags()">
+                                    {{ clearing() ? 'Очищаем…' : 'Точно очистить' }}
+                                </button>
+                                <button tuiButton type="button" size="s" appearance="flat" [disabled]="clearing()" (click)="pendingClear.set(false)">
+                                    Отмена
+                                </button>
+                            } @else {
+                                <button tuiButton type="button" size="s" appearance="flat-destructive" (click)="pendingClear.set(true)">
+                                    Очистить все теги
+                                </button>
+                            }
+                        </div>
+                    </div>
+                }
+            </form>
+        } @else {
+            <div tuiCardLarge="normal" appearance="floating">
+                <h2 class="app-form-title">Аудиофайл</h2>
+
+                <app-file-source
+                    accept="audio/*"
+                    [files]="sourceFiles()"
+                    [url]="sourceUrl()"
+                    [loading]="loading()"
+                    (filesChange)="setSourceFiles($event)"
+                    (urlChange)="setSourceUrl($event)"
+                />
+
+                <div class="app-actions">
+                    <button tuiButton type="button" size="m" [disabled]="loading()" (click)="create()">Открыть</button>
+                </div>
+
+                <p class="app-hint">Файл хранится временно. Аудио не перекодируется, меняются только теги.</p>
+            </div>
+        }
+    } @else {
+        <app-help-section title="Что это">
+            <p class="app-text">Редактор аудио-тегов читает и записывает метаданные через getID3. Можно загрузить файл или указать ссылку.</p>
+        </app-help-section>
+
+        <app-help-section title="Что делает">
+            <p class="app-text">
+                Показывает формат, битрейт, частоту, каналы, размер и длительность файла. Редактирует название, исполнителя, альбом, год, номер трека, жанр,
+                ссылку, комментарий, композитора, номер диска, BPM, ISRC, копирайт и текст песни. Заменяет или удаляет обложку, заполняет основные поля из имени
+                файла, показывает прочие теги и умеет очищать все теги сразу.
+            </p>
+        </app-help-section>
+
+        <app-help-section title="Чего не делает">
+            <p class="app-text">Не перекодирует звук, не восстанавливает повреждённые файлы, не ищет теги в интернете и не является плеером.</p>
+        </app-help-section>
+
+        <app-help-section title="Ограничения">
+            <dl class="app-meta">
+                <dt>Форматы тегов</dt>
+                <dd>MP3/MP2/MP1 — ID3v1/v2, MPC — APE, FLAC и OGG Vorbis — Vorbis comments, WAV — ID3v2 в чанке id3, RealMedia — Real.</dd>
+                <dt>Только чтение</dt>
+                <dd>WMA/ASF: теги и параметры показываются, но не записываются.</dd>
+                <dt>Дополнительные теги</dt>
+                <dd>Композитор, номер диска, BPM, ISRC, копирайт и текст песни записываются не во всех форматах. Реальные возможности видны по файлу.</dd>
+                <dt>Обложка</dt>
+                <dd>JPEG, PNG, WebP или GIF; файлом или по ссылке. Форматы без поддержки обложки её не сохранят.</dd>
+                <dt>Хранение</dt>
+                <dd>Загруженный файл временный и удаляется по расписанию. Скачайте готовый файл после редактирования.</dd>
+            </dl>
+        </app-help-section>
+    }
+</section>

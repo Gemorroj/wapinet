@@ -15,6 +15,7 @@ final class FileVoter extends Voter
 {
     public const string DELETE = 'DELETE';
     public const string EDIT = 'EDIT';
+    public const string VIEW = 'VIEW';
 
     public function __construct(private readonly AccessDecisionManagerInterface $decisionManager)
     {
@@ -22,7 +23,7 @@ final class FileVoter extends Voter
 
     protected function supports(string $attribute, $subject): bool
     {
-        if (!\in_array($attribute, [self::DELETE, self::EDIT], true)) {
+        if (!\in_array($attribute, [self::DELETE, self::EDIT, self::VIEW], true)) {
             return false;
         }
 

@@ -10,26 +10,12 @@ parameters:
     .container.dumper.inline_factories: true # performance optimization. see https://symfony.com/doc/current/performance.html#dump-the-service-container-into-a-single-file
     locale: 'ru'
     wapinet_title: 'WEB мастерская wapinet.ru'
-    wapinet_contact_email: '%env(CONTACT_EMAIL)%'
-    wapinet_robot_email: '%env(ROBOT_EMAIL)%'
-    wapinet_ffmpeg_path: '%env(FFMPEG_PATH)%'
-    wapinet_ffprobe_path: '%env(FFPROBE_PATH)%'
     wapinet_threads_count: 3
-    wapinet_geoip2_country_path: '%env(GEOIP2_COUNTRY_PATH)%'
-    wapinet_forum_url: 'https://forum.wapinet.ru'
-    wapinet_forum_database_name: '%env(FORUM_DATABASE_NAME)%'
-    wapinet_role_nocaptcha: ROLE_USER
+
     wapinet_paginate_maxperpage: 10
     wapinet_user_last_activity_delay: 60
-    wapinet_php_path: '%env(PHP_PATH)%'
-    wapinet_7z_path: '%env(P7Z_PATH)%'
     wapinet_archiver_comment: 'Wapinet.ru archiver'
     wapinet_video_screenshot_second: 5
-    wapinet_email_footer: 'Сообщение отправлено через бесплатный сервис отправки E-mail https://wapinet.ru'
-    wapinet_vk_access_token: '%env(VK_ACCESS_TOKEN)%'
-
-    manticore_port: '%env(MANTICORE_PORT)%'
-    manticore_host: '%env(MANTICORE_HOST)%'
 
     router.request_context.host: wapinet.ru # для определения хоста в консольном режиме
 
@@ -49,14 +35,24 @@ services:
             - '../src/Kernel.php'
             - '../src/Exception/'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
-
-    pagerfanta.view.default:
-        class: App\Pagerfanta\View
+    App\ApiDoc\MapQueryStringDeepObjectProcessor:
         tags:
-            - { name: pagerfanta.view, alias: default }
+            - { name: nelmio_api_doc.swagger.processor, priority: -10 }
 
-    App\Service\File\Meta:
-        arguments:
-            $imagine: '@liip_imagine'
+when@test:
+    services:
+        App\Tests\Stub\SearchEngineStub: ~
+
+        App\Service\Search\SearchEngineInterface:
+            alias: App\Tests\Stub\SearchEngineStub
+
+        App\Tests\Stub\WhoisGatewayStub: ~
+
+        App\Service\Api\Whois\WhoisGatewayInterface:
+            alias: App\Tests\Stub\WhoisGatewayStub
+
+        App\Tests\Stub\WhoisDnsLookupStub: ~
+
+        App\Service\Api\Whois\WhoisDnsLookupInterface:
+            alias: App\Tests\Stub\WhoisDnsLookupStub
+

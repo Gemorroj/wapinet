@@ -1,0 +1,14 @@
+.user-avatar {
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.user-avatar > [tuiAvatar] {
+    box-shadow: 0 0 0 1px var(--tui-border-normal);
+}
+
+.user-avatar > .online-badge {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-end: 0;
+}

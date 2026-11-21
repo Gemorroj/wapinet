@@ -1,0 +1,93 @@
+<div class="bbcode-editor">
+    @if (mode() === 'edit') {
+        <tui-textfield>
+            <label tuiLabel>{{ label() }}</label>
+            @if (limit(); as max) {
+                <textarea
+                    #textarea
+                    tuiTextarea
+                    [attr.name]="name()"
+                    [limit]="max"
+                    [minRows]="rows()"
+                    [maxRows]="maxRows()"
+                    [placeholder]="placeholder()"
+                    [ngModelOptions]="{ standalone: true }"
+                    [ngModel]="value()"
+                    (ngModelChange)="valueChange.emit($event)"
+                ></textarea>
+            } @else {
+                <textarea
+                    #textarea
+                    tuiTextarea
+                    [attr.name]="name()"
+                    [minRows]="rows()"
+                    [maxRows]="maxRows()"
+                    [placeholder]="placeholder()"
+                    [ngModelOptions]="{ standalone: true }"
+                    [ngModel]="value()"
+                    (ngModelChange)="valueChange.emit($event)"
+                ></textarea>
+            }
+
+            <button
+                type="button"
+                class="bbcode-editor__help"
+                aria-label="Справка по BBCode"
+                aria-haspopup="dialog"
+                title="Справка по BBCode"
+                (click)="$event.stopPropagation(); helpOpen.set(true)"
+            >
+                <tui-icon icon="@tui.circle-help" />
+            </button>
+        </tui-textfield>
+    } @else {
+        @if (loading()) {
+            <tui-loader [loading]="true" />
+        }
+
+        @if (error()) {
+            <div tuiNotification appearance="negative">{{ error() }}</div>
+        }
+
+        @if (html()) {
+            <div class="bbcode-editor__preview" appCodeHighlight [innerHTML]="html()"></div>
+        }
+    }
+
+    <div class="bbcode-editor__actions">
+        <button
+            tuiButton
+            type="button"
+            size="s"
+            appearance="flat"
+            class="bbcode-editor__mode"
+            [disabled]="'edit' === mode() && !canPreview()"
+            (click)="switchMode()"
+        >
+            <tui-icon [icon]="'edit' === mode() ? '@tui.eye' : '@tui.pencil'" />
+            {{ 'edit' === mode() ? 'Предпросмотр' : 'Редактировать' }}
+        </button>
+    </div>
+</div>
+
+<!-- [tuiDialog] is the open input alias; a bare tuiDialog attribute would bind an empty string to it. -->
+<ng-template [tuiDialog]="helpOpen()" (tuiDialogChange)="helpOpen.set($event)" [tuiDialogOptions]="{ label: 'BBCode', size: 'l' }">
+    <div class="bbcode-editor__help-body">
+        <p class="app-hint">Разметка в квадратных скобках. «Предпросмотр» покажет результат до отправки.</p>
+
+        @for (group of helpGroups; track group.title) {
+            <section class="bbcode-editor__group">
+                <h3 class="bbcode-editor__group-title">{{ group.title }}</h3>
+
+                <dl class="bbcode-editor__tags">
+                    @for (item of group.items; track item.tag) {
+                        <dt>
+                            <code>{{ item.tag }}</code>
+                        </dt>
+                        <dd>{{ item.meaning }}</dd>
+                    }
+                </dl>
+            </section>
+        }
+    </div>
+</ng-template>

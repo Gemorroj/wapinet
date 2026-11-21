@@ -3,8 +3,6 @@ twig:
     default_path: '%kernel.project_dir%/templates'
     globals:
         wapinet_title: '%wapinet_title%'
-        wapinet_contact_email: '%wapinet_contact_email%'
-        wapinet_forum_url: '%wapinet_forum_url%'
 
 when@test:
     twig:

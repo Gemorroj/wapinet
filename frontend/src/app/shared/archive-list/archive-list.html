@@ -1,0 +1,51 @@
+@if (rows().length) {
+    <p class="archive-list__summary">
+        {{ summary().files }} {{ plural(summary().files, 'файл', 'файла', 'файлов') }} · {{ summary().folders }}
+        {{ plural(summary().folders, 'папка', 'папки', 'папок') }} · {{ size(summary().size) }}
+    </p>
+
+    <div class="archive-list__rows">
+        @for (row of rows(); track row.entry.path) {
+            <div class="archive-list__row" [style.--archive-depth]="row.depth">
+                <tui-icon class="archive-list__icon" [icon]="icon(row)" />
+                <span class="archive-list__name" [class.archive-list__name_dir]="row.entry.isDirectory">{{ row.name }}</span>
+                @if (row.entry.isEncrypted) {
+                    <span tuiBadge appearance="warning">Пароль</span>
+                }
+                <span class="archive-list__size">{{ row.entry.isDirectory ? '' : size(row.entry.size) }}</span>
+                @if (!row.entry.isDirectory && showAction()) {
+                    <button
+                        tuiButton
+                        type="button"
+                        size="s"
+                        appearance="flat"
+                        (click)="action(row.entry)"
+                        [disabled]="busyPath() === row.entry.path"
+                        [attr.aria-label]="actionLabel()"
+                        [attr.title]="actionLabel()"
+                    >
+                        <tui-icon [icon]="actionIcon()" />
+                    </button>
+                } @else {
+                    <span class="archive-list__action"></span>
+                }
+                @if (showDelete()) {
+                    <button
+                        tuiButton
+                        type="button"
+                        size="s"
+                        appearance="flat-destructive"
+                        (click)="remove(row.entry)"
+                        [disabled]="busyPath() === row.entry.path"
+                        aria-label="Удалить"
+                        title="Удалить"
+                    >
+                        <tui-icon icon="@tui.trash" />
+                    </button>
+                }
+            </div>
+        }
+    </div>
+} @else {
+    <div tuiNotification>{{ emptyText() }}</div>
+}

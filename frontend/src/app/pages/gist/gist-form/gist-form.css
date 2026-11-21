@@ -1,0 +1,7 @@
+.gist-form__honeypot {
+    position: absolute;
+    inset-inline-start: -9999px;
+    inline-size: 1px;
+    block-size: 1px;
+    opacity: 0;
+}

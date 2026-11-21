@@ -1,0 +1,15 @@
+<div class="app-list">
+    @for (user of items(); track user.id) {
+        <a tuiCell [routerLink]="['/user/profile', user.username]">
+            <app-user-avatar [avatarUrl]="user.avatarUrl" [alt]="user.username" [isOnline]="user.isOnline" size="m" />
+
+            <div tuiTitle>
+                {{ user.username }}
+            </div>
+        </a>
+    } @empty {
+        @if (!loading()) {
+            <div tuiNotification>{{ emptyText() }}</div>
+        }
+    }
+</div>

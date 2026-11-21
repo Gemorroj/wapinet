@@ -1,0 +1,3 @@
+@if (pages() > 1) {
+    <tui-pagination [length]="pages()" [index]="page() - 1" (indexChange)="pageChange.emit($event + 1)" />
+}

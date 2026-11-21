@@ -1,0 +1,11 @@
+.edit__form {
+    max-inline-size: 36rem;
+}
+
+.edit__flag {
+    inline-size: 1.25rem;
+    block-size: auto;
+    margin-inline-end: 0.5rem;
+    vertical-align: middle;
+    border-radius: 0.125rem;
+}

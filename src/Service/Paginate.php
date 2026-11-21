@@ -9,12 +9,14 @@ use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Doctrine\Collections\CollectionAdapter;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 final readonly class Paginate
 {
-    public function __construct(private ParameterBagInterface $parameterBag)
-    {
+    public function __construct(
+        #[Autowire('%wapinet_paginate_maxperpage%')]
+        private int $maxPerPage,
+    ) {
     }
 
     /**
@@ -33,7 +35,7 @@ final readonly class Paginate
         }
 
         $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage($maxPerPage ?? $this->parameterBag->get('wapinet_paginate_maxperpage'));
+        $pagerfanta->setMaxPerPage($maxPerPage ?? $this->maxPerPage);
         $pagerfanta->setCurrentPage($this->normalizePage($pagerfanta, $page));
 
         return $pagerfanta;

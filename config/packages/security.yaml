@@ -20,17 +20,47 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
-            pattern: ^/
+        api_login:
+            pattern: ^/api/auth/login$
+            stateless: true
+            provider: wapinet_user_provider
+            user_checker: App\Security\UserChecker
+            json_login:
+                check_path: api_auth_login
+                username_path: username
+                password_path: password
+                success_handler: App\Security\ApiLoginSuccessHandler
+                failure_handler: App\Security\ApiLoginFailureHandler
+            login_throttling:
+                max_attempts: 5
+                interval: '1 minute'
+        api:
+            pattern: ^/api
+            stateless: true
+            provider: wapinet_user_provider
+            access_token:
+                token_handler: App\Security\ApiTokenHandler
+        admin:
+            pattern: ^/admin
+            provider: wapinet_user_provider
+            user_checker: App\Security\UserChecker
             form_login:
                 provider: wapinet_user_provider
-                remember_me: true
-            remember_me:
-                lifetime: 2592000 #30 days
-                name: wapinet_rememberme
-                secret: '%kernel.secret%'
-            logout: true
+                login_path: admin_login
+                check_path: admin_login_check
+                default_target_path: admin
+                enable_csrf: true
+                csrf_token_id: authenticate
+                csrf_parameter: _csrf_token
+            login_throttling:
+                max_attempts: 5
+                interval: '1 minute'
+            logout:
+                path: /admin/logout
             lazy: true
+        main:
+            pattern: ^/
+            stateless: true
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -41,14 +71,32 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        - { path: ^/api/auth/(login|register)$, roles: PUBLIC_ACCESS }
+        - { path: ^/api/bbcode/preview$, roles: PUBLIC_ACCESS, methods: [POST] }
+        - { path: ^/api/browser-info$, roles: PUBLIC_ACCESS, methods: [GET] }
+        - { path: ^/api/whois$, roles: PUBLIC_ACCESS, methods: [POST] }
+        - { path: ^/api/http$, roles: PUBLIC_ACCESS, methods: [POST] }
+        - { path: ^/api/audio-tags, roles: PUBLIC_ACCESS }
+        - { path: ^/api/hash$, roles: PUBLIC_ACCESS, methods: [POST] }
+        - { path: ^/api/php-obfuscator$, roles: PUBLIC_ACCESS, methods: [GET, POST] }
+        - { path: ^/api/php-validator$, roles: PUBLIC_ACCESS, methods: [GET, POST] }
+        - { path: ^/api/(html|css)-validator$, roles: PUBLIC_ACCESS, methods: [POST] }
+        - { path: ^/api/archiver, roles: PUBLIC_ACCESS }
+        - { path: ^/api/(health|doc|config), roles: PUBLIC_ACCESS }
+        - { path: ^/api/files, roles: PUBLIC_ACCESS, methods: [GET, HEAD, POST] }
+        - { path: ^/api/(tags|online|home|news|gists), roles: PUBLIC_ACCESS, methods: [GET, HEAD] }
+        - { path: ^/api/guestbook, roles: PUBLIC_ACCESS, methods: [GET, HEAD, POST] }
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/admin/login, roles: PUBLIC_ACCESS }
         - { path: ^/admin, roles: ROLE_SUPER_ADMIN }
-        #- { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        #- { path: ^/registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: PUBLIC_ACCESS }
 
 when@test:
     security:
         firewalls:
+            admin:
+                http_basic: ~
+                entry_point: http_basic
             main:
                 http_basic: ~
                 entry_point: http_basic
@@ -62,3 +110,4 @@ when@test:
                 cost: 4 # Lowest possible value for bcrypt
                 time_cost: 3 # Lowest possible value for argon
                 memory_cost: 10 # Lowest possible value for argon
+

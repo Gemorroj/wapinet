@@ -1,0 +1,11 @@
+<tui-breadcrumbs [itemsLimit]="items.length + 2">
+    @for (item of items; track $index; let last = $last) {
+        <ng-template tuiItem>
+            @if (item.link && !last) {
+                <a tuiLink [routerLink]="item.link">{{ item.label }}</a>
+            } @else {
+                <span [class.breadcrumbs__current]="last" [attr.title]="last ? item.label : null">{{ item.label }}</span>
+            }
+        </ng-template>
+    }
+</tui-breadcrumbs>

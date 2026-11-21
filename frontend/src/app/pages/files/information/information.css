@@ -1,0 +1,13 @@
+.information {
+    max-inline-size: 48rem;
+}
+
+.information__content {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.information__content p,
+.information__content ul {
+    margin: 0;
+}

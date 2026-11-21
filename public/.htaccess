@@ -36,9 +36,6 @@ DirectoryIndex index.php
     RewriteCond %{REQUEST_URI}::$0 ^(/.+)/(.*)::\2$
     RewriteRule .* - [E=BASE:%1]
 
-    # Legacy: static files used to be served from /build/resources/
-    RewriteRule ^build/resources/(.*)$ %{ENV:BASE}/resources/$1 [R=301,L]
-
     # Sets the HTTP_AUTHORIZATION header removed by Apache
     RewriteCond %{HTTP:Authorization} .+
     RewriteRule ^ - [E=HTTP_AUTHORIZATION:%0]
@@ -56,6 +53,13 @@ DirectoryIndex index.php
     #   following RewriteCond (best solution)
     #RewriteCond %{ENV:REDIRECT_STATUS} =""
     RewriteRule ^index\.php(?:/(.*)|$) %{ENV:BASE}/$1 [R=308,END]
+
+    # SPA routes. Existing files are served directly, everything else falls
+    # through to the SPA shell; API and admin requests are matched below.
+    RewriteRule ^$ %{ENV:BASE}/app/index.html [END]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_URI} !^/(api|admin|_profiler|_wdt|app|bundles|resources|media|static|favicon\.ico|robots\.txt|apple-touch-icon\.png|index\.php)(/|$)
+    RewriteRule ^ %{ENV:BASE}/app/index.html [END]
 
     # If the requested filename exists, simply serve it.
     # We only want to let Apache serve files and not directories.

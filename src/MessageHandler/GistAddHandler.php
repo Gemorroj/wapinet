@@ -6,7 +6,6 @@ namespace App\MessageHandler;
 
 use App\Entity\Event as EntityEvent;
 use App\Entity\Gist;
-use App\Entity\UserFriend;
 use App\Message\GistAddMessage;
 use App\Repository\GistRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,11 +24,10 @@ readonly class GistAddHandler
     {
         /** @var Gist|null $gist */
         $gist = $this->gistRepository->find($message->gistId);
-        if (!$gist || !$gist->getUser()) {
+        if (!$gist) {
             return;
         }
 
-        /** @var UserFriend $friend */
         foreach ($gist->getUser()->getFriended() as $friend) {
             $entityEvent = new EntityEvent();
             if ($gist->getUser()->isFemale()) {

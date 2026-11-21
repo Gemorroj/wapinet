@@ -1,0 +1,103 @@
+<section class="gists app-page">
+    <h1 class="app-sr-only">{{ title() }}</h1>
+    <app-breadcrumbs [items]="breadcrumbs()" />
+
+    @if (error()) {
+        <div tuiNotification appearance="negative">{{ error() }}</div>
+    }
+
+    <div class="gists__toolbar">
+        <tui-textfield class="gists__search" tuiTextfieldSize="s">
+            <input
+                tuiInput
+                maxlength="5000"
+                placeholder="Поиск по блогам"
+                aria-label="Поиск по блогам"
+                [ngModel]="searchText()"
+                (ngModelChange)="searchText.set($event)"
+                (keyup.enter)="search()"
+            />
+            <button tuiButton type="button" size="s" appearance="flat" aria-label="Найти" (click)="search()">
+                <tui-icon icon="@tui.search" />
+            </button>
+        </tui-textfield>
+
+        <button tuiButton type="button" size="s" appearance="secondary" (click)="filtersOpen.set(true)" aria-label="Фильтры">
+            <tui-icon icon="@tui.sliders-horizontal" />
+            <span class="gists__toolbar-label">Фильтры</span>
+            @if (activeFilterCount() > 0) {
+                <span tuiBadge size="s">{{ activeFilterCount() }}</span>
+            }
+        </button>
+
+        @if (auth.authenticated()) {
+            <a tuiButton size="s" routerLink="/gist/new" aria-label="Написать запись">
+                <tui-icon icon="@tui.notebook-pen" />
+                <span class="gists__toolbar-label">Написать</span>
+            </a>
+        }
+    </div>
+
+    <app-filter-drawer [open]="filtersOpen()" (closed)="filtersOpen.set(false)" (applied)="applyFilters()" (clear)="resetFilters()">
+        <div class="gists__sorts" role="group" aria-label="Сортировка">
+            @for (option of sorts; track option.value) {
+                <button tuiChip type="button" [appearance]="sort() === option.value ? 'primary' : 'neutral'" (click)="selectSort(option)">
+                    {{ option.label }}
+                </button>
+            }
+        </div>
+
+        @if (!username()) {
+            <tui-textfield>
+                <label tuiLabel>Автор</label>
+                <input
+                    tuiInput
+                    maxlength="180"
+                    placeholder="Точное имя"
+                    [disabled]="mine()"
+                    [ngModel]="author()"
+                    (ngModelChange)="author.set($event)"
+                    (keyup.enter)="applyFilters()"
+                />
+            </tui-textfield>
+
+            @if (auth.authenticated()) {
+                <div class="gists__filter-toggles">
+                    <button tuiChip type="button" [appearance]="mine() ? 'primary' : 'neutral'" (click)="mine.set(!mine())">Мои записи</button>
+                </div>
+            }
+        }
+    </app-filter-drawer>
+
+    @if (loading()) {
+        <tui-loader [loading]="true" />
+    }
+
+    <div class="app-list">
+        @for (item of items(); track item.id) {
+            <div tuiCell>
+                <app-user-avatar [avatarUrl]="item.avatarUrl" [alt]="item.user?.username ?? 'Автор'" [isOnline]="item.isOnline" />
+
+                <div tuiTitle>
+                    <a [routerLink]="['/gist/view', item.id]">{{ item.subject }}</a>
+
+                    <div tuiSubtitle class="gists__meta">
+                        @if (item.user; as user) {
+                            <a [routerLink]="['/user/profile', user.username]">{{ user.username }}</a>
+                        }
+                        <span>{{ item.createdAt | relativeDate }}</span>
+                        @if (item.updatedAt) {
+                            <span>Обновлено {{ item.updatedAt | relativeDate }}</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        } @empty {
+            @if (!loading()) {
+                <div tuiNotification>Записей не найдено.</div>
+            }
+        }
+    </div>
+
+    <app-pagination [total]="total()" [perPage]="perPage()" [page]="page()" (pageChange)="goToPage($event)" />
+</section>
