@@ -51,7 +51,7 @@
 		file_server
 	}
 
-	@appIndex path /app/index.html
+	@appIndex path /app /app/ /app/index.html
 	handle @appIndex {
 		header Cache-Control "no-cache"
 		file_server
@@ -66,6 +66,7 @@
 
 	handle {
 		try_files {path} /app/index.html
+		header Cache-Control "no-cache"
 		file_server
 	}
 }

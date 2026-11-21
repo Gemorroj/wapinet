@@ -100,6 +100,12 @@ class DashboardController extends AbstractDashboardController
             $manticoreInfo = null;
         }
 
+        try {
+            $frankenphpInfo = $ginfo->getFrankenphp();
+        } catch (\Throwable) {
+            $frankenphpInfo = null;
+        }
+
         return $this->render('admin/monitoring.html.twig', [
             'info_general' => $ginfo->getGeneral(),
             'info_php' => $ginfo->getPhp(),
@@ -110,7 +116,7 @@ class DashboardController extends AbstractDashboardController
             'info_disk' => $ginfo->getDisk(),
             'info_services' => $this->indexServices($ginfo->getServices()),
             'info_memory' => $ginfo->getMemory(),
-            'info_frankenphp' => $ginfo->getFrankenphp(),
+            'info_frankenphp' => $frankenphpInfo,
             'info_mysql' => $ginfo->getMysql($this->entityManager->getConnection()->getNativeConnection()),
             'info_manticore' => $manticoreInfo,
             'info_messenger' => $this->messengerHealth->counts(),

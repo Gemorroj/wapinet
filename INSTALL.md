@@ -224,6 +224,9 @@ EOF
 
 systemctl enable manticore
 systemctl restart manticore
+
+# После импорта данных и после каждого изменения данных:
+# sudo -u manticore /usr/bin/indexer --rotate --all
 ```
 
 ## FrankenPHP
@@ -323,6 +326,7 @@ curl -fL -o 7z.tar.xz "https://github.com/ip7z/7zip/releases/download/26.06/7z26
 tar xJf 7z.tar.xz
 rm -f 7z.tar.xz
 /opt/7z2606-linux-x64/7zz i
+ln -sf /opt/7z2606-linux-x64/7zz /usr/local/bin/7zz
 
 add-apt-repository ppa:ubuntuhandbook1/ffmpeg9
 apt update
@@ -338,7 +342,7 @@ cd wapinet
 
 cp .env.dist .env
 # edit .env: APP_ENV=prod, APP_DEBUG=0, DATABASE_URL, MANTICORE_HOST,
-# MAILER_DSN, PHP_PATH=/usr/local/bin/php, P7Z_PATH=/usr/bin/7z и т.д.
+# MAILER_DSN, PHP_PATH=/usr/local/bin/php, P7Z_PATH=/usr/local/bin/7zz и т.д.
 ```
 
 ```bash
@@ -437,7 +441,7 @@ wapinet.ru {
         file_server
     }
 
-    @appIndex path /app/index.html
+    @appIndex path /app /app/ /app/index.html
     handle @appIndex {
         header Cache-Control "no-cache"
         file_server
@@ -452,6 +456,7 @@ wapinet.ru {
 
     handle {
         try_files {path} /app/index.html
+        header Cache-Control "no-cache"
         file_server
     }
 }
@@ -490,17 +495,12 @@ install -d -o www-data -g www-data -m 0700 var/sessions
 systemctl daemon-reload
 ```
 
-Проверка приложения:
-
-```bash
-php bin/console about
-```
-
 Зависимости и кэш:
 
 ```bash
 cd /var/www/wapinet
 php ../composer.phar install --no-dev --optimize-autoloader
+php bin/console about
 php bin/console cache:clear --env=prod
 php bin/console cache:warmup --env=prod
 ```
@@ -523,6 +523,8 @@ mysql -u root -p
 ```
 
 ```sql
+CREATE DATABASE IF NOT EXISTS wapinet
+    CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 CREATE USER 'wapinet'@'localhost' IDENTIFIED BY 'password';
 GRANT ALL ON wapinet.* TO 'wapinet'@'localhost';
 GRANT SELECT ON forum.* TO 'wapinet'@'localhost';
@@ -531,6 +533,9 @@ QUIT;
 
 ```bash
 mysql -u wapinet -p wapinet < wapinet.sql
+
+# Первичная индексация Manticore
+sudo -u manticore /usr/bin/indexer --rotate --all
 ```
 
 ## Запуск FrankenPHP
@@ -577,10 +582,12 @@ systemctl enable --now messenger scheduler
 
 ```bash
 cd /var/www/wapinet
-sudo -u www-data git pull
+git pull
 php ../composer.phar install --no-dev --optimize-autoloader
 php bin/console cache:clear --env=prod
 php bin/console cache:warmup --env=prod
+chown -R www-data:www-data var
+chmod -R u+rwX,g+rwX,o-rwx var
 systemctl restart messenger scheduler
 systemctl restart frankenphp
 ```
