@@ -19,7 +19,7 @@ final class UploadLimitTest extends WebTestCaseWapinet
 
         static::assertResponseStatusCodeSame(Response::HTTP_REQUEST_ENTITY_TOO_LARGE);
         static::assertSame(
-            'Файл слишком большой: за один запрос можно загрузить не более 50 МБ.',
+            'Файл слишком большой: за один запрос можно загрузить не более 55 МБ.',
             $this->json($client)['detail'],
         );
     }

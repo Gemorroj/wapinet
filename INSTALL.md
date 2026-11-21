@@ -254,7 +254,7 @@ apt install \
   php-zts-opcache
 ```
 
-Прослойка для `php`:
+Прослойка для `php` (`-l` выполняет `bin/php-lint.php`, не исполняя проверяемый файл):
 
 ```bash
 cat > /usr/local/bin/php <<'PHP'
@@ -262,25 +262,45 @@ cat > /usr/local/bin/php <<'PHP'
 set -euo pipefail
 
 args=()
-skip_next=0
+lint_file=""
+expect_lint_file=0
+expect_d_value=0
 
 for arg in "$@"; do
-    if (( skip_next )); then
-        skip_next=0
+    if (( expect_lint_file )); then
+        lint_file="$arg"
+        expect_lint_file=0
+        continue
+    fi
+
+    if (( expect_d_value )); then
+        expect_d_value=0
         continue
     fi
 
     case "$arg" in
         -d)
-            skip_next=1
+            expect_d_value=1
             ;;
-        -d*)
+        -d\ *|-d*)
+            ;;
+        -l)
+            expect_lint_file=1
             ;;
         *)
             args+=("$arg")
             ;;
     esac
 done
+
+if (( expect_lint_file )); then
+    echo 'Missing input file for -l' >&2
+    exit 1
+fi
+
+if [ -n "$lint_file" ]; then
+    exec /usr/bin/frankenphp php-cli /var/www/wapinet/bin/php-lint.php "$lint_file"
+fi
 
 exec /usr/bin/frankenphp php-cli "${args[@]}"
 PHP
@@ -352,7 +372,7 @@ memory_limit = -1
 max_execution_time = 0
 max_input_time = -1
 
-post_max_size = 50M
+post_max_size = 55M
 upload_max_filesize = 50M
 
 date.timezone = UTC
@@ -408,7 +428,7 @@ wapinet.ru {
     }
 
     request_body {
-        max_size 50MiB
+        max_size 55MiB
     }
 
     log {
@@ -534,8 +554,9 @@ QUIT;
 ```bash
 mysql -u wapinet -p wapinet < wapinet.sql
 
-# Первичная индексация Manticore
+# Первичная индексация Manticore и загрузка таблиц в searchd
 sudo -u manticore /usr/bin/indexer --rotate --all
+systemctl restart manticore
 ```
 
 ## Запуск FrankenPHP

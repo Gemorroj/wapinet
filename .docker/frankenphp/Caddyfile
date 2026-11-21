@@ -11,7 +11,7 @@
 	encode zstd gzip
 
 	request_body {
-		max_size 50MiB
+		max_size 55MiB
 	}
 
 	log {
