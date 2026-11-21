@@ -11,7 +11,7 @@ if [ -d frontend/.angular ]; then
     chown -R www-data:www-data frontend/.angular
 fi
 
-exec runuser -u www-data -- sh -eu -c '
+exec /usr/sbin/runuser -u www-data -- sh -eu -c '
     composer install --no-interaction
     php bin/console doctrine:database:create --if-not-exists --no-interaction
     php bin/console doctrine:migrations:migrate --no-interaction
