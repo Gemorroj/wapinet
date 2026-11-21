@@ -1,6 +1,9 @@
 # PHPStorm
 .idea/
 
+# AI
+.ai/
+
 # Assets
 /public/static/file/*
 /public/media/cache/resolve/thumbnail/static/*
