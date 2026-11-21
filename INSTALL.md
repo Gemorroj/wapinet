@@ -40,17 +40,20 @@ skip-name-resolve
 innodb_file_per_table=1
 max_connections=50
 innodb_flush_log_at_trx_commit=2
-innodb_buffer_pool_size=512M
+
+innodb_buffer_pool_size=256M
 innodb_buffer_pool_instances=1
+innodb_log_buffer_size=32M
+
 key_buffer_size=0
-innodb_flush_method = O_DIRECT
+innodb_flush_method=O_DIRECT
 
 table_open_cache=2000
-tmp_table_size=76M
-max_heap_table_size=76M
-join_buffer_size = 2M
+tmp_table_size=48M
+max_heap_table_size=48M
+join_buffer_size=3M
 
-innodb_fast_shutdown = 0
+innodb_fast_shutdown=0
 ' > /etc/mysql/mysql.conf.d/z_wapinet.cnf
 
 # manticore
