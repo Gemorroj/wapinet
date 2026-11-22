@@ -1,4 +1,4 @@
-FROM dunglas/frankenphp:1-php8.5
+FROM dunglas/frankenphp:1.14-php8.5
 
 RUN set -eux; \
     apt-get update; \

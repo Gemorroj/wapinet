@@ -120,6 +120,12 @@ services:
             API_TARGET: http://php:8080
         # npm ci, если node_modules пуст или старше package-lock.json
         command: ['sh', '-ec', '[ -x node_modules/.bin/ng ] && [ node_modules/.package-lock.json -nt package-lock.json ] || npm ci --no-audit --no-fund; exec npm start -- --host 0.0.0.0 --port 4200']
+        healthcheck:
+            test: ['CMD-SHELL', 'test -x node_modules/.bin/ng']
+            interval: 5s
+            timeout: 3s
+            retries: 60
+            start_period: 180s
         ports:
             - '127.0.0.1:${FRONTEND_PORT:-4200}:4200'
         depends_on:

@@ -6,7 +6,7 @@
 - Symfony 8.2
 - Angular 22 + Taiga UI 5 (SPA, `frontend/`)
 - PHP 8.5
-- FrankenPHP (Caddy) в worker mode
+- FrankenPHP 1.14 (worker mode)
 - MySQL 8.4
 - Manticore
 - 7zip
@@ -28,7 +28,7 @@ PHP_PATH=/usr/local/bin/php
 Compose задаёт только контейнерные переменные; остальное приложение читает из `.env.local` (реальный env перекрывает dotenv, поэтому дублировать настройки в compose нельзя). В dev MySQL — `root` без пароля, как в `.env.dist`; имя БД `wapinet` указано ещё и в `.docker/manticore/manticore.conf` (индексатор). FrankenPHP в контейнере `php` отдаёт SPA, API и `/admin`; отдельного nginx нет.
 
 ```bash
-docker compose up -d --build --remove-orphans
+docker compose up -d --build --remove-orphans --wait
 ```
 
 `init` при старте выставляет владельцев каталогов, ставит Composer-зависимости и миграции обеих БД; остальные сервисы ждут его (логи — `docker compose logs init`, повтор — `docker compose run --rm init`). PHP и Node работают от владельца исходников (`1000:1000`); другой UID: `LOCAL_UID=$(id -u) LOCAL_GID=$(id -g) docker compose up -d --build`.
@@ -55,7 +55,7 @@ docker compose exec frontend npm run api:sync # OpenAPI → TS-клиент, bac
 docker compose exec frontend npm run build # собирает public/app
 ```
 
-Контейнер `frontend` при старте сам ставит зависимости, если `node_modules` пуст или изменился `package-lock.json`. После правок фоновых обработчиков — `docker compose restart messenger scheduler`.
+Контейнер `frontend` при старте сам ставит зависимости, если `node_modules` пуст или изменился `package-lock.json`; `--wait` дожидается его healthcheck. После правок фоновых обработчиков — `docker compose restart messenger scheduler`.
 
 ### Поиск (Manticore)
 

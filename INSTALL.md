@@ -2,7 +2,7 @@
 
 Актуально для Ubuntu 24.04. Обзор проекта — в [`README.md`](README.md).
 
-Стек продакшена: FrankenPHP (Caddy) в worker mode, MySQL, Manticore, systemd.
+Стек: FrankenPHP (worker mode), PHP, MySQL, Manticore, systemd.
 
 ## Система
 
@@ -239,6 +239,7 @@ echo "deb [signed-by=/etc/apt/keyrings/static-php${VERSION}.asc] https://pkg.hen
   | tee /etc/apt/sources.list.d/static-php${VERSION}.list
 apt update
 apt install frankenphp
+frankenphp version
 systemctl stop frankenphp
 
 apt install \
