@@ -7,10 +7,10 @@ namespace App\Service\Api\Http;
 use App\Dto\Api\Http\HttpCallHeader;
 use App\Dto\Api\Http\HttpCallRequest;
 use App\Dto\Api\Http\HttpCallResponse;
+use App\Exception\PublicHttpException;
 use App\Service\Network\OutboundUrlBlockedException;
 use App\Service\Network\OutboundUrlGuard;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
@@ -33,7 +33,7 @@ final readonly class HttpRequester
         try {
             $target = $this->guard->resolve($request->url);
         } catch (OutboundUrlBlockedException $exception) {
-            throw new UnprocessableEntityHttpException($exception->getMessage(), $exception);
+            throw new PublicHttpException(422, $exception->getMessage(), $exception);
         }
 
         $timeout = \max(1, \min(30, $request->timeout));
@@ -75,7 +75,7 @@ final readonly class HttpRequester
             $httpVersion = $response->getInfo('http_version');
             [$content, $truncated] = $this->read($response);
         } catch (TransportExceptionInterface $exception) {
-            throw new UnprocessableEntityHttpException($this->transportError($exception), $exception);
+            throw new PublicHttpException(422, $this->transportError($exception), $exception);
         }
 
         $time = (\hrtime(true) - $start) / 1e6;
@@ -140,11 +140,11 @@ final readonly class HttpRequester
         }
 
         if (1 !== \preg_match('/^[!#$%&\'*+.^_`|~0-9A-Za-z-]{1,32}$/', $method)) {
-            throw new UnprocessableEntityHttpException('Некорректный HTTP-метод.');
+            throw new PublicHttpException(422, 'Некорректный HTTP-метод.');
         }
 
         if ('CONNECT' === $method) {
-            throw new UnprocessableEntityHttpException('Метод CONNECT не поддерживается: HTTP-клиент не устанавливает туннель.');
+            throw new PublicHttpException(422, 'Метод CONNECT не поддерживается: HTTP-клиент не устанавливает туннель.');
         }
 
         return $method;
@@ -172,7 +172,7 @@ final readonly class HttpRequester
             $position = \strpos($line, ':');
 
             if (false === $position) {
-                throw new UnprocessableEntityHttpException('Некорректная строка заголовка: '.$line);
+                throw new PublicHttpException(422, 'Некорректная строка заголовка: '.$line);
             }
 
             $name = \trim(\substr($line, 0, $position));
@@ -181,11 +181,11 @@ final readonly class HttpRequester
             if (1 !== \preg_match('/^[!#$%&\'*+.^_`|~0-9A-Za-z-]+$/', $name)) {
                 // Имя заголовка — token по RFC 9110. Иначе curl падает с ошибкой framing,
                 // поэтому проверяем заранее и отдаём понятный 422.
-                throw new UnprocessableEntityHttpException('Некорректное имя заголовка: '.$name);
+                throw new PublicHttpException(422, 'Некорректное имя заголовка: '.$name);
             }
 
             if (1 === \preg_match('/[\r\n]/', $value)) {
-                throw new UnprocessableEntityHttpException('Некорректное значение заголовка: '.$name);
+                throw new PublicHttpException(422, 'Некорректное значение заголовка: '.$name);
             }
 
             $key = \strtolower($name);
@@ -198,7 +198,7 @@ final readonly class HttpRequester
             $size += \strlen($name) + \strlen($value);
 
             if (\count($result) > self::MAX_HEADER_COUNT || $size > self::MAX_HEADER_SIZE) {
-                throw new UnprocessableEntityHttpException('Слишком много заголовков.');
+                throw new PublicHttpException(422, 'Слишком много заголовков.');
             }
         }
 
@@ -218,7 +218,7 @@ final readonly class HttpRequester
         $body = \base64_decode($request->body, true);
 
         if (false === $body) {
-            throw new UnprocessableEntityHttpException('Тело не является корректным base64.');
+            throw new PublicHttpException(422, 'Тело не является корректным base64.');
         }
 
         return $body;

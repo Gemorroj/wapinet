@@ -4,28 +4,28 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
+use App\Attribute\RateLimitByIp;
+use App\Attribute\RateLimitByVisitor;
 use App\Dto\Api\Guestbook\GuestbookCreateRequest;
 use App\Dto\Api\Guestbook\GuestbookListResponse;
 use App\Dto\Api\Guestbook\GuestbookMessageResponse;
 use App\Dto\Api\Network\IpInsightResponse;
 use App\Entity\Guestbook;
 use App\Entity\User;
+use App\Exception\PublicHttpException;
 use App\Repository\GuestbookRepository;
 use App\Service\Api\Guestbook\GuestbookPresenter;
 use App\Service\Api\Guestbook\GuestbookService;
-use App\Service\Api\RateLimit;
 use App\Service\Paginate;
 use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route('/api/guestbook', name: 'api_guestbook_')]
 #[OA\Tag(name: 'Guestbook')]
@@ -62,6 +62,7 @@ final class GuestbookController extends AbstractController
     }
 
     #[Route('/{id<\d+>}/insight', name: 'insight', methods: ['GET'])]
+    #[RateLimitByIp('api_guestbook_insight')]
     #[OA\Response(
         response: 200,
         description: 'IP insight for an anonymous guestbook message',
@@ -71,30 +72,26 @@ final class GuestbookController extends AbstractController
     #[OA\Response(response: 429, description: 'Too many insight requests')]
     public function insight(
         int $id,
-        Request $request,
         GuestbookRepository $guestbookRepository,
         GuestbookPresenter $presenter,
-        #[Autowire(service: 'limiter.api_guestbook_insight')]
-        RateLimiterFactory $insightLimiter,
     ): JsonResponse {
-        RateLimit::consumeForIp($insightLimiter, $request);
-
         $message = $guestbookRepository->find($id);
 
         if (null === $message) {
-            throw new NotFoundHttpException('Message not found.');
+            throw new PublicHttpException(404, 'Message not found.');
         }
 
         $insight = $presenter->insight($message);
 
         if (null === $insight) {
-            throw new NotFoundHttpException('Insight is not available.');
+            throw new PublicHttpException(404, 'Insight is not available.');
         }
 
         return $this->json($insight);
     }
 
     #[Route('', name: 'create', methods: ['POST'])]
+    #[RateLimitByVisitor('api_guestbook_create')]
     #[OA\RequestBody(
         required: true,
         content: new OA\JsonContent(ref: new Model(type: GuestbookCreateRequest::class)),
@@ -111,12 +108,11 @@ final class GuestbookController extends AbstractController
         #[MapRequestPayload]
         GuestbookCreateRequest $payload,
         Request $request,
+        #[CurrentUser]
+        ?User $user,
         GuestbookService $guestbookService,
         GuestbookPresenter $presenter,
     ): JsonResponse {
-        $user = $this->getUser();
-        $user = $user instanceof User ? $user : null;
-
         return $this->json(
             $presenter->message($guestbookService->create($payload, $request, $user)),
             Response::HTTP_CREATED,

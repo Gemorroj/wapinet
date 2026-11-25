@@ -4,28 +4,24 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
+use App\Attribute\RateLimitByIp;
 use App\Dto\Api\AudioTags\AudioTagsCreateRequest;
 use App\Dto\Api\AudioTags\AudioTagsInfoResponse;
 use App\Dto\Api\AudioTags\AudioTagsUpdateRequest;
+use App\Exception\PublicHttpException;
 use App\Service\Api\AudioTags\AudioTagsException;
 use App\Service\Api\AudioTags\AudioTagsNotFoundException;
 use App\Service\Api\AudioTags\AudioTagsService;
 use App\Service\Api\AudioTags\AudioTagsStorage;
-use App\Service\Api\RateLimit;
 use App\Service\Translit;
 use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/api/audio-tags', name: 'api_audio_tags_')]
@@ -33,6 +29,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class AudioTagsController extends AbstractController
 {
     #[Route('', name: 'create', methods: ['POST'])]
+    #[RateLimitByIp('api_audio_tags')]
     #[OA\RequestBody(
         required: true,
         content: new OA\MediaType(
@@ -50,17 +47,12 @@ final class AudioTagsController extends AbstractController
     public function create(
         #[MapRequestPayload(mapWhenEmpty: true)]
         AudioTagsCreateRequest $payload,
-        Request $request,
         AudioTagsService $service,
-        #[Autowire(service: 'limiter.api_audio_tags')]
-        RateLimiterFactory $limiter,
     ): JsonResponse {
-        RateLimit::consumeForIp($limiter, $request);
-
         try {
             return $this->json($service->create($payload), Response::HTTP_CREATED);
         } catch (AudioTagsException $exception) {
-            throw new UnprocessableEntityHttpException($exception->getMessage(), $exception);
+            throw new PublicHttpException(422, $exception->getMessage(), $exception);
         }
     }
 
@@ -76,11 +68,12 @@ final class AudioTagsController extends AbstractController
         try {
             return $this->json($service->info($id));
         } catch (AudioTagsNotFoundException $exception) {
-            throw new NotFoundHttpException($exception->getMessage(), $exception);
+            throw new PublicHttpException(404, $exception->getMessage(), $exception);
         }
     }
 
     #[Route('/{id}', name: 'update', requirements: ['id' => '[a-f0-9]{32}'], methods: ['POST'])]
+    #[RateLimitByIp('api_audio_tags')]
     #[OA\RequestBody(
         required: true,
         content: new OA\MediaType(
@@ -100,23 +93,19 @@ final class AudioTagsController extends AbstractController
         string $id,
         #[MapRequestPayload(mapWhenEmpty: true)]
         AudioTagsUpdateRequest $payload,
-        Request $request,
         AudioTagsService $service,
-        #[Autowire(service: 'limiter.api_audio_tags')]
-        RateLimiterFactory $limiter,
     ): JsonResponse {
-        RateLimit::consumeForIp($limiter, $request);
-
         try {
             return $this->json($service->update($id, $payload));
         } catch (AudioTagsNotFoundException $exception) {
-            throw new NotFoundHttpException($exception->getMessage(), $exception);
+            throw new PublicHttpException(404, $exception->getMessage(), $exception);
         } catch (AudioTagsException $exception) {
-            throw new UnprocessableEntityHttpException($exception->getMessage(), $exception);
+            throw new PublicHttpException(422, $exception->getMessage(), $exception);
         }
     }
 
     #[Route('/{id}/clear', name: 'clear', requirements: ['id' => '[a-f0-9]{32}'], methods: ['POST'])]
+    #[RateLimitByIp('api_audio_tags')]
     #[OA\Response(
         response: 200,
         description: 'Audio file information after clearing all tags',
@@ -127,19 +116,14 @@ final class AudioTagsController extends AbstractController
     #[OA\Response(response: 429, description: 'Too many audio tag requests')]
     public function clear(
         string $id,
-        Request $request,
         AudioTagsService $service,
-        #[Autowire(service: 'limiter.api_audio_tags')]
-        RateLimiterFactory $limiter,
     ): JsonResponse {
-        RateLimit::consumeForIp($limiter, $request);
-
         try {
             return $this->json($service->clearTags($id));
         } catch (AudioTagsNotFoundException $exception) {
-            throw new NotFoundHttpException($exception->getMessage(), $exception);
+            throw new PublicHttpException(404, $exception->getMessage(), $exception);
         } catch (AudioTagsException $exception) {
-            throw new UnprocessableEntityHttpException($exception->getMessage(), $exception);
+            throw new PublicHttpException(422, $exception->getMessage(), $exception);
         }
     }
 
@@ -161,7 +145,7 @@ final class AudioTagsController extends AbstractController
         try {
             $path = $storage->path($id);
         } catch (AudioTagsNotFoundException $exception) {
-            throw new NotFoundHttpException($exception->getMessage(), $exception);
+            throw new PublicHttpException(404, $exception->getMessage(), $exception);
         }
 
         $originalName = $storage->originalName($id);
@@ -188,7 +172,7 @@ final class AudioTagsController extends AbstractController
         try {
             $cover = $service->cover($id);
         } catch (AudioTagsNotFoundException $exception) {
-            throw new NotFoundHttpException($exception->getMessage(), $exception);
+            throw new PublicHttpException(404, $exception->getMessage(), $exception);
         }
 
         return new Response($cover['data'], Response::HTTP_OK, [

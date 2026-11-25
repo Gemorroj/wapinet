@@ -1,1 +1,0 @@
-import{c as Q}from"./chunk-CircgqQX.js";import{Er as QI,Sr as Q$1,Wi as h,_r as Oi,ga as nr,ja as s7}from"./main-M6WYB3HM.js";function y(){let o=h(Q,{optional:!0}),f=o?.control()||h(nr,{optional:!0}),p=QI(s7(f,h(Oi)),{requireSync:!0});return Q$1(()=>{let r=o?.child();return r?r.value():p()})}export{y as t};

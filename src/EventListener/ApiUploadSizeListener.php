@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\EventListener;
 
+use App\Exception\PublicHttpException;
 use App\Service\ByteSize;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\HttpKernel\Exception\ContentTooLargeHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -34,7 +34,7 @@ final class ApiUploadSizeListener
         $length = (int) ($request->headers->get('content-length') ?? 0);
 
         if ($limit > 0 && $length > $limit) {
-            throw new ContentTooLargeHttpException(\sprintf('Файл слишком большой: за один запрос можно загрузить не более %s.', ByteSize::format($limit)));
+            throw new PublicHttpException(413, \sprintf('Файл слишком большой: за один запрос можно загрузить не более %s.', ByteSize::format($limit)));
         }
     }
 

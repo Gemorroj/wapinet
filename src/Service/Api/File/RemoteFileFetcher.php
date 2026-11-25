@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Service\Api\File;
 
 use App\Entity\File\FileUrl;
+use App\Exception\PublicHttpException;
 use App\Service\FileSystem\RemoteFileDownloader;
 use App\Service\FileSystem\RemoteFileException;
 use App\Service\Network\OutboundUrlBlockedException;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
  * Downloads a file from a public HTTP(S) URL for upload-by-link.
@@ -25,7 +25,7 @@ final readonly class RemoteFileFetcher
         try {
             return $this->downloader->download($url, maxSize: $maxSize);
         } catch (OutboundUrlBlockedException|RemoteFileException $exception) {
-            throw new UnprocessableEntityHttpException($exception->getMessage(), $exception);
+            throw new PublicHttpException(422, $exception->getMessage(), $exception);
         }
     }
 }

@@ -176,6 +176,31 @@ final class GistsControllerTest extends WebTestCaseWapinet
         static::assertResponseStatusCodeSame(Response::HTTP_NO_CONTENT);
     }
 
+    public function testUpdateAcceptsStructuredJsonSuffixMediaType(): void
+    {
+        $client = static::createClient();
+        $owner = $this->createUser();
+        $id = $this->createGist($owner['id'], 'Old subject', 'Old body');
+
+        $this->gistIds[] = $id;
+
+        $auth = $this->auth($client, $owner['username']);
+
+        $client->request(
+            'PATCH',
+            '/api/gists/'.$id,
+            server: $auth + ['CONTENT_TYPE' => 'application/merge-patch+json'],
+            content: \json_encode(['subject' => 'New subject', 'body' => 'New body'], \JSON_THROW_ON_ERROR),
+        );
+
+        static::assertResponseIsSuccessful();
+
+        $data = $this->json($client);
+
+        static::assertSame('New subject', $data['subject']);
+        static::assertSame('New body', $data['body']);
+    }
+
     public function testOtherUserCannotUpdateOrDeleteBlogPost(): void
     {
         $client = static::createClient();
@@ -190,6 +215,7 @@ final class GistsControllerTest extends WebTestCaseWapinet
         $client->jsonRequest('PATCH', '/api/gists/'.$id, ['subject' => 'Hacked', 'body' => 'Hacked'], $auth);
 
         static::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+        static::assertSame('Доступ запрещён.', $this->json($client)['detail']);
 
         $client->jsonRequest('DELETE', '/api/gists/'.$id, [], $auth);
 

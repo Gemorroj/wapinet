@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Service\Api\Archiver;
 
+use App\Exception\PublicHttpException;
 use App\Service\Api\Archiver\Archiver;
 use App\Service\Archiver\Archive7z;
 use App\Service\Archiver\ArchiveLimits;
@@ -11,9 +12,6 @@ use App\Service\Archiver\ArchiveZip;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 final class ArchiverTest extends TestCase
 {
@@ -86,7 +84,7 @@ final class ArchiverTest extends TestCase
 
         static::assertDirectoryDoesNotExist($this->root.'/archiver/'.$archive);
 
-        $this->expectException(NotFoundHttpException::class);
+        $this->expectException(PublicHttpException::class);
         $archiver->response($archive);
     }
 
@@ -125,7 +123,7 @@ final class ArchiverTest extends TestCase
 
     public function testRejectsUnsupportedArchive(): void
     {
-        $this->expectException(UnprocessableEntityHttpException::class);
+        $this->expectException(PublicHttpException::class);
 
         $this->archiver()->extract($this->upload('plain.txt', 'not an archive'));
     }
@@ -134,7 +132,7 @@ final class ArchiverTest extends TestCase
     {
         $source = $this->zipFile('evil.zip', ['../evil.txt' => 'evil']);
 
-        $this->expectException(UnprocessableEntityHttpException::class);
+        $this->expectException(PublicHttpException::class);
 
         $this->archiver()->extract($source);
     }
@@ -144,14 +142,14 @@ final class ArchiverTest extends TestCase
         $limits = new ArchiveLimits(maxTotalSize: 50, minFreeSpace: 0);
         $source = $this->zipFile('big.zip', ['big.txt' => \str_repeat('a', 100)]);
 
-        $this->expectException(UnprocessableEntityHttpException::class);
+        $this->expectException(PublicHttpException::class);
 
         $this->archiver($limits)->extract($source);
     }
 
     public function testRejectsFileSizeLimit(): void
     {
-        $this->expectException(UnprocessableEntityHttpException::class);
+        $this->expectException(PublicHttpException::class);
 
         $this->archiver(new ArchiveLimits(maxFileSize: 3))->create([$this->upload('big.txt', 'hello')]);
     }
@@ -161,7 +159,7 @@ final class ArchiverTest extends TestCase
         $archiver = $this->archiver(new ArchiveLimits(maxTotalSize: 6));
         $archive = $archiver->create([$this->upload('one.txt', 'hello')])->archive;
 
-        $this->expectException(UnprocessableEntityHttpException::class);
+        $this->expectException(PublicHttpException::class);
 
         $archiver->add($archive, [$this->upload('two.txt', 'hello')]);
     }
@@ -170,7 +168,7 @@ final class ArchiverTest extends TestCase
     {
         $archiver = $this->archiver(new ArchiveLimits(maxFiles: 2));
 
-        $this->expectException(UnprocessableEntityHttpException::class);
+        $this->expectException(PublicHttpException::class);
 
         $archiver->create([
             $this->upload('one.txt', '1'),
@@ -184,21 +182,21 @@ final class ArchiverTest extends TestCase
         $archiver = $this->archiver(new ArchiveLimits(maxFiles: 1));
         $archive = $archiver->create([$this->upload('one.txt', '1')])->archive;
 
-        $this->expectException(UnprocessableEntityHttpException::class);
+        $this->expectException(PublicHttpException::class);
 
         $archiver->add($archive, [$this->upload('two.txt', '2')]);
     }
 
     public function testRejectsUnknownArchive(): void
     {
-        $this->expectException(NotFoundHttpException::class);
+        $this->expectException(PublicHttpException::class);
 
         $this->archiver()->response('archive'.\bin2hex(\random_bytes(8)));
     }
 
     public function testRejectsInvalidArchiveToken(): void
     {
-        $this->expectException(NotFoundHttpException::class);
+        $this->expectException(PublicHttpException::class);
 
         $this->archiver()->response('../etc');
     }
@@ -208,7 +206,7 @@ final class ArchiverTest extends TestCase
         $archiver = $this->archiver();
         $archive = $archiver->create([$this->upload('one.txt', '1')])->archive;
 
-        $this->expectException(AccessDeniedHttpException::class);
+        $this->expectException(PublicHttpException::class);
 
         $archiver->remove($archive, '../one.txt');
     }
@@ -218,7 +216,7 @@ final class ArchiverTest extends TestCase
         $archiver = $this->archiver();
         $archive = $archiver->create([$this->upload('one.txt', '1')])->archive;
 
-        $this->expectException(NotFoundHttpException::class);
+        $this->expectException(PublicHttpException::class);
 
         $archiver->filePath($archive, 'missing.txt');
     }

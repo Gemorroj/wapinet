@@ -2,6 +2,22 @@
 framework:
     secret: '%env(APP_SECRET)%'
 
+    # Known infrastructure failures get an HTTP status only: the public detail
+    # stays generic (Conflict, Service Unavailable).
+    exceptions:
+        Doctrine\DBAL\Exception\UniqueConstraintViolationException:
+            status_code: 409
+        Doctrine\ORM\OptimisticLockException:
+            status_code: 409
+        Doctrine\DBAL\Exception\ConstraintViolationException:
+            status_code: 422
+        Doctrine\DBAL\Exception\ConnectionException:
+            status_code: 503
+        Doctrine\DBAL\Exception\RetryableException:
+            status_code: 503
+        Symfony\Component\Messenger\Exception\TransportException:
+            status_code: 503
+
     http_client:
         default_options:
             headers:

@@ -74,6 +74,7 @@ class AuthControllerTest extends WebTestCaseWapinet
             'application/problem+json',
             (string) $client->getResponse()->headers->get('Content-Type')
         );
+        static::assertSame('Требуется авторизация.', $this->json($client)['detail']);
     }
 
     public function testLoginRejectsInvalidPassword(): void
@@ -178,6 +179,7 @@ class AuthControllerTest extends WebTestCaseWapinet
 
         $client->request('GET', '/api/me', server: ['HTTP_AUTHORIZATION' => 'Bearer '.$phoneToken]);
         static::assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
+        static::assertSame('Недействительный токен.', $this->json($client)['detail']);
 
         $client->request('DELETE', '/api/auth/tokens/'.$currentIds[0], server: ['HTTP_AUTHORIZATION' => 'Bearer '.$otherToken]);
         static::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);

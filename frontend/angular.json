@@ -19,7 +19,7 @@
                     "options": {
                         "browser": "src/main.ts",
                         "tsConfig": "tsconfig.app.json",
-                        "styles": ["node_modules/@taiga-ui/styles/taiga-ui-theme.less", "node_modules/@taiga-ui/styles/taiga-ui-fonts.less", "src/styles.css"],
+                        "styles": ["node_modules/@taiga-ui/styles/taiga-ui-theme.css", "node_modules/@taiga-ui/styles/taiga-ui-fonts.css", "src/styles.css"],
                         "outputPath": {
                             "base": "../public/app",
                             "browser": ""

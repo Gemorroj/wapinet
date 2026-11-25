@@ -14,6 +14,7 @@ use App\Dto\Api\User\UserProfileResponse;
 use App\Entity\Event;
 use App\Entity\User;
 use App\Entity\UserFriend;
+use App\Exception\PublicHttpException;
 use App\Repository\EventRepository;
 use App\Repository\UserRepository;
 use App\Service\Api\User\UserPresenter;
@@ -28,8 +29,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
@@ -59,7 +58,7 @@ final class UsersController extends AbstractController
             try {
                 $pager = $userSearch->search($search, $page);
             } catch (SearchUnavailableException $exception) {
-                throw new ServiceUnavailableHttpException(null, 'Search is unavailable.', $exception);
+                throw new PublicHttpException(503, 'Search is unavailable.', $exception);
             }
         } else {
             $pager = $paginate->paginate($userRepository->getOnlineUsersQuery(), $page);
@@ -263,7 +262,7 @@ final class UsersController extends AbstractController
         $user = $userRepository->findOneBy(['username' => $username]);
 
         if (null === $user) {
-            throw new NotFoundHttpException('Пользователь не найден.');
+            throw new PublicHttpException(404, 'Пользователь не найден.');
         }
 
         return $user;

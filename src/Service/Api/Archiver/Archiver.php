@@ -7,6 +7,7 @@ namespace App\Service\Api\Archiver;
 use App\Dto\Api\ArchiveEntryResponse;
 use App\Dto\Api\Archiver\ArchiveResponse;
 use App\Entity\File\FileUrl;
+use App\Exception\PublicHttpException;
 use App\Service\Archiver\Archive7z;
 use App\Service\Archiver\ArchiveLimits;
 use App\Service\Archiver\ArchiverException;
@@ -16,10 +17,6 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
  * A temporary archive identified by an unguessable token: an anonymous visitor
@@ -85,12 +82,12 @@ final readonly class Archiver
             } elseif ($this->zip->isValid($source)) {
                 $this->zip->extract($directory, $source);
             } else {
-                throw new UnprocessableEntityHttpException('Неподдерживаемый тип архива.');
+                throw new PublicHttpException(422, 'Неподдерживаемый тип архива.');
             }
         } catch (ArchiverException $exception) {
             $this->filesystem->remove($directory);
 
-            throw new UnprocessableEntityHttpException($exception->getMessage(), $exception);
+            throw new PublicHttpException(422, $exception->getMessage(), $exception);
         } catch (\Throwable $exception) {
             $this->filesystem->remove($directory);
 
@@ -185,7 +182,7 @@ final readonly class Archiver
         $file = $this->resolve($this->directory($token), $path);
 
         if (\is_dir($file)) {
-            throw new NotFoundHttpException('Файл не найден.');
+            throw new PublicHttpException(404, 'Файл не найден.');
         }
 
         return $file;
@@ -205,7 +202,7 @@ final readonly class Archiver
         $target = $directory.\DIRECTORY_SEPARATOR.$name;
 
         if (\is_dir($target)) {
-            throw new UnprocessableEntityHttpException('Файл с таким именем уже есть в архиве.');
+            throw new PublicHttpException(422, 'Файл с таким именем уже есть в архиве.');
         }
 
         if (\is_file($target)) {
@@ -221,20 +218,20 @@ final readonly class Archiver
     private function assertSources(array $sources, int $count = 0, int $size = 0): void
     {
         if ([] === $sources) {
-            throw new UnprocessableEntityHttpException('Укажите файл или ссылку.');
+            throw new PublicHttpException(422, 'Укажите файл или ссылку.');
         }
 
         $this->assertFreeSpace();
 
         foreach ($sources as $source) {
             if (!\is_file($source->getPathname())) {
-                throw new UnprocessableEntityHttpException('Файл не загружен.');
+                throw new PublicHttpException(422, 'Файл не загружен.');
             }
 
             $sourceSize = $this->size($source);
 
             if ($sourceSize > $this->limits->maxFileSize) {
-                throw new UnprocessableEntityHttpException(\sprintf('Файл «%s» больше %s.', $this->name($source), ByteSize::format($this->limits->maxFileSize)));
+                throw new PublicHttpException(422, \sprintf('Файл «%s» больше %s.', $this->name($source), ByteSize::format($this->limits->maxFileSize)));
             }
 
             ++$count;
@@ -242,22 +239,22 @@ final readonly class Archiver
         }
 
         if ($count > $this->limits->maxFiles) {
-            throw new UnprocessableEntityHttpException(\sprintf('В архиве больше %d файлов.', $this->limits->maxFiles));
+            throw new PublicHttpException(422, \sprintf('В архиве больше %d файлов.', $this->limits->maxFiles));
         }
 
         if ($size > $this->limits->maxTotalSize) {
-            throw new UnprocessableEntityHttpException(\sprintf('Суммарный размер архива больше %s.', ByteSize::format($this->limits->maxTotalSize)));
+            throw new PublicHttpException(422, \sprintf('Суммарный размер архива больше %s.', ByteSize::format($this->limits->maxTotalSize)));
         }
     }
 
     private function assertArchiveFile(UploadedFile $source): void
     {
         if (!\is_file($source->getPathname())) {
-            throw new UnprocessableEntityHttpException('Файл не загружен.');
+            throw new PublicHttpException(422, 'Файл не загружен.');
         }
 
         if ($this->size($source) > $this->limits->maxFileSize) {
-            throw new UnprocessableEntityHttpException(\sprintf('Архив больше %s.', ByteSize::format($this->limits->maxFileSize)));
+            throw new PublicHttpException(422, \sprintf('Архив больше %s.', ByteSize::format($this->limits->maxFileSize)));
         }
 
         $this->assertFreeSpace();
@@ -268,7 +265,7 @@ final readonly class Archiver
         $free = @\disk_free_space($this->tmpDir);
 
         if (false !== $free && $free < $this->limits->minFreeSpace) {
-            throw new ServiceUnavailableHttpException(null, 'На сервере недостаточно свободного места.');
+            throw new PublicHttpException(503, 'На сервере недостаточно свободного места.');
         }
     }
 
@@ -297,7 +294,7 @@ final readonly class Archiver
         $name = \basename(\str_replace('\\', '/', $source->getClientOriginalName()));
 
         if ('' === $name || '.' === $name || '..' === $name) {
-            throw new UnprocessableEntityHttpException('Недопустимое имя файла.');
+            throw new PublicHttpException(422, 'Недопустимое имя файла.');
         }
 
         return $name;
@@ -317,13 +314,13 @@ final readonly class Archiver
     private function directory(string $token): string
     {
         if (1 !== \preg_match('/^archive[a-z0-9]{8,32}$/', $token)) {
-            throw new NotFoundHttpException('Архив не найден.');
+            throw new PublicHttpException(404, 'Архив не найден.');
         }
 
         $directory = $this->archiverDir.\DIRECTORY_SEPARATOR.$token;
 
         if (!\is_dir($directory)) {
-            throw new NotFoundHttpException('Архив не найден или срок его хранения истёк.');
+            throw new PublicHttpException(404, 'Архив не найден или срок его хранения истёк.');
         }
 
         return $directory;
@@ -334,26 +331,26 @@ final readonly class Archiver
         $path = \str_replace('\\', '/', $path);
 
         if ('' === $path || '/' === $path[0] || \str_contains($path, '../')) {
-            throw new AccessDeniedHttpException('Недопустимый путь.');
+            throw new PublicHttpException(403, 'Недопустимый путь.');
         }
 
         $base = \realpath($directory);
 
         if (false === $base) {
-            throw new NotFoundHttpException('Архив не найден.');
+            throw new PublicHttpException(404, 'Архив не найден.');
         }
 
         $file = \realpath($base.\DIRECTORY_SEPARATOR.$path);
 
         if (false === $file) {
-            throw new NotFoundHttpException('Файл не найден.');
+            throw new PublicHttpException(404, 'Файл не найден.');
         }
 
         $base = \str_replace('\\', '/', $base);
         $normalized = \str_replace('\\', '/', $file);
 
         if (!\str_starts_with($normalized, $base.'/')) {
-            throw new AccessDeniedHttpException('Недопустимый путь.');
+            throw new PublicHttpException(403, 'Недопустимый путь.');
         }
 
         return $file;

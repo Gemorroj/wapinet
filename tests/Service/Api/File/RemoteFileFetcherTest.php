@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Service\Api\File;
 
+use App\Exception\PublicHttpException;
 use App\Service\Api\File\RemoteFileFetcher;
 use App\Service\FileSystem\RemoteFileDownloader;
 use App\Service\Network\DnsLookup;
@@ -13,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 final class RemoteFileFetcherTest extends TestCase
 {
@@ -76,14 +76,14 @@ final class RemoteFileFetcherTest extends TestCase
 
     public function testRejectsNonHttpUrl(): void
     {
-        $this->expectException(UnprocessableEntityHttpException::class);
+        $this->expectException(PublicHttpException::class);
 
         $this->fetcher(new MockHttpClient())->fetch('file:///etc/passwd');
     }
 
     public function testRejectsPrivateAddress(): void
     {
-        $this->expectException(UnprocessableEntityHttpException::class);
+        $this->expectException(PublicHttpException::class);
 
         $this->fetcher(new MockHttpClient())->fetch('http://127.0.0.1/secret');
     }

@@ -298,9 +298,7 @@
         },
         "/api/audio-tags": {
             "post": {
-                "tags": [
-                    "Audio tags"
-                ],
+                "tags": ["Audio tags"],
                 "operationId": "post_api_audio_tags_create",
                 "requestBody": {
                     "required": true,
@@ -334,9 +332,7 @@
         },
         "/api/audio-tags/{id}": {
             "get": {
-                "tags": [
-                    "Audio tags"
-                ],
+                "tags": ["Audio tags"],
                 "operationId": "get_api_audio_tags_show",
                 "parameters": [
                     {
@@ -366,9 +362,7 @@
                 }
             },
             "post": {
-                "tags": [
-                    "Audio tags"
-                ],
+                "tags": ["Audio tags"],
                 "operationId": "post_api_audio_tags_update",
                 "parameters": [
                     {
@@ -414,9 +408,7 @@
                 }
             },
             "delete": {
-                "tags": [
-                    "Audio tags"
-                ],
+                "tags": ["Audio tags"],
                 "operationId": "delete_api_audio_tags_delete",
                 "parameters": [
                     {
@@ -438,9 +430,7 @@
         },
         "/api/audio-tags/{id}/clear": {
             "post": {
-                "tags": [
-                    "Audio tags"
-                ],
+                "tags": ["Audio tags"],
                 "operationId": "post_api_audio_tags_clear",
                 "parameters": [
                     {
@@ -478,9 +468,7 @@
         },
         "/api/audio-tags/{id}/download": {
             "get": {
-                "tags": [
-                    "Audio tags"
-                ],
+                "tags": ["Audio tags"],
                 "operationId": "get_api_audio_tags_download",
                 "parameters": [
                     {
@@ -513,9 +501,7 @@
         },
         "/api/audio-tags/{id}/cover": {
             "get": {
-                "tags": [
-                    "Audio tags"
-                ],
+                "tags": ["Audio tags"],
                 "operationId": "get_api_audio_tags_cover",
                 "parameters": [
                     {
@@ -543,9 +529,7 @@
         },
         "/api/auth/login": {
             "post": {
-                "tags": [
-                    "Auth"
-                ],
+                "tags": ["Auth"],
                 "summary": "Issues an API token for valid credentials.",
                 "operationId": "post_api_auth_login",
                 "requestBody": {
@@ -580,9 +564,7 @@
         },
         "/api/auth/logout": {
             "post": {
-                "tags": [
-                    "Auth"
-                ],
+                "tags": ["Auth"],
                 "operationId": "post_api_auth_logout",
                 "responses": {
                     "204": {
@@ -593,9 +575,7 @@
         },
         "/api/auth/tokens": {
             "get": {
-                "tags": [
-                    "Auth"
-                ],
+                "tags": ["Auth"],
                 "operationId": "get_api_auth_tokens",
                 "responses": {
                     "200": {
@@ -613,9 +593,7 @@
         },
         "/api/auth/tokens/{id}": {
             "delete": {
-                "tags": [
-                    "Auth"
-                ],
+                "tags": ["Auth"],
                 "operationId": "delete_api_auth_token_revoke",
                 "parameters": [
                     {
@@ -643,9 +621,7 @@
         },
         "/api/auth/register": {
             "post": {
-                "tags": [
-                    "Auth"
-                ],
+                "tags": ["Auth"],
                 "operationId": "post_api_auth_register",
                 "requestBody": {
                     "required": true,
@@ -682,9 +658,7 @@
         },
         "/api/bbcode/preview": {
             "post": {
-                "tags": [
-                    "BBCode"
-                ],
+                "tags": ["BBCode"],
                 "operationId": "post_api_bbcode_preview",
                 "requestBody": {
                     "required": true,
@@ -746,9 +720,7 @@
         },
         "/api/config": {
             "get": {
-                "tags": [
-                    "System"
-                ],
+                "tags": ["System"],
                 "operationId": "get_api_config",
                 "responses": {
                     "200": {
@@ -802,9 +774,7 @@
         },
         "/api/files": {
             "get": {
-                "tags": [
-                    "Files"
-                ],
+                "tags": ["Files"],
                 "operationId": "get_api_files_list",
                 "parameters": [
                     {
@@ -854,13 +824,7 @@
                         "schema": {
                             "type": "string",
                             "default": "newest",
-                            "enum": [
-                                "newest",
-                                "oldest",
-                                "name",
-                                "views",
-                                "relevance"
-                            ]
+                            "enum": ["newest", "oldest", "name", "views", "relevance"]
                         }
                     }
                 ],
@@ -881,9 +845,7 @@
                 }
             },
             "post": {
-                "tags": [
-                    "Files"
-                ],
+                "tags": ["Files"],
                 "operationId": "post_api_files_create",
                 "requestBody": {
                     "required": true,
@@ -926,9 +888,7 @@
         },
         "/api/files/statistics": {
             "get": {
-                "tags": [
-                    "Files"
-                ],
+                "tags": ["Files"],
                 "operationId": "get_api_files_statistics",
                 "responses": {
                     "200": {
@@ -946,9 +906,7 @@
         },
         "/api/files/{id}": {
             "get": {
-                "tags": [
-                    "Files"
-                ],
+                "tags": ["Files"],
                 "operationId": "get_api_files_show",
                 "parameters": [
                     {
@@ -981,9 +939,7 @@
                 }
             },
             "delete": {
-                "tags": [
-                    "Files"
-                ],
+                "tags": ["Files"],
                 "operationId": "delete_api_files_delete",
                 "parameters": [
                     {
@@ -1006,9 +962,7 @@
                 }
             },
             "patch": {
-                "tags": [
-                    "Files"
-                ],
+                "tags": ["Files"],
                 "operationId": "patch_api_files_update",
                 "parameters": [
                     {
@@ -1061,9 +1015,7 @@
         },
         "/api/files/{id}/download": {
             "get": {
-                "tags": [
-                    "Files"
-                ],
+                "tags": ["Files"],
                 "operationId": "get_api_files_download",
                 "parameters": [
                     {
@@ -1099,9 +1051,7 @@
         },
         "/api/files/{id}/archive": {
             "get": {
-                "tags": [
-                    "Files"
-                ],
+                "tags": ["Files"],
                 "operationId": "get_api_files_archive",
                 "parameters": [
                     {
@@ -1139,9 +1089,7 @@
         },
         "/api/files/{id}/archive/entry": {
             "get": {
-                "tags": [
-                    "Files"
-                ],
+                "tags": ["Files"],
                 "operationId": "get_api_files_archive_entry",
                 "parameters": [
                     {
@@ -1180,9 +1128,7 @@
         },
         "/api/gists": {
             "get": {
-                "tags": [
-                    "Gists"
-                ],
+                "tags": ["Gists"],
                 "operationId": "get_api_gists_list",
                 "parameters": [
                     {
@@ -1227,11 +1173,7 @@
                         "schema": {
                             "type": "string",
                             "default": "newest",
-                            "enum": [
-                                "newest",
-                                "oldest",
-                                "relevance"
-                            ]
+                            "enum": ["newest", "oldest", "relevance"]
                         }
                     }
                 ],
@@ -1252,9 +1194,7 @@
                 }
             },
             "post": {
-                "tags": [
-                    "Gists"
-                ],
+                "tags": ["Gists"],
                 "operationId": "post_api_gists_create",
                 "requestBody": {
                     "required": true,
@@ -1291,9 +1231,7 @@
         },
         "/api/gists/{id}": {
             "get": {
-                "tags": [
-                    "Gists"
-                ],
+                "tags": ["Gists"],
                 "operationId": "get_api_gists_show",
                 "parameters": [
                     {
@@ -1323,9 +1261,7 @@
                 }
             },
             "delete": {
-                "tags": [
-                    "Gists"
-                ],
+                "tags": ["Gists"],
                 "operationId": "delete_api_gists_delete",
                 "parameters": [
                     {
@@ -1351,9 +1287,7 @@
                 }
             },
             "patch": {
-                "tags": [
-                    "Gists"
-                ],
+                "tags": ["Gists"],
                 "operationId": "patch_api_gists_update",
                 "parameters": [
                     {
@@ -1401,9 +1335,7 @@
         },
         "/api/guestbook": {
             "get": {
-                "tags": [
-                    "Guestbook"
-                ],
+                "tags": ["Guestbook"],
                 "operationId": "get_api_guestbook_list",
                 "parameters": [
                     {
@@ -1430,9 +1362,7 @@
                 }
             },
             "post": {
-                "tags": [
-                    "Guestbook"
-                ],
+                "tags": ["Guestbook"],
                 "operationId": "post_api_guestbook_create",
                 "requestBody": {
                     "required": true,
@@ -1469,9 +1399,7 @@
         },
         "/api/guestbook/{id}/insight": {
             "get": {
-                "tags": [
-                    "Guestbook"
-                ],
+                "tags": ["Guestbook"],
                 "operationId": "get_api_guestbook_insight",
                 "parameters": [
                     {
@@ -1542,9 +1470,7 @@
         },
         "/api/health": {
             "get": {
-                "tags": [
-                    "System"
-                ],
+                "tags": ["System"],
                 "operationId": "get_api_health",
                 "responses": {
                     "200": {
@@ -1579,9 +1505,7 @@
         },
         "/api/home": {
             "get": {
-                "tags": [
-                    "Home"
-                ],
+                "tags": ["Home"],
                 "operationId": "get_api_home_show",
                 "responses": {
                     "200": {
@@ -1668,9 +1592,7 @@
         },
         "/api/me": {
             "get": {
-                "tags": [
-                    "Auth"
-                ],
+                "tags": ["Auth"],
                 "operationId": "get_api_me",
                 "responses": {
                     "200": {
@@ -1691,9 +1613,7 @@
         },
         "/api/news": {
             "get": {
-                "tags": [
-                    "News"
-                ],
+                "tags": ["News"],
                 "operationId": "get_api_news_list",
                 "parameters": [
                     {
@@ -1722,9 +1642,7 @@
         },
         "/api/news/{id}": {
             "get": {
-                "tags": [
-                    "News"
-                ],
+                "tags": ["News"],
                 "operationId": "get_api_news_show",
                 "parameters": [
                     {
@@ -1756,9 +1674,7 @@
         },
         "/api/online": {
             "get": {
-                "tags": [
-                    "Online"
-                ],
+                "tags": ["Online"],
                 "operationId": "get_api_online_list",
                 "responses": {
                     "200": {
@@ -1878,9 +1794,7 @@
         },
         "/api/tags": {
             "get": {
-                "tags": [
-                    "Tags"
-                ],
+                "tags": ["Tags"],
                 "operationId": "get_api_tags_list",
                 "parameters": [
                     {
@@ -1934,9 +1848,7 @@
         },
         "/api/users": {
             "get": {
-                "tags": [
-                    "Users"
-                ],
+                "tags": ["Users"],
                 "operationId": "get_api_users_list",
                 "parameters": [
                     {
@@ -1982,9 +1894,7 @@
         },
         "/api/users/events": {
             "get": {
-                "tags": [
-                    "Users"
-                ],
+                "tags": ["Users"],
                 "operationId": "get_api_users_events",
                 "parameters": [
                     {
@@ -2013,9 +1923,7 @@
         },
         "/api/users/subscriber": {
             "get": {
-                "tags": [
-                    "Users"
-                ],
+                "tags": ["Users"],
                 "operationId": "get_api_users_subscriber",
                 "responses": {
                     "200": {
@@ -2031,9 +1939,7 @@
                 }
             },
             "put": {
-                "tags": [
-                    "Users"
-                ],
+                "tags": ["Users"],
                 "operationId": "put_api_users_subscriber_update",
                 "requestBody": {
                     "required": true,
@@ -2061,9 +1967,7 @@
         },
         "/api/users/profile": {
             "put": {
-                "tags": [
-                    "Users"
-                ],
+                "tags": ["Users"],
                 "operationId": "put_api_users_profile_update",
                 "requestBody": {
                     "required": true,
@@ -2094,9 +1998,7 @@
         },
         "/api/users/{username}/friends": {
             "get": {
-                "tags": [
-                    "Users"
-                ],
+                "tags": ["Users"],
                 "operationId": "get_api_users_friends",
                 "parameters": [
                     {
@@ -2135,9 +2037,7 @@
                 }
             },
             "post": {
-                "tags": [
-                    "Users"
-                ],
+                "tags": ["Users"],
                 "operationId": "post_api_users_friends_add",
                 "parameters": [
                     {
@@ -2163,9 +2063,7 @@
                 }
             },
             "delete": {
-                "tags": [
-                    "Users"
-                ],
+                "tags": ["Users"],
                 "operationId": "delete_api_users_friends_delete",
                 "parameters": [
                     {
@@ -2193,9 +2091,7 @@
         },
         "/api/users/{username}": {
             "get": {
-                "tags": [
-                    "Users"
-                ],
+                "tags": ["Users"],
                 "operationId": "get_api_users_show",
                 "parameters": [
                     {
@@ -2267,10 +2163,7 @@
             "ArchiveSourceRequest": {
                 "properties": {
                     "files": {
-                        "type": [
-                            "array",
-                            "null"
-                        ],
+                        "type": ["array", "null"],
                         "items": {
                             "type": "string",
                             "format": "binary"
@@ -2279,10 +2172,7 @@
                         "maxItems": 20
                     },
                     "url": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "format": "uri",
                         "default": null
                     }
@@ -2292,10 +2182,7 @@
             "AudioTagsCreateRequest": {
                 "properties": {
                     "files": {
-                        "type": [
-                            "array",
-                            "null"
-                        ],
+                        "type": ["array", "null"],
                         "items": {
                             "type": "string",
                             "format": "binary"
@@ -2304,10 +2191,7 @@
                         "maxItems": 1
                     },
                     "url": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "format": "uri",
                         "default": null
                     }
@@ -2317,122 +2201,77 @@
             "AudioTagsUpdateRequest": {
                 "properties": {
                     "title": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 255
                     },
                     "albumArtist": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 255
                     },
                     "artist": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 255
                     },
                     "album": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 255
                     },
                     "year": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 32
                     },
                     "trackNumber": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 32
                     },
                     "urlUser": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 255
                     },
                     "genre": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 255
                     },
                     "comment": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 10000
                     },
                     "composer": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 255
                     },
                     "discNumber": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 32
                     },
                     "copyright": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 255
                     },
                     "lyrics": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 20000
                     },
                     "bpm": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 16
                     },
                     "isrc": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 32
                     },
@@ -2445,18 +2284,12 @@
                         "default": false
                     },
                     "picture": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "format": "binary",
                         "default": null
                     },
                     "pictureUrl": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "format": "uri",
                         "default": null
                     }
@@ -2483,10 +2316,7 @@
                         "minLength": 6
                     },
                     "captchaToken": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 4096
                     }
@@ -2505,44 +2335,21 @@
             },
             "ProfileType": {
                 "type": "string",
-                "enum": [
-                    "none",
-                    "css1",
-                    "css2",
-                    "css21",
-                    "css3",
-                    "svg",
-                    "svgbasic",
-                    "svgtiny",
-                    "mobile",
-                    "atsc-tv",
-                    "tv"
-                ]
+                "enum": ["none", "css1", "css2", "css21", "css3", "svg", "svgbasic", "svgtiny", "mobile", "atsc-tv", "tv"]
             },
             "WarningType": {
                 "type": "string",
-                "enum": [
-                    "2",
-                    "1",
-                    "0",
-                    "no"
-                ]
+                "enum": ["2", "1", "0", "no"]
             },
             "CssValidatorRequest": {
                 "properties": {
                     "code": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 262144
                     },
                     "url": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 2048
                     },
@@ -2574,56 +2381,27 @@
             "FileFilterQuery": {
                 "properties": {
                     "q": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 255
                     },
                     "category": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
-                        "enum": [
-                            "video",
-                            "audio",
-                            "image",
-                            "text",
-                            "office",
-                            "archive",
-                            "android",
-                            "java",
-                            "windows",
-                            "playlist",
-                            "torrent",
-                            "other"
-                        ]
+                        "enum": ["video", "audio", "image", "text", "office", "archive", "android", "java", "windows", "playlist", "torrent", "other"]
                     },
                     "date": {
                         "type": "string",
                         "default": "all",
-                        "enum": [
-                            "all",
-                            "today",
-                            "yesterday"
-                        ]
+                        "enum": ["all", "today", "yesterday"]
                     },
                     "tag": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 255
                     },
                     "user": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 180
                     },
@@ -2632,10 +2410,7 @@
                         "default": false
                     },
                     "hidden": {
-                        "type": [
-                            "boolean",
-                            "null"
-                        ],
+                        "type": ["boolean", "null"],
                         "default": null
                     }
                 },
@@ -2669,13 +2444,7 @@
                     "sort": {
                         "type": "string",
                         "default": "newest",
-                        "enum": [
-                            "newest",
-                            "oldest",
-                            "name",
-                            "views",
-                            "relevance"
-                        ]
+                        "enum": ["newest", "oldest", "name", "views", "relevance"]
                     }
                 },
                 "type": "object"
@@ -2683,18 +2452,12 @@
             "FileCreateRequest": {
                 "properties": {
                     "file": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "format": "binary",
                         "default": null
                     },
                     "url": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "format": "uri",
                         "default": null
                     },
@@ -2712,18 +2475,12 @@
                         "maxItems": 30
                     },
                     "password": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 100
                     },
                     "captchaToken": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 4096
                     }
@@ -2733,18 +2490,12 @@
             "FileUpdateRequest": {
                 "properties": {
                     "description": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 5000
                     },
                     "tags": {
-                        "type": [
-                            "array",
-                            "null"
-                        ],
+                        "type": ["array", "null"],
                         "items": {
                             "type": "string"
                         },
@@ -2752,34 +2503,22 @@
                         "maxItems": 30
                     },
                     "password": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 100
                     },
                     "file": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "format": "binary",
                         "default": null
                     },
                     "url": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "format": "uri",
                         "default": null
                     },
                     "hidden": {
-                        "type": [
-                            "boolean",
-                            "null"
-                        ],
+                        "type": ["boolean", "null"],
                         "default": null
                     }
                 },
@@ -2788,18 +2527,12 @@
             "GistFilterQuery": {
                 "properties": {
                     "q": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 5000
                     },
                     "user": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 180
                     }
@@ -2829,11 +2562,7 @@
                     "sort": {
                         "type": "string",
                         "default": "newest",
-                        "enum": [
-                            "newest",
-                            "oldest",
-                            "relevance"
-                        ]
+                        "enum": ["newest", "oldest", "relevance"]
                     }
                 },
                 "type": "object"
@@ -2853,10 +2582,7 @@
                         "minLength": 1
                     },
                     "bCheck": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null
                     }
                 },
@@ -2888,28 +2614,19 @@
                         "minLength": 1
                     },
                     "captchaToken": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 4096
                     },
                     "bCheck": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null
                     }
                 },
                 "type": "object"
             },
             "HashRequest": {
-                "required": [
-                    "url",
-                    "algorithms"
-                ],
+                "required": ["url", "algorithms"],
                 "properties": {
                     "url": {
                         "type": "string",
@@ -2945,18 +2662,12 @@
             "ValidatorRequest": {
                 "properties": {
                     "code": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 262144
                     },
                     "url": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 2048
                     }
@@ -2976,28 +2687,19 @@
                         "maxLength": 32
                     },
                     "headers": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 16384
                     },
                     "body": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 1048576
                     },
                     "bodyEncoding": {
                         "type": "string",
                         "default": "text",
-                        "enum": [
-                            "text",
-                            "base64"
-                        ]
+                        "enum": ["text", "base64"]
                     },
                     "timeout": {
                         "type": "integer",
@@ -3008,12 +2710,7 @@
                     "httpVersion": {
                         "type": "string",
                         "default": "auto",
-                        "enum": [
-                            "auto",
-                            "1.1",
-                            "2",
-                            "3"
-                        ]
+                        "enum": ["auto", "1.1", "2", "3"]
                     },
                     "verifyTls": {
                         "type": "boolean",
@@ -3024,27 +2721,17 @@
             },
             "ObfuscatorLevel": {
                 "type": "string",
-                "enum": [
-                    "light",
-                    "normal",
-                    "max"
-                ]
+                "enum": ["light", "normal", "max"]
             },
             "ObfuscatorRequest": {
                 "properties": {
                     "code": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 262144
                     },
                     "url": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 2048
                     },
@@ -3062,10 +2749,7 @@
             "TagFilterQuery": {
                 "properties": {
                     "q": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 255
                     }
@@ -3097,10 +2781,7 @@
             "UserFilterQuery": {
                 "properties": {
                     "search": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 180
                     }
@@ -3139,51 +2820,30 @@
             "ProfileUpdateRequest": {
                 "properties": {
                     "sex": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
-                        "enum": [
-                            "m",
-                            "f"
-                        ]
+                        "enum": ["m", "f"]
                     },
                     "birthday": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null
                     },
                     "timezone": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null
                     },
                     "country": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null
                     },
                     "vk": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "pattern": "[a-z0-9_]*",
                         "default": null,
                         "maxLength": 255
                     },
                     "info": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 5000
                     }
@@ -3200,22 +2860,13 @@
                     "protocol": {
                         "type": "string",
                         "default": "auto",
-                        "enum": [
-                            "auto",
-                            "rdap",
-                            "whois"
-                        ]
+                        "enum": ["auto", "rdap", "whois"]
                     }
                 },
                 "type": "object"
             },
             "ArchiveEntryResponse": {
-                "required": [
-                    "path",
-                    "size",
-                    "isDirectory",
-                    "isEncrypted"
-                ],
+                "required": ["path", "size", "isDirectory", "isEncrypted"],
                 "properties": {
                     "path": {
                         "type": "string"
@@ -3233,11 +2884,7 @@
                 "type": "object"
             },
             "ArchiveResponse": {
-                "required": [
-                    "archive",
-                    "items",
-                    "size"
-                ],
+                "required": ["archive", "items", "size"],
                 "properties": {
                     "archive": {
                         "type": "string"
@@ -3252,17 +2899,11 @@
                         "type": "integer"
                     },
                     "format": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null
                     },
                     "sourceSize": {
-                        "type": [
-                            "integer",
-                            "null"
-                        ],
+                        "type": ["integer", "null"],
                         "default": null
                     }
                 },
@@ -3338,10 +2979,7 @@
                 "type": "object"
             },
             "AudioTagsOtherTagResponse": {
-                "required": [
-                    "name",
-                    "value"
-                ],
+                "required": ["name", "value"],
                 "properties": {
                     "name": {
                         "type": "string"
@@ -3353,16 +2991,7 @@
                 "type": "object"
             },
             "AudioTagsInfoResponse": {
-                "required": [
-                    "id",
-                    "originalName",
-                    "size",
-                    "format",
-                    "tagFormats",
-                    "tags",
-                    "otherTags",
-                    "canWrite"
-                ],
+                "required": ["id", "originalName", "size", "format", "tagFormats", "tags", "otherTags", "canWrite"],
                 "properties": {
                     "id": {
                         "type": "string"
@@ -3374,38 +3003,23 @@
                         "type": "integer"
                     },
                     "duration": {
-                        "type": [
-                            "number",
-                            "null"
-                        ],
+                        "type": ["number", "null"],
                         "format": "float"
                     },
                     "format": {
                         "type": "string"
                     },
                     "bitrate": {
-                        "type": [
-                            "integer",
-                            "null"
-                        ]
+                        "type": ["integer", "null"]
                     },
                     "bitrateMode": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "sampleRate": {
-                        "type": [
-                            "integer",
-                            "null"
-                        ]
+                        "type": ["integer", "null"]
                     },
                     "channelMode": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "tagFormats": {
                         "type": "array",
@@ -3426,10 +3040,7 @@
                         "type": "boolean"
                     },
                     "readOnlyReason": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     }
                 },
                 "type": "object"
@@ -3447,10 +3058,7 @@
                         "maxLength": 4096
                     },
                     "deviceName": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null,
                         "maxLength": 100
                     }
@@ -3458,12 +3066,7 @@
                 "type": "object"
             },
             "UserResponse": {
-                "required": [
-                    "id",
-                    "username",
-                    "email",
-                    "roles"
-                ],
+                "required": ["id", "username", "email", "roles"],
                 "properties": {
                     "id": {
                         "type": "integer"
@@ -3484,11 +3087,7 @@
                 "type": "object"
             },
             "TokenResponse": {
-                "required": [
-                    "token",
-                    "expiresAt",
-                    "user"
-                ],
+                "required": ["token", "expiresAt", "user"],
                 "properties": {
                     "token": {
                         "type": "string"
@@ -3504,13 +3103,7 @@
                 "type": "object"
             },
             "ApiTokenResponse": {
-                "required": [
-                    "id",
-                    "name",
-                    "createdAt",
-                    "expiresAt",
-                    "current"
-                ],
+                "required": ["id", "name", "createdAt", "expiresAt", "current"],
                 "properties": {
                     "id": {
                         "type": "integer"
@@ -3527,10 +3120,7 @@
                         "format": "date-time"
                     },
                     "lastUsedAt": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "format": "date-time"
                     },
                     "current": {
@@ -3540,9 +3130,7 @@
                 "type": "object"
             },
             "ApiTokenListResponse": {
-                "required": [
-                    "items"
-                ],
+                "required": ["items"],
                 "properties": {
                     "items": {
                         "type": "array",
@@ -3554,9 +3142,7 @@
                 "type": "object"
             },
             "RegisterResponse": {
-                "required": [
-                    "username"
-                ],
+                "required": ["username"],
                 "properties": {
                     "username": {
                         "type": "string"
@@ -3565,9 +3151,7 @@
                 "type": "object"
             },
             "BbcodePreviewResponse": {
-                "required": [
-                    "html"
-                ],
+                "required": ["html"],
                 "properties": {
                     "html": {
                         "type": "string"
@@ -3576,10 +3160,7 @@
                 "type": "object"
             },
             "BrowserGeoDatabase": {
-                "required": [
-                    "type",
-                    "buildDate"
-                ],
+                "required": ["type", "buildDate"],
                 "properties": {
                     "type": {
                         "type": "string"
@@ -3591,159 +3172,92 @@
                 "type": "object"
             },
             "BrowserGeoInfo": {
-                "required": [
-                    "inEuropeanUnion"
-                ],
+                "required": ["inEuropeanUnion"],
                 "properties": {
                     "continent": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "continentCode": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "country": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "countryCode": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "region": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "city": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "postalCode": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "latitude": {
-                        "type": [
-                            "number",
-                            "null"
-                        ],
+                        "type": ["number", "null"],
                         "format": "float"
                     },
                     "longitude": {
-                        "type": [
-                            "number",
-                            "null"
-                        ],
+                        "type": ["number", "null"],
                         "format": "float"
                     },
                     "accuracyRadius": {
-                        "type": [
-                            "integer",
-                            "null"
-                        ]
+                        "type": ["integer", "null"]
                     },
                     "timezone": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "registeredCountry": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "registeredCountryCode": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "inEuropeanUnion": {
                         "type": "boolean"
                     },
                     "network": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     }
                 },
                 "type": "object"
             },
             "BrowserIpReputation": {
-                "required": [
-                    "appears",
-                    "torExit"
-                ],
+                "required": ["appears", "torExit"],
                 "properties": {
                     "appears": {
                         "type": "boolean"
                     },
                     "confidence": {
-                        "type": [
-                            "number",
-                            "null"
-                        ],
+                        "type": ["number", "null"],
                         "format": "float"
                     },
                     "frequency": {
-                        "type": [
-                            "number",
-                            "null"
-                        ],
+                        "type": ["number", "null"],
                         "format": "float"
                     },
                     "lastSeen": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "torExit": {
                         "type": "boolean"
                     },
                     "country": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "asn": {
-                        "type": [
-                            "integer",
-                            "null"
-                        ]
+                        "type": ["integer", "null"]
                     },
                     "delegated": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     }
                 },
                 "type": "object"
             },
             "IpInsightResponse": {
-                "required": [
-                    "ip"
-                ],
+                "required": ["ip"],
                 "properties": {
                     "ip": {
                         "type": "string"
@@ -3769,34 +3283,19 @@
                         ]
                     },
                     "ptr": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "asn": {
-                        "type": [
-                            "integer",
-                            "null"
-                        ]
+                        "type": ["integer", "null"]
                     },
                     "network": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "organization": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "kind": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "dnsProvider": {
                         "type": "string",
@@ -3806,9 +3305,7 @@
                 "type": "object"
             },
             "BrowserIpGeo": {
-                "required": [
-                    "ip"
-                ],
+                "required": ["ip"],
                 "properties": {
                     "ip": {
                         "type": "string"
@@ -3827,14 +3324,7 @@
                 "type": "object"
             },
             "BrowserVpnInfo": {
-                "required": [
-                    "suspicious",
-                    "torExit",
-                    "proxyHeaders",
-                    "countryMismatch",
-                    "blacklisted",
-                    "signals"
-                ],
+                "required": ["suspicious", "torExit", "proxyHeaders", "countryMismatch", "blacklisted", "signals"],
                 "properties": {
                     "suspicious": {
                         "type": "boolean"
@@ -3861,123 +3351,61 @@
                 "type": "object"
             },
             "BrowserInfoResponse": {
-                "required": [
-                    "method",
-                    "uri",
-                    "https",
-                    "proxyGeo",
-                    "webrtcGeo",
-                    "vpn",
-                    "headers"
-                ],
+                "required": ["method", "uri", "https", "proxyGeo", "webrtcGeo", "vpn", "headers"],
                 "properties": {
                     "ip": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "ipHost": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "proxy": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "proxyHost": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "phoneNumber": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "userAgent": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "remotePort": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "remoteUser": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "referer": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "encoding": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "cache": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "connection": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "via": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "httpProtocol": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "accept": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "language": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "charset": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "dnt": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "method": {
                         "type": "string"
@@ -3986,16 +3414,10 @@
                         "type": "string"
                     },
                     "serverName": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "serverPort": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "https": {
                         "type": "boolean"
@@ -4048,10 +3470,7 @@
                 "type": "object"
             },
             "CaptchaConfigResponse": {
-                "required": [
-                    "enabled",
-                    "siteKey"
-                ],
+                "required": ["enabled", "siteKey"],
                 "properties": {
                     "enabled": {
                         "type": "boolean"
@@ -4063,10 +3482,7 @@
                 "type": "object"
             },
             "CountryResponse": {
-                "required": [
-                    "code",
-                    "name"
-                ],
+                "required": ["code", "name"],
                 "properties": {
                     "code": {
                         "type": "string"
@@ -4078,10 +3494,7 @@
                 "type": "object"
             },
             "TimezoneResponse": {
-                "required": [
-                    "id",
-                    "name"
-                ],
+                "required": ["id", "name"],
                 "properties": {
                     "id": {
                         "type": "string"
@@ -4093,11 +3506,7 @@
                 "type": "object"
             },
             "ConfigResponse": {
-                "required": [
-                    "captcha",
-                    "countries",
-                    "timezones"
-                ],
+                "required": ["captcha", "countries", "timezones"],
                 "properties": {
                     "captcha": {
                         "$ref": "#/components/schemas/CaptchaConfigResponse"
@@ -4118,49 +3527,31 @@
                 "type": "object"
             },
             "ValidatorMessageResponse": {
-                "required": [
-                    "severity",
-                    "message"
-                ],
+                "required": ["severity", "message"],
                 "properties": {
                     "severity": {
                         "type": "string"
                     },
                     "type": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "line": {
-                        "type": [
-                            "integer",
-                            "null"
-                        ]
+                        "type": ["integer", "null"]
                     },
                     "column": {
-                        "type": [
-                            "integer",
-                            "null"
-                        ]
+                        "type": ["integer", "null"]
                     },
                     "message": {
                         "type": "string"
                     },
                     "extract": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     }
                 },
                 "type": "object"
             },
             "ValidatorResponse": {
-                "required": [
-                    "valid",
-                    "messages"
-                ],
+                "required": ["valid", "messages"],
                 "properties": {
                     "valid": {
                         "type": "boolean"
@@ -4172,48 +3563,30 @@
                         }
                     },
                     "source": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null
                     },
                     "documentType": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null
                     },
                     "encoding": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null
                     },
                     "profile": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null
                     },
                     "phpVersion": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "default": null
                     }
                 },
                 "type": "object"
             },
             "UserSummary": {
-                "required": [
-                    "id",
-                    "username"
-                ],
+                "required": ["id", "username"],
                 "properties": {
                     "id": {
                         "type": "integer"
@@ -4225,18 +3598,7 @@
                 "type": "object"
             },
             "FileListItem": {
-                "required": [
-                    "id",
-                    "name",
-                    "description",
-                    "size",
-                    "mimeType",
-                    "category",
-                    "createdAt",
-                    "hasPassword",
-                    "hidden",
-                    "url"
-                ],
+                "required": ["id", "name", "description", "size", "mimeType", "category", "createdAt", "hasPassword", "hidden", "url"],
                 "properties": {
                     "id": {
                         "type": "integer"
@@ -4280,10 +3642,7 @@
                         "type": "string"
                     },
                     "thumbnailUrl": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "meta": {
                         "oneOf": [
@@ -4304,12 +3663,7 @@
                 "type": "object"
             },
             "FileListResponse": {
-                "required": [
-                    "items",
-                    "total",
-                    "page",
-                    "perPage"
-                ],
+                "required": ["items", "total", "page", "perPage"],
                 "properties": {
                     "items": {
                         "type": "array",
@@ -4330,10 +3684,7 @@
                 "type": "object"
             },
             "FileLinks": {
-                "required": [
-                    "url",
-                    "downloadUrl"
-                ],
+                "required": ["url", "downloadUrl"],
                 "properties": {
                     "url": {
                         "type": "string"
@@ -4342,22 +3693,13 @@
                         "type": "string"
                     },
                     "thumbnailUrl": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "convertedUrl": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "convertedFormat": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     }
                 },
                 "type": "object"
@@ -4365,25 +3707,16 @@
             "FileNavigation": {
                 "properties": {
                     "prevId": {
-                        "type": [
-                            "integer",
-                            "null"
-                        ]
+                        "type": ["integer", "null"]
                     },
                     "nextId": {
-                        "type": [
-                            "integer",
-                            "null"
-                        ]
+                        "type": ["integer", "null"]
                     }
                 },
                 "type": "object"
             },
             "PlaylistEntry": {
-                "required": [
-                    "title",
-                    "path"
-                ],
+                "required": ["title", "path"],
                 "properties": {
                     "title": {
                         "type": "string"
@@ -4395,10 +3728,7 @@
                 "type": "object"
             },
             "TorrentEntry": {
-                "required": [
-                    "path",
-                    "size"
-                ],
+                "required": ["path", "size"],
                 "properties": {
                     "path": {
                         "type": "string"
@@ -4410,13 +3740,7 @@
                 "type": "object"
             },
             "FilePermission": {
-                "required": [
-                    "name",
-                    "description",
-                    "danger",
-                    "warning",
-                    "cost"
-                ],
+                "required": ["name", "description", "danger", "warning", "cost"],
                 "properties": {
                     "name": {
                         "type": "string"
@@ -4437,14 +3761,7 @@
                 "type": "object"
             },
             "FileContent": {
-                "required": [
-                    "playableAudio",
-                    "playableVideo",
-                    "conversionPending",
-                    "playlist",
-                    "torrent",
-                    "permissions"
-                ],
+                "required": ["playableAudio", "playableVideo", "conversionPending", "playlist", "torrent", "permissions"],
                 "properties": {
                     "playableAudio": {
                         "type": "boolean"
@@ -4524,17 +3841,11 @@
                         "format": "date-time"
                     },
                     "updatedAt": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "format": "date-time"
                     },
                     "lastViewAt": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "format": "date-time"
                     },
                     "countViews": {
@@ -4566,10 +3877,7 @@
                         }
                     },
                     "meta": {
-                        "type": [
-                            "object",
-                            "null"
-                        ],
+                        "type": ["object", "null"],
                         "additionalProperties": {}
                     },
                     "canEdit": {
@@ -4591,10 +3899,7 @@
                 "type": "object"
             },
             "FileStatisticsUser": {
-                "required": [
-                    "username",
-                    "uploads"
-                ],
+                "required": ["username", "uploads"],
                 "properties": {
                     "username": {
                         "type": "string"
@@ -4606,13 +3911,7 @@
                 "type": "object"
             },
             "FileStatisticsResponse": {
-                "required": [
-                    "countFiles",
-                    "sizeFiles",
-                    "countViews",
-                    "users",
-                    "categories"
-                ],
+                "required": ["countFiles", "sizeFiles", "countViews", "users", "categories"],
                 "properties": {
                     "countFiles": {
                         "type": "integer"
@@ -4639,9 +3938,7 @@
                 "type": "object"
             },
             "ArchiveListResponse": {
-                "required": [
-                    "items"
-                ],
+                "required": ["items"],
                 "properties": {
                     "items": {
                         "type": "array",
@@ -4653,15 +3950,7 @@
                 "type": "object"
             },
             "GistListItem": {
-                "required": [
-                    "id",
-                    "subject",
-                    "createdAt",
-                    "avatarUrl",
-                    "isOnline",
-                    "canEdit",
-                    "canDelete"
-                ],
+                "required": ["id", "subject", "createdAt", "avatarUrl", "isOnline", "canEdit", "canDelete"],
                 "properties": {
                     "id": {
                         "type": "integer"
@@ -4674,10 +3963,7 @@
                         "format": "date-time"
                     },
                     "updatedAt": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "format": "date-time"
                     },
                     "user": {
@@ -4706,12 +3992,7 @@
                 "type": "object"
             },
             "GistListResponse": {
-                "required": [
-                    "items",
-                    "total",
-                    "page",
-                    "perPage"
-                ],
+                "required": ["items", "total", "page", "perPage"],
                 "properties": {
                     "items": {
                         "type": "array",
@@ -4732,17 +4013,7 @@
                 "type": "object"
             },
             "GistResponse": {
-                "required": [
-                    "id",
-                    "subject",
-                    "body",
-                    "bodyHtml",
-                    "createdAt",
-                    "avatarUrl",
-                    "isOnline",
-                    "canEdit",
-                    "canDelete"
-                ],
+                "required": ["id", "subject", "body", "bodyHtml", "createdAt", "avatarUrl", "isOnline", "canEdit", "canDelete"],
                 "properties": {
                     "id": {
                         "type": "integer"
@@ -4761,10 +4032,7 @@
                         "format": "date-time"
                     },
                     "updatedAt": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "format": "date-time"
                     },
                     "user": {
@@ -4793,14 +4061,7 @@
                 "type": "object"
             },
             "GuestbookMessageResponse": {
-                "required": [
-                    "id",
-                    "message",
-                    "messageHtml",
-                    "createdAt",
-                    "avatarUrl",
-                    "isOnline"
-                ],
+                "required": ["id", "message", "messageHtml", "createdAt", "avatarUrl", "isOnline"],
                 "properties": {
                     "id": {
                         "type": "integer"
@@ -4832,39 +4093,22 @@
                         "type": "boolean"
                     },
                     "ip": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "browser": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "countryCode": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "countryName": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     }
                 },
                 "type": "object"
             },
             "GuestbookListResponse": {
-                "required": [
-                    "items",
-                    "total",
-                    "page",
-                    "perPage"
-                ],
+                "required": ["items", "total", "page", "perPage"],
                 "properties": {
                     "items": {
                         "type": "array",
@@ -4885,9 +4129,7 @@
                 "type": "object"
             },
             "HashResponse": {
-                "required": [
-                    "hashes"
-                ],
+                "required": ["hashes"],
                 "properties": {
                     "hashes": {
                         "type": "object",
@@ -4899,12 +4141,7 @@
                 "type": "object"
             },
             "HomeResponse": {
-                "required": [
-                    "files",
-                    "gists",
-                    "guestbook",
-                    "online"
-                ],
+                "required": ["files", "gists", "guestbook", "online"],
                 "properties": {
                     "files": {
                         "type": "integer"
@@ -4919,32 +4156,20 @@
                         "type": "integer"
                     },
                     "newsLastDate": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "format": "date-time"
                     },
                     "forumTopics": {
-                        "type": [
-                            "integer",
-                            "null"
-                        ]
+                        "type": ["integer", "null"]
                     },
                     "forumPosts": {
-                        "type": [
-                            "integer",
-                            "null"
-                        ]
+                        "type": ["integer", "null"]
                     }
                 },
                 "type": "object"
             },
             "HttpCallHeader": {
-                "required": [
-                    "name",
-                    "value"
-                ],
+                "required": ["name", "value"],
                 "properties": {
                     "name": {
                         "type": "string"
@@ -4956,16 +4181,7 @@
                 "type": "object"
             },
             "HttpCallResponse": {
-                "required": [
-                    "status",
-                    "statusText",
-                    "url",
-                    "time",
-                    "size",
-                    "truncated",
-                    "binary",
-                    "headers"
-                ],
+                "required": ["status", "statusText", "url", "time", "size", "truncated", "binary", "headers"],
                 "properties": {
                     "status": {
                         "type": "integer"
@@ -4974,19 +4190,13 @@
                         "type": "string"
                     },
                     "httpVersion": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "url": {
                         "type": "string"
                     },
                     "location": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "time": {
                         "type": "number",
@@ -4999,31 +4209,19 @@
                         "type": "boolean"
                     },
                     "contentType": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "bodyLanguage": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "binary": {
                         "type": "boolean"
                     },
                     "body": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "bodyBase64": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "headers": {
                         "type": "array",
@@ -5035,11 +4233,7 @@
                 "type": "object"
             },
             "NewsListItemResponse": {
-                "required": [
-                    "id",
-                    "subject",
-                    "createdAt"
-                ],
+                "required": ["id", "subject", "createdAt"],
                 "properties": {
                     "id": {
                         "type": "integer"
@@ -5052,22 +4246,14 @@
                         "format": "date-time"
                     },
                     "updatedAt": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "format": "date-time"
                     }
                 },
                 "type": "object"
             },
             "NewsListResponse": {
-                "required": [
-                    "items",
-                    "total",
-                    "page",
-                    "perPage"
-                ],
+                "required": ["items", "total", "page", "perPage"],
                 "properties": {
                     "items": {
                         "type": "array",
@@ -5088,13 +4274,7 @@
                 "type": "object"
             },
             "NewsResponse": {
-                "required": [
-                    "id",
-                    "subject",
-                    "body",
-                    "bodyHtml",
-                    "createdAt"
-                ],
+                "required": ["id", "subject", "body", "bodyHtml", "createdAt"],
                 "properties": {
                     "id": {
                         "type": "integer"
@@ -5113,10 +4293,7 @@
                         "format": "date-time"
                     },
                     "updatedAt": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "format": "date-time"
                     },
                     "createdBy": {
@@ -5133,11 +4310,7 @@
                 "type": "object"
             },
             "OnlineItemResponse": {
-                "required": [
-                    "id",
-                    "datetime",
-                    "browser"
-                ],
+                "required": ["id", "datetime", "browser"],
                 "properties": {
                     "id": {
                         "type": "integer"
@@ -5150,25 +4323,16 @@
                         "type": "string"
                     },
                     "ip": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "path": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     }
                 },
                 "type": "object"
             },
             "OnlineListResponse": {
-                "required": [
-                    "items",
-                    "count"
-                ],
+                "required": ["items", "count"],
                 "properties": {
                     "items": {
                         "type": "array",
@@ -5183,10 +4347,7 @@
                 "type": "object"
             },
             "ObfuscatorInfoResponse": {
-                "required": [
-                    "phpVersion",
-                    "maxCodeSize"
-                ],
+                "required": ["phpVersion", "maxCodeSize"],
                 "properties": {
                     "phpVersion": {
                         "type": "string"
@@ -5198,11 +4359,7 @@
                 "type": "object"
             },
             "ObfuscatorResponse": {
-                "required": [
-                    "code",
-                    "sourceSize",
-                    "resultSize"
-                ],
+                "required": ["code", "sourceSize", "resultSize"],
                 "properties": {
                     "code": {
                         "type": "string"
@@ -5217,9 +4374,7 @@
                 "type": "object"
             },
             "PhpValidatorInfoResponse": {
-                "required": [
-                    "phpVersion"
-                ],
+                "required": ["phpVersion"],
                 "properties": {
                     "phpVersion": {
                         "type": "string"
@@ -5228,11 +4383,7 @@
                 "type": "object"
             },
             "TagListItem": {
-                "required": [
-                    "id",
-                    "name",
-                    "count"
-                ],
+                "required": ["id", "name", "count"],
                 "properties": {
                     "id": {
                         "type": "integer"
@@ -5247,12 +4398,7 @@
                 "type": "object"
             },
             "TagListResponse": {
-                "required": [
-                    "items",
-                    "total",
-                    "page",
-                    "perPage"
-                ],
+                "required": ["items", "total", "page", "perPage"],
                 "properties": {
                     "items": {
                         "type": "array",
@@ -5273,12 +4419,7 @@
                 "type": "object"
             },
             "UserListItem": {
-                "required": [
-                    "id",
-                    "username",
-                    "avatarUrl",
-                    "isOnline"
-                ],
+                "required": ["id", "username", "avatarUrl", "isOnline"],
                 "properties": {
                     "id": {
                         "type": "integer"
@@ -5296,12 +4437,7 @@
                 "type": "object"
             },
             "UserListResponse": {
-                "required": [
-                    "items",
-                    "total",
-                    "page",
-                    "perPage"
-                ],
+                "required": ["items", "total", "page", "perPage"],
                 "properties": {
                     "items": {
                         "type": "array",
@@ -5322,12 +4458,7 @@
                 "type": "object"
             },
             "EventResponse": {
-                "required": [
-                    "id",
-                    "createdAt",
-                    "subject",
-                    "template"
-                ],
+                "required": ["id", "createdAt", "subject", "template"],
                 "properties": {
                     "id": {
                         "type": "integer"
@@ -5343,21 +4474,13 @@
                         "type": "string"
                     },
                     "url": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     }
                 },
                 "type": "object"
             },
             "EventListResponse": {
-                "required": [
-                    "items",
-                    "total",
-                    "page",
-                    "perPage"
-                ],
+                "required": ["items", "total", "page", "perPage"],
                 "properties": {
                     "items": {
                         "type": "array",
@@ -5378,10 +4501,7 @@
                 "type": "object"
             },
             "SubscriberResponse": {
-                "required": [
-                    "emailNews",
-                    "emailFriends"
-                ],
+                "required": ["emailNews", "emailFriends"],
                 "properties": {
                     "emailNews": {
                         "type": "boolean"
@@ -5393,11 +4513,7 @@
                 "type": "object"
             },
             "UserCounters": {
-                "required": [
-                    "files",
-                    "gists",
-                    "friends"
-                ],
+                "required": ["files", "gists", "friends"],
                 "properties": {
                     "files": {
                         "type": "integer"
@@ -5412,12 +4528,7 @@
                 "type": "object"
             },
             "VkProfile": {
-                "required": [
-                    "id",
-                    "name",
-                    "photoUrl",
-                    "isOnline"
-                ],
+                "required": ["id", "name", "photoUrl", "isOnline"],
                 "properties": {
                     "id": {
                         "type": "integer"
@@ -5435,16 +4546,7 @@
                 "type": "object"
             },
             "UserProfileResponse": {
-                "required": [
-                    "id",
-                    "username",
-                    "avatarUrl",
-                    "isOnline",
-                    "createdAt",
-                    "isFriend",
-                    "canEdit",
-                    "counters"
-                ],
+                "required": ["id", "username", "avatarUrl", "isOnline", "createdAt", "isFriend", "canEdit", "counters"],
                 "properties": {
                     "id": {
                         "type": "integer"
@@ -5459,63 +4561,36 @@
                         "type": "boolean"
                     },
                     "sex": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "birthday": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "country": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "countryName": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "timezone": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "createdAt": {
                         "type": "string",
                         "format": "date-time"
                     },
                     "lastActivity": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": ["string", "null"],
                         "format": "date-time"
                     },
                     "vk": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "info": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "infoHtml": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "isFriend": {
                         "type": "boolean"
@@ -5540,10 +4615,7 @@
                 "type": "object"
             },
             "WhoisField": {
-                "required": [
-                    "label",
-                    "value"
-                ],
+                "required": ["label", "value"],
                 "properties": {
                     "label": {
                         "type": "string"
@@ -5555,10 +4627,7 @@
                 "type": "object"
             },
             "WhoisEvent": {
-                "required": [
-                    "action",
-                    "date"
-                ],
+                "required": ["action", "date"],
                 "properties": {
                     "action": {
                         "type": "string"
@@ -5570,39 +4639,25 @@
                 "type": "object"
             },
             "WhoisContact": {
-                "required": [
-                    "role"
-                ],
+                "required": ["role"],
                 "properties": {
                     "role": {
                         "type": "string"
                     },
                     "name": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "organization": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "email": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     }
                 },
                 "type": "object"
             },
             "WhoisDnsRecord": {
-                "required": [
-                    "type",
-                    "value"
-                ],
+                "required": ["type", "value"],
                 "properties": {
                     "type": {
                         "type": "string"
@@ -5614,18 +4669,13 @@
                 "type": "object"
             },
             "WhoisIpInfo": {
-                "required": [
-                    "ip"
-                ],
+                "required": ["ip"],
                 "properties": {
                     "ip": {
                         "type": "string"
                     },
                     "hostname": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": ["string", "null"]
                     },
                     "geo": {
                         "oneOf": [
@@ -5641,11 +4691,7 @@
                 "type": "object"
             },
             "WhoisHostInfo": {
-                "required": [
-                    "hostname",
-                    "ips",
-                    "confirmed"
-                ],
+                "required": ["hostname", "ips", "confirmed"],
                 "properties": {
                     "hostname": {
                         "type": "string"
@@ -5663,11 +4709,7 @@
                 "type": "object"
             },
             "WhoisDnsInfo": {
-                "required": [
-                    "records",
-                    "ips",
-                    "hosts"
-                ],
+                "required": ["records", "ips", "hosts"],
                 "properties": {
                     "records": {
                         "type": "array",
@@ -5695,19 +4737,7 @@
                 "type": "object"
             },
             "WhoisResponse": {
-                "required": [
-                    "query",
-                    "kind",
-                    "protocol",
-                    "server",
-                    "raw",
-                    "details",
-                    "statuses",
-                    "events",
-                    "nameservers",
-                    "contacts",
-                    "dns"
-                ],
+                "required": ["query", "kind", "protocol", "server", "raw", "details", "statuses", "events", "nameservers", "contacts", "dns"],
                 "properties": {
                     "query": {
                         "type": "string"

@@ -4,28 +4,25 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
+use App\Attribute\RateLimitByIp;
 use App\Dto\Api\Whois\WhoisRequest;
 use App\Dto\Api\Whois\WhoisResponse;
-use App\Service\Api\RateLimit;
+use App\Exception\PublicHttpException;
 use App\Service\Api\Whois\WhoisException;
 use App\Service\Api\Whois\WhoisLookup;
 use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/api/whois', name: 'api_whois_')]
 final class WhoisController extends AbstractController
 {
     #[Route('', name: 'lookup', methods: ['POST'])]
+    #[RateLimitByIp('api_whois_lookup')]
     #[OA\RequestBody(
         required: true,
         content: new OA\JsonContent(ref: new Model(type: WhoisRequest::class)),
@@ -43,25 +40,21 @@ final class WhoisController extends AbstractController
         WhoisRequest $payload,
         Request $request,
         WhoisLookup $lookup,
-        #[Autowire(service: 'limiter.api_whois_lookup')]
-        RateLimiterFactory $whoisLimiter,
     ): JsonResponse {
-        RateLimit::consumeForIp($whoisLimiter, $request);
-
         $query = \trim($payload->query);
 
         if ('' === $query) {
             $query = (string) $request->getClientIp();
 
             if ('' === $query) {
-                throw new BadRequestHttpException('Cannot determine client IP.');
+                throw new PublicHttpException(400, 'Cannot determine client IP.');
             }
         }
 
         try {
             return $this->json($lookup->lookup($query, $payload->protocol));
         } catch (WhoisException $exception) {
-            throw new HttpException(Response::HTTP_BAD_GATEWAY, $exception->getMessage(), $exception);
+            throw new PublicHttpException(502, $exception->getMessage(), $exception);
         }
     }
 }

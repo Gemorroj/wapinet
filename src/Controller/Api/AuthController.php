@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Attribute\RateLimitByIp;
 use App\Dto\Api\Auth\ApiTokenListResponse;
 use App\Dto\Api\Auth\ApiTokenResponse;
 use App\Dto\Api\Auth\LoginRequest;
@@ -10,6 +11,7 @@ use App\Dto\Api\User\RegisterRequest;
 use App\Dto\Api\User\RegisterResponse;
 use App\Entity\ApiToken;
 use App\Entity\User;
+use App\Exception\PublicHttpException;
 use App\Repository\ApiTokenRepository;
 use App\Service\Api\User\UserService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,9 +22,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\UnsupportedMediaTypeHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
@@ -57,7 +56,7 @@ final class AuthController extends AbstractController
     public function login(): never
     {
         // JSON requests are intercepted by json_login; anything else reaches this fallback.
-        throw new UnsupportedMediaTypeHttpException('Login expects an application/json request.');
+        throw new PublicHttpException(415, 'Login expects an application/json request.');
     }
 
     #[Route('/logout', name: 'logout', methods: ['POST'])]
@@ -103,11 +102,11 @@ final class AuthController extends AbstractController
         $token = $this->apiTokens->find($id);
 
         if (null === $token) {
-            throw new NotFoundHttpException('Token not found.');
+            throw new PublicHttpException(404, 'Token not found.');
         }
 
         if (!$token->getUser()->isEqualTo($user) && !$this->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedHttpException('Access denied.');
+            throw new PublicHttpException(403, 'Access denied.');
         }
 
         $this->entityManager->remove($token);
@@ -117,6 +116,7 @@ final class AuthController extends AbstractController
     }
 
     #[Route('/register', name: 'register', methods: ['POST'])]
+    #[RateLimitByIp('api_auth_register')]
     #[OA\RequestBody(
         required: true,
         content: new OA\JsonContent(ref: new Model(type: RegisterRequest::class)),

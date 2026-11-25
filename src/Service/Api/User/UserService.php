@@ -10,23 +10,17 @@ use App\Dto\Api\User\SubscriberUpdateRequest;
 use App\Entity\User;
 use App\Entity\UserFriend;
 use App\Entity\UserSubscriber;
+use App\Exception\PublicHttpException;
 use App\Message\FriendAddMessage;
 use App\Message\FriendDeleteMessage;
 use App\Repository\UserFriendRepository;
 use App\Repository\UserRepository;
-use App\Service\Api\RateLimit;
 use App\Service\Captcha\CaptchaUnavailableException;
 use App\Service\Captcha\CaptchaVerifierInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
-use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
 
 final readonly class UserService
 {
@@ -36,32 +30,28 @@ final readonly class UserService
         private UserFriendRepository $friendRepository,
         private PasswordHasherFactoryInterface $passwordHasherFactory,
         private CaptchaVerifierInterface $captchaVerifier,
-        #[Autowire(service: 'limiter.api_auth_register')]
-        private RateLimiterFactory $registerLimiter,
         private MessageBusInterface $messageBus,
     ) {
     }
 
     public function register(RegisterRequest $payload, Request $request): User
     {
-        RateLimit::consumeForIp($this->registerLimiter, $request);
-
         try {
             $captchaValid = $this->captchaVerifier->verify($payload->captchaToken ?? '', $request->getClientIp());
         } catch (CaptchaUnavailableException $exception) {
-            throw new ServiceUnavailableHttpException(null, 'Captcha service is unavailable.', $exception);
+            throw new PublicHttpException(503, 'Captcha service is unavailable.', $exception);
         }
 
         if (!$captchaValid) {
-            throw new AccessDeniedHttpException('Captcha verification failed.');
+            throw new PublicHttpException(403, 'Captcha verification failed.');
         }
 
         if (null !== $this->userRepository->findOneBy(['username' => $payload->username])) {
-            throw new UnprocessableEntityHttpException('Пользователь с таким username уже зарегистрирован.');
+            throw new PublicHttpException(422, 'Пользователь с таким username уже зарегистрирован.');
         }
 
         if (null !== $this->userRepository->findOneBy(['email' => $payload->email])) {
-            throw new UnprocessableEntityHttpException('Пользователь с таким email уже зарегистрирован.');
+            throw new PublicHttpException(422, 'Пользователь с таким email уже зарегистрирован.');
         }
 
         $user = new User();
@@ -106,11 +96,11 @@ final readonly class UserService
     public function addFriend(User $user, User $friend): void
     {
         if ($user->getId() === $friend->getId()) {
-            throw new UnprocessableEntityHttpException('Нельзя добавить себя в друзья.');
+            throw new PublicHttpException(422, 'Нельзя добавить себя в друзья.');
         }
 
         if (null !== $this->friendRepository->getFriend($user, $friend)) {
-            throw new ConflictHttpException('Пользователь уже в друзьях.');
+            throw new PublicHttpException(409, 'Пользователь уже в друзьях.');
         }
 
         $userFriend = new UserFriend();
@@ -129,7 +119,7 @@ final readonly class UserService
         $userFriend = $this->friendRepository->getFriend($user, $friend);
 
         if (null === $userFriend) {
-            throw new ConflictHttpException('Пользователь не в друзьях.');
+            throw new PublicHttpException(409, 'Пользователь не в друзьях.');
         }
 
         $user->getFriends()->removeElement($userFriend);

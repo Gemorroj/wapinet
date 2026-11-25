@@ -16,8 +16,9 @@ final readonly class AudioTagsCreateRequest
      */
     public function __construct(
         #[Assert\All([
-            new Assert\File(
+            new Assert\Audio(
                 maxSize: '50M',
+                mimeTypesMessage: 'Файл не является аудиофайлом.',
                 uploadIniSizeErrorMessage: 'Файл слишком большой.',
                 uploadFormSizeErrorMessage: 'Файл слишком большой.',
             ),

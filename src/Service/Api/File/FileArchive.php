@@ -4,13 +4,11 @@ namespace App\Service\Api\File;
 
 use App\Dto\Api\ArchiveEntryResponse;
 use App\Entity\File;
+use App\Exception\PublicHttpException;
 use App\Service\Archiver\Archive7z;
 use Archive7z\Model\Entry;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\File\File as BaseFile;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 final readonly class FileArchive
 {
@@ -31,7 +29,7 @@ final readonly class FileArchive
     {
         try {
             $entries = $this->archive->getEntries($this->archiveFile($file), self::MAX_ENTRIES, $archivePassword);
-        } catch (AccessDeniedHttpException|NotFoundHttpException|UnprocessableEntityHttpException $exception) {
+        } catch (PublicHttpException $exception) {
             throw $exception;
         } catch (\Throwable $exception) {
             throw $this->mapException($exception);
@@ -72,11 +70,11 @@ final readonly class FileArchive
             $entry = $this->findEntry($archiveFile, $path, $archivePassword);
 
             if (null === $entry || $entry->isDirectory()) {
-                throw new NotFoundHttpException('Файл в архиве не найден.');
+                throw new PublicHttpException(404, 'Файл в архиве не найден.');
             }
 
             if ((int) $entry->getSize() > self::MAX_ENTRY_SIZE) {
-                throw new UnprocessableEntityHttpException('Файл в архиве слишком большой.');
+                throw new PublicHttpException(422, 'Файл в архиве слишком большой.');
             }
 
             $entry->extract($targetDir);
@@ -90,11 +88,11 @@ final readonly class FileArchive
                 || !\is_file($target)
                 || !\str_starts_with(\str_replace('\\', '/', $target), \str_replace('\\', '/', $root).'/')
             ) {
-                throw new NotFoundHttpException('Файл в архиве не найден.');
+                throw new PublicHttpException(404, 'Файл в архиве не найден.');
             }
 
             if ((int) \filesize($target) > self::MAX_ENTRY_SIZE) {
-                throw new UnprocessableEntityHttpException('Файл в архиве слишком большой.');
+                throw new PublicHttpException(422, 'Файл в архиве слишком большой.');
             }
 
             $temporaryFile = \tempnam($this->tmpDir, 'archive_');
@@ -111,7 +109,7 @@ final readonly class FileArchive
             }
 
             return $temporaryFile;
-        } catch (AccessDeniedHttpException|NotFoundHttpException|UnprocessableEntityHttpException $exception) {
+        } catch (PublicHttpException $exception) {
             throw $exception;
         } catch (\Throwable $exception) {
             throw $this->mapException($exception);
@@ -130,7 +128,7 @@ final readonly class FileArchive
         $archiveFile = $file->getFile();
 
         if (null === $archiveFile) {
-            throw new NotFoundHttpException('Файл отсутствует на диске.');
+            throw new PublicHttpException(404, 'Файл отсутствует на диске.');
         }
 
         return $archiveFile;
@@ -147,7 +145,7 @@ final readonly class FileArchive
             || 1 === \preg_match('#^[a-zA-Z]:#', $path)
             || 1 === \preg_match('#(^|/)\.\.(/|$)#', $path)
         ) {
-            throw new AccessDeniedHttpException('Недопустимый путь к файлу в архиве.');
+            throw new PublicHttpException(403, 'Недопустимый путь к файлу в архиве.');
         }
 
         return $path;
@@ -158,10 +156,10 @@ final readonly class FileArchive
         $message = \mb_strtolower($exception->getMessage());
 
         if (\str_contains($message, 'password') || \str_contains($message, 'encrypted')) {
-            return new AccessDeniedHttpException('Требуется пароль к архиву или он неверен.', $exception);
+            return new PublicHttpException(403, 'Требуется пароль к архиву или он неверен.', $exception);
         }
 
-        return new UnprocessableEntityHttpException('Не удалось прочитать архив.', $exception);
+        return new PublicHttpException(422, 'Не удалось прочитать архив.', $exception);
     }
 
     private function removeDirectory(string $directory): void

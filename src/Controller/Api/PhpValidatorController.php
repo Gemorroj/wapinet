@@ -4,24 +4,19 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
+use App\Attribute\RateLimitByIp;
 use App\Dto\Api\Validator\PhpValidatorInfoResponse;
 use App\Dto\Api\Validator\ValidatorRequest;
 use App\Dto\Api\Validator\ValidatorResponse;
-use App\Service\Api\RateLimit;
+use App\Exception\PublicHttpException;
 use App\Service\Api\Validator\ValidatorRunnerInterface;
 use App\Service\FileContent\SourceException;
 use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\Cache;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/api/php-validator', name: 'api_php_validator_')]
@@ -40,6 +35,7 @@ final class PhpValidatorController extends AbstractController
     }
 
     #[Route('', name: 'validate', methods: ['POST'])]
+    #[RateLimitByIp('api_php_validator_run')]
     #[OA\RequestBody(
         required: true,
         content: new OA\JsonContent(ref: new Model(type: ValidatorRequest::class)),
@@ -55,19 +51,14 @@ final class PhpValidatorController extends AbstractController
     public function validate(
         #[MapRequestPayload]
         ValidatorRequest $payload,
-        Request $request,
         ValidatorRunnerInterface $runner,
-        #[Autowire(service: 'limiter.api_php_validator_run')]
-        RateLimiterFactory $limiter,
     ): JsonResponse {
-        RateLimit::consumeForIp($limiter, $request);
-
         try {
             return $this->json($runner->validatePhp($payload->code, $payload->url));
         } catch (SourceException $exception) {
-            throw new UnprocessableEntityHttpException($exception->getMessage(), $exception);
+            throw new PublicHttpException(422, $exception->getMessage(), $exception);
         } catch (\Exception $exception) {
-            throw new HttpException(Response::HTTP_BAD_GATEWAY, 'Не удалось проверить PHP-код.', $exception);
+            throw new PublicHttpException(502, 'Не удалось проверить PHP-код.', $exception);
         }
     }
 }

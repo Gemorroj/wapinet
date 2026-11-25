@@ -4,29 +4,28 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
+use App\Attribute\RateLimitByIp;
 use App\Dto\Api\Archiver\ArchiveResponse;
 use App\Dto\Api\Archiver\ArchiveSourceRequest;
+use App\Exception\PublicHttpException;
 use App\Service\Api\Archiver\Archiver;
 use App\Service\Api\Archiver\ArchiveSourceResolver;
-use App\Service\Api\RateLimit;
 use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/api/archiver', name: 'api_archiver_')]
 final class ArchiverController extends AbstractController
 {
     #[Route('/create', name: 'create', methods: ['POST'])]
+    #[RateLimitByIp('api_archiver_write')]
     #[OA\RequestBody(
         required: true,
         content: new OA\MediaType(
@@ -45,18 +44,14 @@ final class ArchiverController extends AbstractController
     public function create(
         #[MapRequestPayload(mapWhenEmpty: true)]
         ArchiveSourceRequest $payload,
-        Request $request,
         Archiver $archiver,
         ArchiveSourceResolver $resolver,
-        #[Autowire(service: 'limiter.api_archiver_write')]
-        RateLimiterFactory $archiverLimiter,
     ): JsonResponse {
-        RateLimit::consumeForIp($archiverLimiter, $request);
-
         return $this->json($archiver->create($resolver->resolve($payload)));
     }
 
     #[Route('/extract', name: 'extract', methods: ['POST'])]
+    #[RateLimitByIp('api_archiver_write')]
     #[OA\RequestBody(
         required: true,
         content: new OA\MediaType(
@@ -75,18 +70,13 @@ final class ArchiverController extends AbstractController
     public function extract(
         #[MapRequestPayload(mapWhenEmpty: true)]
         ArchiveSourceRequest $payload,
-        Request $request,
         Archiver $archiver,
         ArchiveSourceResolver $resolver,
-        #[Autowire(service: 'limiter.api_archiver_write')]
-        RateLimiterFactory $archiverLimiter,
     ): JsonResponse {
-        RateLimit::consumeForIp($archiverLimiter, $request);
-
         $sources = $resolver->resolve($payload);
 
         if (1 !== \count($sources)) {
-            throw new UnprocessableEntityHttpException('Для распаковки выберите один архив.');
+            throw new PublicHttpException(422, 'Для распаковки выберите один архив.');
         }
 
         return $this->json($archiver->extract($sources[0]));
@@ -115,6 +105,7 @@ final class ArchiverController extends AbstractController
     }
 
     #[Route('/{archive}/files', name: 'add', requirements: ['archive' => 'archive[a-z0-9]{8,32}'], methods: ['POST'])]
+    #[RateLimitByIp('api_archiver_write')]
     #[OA\RequestBody(
         required: true,
         content: new OA\MediaType(
@@ -135,14 +126,9 @@ final class ArchiverController extends AbstractController
         string $archive,
         #[MapRequestPayload(mapWhenEmpty: true)]
         ArchiveSourceRequest $payload,
-        Request $request,
         Archiver $archiver,
         ArchiveSourceResolver $resolver,
-        #[Autowire(service: 'limiter.api_archiver_write')]
-        RateLimiterFactory $archiverLimiter,
     ): JsonResponse {
-        RateLimit::consumeForIp($archiverLimiter, $request);
-
         return $this->json($archiver->add($archive, $resolver->resolve($payload)));
     }
 
@@ -160,13 +146,14 @@ final class ArchiverController extends AbstractController
         $path = $request->query->get('path');
 
         if (!\is_string($path) || '' === $path) {
-            throw new UnprocessableEntityHttpException('Не указан файл для удаления.');
+            throw new PublicHttpException(422, 'Не указан файл для удаления.');
         }
 
         return $this->json($archiver->remove($archive, $path));
     }
 
     #[Route('/{archive}/download', name: 'download', requirements: ['archive' => 'archive[a-z0-9]{8,32}'], methods: ['GET'])]
+    #[RateLimitByIp('api_archiver_download')]
     #[OA\Response(
         response: 200,
         description: 'ZIP archive with all files',
@@ -178,13 +165,8 @@ final class ArchiverController extends AbstractController
     #[OA\Response(response: 404, description: 'Archive not found or expired')]
     public function download(
         string $archive,
-        Request $request,
         Archiver $archiver,
-        #[Autowire(service: 'limiter.api_archiver_download')]
-        RateLimiterFactory $downloadLimiter,
     ): BinaryFileResponse {
-        RateLimit::consumeForIp($downloadLimiter, $request);
-
         $response = new BinaryFileResponse($archiver->zip($archive));
         $response->deleteFileAfterSend(true);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $archive.'.zip');
@@ -210,7 +192,7 @@ final class ArchiverController extends AbstractController
         $path = $request->query->get('path');
 
         if (!\is_string($path) || '' === $path) {
-            throw new UnprocessableEntityHttpException('Не указан файл для скачивания.');
+            throw new PublicHttpException(422, 'Не указан файл для скачивания.');
         }
 
         $response = new BinaryFileResponse($archiver->filePath($archive, $path));

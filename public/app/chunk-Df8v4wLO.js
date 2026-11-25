@@ -1,0 +1,1 @@
+import{s as Q}from"./chunk-03jz_qw7.js";import{Dr as QI,Gi as h,_a as nr,bi as a7,wr as Q$1,xr as Oi}from"./main-OKUHWTJG.js";function y(){let o=h(Q,{optional:!0}),f=o?.control()||h(nr,{optional:!0}),p=QI(a7(f,h(Oi)),{requireSync:!0});return Q$1(()=>{let r=o?.child();return r?r.value():p()})}export{y as t};

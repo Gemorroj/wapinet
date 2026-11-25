@@ -212,6 +212,16 @@ final class AudioTagsControllerTest extends WebTestCaseWapinet
         static::assertResponseStatusCodeSame(422);
     }
 
+    public function testRejectsNonAudioFile(): void
+    {
+        $client = static::createClient();
+        $client->request('POST', '/api/audio-tags', [], [
+            'files' => [$this->upload($this->getFixturesPath().'/encrypted.7z', 'sample.7z', 'application/x-7z-compressed')],
+        ]);
+
+        static::assertResponseStatusCodeSame(422);
+    }
+
     public function testRejectsBlockedUrl(): void
     {
         $client = static::createClient();

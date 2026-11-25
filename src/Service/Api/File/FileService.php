@@ -7,6 +7,7 @@ use App\Dto\Api\File\FileUpdateRequest;
 use App\Entity\File;
 use App\Entity\FileTags;
 use App\Entity\User;
+use App\Exception\PublicHttpException;
 use App\Message\FileAddMessage;
 use App\Message\FileConvertMessage;
 use App\Message\FilePrepareMessage;
@@ -17,9 +18,6 @@ use App\Service\MimeGuesser;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -43,7 +41,7 @@ final readonly class FileService
     {
         $uploadedFile = $this->uploadedFile($payload->file, $payload->url);
         if (null === $uploadedFile) {
-            throw new UnprocessableEntityHttpException('Укажите файл или ссылку.');
+            throw new PublicHttpException(422, 'Укажите файл или ссылку.');
         }
 
         $hash = $this->hash($uploadedFile);
@@ -82,7 +80,7 @@ final readonly class FileService
     public function update(File $file, FileUpdateRequest $payload): void
     {
         if (null !== $payload->file && null !== $payload->url && '' !== $payload->url) {
-            throw new UnprocessableEntityHttpException('Укажите только файл или только ссылку.');
+            throw new PublicHttpException(422, 'Укажите только файл или только ссылку.');
         }
 
         $oldFile = clone $file;
@@ -106,7 +104,7 @@ final readonly class FileService
 
         if (null !== $payload->hidden) {
             if (!$this->authorizationChecker->isGranted('ROLE_ADMIN')) {
-                throw new AccessDeniedHttpException('Только администраторы могут менять видимость файла.');
+                throw new PublicHttpException(403, 'Только администраторы могут менять видимость файла.');
             }
 
             $file->setHidden($payload->hidden);
@@ -217,7 +215,7 @@ final readonly class FileService
         $existing = $this->fileRepository->findOneBy(['hash' => $hash]);
 
         if (null !== $existing && $existing !== $current) {
-            throw new ConflictHttpException('Файл с таким содержимым уже существует.');
+            throw new PublicHttpException(409, 'Файл с таким содержимым уже существует.');
         }
     }
 

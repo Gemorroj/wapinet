@@ -1,0 +1,1 @@
+import{Gi as h,_r as O,jt as Z,pt as Bt}from"./main-OKUHWTJG.js";var n=class e{api=h(Bt);list(r={}){return this.api.invoke(Z,r)}static ɵfac=function(p){return new(p||e)};static ɵprov=O({token:e,factory:e.ɵfac,providedIn:`root`})};export{n as t};

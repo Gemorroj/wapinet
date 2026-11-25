@@ -3,11 +3,10 @@
 namespace App\Service\Api\File;
 
 use App\Entity\File;
+use App\Exception\PublicHttpException;
 use App\Security\FileVoter;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 
 final readonly class FileAccess
@@ -23,7 +22,7 @@ final readonly class FileAccess
         $privileged = $this->security->isGranted(FileVoter::VIEW, $file);
 
         if ($file->isHidden() && !$privileged) {
-            throw new NotFoundHttpException('Файл не найден.');
+            throw new PublicHttpException(404, 'Файл не найден.');
         }
 
         if (null === $file->getPassword() || $privileged) {
@@ -33,13 +32,13 @@ final readonly class FileAccess
         $password = $request->headers->get('X-File-Password') ?? (string) $request->query->get('password', '');
 
         if ('' === $password) {
-            throw new AccessDeniedHttpException('Для доступа к файлу требуется пароль.');
+            throw new PublicHttpException(403, 'Для доступа к файлу требуется пароль.');
         }
 
         $hasher = $this->passwordHasherFactory->getPasswordHasher($file);
 
         if (!$hasher->verify($file->getPassword(), $password)) {
-            throw new AccessDeniedHttpException('Неверный пароль к файлу.');
+            throw new PublicHttpException(403, 'Неверный пароль к файлу.');
         }
     }
 }

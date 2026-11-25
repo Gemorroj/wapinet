@@ -4,26 +4,25 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
+use App\Attribute\RateLimitByVisitor;
 use App\Dto\Api\Bbcode\BbcodePreviewRequest;
 use App\Dto\Api\Bbcode\BbcodePreviewResponse;
 use App\Entity\User;
-use App\Service\Api\RateLimit;
 use App\Service\Bbcode;
 use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route('/api/bbcode', name: 'api_bbcode_')]
 #[OA\Tag(name: 'BBCode')]
 final class BbcodeController extends AbstractController
 {
     #[Route('/preview', name: 'preview', methods: ['POST'])]
+    #[RateLimitByVisitor('api_bbcode_preview')]
     #[OA\RequestBody(
         required: true,
         content: new OA\JsonContent(ref: new Model(type: BbcodePreviewRequest::class)),
@@ -38,15 +37,10 @@ final class BbcodeController extends AbstractController
     public function preview(
         #[MapRequestPayload]
         BbcodePreviewRequest $payload,
-        Request $request,
+        #[CurrentUser]
+        ?User $user,
         Bbcode $bbcode,
-        #[Autowire(service: 'limiter.api_bbcode_preview')]
-        RateLimiterFactory $previewLimiter,
     ): JsonResponse {
-        $user = $this->getUser();
-
-        RateLimit::consumeForVisitor($previewLimiter, $request, $user instanceof User ? $user : null);
-
         return $this->json(new BbcodePreviewResponse($bbcode->render($payload->text)));
     }
 }

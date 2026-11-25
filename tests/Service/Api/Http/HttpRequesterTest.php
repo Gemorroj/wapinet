@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Service\Api\Http;
 
 use App\Dto\Api\Http\HttpCallRequest;
+use App\Exception\PublicHttpException;
 use App\Service\Api\Http\HttpRequester;
 use App\Service\Network\DnsLookup;
 use App\Service\Network\OutboundUrlGuard;
@@ -12,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 final class HttpRequesterTest extends TestCase
 {
@@ -182,35 +182,35 @@ final class HttpRequesterTest extends TestCase
 
     public function testRejectsPrivateUrl(): void
     {
-        $this->expectException(UnprocessableEntityHttpException::class);
+        $this->expectException(PublicHttpException::class);
 
         $this->requester(new MockHttpClient())->send(new HttpCallRequest(url: 'http://127.0.0.1/'));
     }
 
     public function testRejectsInvalidMethod(): void
     {
-        $this->expectException(UnprocessableEntityHttpException::class);
+        $this->expectException(PublicHttpException::class);
 
         $this->requester(new MockHttpClient())->send(new HttpCallRequest(url: 'http://8.8.8.8/', method: 'GE T'));
     }
 
     public function testRejectsConnectMethod(): void
     {
-        $this->expectException(UnprocessableEntityHttpException::class);
+        $this->expectException(PublicHttpException::class);
 
         $this->requester(new MockHttpClient())->send(new HttpCallRequest(url: 'http://8.8.8.8/', method: 'CONNECT'));
     }
 
     public function testRejectsMalformedHeader(): void
     {
-        $this->expectException(UnprocessableEntityHttpException::class);
+        $this->expectException(PublicHttpException::class);
 
         $this->requester(new MockHttpClient())->send(new HttpCallRequest(url: 'http://8.8.8.8/', headers: 'Bad header'));
     }
 
     public function testRejectsInvalidBase64Body(): void
     {
-        $this->expectException(UnprocessableEntityHttpException::class);
+        $this->expectException(PublicHttpException::class);
 
         $this->requester(new MockHttpClient())->send(new HttpCallRequest(url: 'http://8.8.8.8/', body: '!!!', bodyEncoding: 'base64'));
     }
@@ -221,7 +221,7 @@ final class HttpRequesterTest extends TestCase
             (string) \json_encode(['Status' => 0, 'Answer' => [['name' => 'internal.test', 'type' => 1, 'data' => '10.0.0.1']]]),
         ));
 
-        $this->expectException(UnprocessableEntityHttpException::class);
+        $this->expectException(PublicHttpException::class);
 
         $this->requester($client)->send(new HttpCallRequest(url: 'http://internal.test/'));
     }

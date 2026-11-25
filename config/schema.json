@@ -559,7 +559,8 @@
                                         "additionalProperties": {
                                             "$ref": "#/$defs/types/variable"
                                         },
-                                        "minProperties": 1
+                                        "minProperties": 1,
+                                        "minItems": 1
                                     }
                                 },
                                 "patternProperties": {
@@ -1298,7 +1299,8 @@
                                                 "identity_generation_preferences": []
                                             }
                                         },
-                                        "minProperties": 1
+                                        "minProperties": 1,
+                                        "minItems": 1
                                     },
                                     "resolve_target_entities": {
                                         "$ref": "#/$defs/types/object_null",
@@ -2764,7 +2766,7 @@
                                     },
                                     "save_path": {
                                         "$ref": "#/$defs/types/scalar",
-                                        "description": "Defaults to \"%kernel.cache_dir%/sessions\" if the \"handler_id\" option is not null."
+                                        "description": "Defaults to \"%kernel.share_dir%/sessions\" if the \"handler_id\" option is not null."
                                     },
                                     "metadata_update_threshold": {
                                         "$ref": "#/$defs/types/integer",
@@ -6569,7 +6571,8 @@
                                     "!php/enum Symfony\\Component\\Security\\Http\\Authentication\\ExposeSecurityLevel::AccountStatus",
                                     "account_status",
                                     "!php/enum Symfony\\Component\\Security\\Http\\Authentication\\ExposeSecurityLevel::All",
-                                    "all"
+                                    "all",
+                                    null
                                 ]
                             },
                             {
@@ -6700,6 +6703,7 @@
                             ]
                         },
                         "minProperties": 1,
+                        "minItems": 1,
                         "examples": [
                             {
                                 "App\\Entity\\User1": "auto",
@@ -6927,6 +6931,7 @@
                             "additionalProperties": false
                         },
                         "minProperties": 1,
+                        "minItems": 1,
                         "examples": [
                             {
                                 "my_memory_provider": {
@@ -9386,7 +9391,8 @@
                             },
                             "additionalProperties": false
                         },
-                        "minProperties": 1
+                        "minProperties": 1,
+                        "minItems": 1
                     },
                     "access_control": {
                         "$ref": "#/$defs/types/array_null",

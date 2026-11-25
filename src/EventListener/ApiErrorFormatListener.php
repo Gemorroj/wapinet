@@ -4,13 +4,13 @@ namespace App\EventListener;
 
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * Keeps API responses JSON and renders errors as RFC 9457 problem+json.
+ * Keeps API error responses JSON: the error renderer uses Accept to pick the format.
  *
- * The error body itself is produced by Symfony's built-in ProblemNormalizer.
+ * The problem+json body and Content-Type are set by the error renderer
+ * or by the API security handlers, never here.
  */
 final class ApiErrorFormatListener
 {
@@ -23,23 +23,6 @@ final class ApiErrorFormatListener
             return;
         }
 
-        // ErrorRenderer uses Accept to pick the format; never fall back to HTML.
         $request->headers->set('Accept', 'application/json');
-    }
-
-    #[AsEventListener(event: KernelEvents::RESPONSE, priority: -100)]
-    public function onResponse(ResponseEvent $event): void
-    {
-        $request = $event->getRequest();
-
-        if (!\str_starts_with($request->getPathInfo(), '/api')) {
-            return;
-        }
-
-        $response = $event->getResponse();
-
-        if ($response->getStatusCode() >= 400) {
-            $response->headers->set('Content-Type', 'application/problem+json');
-        }
     }
 }

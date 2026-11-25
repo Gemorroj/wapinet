@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
+use App\Attribute\RateLimitByUser;
 use App\Dto\Api\Gist\GistCreateRequest;
 use App\Dto\Api\Gist\GistListQuery;
 use App\Dto\Api\Gist\GistListResponse;
@@ -11,6 +12,7 @@ use App\Dto\Api\Gist\GistResponse;
 use App\Dto\Api\Gist\GistUpdateRequest;
 use App\Entity\Gist;
 use App\Entity\User;
+use App\Exception\PublicHttpException;
 use App\Repository\GistRepository;
 use App\Repository\UserRepository;
 use App\Security\GistVoter;
@@ -28,7 +30,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
-use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -57,7 +58,7 @@ final class GistsController extends AbstractController
             try {
                 return $this->json($gistSearch->search($query));
             } catch (SearchUnavailableException $exception) {
-                throw new ServiceUnavailableHttpException(null, 'Search engine is unavailable.', $exception);
+                throw new PublicHttpException(503, 'Search engine is unavailable.', $exception);
             }
         }
 
@@ -108,6 +109,7 @@ final class GistsController extends AbstractController
     }
 
     #[Route('', name: 'create', methods: ['POST'])]
+    #[RateLimitByUser('api_gists_create')]
     #[OA\RequestBody(
         required: true,
         content: new OA\JsonContent(ref: new Model(type: GistCreateRequest::class)),

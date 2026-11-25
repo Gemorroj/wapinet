@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Attribute\RateLimitByVisitor;
 use App\Dto\Api\File\ArchiveListResponse;
 use App\Dto\Api\File\FileCreateRequest;
 use App\Dto\Api\File\FileListQuery;
@@ -13,6 +14,7 @@ use App\Dto\Api\File\FileUpdateRequest;
 use App\Entity\File;
 use App\Entity\User;
 use App\Enum\FileCategory;
+use App\Exception\PublicHttpException;
 use App\Repository\FileRepository;
 use App\Security\FileVoter;
 use App\Service\Api\File\FileAccess;
@@ -35,10 +37,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/api/files', name: 'api_files_')]
@@ -63,7 +63,7 @@ final class FilesController extends AbstractController
         $user = $this->getUser();
 
         if ($query->filter->mine && !$user instanceof User) {
-            throw new UnauthorizedHttpException('Bearer', 'Для просмотра своих файлов требуется авторизация.');
+            throw PublicHttpException::unauthorized('Bearer', 'Для просмотра своих файлов требуется авторизация.');
         }
 
         $viewer = $user instanceof User ? $user : null;
@@ -72,7 +72,7 @@ final class FilesController extends AbstractController
             try {
                 return $this->json($fileSearch->search($query));
             } catch (SearchUnavailableException $exception) {
-                throw new ServiceUnavailableHttpException(null, 'Поиск временно недоступен.', $exception);
+                throw new PublicHttpException(503, 'Поиск временно недоступен.', $exception);
             }
         }
 
@@ -149,6 +149,7 @@ final class FilesController extends AbstractController
     }
 
     #[Route('', name: 'create', methods: ['POST'])]
+    #[RateLimitByVisitor('api_files_upload')]
     #[OA\RequestBody(
         required: true,
         content: new OA\MediaType(
@@ -170,13 +171,12 @@ final class FilesController extends AbstractController
         #[MapRequestPayload(mapWhenEmpty: true)]
         FileCreateRequest $payload,
         Request $request,
+        #[CurrentUser]
+        ?User $user,
         FileService $fileService,
         FilePresenter $presenter,
         FileUploadGuard $uploadGuard,
     ): JsonResponse {
-        $user = $this->getUser();
-        $user = $user instanceof User ? $user : null;
-
         $uploadGuard->assertCanUpload($request, $user, $payload->captchaToken);
 
         $file = $fileService->create($payload, $request, $user);
@@ -253,7 +253,7 @@ final class FilesController extends AbstractController
         $path = $file->getFile()?->getRealPath();
 
         if (false === $path || null === $path || !\is_file($path)) {
-            throw new NotFoundHttpException('Файл отсутствует на диске.');
+            throw new PublicHttpException(404, 'Файл отсутствует на диске.');
         }
 
         $response = new BinaryFileResponse($path);

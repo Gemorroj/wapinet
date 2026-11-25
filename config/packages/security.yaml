@@ -38,8 +38,12 @@ security:
             pattern: ^/api
             stateless: true
             provider: wapinet_user_provider
+            # JSON problem+json for security failures of the stateless API.
+            entry_point: App\Security\ApiAuthenticationEntryPoint
+            access_denied_handler: App\Security\ApiAccessDeniedHandler
             access_token:
                 token_handler: App\Security\ApiTokenHandler
+                failure_handler: App\Security\ApiAccessTokenFailureHandler
         admin:
             pattern: ^/admin
             provider: wapinet_user_provider

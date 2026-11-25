@@ -38,6 +38,12 @@ services:
         tags:
             - { name: nelmio_api_doc.swagger.processor, priority: -10 }
 
+    # Adds public messages of PublicErrorInterface exceptions to problem+json,
+    # including in production where Symfony would render the status text.
+    App\Serializer\ApiProblemNormalizer:
+        decorates: serializer.normalizer.problem
+        arguments: ['@.inner']
+
 when@test:
     services:
         App\Tests\Stub\SearchEngineStub: ~

@@ -8,31 +8,24 @@ use App\Dto\Api\Gist\GistCreateRequest;
 use App\Dto\Api\Gist\GistUpdateRequest;
 use App\Entity\Gist;
 use App\Entity\User;
+use App\Exception\PublicHttpException;
 use App\Message\GistAddMessage;
-use App\Service\Api\RateLimit;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
 
 final readonly class GistService
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
         private MessageBusInterface $messageBus,
-        #[Autowire(service: 'limiter.api_gists_create')]
-        private RateLimiterFactory $gistLimiter,
     ) {
     }
 
     public function create(GistCreateRequest $payload, Request $request, User $user): Gist
     {
-        RateLimit::consumeForUser($this->gistLimiter, $user);
-
         if ('' !== \trim((string) $payload->bCheck)) {
-            throw new AccessDeniedHttpException('Spam detected.');
+            throw new PublicHttpException(403, 'Spam detected.');
         }
 
         $gist = new Gist();
