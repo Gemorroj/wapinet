@@ -4183,7 +4183,7 @@
         },
         {
             "name": "symfony/clock",
-            "version": "v8.2.0-BETA1",
+            "version": "v8.2.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/clock.git",
@@ -4236,7 +4236,7 @@
                 "time"
             ],
             "support": {
-                "source": "https://github.com/symfony/clock/tree/v8.2.0-BETA1"
+                "source": "https://github.com/symfony/clock/tree/v8.2.0-RC1"
             },
             "funding": [
                 {
@@ -4257,7 +4257,7 @@
                 }
             ],
             "time": "2026-10-12T14:32:11+00:00",
-            "published-time": "2026-11-04T12:36:04+00:00"
+            "published-time": "2026-11-27T11:40:20+00:00"
         },
         {
             "name": "symfony/config",
@@ -4709,7 +4709,7 @@
         },
         {
             "name": "symfony/doctrine-messenger",
-            "version": "v8.2.0-BETA2",
+            "version": "v8.2.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/doctrine-messenger.git",
@@ -4760,7 +4760,7 @@
             "description": "Symfony Doctrine Messenger Bridge",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/doctrine-messenger/tree/v8.2.0-BETA2"
+                "source": "https://github.com/symfony/doctrine-messenger/tree/v8.2.0-RC1"
             },
             "funding": [
                 {
@@ -4781,11 +4781,11 @@
                 }
             ],
             "time": "2026-11-10T01:09:09+00:00",
-            "published-time": "2026-11-13T17:30:27+00:00"
+            "published-time": "2026-11-27T11:40:31+00:00"
         },
         {
             "name": "symfony/dotenv",
-            "version": "v8.2.0-BETA1",
+            "version": "v8.2.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dotenv.git",
@@ -4838,7 +4838,7 @@
                 "environment"
             ],
             "support": {
-                "source": "https://github.com/symfony/dotenv/tree/v8.2.0-BETA1"
+                "source": "https://github.com/symfony/dotenv/tree/v8.2.0-RC1"
             },
             "funding": [
                 {
@@ -4859,11 +4859,11 @@
                 }
             ],
             "time": "2026-10-22T16:53:57+00:00",
-            "published-time": "2026-11-04T12:35:43+00:00"
+            "published-time": "2026-11-27T11:40:36+00:00"
         },
         {
             "name": "symfony/error-handler",
-            "version": "v8.2.0-BETA1",
+            "version": "v8.2.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/error-handler.git",
@@ -4920,7 +4920,7 @@
             "description": "Provides tools to manage errors and ease debugging PHP code",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/error-handler/tree/v8.2.0-BETA1"
+                "source": "https://github.com/symfony/error-handler/tree/v8.2.0-RC1"
             },
             "funding": [
                 {
@@ -4941,11 +4941,11 @@
                 }
             ],
             "time": "2026-10-29T22:32:57+00:00",
-            "published-time": "2026-11-04T12:34:08+00:00"
+            "published-time": "2026-11-27T11:40:41+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v8.2.0-BETA1",
+            "version": "v8.2.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -5009,7 +5009,7 @@
             "description": "Provides tools that allow your application components to communicate with each other by dispatching events and listening to them",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/event-dispatcher/tree/v8.2.0-BETA1"
+                "source": "https://github.com/symfony/event-dispatcher/tree/v8.2.0-RC1"
             },
             "funding": [
                 {
@@ -5030,7 +5030,7 @@
                 }
             ],
             "time": "2026-11-04T11:35:44+00:00",
-            "published-time": "2026-11-04T12:36:31+00:00"
+            "published-time": "2026-11-27T11:40:46+00:00"
         },
         {
             "name": "symfony/event-dispatcher-contracts",
@@ -6439,7 +6439,7 @@
         },
         {
             "name": "symfony/monolog-bridge",
-            "version": "v8.2.0-BETA1",
+            "version": "v8.2.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/monolog-bridge.git",
@@ -6498,7 +6498,7 @@
             "description": "Provides integration for Monolog with various Symfony components",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/monolog-bridge/tree/v8.2.0-BETA1"
+                "source": "https://github.com/symfony/monolog-bridge/tree/v8.2.0-RC1"
             },
             "funding": [
                 {
@@ -6519,7 +6519,7 @@
                 }
             ],
             "time": "2026-10-22T16:53:57+00:00",
-            "published-time": "2026-11-04T12:34:01+00:00"
+            "published-time": "2026-11-27T11:42:17+00:00"
         },
         {
             "name": "symfony/monolog-bundle",
@@ -6603,16 +6603,16 @@
         },
         {
             "name": "symfony/options-resolver",
-            "version": "v8.2.0-BETA1",
+            "version": "v8.2.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/options-resolver.git",
-                "reference": "6c54d178f3ba9f95dca6eb4544a79c0fa447a532"
+                "reference": "0a2aa769aced59924bbf5a370aa3def83c836a0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/6c54d178f3ba9f95dca6eb4544a79c0fa447a532",
-                "reference": "6c54d178f3ba9f95dca6eb4544a79c0fa447a532",
+                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/0a2aa769aced59924bbf5a370aa3def83c836a0f",
+                "reference": "0a2aa769aced59924bbf5a370aa3def83c836a0f",
                 "shasum": ""
             },
             "require": {
@@ -6650,7 +6650,7 @@
                 "options"
             ],
             "support": {
-                "source": "https://github.com/symfony/options-resolver/tree/v8.2.0-BETA1"
+                "source": "https://github.com/symfony/options-resolver/tree/v8.2.0-RC1"
             },
             "funding": [
                 {
@@ -6670,12 +6670,12 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-10-28T08:10:05+00:00",
-            "published-time": "2026-11-04T12:39:20+00:00"
+            "time": "2026-11-06T11:00:24+00:00",
+            "published-time": "2026-11-27T11:42:27+00:00"
         },
         {
             "name": "symfony/password-hasher",
-            "version": "v8.2.0-BETA1",
+            "version": "v8.2.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/password-hasher.git",
@@ -6728,7 +6728,7 @@
                 "password"
             ],
             "support": {
-                "source": "https://github.com/symfony/password-hasher/tree/v8.2.0-BETA1"
+                "source": "https://github.com/symfony/password-hasher/tree/v8.2.0-RC1"
             },
             "funding": [
                 {
@@ -6749,7 +6749,7 @@
                 }
             ],
             "time": "2026-10-22T16:53:57+00:00",
-            "published-time": "2026-11-04T12:39:17+00:00"
+            "published-time": "2026-11-27T11:42:32+00:00"
         },
         {
             "name": "symfony/polyfill-deepclone",
@@ -7348,7 +7348,7 @@
         },
         {
             "name": "symfony/runtime",
-            "version": "v8.2.0-BETA2",
+            "version": "v8.2.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/runtime.git",
@@ -7408,7 +7408,7 @@
                 "runtime"
             ],
             "support": {
-                "source": "https://github.com/symfony/runtime/tree/v8.2.0-BETA2"
+                "source": "https://github.com/symfony/runtime/tree/v8.2.0-RC1"
             },
             "funding": [
                 {
@@ -7429,7 +7429,7 @@
                 }
             ],
             "time": "2026-11-12T16:19:10+00:00",
-            "published-time": "2026-11-13T17:31:52+00:00"
+            "published-time": "2026-11-27T11:42:59+00:00"
         },
         {
             "name": "symfony/scheduler",
@@ -7723,7 +7723,7 @@
         },
         {
             "name": "symfony/security-csrf",
-            "version": "v8.2.0-BETA1",
+            "version": "v8.2.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/security-csrf.git",
@@ -7772,7 +7772,7 @@
             "description": "Symfony Security Component - CSRF Library",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/security-csrf/tree/v8.2.0-BETA1"
+                "source": "https://github.com/symfony/security-csrf/tree/v8.2.0-RC1"
             },
             "funding": [
                 {
@@ -7793,7 +7793,7 @@
                 }
             ],
             "time": "2026-08-03T16:34:37+00:00",
-            "published-time": "2026-11-04T12:38:43+00:00"
+            "published-time": "2026-11-27T11:43:06+00:00"
         },
         {
             "name": "symfony/security-http",
@@ -8714,7 +8714,7 @@
         },
         {
             "name": "symfony/uid",
-            "version": "v8.2.0-BETA1",
+            "version": "v8.2.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/uid.git",
@@ -8774,7 +8774,7 @@
                 "uuid"
             ],
             "support": {
-                "source": "https://github.com/symfony/uid/tree/v8.2.0-BETA1"
+                "source": "https://github.com/symfony/uid/tree/v8.2.0-RC1"
             },
             "funding": [
                 {
@@ -8795,7 +8795,7 @@
                 }
             ],
             "time": "2026-10-22T16:53:57+00:00",
-            "published-time": "2026-11-04T12:37:25+00:00"
+            "published-time": "2026-11-27T11:43:56+00:00"
         },
         {
             "name": "symfony/ux-twig-component",
@@ -8993,7 +8993,7 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v8.2.0-BETA2",
+            "version": "v8.2.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
@@ -9057,7 +9057,7 @@
                 "dump"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-dumper/tree/v8.2.0-BETA2"
+                "source": "https://github.com/symfony/var-dumper/tree/v8.2.0-RC1"
             },
             "funding": [
                 {
@@ -9078,11 +9078,11 @@
                 }
             ],
             "time": "2026-11-12T10:33:36+00:00",
-            "published-time": "2026-11-13T17:31:21+00:00"
+            "published-time": "2026-11-27T11:44:01+00:00"
         },
         {
             "name": "symfony/var-exporter",
-            "version": "v8.2.0-BETA1",
+            "version": "v8.2.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-exporter.git",
@@ -9141,7 +9141,7 @@
                 "serialize"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-exporter/tree/v8.2.0-BETA1"
+                "source": "https://github.com/symfony/var-exporter/tree/v8.2.0-RC1"
             },
             "funding": [
                 {
@@ -9162,7 +9162,7 @@
                 }
             ],
             "time": "2026-10-22T14:35:59+00:00",
-            "published-time": "2026-11-04T12:38:03+00:00"
+            "published-time": "2026-11-27T11:44:02+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -12973,7 +12973,7 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v8.2.0-BETA2",
+            "version": "v8.2.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
@@ -13022,7 +13022,7 @@
             "description": "Simulates the behavior of a web browser, allowing you to make requests, click on links and submit forms programmatically",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/browser-kit/tree/v8.2.0-BETA2"
+                "source": "https://github.com/symfony/browser-kit/tree/v8.2.0-RC1"
             },
             "funding": [
                 {
@@ -13043,11 +13043,11 @@
                 }
             ],
             "time": "2026-11-12T10:33:36+00:00",
-            "published-time": "2026-11-13T17:32:28+00:00"
+            "published-time": "2026-11-27T11:40:14+00:00"
         },
         {
             "name": "symfony/css-selector",
-            "version": "v8.2.0-BETA1",
+            "version": "v8.2.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -13092,7 +13092,7 @@
             "description": "Converts CSS selectors to XPath expressions",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/css-selector/tree/v8.2.0-BETA1"
+                "source": "https://github.com/symfony/css-selector/tree/v8.2.0-RC1"
             },
             "funding": [
                 {
@@ -13113,7 +13113,7 @@
                 }
             ],
             "time": "2026-10-18T14:56:39+00:00",
-            "published-time": "2026-11-04T12:38:35+00:00"
+            "published-time": "2026-11-27T11:40:29+00:00"
         },
         {
             "name": "symfony/debug-bundle",
@@ -13193,7 +13193,7 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v8.2.0-BETA1",
+            "version": "v8.2.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
@@ -13239,7 +13239,7 @@
             "description": "Eases DOM navigation for HTML and XML documents",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/dom-crawler/tree/v8.2.0-BETA1"
+                "source": "https://github.com/symfony/dom-crawler/tree/v8.2.0-RC1"
             },
             "funding": [
                 {
@@ -13260,7 +13260,7 @@
                 }
             ],
             "time": "2026-10-28T08:03:22+00:00",
-            "published-time": "2026-11-04T12:34:53+00:00"
+            "published-time": "2026-11-27T11:40:35+00:00"
         },
         {
             "name": "symfony/maker-bundle",
