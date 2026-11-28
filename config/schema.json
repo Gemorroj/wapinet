@@ -465,56 +465,6 @@
                 },
                 "additionalProperties": false
             },
-            "debug": {
-                "$ref": "#/$defs/types/object_null",
-                "properties": {
-                    "max_items": {
-                        "$ref": "#/$defs/types/integer",
-                        "minimum": -1,
-                        "default": 2500,
-                        "description": "Max number of displayed items past the first level, -1 means no limit."
-                    },
-                    "min_depth": {
-                        "$ref": "#/$defs/types/integer",
-                        "minimum": 0,
-                        "default": 1,
-                        "description": "Minimum tree depth to clone all the items, 1 is default."
-                    },
-                    "max_string_length": {
-                        "$ref": "#/$defs/types/integer",
-                        "minimum": -1,
-                        "default": -1,
-                        "description": "Max length of displayed strings, -1 means no limit."
-                    },
-                    "dump_destination": {
-                        "$ref": "#/$defs/types/scalar",
-                        "default": null,
-                        "description": "A stream URL where dumps should be written to.",
-                        "examples": [
-                            "php://stderr, or tcp://%env(VAR_DUMPER_SERVER)% when using the \"server:dump\" command"
-                        ]
-                    },
-                    "theme": {
-                        "anyOf": [
-                            {
-                                "enum": [
-                                    "dark",
-                                    "light"
-                                ]
-                            },
-                            {
-                                "$ref": "#/$defs/types/param"
-                            }
-                        ],
-                        "default": "dark",
-                        "description": "Changes the color of the dump() output when rendered directly on the templating. \"dark\" (default) or \"light\".",
-                        "examples": [
-                            "dark"
-                        ]
-                    }
-                },
-                "additionalProperties": false
-            },
             "doctrine": {
                 "$ref": "#/$defs/types/object_null",
                 "properties": {
@@ -11356,49 +11306,6 @@
                     }
                 },
                 "additionalProperties": false
-            },
-            "web_profiler": {
-                "$ref": "#/$defs/types/object_null",
-                "properties": {
-                    "toolbar": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/$defs/types/object_null",
-                                "properties": {
-                                    "enabled": {
-                                        "$ref": "#/$defs/types/boolean",
-                                        "default": false
-                                    },
-                                    "ajax_replace": {
-                                        "$ref": "#/$defs/types/boolean",
-                                        "default": false,
-                                        "description": "Replace toolbar on AJAX requests"
-                                    }
-                                },
-                                "additionalProperties": false
-                            },
-                            {
-                                "type": [
-                                    "boolean"
-                                ]
-                            }
-                        ],
-                        "default": {
-                            "enabled": false,
-                            "ajax_replace": false
-                        },
-                        "description": "Profiler toolbar configuration"
-                    },
-                    "intercept_redirects": {
-                        "$ref": "#/$defs/types/boolean",
-                        "default": false
-                    },
-                    "excluded_ajax_paths": {
-                        "$ref": "#/$defs/types/scalar",
-                        "default": "^/((index|app(_[\\w]+)?)\\.php/)?_wdt"
-                    }
-                },
-                "additionalProperties": false
             }
         }
     },
@@ -11491,9 +11398,6 @@
                 "cache": {
                     "$ref": "#/$defs/nodes/cache"
                 },
-                "debug": {
-                    "$ref": "#/$defs/nodes/debug"
-                },
                 "doctrine": {
                     "$ref": "#/$defs/nodes/doctrine"
                 },
@@ -11571,99 +11475,6 @@
                 },
                 "vich_uploader": {
                     "$ref": "#/$defs/nodes/vich_uploader"
-                },
-                "web_profiler": {
-                    "$ref": "#/$defs/nodes/web_profiler"
-                }
-            },
-            "additionalProperties": false
-        },
-        "when@test": {
-            "$ref": "#/$defs/types/object_null",
-            "properties": {
-                "asset": {
-                    "$ref": "#/$defs/nodes/asset"
-                },
-                "cache": {
-                    "$ref": "#/$defs/nodes/cache"
-                },
-                "doctrine": {
-                    "$ref": "#/$defs/nodes/doctrine"
-                },
-                "doctrine_migrations": {
-                    "$ref": "#/$defs/nodes/doctrine_migrations"
-                },
-                "framework": {
-                    "$ref": "#/$defs/nodes/framework"
-                },
-                "http_client": {
-                    "$ref": "#/$defs/nodes/http_client"
-                },
-                "imports": true,
-                "liip_imagine": {
-                    "$ref": "#/$defs/nodes/liip_imagine"
-                },
-                "mailer": {
-                    "$ref": "#/$defs/nodes/mailer"
-                },
-                "messenger": {
-                    "$ref": "#/$defs/nodes/messenger"
-                },
-                "monolog": {
-                    "$ref": "#/$defs/nodes/monolog"
-                },
-                "nelmio_api_doc": {
-                    "$ref": "#/$defs/nodes/nelmio_api_doc"
-                },
-                "parameters": true,
-                "property_access": {
-                    "$ref": "#/$defs/nodes/property_access"
-                },
-                "property_info": {
-                    "$ref": "#/$defs/nodes/property_info"
-                },
-                "rate_limiter": {
-                    "$ref": "#/$defs/nodes/rate_limiter"
-                },
-                "router": {
-                    "$ref": "#/$defs/nodes/router"
-                },
-                "scheduler": {
-                    "$ref": "#/$defs/nodes/scheduler"
-                },
-                "security": {
-                    "$ref": "#/$defs/nodes/security"
-                },
-                "serializer": {
-                    "$ref": "#/$defs/nodes/serializer"
-                },
-                "services": true,
-                "translation": {
-                    "$ref": "#/$defs/nodes/translation"
-                },
-                "twig": {
-                    "$ref": "#/$defs/nodes/twig"
-                },
-                "twig_component": {
-                    "$ref": "#/$defs/nodes/twig_component"
-                },
-                "twig_extra": {
-                    "$ref": "#/$defs/nodes/twig_extra"
-                },
-                "type_info": {
-                    "$ref": "#/$defs/nodes/type_info"
-                },
-                "uid": {
-                    "$ref": "#/$defs/nodes/uid"
-                },
-                "validation": {
-                    "$ref": "#/$defs/nodes/validation"
-                },
-                "vich_uploader": {
-                    "$ref": "#/$defs/nodes/vich_uploader"
-                },
-                "web_profiler": {
-                    "$ref": "#/$defs/nodes/web_profiler"
                 }
             },
             "additionalProperties": false

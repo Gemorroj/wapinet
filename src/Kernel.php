@@ -48,10 +48,22 @@ class Kernel extends BaseKernel
     {
         $parameters = parent::getKernelParameters();
 
+        if (($allowedEnvs = $this->getAllowedEnvs()) && !\in_array($this->environment, $allowedEnvs, true)) {
+            throw new \InvalidArgumentException(\sprintf('The environment "%s" is not registered as allowed by "%s::getAllowedEnvs()".', $this->environment, static::class));
+        }
+
         foreach (self::TMP_DIRECTORIES as $name => $dir) {
             $parameters[$name] = $this->getProjectDir().'/var/'.$dir;
         }
 
         return $parameters;
+    }
+
+    /**
+     * @return list<string> An array of allowed values for APP_ENV
+     */
+    private function getAllowedEnvs(): array
+    {
+        return ['prod', 'dev', 'test'];
     }
 }

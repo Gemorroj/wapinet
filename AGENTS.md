@@ -32,6 +32,19 @@ Symfony 8.2 / PHP 8.5 (FrankenPHP) + Angular 22 / Taiga UI 5 (сайт wapinet.r
 - Фоновые задачи (превью, метаданные, конвертация) — Messenger: `messenger:consume async`.
 - Временные каталоги — только `var/tmp*`; их создаёт `Kernel::buildContainer()`, а не сервисы.
 
+## Symfony 8.2
+
+- Конфигурация бандлов — корневыми ключами (`cache:`, `messenger:`, `mailer:`, `router:`, `translation:`, `rate_limiter:`, `scheduler:`, `validation:`), если ключ поддерживается; `framework:` — для опций самого FrameworkBundle (`session`, `exceptions`, `csrf_protection`, `default_locale`).
+- Опции не угадывать: `config/reference.php` — справочник по установленным бандлам, `config/schema.json` — JSON-схема для редактора; оба генерируются при сборке контейнера в debug и руками не правятся. Текущее значение — `php bin/console debug:config <key>`.
+- Сначала атрибуты и автовайринг (`#[Route]`, `#[IsGranted]`, `#[AsCommand]`, `#[AsMessageHandler]`, `#[AsEventListener]`, `#[Autowire]`, `#[Target]`); YAML-описание сервиса — последний вариант.
+- Входные данные API — `#[MapRequestPayload]` / `#[MapQueryString]` с DTO и валидацией, не `json_decode()`.
+- Перед новой библиотекой проверить компонент Symfony: Lock, Cache, HttpClient, Mailer, Messenger, Scheduler, RateLimiter, Workflow.
+- `.env` — только дефолты; секреты — `.env.local` или `php bin/console secrets:set`.
+- В dev контейнер пересобирается сам; `cache:clear` — после изменения bundles/рецептов/конфигурации и для prod.
+- `make:*` в неинтерактивном режиме запускать с аргументами и `--no-interaction`.
+- Диагностика: `php bin/console debug:autowiring`, `debug:autoconfiguration`, `debug:config`, `debug:router`, `debug:container --env-vars`, `debug:messenger`, `debug:event-dispatcher`; проверки — `lint:container`, `lint:yaml config/`, `lint:twig templates/`.
+- API компонентов меняется между версиями: сверяться с `vendor/symfony/<package>/CHANGELOG.md`, исходниками и docblocks в `vendor/`, документацией для версии из `composer.json`.
+
 ## Frontend
 
 - 4 пробела; стили — компоненты Taiga UI, кастомный CSS только для layout.
@@ -45,4 +58,8 @@ Symfony 8.2 / PHP 8.5 (FrankenPHP) + Angular 22 / Taiga UI 5 (сайт wapinet.r
 
 - Тесты повторяют структуру `src`: путь файла и namespace совпадают с тестируемым классом.
 - Новый код покрывать тестами: backend — PHPUnit, frontend — Vitest/Angular TestBed с моками API.
+- Баг сначала воспроизводить тестом, затем исправлять.
+- В тестах использовать штатные средства: `KernelBrowser::loginUser()` для входа, `MessengerAssertionsTrait::consumeQueuedMessages()` для async-сообщений, `ClockSensitiveTrait::mockTime()` для времени.
+- Комментарий — только для причины, неочевидного ограничения или ссылки на спецификацию; не пересказывать код.
+- Проблему в зависимости сначала воспроизвести и измерить; обход — минимальный, со ссылкой на upstream issue. Перед публикацией issue/PR спросить автора; security — только приватно.
 - Использовать возможности PhpStorm: инспекции, реформат, run configurations, Xdebug.

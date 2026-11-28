@@ -13,6 +13,7 @@ final class RateLimitByIpTest extends TestCase
     public function testKeyIsBuiltFromTheClientIp(): void
     {
         $attribute = new RateLimitByIp('api');
+        self::assertTrue($attribute->exposeHeaders);
         $key = $attribute->key;
         self::assertInstanceOf(\Closure::class, $key);
 

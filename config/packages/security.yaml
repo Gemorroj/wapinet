@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../schema.json
 security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
@@ -17,9 +18,6 @@ security:
         wapinet_user_provider:
             id: App\Security\UserProvider
     firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
         api_login:
             pattern: ^/api/auth/login$
             stateless: true
@@ -48,6 +46,7 @@ security:
             pattern: ^/admin
             provider: wapinet_user_provider
             user_checker: App\Security\UserChecker
+            user_checker_on_refresh: true
             form_login:
                 provider: wapinet_user_provider
                 login_path: admin_login
@@ -66,14 +65,13 @@ security:
             pattern: ^/
             stateless: true
 
-            # activate different ways to authenticate
+            # Activate different ways to authenticate:
             # https://symfony.com/doc/current/security.html#the-firewall
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
 
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
+    # Note: Only the *first* matching rule is applied
     access_control:
         - { path: ^/api/auth/(login|register)$, roles: PUBLIC_ACCESS }
         - { path: ^/api/bbcode/preview$, roles: PUBLIC_ACCESS, methods: [POST] }
@@ -104,14 +102,4 @@ when@test:
             main:
                 http_basic: ~
                 entry_point: http_basic
-        password_hashers:
-            # By default, password hashers are resource intensive and take time. This is
-            # important to generate secure password hashes. In tests however, secure hashes
-            # are not important, waste resources and increase test times. The following
-            # reduces the work factor to the lowest possible values.
-            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
-                algorithm: auto
-                cost: 4 # Lowest possible value for bcrypt
-                time_cost: 3 # Lowest possible value for argon
-                memory_cost: 10 # Lowest possible value for argon
 

@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../schema.json
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
     secret: '%env(APP_SECRET)%'
@@ -25,6 +26,7 @@ framework:
 
     # Note that the session will be started ONLY if you read or write from it.
     session:
+        isolate_attributes: true
         handler_id: null
         cookie_secure: auto
         cookie_samesite: lax

@@ -66,7 +66,7 @@ docker compose exec frontend npm run build # собирает public/app
 ### Лимиты и фоновые задачи
 
 - Загрузка файлов: до 50 МиБ; архиватор — до 20 файлов за запрос, суммарно до 50 МиБ (post_max_size 55M); в архиве — до 1000 файлов, 50 МиБ на файл, 250 МиБ на архив.
-- Rate limit: `config/packages/rate_limiter.yaml`; при превышении API отдаёт `429` с `Retry-After` и problem+json `detail`, текст для пользователя SPA строит по `Retry-After`.
+- Rate limit: `config/packages/rate_limiter.yaml`; при превышении API отдаёт `429` с `Retry-After` и problem+json `detail`, текст для пользователя SPA строит по `Retry-After`. Успешные ответы и 429 содержат `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`.
 - Ошибки API — RFC 9457 `problem+json`. Пользовательские тексты задаются через `App\Exception\PublicHttpException`/`PublicErrorInterface`, технические детали остаются в логах. 401/403 security и 429 rate limit тоже отдают `problem+json`; известные ошибки БД и инфраструктуры маппятся через `framework.exceptions`.
 - Временные каталоги `var/tmp`, `var/tmp/archiver`, `var/tmp/audio-tags`, `var/tmp/file` создаёт `Kernel` при сборке контейнера; старые файлы чистит `app:tmp-clear`.
 - Фоновые задачи (превью, метаданные, конвертация) — через Messenger: `messenger:consume async`.

@@ -1,6 +1,6 @@
+# yaml-language-server: $schema=../schema.json
 twig:
     file_name_pattern: '*.twig'
-    default_path: '%kernel.project_dir%/templates'
     globals:
         wapinet_title: '%wapinet_title%'
 

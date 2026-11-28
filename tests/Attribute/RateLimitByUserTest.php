@@ -13,6 +13,7 @@ final class RateLimitByUserTest extends TestCase
     public function testKeyIsBuiltFromTheCurrentUser(): void
     {
         $attribute = new RateLimitByUser('api');
+        self::assertTrue($attribute->exposeHeaders);
         $key = $attribute->key;
         self::assertInstanceOf(\Closure::class, $key);
 

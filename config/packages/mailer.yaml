@@ -1,3 +1,3 @@
-framework:
-    mailer:
-        dsn: '%env(MAILER_DSN)%'
+# yaml-language-server: $schema=../schema.json
+mailer:
+    dsn: '%env(MAILER_DSN)%'

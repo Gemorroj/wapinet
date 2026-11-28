@@ -22,7 +22,7 @@ final class RateLimitByVisitor extends RateLimit
         string $limiter,
         int $tokens = 1,
         array|string $methods = [],
-        bool $exposeHeaders = false,
+        bool $exposeHeaders = true,
         bool|Expression|\Closure $if = true,
     ) {
         parent::__construct(

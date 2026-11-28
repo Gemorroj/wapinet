@@ -45,4 +45,17 @@ final class BbcodeControllerTest extends WebTestCaseWapinet
 
         static::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
+
+    public function testRateLimitHeadersAreExposed(): void
+    {
+        $client = static::createClient();
+
+        $client->jsonRequest('POST', '/api/bbcode/preview', ['text' => '[b]x[/b]']);
+        static::assertResponseIsSuccessful();
+
+        $response = $client->getResponse();
+        self::assertSame('30', $response->headers->get('X-RateLimit-Limit'));
+        self::assertSame('29', $response->headers->get('X-RateLimit-Remaining'));
+        self::assertMatchesRegularExpression('/^\d+$/', (string) $response->headers->get('X-RateLimit-Reset'));
+    }
 }

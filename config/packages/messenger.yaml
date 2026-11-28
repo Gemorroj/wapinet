@@ -1,27 +1,31 @@
-framework:
+# yaml-language-server: $schema=../schema.json
+messenger:
+    failure_transport: failed
+
+    transports:
+        # https://symfony.com/doc/current/messenger.html#transport-configuration
+        async:
+            dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+            retry_strategy:
+                max_retries: 3
+                multiplier: 2
+            cooldown_strategy:
+                failure_threshold: 5
+                delay: 1000
+                multiplier: 2
+                max_delay: 60000
+        failed:
+            dsn: 'doctrine://default?queue_name=failed'
+            sign: true
+        # sync: 'sync://'
+
+    routing:
+        Symfony\Component\Mailer\Messenger\SendEmailMessage: async
+
+        # Route your messages to the transports
+        # 'App\Message\YourMessage': async
+
+when@test:
     messenger:
-        failure_transport: failed
-
         transports:
-            # https://symfony.com/doc/current/messenger.html#transport-configuration
-            async:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                options:
-                    use_notify: true
-                    check_delayed_interval: 60000
-                retry_strategy:
-                    max_retries: 3
-                    multiplier: 2
-            failed: 'doctrine://default?queue_name=failed'
-            # sync: 'sync://'
-
-        default_bus: messenger.bus.default
-
-        buses:
-            messenger.bus.default: []
-
-        routing:
-            Symfony\Component\Mailer\Messenger\SendEmailMessage: async
-
-            # Route your messages to the transports
-            # 'App\Message\YourMessage': async
+            async: 'in-memory://'

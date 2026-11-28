@@ -8,8 +8,6 @@ charset = utf-8
 end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
-
-[*.{php,ts,js,css,json,yaml}]
 indent_size = 4
 indent_style = space
 

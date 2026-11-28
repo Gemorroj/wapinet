@@ -1,13 +1,15 @@
-when@dev:
-    framework:
-        scheduler:
-            use_messenger_routing: true
-            schedules:
-                default:
-                    stateful: true
-                    cache_pool: cache.scheduler_state
-                    process_only_last_missed_run: true
-        cache:
-            pools:
-                cache.scheduler_state:
-                    adapter: cache.adapter.filesystem
+# yaml-language-server: $schema=../schema.json
+scheduler:
+    # send the scheduled messages to the Messenger transports routed for their class
+    use_messenger_routing: true
+
+    schedules:
+        default:
+            # run the tasks missed while no worker was running, once
+            stateful: true
+            # the default "cache.scheduler" pool inherits the in-memory cache.app
+            cache_pool: cache.scheduler_state
+            process_only_last_missed_run: true
+
+            # add your tasks with the #[AsCronTask] and #[AsPeriodicTask] attributes
+            # see https://symfony.com/doc/current/scheduler.html
