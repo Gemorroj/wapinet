@@ -4217,7 +4217,7 @@
                                                 "additionalProperties": {
                                                     "$ref": "#/$defs/types/scalar"
                                                 },
-                                                "description": "Recipient PGP public keys, as a map of email address to public key file path. Cannot be used together with \"repository\"."
+                                                "description": "Recipient PGP public keys, as a map of email address to the path of a file holding exactly one key with a user ID for that address. Cannot be used together with \"repository\"."
                                             },
                                             "binary": {
                                                 "$ref": "#/$defs/types/scalar",
@@ -4252,7 +4252,7 @@
                                             "hide_recipients": {
                                                 "$ref": "#/$defs/types/boolean",
                                                 "default": false,
-                                                "description": "Hide every recipient's key ID in the encrypted message (gpg --hidden-recipient). Recipients listed in the Bcc header are always hidden regardless of this option; set it to true to also hide To and Cc recipients."
+                                                "description": "Hide every recipient's key ID in the encrypted message (gpg --hidden-recipient-file). Recipients listed in the Bcc header are always hidden regardless of this option; set it to true to also hide To and Cc recipients."
                                             },
                                             "on_missing_key": {
                                                 "anyOf": [
@@ -8944,10 +8944,9 @@
                                                             "minItems": 1,
                                                             "default": [
                                                                 "ES256",
-                                                                "PS256",
                                                                 "RS256"
                                                             ],
-                                                            "description": "The algorithms a proof may be signed with, announced in the challenge."
+                                                            "description": "The algorithms a proof may be signed with, announced in the challenge. \"PS256\", \"PS384\" and \"PS512\" need the GMP or BCMath extension."
                                                         },
                                                         "cache": {
                                                             "$ref": "#/$defs/types/scalar",
@@ -8981,10 +8980,9 @@
                                                                     "minItems": 1,
                                                                     "default": [
                                                                         "ES256",
-                                                                        "PS256",
                                                                         "RS256"
                                                                     ],
-                                                                    "description": "The algorithms a proof may be signed with, announced in the challenge."
+                                                                    "description": "The algorithms a proof may be signed with, announced in the challenge. \"PS256\", \"PS384\" and \"PS512\" need the GMP or BCMath extension."
                                                                 }
                                                             ]
                                                         }
@@ -9001,7 +8999,6 @@
                                                 "enabled": false,
                                                 "algorithms": [
                                                     "ES256",
-                                                    "PS256",
                                                     "RS256"
                                                 ],
                                                 "cache": "cache.security",
